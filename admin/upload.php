@@ -31,9 +31,12 @@
 		//ファイルのエラーチェック
 		elseif($this->file_has_error($_FILES["file"]))
 			$message[] = $this->file_has_error($_FILES["file"]);
+		//対応端末のチェック
+		if(empty($_POST['devices']))
+			$message[] = "対応端末が指定されてません。";
 		//エラー状態のチェック
 		if(empty($message)){
-			$this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]);
+			$this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]);
 		}else
 			$error = true;
 	}
@@ -50,7 +53,8 @@
 		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
 	){
 		$updated = true;
-		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]))
+		var_dump($_REQUEST);
+		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]))
 			$message[] = "ファイルの更新に成功しました";
 		else
 			$message[] = "ファイルの更新に失敗しました";
@@ -68,9 +72,11 @@
 	}else
 		$uploading = true;
 	
-	if($updating || $updated)
+	if($updating || $updated){
 		$file = $this->get_files($_REQUEST["post_id"], $_REQUEST["file_id"]);
+	}
 	$files = $this->get_files($_GET["post_id"]);
+	$devices = $this->get_devices();
 ?><form method="post" class="media-upload-form type-form validate" enctype="multipart/form-data">
 	<?php
 		if($updating || $updated){
@@ -115,7 +121,7 @@
 					<td class="field">
 						<label><input name="public" type="radio" value="1"<?php if(!($updating || $updated) || $file->public == 1) echo ' checked="checked"'; ?> />公開</label>
 						<label><input name="public" type="radio" value="0"<?php if(($updating || $updated) && $file->public == 0) echo ' checked="checked"'; ?> />非公開</label>
-						<p class="help">このファイルの公開状態です。</p>
+						<p class="help">このファイルの公開状態です。非公開になっているものはファイルが表示されません。</p>
 					</td>
 				</tr>
 				<tr>
@@ -124,12 +130,29 @@
 					</th>
 					<td class="field">
 						<label><input name="free" type="radio" value="0"<?php if(!($updating || $updated) || $file->free == 0) echo ' checked="checked"'; ?> />できない</label>
-						<label><input name="free" type="radio" value="1"<?php if(($updating || $updated) && $file->free == 1) echo ' checked="checked"'; ?> />できる</label>
+						<label><input name="free" type="radio" value="1"<?php if(($updating || $updated) && $file->free == 1) echo ' checked="checked"'; ?> />登録していればできる</label>
+						<label><input name="free" type="radio" value="2"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> />登録していなくてもできる</label>
 						<p class="help">
-							「立ち読みできる」とは<strong>購入せずにすべてをダウンロードできる状態</strong>を意味します。<br />
-							「部分的な立ち読み」を提供したい場合は<strong>立ち読み用のファイル</strong>を用意した上で「立ち読みできる」を指定してください。
+							「立ち読み」とは<strong>購入せずにすべてをダウンロードできる状態</strong>を意味します。<br />
+							「部分的な立ち読み」を提供したい場合は<strong>立ち読み用のファイル</strong>を用意した上で「できない」以外を指定してください。
 						</p>
 					</td>
+				</tr>
+				<tr>
+				<tr>
+					<th scope="row" valign="top" class="label">
+						<label>対応端末</label>
+					</th>
+					<td class="field">
+						<?php foreach($devices as $d): ?>
+						<label><input name="devices[]" type="checkbox" value="<?php echo $d->ID; ?>"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> /><?php echo $d->name; ?></label>　
+						<?php endforeach; ?>
+						<p class="help">
+							このファイルが対応する端末にチェックを入れてください。<br />
+							端末の登録は<a href="#" onclick="parent.location.href = '<?php echo admin_url(); ?>edit.php?post_type=ebook&page=lwp-devices';">端末設定ページ</a>で行ってください。
+						</p>
+					</td>
+				</tr>
 				</tr>
 				<tr>
 					<th scope="row" valign="top" class="label">

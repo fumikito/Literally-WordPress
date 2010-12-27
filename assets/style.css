@@ -22,3 +22,8 @@ div.ebook{
 .wrap em{
 	font-family: Baskerville,Times,'Times New Roman',serif !important; 
 }
+
+.help-wrap{
+	margin:20px auto;
+	width:400px;
+}

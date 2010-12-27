@@ -9,8 +9,10 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 		$book = wp_get_single_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 ?>
+<h3>取引情報を更新する</h3>
 <form method="post">
 	<?php wp_nonce_field("lwp_update_transaction"); ?>
+	<input type="hidden" name="transaction_id" value="<?php $this->h($transaction->ID);?>" />
 	<table class="form-table">
 		<tbody>
 			<tr>
@@ -18,25 +20,66 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 				<td><?php echo $book->post_title; ?></td>
 			</tr>
 			<tr>
-				<th scope="row" valign="top">ユーザー名</th>
-				<td><?php echo $user->display_name;  ?></td>
+				<th scope="row" valign="top"><label for="user_id">ユーザー名</label></th>
+				<td>
+					<?php if($transaction->user_id): ?>
+						<input type="hidden" name="user_id" value="<?php echo $transaction->user_id;?>" />
+						<?php echo $user->display_name;  ?><small>（<a href="<?php echo admin_url();?>user-edit.php?user_id=<?php echo $user->ID;?>">詳細を見る&raquo;</a>）</small>
+					<?php else: ?>
+						<select name="user_id" id="user_id">
+							<option value="0" selected="selected" disabled="true">選択してください</option>
+							<?php
+								$sql = <<<EOS
+									SELECT * FROM {$wpdb->users} as u
+									LEFT JOIN {$wpdb->usermeta} as m
+									ON u.ID = m.user_id AND m.meta_key = '{$wpdb->prefix}user_level'
+									WHERE m.meta_value = 0 
+EOS;
+								$users = $wpdb->get_results($sql);
+								foreach($users as $u):
+							?>
+								<option value="<?php echo $u->ID; ?>"><?php echo $u->display_name; ?></option>
+							<?php endforeach; ?>
+						</select>
+						<p class="error">この取引情報は会員と紐づいていません。<small>（<a href="<?php echo $this->help("account"); ?>">もっと詳しく</a>）</small></p>
+					<?php endif; ?>
+				</td>
 			</tr>
 			<tr>
-				<th scope="row" valign="top">販売価格</th>
-				<td><?php echo money_format('%7n', $transaction->price); ?><small>（定価 <?php echo money_format('%7n', get_post_meta($book->ID, "lwp_price", true));?>）</small></td>
+				<th scope="row" valign="top"><label for="price">販売価格</label></th>
+				<td>
+					<input id="price" type="text" name="price" value="<?php $this->h($transaction->price); ?>" />
+					<p class="description">定価 <?php echo money_format('%7n', get_post_meta($book->ID, "lwp_price", true));?></p>
+				</td>
 			</tr>
 			<tr>
-				<th scope="row" valign="top">販売方法</th>
-				<td><?php echo $transaction->method; ?></td>
+				<th scope="row" valign="top"><label for="method">販売方法</label></th>
+				<td>
+					<select name="method" id="method">
+						<option value="PAYPAL"<?php if($transaction->method == "PAYPAL") echo ' selected="selected"';?>>PayPal</option>
+						<option value="present"<?php if($transaction->method == "present") echo ' selected="selected"';?>>プレゼント</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" valign="top"><label for="payer_mail">トランザクションメール</label></th>
+				<td>
+					<input readonly="readonly" class="regular-text" type="text" name="payer_mail" id="payer_mail" value="<?php $this->h($transaction->payer_mail); ?>" />
+					<?php if($transaction->payer_mail == $user->user_email):?>
+						<p class="description">このメールアドレスはアカウントとして登録されているメールアドレスと同じです。</p>
+					<?php elseif($transaction->payer_mail == get_user_meta($transaction->user_id, "paypal")): ?>
+						<p class="description">このメールアドレスはPayPalアドレスとして登録されています。</p>
+					<?php else: ?>
+						<p class="error">このメールアドレスはユーザー情報と紐づいていません。</p>
+					<?php endif; ?>
+				</td>
 			</tr>
 			<tr>
 				<th scope="row" valign="top"><label for="status">ステータス</label></th>
 				<td>
-					<?php echo $transaction->status; ?><br />
 					<select name="status" id="status">
-						<option value="" selected="selected" disabled="true">変更する場合は選択してください</option>
-						<option value="CUCCESS">完了</option>
-						<option value="Cancel">キャンセル</option>
+						<option value="CUCCESS"<?php if($transaction->status == "CUCCESS") echo ' selected="selected"';?>>完了</option>
+						<option value="Cancel"<?php if($transaction->status == "Cancel") echo ' selected="selected"';?>>キャンセル</option>
 					</select>
 				</td>
 			</tr>
@@ -47,7 +90,10 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 		</tbody>
 	</table>
 	<p class="submit">
-		<input type="submit" class="primary-button" vlue="更新" />
+		<input type="submit" class="primary-button" value="更新" />
+	</p>
+	<p>
+		<a href="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-management">&laquo;一覧に戻る</a>
 	</p>
 </form>
  
@@ -113,7 +159,7 @@ $length = count($this->get_transaction($ebook_id, $user_id, $status));
 				<td><?php echo $t->status; ?></td>
 				<td><?php echo $t->method; ?></td>
 				<td><?php echo mysql2date("Y年m月d日", $t->registered); ?></td>
-				<td><p><a class="button" href="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-management&amp;transaction_id=<?php echo $t->ID; ?>">詳細を見る</a></p></td>
+				<td><p><a class="button" href="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-management&amp;transaction_id=<?php echo $t->ID; ?>">修正</a></p></td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
