@@ -1071,7 +1071,7 @@ EOS;
 	 * 指定された投稿が指定された日付にキャンペーンを行っているかを返す
 	 * 
 	 * @param object|int $post
-	 * @param string $time
+	 * @param string $time (optional) 指定しなければ今日の日付
 	 * @return booelan
 	 */
 	public function is_on_sale($post = null, $time = null)
@@ -1252,9 +1252,10 @@ EOS;
 	public function show_history($content)
 	{
 		//本棚用のタグを作成
+		// TODO: タグを自動生成する必要はあるか？
 		$book_shelf = "";
 		if(is_page($this->option["mypage"])){
-			$book_shelf = "ほげ";
+			$book_shelf = "";
 		}
 		return $book_shelf.$content;
 	}
@@ -1281,12 +1282,23 @@ EOS;
 		$sql = "SELECT * FROM {$this->transaction} ";
 		if($user_id || $status || $book_id)
 			$sql .= "WHERE ";
-		if($book_id)
+		$flg = false;
+		if($book_id){
 			$sql .= $wpdb->prepare("book_id = %d ", $book_id);
-		if($user_id)
+			$flg = true;
+		}
+		if($user_id){
+			if(!$flg)
+				$flg = true;
+			else
+				$sql .= " AND ";
 			$sql .= $wpdb->prepare("user_id = %d ", $user_id);
-		if($status)
+		}
+		if($status){
+			if($flg)
+				$sql .= " AND ";
 			$sql .= $wpdb->prepare("status = %s ", $status);
+		}
 		$sql .= "ORDER BY `registered` DESC ";
 		if(is_numeric($offset))
 			if($offset == 0)

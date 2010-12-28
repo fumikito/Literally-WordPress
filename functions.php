@@ -37,7 +37,7 @@ function lwp_is_free($original = false, $post = null)
 	if($original)
 		return (lwp_original_price($post) == 0);
 	else
-		return lwp_price() == 0;
+		return lwp_price($post) == 0;
 }
 
 /**
@@ -268,6 +268,7 @@ function lwp_get_devices($post = null)
 		SELECT * FROM {$lwp->devices} as d
 		LEFT JOIN {$lwp->file_relationships} as r
 		ON d.ID = r.device_id
+		GROUP BY d.ID
 EOS;
 	$devices = $wpdb->get_results($sql);
 	$files_req = $lwp->get_files($post->ID);
@@ -368,6 +369,74 @@ function lwp_get_date($file, $registered = true, $echo = true)
 		echo $formatted;
 	else
 		return $formatted;
+}
+
+/**
+ * 購入した電子書籍のリストを返す
+ * 
+ * @param string $status (optional) SUCCESS, Cancel, Errorのいずれか
+ * @param int $user_id (optional) 指定しない場合は現在のユーザー
+ * @return array
+ */
+function lwp_bought_books($status = "SUCCESS", $user_id = null)
+{
+	global $lwp;
+	if(!$user_id){
+		global $user_ID;
+		$user_id = $user_ID;
+	}
+	//トランザクションを取得
+	$trans = $lwp->get_transaction(null, $user_id, $status);
+	$book_ids = array();
+	foreach($trans as $t){
+		$book_ids[] = $t->book_id;
+	}
+	//投稿オブジェクトを取得
+	if(empty($book_ids))
+		return array();
+	else
+		return get_posts(
+			array(
+				"post_type" => "ebook",
+				"post__in" => $book_ids
+			)
+		);
+}
+
+/**
+ * 投稿に紐づいたユーザーの購入詳細を返す
+ * 
+ * @param int $book_id
+ * @param int $user_id (optional) 指定しない場合は現在のユーザー
+ * @return object
+ */
+function lwp_get_tran($book_id, $user_id = null)
+{
+	global $lwp;
+	if(!$user_id){
+		global $user_ID;
+		$user_id = $user_ID;
+	}
+	return $lwp->get_transaction($book_id, $user_id, "SUCCESS");
+}
+
+/**
+ * ユーザーがこれまでに購入した総額を返す
+ */
+function lwp_user_bought_price($user_id = null)
+{
+	global $lwp, $wpdb;
+	if(!$user_id){
+		global $user_ID;
+		$user_id = $user_ID;
+	}
+	$sql = <<<EOS
+		SELECT user_id, SUM(price) FROM {$lwp->transaction}
+		WHERE user_id = %d AND status = 'SUCCESS'
+		GROUP BY user_id
+EOS;
+	$req = $wpdb->get_row($wpdb->prepare($sql, $user_id));
+	return ($req) ? $req->{'SUM(price)'} : 0;
 }
 
 /**
