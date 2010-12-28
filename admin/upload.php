@@ -12,6 +12,7 @@
 	$deleted = false;
 	$error = false;
 	$message = array();
+	$devices_registered = array();
 	//POSTが設定されていたら、アップロードアクション
 	if(
 		isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_upload")
@@ -53,7 +54,6 @@
 		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
 	){
 		$updated = true;
-		var_dump($_REQUEST);
 		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]))
 			$message[] = "ファイルの更新に成功しました";
 		else
@@ -72,8 +72,14 @@
 	}else
 		$uploading = true;
 	
+	//更新のとき
 	if($updating || $updated){
 		$file = $this->get_files($_REQUEST["post_id"], $_REQUEST["file_id"]);
+		if($req = $this->get_devices($_REQUEST['file_id'])){
+			foreach($req as $r){
+				$devices_registered[] = $r->device_id;
+			}
+		};
 	}
 	$files = $this->get_files($_GET["post_id"]);
 	$devices = $this->get_devices();
@@ -145,7 +151,7 @@
 					</th>
 					<td class="field">
 						<?php foreach($devices as $d): ?>
-						<label><input name="devices[]" type="checkbox" value="<?php echo $d->ID; ?>"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> /><?php echo $d->name; ?></label>　
+						<label><input name="devices[]" type="checkbox" value="<?php echo $d->ID; ?>"<?php if(($updating || $updated) && false !== array_search($d->ID, $devices_registered)) echo ' checked="checked"'; ?> /><?php echo $d->name; ?></label>　
 						<?php endforeach; ?>
 						<p class="help">
 							このファイルが対応する端末にチェックを入れてください。<br />
@@ -190,7 +196,6 @@
 		<h4 class="media-sub-title">登録済み電子書籍ファイル</h4>
 		<?php foreach($files as $f): ?>
 		<div class="media-item">
-			<img class="pinkynail" src="<?php echo $this->url; ?>/assets/icons/<?php echo end(explode(".", $f->file)); ?>.png" />
 			<form method="post" class="describe-toggle-on">
 				<?php wp_nonce_field("lwp_deleted"); ?>
 				<input type="hidden" value="<?php echo $f->ID; ?>" name="file_id" />

@@ -254,6 +254,82 @@ function lwp_get_ext($file)
 }
 
 /**
+ * 電子書籍のデバイス登録情報を返す
+ * 
+ * @param object $post(optional) 投稿オブジェクト。指定しない場合は現在の投稿
+ * @return array デバイス情報の配列。各要素はname(string), slug(string), valid(boolean)のキーを持つ
+ */
+function lwp_get_devices($post = null)
+{
+	global $lwp, $wpdb;
+	if(!$post)
+		global $post;
+	$sql = <<<EOS
+		SELECT * FROM {$lwp->devices} as d
+		LEFT JOIN {$lwp->file_relationships} as r
+		ON d.ID = r.device_id
+EOS;
+	$devices = $wpdb->get_results($sql);
+	$files_req = $lwp->get_files($post->ID);
+	$files = array();
+	foreach($files_req as $f){
+		$files[] = $f->ID;
+	}
+	$arr = array();
+	foreach($devices as $d){
+		if(false !==  array_search($d->file_id, $files)){
+			$arr[] = array(
+				"name" => $d->name,
+				"slug" => $d->slug,
+				"valid" => true
+			);
+		}else{
+			$arr[] = array(
+				"name" => $d->name,
+				"slug" => $d->slug,
+				"valid" => false
+			);
+		}
+	}
+	return $arr;
+}
+
+/**
+ * ファイルオブジェクトを受け取り、対応しているデバイスを返す
+ * 
+ * @param object $file
+ * @param boolean $slug(optional) デバイスのスラッグが欲しい場合はtrue
+ * @return array デバイス名の配列。$slugをtrueにした場合、各要素は文字列ではなくnameとslugをキーに持つ配列となる。
+ */
+function lwp_get_file_devices($file, $slug = false)
+{
+	global $wpdb,$lwp;
+	$sql = <<<EOS
+		SELECT * FROM {$lwp->file_relationships} as r
+		LEFT JOIN {$lwp->devices} as d
+		ON r.device_id = d.ID
+		WHERE r.file_id = {$file->ID}
+EOS;
+	$results = $wpdb->get_results($sql);
+	if(empty($results))
+		return array();
+	else{
+		$array = array();
+		foreach($results as $r){
+			if($slug){
+				$array[] = array(
+					"name" => $r->name,
+					"slug" => $r->slug
+				);
+			}else{
+				$array[] = $r->name;
+			}
+		}
+		return $array;
+	}
+}
+
+/**
  * ファイルのアクセス権を返す
  * 
  * @param object $file ファイルオブジェクト

@@ -678,24 +678,19 @@ EOS;
 		);
 		if($req){
 			if(!empty($devices)){
-				$registered_ids = array();
 				$deleted_ids = array();
-				foreach($devices as $d){
-					//このファイルに登録されたデバイスIDをすべて取得
-					foreach($wpdb->get_results($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d", $file_id)) as $registered){
-						if(false === array_search($registered->device_id, $devices)){
-							//登録されたデバイスIDがPOSTされた値の中に見つからなかったら削除
-							$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d));
-							$deleted_ids[] = $d;
-						}else{
-							//登録されたデバイスIDがPOSTされた値が存在すれば、登録済み配列に追加
-							$registered[] = $d;
-						}
+				//このファイルに登録されたデバイスIDをすべて取得
+				foreach($wpdb->get_results($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d", $file_id)) as $registered){
+					if(false === array_search($registered->device_id, $devices)){
+						//登録されたデバイスIDがPOSTされた値の中に見つからなかったら削除
+						$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE ID = %d", $registered->ID));
+						$deleted_ids[] = $registered->device_id;
 					}
 				}
 				foreach($devices as $d){
 					//デバイスIDが削除済みにも登録済みにも存在しない場合
-					if(false === array_search($d, $registered_ids) && false === array_search($d, $deleted_ids)){
+					var_dump($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d));
+					if(false === array_search($d, $deleted_ids) && !$wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d))){
 						$wpdb->insert(
 							$this->file_relationships,
 							array(
@@ -870,18 +865,23 @@ EOS;
 	/**
 	 * デバイス情報を返す
 	 * 
-	 * @param object $file (optional) 指定s田場合はファイルに紐づけられた端末を返す
+	 * @param object $file (optional) 指定した場合はファイルに紐づけられた端末を返す
 	 * @return array
 	 */
 	public function get_devices($file = null)
 	{
 		global $wpdb;
+		if(is_numeric($file)){
+			$file_id = $file;
+		}elseif(is_object($file)){
+			$file_id = $file->ID;
+		}
 		if(!is_null($file)){
 			$sql = <<<EOS
 				SELECT * FROM {$this->devices} as d
 				LEFT JOIN {$this->file_relationships} as f
 				ON d.ID = f.device_id
-				WHERE f.file_id = {$file->ID}
+				WHERE f.file_id = {$file_id}
 EOS;
 		}else{
 			$sql = "SELECT * FROM {$this->devices}";
