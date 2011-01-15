@@ -264,21 +264,27 @@ function lwp_get_devices($post = null)
 	global $lwp, $wpdb;
 	if(!$post)
 		global $post;
+	//デバイスの一覧を取得
+	$devices = $wpdb->get_results("SELECT * FROM {$lwp->devices}");
+	
+	//登録されたファイルの一覧を取得
 	$sql = <<<EOS
-		SELECT * FROM {$lwp->devices} as d
-		LEFT JOIN {$lwp->file_relationships} as r
-		ON d.ID = r.device_id
-		GROUP BY d.ID
+		SELECT * FROM {$lwp->file_relationships} as r
+		LEFT JOIN {$lwp->files} as f
+		ON r.file_id = f.ID
+		WHERE f.book_id = {$post->ID}
 EOS;
-	$devices = $wpdb->get_results($sql);
-	$files_req = $lwp->get_files($post->ID);
-	$files = array();
-	foreach($files_req as $f){
-		$files[] = $f->ID;
+	$files = $wpdb->get_results($sql);
+	
+	//登録されたデバイスIDの一覧を配列に変換
+	$registered_devices = array();
+	foreach($files as $f){
+		$registered_devices[] = $f->device_id;
 	}
+	//リストの照合
 	$arr = array();
 	foreach($devices as $d){
-		if(false !==  array_search($d->file_id, $files)){
+		if(false !==  array_search($d->ID, $registered_devices)){
 			$arr[] = array(
 				"name" => $d->name,
 				"slug" => $d->slug,

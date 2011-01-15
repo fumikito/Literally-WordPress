@@ -785,7 +785,7 @@ EOS;
 		$ext = pathinfo($file, PATHINFO_EXTENSION);
 		switch($ext){
 			case "epub":
-				$mime = "application/zip+epub";
+				$mime = "application/epub+zip";
 				break;
 			case "azw":
 				$mime = "application/octet-stream";
@@ -1355,7 +1355,7 @@ EOS;
 		//電子書籍の場合だけ実行
 		if(is_single() && "ebook" == get_post_type()){
 			//ファイル取得の場合
-			if(isset($_REQUEST["ebook_file"]) && is_user_logged_in()){
+			if(isset($_REQUEST["ebook_file"])){
 				global $post, $user_ID;
 				$this->print_file($_REQUEST["ebook_file"], $post->ID, $user_ID);
 			}
