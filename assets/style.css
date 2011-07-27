@@ -1,5 +1,14 @@
 @charset "utf-8";
 
+.update-nag ul{
+	padding:0 20px;
+	font-size:1.2em;
+	font-weight:bold;
+}
+.update-nag li{
+	text-align:left;
+}
+
 div.ebook{
 	background:url(./book_32.png) left top no-repeat;
 }
@@ -24,6 +33,5 @@ div.ebook{
 }
 
 .help-wrap{
-	margin:20px auto;
-	width:400px;
+	padding:10px 20px;
 }
