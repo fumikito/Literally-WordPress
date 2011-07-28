@@ -689,8 +689,8 @@ EOS;
 				"file" => $file,
 				"public" => $public,
 				"free" => $free,
-				"registered" => date("Y-m-d H:i:s"),
-				"updated" => date("Y-m-d H:i:s")
+				"registered" => gmdate("Y-m-d H:i:s"),
+				"updated" => gmdate("Y-m-d H:i:s")
 			),
 			array("%d", "%s", "%s", "%s", "%d", "%d", "%s", "%s")
 		);
@@ -726,7 +726,7 @@ EOS;
 				"desc" => $desc,
 				"public" => $public,
 				"free" => $free,
-				"updated" => date("Y-m-d H:i:s")
+				"updated" => gmdate("Y-m-d H:i:s")
 			),
 			array("ID" => $file_id),
 			array("%s", "%s", "%d", "%d", "%s"),
@@ -1365,7 +1365,7 @@ EOS;
 					"status" => $_REQUEST["status"],
 					"method" => $_REQUEST["method"],
 					"payer_mail" => $_REQUEST["payer_mail"],
-					"registered" => date("Y-m-d H:i:s")
+					"registered" => gmdate("Y-m-d H:i:s")
 				),
 				array("ID" => $_REQUEST["transaction_id"]),
 				array("%d", "%d", "%s", "%s", "%s", "%s"),
@@ -1393,7 +1393,7 @@ EOS;
 		//電子書籍の場合だけ実行
 		if(is_front_page() && isset($_GET["lwp"])){
 			switch($_GET["lwp"]){
-				case "buy":
+				case "buy": //リダイレクトかwp_die
 					global $user_ID;
 					if(!is_user_logged_in()){
 						//ユーザーがログインしていない
@@ -1409,11 +1409,12 @@ EOS;
 					//エラーが起きた場合はwp_die
 					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('backlink' => true));
 					break;
-				case "confirm":
+				case "confirm": //コンファームかwp_die
 					global $wpdb;
 					if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
 						if(PayPal_Statics::do_transaction($_POST)){
 							//データを更新
+							$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $_POST["TOKEN"])); 
 							$tran_id = $wpdb->update(
 								$this->transaction,
 								array(
@@ -1429,33 +1430,61 @@ EOS;
 								array("%s")
 							);
 							//サンキューページを表示する
-							require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."receipt-confirm.php";
+							header("Location: ".get_bloginfo("url")."?lwp=success&lwp_id={$post_id}"); 
 						}else{
 							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("backlink" => true));
 						}
 					}else{
+						$message = "";
 						//確認画面
 						$info = PayPal_Statics::get_transaction_info($_REQUEST['token']);
-						$wpdb->show_errors();
+						if(!$info){
+							$message = $this->_("Failed to connect with PayPal.");
+						}
 						$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE transaction_key = %s", $_REQUEST['token']));
+						if(!$transaction){
+							$message = $this->_("Failed to get the transactional information.");
+						}
 						$post = get_post($transaction->book_id);
-						require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."return-success.php";
+						if(empty($message)){
+							$this->show_form("return", array(
+								"info" => $info,
+								"transaction" => $transaction,
+								"post" => $post
+							));
+						}else{
+							wp_die($message, $this->_("Failed"), array("backlink" => true));
+						}
 					}
-					exit;
 					break;
 				case "success":
-					
+					$this->show_form("success");
+					break;
+				case "cancel":
+					global $wpdb;
+					$post_id = $this->option['mypage'];
+					if(isset($_REQUEST['TOKEN'])){
+						$wpdb->update(
+							$this->transaction,
+							array(
+								"status" => "Cancel",
+								"updated" => gmdate("Y-m-d H:i:s")
+							),
+							array("transaction_key" => $_REQUEST["TOKEN"]),
+							array("%s", "%s"),
+							array("%s")
+						);
+						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $_REQUEST['TOKEN']));
+					}
+					$this->show_form("cancel", array("post_id" => $post_id));
+					break;
+				case "file":
 					break;
 			}
 			//ファイル取得の場合
 			if(isset($_REQUEST["lwp_file"])){
 				global $post, $user_ID;
 				$this->print_file($_REQUEST["lwp_file"], $post->ID, $user_ID);
-			}
-			//トランザクション完了の場合
-			if(isset($_REQUEST["lwp_return"]) && isset($_REQUEST["tx"]) && is_user_logged_in()){
-				$this->on_transaction = true;
-				$this->do_transaction();
 			}
 		}
 	}
@@ -1500,7 +1529,15 @@ EOS;
 		}
 	}
 	
-	private function show_form($slug){
+	/**
+	 * フォームを出力する
+	 * @since 0.8
+	 * @param type $slug
+	 * @param type $args
+	 * @return void
+	 */
+	private function show_form($slug, $args = array()){
+		extract($args);
 		$filename = "paypal-{$slug}.php";
 		//テーマテンプレートに存在するかどうか調べる
 		if(file_exists(TEMPLATEPATH.DIRECTORY_SEPARATOR.$filename)){
@@ -1510,16 +1547,21 @@ EOS;
 			//なければ自作
 			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
 			//CSS-js読み込み
-			wp_enqueue_style("lwp-form", $this->url, array(), $this->version);
-			
-			//
-			require_once $this->dir;
+			$css = (file_exists(TEMPLATEPATH.DIRECTORY_SEPARATOR."lwp-form.css")) ? get_bloginfo("template_directory")."/lwp-form.css" : $this->url."/assets/lwp-form.css";
+			wp_enqueue_style("lwp-form", $css, array(), $this->version);
+			wp_enqueue_script("lwp-form-helper", $this->url."/assets/js/form-helper.js", array("jquery"), $this->version, true);
+			require_once $parent_directory."paypal-header.php";
+			require_once $parent_directory.$filename;
+			require_once $parent_directory."paypal-footer.php";
 		}
+		exit;
 	}
 	
 	/**
 	 * ファイルを出力する
-	 * 
+	 * @param type $file_id
+	 * @param type $post_id
+	 * @param type $user_id
 	 * @return void
 	 */
 	private function print_file($file_id, $post_id, $user_id)
