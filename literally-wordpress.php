@@ -26,8 +26,9 @@
 /**
  * ディレクトリーセパレータ
  */
-if(!defined("DS"))
+if(!defined("DS")){
 	define("DS", DIRECTORY_SEPARATOR); 
+}
 
 //コアクラスをグローバル変数に格納
 global $lwp;
@@ -36,7 +37,8 @@ global $lwp;
 if(literally_wordpress_check_version() && function_exists("curl_init")){
 		
 	//クラスファイル読み込み
-	require_once dirname(__FILE__)."/literally-wordpress.class.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress.class.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."paypal".DIRECTORY_SEPARATOR."paypal_statics.php";
 	
 	/**
 	 * Literally_WordPressのインスタンス変数
@@ -44,14 +46,14 @@ if(literally_wordpress_check_version() && function_exists("curl_init")){
 	 * @var Literally_WordPress
 	 */
 	$lwp = new Literally_WordPress();
-	//管理画面でのみ行うフックを登録
-	if(is_admin())
+	
+	if(is_admin()){
+		//管理画面でのみ行うフックを登録
 		$lwp->admin_hooks();
-	//公開画面でのみ行うフック
-	else
+	}else{
+		//公開画面でのみ行うフック
 		$lwp->public_hooks();
-	//ユーザーのコンタクトメソッドにPayPalアカウントを登録する
-	add_filter('user_contactmethods',array($lwp, "add_paypal_mail"),12,1);
+	}
 	//ユーザー関数の読み込み
 	require_once dirname(__FILE__).DS."functions.php";
 }else{

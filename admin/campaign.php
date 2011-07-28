@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h2>電子書籍キャンペーン</h2>
 
 <?php

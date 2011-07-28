@@ -13,8 +13,10 @@
  * ループ内で引数なしで利用すると、現在ログイン中のユーザーが表示中の
  * 電子書籍を購入済みかどうかを判断します。
  * 
+ * @since 0.2
  * @param object|int $post (optional) 投稿オブジェクト
  * @param int $user_id (optional) ユーザーID
+ * @return boolean
  */
 function lwp_is_owner($post = null, $user_id = null)
 {
@@ -40,6 +42,26 @@ function lwp_is_free($original = false, $post = null)
 		return lwp_price($post) == 0;
 }
 
+/**
+ * @deprecated
+ * @param type $post
+ * @return type 
+ */
+function lwp_ammount($post = null)
+{
+	return (int) _lwp_post_meta("lwp_number", $post);
+}
+
+/**
+ * 電子書籍のISBNを返す
+ * @deprecated
+ * @param object $post (optional)ループ内で引数なしで使用すると、表示中の電子書籍のISBNを返します。
+ * @return string
+ */
+function lwp_isbn($post = null)
+{
+	return _lwp_post_meta("lwp_isbn", $post);
+}
 /**
  * 指定された電子書籍ファイルオブジェクトが無料のものかどうかを返す
  * 
@@ -150,27 +172,6 @@ function lwp_original_price($post = null)
 	return (int) _lwp_post_meta("lwp_price", $post);
 }
 
-/**
- * 電子書籍の分量を返す
- * 
- * @param object $post (optional)ループ内で引数なしで使用すると、表示中の電子書籍の分量を返します。
- * @return int
- */
-function lwp_ammount($post = null)
-{
-	return (int) _lwp_post_meta("lwp_number", $post);
-}
-
-/**
- * 電子書籍のISBNを返す
- * 
- * @param object $post (optional)ループ内で引数なしで使用すると、表示中の電子書籍のISBNを返します。
- * @return string
- */
-function lwp_isbn($post = null)
-{
-	return _lwp_post_meta("lwp_isbn", $post);
-}
 
 /**
  * 投稿に所属するファイルを返す
@@ -448,7 +449,8 @@ EOS;
 /**
  * 購入ボタンを出力する
  * 
- * @param object $post (optional) 投稿オブェクト。ループ内では指定する必要はありません。
+ * @since 0.3
+ * @param mixed $post (optional) 投稿オブェクトまたは投稿ID。ループ内では指定する必要はありません。
  * @param string $btn_src (optional) 購入ボタンまでのURL
  * @param string $extra (optional) その他、フォーム内に出力したいHTMLタグなど
  * @return void
@@ -456,40 +458,18 @@ EOS;
 function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif", $extra = "")
 {
 	global $lwp;
-	if(!$post)
+	if(!$post){
 		global $post;
-	//キャンセル用のURLを設定
-	$url = get_permalink();
-	if(false === strpos($url, "?")){
-		$cancel_url = $url."?lwp_cancel=1";
-		$return_url = $url."?lwp_return=1";
+		$post_id = $post->ID;
+	}elseif(is_numeric($post)){
+		$post_id = $post;
+	}elseif(is_object($post) && isset($post->ID)){
+		$post_id = $post->ID;
 	}else{
-		$cancel_url = $url."&amp;lwp_cancel=1";
-		$return_url = $url."&amp;lwp_return=1";
+		return;
 	}
 	?>
-	 <form action="https://www.paypal.com/jp/cgi-bin/webscr" method="post"> 
-		<input type="hidden" name="cmd" value="_xclick" />
-		<input type="hidden" name="amount" value="<?php echo lwp_price(); ?>" />
-		<input type="hidden" name="charset" value="utf-8" />
-		<input type="hidden" name="business" value="<?php echo $lwp->option["marchant_id"];?>" />
-		<input type="hidden" name="item_name" value="<?php the_title(); ?>" />
-		<input type="hidden" name="item_number" value="<?php echo $lwp->option["slug"]; ?>-<?php echo $post->ID; ?>" />
-		<input type="hidden" name="shipping" value="0" />
-		<input type="hidden" name="no_shipping" value="1" />
-		<input type="hidden" name="tax" value="0" />
-		<input type="hidden" name="quantity" value="1" />
-		<input type="hidden" name="lc" value="JP" />
-		<input type="hidden" name="currency_code" value="JPY" />
-		<input type="hidden" name="page_style" value="primary" />
-		<input type="hidden" name="cn" value="<?php bloginfo("name"); ?>へのご意見（オプション）" />
-		<input type="hidden" name="return" value="<?php echo $return_url; ?>" />
-		<input type="hidden" name="cancel_return" value="<?php echo $cancel_url; ?>" />
-		<input type="hidden" name="notify_url" value="<?php echo $lwp->url; ?>/paypal/ipn.php" />
-		<input type="hidden" name="cbt" value="<?php bloginfo("name"); ?>へ戻る" />
-		<input type="image" src="<?php $lwp->h($btn_src); ?>" name="submit" alt="購入" /><br />
-		<?php echo $extra; ?>
-	</form>
+		<a class="lwp-butnow" href="<?php echo get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}"; ?>"><img src="<?php echo h($btn_src); ?>" alt="<?php $lwp->e('Buy Now');?>" /></a>
 	<?php
 }
 

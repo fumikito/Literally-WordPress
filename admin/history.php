@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h2>購入履歴</h2>
 <?php
 global $user_ID;

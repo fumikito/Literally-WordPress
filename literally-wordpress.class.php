@@ -16,6 +16,12 @@ class Literally_WordPress
 	private $version = "0.2";
 	
 	/**
+	 * 翻訳用ドメイン名
+	 * @var string
+	 */
+	public $domain = "literally-wordpress";
+	
+	/**
 	 * オプション
 	 *
 	 * @var array
@@ -72,7 +78,7 @@ class Literally_WordPress
 	* @var string
 	*/
 	public $dir = "";
-	
+		
 	/**
 	 * Paypalから返ってきたところかどうか
 	 * 
@@ -126,21 +132,30 @@ class Literally_WordPress
 	{
 		global $wpdb;
 		//初期値の設定
-		$this->url = get_bloginfo("url")."/wp-content/plugins/literally-wordpress";
+		$this->url = plugin_dir_url(__FILE__);
 		$this->dir = dirname(__FILE__);
+		//テーブル名の設定
 		$this->campaign = $wpdb->prefix."lwp_".$this->campaign;
 		$this->transaction = $wpdb->prefix."lwp_".$this->transaction;
 		$this->files = $wpdb->prefix."lwp_".$this->files;
 		$this->devices = $wpdb->prefix."lwp_".$this->devices;
 		$this->file_relationships = $wpdb->prefix."lwp_".$this->file_relationships;
+		//オプションの設定
 		$this->option = array();
 		$saved_option = get_option("literally_wordpress_option");
 		$default_option =  array(
-        	"marchant_id" => "",
+			"sandbox" => false,
+        	"user_name" => "",
+			"password" => "",
+			"signature" => "",
         	"token" => "",
         	"dir" => dirname(__FILE__).DS."contents",
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
-			"mypage" => 2
+			"currency_code" => '',
+			"country_code" => '',
+			"mypage" => 2,
+			"custom_post_type" => array(),
+			"payable_post_types" => array()
 		);
 		foreach($default_option as $k => $v){
 			if(isset($saved_option[$k]))
@@ -148,9 +163,17 @@ class Literally_WordPress
 			else
 				$this->option[$k] = $v;
 		}
-		//通貨設定
-		setlocale( LC_MONETARY, 'ja_JP' );
-		
+		// 作成したカスタムポストタイプが
+		// Payableオプションに入っていなかったら追加する
+		// あと、単数形が指定されていなかったら同じにする
+		if(!empty($this->option['custom_post_type'])){
+			if(empty($this->option['custom_post_type']['singular'])){
+				$this->option['custom_post_type']['singular'] = $this->option['custom_post_type']['name'];
+			}
+			if(false === array_search($this->option['custom_post_type']['slug'], $this->option['payable_post_types'])){
+				array_push($this->option['payable_post_types'], $this->option['custom_post_type']['slug']);
+			}
+		}
 		//投稿タイプの追加
 		add_action("init", array($this, "custom_post"));
 	}
@@ -162,36 +185,37 @@ class Literally_WordPress
 	*/
 	public function custom_post()
 	{
-		//投稿タイプを設定
-		$labels = array(
-			'name' => "電子書籍",
-			'singular_name' => "一覧",
-			'add_new' => "新規登録",
-			'add_new_item' => "新規電子書籍",
-			'edit_item' => "電子書籍商品編集",
-			'new_item' => "新しい電子書籍",
-			'view_item' => "電子書籍を表示する",
-			'search_items' => "電子書籍を検索",
-			'not_found' =>  "電子書籍が見つかりませんでした",
-			'not_found_in_trash' => "ゴミ箱に電子書籍はありませんでした", 
-			'parent_item_colon' => ''
-		);
-		$args = array(
-			'labels' => $labels,
-			'public' => true,
-			'publicly_queryable' => true,
-			'show_ui' => true, 
-			'query_var' => true,
-			'rewrite' => true,
-			'capability_type' => 'post',
-			'hierarchical' => true,
-			'menu_position' => 9,
-			'register_meta_box_cb' => array($this, "post_metabox"),
-			'supports' => array('title','editor','author','thumbnail','excerpt', 'comments', 'custom-fields'),
-			'show_in_nav_menus' => true,
-			'menu_icon' => $this->url."/assets/book.png"
-		);
-		register_post_type("ebook", $args);
+		if(!empty($this->option['custom_post_type'])){
+			//投稿タイプを設定
+			$labels = array(
+				'name' => $this->option['custom_post_type']['name'],
+				'singular_name' => $this->option['custom_post_type']['singular'],
+				'add_new' => $this->_('Add New'),
+				'add_new_item' => sprintf($this->_('Add New %s'), $this->option['custom_post_type']['singular']),
+				'edit_item' => sprintf($this->_("Edit %s"), $this->option['custom_post_type']['name']),
+				'new_item' => sprintf($this->_('Add New %s'), $this->option['custom_post_type']['singular']),
+				'view_item' => sprintf($this->_('View %s'), $this->option['custom_post_type']['singular']),
+				'search_items' => sprintf($this->_("Search %s"), $this->option['custom_post_type']['name']),
+				'not_found' =>  sprintf($this->_('No %s was found.'), $this->option['custom_post_type']['singular']),
+				'not_found_in_trash' => sprintf($this->_('No %s was found in trash.'), $this->option['custom_post_type']['singular']), 
+				'parent_item_colon' => ''
+			);
+			$args = array(
+				'labels' => $labels,
+				'public' => true,
+				'publicly_queryable' => true,
+				'show_ui' => true, 
+				'query_var' => true,
+				'rewrite' => true,
+				'capability_type' => 'post',
+				'hierarchical' => true,
+				'menu_position' => 9,
+				'supports' => array('title','editor','author','thumbnail','excerpt', 'comments', 'custom-fields'),
+				'show_in_nav_menus' => true,
+				'menu_icon' => $this->url."/assets/book.png"
+			);
+			register_post_type($this->option['custom_post_type']['slug'], $args);
+		}
 	}
 	
 	/**
@@ -204,7 +228,7 @@ class Literally_WordPress
 		//ディレクトリの書き込み可否を判断
 		if(!is_writable($this->option["dir"])){
 			$this->initialized = false;
-			$this->message["dir"] = "ディレクトリが書き込みできません。";
+			$this->message["dir"] = $this->_('Directory isn\'t writable.');
 		}
 		//ファイルのアクセス可否を判断
 		if(false !== strpos($this->option["dir"], ABSPATH)){
@@ -220,13 +244,22 @@ class Literally_WordPress
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			if($http_code == 200){
 				$this->initialized = false;
-				$this->message["access"] = "ディレクトリのファイルにアクセスできてしまいます。";
+				$this->message["access"] = $this->_('Directory is publically accessible via HTTP');
 			}
 		}
 		//課金できるかどうかチェック
-		if(empty($this->option["marchant_id"]) || empty($this->option["token"])){
+		if(empty($this->option["user_name"]) || empty($this->option["token"])){
 			$this->initialized = false;
-			$this->message["paypal"] = "マーチャントIDとPDTトークンがないと課金できません。";
+			$this->message["paypal"] = $this->_('Marchand ID and PDT Token required for transaction');
+		}
+		//通貨と国が設定されているかをチェック
+		if(false == array_key_exists($this->option['currency_code'], PayPal_Statics::currency_codes())){
+			$this->initialized = false;
+			$this->message["currency"] = $this->_("Currency code is invalid.");
+		}
+		if(false == array_key_exists($this->option['country_code'], PayPal_Statics::country_codes())){
+			$this->initialized = false;
+			$this->message["country"] = $this->_("Country code is invalid.");
 		}
 	}
 	
@@ -245,37 +278,43 @@ class Literally_WordPress
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
 		//オプション更新
-		if($this->is_admin("setting"))
+		if($this->is_admin("setting")){
 			add_action("admin_init", array($this, "option_update"));
+		}
 		//キャンペーン更新
-		if($this->is_admin("campaign"))
+		if($this->is_admin("campaign")){
 			add_action("admin_init", array($this, "campaign_update"));
+		}
 		//トランザクション更新
-		if($this->is_admin("management"))
+		if($this->is_admin("management")){
 			add_action("admin_init", array($this, "update_transaction"));
+		}
 		//端末更新
-		if($this->is_admin("devices"))
+		if($this->is_admin("devices")){
 			add_action("admin_init", array($this, "update_devices"));
+		}
 		//電子書籍のアップデート
 		add_action("edit_post", array($this, "post_update"));
 		//メニューの追加
 		add_action("admin_menu", array($this, "add_menu"));
 		//スタイルシート・JSの追加
-		if(
-			(isset($_GET["post_type"]) && isset($_GET["page"]) && $_GET["post_type"] == "ebook")
-			||
-			(basename($_SERVER["SCRIPT_FILENAME"]) == "users.php" && $_REQUEST["page"] == "lwp-history") 
-		)
-			add_action("admin_head", array($this, "assets"));
+		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
+			add_action("admin_init", array($this, "assets"));
+		}
 		//メッセージの出力
 		add_action("admin_notice", array($this, "admin_notice"));
+		//メタボックスの追加
+		foreach($this->option['payable_post_types'] as $post){
+			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
+		}
 		//ファイルアップロード用のタブを追加
 		add_action("media_upload_ebook", array($this, "generate_tab"));
 		//ユーザーに書籍をプレゼントするフォーム
 		add_action("edit_user_profile", array($this, "give_user_form"));
 		//書籍プレゼントが実行されたら
-		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php")
+		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 			add_action("profile_update", array($this, "give_user"));
+		}
 		/*--------------
 		 * フィルターフック
 		 */
@@ -363,7 +402,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	public function public_hooks()
 	{
 		//ヘッダー部分でリクエストの内容をチェックする
-		add_action("template_redirect", array($this, "manage_ebook"));
+		add_action("template_redirect", array($this, "manage_actions"));
 		//本棚ページだったら、投稿内容に購入履歴を出力する
 		add_filter('the_content', array($this, "show_history"));
 	}
@@ -375,19 +414,24 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	 */
 	public function add_menu()
 	{
-		add_submenu_page("edit.php?post_type=ebook", "電子書籍顧客管理", "顧客管理", 10, "lwp-management", array($this, "load"));
-		add_submenu_page("edit.php?post_type=ebook", "電子書籍キャンペーン", "キャンペーン", 10, "lwp-campaign", array($this, "load"));
-		add_submenu_page("edit.php?post_type=ebook", "電子書籍設定", "設定", 10, "lwp-setting", array($this, "load"));
-		add_submenu_page("edit.php?post_type=ebook", "端末設定", "端末", 10, "lwp-devices", array($this, "load"));
-		add_submenu_page("profile.php", "電子書籍購入履歴", "購入履歴", 0, "lwp-history", array($this, "load"));
+		//設定ページの追加
+		add_menu_page("Literally WordPress", "Literally WordPress", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
+		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("Setting"), 5, "lwp-setting", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Customer Management"), $this->_("Customer"), 5, "lwp-management", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device"), 5, "lwp-devices", array($this, "load"));
+		//顧客の購入履歴確認ページ
+		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
 	}
 	
 	/**
 	 * 管理画面用のファイルを読み込む
+	 * 
+	 * @return void
 	 */
 	public function load()
 	{
-		if(isset($_GET["page"]) && isset($_GET["post_type"]) && $_GET["post_type"] == "ebook"){
+		if(isset($_GET["page"]) && (false !== strpos($_GET["page"], "lwp-"))){
 			$slug = str_replace("lwp-", "", $_GET["page"]);
 			if(file_exists($this->dir.DS."admin".DS."{$slug}.php")){
 				global $wpdb;
@@ -395,6 +439,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 				do_action("admin_notice");
 				echo "<div class=\"icon32 ebook\"><br /></div>";
 				require_once $this->dir.DS."admin".DS."{$slug}.php";
+				require_once $this->dir.DS."admin".DS."donate.php";
 				echo "</div>\n<!-- .wrap ends -->";
 			}else
 				return;
@@ -405,8 +450,9 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 			echo "<div class=\"icon32 ebook\"><br /></div>";
 			require_once $this->dir.DS."admin".DS."history.php";
 			echo "</div>\n<!-- .wrap ends -->";
-		}else
+		}else{
 			return;
+		}
 	}
 	
 	/**
@@ -416,9 +462,9 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	 */
 	public function assets()
 	{
-		?>
-		<link rel="stylesheet" type="text/css" href="<?php echo $this->url; ?>/assets/style.css?version=<?php echo $this->version; ?>" />
-		<?php
+		wp_enqueue_style("lwp-admin", $this->url."/assets/style.css", array(), $this->version);
+		wp_enqueue_style("thickbox");
+		wp_enqueue_script("thickbox");
 	}
 	
 	
@@ -444,14 +490,18 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	 * ヘルプページのURLを返す
 	 * 
 	 * @param string $name
+	 * @param string $title
 	 * return string
 	 */
-	public function help($name)
+	public function help($name, $title)
 	{
-		$url = $this->url."/help/?name={$name}";
-		if(is_ssl())
+		$url = $this->url."help/?name={$name}";
+		if(is_ssl()){
 			$url = $this->ssl($url);
-		return $url;
+		}
+		$title_attr = $this->_('Literally WordPress Help'); 
+		$tag = "<a class=\"thickbox\" href=\"{$url}&amp;TB_ifrmae=1\" title=\"{$title_attr}\">{$title}</a>";
+		return $tag;
 	}
 
 
@@ -476,12 +526,35 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 			&& wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_option")
 		){
 			$new_option = array(
-				"marchant_id" => $_REQUEST["marchant_id"],
+				"user_name" => $_REQUEST["user_name"],
+				"password" => $_REQUEST["marchand_pass"],
+				'signature' => $_REQUEST['signature'],
 				"token" => $_REQUEST["token"],
 				"dir" => $_REQUEST["dir"],
 				"slug" => $_REQUEST["product_slug"],
-				"mypage" => $_REQUEST["mypage"]
+				"mypage" => $_REQUEST["mypage"],
+				"currency_code" => $_REQUEST["currency_code"],
+				"country_code" => $_REQUEST["country_code"]
 			);
+			//sandbox
+			$new_option['sandbox'] = isset($_REQUEST['sandbox']) ? true : false;
+			if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
+				$new_option['custom_post_type'] = array(
+					"name" => $_REQUEST['custom_post_type_name'],
+					"slug" => $_REQUEST['custom_post_type_slug']
+				);
+				$new_option['custom_post_type']['singular'] = empty($_REQUEST['custom_post_type_singular'])
+															  ? $_REQUEST['custom_post_type_name']
+															  : $_REQUEST['custom_post_type_singular'];
+			}else{
+				$new_option['custom_post_type'] = array();
+			}
+			$new_option['payable_post_types'] = array();
+			if(!empty($_REQUEST['payable_post_types'])){
+				foreach($_REQUEST['payable_post_types'] as $post_type){
+					array_push($new_option['payable_post_types'], $post_type);
+				}
+			}
 			update_option("literally_wordpress_option", $new_option);
 			$this->option = $new_option;
 		}
@@ -504,30 +577,13 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 		if(isset($_REQUEST["_lwpnonce"]) && wp_verify_nonce($_REQUEST["_lwpnonce"], "lwp_price")){
 			//価格を登録（必須のため、なければエラー）
 			$price = preg_replace("/[^0-9]/", "", mb_convert_kana($_REQUEST["lwp_price"], "n"));
-			if(preg_match("/^[0-9]+$/", $price))
+			if(preg_match("/^[0-9]+$/", $price)){
 				update_post_meta($_POST["ID"], "lwp_price", $price);
-			else{
-				$this->message[] = "定価は数字だけにしてください。";
+			}else{
+				$this->message[] = $this->_("Price must be numeric.");
 				$this->error = true;
 			}
-			//ページ数を登録
-			$num = (int) preg_replace("/[^0-9]/", "", mb_convert_kana($_REQUEST["lwp_number"], "n"));
-			update_post_meta($_POST["ID"], "lwp_number", $num);
-			//ISBNがあれば登録
-			if(!empty($_POST["lwp_isbn"])){
-				update_post_meta($_POST["ID"], "lwp_isbn", $_POST["lwp_isbn"]);
-			}
 		} 
-	}
-	
-		/**
-	* 投稿ページにフォームを追加する
-	*
-	* @return void
-	*/
-	public function post_metabox()
-	{
-		add_meta_box('ebookdetail', "電子書籍の設定", array($this, 'post_metabox_form'), 'ebook', 'side', 'core');
 	}
 	
 	/**
@@ -909,57 +965,39 @@ EOS;
 		//datepickerを読み込み
 		wp_enqueue_script(
 			'jquery-datepicker',
-			$this->url."/assets/datepicker/jquery.datepicker.js",
+			$this->url."/assets/datepicker/jquery.ui.datepicker.js",
 			array("jquery", "jquery-ui-core"),
-			"1.7.3"
+			"1.8.9"
 		);
 		wp_enqueue_script(
 			'jquery-slider',
-			$this->url."/assets/datepicker/jquery.slider.js",
-			array("jquery", "jquery-ui-core"),
-			"1.7.3"
+			$this->url."/assets/datepicker/jquery.ui.slider.js",
+			array("jquery", "jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"),
+			"1.8.9"
 		);
 		wp_enqueue_script(
-			'jquery-effect',
-			$this->url."/assets/datepicker/jquery.effects.core.js",
-			array("jquery", "jquery-ui-core"),
-			"1.7.3"
-		);
-		wp_enqueue_script(
-			'jquery-hilight',
-			$this->url."/assets/datepicker/jquery.effects.highlight.js",
-			array("jquery", "jquery-ui-core"),
-			"1.7.3"
-		);
-		wp_enqueue_script(
-			'jquery-calendar-i18n',
-			$this->url."/assets/datepicker/i18n/ui.datepicker-ja.js",
-			array("jquery-ui-", "jquery-datepicker"),
-			"1.7.3"
+			'jquery-datepicker-i18n',
+			$this->url."/assets/datepicker/i18n/jquery.ui.datepicker-ja.js",
+			array("jquery-ui-core", "jquery-datepicker"),
+			"1.8.13"
 		);
 		wp_enqueue_script(
 			'jquery-timepicker',
 			$this->url."/assets/datepicker/timepicker/timepicker.js",
 			array("jquery-datepicker"),
-			"1.7.3"
+			"1.8.9"
+		);
+		wp_enqueue_style(
+			'jquery-datepicker-style',
+			$this->url."/assets/datepicker/smoothness/jquery-ui.css",
+			array(),
+			"1.8.9"
 		);
 		wp_enqueue_script(
 			"jquery-datepicker-load",
 			$this->url."/assets/js/campaign.js",
 			array("jquery-datepicker"),
 			$this->version
-		);
-		wp_enqueue_style(
-			'jquery-datepicker-style',
-			$this->url."/assets/datepicker/ui-lightness/jquery-ui.css",
-			array(),
-			"1.7.3"
-		);
-		wp_enqueue_style(
-			'jquery-timepicker-style',
-			$this->url."/assets/datepicker/timepicker/style.css",
-			array(),
-			"1.7.3"
 		);
 		//キャンペーンの追加
 		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_add_campaign")){
@@ -1082,8 +1120,9 @@ EOS;
 			$post_id = $post->ID;
 		}elseif(is_object($post)){
 			$post_id = (int)$post->ID;
-		}else
+		}else{
 			$post_id = $post;
+		}
 		if(!$time)
 			$time = date('Y-m-d H:i:s');
 		$sql = "SELECT ID FROM {$this->campaign} WHERE book_id = %d AND start <= %s AND end >= %s";
@@ -1346,18 +1385,72 @@ EOS;
 	//--------------------------------------------
 	
 	/**
-	 * ebookへのリクエストを分類する
+	 * コンテンツに対するアクションを処理
 	 * 
 	 * @return void
 	 */
-	public function manage_ebook()
-	{
+	public function manage_actions(){
 		//電子書籍の場合だけ実行
-		if(is_single() && "ebook" == get_post_type()){
+		if(is_front_page() && isset($_GET["lwp"])){
+			switch($_GET["lwp"]){
+				case "buy":
+					global $user_ID;
+					if(!is_user_logged_in()){
+						//ユーザーがログインしていない
+						auth_redirect ($_SERVER["REQUEST_URI"]);
+						exit;
+					}elseif(!isset($_GET['lwp_id'])){
+						$message = $this->_("No content is specified.");
+					}elseif(lwp_price($_GET["lwp_id"]) < 1){
+						$message = $this->_("This contents is not on sale.");
+					}elseif(!$this->start_transaction($user_ID, $_GET['lwp_id'])){
+						$message = $this->_("Failed to make transaction.");
+					}
+					//エラーが起きた場合はwp_die
+					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('backlink' => true));
+					break;
+				case "confirm":
+					global $wpdb;
+					if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
+						if(PayPal_Statics::do_transaction($_POST)){
+							//データを更新
+							$tran_id = $wpdb->update(
+								$this->transaction,
+								array(
+									"status" => "SUCCESS",
+									"transaction_key" => $_POST['INVNUM'],
+									"payer_mail" => $_POST["EMAIL"],
+									'updated' => gmdate("Y-m-d H:i:s")
+								),
+								array(
+									"transaction_key" => $_POST["TOKEN"]
+								),
+								array("%s", "%s", "%s"),
+								array("%s")
+							);
+							//サンキューページを表示する
+							require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."receipt-confirm.php";
+						}else{
+							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("backlink" => true));
+						}
+					}else{
+						//確認画面
+						$info = PayPal_Statics::get_transaction_info($_REQUEST['token']);
+						$wpdb->show_errors();
+						$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE transaction_key = %s", $_REQUEST['token']));
+						$post = get_post($transaction->book_id);
+						require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."return-success.php";
+					}
+					exit;
+					break;
+				case "success":
+					
+					break;
+			}
 			//ファイル取得の場合
-			if(isset($_REQUEST["ebook_file"])){
+			if(isset($_REQUEST["lwp_file"])){
 				global $post, $user_ID;
-				$this->print_file($_REQUEST["ebook_file"], $post->ID, $user_ID);
+				$this->print_file($_REQUEST["lwp_file"], $post->ID, $user_ID);
 			}
 			//トランザクション完了の場合
 			if(isset($_REQUEST["lwp_return"]) && isset($_REQUEST["tx"]) && is_user_logged_in()){
@@ -1368,120 +1461,59 @@ EOS;
 	}
 	
 	/**
-	 * トランザクションを実行する
+	 * トランザクションを開始する
 	 * 
-	 * @return boolean
+	 * @since 0.8
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param int $post_id
+	 * @return boolean 失敗した時だけfalseを返す
 	 */
-	public function do_transaction()
-	{
-		global $wpdb, $user_ID, $post;
-		//値が取得できるかチェックし、なかったらエラー
-		if(!(isset($_REQUEST["item_number"]) && isset($_REQUEST["amt"]) && isset($_REQUEST["tx"]) ))
-			return false;
-		//値が揃っているので、処理を開始
-		$item_number = $_REQUEST["item_number"];
-		$amount = $_REQUEST["amt"];
-		//cURLのセットアップ
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "http://www.paypal.com/cgi-bin/webscr");
-		curl_setopt ($ch,CURLOPT_POST,true);
-		//POSTデータのセットアップ
-		$post_data = "cmd=_notify-synch&tx={$_REQUEST['tx']}&at={$this->option['token']}";
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		//データの取得
-		curl_setopt ($ch,CURLOPT_RETURNTRANSFER, true);
-		$req = curl_exec($ch);
-		//エラーの取得
-		$err = curl_error($ch);
-		//データの検証
-		if(empty($err)){
-			$lines = explode("\n", $req);
-			if(false === strpos($lines[0], "SUCCESS")){
-				//データが失敗で返ってきた
-				$this->transaction_status = "ERROR";
-				return false;
-			}else{
-				//成功
-				$val = array();
-				foreach($lines as $v){
-					if(false !== strpos($v, "=")){
-						$pair = explode("=", $v);
-						$val[$pair[0]] = rawurldecode($pair[1]);
-					}
-				}
-				//データの検証（即時決済かどうかだけ見る）
-				if($val["payment_status"] == "Completed"){
-					$this->transaction_status = "SUCCESS";
-					$status = "SUCCESS";
-				}else{
-					$this->transaction_status = "FAILED";
-					$status = $val["payment_status"];
-				}
-				//データを取得する（IPNの方が早かった場合を考慮）
-				$tran = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE transaction_key = %s", $val["txn_id"]));
-				
-				//データがあり、ユーザーIDが0か、ステータスがSUCCESSではない場合に更新する
-				if($tran){
-					$update_var = array();
-					$update_prepare = array();
-					if($tran->user_id == 0){
-						$update_var["user_id"] = $user_ID;
-						$update_prepare[] = "%d";
-					}
-					if($tran->status != "SUCCESS"){
-						$update_var["status"] = $status;
-						$update_prepare[] = "%s";
-					}
-					if(!empty($update_var)){
-						//更新の必要がある場合は更新
-						$update_var["updated"] = date('Y-m-d H:i:s');
-						$update_prepare[] = "%s";
-						$request = $wpdb->update(
-							$this->transaction,
-							$update_var,
-							array("ID" => $tran->ID),
-							$update_prepare,
-							array("%d")
-						);
-						if($request){
-							return true;
-						}else{
-							$this->transaction_status = "ERROR";
-							return false;
-						}
-					}else{
-						//更新の必要がなかったらそのまま
-						return true;
-					}
-				}else{
-					//データの登録
-					$result = $wpdb->insert(
-						$this->transaction,
-						array(
-							"user_id" => $user_ID,
-							"book_id" => $post->ID,
-							"price" => $val["mc_gross"],
-							"status" => $status ,
-							"method" => "PAYPAL",
-							"transaction_key" => $val["txn_id"],
-							"payer_mail" => $val["payer_email"],
-							"registered" => date('Y-m-d H:i:s'),
-							"updated" => date('Y-m-d H:i:s')
-						),
-						array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
-					);
-					if($wpdb->insert_id){
-						return true;
-					}else{
-						$this->transaction_status = "ERROR";
-						return false;
-					}
-				}
-			}
+	public function start_transaction($user_id, $post_id){
+		global $wpdb;
+		//トランザクションを作る
+		$price = lwp_price($post_id);
+		//トークンを取得
+		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d", $post_id), get_bloginfo('url')."?lwp=confirm", get_bloginfo('url')."?lwp=cancel");
+		if($token){
+			//トークンが帰ってきたら、データベースに保存
+			$wpdb->insert(
+				$this->transaction,
+				array(
+					"user_id" => $user_id,
+					"book_id" => $post_id,
+					"price" => $price,
+					"status" => "START",
+					"method" => "PAYPAL",
+					"transaction_key" => $token,
+					"registered" => gmdate('Y-m-d H:i:s'),
+					"updated" => gmdate('Y-m-d H:i:s')
+				),
+				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
+			);
+			//PayPalにリダイレクト
+			PayPal_Statics::redirect($token);
+			exit;
 		}else{
-			//完全にエラー
-			$this->transaction_status = "ERROR";
+			//トークンが帰ってこなかったら、エラー
 			return false;
+		}
+	}
+	
+	private function show_form($slug){
+		$filename = "paypal-{$slug}.php";
+		//テーマテンプレートに存在するかどうか調べる
+		if(file_exists(TEMPLATEPATH.DIRECTORY_SEPARATOR.$filename)){
+			//テンプレートがあれば読み込む
+			require_once TEMPLATEPATH.DIRECTORY_SEPARATOR.$filename;
+		}else{
+			//なければ自作
+			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
+			//CSS-js読み込み
+			wp_enqueue_style("lwp-form", $this->url, array(), $this->version);
+			
+			//
+			require_once $this->dir;
 		}
 	}
 	
@@ -1530,6 +1562,8 @@ EOS;
 			fclose($handle);
 			//終了
 			exit;
+		}else{
+			
 		}
 	}
 		
@@ -1552,7 +1586,7 @@ EOS;
 			case "setting":
 			case "management":
 			case "devices":
-				return (isset($_GET["post_type"]) && isset($_GET["page"]) && $_GET["post_type"] == "ebook" && $_GET["page"] == "lwp-{$page_name}");
+				return (isset($_GET["page"]) && $_GET["page"] == "lwp-{$page_name}");
 				break;
 			case "history":
 				return (basename($_SERVER["SCRIPT_FILENAME"]) == "users.php" && $_REQUEST["page"] == "lwp-history");
@@ -1584,5 +1618,25 @@ EOS;
 	public function ssl($url)
 	{
 		return str_replace("http:", "https:", $url);
+	}
+	
+	/**
+	 * gettextのエイリアス
+	 * 
+	 * @param string $text
+	 * @return void
+	 */
+	public function e($text){
+		echo _e($text, $this->domain);
+	}
+	
+	/**
+	 * gettextのエイリアス
+	 * 
+	 * @param string $text
+	 * @return string
+	 */
+	public function _($text){
+		return __($text, $this->domain);
 	}
 }

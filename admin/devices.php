@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h2>対応端末</h2>
 
 <?php
@@ -9,7 +10,7 @@
 	function lwp_confirm_delete(event)
 	{
 		var select = jQuery(event.target).prev().attr("value");
-		if(select != "delete" || !confirm("削除してもよろしいですか？")){
+		if(select != "delete" || !confirm("<?php $this->e("You really delete this device?"); ?>")){
 			event.preventDefault();
 		}
 	}

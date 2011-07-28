@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h2>電子書籍顧客管理</h2>
 <?php
 /*---------------------------------
@@ -41,7 +42,7 @@ EOS;
 								<option value="<?php echo $u->ID; ?>"><?php echo $u->display_name; ?></option>
 							<?php endforeach; ?>
 						</select>
-						<p class="error">この取引情報は会員と紐づいていません。<small>（<a href="<?php echo $this->help("account"); ?>">もっと詳しく</a>）</small></p>
+						<p class="error">この取引情報は会員と紐づいていません。<small>（<?php echo $this->help("account", $this->_("More &gt;")); ?>）</small></p>
 					<?php endif; ?>
 				</td>
 			</tr>
@@ -159,7 +160,7 @@ $length = count($this->get_transaction($ebook_id, $user_id, $status));
 				<td><?php echo $t->status; ?></td>
 				<td><?php echo $t->method; ?></td>
 				<td><?php echo mysql2date("Y年m月d日", $t->registered); ?></td>
-				<td><p><a class="button" href="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-management&amp;transaction_id=<?php echo $t->ID; ?>">修正</a></p></td>
+				<td><p><a class="button" href="<?php echo admin_url("admin.php?page=lwp-management&transaction_id={$t->ID}"); ?>"><?php $this->e("Edit"); ?></a></p></td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>

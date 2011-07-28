@@ -1,8 +1,5 @@
 <?php
-	/**
-	* @var  Literally_WordPress $this
-	*/
-	$this;
+	/* @var $this Literally_WordPress */
 	
 	$file = false;
 	$uploading = false;

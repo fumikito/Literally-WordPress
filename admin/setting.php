@@ -1,141 +1,207 @@
-<h2>電子書籍設定</h2>
+<?php /* @var $this Literally_WordPress */ ?>
+<h2><?php $this->e("General Setting"); ?></h2>
 <form method="post">
 	<?php wp_nonce_field("lwp_update_option"); ?>
 	<table class="form-table">
 		<tbody>
 			<tr>
 				<th valign="top">
-					<label for="marchant_id">Paypal マーチャントID</label>
+					<label><?php $this->e("Use Sandbox"); ?></label>
 				</th>
 				<td>
-					<input id="marchant_id" name="marchant_id" class="regular-text" type="text" value="<?php $this->h($this->option["marchant_id"]); ?>" />
+					<label>
+						<input type="checkbox" name="sandbox" id="sandbox" value="1"<?php if($this->option['sandbox']) echo ' checked="checked"';?> />
+						<?php $this->e("This is a develop enviorment.")?>
+					</label>
 					<p class="description">
-						Paypalから発行されているセキュアなIDです。<small>（<a href="<?php echo $this->help("account"); ?>">もっと詳しく</a>）</small>
+						<?php $this->e("Sandbox means develop enviorment. You can test your settings by checking above."); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 					</p>
-					<?php if(!preg_match("/^[a-zA-Z0-9]+$/", $this->option["marchant_id"])): ?>
-					<p class="error">
-					もしかしたらこのIDはまちがっているかもしれません。<a href="<?php echo $this->help("account"); ?>">ヘルプ</a>を確認して、セキュアIDを取得してください。
-					</p>
-					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="token">Paypal PDTトークン</label>
+					<label for="country_code"><?php $this->e("Country Code");?></label>
+				</th>
+				<td>
+					<select name="country_code" id="country_code">
+						<?php foreach(PayPal_Statics::country_codes() as $code => $country): ?>
+						<option value="<?php echo $code; ?>"<?php if($this->option['country_code'] == $code) echo ' selected="selected"';?>><?php echo $country; ?></option>
+						<?php endforeach;?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="currency_code"><?php $this->e("Currency Code");?></label>
+				</th>
+				<td>
+					<select name="currency_code" id="currency_code">
+						<?php foreach (PayPal_Statics::currency_codes() as $code => $desc): ?>
+						<option value="<?php echo $code; ?>"<?php if($this->option['currency_code'] == $code) echo ' selected="selected"';?>><?php echo PayPal_Statics::currency_entity($code); ?> (<?php echo $desc; ?>)</option>
+						<?php endforeach;?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="user_name"><?php $this->e("PayPal API User Name");?></label>
+				</th>
+				<td>
+					<input id="user_name" name="user_name" class="regular-text" type="text" value="<?php $this->h($this->option["user_name"]); ?>" />
+					<p class="description">
+						<?php $this->e("PayPal API User Name issued by PayPal."); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="marchand_pass"><?php $this->e("PayPal Password");?></label>
+				</th>
+				<td>
+					<input id="marchand_pass" name="marchand_pass" class="regular-text" type="password" value="<?php $this->h($this->option["password"]); ?>" />
+					<p class="description">
+						<?php $this->e("API password issued by PayPal"); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="signature"><?php $this->e("PayPal Signature");?></label>
+				</th>
+				<td>
+					<input id="signature" name="signature" class="regular-text" type="text" value="<?php $this->h($this->option["signature"]); ?>" />
+					<p class="description">
+						<?php $this->e("API signature issued by PayPal"); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="token"><?php $this->e('PayPal PDT Token'); ?></label>
 				</th>
 				<td>
 					<input id="token" name="token" class="regular-text" type="text" value="<?php $this->h($this->option["token"]); ?>" />
 					<p class="description">
-						Paypalから発行されるトークンです。購入履歴の同期に必要です。<small>（<a href="<?php echo $this->help("account"); ?>">もっと詳しく</a>）</small>
+						<?php $this->e("Token issued by PayPal. Required for transaction.")?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 					</p>
 					<?php if(!preg_match("/^[a-zA-Z0-9]+$/", $this->option["token"])): ?>
 					<p class="error">
-					もしかしたらこのトークンはまちがっているかもしれません。<a href="<?php echo $this->help("account"); ?>">ヘルプ</a>を確認して、PDTトークンを取得してください。
+						<?php printf($this->_('This Token might be incorrect. See %s and get correct PDT Token.'), $this->help('account', $this->_('Help'))); ?>
 					</p>
 					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="dir">ファイル保存用ディレクトリ</label>
+					<label for="dir"><?php $this->e('Directory for File protection'); ?></label>
 				</th>
 				<td>
 					<input id="dir" name="dir" class="regular-text" type="text" value="<?php $this->h($this->option["dir"]); ?>" />
 					<p class="description">
-						電子書籍のファイルを保存するディレクトリです。書き込み可能であり、外部からアクセスできない必要があります。<small>（<a href="<?php echo $this->help("dir"); ?>">もっと詳しく</a>）</small>
+						<?php $this->e('Directory to save files. This should be writable and innaccessible via HTTP.'); ?>
+						<small>（<?php echo $this->help("dir", $this->_("More &gt;"))?>）</small>
 					</p>
 					<?php if(!is_writable($this->option["dir"])): ?>
 					<p class="error">
-					ディレクトリに書き込みできません。このままではファイルをアップロードできません。<a href="<?php echo $this->help("dir"); ?>">ヘルプ</a>を確認してください。
+						<?php printf($this->_('Directory isn\'t writable. You can\'t upload files. See %s and set appropriate permission.'), $this->help("dir", $this->_("Help")));?>
 					</p>
 					<?php endif; ?>
 					<?php if(!empty($this->message["access"])): ?>
 					<p class="error">
-					ファイルにアクセスできてしまうようです。<a href="<?php echo $this->help("dir"); ?>">ヘルプ</a>を確認し、ファイルを保護してください。
+						<?php printf($this->_('Directory is accessible via HTTP. See %s and prepend others from direct access.'), $this->help('dir', $this->_('Help'))); ?>
 					</p>
 					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="product_slug">取引識別スラッグ</label>
+					<label for="product_slug"><?php $this->e('Product slug'); ?></label>
 				</th>
 				<td>
 					<input id="product_slug" name="product_slug" type="text" value="<?php $this->h($this->option['slug']); ?>" />
 					<p class="description">
-					Paypalの管理画面に表示される商品識別IDです。一つのPaypalアカウントで複数の取引を利用している場合に有用です。
-					<small>（<a href="<?php echo $this->help("account"); ?>">もっと詳しく</a>）</small><br />
-					<strong>10文字程度の半角英数字</strong>で設定してください。末尾にハイフンとIDがつきます。<small>例：example-100</small>
+						<?php $this-_e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
+						<small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />
+						<?php $this->e('Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>'); ?>
 					</p>
 				</td>
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="mypage">マイページ</label>
+					<label for="mypage"><?php $this->e('Purchase History Page'); ?></label>
 				</th>
 				<td>
 					<select id="mypage" name="mypage">
+						<option value="0"><?php $this->e('-------'); ?></option>
 						<?php foreach(get_pages() as $p): ?>
 						<option value="<?php echo $p->ID;?>"<?php if($p->ID == $this->option['mypage']) echo ' selected="selected"';?>><?php echo $p->post_title; ?></option>
 						<?php endforeach; ?>
 					</select>
 					<p class="description">
-					ログイン後に顧客が移動できるページです。このページを設定することで、「本棚」を作ることができます。
-					<small>（<a href="<?php echo $this->help("customize"); ?>">もっと詳しく</a>）</small>
+						<?php $this->e('You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel.');  ?>
+						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label><?php $this->e("Custom Post Type"); ?></label>
+				</th>
+				<td>
+					<label>
+						<input type="text" name="custom_post_type_name" value="<?php if(isset($this->option['custom_post_type']['name'])) echo $this->option['custom_post_type']['name']; ?>" />
+						<?php $this->e('Custom post name');  ?>
+						<small class="description"><?php $this->e('If not needed, leave it blank. ex: eBooks'); ?></small>
+					</label><br />
+					<label>
+						<input type="text" name="custom_post_type_singular" value="<?php if(isset($this->option['custom_post_type']['singular'])) echo $this->option['custom_post_type']['singular']; ?>" />
+						<?php $this->e('Custom post name in Singular');  ?>
+						<small class="description"><?php $this->e('If you don\'t specified, this same as above field. ex: eBook'); ?></small>
+					</label><br />
+					<label>
+						<input type="text" name="custom_post_type_slug" value="<?php if(isset($this->option['custom_post_type']['slug'])) echo $this->option['custom_post_type']['slug']; ?>" />
+						<?php $this->e('Custom post slug');  ?>
+						<small class="description"><?php $this->e('Must be alphabetical and lowercase. Used for permalink. ex: ebook'); ?></small>
+					</label>
+					<p class="description">
+						<?php $this->e('If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you.'); ?>
+						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label><?php $this->e("Payable Post Types"); ?></label>
+				</th>
+				<td>
+					<?php foreach(get_post_types('', 'object') as $post_type): if(false === array_search($post_type->name, array('revision', 'nav_menu_item', 'page', 'attachment'))): ?>
+					<label>
+						<input type="checkbox" name="payable_post_types[]" value="<?php echo $post_type->name; ?>" <?php if(false !== array_search($post_type->name, $this->option['payable_post_types'])) echo 'checked="checked" '; ?>/>
+						<?php echo $post_type->labels->name; ?>
+					</label>&nbsp;
+					<?php endif; endforeach; ?>
+					<p class="description">
+						<?php $this->e('Chekced post type will be payable. &quot;Bun Now&quot; button and prices will be automatically displayed. If you want customize it\'s appearance, uncheck all option and edit your theme.');?>
+						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
 					</p>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	<p class="submit">
-		<input type="submit" class="button-primary" value="設定更新" />
+		<input type="submit" class="button-primary" value="<?php $this->e("Update"); ?>" />
 	</p>
 </form>
-<h3>その他注意点</h3>
+<h3><?php $this->e("Notes"); ?></h3>
 
-<h4>パーマリンクについて</h4>
+<h4><?php $this->e("Permalink"); ?></h4>
 <p>
-パーマリンクを有効化している場合、電子書籍のページが<em>&quot;404 Not Found&quot;</em>となり、表示されません。<br />
-<a href="<?php admin_url(); ?>options-permalink.php">パーマリンク設定</a>から一度「変更を保存」してください。設定内容を変更する必要はありません。<br />
-これでリライトルールが初期化され、<em>&quot;<?php bloginfo("url"); ?>/ebook/example-book&quot;</em>というURLの電子書籍ページが表示されるようになります。
+	<?php printf($this->_('If permalink is enabled, custom post type page will return %s and won\'t be displayed.'), "<em>&quot;404 Not Found&quot;</em>")?><br />
+	<?php printf($this->_('Visit <a href="%1$s">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display.'), admin_url('options-permalink.php'),__('Permalinks'), __( 'Save Changes' )); ?><br />
 </p>
 
-<h4>カスタマイズ</h4>
+<h4><?php $this->e("Customize"); ?></h4>
 <p>
-Literally WordPressはテンプレートタグを利用することでカスタマイズすることができます。
-テンプレートタグおよび関数については<a href="<?php echo $this->help("customize"); ?>">ヘルプ</a>をご覧下さい。
+	<?php $this->e("If you are a experienced developper, you can customize this plugin with template tags.");?><br />
+	<?php printf($this->_('See detail at %s.'), $this->help("customize", $this->_("Help")));?>
 </p>
-
-<h3>寄付する</h3>
-<p>
-	このプラグインは<a href="http://hametuha.com" target="_blank">破滅派</a>の<a href="http://takahashifumiki.com" target="_blank">高橋文樹</a>が作成しました。
-	寄付をしてくれるともっと開発をがんばれるかもしれません。
-</p>
-
-<!-- //Paypal -->
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-	<input type="hidden" name="cmd" value="_s-xclick" />
-	<input type="hidden" name="hosted_button_id" value="46TV2VBBZDSV4" />
-	<table>
-		<tr>
-			<td><input type="hidden" name="on0" value="寄付金額" />寄付金額</td>
-		</tr>
-		<tr>
-			<td>
-				<select name="os0">
-					<option value="気持ちだけ">気持ちだけ ¥100</option>
-					<option value="期待を込めて">期待を込めて ¥1,000</option>
-					<option value="大盤振る舞い">大盤振る舞い ¥3,000</option>
-					<option value="焼肉でも食え">焼肉でも食え ¥5,000</option>
-					<option value="わしが育てた">わしが育てた ¥10,000</option>
-				</select>
-			</td>
-		</tr>
-	</table>
-	<input type="hidden" name="currency_code" value="JPY" />
-	<input type="hidden" name="ctb" value="高橋文樹.comへ戻る" />
-	<input type="image" src="https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal- オンラインで安全・簡単にお支払い" />
-	<img alt="" border="0" src="https://www.paypal.com/ja_JP/i/scr/pixel.gif" width="1" height="1" />
-</form>
-
-<!-- Paypal //-->
