@@ -197,24 +197,24 @@ else:
 					<?php wp_nonce_field("lwp_add_campaign"); ?>
 										
 					<div class="form-field">
-						<label for="book_id">対象書籍</label>
+						<label for="book_id"><?php $this->e("Campaign Item");?></label>
 						<select id="book_id" name="book_id">
-							<option disabled="disabled" selected="selected">選択してください</option>
-							<?php foreach(get_posts("post_type=ebook") as $p): ?>
+							<option disabled="disabled" selected="selected"><?php $this->e("Select from here.");?></option>
+							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'])) as $p): ?>
 							<option value="<?php echo $p->ID; ?>"><?php echo $p->post_title; ?></option>
 							<?php endforeach; ?>
 						</select>
 						<p>
-							キャンペーンの対象となる電子書籍です。
+							<?php $this->e("Item for which campaign will be adopted.");?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
 					<div class="form-field">
-						<label for="price">価格</label>
+						<label for="price"><?php $this->e("Campaign Price"); ?></label>
 						<input type="text" id="price" name="price" />
 						<p>
-							キャンペーン価格です。
+							<?php $this->e('Price for campaign.'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->

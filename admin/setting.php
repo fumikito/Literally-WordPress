@@ -181,7 +181,49 @@
 					</label>&nbsp;
 					<?php endif; endforeach; ?>
 					<p class="description">
-						<?php $this->e('Chekced post type will be payable. &quot;Bun Now&quot; button and prices will be automatically displayed. If you want customize it\'s appearance, uncheck all option and edit your theme.');?>
+						<?php $this->e('You can manually make any post type payable. See detail at how to customize.'); ?>
+						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label><?php $this->e("Automatic output"); ?></label>
+				</th>
+				<td>
+					<label>
+						<input type="radio" name="show_form" value="1" <?php if($this->option['show_form']) echo 'checked="checked" ';?>/>
+						<?php $this->e("Show complete form"); ?>
+					</label>
+					<label>
+						<input type="radio" name="show_form" value="0" <?php if(!$this->option['show_form']) echo 'checked="checked" ';?>/>
+						<?php $this->e("Manually display form"); ?>
+					</label>
+					<p class="description">
+						<?php $this->e('If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags.');?>
+						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label><?php $this->e("Assets Loading"); ?></label>
+				</th>
+				<td>
+					<label>
+						<input type="radio" name="load_assets" value="2" <?php if($this->option['load_assets'] == 2) echo 'checked="checked" ';?>/>
+						<?php $this->e("Load plugin default CSS and JS"); ?>
+					</label>
+					<label>
+						<input type="radio" name="load_assets" value="1" <?php if($this->option['load_assets'] == 1) echo 'checked="checked" ';?>/>
+						<?php $this->e("Load only JS"); ?>
+					</label>
+					<label>
+						<input type="radio" name="load_assets" value="0" <?php if($this->option['load_assets'] == 0) echo 'checked="checked" ';?>/>
+						<?php $this->e("Load no Assets"); ?>
+					</label>
+					<p class="description">
+						<?php $this->e('This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign.');?>
 						<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
 					</p>
 				</td>

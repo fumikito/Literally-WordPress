@@ -1,0 +1,86 @@
+@charset "utf-8";
+/**
+ * @package Literally WordPress
+ * @since 0.8
+ */
+
+ .lwp-form{
+	clear:both;
+	width: 300px;
+	border:1px solid #dfdfdf;
+	background: #f9f9f9;
+	padding:2em 1em;
+	margin:2em auto;
+	color:#444;
+	border-radius:10px;
+	text-align:center;
+ }
+ .lwp-form.onsale{
+	 background: #f9f9f9 url(./label_sale.png) 1em 1em no-repeat;
+ }
+ .lwp-form .lwp-campaign-caption{
+	 text-align: center;
+	 font-size:14px;
+	 color:rgb(0, 51, 102);
+	 font-weight:bold;
+ }
+ .lwp-timer{
+	 font-size:18px;
+	 color:#666;
+ }
+ .lwp-price small{
+	 color:#999;
+	 font-size:14px;
+	 font-family: "Georgia", serif;
+	 margin-right:0.5em;
+ }
+ .lwp-timer span{
+	 font-size:28px;
+	 font-family: 'Courier', mono-space;
+	 color:#000;
+ }
+ .lwp-price span.price{
+	 text-decoration: none;
+	 font-family: "Georgia", serif;
+	 font-size:30px !important;
+	 color: rgb(255,169,38) !important;
+ }
+ .lwp-price del{
+	 font-size:11px;
+	 color:#ccc;
+	 margin-right:1em;
+ }
+ .lwp-price .lwp-off{
+	 font-family: 'Georgia', serif;
+	 font-style: italic;
+	 margin-left:0.5em;
+	 font-size:18px;
+}
+ 
+.lwp-button a.button{
+	font-family:sans-serif;
+	text-decoration:none;
+	font-size:14px!important;
+	line-height:16px;
+	padding:6px 12px;
+	cursor:pointer;
+	border:1px solid #bbb;
+	color:#464646;
+	-moz-border-radius:15px;
+	-khtml-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	-moz-box-sizing:content-box;
+	-webkit-box-sizing:content-box;
+	-khtml-box-sizing:content-box;
+	box-sizing:content-box;
+	background:#f2f2f2 url(./white-grad.png) repeat-x scroll left top;
+	margin-right:20px;
+}
+.lwp-button a.button:hover{
+	color:#000;
+	border-color:#666;
+}
+.lwp-button a.button:active{
+	background:#eee url(./white-grad-active.png) repeat-x scroll left top;
+}

@@ -13,7 +13,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	private $version = "0.2";
+	public $version = "0.2";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -153,9 +153,11 @@ class Literally_WordPress
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
 			"country_code" => '',
-			"mypage" => 2,
+			"mypage" => 0,
 			"custom_post_type" => array(),
-			"payable_post_types" => array()
+			"payable_post_types" => array(),
+			"show_form" => true,
+			"load_assets" => 2
 		);
 		foreach($default_option as $k => $v){
 			if(isset($saved_option[$k]))
@@ -264,6 +266,10 @@ class Literally_WordPress
 		if(false == array_key_exists($this->option['country_code'], PayPal_Statics::country_codes())){
 			$this->initialized = false;
 			$this->message["country"] = $this->_("Country code is invalid.");
+		}
+		//ユーザーが登録可能かチェック
+		if(!get_option("user_can_register")){
+			$this->message['registration'] = sprintf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php'));
 		}
 	}
 	
@@ -413,8 +419,16 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	{
 		//ヘッダー部分でリクエストの内容をチェックする
 		add_action("template_redirect", array($this, "manage_actions"));
-		//本棚ページだったら、投稿内容に購入履歴を出力する
-		add_filter('the_content', array($this, "show_history"));
+		//the_contentにフックをかける
+		add_filter('the_content', array($this, "the_content"));
+		//設定でJSを出力するようになっていたら出力
+		if($this->option['load_assets'] > 0){
+			wp_enqueue_script("lwp-timer", $this->url."/assets/js/form-timer.js", array('jquery'), $this->version, true);
+		}
+		//設定でCSSを出力するようになっていたら出力
+		if($this->option['load_assets'] > 1){
+			wp_enqueue_style("lwp-timer", $this->url."/assets/lwp-buynow.css", array(), $this->version);
+		}
 	}
 	
 	/**
@@ -549,7 +563,9 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 				"slug" => $_REQUEST["product_slug"],
 				"mypage" => $_REQUEST["mypage"],
 				"currency_code" => $_REQUEST["currency_code"],
-				"country_code" => $_REQUEST["country_code"]
+				"country_code" => $_REQUEST["country_code"],
+				"show_form" => (boolean)($_REQUEST["show_form"] == 1),
+				"load_assets" => (int)$_REQUEST["load_assets"]
 			);
 			//sandbox
 			$new_option['sandbox'] = isset($_REQUEST['sandbox']) ? true : false;
@@ -1139,8 +1155,9 @@ EOS;
 		}else{
 			$post_id = $post;
 		}
-		if(!$time)
-			$time = date('Y-m-d H:i:s');
+		if(!$time){
+			$time = gmdate('Y-m-d H:i:s');
+		}
 		$sql = "SELECT ID FROM {$this->campaign} WHERE book_id = %d AND start <= %s AND end >= %s";
 		$req = $wpdb->get_row($wpdb->prepare($sql, $post_id, $time, $time));
 		return $req != false;
@@ -1287,22 +1304,7 @@ EOS;
 		return count($this->get_transaction($book_id, $user_ID, null));
 	}
 	
-	/**
-	 * 本棚用ページにタグを追加する
-	 * 
-	 * @param string $content
-	 * @return string
-	 */
-	public function show_history($content)
-	{
-		//本棚用のタグを作成
-		// TODO: タグを自動生成する必要はあるか？
-		$book_shelf = "";
-		if(is_page($this->option["mypage"])){
-			$book_shelf = "";
-		}
-		return $book_shelf.$content;
-	}
+	
 	
 	//--------------------------------------------
 	//
@@ -1408,6 +1410,7 @@ EOS;
 						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
 					}elseif(lwp_price($_GET["lwp_id"]) < 1){
+						var_dump($_GET['lwp_id'], lwp_price($_GET['lwp_id']));
 						//コンテンツが購入可能じゃない
 						$message = $this->_("This contents is not on sale.");
 					}elseif(!$this->start_transaction($user_ID, $_GET['lwp_id'])){
@@ -1471,18 +1474,22 @@ EOS;
 				case "cancel":
 					global $wpdb;
 					$post_id = $this->option['mypage'];
-					if(isset($_REQUEST['TOKEN'])){
+					$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
+					if(!$token){
+						$token = isset($_REQUEST['TOKEN']) ? $_REQUEST['TOKEN'] : null;
+					}
+					if($token){
 						$wpdb->update(
 							$this->transaction,
 							array(
 								"status" => "Cancel",
 								"updated" => gmdate("Y-m-d H:i:s")
 							),
-							array("transaction_key" => $_REQUEST["TOKEN"]),
+							array("transaction_key" => $token),
 							array("%s", "%s"),
 							array("%s")
 						);
-						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $_REQUEST['TOKEN']));
+						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $token));
 					}
 					$this->show_form("cancel", array("post_id" => $post_id));
 					break;
@@ -1617,6 +1624,27 @@ EOS;
 		}
 	}
 	
+	
+	/**
+	 * the_contentへのフック
+	 * 
+	 * @param string $content
+	 * @return string
+	 */
+	public function the_content($content)
+	{
+		//本棚用のタグを作成
+		// TODO: タグを自動生成する必要はあるか？
+
+		if($this->option["mypage"] > 0 && is_page($this->option["mypage"])){
+			$book_shelf = "";
+			return $book_shelf.$content;
+		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
+			return $content.lwp_show_form();
+		}else{
+			return $content;
+		}
+	}
 	
 	//--------------------------------------------
 	//

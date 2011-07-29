@@ -76,8 +76,9 @@ function lwp_is_sample($file)
 /**
  * 指定された投稿が指定された日付にキャンペーンを行っているかを返す
  * 
- * ループ内で引数なしで使用すると、現在表示してる
+ * ループ内で引数なしで使用すると、現在表示してるいる投稿がキャンペーン中か否かを示す
  * 
+ * @global Literally_WordPress $lwp
  * @param object|int $post
  * @param string $time
  * @return booelan
@@ -101,14 +102,14 @@ function lwp_campaign_end($post = null, $timestamp = false)
 	global $lwp;
 	if(!$post)
 		global $post;
-	$campaign = $lwp->get_campaign($post->ID, date('Y-m-d H:i:s'));
+	$campaign = $lwp->get_campaign($post->ID, gmdate('Y-m-d H:i:s'));
 	if(!$campaign)
 		return false;
 	else{
 		if($timestamp)
-			return strtotime($campaign->end);
+			return strtotime(get_date_from_gmt($campaign->end));
 		else
-			return mysql2date(get_option("date_format"), $campaign->end, false);
+			return mysql2date(get_option("date_format"), get_date_from_gmt ($campaign->end), false);
 	}
 }
 
@@ -118,22 +119,59 @@ function lwp_campaign_end($post = null, $timestamp = false)
  * ループ内で引数なしで使用すると、表示中の電子書籍の定価を返します。
  * キャンペーン中はキャンペーン価格を返します。
  * 
+ * @global object $post
+ * @global Literally_WordPress $lwp
  * @param object $post (optional)
  * @return int
  */
-
 function lwp_price($post = null)
 {
-	if(!$post)
+	if(!$post){
 		global $post;
+	}else{
+		$post = get_post($post);
+	}
 	if(lwp_on_sale($post)){
 		global $lwp;
 		$campaign = $lwp->get_campaign($post->ID, date('Y-m-d H:i:s'));
 		return $campaign->price;
-	}else
+	}else{
 		return lwp_original_price($post);
+	}
 }
 
+/**
+ * 現在設定されている通貨記号を返す
+ * 
+ * @since 0.8
+ * @global Literally_WordPress $lwp
+ * @return string
+ */
+function lwp_currency_code(){
+	global $lwp;
+	return $lwp->option['currency_code'];
+}
+
+/**
+ * 現在設定されている通貨の実態を返す
+ * @global Literally_WordPress $lwp
+ * @return string
+ */
+function lwp_currency_symbol(){
+	global $lwp;
+	return PayPal_Statics::currency_entity(lwp_currency_code());
+}
+
+/**
+ * 現在の価格を通貨記号付きで返す
+ * 
+ * @since 0.8
+ * @param object $post
+ * @return void
+ */
+function lwp_the_price($post = null){
+	echo lwp_currency_symbol().number_format(lwp_price());
+}
 
 /**
  * 電子書籍のカスタムフィールドを返す
@@ -371,7 +409,7 @@ function lwp_get_accessibility($file)
 function lwp_get_date($file, $registered = true, $echo = true)
 {
 	$date = $registered ? $file->registered : $file->updated;
-	$formatted = mysql2date(get_option('date_format'), $date, false);
+	$formatted = mysql2date(get_option('date_format'), $date);
 	if($echo)
 		echo $formatted;
 	else
@@ -452,10 +490,9 @@ EOS;
  * @since 0.3
  * @param mixed $post (optional) 投稿オブェクトまたは投稿ID。ループ内では指定する必要はありません。
  * @param string $btn_src (optional) 購入ボタンまでのURL
- * @param string $extra (optional) その他、フォーム内に出力したいHTMLタグなど
  * @return void
  */
-function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif", $extra = "")
+function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif")
 {
 	global $lwp;
 	if(!$post){
@@ -468,19 +505,129 @@ function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i
 	}else{
 		return;
 	}
-	?>
-		<a class="lwp-butnow" href="<?php echo get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}"; ?>"><img src="<?php echo h($btn_src); ?>" alt="<?php $lwp->e('Buy Now');?>" /></a>
-	<?php
+	return "<a class=\"lwp-butnow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\"><img src=\"".h($btn_src)."\" alt=\"".$lwp->_('Buy Now')."\" /></a>";
 }
+
+/**
+ * キャンペーンの終了日時をタグにして返す
+ * @global object $post
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return string
+ */
+function lwp_campaign_timer($post = null){
+	if(!$post){
+		global $post;
+	}
+	if(lwp_on_sale($post)){
+		global $lwp;
+		//終了日を取得
+		$end = lwp_campaign_end($post, true);
+		if(!$end){
+			return false;
+		}
+		//残り時間
+		$last = $end - time();
+		$days = floor($last / (60 * 60 * 24));
+		$last -= $days * 60 * 60 * 24;
+		$hours = floor($last / (60 * 60));
+		$last -= $hours * 60 * 60;
+		$minutes = floor($last / 60);
+		$last -= $minutes * 60;
+		$seconds = $last;
+		//タグを作成
+		$tag = "";
+		if($days > 0){
+			$unit = $days == 1 ? $lwp->_('day') : $lwp->_('days');
+			$tag .= sprintf('<span class="day">%1$d</span>%2$s', $days, $unit)." ";
+		}
+		$tag .= sprintf('<span class="hour">%02d</span>:', $hours);
+		$tag .= sprintf('<span class="minutes">%02d</span>:', $minutes);
+		$tag .= sprintf('<span class="seconds">%02d</span>', $seconds);
+		return "<p class=\"lwp-timer\">{$tag}</p>";
+	}else{
+		return "";
+	}
+}
+
+/**
+ * セール中の値引き率を返す
+ * @since 0.8
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return string
+ */
+function lwp_discout_rate($post = null){
+	global $lwp;
+	if(lwp_on_sale($post)){
+		$orig_price = lwp_original_price($post);
+		$current_price = lwp_price($post);
+		return sprintf($lwp->_("%d%%Off"), floor($current_price / $orig_price * 100));
+	}else{
+		return "";
+	}
+}
+
+/**
+ * 購入用のフォームを返す
+ * 
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @param string $btn_src (optional) Src of "buy now" button.
+ * @return string
+ */
+function lwp_show_form($post = null, $btn_src = null){
+	global $lwp;
+	if(!$post){
+		global $post;
+	}
+	if(!$post){
+		return "";
+	}
+	$timer = lwp_campaign_timer($post);
+	if(!empty($timer)){
+		$timer = '<p class="lwp-campaign-caption">'.sprintf($lwp->_('On SALE till %s'), lwp_campaign_end($post)).''.$timer;
+	}
+	$currency_code = $lwp->option['currency_code'];
+	$currency_symbol = PayPal_Statics::currency_entity($currency_code);
+	if(lwp_on_sale($post)){
+		//セール中の場合
+		$original_price = lwp_original_price($post);
+		$current_price = lwp_price($post);
+		$price_tag = "<p class=\"lwp-price\"><small>({$currency_code})</small><del>{$currency_symbol} ".number_format($original_price)."</del><span class=\"price\">{$currency_symbol} ".number_format($current_price)."</span><span class=\"lwp-off\">".  lwp_discout_rate($post)."</span></p>";
+		$class = "lwp-form onsale";
+	}elseif(lwp_original_price() > 0){
+		//売り物だけどセール中じゃない場合
+		$price_tag = "<p class=\"lwp-price\"><small>({$currency_code})</small><span class=\"price\">{$currency_symbol} ".  number_format(lwp_price($post))."</span></p>";
+		$class = "lwp-form";
+	}
+	if(is_user_logged_in()){
+		$button = $btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post);
+		$button = "<p class=\"lwp-button\">{$button}</p>";
+	}else{
+		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(get_bloginfo('url')."?lwp=buy&lwp_id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
+	}
+	return <<<EOS
+<!-- Literally WordPress {$lwp->version} -->
+<div class="{$class}">
+	{$timer}
+	{$price_tag}
+	{$button}
+</div>
+EOS;
+}
+
 
 /**
  * 購入がキャンセルされたか否かを返す。
  * 
+ * @deprecated
  * @return boolean
  */
 function lwp_is_canceled()
 {
-	if(isset($_GET["lwp_cancel"]))
+	if(isset($_GET["lwp"]) && $_GET['lwp'] == "cancel")
 		return true;
 	else
 		return false;
@@ -489,6 +636,7 @@ function lwp_is_canceled()
 /**
  * 購入を完了して、成功したか否かを返す
  * 
+ * @deprecated
  * @return boolean
  */
 function lwp_is_success()
@@ -500,6 +648,7 @@ function lwp_is_success()
 /**
  * 購入処理にエラーがあったか否かを返す
  * 
+ * @deprecated
  * @return boolean
  */
 function lwp_is_transaction_error()
