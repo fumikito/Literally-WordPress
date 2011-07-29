@@ -176,6 +176,9 @@ class Literally_WordPress
 		}
 		//投稿タイプの追加
 		add_action("init", array($this, "custom_post"));
+		
+		//ショートコードの追加
+		add_shortcode("lwp", array($this, "shortcode"));
 	}
 	
 	/**
@@ -210,6 +213,7 @@ class Literally_WordPress
 				'capability_type' => 'post',
 				'hierarchical' => true,
 				'menu_position' => 9,
+				'has_archive' => true,
 				'supports' => array('title','editor','author','thumbnail','excerpt', 'comments', 'custom-fields'),
 				'show_in_nav_menus' => true,
 				'menu_icon' => $this->url."/assets/book.png"
@@ -309,12 +313,14 @@ class Literally_WordPress
 		}
 		//ファイルアップロード用のタブを追加
 		add_action("media_upload_ebook", array($this, "generate_tab"));
+		
 		//ユーザーに書籍をプレゼントするフォーム
 		add_action("edit_user_profile", array($this, "give_user_form"));
 		//書籍プレゼントが実行されたら
 		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 			add_action("profile_update", array($this, "give_user"));
 		}
+		
 		/*--------------
 		 * フィルターフック
 		 */
@@ -322,6 +328,10 @@ class Literally_WordPress
 		add_filter("media_upload_tabs", array($this, "upload_tab"));
 		//ファイルアップロード可能な拡張子を追加する
 		add_filter("upload_mimes", array($this, "upload_mimes"));
+		//tinyMCEにボタンを追加する
+		add_filter("mce_external_plugins", array($this, "mce_plugin"));
+		add_filter("mce_external_languages", array($this, "mce_lang"));
+		add_filter("mce_buttons_2", array($this, "mce_button"));
 	}
 	
 	/**
@@ -470,6 +480,9 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	
 	/**
 	 * 管理画面でメッセージを発行する
+	 * 
+	 * @since 0.3
+	 * @return void
 	 */
 	public function admin_notice()
 	{
@@ -489,6 +502,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	/**
 	 * ヘルプページのURLを返す
 	 * 
+	 * @since 0.3
 	 * @param string $name
 	 * @param string $title
 	 * return string
@@ -515,6 +529,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	/**
 	 * 設定更新時の処理
 	 * 
+	 * @since 0.3
 	 * @return void
 	 */
 	public function option_update()
@@ -902,9 +917,9 @@ EOS;
 				array("%s", "%s")
 			);
 			if($req)
-				$this->message[] = "端末を追加しました。";
+				$this->message[] = $this->_("Device added.");
 			else
-				$this->message[] = "端末の追加に失敗しました。";
+				$this->message[] = $this->_("Failed to add device.");
 		}
 		//削除フォームのとき
 		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "lwp_delete_devices") && !empty($_POST['devices'])){
@@ -914,13 +929,14 @@ EOS;
 			$wpdb->query($sql);
 			$sql = "DELETE FROM {$this->file_relationships} WHERE device_id IN ({$ids})";
 			$wpdb->query($sql);
-			$this->message[] = "端末情報を削除しました。";
+			$this->message[] = $this->_("Device deleted.");
 		}
 	}
 	
 	/**
 	 * デバイス情報を返す
 	 * 
+	 * @since 0.3
 	 * @param object $file (optional) 指定した場合はファイルに紐づけられた端末を返す
 	 * @return array
 	 */
@@ -1004,27 +1020,27 @@ EOS;
 			//投稿の確認
 			if(!is_numeric($_REQUEST["book_id"])){
 				$this->error = true;
-				$this->message[] = "対象となる電子書籍を選んでください。";
+				$this->message[] = $this->_("Please select item.");
 			}
 			//価格の確認
 			if(!is_numeric(mb_convert_kana($_REQUEST["price"], "n"))){
 				$this->error = true;
-				$this->message[] = "価格は数値にしてください。";
+				$this->message[] = $this->_("Price must be numeric.");
 			}
 			//価格の確認
 			elseif($_REQUEST["price"] > get_post_meta($_REQUEST["book_id"], "lwp_price", true)){
 				$this->error = true;
-				$this->message[] = "キャンペーン価格が定価よりも高くなっています。";
+				$this->message[] = $this->_("Price is higher than original price.");
 			}
 			//形式の確認
 			if(!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["start"]) || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["end"])){
 				$this->error = true;
-				$this->message[] = "日付の形式が不正です";
+				$this->message[] = $this->_("Date format is invalid.");
 			}
 			//開始日と終了日の確認
 			elseif(strtotime($_REQUEST["end"]) < time() || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
 				$this->error = true;
-				$this->message[] = "終了日が過去に設定されています。";
+				$this->message[] = $this->_("End date was past.");
 			}
 			//エラーがなければ登録
 			if(!$this->error){
@@ -1040,10 +1056,10 @@ EOS;
 					array("%d", "%d", "%s", "%s")
 				);
 				if($wpdb->insert_id)
-					$this->message[] = "キャンペーンを追加しました。";
+					$this->message[] = $this->_("Campaign added.");
 				else{
 					$this->error = true;
-					$this->message[] = "キャンペーンの追加に失敗しました。";
+					$this->message[] = $this->_("Failed to add campaign.");
 				}
 			}
 		}
@@ -1166,18 +1182,6 @@ EOS;
 	//--------------------------------------------
 	
 	/**
-	 * プロフィール編集画面にPayPalアドレス用のコンタクトフィールドを追加する
-	 * 
-	 * @param array $contactmethods
-	 * @return array
-	 */
-	public function add_paypal_mail($contactmethods)
-	{
-		$contactmethods["paypal"] = "PayPal メールアドレス<br /><span class=\"description\"><small>※登録アドレスと異なる場合は必須</small></span>";
-		return $contactmethods;
-	}
-	
-	/**
 	 *  ユーザープロフィール編集画面にプレゼント用のフォームを追加する
 	 * 
 	 * @return void
@@ -1245,8 +1249,9 @@ EOS;
 			$post_id = $post->ID;
 		}elseif(is_object($post)){
 			$post_id = (int) $post->ID;
-		}else
+		}else{
 			$post_id = $post;
+		}
 		if(!$user_id){
 			global $user_ID;
 			$user_id = (int) $user_ID;
@@ -1254,7 +1259,7 @@ EOS;
 		global $wpdb;
 		$sql = "SELECT ID FROM {$this->transaction} WHERE user_id = %d AND book_id = %d AND status = %s";
 		$req = $wpdb->get_row($wpdb->prepare($sql, $user_id, $post_id, "SUCCESS"));
-		return $req != false;
+		return (boolean) $req != false;
 	}
 	
 	/**
@@ -1400,10 +1405,13 @@ EOS;
 						auth_redirect ($_SERVER["REQUEST_URI"]);
 						exit;
 					}elseif(!isset($_GET['lwp_id'])){
+						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
 					}elseif(lwp_price($_GET["lwp_id"]) < 1){
+						//コンテンツが購入可能じゃない
 						$message = $this->_("This contents is not on sale.");
 					}elseif(!$this->start_transaction($user_ID, $_GET['lwp_id'])){
+						//トランザクション作成に失敗
 						$message = $this->_("Failed to make transaction.");
 					}
 					//エラーが起きた場合はwp_die
@@ -1608,7 +1616,78 @@ EOS;
 			
 		}
 	}
-		
+	
+	
+	//--------------------------------------------
+	//
+	// TinyMCE
+	//
+	//--------------------------------------------
+	
+	/**
+	 * ショートコードを追加する
+	 * 
+	 * @since 0.8
+	 * @param array $atts
+	 * @param string $contents
+	 * @return string
+	 */
+	public function shortcode($atts, $contents = null){
+		//属性値を抽出
+		extract(shortcode_atts(array("user" => "owner"), $atts));
+		//省略形を優先する
+		if(isset($atts[0])){
+			$user = $atts[0];
+		}
+		//属性値によって返す値を検討
+		switch($user){
+			case "owner": //オーナーの場合
+				return $this->is_owner() ? wpautop($contents) : "";
+				break;
+			case "subscriber": //登録済ユーザーの場合
+				return is_user_logged_in() ? wpautop($contents) : "";
+				break;
+			case "non-owner": //オーナーではない場合
+				return $this->is_owner() ? "" : wpautop($contents);
+				break;
+			case "non-subscriber": //登録者ではない場合
+				return is_user_logged_in() ? "" : wpautop($contents);
+				break;
+			default:
+				return wpautop($contents);
+		}
+	}
+	
+	/**
+	 * TinyMCEにプラグインを登録する
+	 * @param array $plugin_array
+	 * @return array
+	 */
+	public function mce_plugin($plugin_array){
+		$plugin_array['lwpShortCode'] = plugin_dir_url(__FILE__)."/assets/js/tinymce.js";
+		return $plugin_array;
+	}
+	
+	/**
+	 * TinyMCEの言語ファイルを追加する
+	 * @param array $languages
+	 * @return array
+	 */
+	public function mce_lang($languages){
+		$languages["lwpShortCode"] = $this->dir.DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."js".DIRECTORY_SEPARATOR."tinymce-lang.php";
+		return $languages;
+	}
+	
+	/**
+	 * TinyMCEのボタンを追加する
+	 * @param array $buttons
+	 * @return array
+	 */
+	public function mce_button($buttons){
+		array_push($buttons, "lwpListBox", "separator");
+		return $buttons;
+	}
+	
 	//--------------------------------------------
 	//
 	// ユーティリティ

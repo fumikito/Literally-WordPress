@@ -1,5 +1,5 @@
 <?php
-	/* @var $this Literally_WordPress */
+	/** @var $this Literally_WordPress */
 	
 	$file = false;
 	$uploading = false;
@@ -85,10 +85,9 @@
 		if($updating || $updated){
 			wp_nonce_field("lwp_updated");
 			echo '<input type="hidden" name="file_id" value="'.$_REQUEST["file_id"].'" />';
-		}
-		else
+		}else{
 			wp_nonce_field("lwp_upload");
-			
+		}
 	?>
 	<h3 class="media-title">電子書籍ファイルの管理</h3>
 	<div class="media-items">
@@ -100,11 +99,13 @@
 		<?php endif; ?>
 		</h4>
 		<?php if(!empty($message)): ?>
-		<p class="error">
+		<div class="error">
+			<p>
 			<?php foreach($message as $m): ?>
 			<?php echo $m; ?><br />
 			<?php endforeach; ?>
-		</p>
+			</p>
+		</div>
 		<?php endif; ?>
 		<table class="describe">
 			<tbody>
