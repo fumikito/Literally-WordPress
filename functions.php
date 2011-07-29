@@ -505,7 +505,7 @@ function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i
 	}else{
 		return;
 	}
-	return "<a class=\"lwp-butnow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\"><img src=\"".h($btn_src)."\" alt=\"".$lwp->_('Buy Now')."\" /></a>";
+	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\"><img src=\"".h($btn_src)."\" alt=\"".$lwp->_('Buy Now')."\" /></a>";
 }
 
 /**

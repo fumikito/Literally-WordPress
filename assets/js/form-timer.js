@@ -40,4 +40,10 @@ jQuery(document).ready(function($){
 			}, 1000);
 		});
 	}
+	//Google Analytics
+	$('a.lwp-buynow').click(function(e){
+		if(pageTracker){
+			pageTracker._trackPageview(this.href.replace(/https?:\/\/[^\/]+\//, "/"));
+		}
+	});
 });
