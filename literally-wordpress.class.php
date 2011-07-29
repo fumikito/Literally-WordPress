@@ -643,7 +643,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	public function upload_tab($tabs)
 	{
 		if($this->initialized)
-			$tabs["ebook"] = "電子書籍";
+			$tabs["ebook"] = $this->_('Literally WordPress');
 		return $tabs;
 	}
 	
@@ -671,20 +671,25 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	/**
 	 * 電子書籍に所属するファイルのリストを返す
 	 * 
-	 * @param int $book_id
-	 * @return array
+	 * @since 0.3
+	 * @param int $book_id (optional)
+	 * @param int $file_id (optional)
+	 * @return array|object
 	 */
-	public function get_files($book_id, $file_id = null)
+	public function get_files($book_id = null, $file_id = null)
 	{
 		global $wpdb;
-		$query = <<<EOS
-			SELECT * FROM {$this->files} WHERE book_id = %d	
-EOS;
+		if($book_id && $file_id){
+			return array();
+		}
+		$query = "SELECT * FROM {$this->files} WHERE";
 		if($file_id){
-			$query .= " AND ID = %d";
-			return $wpdb->get_row($wpdb->prepare($query, $book_id, $file_id));
-		}else
+			$query .= " ID = %d";
+			return $wpdb->get_row($wpdb->prepare($query, $file_id));
+		}else{
+			$query .= "book_id = %d";
 			return $wpdb->get_results($wpdb->prepare($query, $book_id));
+		}
 	}
 	
 	/**
@@ -833,25 +838,25 @@ EOS;
 		$message;
 		switch($info["error"]){
 			 case UPLOAD_ERR_INI_SIZE: 
-                $message = "アップロードされたファイルはphp.iniに記載されたupload_max_filesizeを超えています。"; 
+                $message = $this->_("Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"); 
                 break; 
             case UPLOAD_ERR_FORM_SIZE: 
-                $message = "指定されたサイズより大きなファイルがアップロードされました。"; 
+                $message = $this->_("Uploaded file size exceeds");"指定されたサイズより大きなファイルがアップロードされました。"; 
                 break; 
             case UPLOAD_ERR_PARTIAL: 
-                $message = "ファイルは完全にアップロードされませんでした。インターネット接続等を確認してください。"; 
+                $message = $this->_("File has been uploaded incompletely. Check your internet connection."); 
                 break; 
             case UPLOAD_ERR_NO_FILE: 
-                $message = "ファイルがアップロードされていません。"; 
+                $message = $this->_("No file was uploaded."); 
                 break; 
             case UPLOAD_ERR_NO_TMP_DIR: 
-                $message = "一時ディレクトリーが存在しません。サーバ管理者に問い合わせてください。"; 
+                $message = $this->_("No tmp directory exists. Contact to your server administrator."); 
                 break; 
             case UPLOAD_ERR_CANT_WRITE: 
-                $message = "ファイルを保存できませんでした。サーバ管理者に問い合わせてください。"; 
+                $message = $this->_("Failed to save the uploaded file. Contact to your server administrator.");; 
                 break; 
             case UPLOAD_ERR_EXTENSION: 
-                $message = "PHPの機能によってアップロードが中止されました。"; 
+                $message = $this->_("PHP stops uploading."); 
                 break;
 			case UPLOAD_ERR_OK:
 				$message = false;
@@ -1494,12 +1499,8 @@ EOS;
 					$this->show_form("cancel", array("post_id" => $post_id));
 					break;
 				case "file":
+					$this->print_file($_REQUEST["lwp_file"], $post->ID, $user_ID);
 					break;
-			}
-			//ファイル取得の場合
-			if(isset($_REQUEST["lwp_file"])){
-				global $post, $user_ID;
-				$this->print_file($_REQUEST["lwp_file"], $post->ID, $user_ID);
 			}
 		}
 	}
@@ -1574,27 +1575,30 @@ EOS;
 	
 	/**
 	 * ファイルを出力する
-	 * @param type $file_id
-	 * @param type $post_id
-	 * @param type $user_id
+	 * @param int $file_id
+	 * @param int $user_id
 	 * @return void
 	 */
-	private function print_file($file_id, $post_id, $user_id)
+	private function print_file($file_id, $user_id)
 	{
 		$error = false;
-		$file = $this->get_files($post_id, $file_id);
+		$file = $this->get_files(null, $file_id);
 		//ファイルの取得を確認
-		if(!$file)
+		if(!$file){
 			$error = true;
+		}
 		//ユーザーの所有権を確認
 		if(
-			($file->free == 0 && !$this->is_owner($post_id, $user_id)) //購入必須にも関わらずファイルを購入していない
+			($file->free == 0 && !$this->is_owner($file->book_id, $user_id)) //購入必須にも関わらずファイルを購入していない
 			||
 			($file->free == 1 && !is_user_logged_in()) //ログイン必須にも関わらずログインしていない
-		)
+			||
+			$file->public != 1 //ファイルが公開されていない
+		){
 			$error = true;
+		}
 		//ファイルの所在を確認
-		$path = $this->option["dir"].DS.$post_id.DS.$file->file;
+		$path = $this->option["dir"].DS.$file->book_id.DS.$file->file;
 		if(!file_exists($path)){
 			$error = true;
 		}
@@ -1620,7 +1624,7 @@ EOS;
 			//終了
 			exit;
 		}else{
-			
+			wp_die($this-_('You have no permission to access this file.'), $this->_('Permission Error'), array("response" => 403, "backlink" => true));
 		}
 	}
 	
@@ -1628,19 +1632,26 @@ EOS;
 	/**
 	 * the_contentへのフック
 	 * 
+	 * @since 0.3
+	 * @global object $post
 	 * @param string $content
 	 * @return string
 	 */
 	public function the_content($content)
 	{
+		global $post, $wpdb;
 		//本棚用のタグを作成
 		// TODO: タグを自動生成する必要はあるか？
-
 		if($this->option["mypage"] > 0 && is_page($this->option["mypage"])){
 			$book_shelf = "";
 			return $book_shelf.$content;
 		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
-			return $content.lwp_show_form();
+			$content .= lwp_show_form();
+			//ダウンドーロ可能なファイルがあったらテーブルを出力
+			if($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$this->files} WHERE book_id = %d", $post->ID))){
+				$content .= lwp_get_device_table().lwp_get_file_list();
+			}
+			return $content;
 		}else{
 			return $content;
 		}

@@ -240,17 +240,13 @@ function lwp_get_files($accessibility = "all", $post = null)
 /**
  * ファイルへのリンクを返す
  * 
+ * @since 0.3
  * @param int $file_id
  * @return string
  */
 function lwp_file_link($file_id)
 {
-	$url = get_permalink();
-	if(false === strpos($url, "?"))
-		$url .= "?ebook_file={$file_id}";
-	else
-		$url .= "&amp;ebook_file={$file_id}";
-	return $url;
+	return get_bloginfo('url')."?lwp=file&lwp_file={$file_id}";
 }
 
 /**
@@ -398,23 +394,124 @@ function lwp_get_accessibility($file)
 	}
 }
 
+
+/**
+ * ファイルオブジェクトを受け取り、それが現在のユーザーにとって
+ * アクセス可能かを返す
+ * 
+ * @param object $file
+ * @return boolean
+ */
+function lwp_file_accessible($file){
+	switch(lwp_get_accessibility($file)){
+		case "owner":
+			return lwp_is_owner();
+			break;
+		case "member":
+			return is_user_logged_in();
+			break;
+		case "any":
+			return true;
+			break;
+		default:
+			return false;
+			break;
+	}
+}
+
 /**
  * ファイルの最終更新日を返す
  * 
  * @param object $file ファイルオブジェクト
  * @param boolean $registered (optional) 最終更新日ではなく登録日を欲しい場合はfalse
  * @param boolean $echo (optional) 出力したくない場合はfalse
- * @param 
+ * @return string|void 
  */
 function lwp_get_date($file, $registered = true, $echo = true)
 {
 	$date = $registered ? $file->registered : $file->updated;
-	$formatted = mysql2date(get_option('date_format'), $date);
+	$formatted = mysql2date(get_option('date_format'), get_date_from_gmt($date), false);
 	if($echo)
 		echo $formatted;
 	else
 		return $formatted;
 }
+
+
+function lwp_get_file_list($accessibility = "all", $post = null){
+	var_dump(lwp_get_files($accessibility, $post));
+	global $lwp;
+	$tag = "<!-- Literally WordPress {$lwp->version} --><div class=\"lwp-files\"><h3>".$lwp->_('Registered Files')."</h3>";
+	$tag .= "<table class=\"lwp-file-table\">";
+	$tag .= "
+		<thead>
+			<tr>
+				<th class=\"name\">".$lwp->_('File Name')."</th>
+				<th>".$lwp->_('Description')."</th>
+				<th>".$lwp->_('Available with')."</th>
+				<th>".$lwp->_('Download')."</th>
+			</tr>
+		</thead>
+		<tbody>
+";
+	foreach(lwp_get_files($accessibility, $post) as $file){
+		$ext = lwp_get_ext($file);
+		$desc = wpautop($file->desc);
+		$button = lwp_file_accessible($file) ? "<a class=\"button lwp-dl\" href=\"".lwp_file_link($file->ID)."\">".$lwp->_('download')."</a>"
+											 : "<a class=\"button disabled\">".$lwp->_('Unavailable')."</a>";
+		$size = sprintf($lwp->_("File Size: %s"), lwp_get_size($file));
+		$published = sprintf($lwp->_("Published: %s"), lwp_get_date($file, true, false));
+		$updated = sprintf($lwp->_("Updated: %s"), lwp_get_date($file, false, false));
+		$devices = implode(", ", lwp_get_file_devices($file));
+		$tag .= <<<EOS
+				<tr>
+					<td class="{$ext}">{$file->name}</td>
+					<td>
+						{$desc}
+						<p class="desc">{$published}<br />{$updated}</p>
+					</td>
+					<td>{$devices}</td>
+					<td><p class="lwp-button">{$button}</p><span class="lwp-file-size">{$size}</span></td>
+				</tr>
+EOS;
+	}
+	$tag .= "</tbody></table></div>";
+	return $tag;
+}
+
+/**
+ * 対応端末のテーブルを返す
+ * @since 0.8
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return string
+ */
+function lwp_get_device_table($post = null){
+	global $lwp;
+	$tag = "<!-- Literally WordPress {$lwp->version} --><div class=\"lwp-devices\"><h3>".$lwp->_('Devices Available With')."</h3>";
+	$tag .= "<table class=\"lwp-device-table\">";
+	$tag .= "
+		<thead>
+			<tr>
+				<th class=\"slug\">".$lwp->_('Device Name')."</th>
+				<th>".$lwp->_('Avalability')."</th>
+			</tr>
+		</thead>
+		<tbody>
+";
+	foreach(lwp_get_devices($post) as $device){
+		$validity = $device['valid'] ? $lwp->_("Available") :  $lwp->_("Unconfirmed");
+		$class = $device['valid'] ? "available" : "unconfirmed";
+		$tag .= "
+			<tr>
+				<td class=\"".$device['slug']."\">".$device['name']."</td>
+				<td class=\"{$class}\">{$validity}</td>
+			</tr>";
+	}
+	$tag .= "</tbody></table></div>";
+	return $tag;
+}
+
 
 /**
  * 購入した電子書籍のリストを返す
