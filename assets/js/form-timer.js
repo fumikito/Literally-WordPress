@@ -41,7 +41,7 @@ jQuery(document).ready(function($){
 		});
 	}
 	//Google Analytics
-	$('a.lwp-buynow').click(function(e){
+	$('a.lwp-buynow, a.lwp-dl').click(function(e){
 		if(pageTracker){
 			pageTracker._trackPageview(this.href.replace(/https?:\/\/[^\/]+\//, "/"));
 		}
