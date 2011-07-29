@@ -200,8 +200,10 @@ else:
 						<label for="book_id"><?php $this->e("Campaign Item");?></label>
 						<select id="book_id" name="book_id">
 							<option disabled="disabled" selected="selected"><?php $this->e("Select from here.");?></option>
-							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'])) as $p): ?>
+							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'], 'posts_per_page' => -1)) as $p): ?>
+							<?php if(true): ?>
 							<option value="<?php echo $p->ID; ?>"><?php echo $p->post_title; ?></option>
+							<?php endif; ?>
 							<?php endforeach; ?>
 						</select>
 						<p>

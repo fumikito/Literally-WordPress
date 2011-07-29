@@ -1415,9 +1415,30 @@ EOS;
 						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
 					}elseif(lwp_price($_GET["lwp_id"]) < 1){
-						var_dump($_GET['lwp_id'], lwp_price($_GET['lwp_id']));
-						//コンテンツが購入可能じゃない
-						$message = $this->_("This contents is not on sale.");
+						//セール中のため無料だが、本来は有料。トランザクションの必要がない
+						if(lwp_original_price($_GET['lwp_id']) > 0){
+							//購入済みにする
+							global $user_ID, $wpdb;
+							$wpdb->insert(
+								$this->transaction,
+								array(
+									"user_id" => $user_ID,
+									"book_id" => $_GET["lwp_id"],
+									"price" => 0,
+									"status" => "SUCCESS",
+									"method" => "CAMPAIGN",
+									"registered" => gmdate('Y-m-d H:i:s'),
+									"updated" => gmdate('Y-m-d H:i:s')
+								),
+								array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
+							);
+							//サンキューページを表示する
+							header("Location: ".get_bloginfo("url")."?lwp=success&lwp_id={$_GET['lwp_id']}");
+							exit;
+						}else{
+							//コンテンツが購入可能じゃない
+							$message = $this->_("This contents is not on sale.");
+						}
 					}elseif(!$this->start_transaction($user_ID, $_GET['lwp_id'])){
 						//トランザクション作成に失敗
 						$message = $this->_("Failed to make transaction.");
@@ -1474,7 +1495,12 @@ EOS;
 					}
 					break;
 				case "success":
-					$this->show_form("success");
+					if(isset($_REQUEST['lwp_id'])){
+						$url = get_permalink($_REQUEST['lwp_id']);
+					}else{
+						$url = get_bloginfo('url');
+					}
+					$this->show_form("success", array('link' => $url));
 					break;
 				case "cancel":
 					global $wpdb;

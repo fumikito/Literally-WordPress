@@ -659,7 +659,7 @@ function lwp_discout_rate($post = null){
 	if(lwp_on_sale($post)){
 		$orig_price = lwp_original_price($post);
 		$current_price = lwp_price($post);
-		return sprintf($lwp->_("%d%%Off"), floor($current_price / $orig_price * 100));
+		return sprintf($lwp->_("%d%%Off"), floor((1 - $current_price / $orig_price) * 100));
 	}else{
 		return "";
 	}
