@@ -140,7 +140,9 @@ class Literally_WordPress
 		$this->files = $wpdb->prefix."lwp_".$this->files;
 		$this->devices = $wpdb->prefix."lwp_".$this->devices;
 		$this->file_relationships = $wpdb->prefix."lwp_".$this->file_relationships;
-		//オプションの設定
+		//テキストドメインを設定する
+		load_plugin_textdomain($this->domain, false, basename($this->dir).DIRECTORY_SEPARATOR."language");
+		////オプションの設定
 		$this->option = array();
 		$saved_option = get_option("literally_wordpress_option");
 		$default_option =  array(
@@ -268,7 +270,7 @@ class Literally_WordPress
 			$this->message["country"] = $this->_("Country code is invalid.");
 		}
 		//ユーザーが登録可能かチェック
-		if(!get_option("user_can_register")){
+		if(!get_option("users_can_register")){
 			$this->message['registration'] = sprintf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php'));
 		}
 	}
@@ -439,7 +441,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 	public function add_menu()
 	{
 		//設定ページの追加
-		add_menu_page("Literally WordPress", "Literally WordPress", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
+		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("Setting"), 5, "lwp-setting", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Customer Management"), $this->_("Customer"), 5, "lwp-management", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
@@ -841,7 +843,7 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
                 $message = $this->_("Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"); 
                 break; 
             case UPLOAD_ERR_FORM_SIZE: 
-                $message = $this->_("Uploaded file size exceeds");"指定されたサイズより大きなファイルがアップロードされました。"; 
+                $message = $this->_("Uploaded file size exceeds"); 
                 break; 
             case UPLOAD_ERR_PARTIAL: 
                 $message = $this->_("File has been uploaded incompletely. Check your internet connection."); 
@@ -1089,25 +1091,25 @@ EOS;
 			//キャンペーンIDの存在を確認
 			if(!$wpdb->get_row($wpdb->prepare("SELECT ID FROM {$this->campaign} WHERE ID = %d", $_REQUEST["campaign"]))){
 				$this->error = true;
-				$this->message[] = "指定されたキャンペーンが存在しません。"; 
+				$this->message[] = $this->_("Specified campaing doesn't exist");
 			}
 			//価格の確認
 			if(!is_numeric(mb_convert_kana($_REQUEST["price"], "n"))){
 				$this->error = true;
-				$this->message[] = "価格は数値にしてください。";
+				$this->message[] = $this->_("Price should be numeric.");
 			}elseif($_REQUEST["price"] > get_post_meta($_REQUEST["book_id"], "lwp_price", true)){
 				$this->error = true;
-				$this->message[] = "キャンペーン価格が定価よりも高くなっています。";
+				$this->message[] = $this->_("Campgin price is higher than original price.");
 			}
 			//形式の確認
 			if(!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["start"]) || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["end"])){
 				$this->error = true;
-				$this->message[] = "日付の形式が不正です";
+				$this->message[] = $this->_("Date format is invalid.");
 			}
 			//開始日と終了日の確認
 			elseif(strtotime($_REQUEST["end"]) < time() || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
 				$this->error = true;
-				$this->message[] = "終了日が過去に設定されています。";
+				$this->message[] = $this->_("End date is earlier than start date.");
 			}
 			//エラーがなければ更新
 			if(!$this->error){
@@ -1123,10 +1125,10 @@ EOS;
 					array("%d")
 				);
 				if($req)
-					$this->message[] = "更新完了しました。";
+					$this->message[] = $this->_("Successfully Updated.");
 				else{
 					$this->error = true;
-					$this->message[] = "更新に失敗しました。";
+					$this->message[] = $this->_('Update Failed.');
 				}
 			}
 		}
@@ -1134,10 +1136,10 @@ EOS;
 		elseif(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_delete_campaign") && is_array($_REQUEST["campaigns"])){
 			$sql = "DELETE FROM {$this->campaign} WHERE ID IN (".implode(",", $_REQUEST["campaigns"]).")";
 			if($wpdb->query($sql))
-				$this->message[] = "キャンペーンを削除しました。";
+				$this->message[] = $this->_("Campaign was deleted.");
 			else{
 				$this->error = true;
-				$this->message[] = "キャンペーンの削除に失敗しました。";
+				$this->message[] = $this->_("Failed to delete campaign.");
 			}
 		}
 	}
@@ -1251,9 +1253,9 @@ EOS;
 				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
 			);
 			if($wpdb->insert_id)
-				$this->message[] = "プレゼントを渡しました";
+				$this->message[] = $this->_("You've kindly given a present.");
 			else
-				$this->message[] = "プレゼントに失敗しました";
+				$this->message[] = $this->_("Failed to give a present.");
 		}
 	}
 	
@@ -1384,9 +1386,9 @@ EOS;
 				array("%d")
 			);
 			if($req)
-				$this->message[] = "購入情報を更新しました。";
+				$this->message[] = $this->_("Purchase infomation updated.");
 			else
-				$this->message[] = "購入情報更新に失敗しました";
+				$this->message[] = $this->_("Failed to update purchase infomration.");
 		}
 	}
 	
@@ -1673,7 +1675,7 @@ EOS;
 			return $book_shelf.$content;
 		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
 			$content .= lwp_show_form();
-			//ダウンドーロ可能なファイルがあったらテーブルを出力
+			//ダウンロード可能なファイルがあったらテーブルを出力
 			if($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$this->files} WHERE book_id = %d", $post->ID))){
 				$content .= lwp_get_device_table().lwp_get_file_list();
 			}

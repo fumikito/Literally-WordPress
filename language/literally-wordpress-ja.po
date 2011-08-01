@@ -1,0 +1,1835 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Litrally WordPress 0.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-01 12:14+0900\n"
+"PO-Revision-Date: 2011-08-01 12:31+0900\n"
+"Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
+"Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: ../functions.php:444
+msgid "Registered Files"
+msgstr "登録されたファイル"
+
+#: ../functions.php:449
+msgid "File Name"
+msgstr "ファイル名"
+
+#: ../functions.php:450
+msgid "Description"
+msgstr "説明"
+
+#: ../functions.php:451
+msgid "Available with"
+msgstr "対応端末"
+
+#: ../functions.php:452
+msgid "Download"
+msgstr "ダウンロード"
+
+#: ../functions.php:460
+msgid "download"
+msgstr "ダウンロード"
+
+#: ../functions.php:461
+msgid "Unavailable"
+msgstr "利用不可能"
+
+#: ../functions.php:462
+#, php-format
+msgid "File Size: %s"
+msgstr "ファイルサイズ: %s"
+
+#: ../functions.php:463
+#, php-format
+msgid "Published: %s"
+msgstr "公開日: %s"
+
+#: ../functions.php:464
+#, php-format
+msgid "Updated: %s"
+msgstr "更新日: %s"
+
+#: ../functions.php:491
+msgid "Devices Available With"
+msgstr "対応端末"
+
+#: ../functions.php:496
+#: ../admin/devices.php:41
+#: ../admin/devices.php:50
+#: ../admin/devices.php:102
+msgid "Device Name"
+msgstr "端末名"
+
+#: ../functions.php:497
+msgid "Avalability"
+msgstr "対応状況"
+
+#: ../functions.php:503
+msgid "Available"
+msgstr "確認済"
+
+#: ../functions.php:503
+msgid "Unconfirmed"
+msgstr "未確認"
+
+#: ../functions.php:605
+msgid "Buy Now"
+msgstr "いますぐ購入"
+
+#: ../functions.php:638
+msgid "day"
+msgstr "日"
+
+#: ../functions.php:638
+msgid "days"
+msgstr "日"
+
+#: ../functions.php:662
+#: ../admin/campaign.php:155
+#, php-format
+msgid "%d%%Off"
+msgstr "%d%%Off"
+
+#: ../functions.php:687
+#, php-format
+msgid "On SALE till %s"
+msgstr "%sまでセール中"
+
+#: ../literally-wordpress.class.php:198
+msgid "Add New"
+msgstr "新規追加"
+
+#: ../literally-wordpress.class.php:199
+#: ../literally-wordpress.class.php:201
+#, php-format
+msgid "Add New %s"
+msgstr "新規%s追加"
+
+#: ../literally-wordpress.class.php:200
+#, php-format
+msgid "Edit %s"
+msgstr "%sを編集"
+
+#: ../literally-wordpress.class.php:202
+#, php-format
+msgid "View %s"
+msgstr "%sを見る"
+
+#: ../literally-wordpress.class.php:203
+#, php-format
+msgid "Search %s"
+msgstr "%sを検索"
+
+#: ../literally-wordpress.class.php:204
+#, php-format
+msgid "No %s was found."
+msgstr "%sは見つかりませんでした"
+
+#: ../literally-wordpress.class.php:205
+#, php-format
+msgid "No %s was found in trash."
+msgstr "ゴミ箱に%sは見つかりませんでした"
+
+#: ../literally-wordpress.class.php:237
+msgid "Directory isn't writable."
+msgstr "ディレクトリが書き込み不可能になっています"
+
+#: ../literally-wordpress.class.php:253
+msgid "Directory is publically accessible via HTTP"
+msgstr "ディレクトリはHTTPでアクセスできてしまいます"
+
+#: ../literally-wordpress.class.php:259
+msgid "Marchand ID and PDT Token required for transaction"
+msgstr "マーチャントIDとPDTトークンは決済に必要です"
+
+#: ../literally-wordpress.class.php:264
+msgid "Currency code is invalid."
+msgstr "通貨コードが不正です。"
+
+#: ../literally-wordpress.class.php:268
+msgid "Country code is invalid."
+msgstr "国コードが不正です。"
+
+#: ../literally-wordpress.class.php:272
+#, php-format
+msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
+msgstr "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登録を許可してください。"
+
+#: ../literally-wordpress.class.php:318
+msgid "Literally WordPress Setting"
+msgstr "Literally WordPress設定"
+
+#: ../literally-wordpress.class.php:443
+#: ../admin/setting.php:2
+msgid "General Setting"
+msgstr "全般設定"
+
+#: ../literally-wordpress.class.php:443
+msgid "Setting"
+msgstr "設定"
+
+#: ../literally-wordpress.class.php:444
+#: ../admin/management.php:2
+msgid "Customer Management"
+msgstr "顧客管理"
+
+#: ../literally-wordpress.class.php:444
+msgid "Customer"
+msgstr "顧客"
+
+#: ../literally-wordpress.class.php:445
+msgid "Campaing Management"
+msgstr "キャンペーン管理"
+
+#: ../literally-wordpress.class.php:445
+msgid "Campaing"
+msgstr "キャンペーン"
+
+#: ../literally-wordpress.class.php:446
+msgid "Device Setting"
+msgstr "端末設定"
+
+#: ../literally-wordpress.class.php:446
+msgid "Device"
+msgstr "端末"
+
+#: ../literally-wordpress.class.php:448
+#: ../admin/history.php:2
+msgid "Purchase History"
+msgstr "購入履歴"
+
+#: ../literally-wordpress.class.php:448
+msgid "Purchase"
+msgstr "購入"
+
+#: ../literally-wordpress.class.php:530
+msgid "Literally WordPress Help"
+msgstr "Literally WordPressヘルプ"
+
+#: ../literally-wordpress.class.php:614
+#: ../literally-wordpress.class.php:1049
+msgid "Price must be numeric."
+msgstr "価格は半角数字でなければなりません。"
+
+#: ../literally-wordpress.class.php:646
+msgid "Literally WordPress"
+msgstr "Literally WordPress"
+
+#: ../literally-wordpress.class.php:841
+msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
+msgstr "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超えています。"
+
+#: ../literally-wordpress.class.php:844
+msgid "Uploaded file size exceeds"
+msgstr "アップロードされたファイルサイズが大きすぎます。"
+
+#: ../literally-wordpress.class.php:847
+msgid "File has been uploaded incompletely. Check your internet connection."
+msgstr "ファイルが完全にアップロードされませんでした。インターネット接続を確認してください。"
+
+#: ../literally-wordpress.class.php:850
+msgid "No file was uploaded."
+msgstr "ファイルがアップロードされませんでした。"
+
+#: ../literally-wordpress.class.php:853
+msgid "No tmp directory exists. Contact to your server administrator."
+msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
+
+#: ../literally-wordpress.class.php:856
+msgid "Failed to save the uploaded file. Contact to your server administrator."
+msgstr "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせてください。"
+
+#: ../literally-wordpress.class.php:859
+msgid "PHP stops uploading."
+msgstr "PHPがアップロードを停止しました。"
+
+#: ../literally-wordpress.class.php:941
+msgid "Device added."
+msgstr "端末が追加されました。"
+
+#: ../literally-wordpress.class.php:943
+msgid "Failed to add device."
+msgstr "端末の追加に失敗しました。"
+
+#: ../literally-wordpress.class.php:953
+msgid "Device deleted."
+msgstr "端末が削除されました。"
+
+#: ../literally-wordpress.class.php:1044
+msgid "Please select item."
+msgstr "アイテムを選択してください。"
+
+#: ../literally-wordpress.class.php:1054
+msgid "Price is higher than original price."
+msgstr "価格が定価よりも高くなっています。"
+
+#: ../literally-wordpress.class.php:1059
+#: ../literally-wordpress.class.php:1105
+msgid "Date format is invalid."
+msgstr "日付の形式が不正です。"
+
+#: ../literally-wordpress.class.php:1064
+msgid "End date was past."
+msgstr "終了日が開始日よりも過去になっています。"
+
+#: ../literally-wordpress.class.php:1080
+msgid "Campaign added."
+msgstr "キャンペーンが追加されました。"
+
+#: ../literally-wordpress.class.php:1083
+msgid "Failed to add campaign."
+msgstr "キャンペーンの追加に失敗しました"
+
+#: ../literally-wordpress.class.php:1092
+msgid "Specified campaing doesn't exist"
+msgstr "指定されたキャンペーンは存在しません。"
+
+#: ../literally-wordpress.class.php:1097
+msgid "Price should be numeric."
+msgstr "価格は半角数字でなくてはなりません。"
+
+#: ../literally-wordpress.class.php:1100
+msgid "Campgin price is higher than original price."
+msgstr "キャンペーン価格が定価よりも高くなっています。"
+
+#: ../literally-wordpress.class.php:1110
+msgid "End date is earlier than start date."
+msgstr "終了日が開始日よりも過去になっています。"
+
+#: ../literally-wordpress.class.php:1126
+msgid "Successfully Updated."
+msgstr "更新しました。"
+
+#: ../literally-wordpress.class.php:1129
+msgid "Update Failed."
+msgstr "更新に失敗しました。"
+
+#: ../literally-wordpress.class.php:1137
+msgid "Campaign was deleted."
+msgstr "キャンペーンは削除されました。"
+
+#: ../literally-wordpress.class.php:1140
+msgid "Failed to delete campaign."
+msgstr "キャンペーンの削除に失敗しました。"
+
+#: ../literally-wordpress.class.php:1254
+msgid "You've kindly given a present."
+msgstr "プレゼントを渡しました。"
+
+#: ../literally-wordpress.class.php:1256
+msgid "Failed to give a present."
+msgstr "プレゼントを渡せませんでした。"
+
+#: ../literally-wordpress.class.php:1387
+msgid "Purchase infomation updated."
+msgstr "購入情報が更新されました。"
+
+#: ../literally-wordpress.class.php:1389
+msgid "Failed to update purchase infomration."
+msgstr "購入情報の更新に失敗しました。"
+
+#: ../literally-wordpress.class.php:1416
+msgid "No content is specified."
+msgstr "コンテンツが指定されていません。"
+
+#: ../literally-wordpress.class.php:1440
+msgid "This contents is not on sale."
+msgstr "このコンテンツはセール中ではありません。"
+
+#: ../literally-wordpress.class.php:1444
+msgid "Failed to make transaction."
+msgstr "トランザクションを開始できませんでした。"
+
+#: ../literally-wordpress.class.php:1447
+#, php-format
+msgid "Transaction Error : %s"
+msgstr "トランザクションエラー: %s"
+
+#: ../literally-wordpress.class.php:1472
+msgid "Transaction Failed to finish."
+msgstr "トランザクションを完了できませんでした。"
+
+#: ../literally-wordpress.class.php:1472
+#: ../literally-wordpress.class.php:1493
+msgid "Failed"
+msgstr "失敗"
+
+#: ../literally-wordpress.class.php:1479
+msgid "Failed to connect with PayPal."
+msgstr "PayPalへの接続に失敗しました。"
+
+#: ../literally-wordpress.class.php:1483
+msgid "Failed to get the transactional information."
+msgstr "トランザクション情報の取得に失敗しました。"
+
+#: ../literally-wordpress.class.php:1653
+msgid "You have no permission to access this file."
+msgstr "このファイルへのアクセス権がありません。"
+
+#: ../literally-wordpress.class.php:1653
+msgid "Permission Error"
+msgstr "アクセス権エラー"
+
+#: ../admin/campaign.php:2
+#: ../admin/history.php:59
+msgid "Campaign"
+msgstr "キャンペーン"
+
+#: ../admin/campaign.php:18
+#: ../admin/campaign.php:198
+msgid "Campaign Item"
+msgstr "キャンペーンアイテム"
+
+#: ../admin/campaign.php:23
+msgid "Item cant't be changed later."
+msgstr "アイテムは変更できません。"
+
+#: ../admin/campaign.php:29
+#: ../admin/campaign.php:214
+msgid "Campaign Price"
+msgstr "キャンペーン価格"
+
+#: ../admin/campaign.php:34
+#, php-format
+msgid "Original price is %s"
+msgstr "定価は%sです。"
+
+#: ../admin/campaign.php:40
+#: ../admin/campaign.php:223
+msgid "Start Date"
+msgstr "開始日"
+
+#: ../admin/campaign.php:45
+#: ../admin/campaign.php:56
+#: ../admin/campaign.php:226
+#: ../admin/campaign.php:235
+#, php-format
+msgid "Format must be %s."
+msgstr "フォーマットは%sです。"
+
+#: ../admin/campaign.php:51
+#: ../admin/campaign.php:232
+msgid "End Date"
+msgstr "終了日"
+
+#: ../admin/campaign.php:65
+msgid "Return to cmapign page"
+msgstr ""
+
+#: ../admin/campaign.php:84
+#, php-format
+msgid "Toatal %d:"
+msgstr ""
+
+#: ../admin/campaign.php:102
+#: ../admin/campaign.php:168
+#: ../admin/devices.php:27
+#: ../admin/devices.php:73
+msgid "Action"
+msgstr "アクション"
+
+#: ../admin/campaign.php:103
+#: ../admin/campaign.php:169
+#: ../admin/devices.php:28
+#: ../admin/devices.php:74
+msgid "Delete"
+msgstr "削除"
+
+#: ../admin/campaign.php:105
+#: ../admin/campaign.php:171
+#: ../admin/devices.php:30
+#: ../admin/devices.php:76
+msgid "Apply"
+msgstr "適用"
+
+#: ../admin/campaign.php:117
+#: ../admin/campaign.php:127
+msgid "Item"
+msgstr "アイテム"
+
+#: ../admin/campaign.php:118
+#: ../admin/campaign.php:128
+msgid "Period"
+msgstr "期間"
+
+#: ../admin/campaign.php:119
+#: ../admin/campaign.php:129
+#: ../admin/history.php:30
+#: ../admin/history.php:39
+#: ../form-template/edit-detail.php:8
+msgid "Price"
+msgstr "価格"
+
+#: ../admin/campaign.php:160
+msgid "No campaign registered."
+msgstr "キャンペーンは登録さていません。"
+
+#: ../admin/campaign.php:181
+msgid "You can edit the campain detail by clicking item link.<br />But You can't change the price of temporary active campain.<br /><strong>In that case, you have to stop campaign and recreate another campaing.</strong>"
+msgstr ""
+
+#: ../admin/campaign.php:193
+msgid "Add new campaign"
+msgstr ""
+
+#: ../admin/campaign.php:200
+msgid "Select from here."
+msgstr ""
+
+#: ../admin/campaign.php:208
+msgid "Item for which campaign will be adopted."
+msgstr ""
+
+#: ../admin/campaign.php:217
+msgid "Price for campaign."
+msgstr ""
+
+#: ../admin/campaign.php:241
+msgid "Add new campaing"
+msgstr ""
+
+#: ../admin/devices.php:2
+msgid "Devices"
+msgstr ""
+
+#: ../admin/devices.php:13
+msgid "You really delete this device?"
+msgstr ""
+
+#: ../admin/devices.php:42
+#: ../admin/devices.php:51
+#: ../admin/devices.php:111
+msgid "Slug"
+msgstr ""
+
+#: ../admin/devices.php:65
+msgid "No device was registered."
+msgstr ""
+
+#: ../admin/devices.php:85
+msgid "You can delete device, but you still have to delete files on each post-editting page"
+msgstr ""
+
+#: ../admin/devices.php:97
+#: ../admin/devices.php:120
+msgid "Add new device"
+msgstr ""
+
+#: ../admin/devices.php:105
+msgid "Name of device to display."
+msgstr ""
+
+#: ../admin/devices.php:114
+msgid "Slug is alphabetical short name for device. It will help for displaying icon.<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"
+msgstr ""
+
+#: ../admin/donate.php:3
+msgid "Donate"
+msgstr ""
+
+#: ../admin/donate.php:5
+#, php-format
+msgid "This plugin was made by <a href=\"http://takahashifumiki.com\" target=\"_blank\">%1$s</a> of <a href=\"http://hametuha.co.jp\" target=\"_blank\">%2$s</a>. If you like this plugin, please vote <a href=\"http://wordpress.org/extend/plugins/literally-wordpress/\" target=\"_blank\">Here</a> or donate."
+msgstr ""
+
+#: ../admin/donate.php:5
+#: ../admin/donate.php:6
+msgid "Takahashi Fumiki"
+msgstr ""
+
+#: ../admin/donate.php:5
+msgid "Hametuha inc."
+msgstr ""
+
+#: ../admin/donate.php:15
+msgid "Donation Ammount"
+msgstr ""
+
+#: ../admin/donate.php:20
+msgid "Drink beer."
+msgstr ""
+
+#: ../admin/donate.php:21
+msgid "Take a lunch."
+msgstr ""
+
+#: ../admin/donate.php:22
+msgid "Go to some nice bar."
+msgstr ""
+
+#: ../admin/donate.php:23
+msgid "Have a good party."
+msgstr ""
+
+#: ../admin/donate.php:24
+msgid "I am your father."
+msgstr ""
+
+#: ../admin/donate.php:30
+msgid "Return to takahashifumiki.com"
+msgstr ""
+
+#: ../admin/donate.php:36
+msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
+msgstr ""
+
+#: ../admin/history.php:14
+#: ../admin/management.php:124
+#, php-format
+msgid "%1$d - %2$d (Total: %3$d)"
+msgstr ""
+
+#: ../admin/history.php:29
+#: ../admin/history.php:38
+#: ../admin/management.php:20
+#: ../admin/management.php:139
+#: ../admin/management.php:150
+msgid "Item Name"
+msgstr ""
+
+#: ../admin/history.php:31
+#: ../admin/history.php:40
+#: ../admin/management.php:59
+#: ../admin/management.php:143
+#: ../admin/management.php:154
+msgid "Method"
+msgstr ""
+
+#: ../admin/history.php:32
+#: ../admin/history.php:41
+#: ../admin/management.php:144
+#: ../admin/management.php:155
+msgid "Date"
+msgstr ""
+
+#: ../admin/history.php:53
+#: ../admin/management.php:62
+msgid "PayPal"
+msgstr ""
+
+#: ../admin/history.php:56
+#: ../admin/management.php:63
+msgid "Present"
+msgstr ""
+
+#: ../admin/history.php:66
+msgid "View Item"
+msgstr ""
+
+#: ../admin/history.php:73
+msgid "You have purchased no item."
+msgstr ""
+
+#: ../admin/history.php:75
+msgid "Contact"
+msgstr ""
+
+#: ../admin/history.php:77
+#, php-format
+msgid "If purchased items were not displayed, please contact to Site administrator &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
+msgstr ""
+
+#: ../admin/management.php:13
+msgid "Update Trnasaction"
+msgstr ""
+
+#: ../admin/management.php:24
+#: ../admin/management.php:140
+#: ../admin/management.php:151
+msgid "User Name"
+msgstr ""
+
+#: ../admin/management.php:33
+msgid "Select below"
+msgstr ""
+
+#: ../admin/management.php:47
+msgid "This transaction doesn't relate to any account."
+msgstr ""
+
+#: ../admin/management.php:47
+#: ../admin/setting.php:17
+#: ../admin/setting.php:52
+#: ../admin/setting.php:63
+#: ../admin/setting.php:74
+#: ../admin/setting.php:85
+#: ../admin/setting.php:102
+#: ../admin/setting.php:124
+#: ../admin/setting.php:142
+#: ../admin/setting.php:168
+#: ../admin/setting.php:185
+#: ../admin/setting.php:204
+#: ../admin/setting.php:227
+msgid "More &gt;"
+msgstr ""
+
+#: ../admin/management.php:52
+#: ../admin/management.php:141
+#: ../admin/management.php:152
+msgid "Purchased Price"
+msgstr ""
+
+#: ../admin/management.php:55
+msgid "Original Price"
+msgstr ""
+
+#: ../admin/management.php:68
+msgid "Mail account for transaction"
+msgstr ""
+
+#: ../admin/management.php:72
+msgid "This mail is same as the account mail."
+msgstr ""
+
+#: ../admin/management.php:74
+msgid "This mail is same as PayPal mail of the user account."
+msgstr ""
+
+#: ../admin/management.php:76
+msgid "This mail doesn't related to account information."
+msgstr ""
+
+#: ../admin/management.php:81
+#: ../admin/management.php:142
+#: ../admin/management.php:153
+msgid "Status"
+msgstr ""
+
+#: ../admin/management.php:84
+msgid "Success"
+msgstr ""
+
+#: ../admin/management.php:85
+msgid "Cancel"
+msgstr ""
+
+#: ../admin/management.php:90
+msgid "Updated"
+msgstr ""
+
+#: ../admin/management.php:93
+msgid "Registered"
+msgstr ""
+
+#: ../admin/management.php:102
+msgid "Return to transaction list"
+msgstr ""
+
+#: ../admin/management.php:145
+#: ../admin/management.php:156
+msgid "Detail"
+msgstr ""
+
+#: ../admin/management.php:168
+msgid "Edit"
+msgstr ""
+
+#: ../admin/setting.php:9
+msgid "Use Sandbox"
+msgstr ""
+
+#: ../admin/setting.php:14
+msgid "This is a develop enviorment."
+msgstr ""
+
+#: ../admin/setting.php:17
+msgid "Sandbox means develop enviorment. You can test your settings by checking above."
+msgstr ""
+
+#: ../admin/setting.php:23
+msgid "Country Code"
+msgstr ""
+
+#: ../admin/setting.php:35
+msgid "Currency Code"
+msgstr ""
+
+#: ../admin/setting.php:47
+msgid "PayPal API User Name"
+msgstr ""
+
+#: ../admin/setting.php:52
+msgid "PayPal API User Name issued by PayPal."
+msgstr ""
+
+#: ../admin/setting.php:58
+msgid "PayPal Password"
+msgstr ""
+
+#: ../admin/setting.php:63
+msgid "API password issued by PayPal"
+msgstr ""
+
+#: ../admin/setting.php:69
+msgid "PayPal Signature"
+msgstr ""
+
+#: ../admin/setting.php:74
+msgid "API signature issued by PayPal"
+msgstr ""
+
+#: ../admin/setting.php:80
+msgid "PayPal PDT Token"
+msgstr ""
+
+#: ../admin/setting.php:85
+msgid "Token issued by PayPal. Required for transaction."
+msgstr ""
+
+#: ../admin/setting.php:89
+#, php-format
+msgid "This Token might be incorrect. See %s and get correct PDT Token."
+msgstr ""
+
+#: ../admin/setting.php:89
+#: ../admin/setting.php:106
+#: ../admin/setting.php:111
+#: ../admin/setting.php:248
+msgid "Help"
+msgstr ""
+
+#: ../admin/setting.php:96
+msgid "Directory for File protection"
+msgstr ""
+
+#: ../admin/setting.php:101
+msgid "Directory to save files. This should be writable and innaccessible via HTTP."
+msgstr ""
+
+#: ../admin/setting.php:106
+#, php-format
+msgid "Directory isn't writable. You can't upload files. See %s and set appropriate permission."
+msgstr ""
+
+#: ../admin/setting.php:111
+#, php-format
+msgid "Directory is accessible via HTTP. See %s and prepend others from direct access."
+msgstr ""
+
+#: ../admin/setting.php:118
+msgid "Product slug"
+msgstr ""
+
+#: ../admin/setting.php:125
+msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>"
+msgstr ""
+
+#: ../admin/setting.php:131
+msgid "Purchase History Page"
+msgstr ""
+
+#: ../admin/setting.php:135
+msgid "-------"
+msgstr ""
+
+#: ../admin/setting.php:141
+msgid "You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel."
+msgstr ""
+
+#: ../admin/setting.php:148
+msgid "Custom Post Type"
+msgstr ""
+
+#: ../admin/setting.php:153
+msgid "Custom post name"
+msgstr ""
+
+#: ../admin/setting.php:154
+msgid "If not needed, leave it blank. ex: eBooks"
+msgstr ""
+
+#: ../admin/setting.php:158
+msgid "Custom post name in Singular"
+msgstr ""
+
+#: ../admin/setting.php:159
+msgid "If you don't specified, this same as above field. ex: eBook"
+msgstr ""
+
+#: ../admin/setting.php:163
+msgid "Custom post slug"
+msgstr ""
+
+#: ../admin/setting.php:164
+msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
+msgstr ""
+
+#: ../admin/setting.php:167
+msgid "If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you."
+msgstr ""
+
+#: ../admin/setting.php:174
+msgid "Payable Post Types"
+msgstr ""
+
+#: ../admin/setting.php:184
+msgid "You can manually make any post type payable. See detail at how to customize."
+msgstr ""
+
+#: ../admin/setting.php:191
+msgid "Automatic output"
+msgstr ""
+
+#: ../admin/setting.php:196
+msgid "Show complete form"
+msgstr ""
+
+#: ../admin/setting.php:200
+msgid "Manually display form"
+msgstr ""
+
+#: ../admin/setting.php:203
+msgid "If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags."
+msgstr ""
+
+#: ../admin/setting.php:210
+msgid "Assets Loading"
+msgstr ""
+
+#: ../admin/setting.php:215
+msgid "Load plugin default CSS and JS"
+msgstr ""
+
+#: ../admin/setting.php:219
+msgid "Load only JS"
+msgstr ""
+
+#: ../admin/setting.php:223
+msgid "Load no Assets"
+msgstr ""
+
+#: ../admin/setting.php:226
+msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign."
+msgstr ""
+
+#: ../admin/setting.php:234
+msgid "Update"
+msgstr ""
+
+#: ../admin/setting.php:237
+msgid "Notes"
+msgstr ""
+
+#: ../admin/setting.php:239
+msgid "Permalink"
+msgstr ""
+
+#: ../admin/setting.php:241
+#, php-format
+msgid "If permalink is enabled, custom post type page will return %s and won't be displayed."
+msgstr ""
+
+#: ../admin/setting.php:242
+#, php-format
+msgid "Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display."
+msgstr ""
+
+#: ../admin/setting.php:245
+msgid "Customize"
+msgstr ""
+
+#: ../admin/setting.php:247
+msgid "If you are a experienced developper, you can customize this plugin with template tags."
+msgstr ""
+
+#: ../admin/setting.php:248
+#, php-format
+msgid "See detail at %s."
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:12
+msgid "Capability"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:13
+msgid "Owner"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:14
+msgid "Subscriber"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:15
+msgid "Non Owner"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:16
+msgid "Non Subscriber"
+msgstr ""
+
+#: ../form-template/edit-detail.php:18
+msgid "This post is free."
+msgstr ""
+
+#: ../form-template/edit-detail.php:23
+msgid "This Post has no files. You can add files from media uploader."
+msgstr ""
+
+#: ../form-template/paypal-cancel.php:2
+msgid "Transaction is canceled."
+msgstr ""
+
+#: ../form-template/paypal-cancel.php:5
+msgid "Return"
+msgstr ""
+
+#: ../form-template/paypal-return.php:18
+msgid "Please confirm the invoice above and accept payment."
+msgstr ""
+
+#: ../form-template/paypal-return.php:20
+msgid "Confirm"
+msgstr ""
+
+#: ../form-template/paypal-return.php:28
+msgid "Invoice No."
+msgstr ""
+
+#: ../form-template/paypal-return.php:35
+msgid "Your Name"
+msgstr ""
+
+#: ../form-template/paypal-return.php:51
+msgid "Amount"
+msgstr ""
+
+#: ../form-template/paypal-success.php:2
+msgid "Thank you for purchasing."
+msgstr ""
+
+#: ../form-template/paypal-success.php:3
+msgid "You will be redirected to the purchased item page."
+msgstr ""
+
+#: ../form-template/paypal-success.php:6
+#, php-format
+msgid "%s seconds left"
+msgstr ""
+
+#: ../form-template/paypal-success.php:9
+msgid "return now"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:203
+msgid "ÅLAND ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:204
+msgid "ALBANIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:205
+msgid "ALGERIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:206
+msgid "AMERICAN SAMOA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:207
+msgid "ANDORRA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:208
+msgid "ANGUILLA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:209
+msgid "ANTARCTICA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:210
+msgid "ANTIGUA AND BARBUDA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:211
+msgid "ARGENTINA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:212
+msgid "ARMENIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:213
+msgid "ARUBA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:214
+msgid "AUSTRALIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:215
+msgid "AUSTRIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:216
+msgid "BAHAMAS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:217
+msgid "BAHRAIN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:218
+msgid "BARBADOS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:219
+msgid "BELGIUM"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:220
+msgid "BELIZE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:221
+msgid "BENIN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:222
+msgid "BERMUDA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:223
+msgid "BHUTAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:224
+msgid "BOTSWANA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:225
+msgid "BOUVET ISLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:226
+msgid "BRAZIL"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:227
+msgid "BRITISH INDIAN OCEAN TERRITORY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:228
+msgid "BRUNEI DARUSSALAM"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:229
+msgid "BULGARIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:230
+msgid "BURKINA FASO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:231
+msgid "CANADA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:232
+msgid "CAPE VERDE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:233
+msgid "CAYMAN ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:234
+msgid "CENTRAL AFRICAN REPUBLIC"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:235
+msgid "CHILE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:236
+msgid "CHINA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:237
+msgid "CHRISTMAS ISLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:238
+msgid "COCOS (KEELING) ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:239
+msgid "COLOMBIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:240
+msgid "COOK ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:241
+msgid "COSTA RICA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:242
+msgid "CYPRUS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:243
+msgid "CZECH REPUBLIC"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:244
+msgid "DENMARK"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:245
+msgid "DJIBOUTI"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:246
+msgid "DOMINICA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:247
+msgid "DOMINICAN REPUBLIC"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:248
+msgid "EGYPT"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:249
+msgid "EL SALVADOR"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:250
+msgid "ESTONIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:251
+msgid "FALKLAND ISLANDS (MALVINAS)"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:252
+msgid "FAROE ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:253
+msgid "FIJI"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:254
+msgid "FINLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:255
+msgid "FRANCE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:256
+msgid "FRENCH GUIANA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:257
+msgid "FRENCH POLYNESIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:258
+msgid "FRENCH SOUTHERN TERRITORIES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:259
+msgid "GAMBIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:260
+msgid "GEORGIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:261
+msgid "GERMANY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:262
+msgid "GHANA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:263
+msgid "GIBRALTAR"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:264
+msgid "GREECE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:265
+msgid "GREENLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:266
+msgid "GRENADA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:267
+msgid "GUADELOUPE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:268
+msgid "GUAM"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:269
+msgid "GUERNSEY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:270
+msgid "HEARD ISLAND AND MCDONALD ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:271
+msgid "HOLY SEE (VATICAN CITY STATE)"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:272
+msgid "HONDURAS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:273
+msgid "HONG KONG"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:274
+msgid "HUNGARY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:275
+msgid "ICELAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:276
+msgid "INDIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:277
+msgid "INDONESIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:278
+msgid "IRELAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:279
+msgid "ISLE OF MAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:280
+msgid "ISRAEL"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:281
+msgid "ITALY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:282
+msgid "JAMAICA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:283
+msgid "JAPAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:284
+msgid "JERSEY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:285
+msgid "JORDAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:286
+msgid "KAZAKHSTAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:287
+msgid "KIRIBATI"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:288
+msgid "KOREA, REPUBLIC OF"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:289
+msgid "KUWAIT"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:290
+msgid "KYRGYZSTAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:291
+msgid "LATVIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:292
+msgid "LESOTHO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:293
+msgid "LIECHTENSTEIN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:294
+msgid "LITHUANIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:295
+msgid "LUXEMBOURG"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:296
+msgid "MACAO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:297
+msgid "MALAWI"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:298
+msgid "MALAYSIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:299
+msgid "MALTA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:300
+msgid "MARSHALL ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:301
+msgid "MARTINIQUE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:302
+msgid "MAURITANIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:303
+msgid "MAURITIUS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:304
+msgid "MAYOTTE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:305
+msgid "MEXICO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:306
+msgid "MICRONESIA, FEDERATED STATES OF"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:307
+msgid "MOLDOVA, REPUBLIC OF"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:308
+msgid "MONACO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:309
+msgid "MONGOLIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:310
+msgid "MONTSERRAT"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:311
+msgid "MOROCCO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:312
+msgid "MOZAMBIQUE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:313
+msgid "NAMIBIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:314
+msgid "NAURU"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:315
+msgid "NEPAL"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:316
+msgid "NETHERLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:317
+msgid "NETHERLANDS ANTILLES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:318
+msgid "NEW CALEDONIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:319
+msgid "NEW ZEALAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:320
+msgid "NICARAGUA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:321
+msgid "NIGER"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:322
+msgid "NIUE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:323
+msgid "NORFOLK ISLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:324
+msgid "NORTHERN MARIANA ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:325
+msgid "NORWAY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:326
+msgid "OMAN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:327
+msgid "PALAU"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:328
+msgid "PANAMA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:329
+msgid "PARAGUAY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:330
+msgid "PERU"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:331
+msgid "PHILIPPINES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:332
+msgid "PITCAIRN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:333
+msgid "POLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:334
+msgid "PORTUGAL"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:335
+msgid "PUERTO RICO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:336
+msgid "QATAR"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:337
+msgid "REUNION"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:338
+msgid "ROMANIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:339
+msgid "SAINT HELENA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:340
+msgid "SAINT KITTS AND NEVIS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:341
+msgid "SAINT LUCIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:342
+msgid "SAINT PIERRE AND MIQUELON"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:343
+msgid "SAINT VINCENT AND THE GRENADINES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:344
+msgid "SAMOA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:345
+msgid "SAN MARINO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:346
+msgid "SAO TOME AND PRINCIPE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:347
+msgid "SAUDI ARABIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:348
+msgid "SENEGAL"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:349
+msgid "SEYCHELLES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:350
+msgid "SINGAPORE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:351
+msgid "SLOVAKIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:352
+msgid "SLOVENIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:353
+msgid "SOLOMON ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:354
+msgid "SOUTH AFRICA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:355
+msgid "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:356
+msgid "SPAIN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:357
+msgid "SURINAME"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:358
+msgid "SVALBARD AND JAN MAYEN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:359
+msgid "SWAZILAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:360
+msgid "SWEDEN"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:361
+msgid "SWITZERLAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:362
+msgid "TAIWAN, PROVINCE OF CHINA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:363
+msgid "TANZANIA, UNITED REPUBLIC OF"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:364
+msgid "THAILAND"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:365
+msgid "TOKELAU"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:366
+msgid "TONGA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:367
+msgid "TRINIDAD AND TOBAGO"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:368
+msgid "TUNISIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:369
+msgid "TURKEY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:370
+msgid "TURKS AND CAICOS ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:371
+msgid "TUVALU"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:372
+msgid "UKRAINE"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:373
+msgid "UNITED ARAB EMIRATES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:374
+msgid "UNITED KINGDOM"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:375
+msgid "UNITED STATES"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:376
+msgid "UNITED STATES MINOR OUTLYING ISLANDS"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:377
+msgid "URUGUAY"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:378
+msgid "VIET NAM"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:379
+msgid "VIRGIN ISLANDS, BRITISH"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:380
+msgid "VIRGIN ISLANDS, U.S."
+msgstr ""
+
+#: ../paypal/paypal_statics.php:381
+msgid "WALLIS AND FUTUNA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:382
+msgid "ZAMBIA"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:395
+msgid "Australian Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:396
+msgid "Brazilian Real"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:397
+msgid "Canadian Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:398
+msgid "Czech Koruna"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:399
+msgid "Danish Krone"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:400
+msgid "Euro"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:401
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:402
+msgid "Hungarian Forint"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:403
+msgid "Israeli New Sheqel"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:404
+msgid "Japanese Yen"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:405
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:406
+msgid "Mexican Peso"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:407
+msgid "Norwegian Krone"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:408
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:409
+msgid "Philippine Peso"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:410
+msgid "Polish Zloty"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:411
+msgid "Pound Sterling"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:412
+msgid "Singapore Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:413
+msgid "Swedish Krona"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:414
+msgid "Swiss Franc"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:415
+msgid "Taiwan New Dollar"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:416
+msgid "Thai Baht"
+msgstr ""
+
+#: ../paypal/paypal_statics.php:417
+msgid "U.S. Dollar"
+msgstr ""
+

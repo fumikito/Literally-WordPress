@@ -1,5 +1,5 @@
 <?php /* @var $this Literally_WordPress */ ?>
-<h2>電子書籍キャンペーン</h2>
+<h2><?php $this->e('Campaign'); ?></h2>
 
 <?php
 /*-------------------------------
@@ -15,45 +15,45 @@ $post = wp_get_single_post($campaign->book_id);
 	<table class="form-table">
 		<tr class="form-field">
 			<th valign="top">
-				<label for="book_id">対象電子書籍</label>
+				<label for="book_id"><?php $this->e("Campaign Item"); ?></label>
 			</th>
 			<td>
 				<strong><?php echo $post->post_title;?></strong>
 				<p class="description">
-					対象電子書籍は変更できません。
+					<?php $this->e("Item cant't be changed later."); ?>
 				</p>
 			</td>
 		</tr>
 		<tr class="form-field">
 			<th valign="top">
-				<label for="price">価格</label>
+				<label for="price"><?php $this->e('Campaign Price'); ?></label>
 			</th>
 			<td>
 				<input type="text" name="price" id="price" value="<?php echo $campaign->price; ?>" />
 				<p class="description">
-					定価は<?php echo money_format('%7n', get_post_meta($post->ID, "lwp_price", true));?>です。
+					<?php printf($this->_('Original price is %s'), number_format(lwp_original_price($post->ID)));?>
 				</p>
 			</td>
 		</tr>
 		<tr class="form-field">
 			<th valign="top">
-				<label for="start">開始</label>
+				<label for="start"><?php $this->e('Start Date'); ?></label>
 			</th>
 			<td>
 				<input type="text" name="start" id="start" value="<?php echo $campaign->start; ?>" class="date-picker" />
 				<p class="description">
-					キャンペーンの開始日時です。<span class="cursive">YYYY-mm-dd HH:MM:SS</span>の形式です。
+					<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 				</p>
 			</td>
 		</tr>
 		<tr class="form-field">
 			<th valign="top">
-				<label for="end">終了</label>
+				<label for="end"><?php $this->e('End Date'); ?></label>
 			</th>
 			<td>
 				<input type="text" name="end" id="end" value="<?php echo $campaign->end; ?>" class="date-picker" />
 				<p class="description">
-					キャンペーンの終了日時です。<span class="cursive">YYYY-mm-dd HH:MM:SS</span>の形式です。
+					<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 				</p>
 			</td>
 		</tr>
@@ -62,7 +62,7 @@ $post = wp_get_single_post($campaign->book_id);
 		<input type="submit" value="更新" name="submit" class="primary-button" />
 	</p>
 </form>
-<a href="<?php echo admin_url(); ?>edit.php?post_type=ebook&page=lwp-campaign">&laquo;キャンペーン一覧へ戻る</a>
+<a href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">&laquo;<?php $this->e('Return to cmapign page'); ?></a>
 <?php
 /*-------------------------------
  * 一覧表示
@@ -81,12 +81,12 @@ else:
 	}
 	$sql = "SELECT * FROM {$this->campaign} ORDER BY `start` DESC LIMIT {$offset}10";
 	$campaigns = $wpdb->get_results($wpdb->prepare($sql));
-	$pagenator = "<small>全{$count}件:";
+	$pagenator = "<small>".sprintf($this->_("Toatal %d:"), $count)." ";
 	for($i = 1; $i <= $pages; $i++){
 		if($i == $curpage){
 			$pagenator .= " {$i}";
 		}else{
-			$pagenator .= ' <a href="'.admin_url()."edit.php?post_type=ebook&page=lwp-campaign&amp;offset=".$i."\">{$i}</a>";
+			$pagenator .= ' <a href="'.admin_url("admin.php?page=lwp-campaign&offset={$i}")."\">{$i}</a>";
 		}
 	}
 	$pagenator .= "</small>";
@@ -99,10 +99,10 @@ else:
 				<div class="tablenav">
 					<div class="alignleft actions">
 						<select name="action">
-							<option selected="selected" value="">一括操作</option>
-							<option value="delete">削除 </option>
+							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
+							<option value="delete"><?php $this->e("Delete"); ?></option>
 						</select>
-						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="適用" />
+						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="<?php $this->e("Apply"); ?>" />
 						<?php echo $pagenator; ?>
 						<br class="clear" />
 					</div>
@@ -114,9 +114,9 @@ else:
 							<th class="manage-column check-column">
 								<input type="checkbox" />
 							</th>
-							<th class="manage-column">対象電子書籍</th>
-							<th class="manage-column">期間</th>
-							<th class="manage-column">金額</th>
+							<th class="manage-column"><?php $this->e("Item"); ?></th>
+							<th class="manage-column"><?php $this->e("Period"); ?></th>
+							<th class="manage-column"><?php $this->e("Price"); ?></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -124,9 +124,9 @@ else:
 							<th class="manage-column check-column">
 								<input type="checkbox" />
 							</th>
-							<th class="manage-column">対象電子書籍</th>
-							<th class="manage-column">期間</th>
-							<th class="manage-column">金額</th>
+							<th class="manage-column"><?php $this->e("Item"); ?></th>
+							<th class="manage-column"><?php $this->e("Period"); ?></th>
+							<th class="manage-column"><?php $this->e("Price"); ?></th>
 						</tr>
 					</tfoot>
 					<tbody>
@@ -152,12 +152,12 @@ else:
 							</td>
 							<td>
 								<?php echo money_format('%7n', $c->price); ?>
-								<small>[<?php echo 100 - round($c->price / get_post_meta($p->ID, "lwp_price", true) * 100)?>%オフ]</small>
+								<small>[<?php printf($this->_('%d%%Off'), (100 - round($c->price / get_post_meta($p->ID, "lwp_price", true) * 100)) ); ?>]</small>
 							</td>
 						</tr>
 						<?php endforeach; else: ?>
 						<tr>
-							<td colspan="4">キャンペーンはまだありません。</td>
+							<td colspan="4"><?php $this->e("No campaign registered."); ?></td>
 						</tr>
 						<?php endif; ?>
 					</tbody>
@@ -165,10 +165,10 @@ else:
 				<div class="tablenav">
 					<div class="alignleft actions">
 						<select name="action">
-							<option selected="selected" value="">一括操作</option>
-							<option value="delete">削除 </option>
+							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
+							<option value="delete"><?php $this->e("Delete"); ?></option>
 						</select>
-						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="適用" />
+						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="<?php $this->e('Apply'); ?>" />
 						<?php echo $pagenator; ?>
 						<br class="clear" />
 					</div>
@@ -178,9 +178,7 @@ else:
 			<div class="description">
 				<p>
 					<strong>Note:</strong><br />
-					対象電子書籍のリンクをクリックすると、キャンペーン内容は変更できます。<br />
-					ただし、キャンペーン開催中に価格を変更することはできません。<br />
-					<strong>その場合はキャンペーンの終了日を変更し、キャンペーンを終了して下さい。</strong>
+					<?php $this->e('You can edit the campain detail by clicking item link.<br />But You can\'t change the price of temporary active campain.<br /><strong>In that case, you have to stop campaign and recreate another campaing.</strong>'); ?>
 				</p>
 			</div>
 			<!-- .description ends -->
@@ -192,7 +190,7 @@ else:
 	<div id="col-left">
 		<div class="col-wrap">
 			<div class="form-wrap">
-				<h3>新しいキャンペーンを開始</h3>
+				<h3><?php $this->e('Add new campaign'); ?></h3>
 				<form method="post">
 					<?php wp_nonce_field("lwp_add_campaign"); ?>
 										
@@ -222,25 +220,25 @@ else:
 					<!-- .form-field ends -->
 					
 					<div class="form-field">
-						<label for="start">開始</label>
+						<label for="start"><?php $this->e('Start Date');?></label>
 						<input type="text" id="start" name="start" class="date-picker" />
 						<p>
-							キャンペーンの開始日時です。<span class="cursive">YYYY-mm-dd HH:MM:SS</span>の形式です。
+							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
 					<div class="form-field">
-						<label for="end">終了</label>
+						<label for="end"><?php $this->e('End Date');?></label>
 						<input type="text" id="end" name="end" class="date-picker" />
 						<p>
-							キャンペーンの終了日時です。<span class="cursive">YYYY-mm-dd HH:MM:SS</span>の形式です。
+							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
 					<p class="submit">
-						<input type="submit" value="新規キャンペーンを開始" id="submit" name="submit" class="button">
+						<input type="submit" value="<?php $this->e('Add new campaing');?>" id="submit" name="submit" class="button">
 					</p>
 					<!-- .submit ends -->
 				</form>

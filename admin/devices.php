@@ -1,5 +1,5 @@
 <?php /* @var $this Literally_WordPress */ ?>
-<h2>対応端末</h2>
+<h2><?php $this->e("Devices"); ?></h2>
 
 <?php
 	//端末を取得
@@ -24,10 +24,10 @@
 				<div class="tablenav">
 					<div class="alignleft actions">
 						<select name="action">
-							<option selected="selected" value="">一括操作</option>
-							<option value="delete">削除 </option>
+							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
+							<option value="delete"><?php $this->e("Delete"); ?></option>
 						</select>
-						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="適用" onclick="lwp_confirm_delete(event);"/>
+						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="<?php $this->e("Apply"); ?>" onclick="lwp_confirm_delete(event);"/>
 						<br class="clear" />
 					</div>
 				</div>
@@ -38,8 +38,8 @@
 							<th class="manage-column check-column">
 								<input type="checkbox" />
 							</th>
-							<th class="manage-column">端末名</th>
-							<th class="manage-column">スラッグ</th>
+							<th class="manage-column"><?php $this->e("Device Name"); ?></th>
+							<th class="manage-column"><?php $this->e("Slug"); ?></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -47,8 +47,8 @@
 							<th class="manage-column check-column">
 								<input type="checkbox" />
 							</th>
-							<th class="manage-column">端末名</th>
-							<th class="manage-column">スラッグ</th>
+							<th class="manage-column"><?php $this->e("Device Name"); ?></th>
+							<th class="manage-column"><?php $this->e("Slug"); ?></th>
 						</tr>
 					</tfoot>
 					<tbody>
@@ -62,7 +62,7 @@
 						</tr>
 						<?php endforeach; else: ?>
 						<tr>
-							<td colspan="3">登録されている端末はありません。</td>
+							<td colspan="3"><?php $this->e("No device was registered."); ?></td>
 						</tr>
 						<?php endif; ?>
 					</tbody>
@@ -70,10 +70,10 @@
 				<div class="tablenav">
 					<div class="alignleft actions">
 						<select name="action">
-							<option selected="selected" value="">一括操作</option>
-							<option value="delete">削除 </option>
+							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
+							<option value="delete"><?php $this->e("Delete"); ?></option>
 						</select>
-						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="適用" onclick="lwp_confirm_delete(this);" />
+						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="<?php $this->e("Apply"); ?>" onclick="lwp_confirm_delete(this);" />
 						<br class="clear" />
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 			<div class="description">
 				<p>
 					<strong>Note:</strong><br />
-					端末は削除できますが、ファイルの削除自体は手動で行ってください。
+					<?php $this->e("You can delete device, but you still have to delete files on each post-editting page");?>
 				</p>
 			</div>
 			<!-- .description ends -->
@@ -94,30 +94,30 @@
 	<div id="col-left">
 		<div class="col-wrap">
 			<div class="form-wrap">
-				<h3>新しい端末を追加</h3>
+				<h3><?php $this->e("Add new device"); ?></h3>
 				<form method="post">
 					<?php wp_nonce_field("lwp_add_device"); ?>
 										
 					<div class="form-field">
-						<label for="device_name">端末名</label>
+						<label for="device_name"><?php $this->e("Device Name"); ?></label>
 						<input type="text" id="device_name" name="device_name" />
 						<p>
-							端末の名前です。
+							<?php $this->e("Name of device to display."); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
 					<div class="form-field">
-						<label for="device_slug">端末のスラッグ</label>
+						<label for="device_slug"><?php $this->e("Slug"); ?></label>
 						<input type="text" id="device_slug" name="device_slug" style="ime-mode:disabled;" />
 						<p>
-							端末のスラッグです。アイコンを表示するときなどに役立ちます。
+							<?php $this->e("Slug is alphabetical short name for device. It will help for displaying icon.<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
 					<p class="submit">
-						<input type="submit" value="新しい端末を追加" id="submit" name="submit" class="button">
+						<input type="submit" value="<?php $this->e("Add new device"); ?>" id="submit" name="submit" class="button">
 					</p>
 					<!-- .submit ends -->
 				</form>
