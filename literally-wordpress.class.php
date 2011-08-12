@@ -181,6 +181,9 @@ class Literally_WordPress
 		//投稿タイプの追加
 		add_action("init", array($this, "custom_post"));
 		
+		//ウィジェットの登録
+		add_action('widgets_init', array($this, 'widgets'));
+		
 		//ショートコードの追加
 		add_shortcode("lwp", array($this, "shortcode"));
 	}
@@ -479,6 +482,14 @@ CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
 		}else{
 			return;
 		}
+	}
+	
+	/**
+	 * ウィジェットを登録する
+	 */
+	public function widgets(){
+		require_once $this->dir."/widgets/buynow.php";
+		register_widget('lwpBuyNow');
 	}
 	
 	/**

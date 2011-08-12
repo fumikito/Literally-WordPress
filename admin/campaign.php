@@ -94,7 +94,7 @@ else:
 <div id="col-container">
 	<div id="col-right">
 		<div class="col-wrap">
-			<form method="post" action="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-campaign">
+			<form method="post" action="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">
 				<?php wp_nonce_field("lwp_delete_campaign"); ?>
 				<div class="tablenav">
 					<div class="alignleft actions">

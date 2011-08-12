@@ -30,11 +30,8 @@ if(!defined("DS")){
 	define("DS", DIRECTORY_SEPARATOR); 
 }
 
-//コアクラスをグローバル変数に格納
-global $lwp;
-
 //インストール要件を満たしているかを確認
-if(literally_wordpress_check_version() && function_exists("curl_init")){
+if(literally_wordpress_check_version()){
 		
 	//クラスファイル読み込み
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress.class.php";
@@ -66,14 +63,14 @@ if(literally_wordpress_check_version() && function_exists("curl_init")){
  *
  * @return void
  */
-function literally_WordPress_failed()
-{
+function literally_WordPress_failed(){
+	load_plugin_textdomain('literally-wordpress', false, basename(__FILE__).DIRECTORY_SEPARATOR."language");
 	?>
 		<div class='update-nag'>
 			<ul>
-				<li>Literally WordPressは有効化されていますが、利用できません。PHPのバージョンが5以上でないとダメです。現在のPHPバージョンは<?php echo phpversion(); ?>です。</li>
+				<li><?php printf(__('Literally WordPress is activated but isn\'t available. This plugin needs PHP version 5<. Your PHP version is %1$s', 'literally-wordpress'), phpversion()); ?></li>
 				<?php if(!function_exists("curl_init")): ?>
-				<li>このプラグインは<a target="_blank" href="http://php.net/manual/ja/book.curl.php">cURL関数</a>の利用を前提としています。サーバ管理者にPHPでのcURL利用が可能かどうか、確認してください。</li>
+				<li><?php _e('This plugin needs curl module. Please contact to your server administrator to check if cUrl is available.', 'literally-wordpress');?></li>
 				<?php endif; ?>
 			</ul>
 		</div>
@@ -85,11 +82,13 @@ function literally_WordPress_failed()
  *
  * @return boolean
  */
-function literally_wordpress_check_version()
-{
+function literally_wordpress_check_version(){
 	$version = explode(".", PHP_VERSION);
 	if($version[0] > 4)
-		return true;
+		if(function_exists("curl_init"))
+			return true;
+		else
+			return false;
 	else
 		return false;	
 }

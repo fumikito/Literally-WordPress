@@ -437,9 +437,14 @@ function lwp_get_date($file, $registered = true, $echo = true)
 		return $formatted;
 }
 
-
+/**
+ * 登録されているファイルのリストを返す
+ * @global Literally_WordPress $lwp
+ * @param string $accessibility
+ * @param object $post
+ * @return string
+ */
 function lwp_get_file_list($accessibility = "all", $post = null){
-	var_dump(lwp_get_files($accessibility, $post));
 	global $lwp;
 	$tag = "<!-- Literally WordPress {$lwp->version} --><div class=\"lwp-files\"><h3>".$lwp->_('Registered Files')."</h3>";
 	$tag .= "<table class=\"lwp-file-table\">";
@@ -586,10 +591,10 @@ EOS;
  * 
  * @since 0.3
  * @param mixed $post (optional) 投稿オブェクトまたは投稿ID。ループ内では指定する必要はありません。
- * @param string $btn_src (optional) 購入ボタンまでのURL
+ * @param string $btn_src (optional) 購入ボタンまでのURL nullを渡すと画像ではなくaタグになる
  * @return void
  */
-function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif")
+function lwp_buy_now($post = null, $btn_src = false)
 {
 	global $lwp;
 	if(!$post){
@@ -602,7 +607,15 @@ function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i
 	}else{
 		return;
 	}
-	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\"><img src=\"".h($btn_src)."\" alt=\"".$lwp->_('Buy Now')."\" /></a>";
+	if(is_null($btn_src)){
+		$tag = $lwp->_('Buy Now');
+	}else{
+		if(!is_string($btn_src)){
+			$btn_src = "https://www.paypal.com/ja_JP/JP/i/btn/btn_buynowCC_LG.gif";
+		}
+		$tag = "<img src=\"".htmlspecialchars($btn_src, ENT_QUOTES, 'utf-8')."\" alt=\"".$lwp->_('Buy Now')."\" />";
+	}
+	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\">{$tag}</a>";
 }
 
 /**
@@ -612,12 +625,15 @@ function lwp_buy_now($post = null, $btn_src = "https://www.paypal.com/ja_JP/JP/i
  * @param object $post
  * @return string
  */
-function lwp_campaign_timer($post = null){
+function lwp_campaign_timer($post = null, $prefix = null){
 	if(!$post){
 		global $post;
 	}
 	if(lwp_on_sale($post)){
 		global $lwp;
+		if(!$prefix){
+			$prefix = $lwp->_('Left time: ');
+		}
 		//終了日を取得
 		$end = lwp_campaign_end($post, true);
 		if(!$end){
@@ -636,12 +652,12 @@ function lwp_campaign_timer($post = null){
 		$tag = "";
 		if($days > 0){
 			$unit = $days == 1 ? $lwp->_('day') : $lwp->_('days');
-			$tag .= sprintf('<span class="day">%1$d</span>%2$s', $days, $unit)." ";
+			$tag .= sprintf($lwp->_('<span class="day">%1$d</span>%2$s'), $days, $unit)." ";
 		}
-		$tag .= sprintf('<span class="hour">%02d</span>:', $hours);
-		$tag .= sprintf('<span class="minutes">%02d</span>:', $minutes);
-		$tag .= sprintf('<span class="seconds">%02d</span>', $seconds);
-		return "<p class=\"lwp-timer\">{$tag}</p>";
+		$tag .= sprintf($lwp->_('<span class="hour">%02d</span>h '), $hours);
+		$tag .= sprintf($lwp->_('<span class="minutes">%02d</span>m '), $minutes);
+		$tag .= sprintf($lwp->_('<span class="seconds">%02d</span>s'), $seconds);
+		return "<p class=\"lwp-timer\"><span class=\"prefix\">{$prefix}</span>{$tag}</p>";
 	}else{
 		return "";
 	}
@@ -659,7 +675,7 @@ function lwp_discout_rate($post = null){
 	if(lwp_on_sale($post)){
 		$orig_price = lwp_original_price($post);
 		$current_price = lwp_price($post);
-		return sprintf($lwp->_("%d%%Off"), floor((1 - $current_price / $orig_price) * 100));
+		return sprintf($lwp->_("%d%% Off"), floor((1 - $current_price / $orig_price) * 100));
 	}else{
 		return "";
 	}
