@@ -53,6 +53,9 @@ class lwpBuyNow extends WP_Widget{
 EOS;
 		?>
 		<strong class="lwp-buynow-title"><?php echo apply_filters('the_title', $post->post_title); ?></strong>
+		<?php if(lwp_on_sale($post) && !empty($sales)): ?>
+		<p class="lwp-on-sale"><?php echo str_replace('%end%', lwp_campaign_end($post), $sales);?></p>
+		<?php endif; ?>
 		<?php if($timer): ?>
 			<?php echo lwp_campaign_timer($post); ?>
 		<?php endif; ?>
@@ -108,7 +111,8 @@ EOS;
 			'title' => $lwp->_('Buy Now'),
 			'post_id' => '',
 			'src' => '',
-			'timer' => '1'
+			'timer' => '1',
+			'sales' => $lwp->_('Now on SALE!')
 		), $instance));
 		?>
 		<p>
@@ -127,6 +131,13 @@ EOS;
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id('src'); ?>" name="<?php echo $this->get_field_name('src'); ?>" value="<?php echo $src; ?>" />
 			<span class="description">
 				<?php $lwp->e('Specify your original "BuyNow" button src. If you don\'t have, leave it blank and PayPal button will be displayed. Put word \'link\', button will be displayed with normal link tag.'); ?>
+			</span>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('sales'); ?>"><?php $lwp->e('Original Image src'); ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id('sales'); ?>" name="<?php echo $this->get_field_name('sales'); ?>" value="<?php echo $sales; ?>" />
+			<span class="description">
+				<?php $lwp->e('This words will be displayed after Title if on sale. %%end%% will be replaced by the campaign end date.'); ?>
 			</span>
 		</p>
 		<p>
