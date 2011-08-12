@@ -1542,6 +1542,12 @@ EOS;
 					break;
 			}
 		}
+		if(is_page($this->option['mypage'])){
+			if(!is_user_logged_in()){
+				auth_redirect();
+				die();
+			}
+		}
 	}
 	
 	/**
@@ -1678,11 +1684,68 @@ EOS;
 	 */
 	public function the_content($content)
 	{
-		global $post, $wpdb;
+		global $post, $wpdb, $user_ID;
 		//本棚用のタグを作成
 		// TODO: タグを自動生成する必要はあるか？
 		if($this->option["mypage"] > 0 && is_page($this->option["mypage"])){
 			$book_shelf = "";
+			$sql = <<<EOS
+				SELECT * FROM {$this->transaction} AS t
+				LEFT JOIN {$wpdb->posts} AS p
+				ON t.book_id = p.ID
+				WHERE t.user_id = %d AND t.status = 'SUCCESS'
+				ORDER BY t.updated DESC
+EOS;
+			$histories = $wpdb->get_results($wpdb->prepare($sql, $user_ID));
+			if(!empty($histories)){
+				$book_name = $this->_('Name');
+				$bought_data = $this->_('Date');
+				$price = $this->_('Price');
+				$method = $this->_('Payment Method');
+				$book_shelf .= <<<EOS
+					<table class="lwp-table form-table">
+						<thead>
+							<tr>
+								<th>{$book_name}</th>
+								<th>{$bought_data}</th>
+								<th>{$method}</th>
+								<th>{$price}</th>
+							</tr>
+						</thead>
+EOS;
+				$total = 0;
+				$tbody = '';
+				foreach($histories as $h){
+					$title = '<a href="'.  get_permalink($h->ID).'">'.apply_filters('the_title', $h->post_title).'</a>';
+					$date = mysql2date(get_option('date_format'), $h->updated);
+					$price = lwp_currency_symbol().number_format($h->price);
+					$total += $h->price;
+					switch(strtolower($h->method)){
+						case 'paypal':
+							$method = 'PayPal';
+							break;
+						case 'present':
+							$method = $this->_('Present');
+							break;
+						case 'campaign':
+							$method = $this->_('Free Campaign');
+							break;
+					}
+					$tbody .= <<<EOS
+						<tr>
+							<td>{$title}</td>
+							<td>{$date}</td>
+							<td>{$method}</td>
+							<td>{$price}</td>
+						</tr>	
+EOS;
+				}
+				$total = lwp_currency_symbol().number_format($total);
+				$book_shelf .= "<tfoot><td>&nbsp;</td><td>&nbsp;</td><td>".$this->_('Total: ')."</td><td>{$total}</td></tfoot>";
+				$book_shelf .= "<tbody>{$tbody}</tbody></table>";
+			}else{
+				$book_shelf = '<p class="message error">'.$this->_('You have no transaction history. Try to get any!').'</p>';
+			}
 			return $book_shelf.$content;
 		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
 			$content .= lwp_show_form();
