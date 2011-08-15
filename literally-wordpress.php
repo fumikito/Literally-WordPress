@@ -53,6 +53,10 @@ if(literally_wordpress_check_version()){
 	}
 	//ユーザー関数の読み込み
 	require_once dirname(__FILE__).DS."functions.php";
+	
+	//インストールスクリプトの登録
+	register_activation_hook(__FILE__, array($lwp, 'table_create'));
+	
 }else{
 	add_action("admin_notice", "literally_WordPress_failed");
 }

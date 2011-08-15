@@ -13,7 +13,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	public $version = "0.2";
+	public $version = "0.8";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -146,6 +146,7 @@ class Literally_WordPress
 		$this->option = array();
 		$saved_option = get_option("literally_wordpress_option");
 		$default_option =  array(
+			"db_version" => 0,
 			"sandbox" => false,
         	"user_name" => "",
 			"password" => "",
@@ -288,8 +289,6 @@ class Literally_WordPress
 		/*--------------
 		 * アクションフック
 		 */
-		//テーブル生成
-		add_action("admin_init", array($this, "table_create"));
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
 		//オプション更新
@@ -353,66 +352,74 @@ class Literally_WordPress
 	public function table_create()
 	{
 		global $wpdb;
-		if(!$wpdb->query("SHOW TABLES LIKE %{$this->files}%")){
-			$sql = <<<EOS
+		//バージョンの確認
+		if($this->version > $this->option['db_version']){
+			//$wpdb->show_errors();
+			$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
+			$sql = array();
+			$sql[] = <<<EOS
 				CREATE TABLE  `{$this->files}` (
-					`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-					`book_id` BIGINT NOT NULL ,
-					`name` VARCHAR( 255 ) NOT NULL ,
-					`file` VARCHAR( 255 ) NOT NULL ,
+					`ID` INT NOT NULL AUTO_INCREMENT,
+					`book_id` BIGINT NOT NULL,
+					`name` VARCHAR( 255 ) NOT NULL,
 					`desc` TEXT NOT NULL,
+					`file` VARCHAR( 255 ) NOT NULL,
 					`public` INT NOT NULL DEFAULT 1,
 					`free` INT NOT NULL DEFAULT 0,
-					`registered` DATETIME NOT NULL ,
-					`updated` DATETIME NOT NULL
-				) ENGINE = MYISAM
+					`registered` DATETIME NOT NULL,
+					`updated` DATETIME NOT NULL,
+					PRIMARY KEY  (`ID`)
+				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
-			$wpdb->query($sql);
-		}
-		if(!$wpdb->query("SHOW TABLES LIKE %{$this->transaction}%")){
-			$sql = <<<EOS
+			$sql[] = <<<EOS
 				CREATE TABLE  `{$this->transaction}` (
-					`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-					`user_id` BIGINT NOT NULL ,
-					`book_id` BIGINT NOT NULL ,
-					`price` BIGINT NOT NULL ,
-					`status` VARCHAR( 45 ) NOT NULL ,
+					`ID` BIGINT NOT NULL AUTO_INCREMENT,
+					`user_id` BIGINT NOT NULL,
+					`book_id` BIGINT NOT NULL,
+					`price` BIGINT NOT NULL,
+					`status` VARCHAR( 45 ) NOT NULL,
 					`method` VARCHAR( 100 ) NOT NULL DEFAULT 'PAYPAL',
-					`transaction_key` VARCHAR (255) NOT NULL ,
+					`transaction_key` VARCHAR (255) NOT NULL,
 					`payer_mail` VARCHAR (255) NOT NULL,
-					`registered` DATETIME NOT NULL ,
-					`updated` DATETIME NOT NULL
-				) ENGINE = MYISAM
+					`registered` DATETIME NOT NULL,
+					`updated` DATETIME NOT NULL,
+					PRIMARY KEY  (`ID`)
+				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
-			$wpdb->query($sql);
-		}
-		if(!$wpdb->query("SHOW TABLES LIKE %{$this->campaign}%")){
-			$sql = <<<EOS
+			$sql[] = <<<EOS
 				CREATE TABLE  `{$this->campaign}` (
-					`ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+					`ID` INT NOT NULL AUTO_INCREMENT,
 					`book_id` BIGINT NOT NULL ,
 					`price` BIGINT NOT NULL ,
 					`start` DATETIME NOT NULL ,
-					`end` DATETIME NOT NULL
-				) ENGINE = MYISAM
+					`end` DATETIME NOT NULL,
+					PRIMARY KEY  (`ID`)
+				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
-			$wpdb->query($sql);
+			$sql[] = <<<EOS
+				CREATE TABLE `{$this->devices}` (
+					`ID` BIGINT NOT NULL AUTO_INCREMENT,
+					`name` VARCHAR( 255 ) NOT NULL,
+					`slug` VARCHAR( 255 ) NOT NULL,
+					PRIMARY KEY  (`ID`)
+				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+			$sql[] = <<<EOS
+				CREATE TABLE  `{$this->file_relationships}` (
+					`ID` BIGINT NOT NULL AUTO_INCREMENT,
+					`file_id` INT NOT NULL ,
+					`device_id` INT NOT NULL,
+					PRIMARY KEY  (`ID`)
+				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+			//テーブルの作成
+			require_once ABSPATH."wp-admin/includes/upgrade.php";
+			foreach($sql as $s){
+				dbDelta($s);
+			}
+			$this->option['db_version'] = $this->version;
+			update_option("literally_wordpress_option", $this->option);
 		}
-/*
---slq for devices
-CREATE TABLE `nikkilwp_devices` (
-`ID` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`name` VARCHAR( 255 ) NOT NULL ,
-`slug` VARCHAR( 255 ) NOT NULL
-) ENGINE = MYISAM ;
-*/ 
-/*
---slq for file_relationships
-CREATE TABLE  `wordpress`.`nikkilwp_file_relationships` (
-`file_id` INT NOT NULL ,
-`device_id` INT NOT NULL
-) ENGINE = MYISAM ;
-*/ 
 	}
 	
 	/**
