@@ -597,6 +597,7 @@ EOS;
 function lwp_buy_now($post = null, $btn_src = false)
 {
 	global $lwp;
+	//投稿オブジェクトを取得
 	if(!$post){
 		global $post;
 		$post_id = $post->ID;
@@ -605,6 +606,10 @@ function lwp_buy_now($post = null, $btn_src = false)
 	}elseif(is_object($post) && isset($post->ID)){
 		$post_id = $post->ID;
 	}else{
+		return;
+	}
+	//購入可能か判別
+	if(lwp_is_free(true, $post)){
 		return;
 	}
 	if(is_null($btn_src)){
