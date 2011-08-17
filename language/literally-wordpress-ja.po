@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 12:14+0900\n"
-"PO-Revision-Date: 2011-08-01 12:31+0900\n"
+"POT-Creation-Date: 2011-08-17 17:13+0900\n"
+"PO-Revision-Date: 2011-08-17 17:26+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -17,369 +17,437 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: ../functions.php:444
+#: ../functions.php:449
 msgid "Registered Files"
 msgstr "登録されたファイル"
 
-#: ../functions.php:449
+#: ../functions.php:454
 msgid "File Name"
 msgstr "ファイル名"
 
-#: ../functions.php:450
+#: ../functions.php:455
+#: ../admin/upload.php:163
 msgid "Description"
 msgstr "説明"
 
-#: ../functions.php:451
+#: ../functions.php:456
 msgid "Available with"
 msgstr "対応端末"
 
-#: ../functions.php:452
+#: ../functions.php:457
 msgid "Download"
 msgstr "ダウンロード"
 
-#: ../functions.php:460
+#: ../functions.php:465
 msgid "download"
 msgstr "ダウンロード"
 
-#: ../functions.php:461
+#: ../functions.php:466
 msgid "Unavailable"
 msgstr "利用不可能"
 
-#: ../functions.php:462
+#: ../functions.php:467
 #, php-format
 msgid "File Size: %s"
 msgstr "ファイルサイズ: %s"
 
-#: ../functions.php:463
+#: ../functions.php:468
 #, php-format
 msgid "Published: %s"
 msgstr "公開日: %s"
 
-#: ../functions.php:464
+#: ../functions.php:469
 #, php-format
 msgid "Updated: %s"
 msgstr "更新日: %s"
 
-#: ../functions.php:491
+#: ../functions.php:496
 msgid "Devices Available With"
 msgstr "対応端末"
 
-#: ../functions.php:496
+#: ../functions.php:501
 #: ../admin/devices.php:41
 #: ../admin/devices.php:50
 #: ../admin/devices.php:102
 msgid "Device Name"
 msgstr "端末名"
 
-#: ../functions.php:497
+#: ../functions.php:502
 msgid "Avalability"
 msgstr "対応状況"
 
-#: ../functions.php:503
+#: ../functions.php:508
 msgid "Available"
 msgstr "確認済"
 
-#: ../functions.php:503
+#: ../functions.php:508
 msgid "Unconfirmed"
 msgstr "未確認"
 
-#: ../functions.php:605
+#: ../functions.php:616
+#: ../functions.php:621
 msgid "Buy Now"
 msgstr "いますぐ購入"
 
-#: ../functions.php:638
+#: ../functions.php:640
+msgid "Left time: "
+msgstr "残り時間: "
+
+#: ../functions.php:659
 msgid "day"
 msgstr "日"
 
-#: ../functions.php:638
+#: ../functions.php:659
 msgid "days"
 msgstr "日"
 
-#: ../functions.php:662
-#: ../admin/campaign.php:155
+#: ../functions.php:660
 #, php-format
-msgid "%d%%Off"
-msgstr "%d%%Off"
+msgid "<span class=\"day\">%1$d</span>%2$s"
+msgstr "<span class=\"day\">%1$d</span>%2$s"
 
-#: ../functions.php:687
+#: ../functions.php:662
+#, php-format
+msgid "<span class=\"hour\">%02d</span>h "
+msgstr "<span class=\"hour\">%02d</span>時間 "
+
+#: ../functions.php:663
+#, php-format
+msgid "<span class=\"minutes\">%02d</span>m "
+msgstr "<span class=\"minutes\">%02d</span>分 "
+
+#: ../functions.php:664
+#, php-format
+msgid "<span class=\"seconds\">%02d</span>s"
+msgstr "<span class=\"seconds\">%02d</span>秒"
+
+#: ../functions.php:683
+#, php-format
+msgid "%d%% Off"
+msgstr "%d%% Off"
+
+#: ../functions.php:708
 #, php-format
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
 
-#: ../literally-wordpress.class.php:198
+#: ../literally-wordpress.class.php:206
 msgid "Add New"
 msgstr "新規追加"
 
-#: ../literally-wordpress.class.php:199
-#: ../literally-wordpress.class.php:201
+#: ../literally-wordpress.class.php:207
+#: ../literally-wordpress.class.php:209
 #, php-format
 msgid "Add New %s"
 msgstr "新規%s追加"
 
-#: ../literally-wordpress.class.php:200
+#: ../literally-wordpress.class.php:208
 #, php-format
 msgid "Edit %s"
 msgstr "%sを編集"
 
-#: ../literally-wordpress.class.php:202
+#: ../literally-wordpress.class.php:210
 #, php-format
 msgid "View %s"
 msgstr "%sを見る"
 
-#: ../literally-wordpress.class.php:203
+#: ../literally-wordpress.class.php:211
 #, php-format
 msgid "Search %s"
 msgstr "%sを検索"
 
-#: ../literally-wordpress.class.php:204
+#: ../literally-wordpress.class.php:212
 #, php-format
 msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
-#: ../literally-wordpress.class.php:205
+#: ../literally-wordpress.class.php:213
 #, php-format
 msgid "No %s was found in trash."
 msgstr "ゴミ箱に%sは見つかりませんでした"
 
-#: ../literally-wordpress.class.php:237
+#: ../literally-wordpress.class.php:245
 msgid "Directory isn't writable."
 msgstr "ディレクトリが書き込み不可能になっています"
 
-#: ../literally-wordpress.class.php:253
+#: ../literally-wordpress.class.php:261
 msgid "Directory is publically accessible via HTTP"
 msgstr "ディレクトリはHTTPでアクセスできてしまいます"
 
-#: ../literally-wordpress.class.php:259
+#: ../literally-wordpress.class.php:267
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../literally-wordpress.class.php:264
+#: ../literally-wordpress.class.php:272
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../literally-wordpress.class.php:268
+#: ../literally-wordpress.class.php:276
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../literally-wordpress.class.php:272
+#: ../literally-wordpress.class.php:280
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登録を許可してください。"
 
-#: ../literally-wordpress.class.php:318
+#: ../literally-wordpress.class.php:324
 msgid "Literally WordPress Setting"
 msgstr "Literally WordPress設定"
 
-#: ../literally-wordpress.class.php:443
+#: ../literally-wordpress.class.php:457
 #: ../admin/setting.php:2
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../literally-wordpress.class.php:443
+#: ../literally-wordpress.class.php:457
 msgid "Setting"
 msgstr "設定"
 
-#: ../literally-wordpress.class.php:444
+#: ../literally-wordpress.class.php:458
 #: ../admin/management.php:2
 msgid "Customer Management"
 msgstr "顧客管理"
 
-#: ../literally-wordpress.class.php:444
+#: ../literally-wordpress.class.php:458
 msgid "Customer"
 msgstr "顧客"
 
-#: ../literally-wordpress.class.php:445
+#: ../literally-wordpress.class.php:459
 msgid "Campaing Management"
 msgstr "キャンペーン管理"
 
-#: ../literally-wordpress.class.php:445
+#: ../literally-wordpress.class.php:459
 msgid "Campaing"
 msgstr "キャンペーン"
 
-#: ../literally-wordpress.class.php:446
+#: ../literally-wordpress.class.php:460
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../literally-wordpress.class.php:446
+#: ../literally-wordpress.class.php:460
 msgid "Device"
 msgstr "端末"
 
-#: ../literally-wordpress.class.php:448
+#: ../literally-wordpress.class.php:462
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr "購入履歴"
 
-#: ../literally-wordpress.class.php:448
+#: ../literally-wordpress.class.php:462
 msgid "Purchase"
 msgstr "購入"
 
-#: ../literally-wordpress.class.php:530
+#: ../literally-wordpress.class.php:552
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../literally-wordpress.class.php:614
-#: ../literally-wordpress.class.php:1049
+#: ../literally-wordpress.class.php:636
+#: ../literally-wordpress.class.php:1071
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../literally-wordpress.class.php:646
+#: ../literally-wordpress.class.php:668
 msgid "Literally WordPress"
 msgstr "Literally WordPress"
 
-#: ../literally-wordpress.class.php:841
+#: ../literally-wordpress.class.php:863
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超えています。"
 
-#: ../literally-wordpress.class.php:844
+#: ../literally-wordpress.class.php:866
 msgid "Uploaded file size exceeds"
 msgstr "アップロードされたファイルサイズが大きすぎます。"
 
-#: ../literally-wordpress.class.php:847
+#: ../literally-wordpress.class.php:869
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr "ファイルが完全にアップロードされませんでした。インターネット接続を確認してください。"
 
-#: ../literally-wordpress.class.php:850
+#: ../literally-wordpress.class.php:872
 msgid "No file was uploaded."
 msgstr "ファイルがアップロードされませんでした。"
 
-#: ../literally-wordpress.class.php:853
+#: ../literally-wordpress.class.php:875
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:856
+#: ../literally-wordpress.class.php:878
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:859
+#: ../literally-wordpress.class.php:881
 msgid "PHP stops uploading."
 msgstr "PHPがアップロードを停止しました。"
 
-#: ../literally-wordpress.class.php:941
+#: ../literally-wordpress.class.php:963
 msgid "Device added."
 msgstr "端末が追加されました。"
 
-#: ../literally-wordpress.class.php:943
+#: ../literally-wordpress.class.php:965
 msgid "Failed to add device."
 msgstr "端末の追加に失敗しました。"
 
-#: ../literally-wordpress.class.php:953
+#: ../literally-wordpress.class.php:975
 msgid "Device deleted."
 msgstr "端末が削除されました。"
 
-#: ../literally-wordpress.class.php:1044
+#: ../literally-wordpress.class.php:1066
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../literally-wordpress.class.php:1054
+#: ../literally-wordpress.class.php:1076
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1059
-#: ../literally-wordpress.class.php:1105
+#: ../literally-wordpress.class.php:1081
+#: ../literally-wordpress.class.php:1127
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../literally-wordpress.class.php:1064
+#: ../literally-wordpress.class.php:1086
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1080
+#: ../literally-wordpress.class.php:1102
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../literally-wordpress.class.php:1083
+#: ../literally-wordpress.class.php:1105
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../literally-wordpress.class.php:1092
+#: ../literally-wordpress.class.php:1114
 msgid "Specified campaing doesn't exist"
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../literally-wordpress.class.php:1097
+#: ../literally-wordpress.class.php:1119
 msgid "Price should be numeric."
 msgstr "価格は半角数字でなくてはなりません。"
 
-#: ../literally-wordpress.class.php:1100
+#: ../literally-wordpress.class.php:1122
 msgid "Campgin price is higher than original price."
 msgstr "キャンペーン価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1110
+#: ../literally-wordpress.class.php:1132
 msgid "End date is earlier than start date."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1126
+#: ../literally-wordpress.class.php:1148
 msgid "Successfully Updated."
 msgstr "更新しました。"
 
-#: ../literally-wordpress.class.php:1129
+#: ../literally-wordpress.class.php:1151
 msgid "Update Failed."
 msgstr "更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1137
+#: ../literally-wordpress.class.php:1159
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../literally-wordpress.class.php:1140
+#: ../literally-wordpress.class.php:1162
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../literally-wordpress.class.php:1254
+#: ../literally-wordpress.class.php:1276
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../literally-wordpress.class.php:1256
+#: ../literally-wordpress.class.php:1278
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../literally-wordpress.class.php:1387
+#: ../literally-wordpress.class.php:1409
 msgid "Purchase infomation updated."
 msgstr "購入情報が更新されました。"
 
-#: ../literally-wordpress.class.php:1389
+#: ../literally-wordpress.class.php:1411
 msgid "Failed to update purchase infomration."
 msgstr "購入情報の更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1416
+#: ../literally-wordpress.class.php:1438
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../literally-wordpress.class.php:1440
+#: ../literally-wordpress.class.php:1462
 msgid "This contents is not on sale."
 msgstr "このコンテンツはセール中ではありません。"
 
-#: ../literally-wordpress.class.php:1444
+#: ../literally-wordpress.class.php:1466
 msgid "Failed to make transaction."
 msgstr "トランザクションを開始できませんでした。"
 
-#: ../literally-wordpress.class.php:1447
+#: ../literally-wordpress.class.php:1469
 #, php-format
 msgid "Transaction Error : %s"
 msgstr "トランザクションエラー: %s"
 
-#: ../literally-wordpress.class.php:1472
+#: ../literally-wordpress.class.php:1494
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../literally-wordpress.class.php:1472
-#: ../literally-wordpress.class.php:1493
+#: ../literally-wordpress.class.php:1494
+#: ../literally-wordpress.class.php:1515
 msgid "Failed"
 msgstr "失敗"
 
-#: ../literally-wordpress.class.php:1479
+#: ../literally-wordpress.class.php:1501
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../literally-wordpress.class.php:1483
+#: ../literally-wordpress.class.php:1505
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../literally-wordpress.class.php:1653
+#: ../literally-wordpress.class.php:1681
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../literally-wordpress.class.php:1653
+#: ../literally-wordpress.class.php:1681
 msgid "Permission Error"
 msgstr "アクセス権エラー"
+
+#: ../literally-wordpress.class.php:1710
+msgid "Name"
+msgstr "お名前"
+
+#: ../literally-wordpress.class.php:1711
+#: ../admin/history.php:32
+#: ../admin/history.php:41
+#: ../admin/management.php:144
+#: ../admin/management.php:155
+msgid "Date"
+msgstr "日付"
+
+#: ../literally-wordpress.class.php:1712
+#: ../admin/campaign.php:119
+#: ../admin/campaign.php:129
+#: ../admin/history.php:30
+#: ../admin/history.php:39
+#: ../form-template/edit-detail.php:8
+msgid "Price"
+msgstr "価格"
+
+#: ../literally-wordpress.class.php:1713
+msgid "Payment Method"
+msgstr "支払い方法"
+
+#: ../literally-wordpress.class.php:1737
+#: ../admin/history.php:56
+#: ../admin/management.php:63
+msgid "Present"
+msgstr "プレゼント"
+
+#: ../literally-wordpress.class.php:1740
+msgid "Free Campaign"
+msgstr "無料キャンペーン"
+
+#: ../literally-wordpress.class.php:1753
+msgid "Total: "
+msgstr "合計: "
+
+#: ../literally-wordpress.class.php:1756
+msgid "You have no transaction history. Try to get any!"
+msgstr "購入履歴はありません。購入をご検討ください。"
 
 #: ../admin/campaign.php:2
 #: ../admin/history.php:59
@@ -424,13 +492,13 @@ msgid "End Date"
 msgstr "終了日"
 
 #: ../admin/campaign.php:65
-msgid "Return to cmapign page"
-msgstr ""
+msgid "Return to campaign page"
+msgstr "キャンペーン一覧に戻る"
 
 #: ../admin/campaign.php:84
 #, php-format
 msgid "Toatal %d:"
-msgstr ""
+msgstr "合計 %d:"
 
 #: ../admin/campaign.php:102
 #: ../admin/campaign.php:168
@@ -443,6 +511,7 @@ msgstr "アクション"
 #: ../admin/campaign.php:169
 #: ../admin/devices.php:28
 #: ../admin/devices.php:74
+#: ../admin/upload.php:200
 msgid "Delete"
 msgstr "削除"
 
@@ -463,13 +532,10 @@ msgstr "アイテム"
 msgid "Period"
 msgstr "期間"
 
-#: ../admin/campaign.php:119
-#: ../admin/campaign.php:129
-#: ../admin/history.php:30
-#: ../admin/history.php:39
-#: ../form-template/edit-detail.php:8
-msgid "Price"
-msgstr "価格"
+#: ../admin/campaign.php:155
+#, php-format
+msgid "%d%%Off"
+msgstr "%d%%Off"
 
 #: ../admin/campaign.php:160
 msgid "No campaign registered."
@@ -477,118 +543,120 @@ msgstr "キャンペーンは登録さていません。"
 
 #: ../admin/campaign.php:181
 msgid "You can edit the campain detail by clicking item link.<br />But You can't change the price of temporary active campain.<br /><strong>In that case, you have to stop campaign and recreate another campaing.</strong>"
-msgstr ""
+msgstr "アイテムのリンクをクリックすることでキャンペーンの詳細を変更することができます。<br />現在有効になっているキャンペーンの価格を変更することはできません。<br /><strong>その場合は一度キャンペーンを終了させ、別のキャンペーンを作ってください</strong>。"
 
 #: ../admin/campaign.php:193
 msgid "Add new campaign"
-msgstr ""
+msgstr "新しいキャンペーンを追加する"
 
 #: ../admin/campaign.php:200
 msgid "Select from here."
-msgstr ""
+msgstr "選択してください。"
 
 #: ../admin/campaign.php:208
 msgid "Item for which campaign will be adopted."
-msgstr ""
+msgstr "キャンペーンが適用されるアイテムです。"
 
 #: ../admin/campaign.php:217
 msgid "Price for campaign."
-msgstr ""
+msgstr "キャンペーンの価格です。"
 
 #: ../admin/campaign.php:241
 msgid "Add new campaing"
-msgstr ""
+msgstr "新しいキャンペーンを追加"
 
 #: ../admin/devices.php:2
+#: ../admin/upload.php:148
+#: ../admin/upload.php:156
 msgid "Devices"
-msgstr ""
+msgstr "端末"
 
 #: ../admin/devices.php:13
 msgid "You really delete this device?"
-msgstr ""
+msgstr "本当にこの端末を削除してよろしいですか？"
 
 #: ../admin/devices.php:42
 #: ../admin/devices.php:51
 #: ../admin/devices.php:111
 msgid "Slug"
-msgstr ""
+msgstr "スラッグ"
 
 #: ../admin/devices.php:65
 msgid "No device was registered."
-msgstr ""
+msgstr "端末が登録されていません。"
 
 #: ../admin/devices.php:85
 msgid "You can delete device, but you still have to delete files on each post-editting page"
-msgstr ""
+msgstr "端末を削除することはできますが、端末に紐づいたファイル情報を削除するには投稿編集画面から行う必要があります。"
 
 #: ../admin/devices.php:97
 #: ../admin/devices.php:120
 msgid "Add new device"
-msgstr ""
+msgstr "新しい端末を追加"
 
 #: ../admin/devices.php:105
 msgid "Name of device to display."
-msgstr ""
+msgstr "表示する端末の名前。"
 
 #: ../admin/devices.php:114
 msgid "Slug is alphabetical short name for device. It will help for displaying icon.<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"
-msgstr ""
+msgstr "スラッグは端末名をアルファベットで表したものです。アイコンを表示するのに役立ちます。<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"
 
 #: ../admin/donate.php:3
 msgid "Donate"
-msgstr ""
+msgstr "寄付"
 
 #: ../admin/donate.php:5
 #, php-format
 msgid "This plugin was made by <a href=\"http://takahashifumiki.com\" target=\"_blank\">%1$s</a> of <a href=\"http://hametuha.co.jp\" target=\"_blank\">%2$s</a>. If you like this plugin, please vote <a href=\"http://wordpress.org/extend/plugins/literally-wordpress/\" target=\"_blank\">Here</a> or donate."
-msgstr ""
+msgstr "このプラグインは<a href=\"http://hametuha.co.jp\" target=\"_blank\">%2$s</a>の<a href=\"http://takahashifumiki.com\" target=\"_blank\">%1$s</a>が作りました。このプラグインがお気に召したら、<a href=\"http://wordpress.org/extend/plugins/literally-wordpress/\" target=\"_blank\">ここ</a>で投票するか、寄付していただけると嬉しいです。 "
 
 #: ../admin/donate.php:5
 #: ../admin/donate.php:6
 msgid "Takahashi Fumiki"
-msgstr ""
+msgstr "高橋文樹"
 
 #: ../admin/donate.php:5
 msgid "Hametuha inc."
-msgstr ""
+msgstr "株式会社破滅派"
 
 #: ../admin/donate.php:15
 msgid "Donation Ammount"
-msgstr ""
+msgstr "寄付総額"
 
 #: ../admin/donate.php:20
 msgid "Drink beer."
-msgstr ""
+msgstr "ビールでも飲め"
 
 #: ../admin/donate.php:21
 msgid "Take a lunch."
-msgstr ""
+msgstr "ランチでも食べろ"
 
 #: ../admin/donate.php:22
 msgid "Go to some nice bar."
-msgstr ""
+msgstr "居酒屋にでも行け"
 
 #: ../admin/donate.php:23
 msgid "Have a good party."
-msgstr ""
+msgstr "パーティに行って来い"
 
 #: ../admin/donate.php:24
 msgid "I am your father."
-msgstr ""
+msgstr "わしが育てた"
 
 #: ../admin/donate.php:30
 msgid "Return to takahashifumiki.com"
-msgstr ""
+msgstr "高橋文樹.comに戻る"
 
 #: ../admin/donate.php:36
 msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
-msgstr ""
+msgstr "\"いますぐ購入\"ボタンを使っているのは、日本政府がPayPalに対して寄付の仲介をすることを許可していないためです。"
 
 #: ../admin/history.php:14
 #: ../admin/management.php:124
 #, php-format
 msgid "%1$d - %2$d (Total: %3$d)"
-msgstr ""
+msgstr "%1$d - %2$d (合計: %3$d)"
 
 #: ../admin/history.php:29
 #: ../admin/history.php:38
@@ -596,7 +664,7 @@ msgstr ""
 #: ../admin/management.php:139
 #: ../admin/management.php:150
 msgid "Item Name"
-msgstr ""
+msgstr "アイテム名"
 
 #: ../admin/history.php:31
 #: ../admin/history.php:40
@@ -604,59 +672,47 @@ msgstr ""
 #: ../admin/management.php:143
 #: ../admin/management.php:154
 msgid "Method"
-msgstr ""
-
-#: ../admin/history.php:32
-#: ../admin/history.php:41
-#: ../admin/management.php:144
-#: ../admin/management.php:155
-msgid "Date"
-msgstr ""
+msgstr "支払い方法"
 
 #: ../admin/history.php:53
 #: ../admin/management.php:62
 msgid "PayPal"
-msgstr ""
-
-#: ../admin/history.php:56
-#: ../admin/management.php:63
-msgid "Present"
-msgstr ""
+msgstr "PayPal"
 
 #: ../admin/history.php:66
 msgid "View Item"
-msgstr ""
+msgstr "アイテムを表示"
 
 #: ../admin/history.php:73
 msgid "You have purchased no item."
-msgstr ""
+msgstr "アイテムを購入していません。"
 
 #: ../admin/history.php:75
 msgid "Contact"
-msgstr ""
+msgstr "コンタクト"
 
 #: ../admin/history.php:77
 #, php-format
 msgid "If purchased items were not displayed, please contact to Site administrator &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
-msgstr ""
+msgstr "購入したアイテムが表示されない場合、サイト管理者 &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. に連絡してください。出来る限り早くお返事致します。"
 
 #: ../admin/management.php:13
-msgid "Update Trnasaction"
-msgstr ""
+msgid "Update Transaction"
+msgstr "決済情報を更新"
 
 #: ../admin/management.php:24
 #: ../admin/management.php:140
 #: ../admin/management.php:151
 msgid "User Name"
-msgstr ""
+msgstr "ユーザー名"
 
 #: ../admin/management.php:33
 msgid "Select below"
-msgstr ""
+msgstr "以下から選んでください"
 
 #: ../admin/management.php:47
 msgid "This transaction doesn't relate to any account."
-msgstr ""
+msgstr "この決済情報はどのアカウントとも紐づいていません"
 
 #: ../admin/management.php:47
 #: ../admin/setting.php:17
@@ -672,354 +728,899 @@ msgstr ""
 #: ../admin/setting.php:204
 #: ../admin/setting.php:227
 msgid "More &gt;"
-msgstr ""
+msgstr "もっと &gt;"
 
 #: ../admin/management.php:52
 #: ../admin/management.php:141
 #: ../admin/management.php:152
 msgid "Purchased Price"
-msgstr ""
+msgstr "購入価格"
 
 #: ../admin/management.php:55
 msgid "Original Price"
-msgstr ""
+msgstr "定価"
 
 #: ../admin/management.php:68
 msgid "Mail account for transaction"
-msgstr ""
+msgstr "決済用メールアカウント"
 
 #: ../admin/management.php:72
 msgid "This mail is same as the account mail."
-msgstr ""
+msgstr "このメールアドレスはアカウントのメールアドレスと同じです。"
 
 #: ../admin/management.php:74
 msgid "This mail is same as PayPal mail of the user account."
-msgstr ""
+msgstr "このメールアドレスはPayPalアカウントのメールアドレスと同じです。"
 
 #: ../admin/management.php:76
 msgid "This mail doesn't related to account information."
-msgstr ""
+msgstr "このメールはアカウント情報に紐づいていません。"
 
 #: ../admin/management.php:81
 #: ../admin/management.php:142
 #: ../admin/management.php:153
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 #: ../admin/management.php:84
 msgid "Success"
-msgstr ""
+msgstr "完了"
 
 #: ../admin/management.php:85
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: ../admin/management.php:90
 msgid "Updated"
-msgstr ""
+msgstr "更新日"
 
 #: ../admin/management.php:93
 msgid "Registered"
-msgstr ""
+msgstr "登録日"
 
 #: ../admin/management.php:102
 msgid "Return to transaction list"
-msgstr ""
+msgstr "決済情報一覧に戻る"
 
 #: ../admin/management.php:145
 #: ../admin/management.php:156
 msgid "Detail"
-msgstr ""
+msgstr "詳細"
 
 #: ../admin/management.php:168
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: ../admin/setting.php:9
 msgid "Use Sandbox"
-msgstr ""
+msgstr "サンドボックスを使用する"
 
 #: ../admin/setting.php:14
 msgid "This is a develop enviorment."
-msgstr ""
+msgstr "これは開発環境です。"
 
 #: ../admin/setting.php:17
 msgid "Sandbox means develop enviorment. You can test your settings by checking above."
-msgstr ""
+msgstr "サンドボックスとは開発環境のことです。チェックを入れることで設定があっているかをテストすることができます。"
 
 #: ../admin/setting.php:23
 msgid "Country Code"
-msgstr ""
+msgstr "国別コード"
 
 #: ../admin/setting.php:35
 msgid "Currency Code"
-msgstr ""
+msgstr "通貨コード"
 
 #: ../admin/setting.php:47
 msgid "PayPal API User Name"
-msgstr ""
+msgstr "PayPal API ユーザー名"
 
 #: ../admin/setting.php:52
 msgid "PayPal API User Name issued by PayPal."
-msgstr ""
+msgstr "PayPalから発行されるAPI利用のためのユーザー名です。"
 
 #: ../admin/setting.php:58
 msgid "PayPal Password"
-msgstr ""
+msgstr "PayPal パスワード"
 
 #: ../admin/setting.php:63
 msgid "API password issued by PayPal"
-msgstr ""
+msgstr "PayPalから提供されるAPI利用のためのパスワードです。"
 
 #: ../admin/setting.php:69
 msgid "PayPal Signature"
-msgstr ""
+msgstr "PayPal署名"
 
 #: ../admin/setting.php:74
 msgid "API signature issued by PayPal"
-msgstr ""
+msgstr "PayPalから発行されるAPI利用のための署名です。"
 
 #: ../admin/setting.php:80
 msgid "PayPal PDT Token"
-msgstr ""
+msgstr "PayPal PDT トークン"
 
 #: ../admin/setting.php:85
 msgid "Token issued by PayPal. Required for transaction."
-msgstr ""
+msgstr "PayPalから発行されるトークンです。決済に必要です。"
 
 #: ../admin/setting.php:89
 #, php-format
 msgid "This Token might be incorrect. See %s and get correct PDT Token."
-msgstr ""
+msgstr "このトークンは間違っているかもしれません。%sを見て、正しいPDTトークンを取得してください。"
 
 #: ../admin/setting.php:89
 #: ../admin/setting.php:106
 #: ../admin/setting.php:111
 #: ../admin/setting.php:248
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: ../admin/setting.php:96
 msgid "Directory for File protection"
-msgstr ""
+msgstr "ファイル保護のためのディレクトリ"
 
 #: ../admin/setting.php:101
 msgid "Directory to save files. This should be writable and innaccessible via HTTP."
-msgstr ""
+msgstr "ファイルを保存するディレクトリです。このフォルダは書き込み可能であり、HTTPでアクセス不可能な場所にある必要があります。"
 
 #: ../admin/setting.php:106
 #, php-format
 msgid "Directory isn't writable. You can't upload files. See %s and set appropriate permission."
-msgstr ""
+msgstr "ディレクトリは書き込みできません。ファイルをアップロードできません。%sを見て、適切なパーミッションを設定してください。"
 
 #: ../admin/setting.php:111
 #, php-format
 msgid "Directory is accessible via HTTP. See %s and prepend others from direct access."
-msgstr ""
+msgstr "ディレクトリはHTTPでアクセスできてしまいます。%sを見て、第三者がディレクトリにアクセスできないようにしてください。"
 
 #: ../admin/setting.php:118
 msgid "Product slug"
-msgstr ""
+msgstr "商品スラッグ"
+
+#: ../admin/setting.php:123
+msgid "Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account."
+msgstr "PayPalの管理画面で表示される取引IDにつけるスラッグです。一つのアカウントで複数の取引を行っている場合に役立ちます。"
 
 #: ../admin/setting.php:125
 msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>"
-msgstr ""
+msgstr "<strong>10文字程度のアルファベット</strong>を設定してください。ハイフンと商品IDがスラッグの後ろに付与されます。<small>ex: example-100</small>"
 
 #: ../admin/setting.php:131
 msgid "Purchase History Page"
-msgstr ""
-
-#: ../admin/setting.php:135
-msgid "-------"
-msgstr ""
+msgstr "購入履歴ページ"
 
 #: ../admin/setting.php:141
 msgid "You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel."
-msgstr ""
+msgstr "公開側のページを購入履歴ページとして指定できます。空白のままにした場合、購入履歴ページは管理画面にのみ表示されます。"
 
 #: ../admin/setting.php:148
 msgid "Custom Post Type"
-msgstr ""
+msgstr "カスタム投稿タイプ"
 
 #: ../admin/setting.php:153
 msgid "Custom post name"
-msgstr ""
+msgstr "カスタプ投稿タイプの名前"
 
 #: ../admin/setting.php:154
 msgid "If not needed, leave it blank. ex: eBooks"
-msgstr ""
+msgstr "必要なければ空白にしてください。ex. eBooks"
 
 #: ../admin/setting.php:158
 msgid "Custom post name in Singular"
-msgstr ""
+msgstr "カスタム投稿タイプの単数形"
 
 #: ../admin/setting.php:159
 msgid "If you don't specified, this same as above field. ex: eBook"
-msgstr ""
+msgstr "指定しない場合は上と同じものが使われます。ex: eBook"
 
 #: ../admin/setting.php:163
 msgid "Custom post slug"
-msgstr ""
+msgstr "カスタム投稿タイプのスラッグ"
 
 #: ../admin/setting.php:164
 msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
-msgstr ""
+msgstr "小文字のアルファベットでなくてはなりません。パーマリンクに使われます。ex: ebook"
 
 #: ../admin/setting.php:167
 msgid "If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you."
-msgstr ""
+msgstr "細かい調整が必要な場合は空白のままにして、ご自分でカスタム投稿タイプを作成してください。サードパーティのプラグインが役に立つでしょう。"
 
 #: ../admin/setting.php:174
 msgid "Payable Post Types"
-msgstr ""
+msgstr "支払い可能な投稿タイプ"
 
 #: ../admin/setting.php:184
 msgid "You can manually make any post type payable. See detail at how to customize."
-msgstr ""
+msgstr "どの投稿タイプも手動で支払い可能に摺ることができます。詳細はカスタマイズ方法を御覧ください。"
 
 #: ../admin/setting.php:191
 msgid "Automatic output"
-msgstr ""
+msgstr "自動出力"
 
 #: ../admin/setting.php:196
 msgid "Show complete form"
-msgstr ""
+msgstr "フォームをすべて表示する"
 
 #: ../admin/setting.php:200
 msgid "Manually display form"
-msgstr ""
+msgstr "フォームは自分で出力する"
 
 #: ../admin/setting.php:203
 msgid "If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags."
-msgstr ""
+msgstr "すべて表示を選んだ場合、購入フォームが投稿の末尾に表示されます。フォームはショートコードやテンプレートタグによって手動で配置することもできます。"
 
 #: ../admin/setting.php:210
 msgid "Assets Loading"
-msgstr ""
+msgstr "アセット読み込み"
 
 #: ../admin/setting.php:215
 msgid "Load plugin default CSS and JS"
-msgstr ""
+msgstr "プラグインのデフォルトCSSとJSを読み込む"
 
 #: ../admin/setting.php:219
 msgid "Load only JS"
-msgstr ""
+msgstr "JSだけ読み込む"
 
 #: ../admin/setting.php:223
 msgid "Load no Assets"
-msgstr ""
+msgstr "アセットは読み込まない"
 
 #: ../admin/setting.php:226
 msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign."
-msgstr ""
+msgstr "このプラグインは&quot;いますぐ購入&quot;ボタンの挙動を向上させるため、CSSとJSを読み込みます。JSはキャンペーンのカウントダウンタイマーを表示するために使われます。"
 
 #: ../admin/setting.php:234
+#: ../admin/upload.php:183
+#: ../admin/upload.php:205
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: ../admin/setting.php:237
 msgid "Notes"
-msgstr ""
+msgstr "注意"
 
 #: ../admin/setting.php:239
 msgid "Permalink"
-msgstr ""
+msgstr "パーマリンク"
 
 #: ../admin/setting.php:241
 #, php-format
 msgid "If permalink is enabled, custom post type page will return %s and won't be displayed."
-msgstr ""
+msgstr "パーマリンクが有効になっている場合、カスタム投稿タイプは %s となり、表示されません。"
 
 #: ../admin/setting.php:242
 #, php-format
 msgid "Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display."
-msgstr ""
+msgstr "<a href=\"%1$s\">%2$s</a>へ行き、&quot;%3$s&quot;を押してください。これによってリライトルールがリセットされ、正しく表示されます。"
 
 #: ../admin/setting.php:245
 msgid "Customize"
-msgstr ""
+msgstr "カスタマイズ"
 
 #: ../admin/setting.php:247
 msgid "If you are a experienced developper, you can customize this plugin with template tags."
-msgstr ""
+msgstr "開発に慣れた方はテンプレートタグでこのプラグインをカスタマイズできます。"
 
 #: ../admin/setting.php:248
 #, php-format
 msgid "See detail at %s."
-msgstr ""
+msgstr "詳しくは%sを見てください。"
+
+#: ../admin/setting.php:249
+#, php-format
+msgid "<a target=\"_blank\" href=\"%s\">Template Tags</a> are also available."
+msgstr "<a target=\"_blank\" href=\"%s\">テンプレートタグ</a>も利用可能です。"
+
+#: ../admin/upload.php:22
+msgid "Title is empty."
+msgstr "タイトルが空です。"
+
+#: ../admin/upload.php:25
+msgid "Select public status."
+msgstr "公開ステータスを選んでください。"
+
+#: ../admin/upload.php:28
+msgid "No file is specified."
+msgstr "ファイルが指定されていません。"
+
+#: ../admin/upload.php:34
+msgid "No device is specified."
+msgstr "端末が指定されていません。"
+
+#: ../admin/upload.php:55
+msgid "File is successfully updated."
+msgstr "ファイルは更新されました。"
+
+#: ../admin/upload.php:57
+msgid "Failed to update file."
+msgstr "ファイルの更新に失敗しました。"
+
+#: ../admin/upload.php:66
+msgid "File deleted."
+msgstr "ファイルが削除されました。"
+
+#: ../admin/upload.php:68
+msgid "Failed to delete file."
+msgstr "ファイルの削除に失敗しました。"
+
+#: ../admin/upload.php:92
+msgid "Manage files"
+msgstr "ファイル管理"
+
+#: ../admin/upload.php:96
+msgid "Please update file information"
+msgstr "ファイル情報を更新してください。"
+
+#: ../admin/upload.php:98
+msgid "Please upload file"
+msgstr "ファイルをアップロードしてください"
+
+#: ../admin/upload.php:114
+msgid "Title"
+msgstr "タイトル"
+
+#: ../admin/upload.php:118
+msgid "Name of this file. ex. ePub for iBooks(2nd Edition)"
+msgstr "このファイルの名前です。 ex. iBooks用ePub（第2版）"
+
+#: ../admin/upload.php:123
+msgid "Public Status"
+msgstr "公開ステータス"
+
+#: ../admin/upload.php:126
+msgid "Public"
+msgstr "公開"
+
+#: ../admin/upload.php:127
+msgid "Private"
+msgstr "非公開"
+
+#: ../admin/upload.php:128
+msgid "Public status of this file. Private files won't be displayed."
+msgstr "このファイルの公開状態です。非公開のファイルは表示されません。"
+
+#: ../admin/upload.php:133
+msgid "Trial"
+msgstr "お試し"
+
+#: ../admin/upload.php:136
+msgid "Impossible"
+msgstr "できない"
+
+#: ../admin/upload.php:137
+msgid "Possible for registered user"
+msgstr "登録ユーザーのみできる"
+
+#: ../admin/upload.php:138
+#: ../admin/upload.php:141
+msgid "Possible for everyone"
+msgstr "誰でもできる"
+
+#: ../admin/upload.php:140
+msgid "Trial means <strong>user can download whole of the file</strong>."
+msgstr "お試しとは<strong>ユーザーがファイル全体をダウンロードできる</stong>ことを意味します。"
+
+#: ../admin/upload.php:141
+#, php-format
+msgid "If you want provide partial trial, <strong>make a partial file</strong> and specify it as &quot;%s&quot;"
+msgstr "部分的なお試しを提供したいばあいは、<strong>その部分だけを含むファイル</strong>を作成し、それを&quot;%s&quot;に指定してください。"
+
+#: ../admin/upload.php:155
+msgid "Check device which can read this file."
+msgstr "このファイルを読み込むことのできる端末を指定してください。"
+
+#: ../admin/upload.php:156
+#, php-format
+msgid "To add device, go to %s."
+msgstr "デバイスの追加は%sで行ってください。"
+
+#: ../admin/upload.php:167
+msgid "Enter if required."
+msgstr "必要ならば入力してください。"
+
+#: ../admin/upload.php:173
+msgid "File"
+msgstr "ファイル"
+
+#: ../admin/upload.php:183
+msgid "Add"
+msgstr "新規追加"
+
+#: ../admin/upload.php:185
+msgid "Go to add file"
+msgstr "ファイルを追加する"
+
+#: ../admin/upload.php:194
+msgid "Registered files"
+msgstr "登録されたファイル"
+
+#: ../admin/upload.php:200
+msgid "Are you sure to delete?"
+msgstr "削除してよろしいですか？"
 
 #: ../assets/js/tinymce-lang.php:12
 msgid "Capability"
-msgstr ""
+msgstr "権限"
 
 #: ../assets/js/tinymce-lang.php:13
 msgid "Owner"
-msgstr ""
+msgstr "所有者"
 
 #: ../assets/js/tinymce-lang.php:14
 msgid "Subscriber"
-msgstr ""
+msgstr "購読者"
 
 #: ../assets/js/tinymce-lang.php:15
 msgid "Non Owner"
-msgstr ""
+msgstr "所有者ではない"
 
 #: ../assets/js/tinymce-lang.php:16
 msgid "Non Subscriber"
-msgstr ""
+msgstr "購読者ではない"
+
+#: ../assets/js/tinymce-lang.php:17
+msgid "Add Buy Now"
+msgstr "いますぐ購入を追加"
+
+#: ../assets/js/tinymce-lang.php:18
+msgid "Default Button"
+msgstr "デフォルトのボタン"
+
+#: ../assets/js/tinymce-lang.php:19
+msgid "Inline link tag"
+msgstr "インラインリンクタグ"
+
+#: ../assets/js/tinymce-lang.php:20
+msgid "Original Image"
+msgstr "オリジナル画像"
+
+#: ../assets/js/tinymce-lang.php:21
+msgid "PUT_IMAGE_SRC_HERE"
+msgstr "ここに画像を入れてください"
 
 #: ../form-template/edit-detail.php:18
 msgid "This post is free."
-msgstr ""
+msgstr "この投稿は無料です。"
 
 #: ../form-template/edit-detail.php:23
 msgid "This Post has no files. You can add files from media uploader."
-msgstr ""
+msgstr "この投稿にはファイルが紐づいていません。メディアアップローダーによってファイルを追加できます。"
 
 #: ../form-template/paypal-cancel.php:2
 msgid "Transaction is canceled."
-msgstr ""
+msgstr "決済はキャンセルされました。"
 
 #: ../form-template/paypal-cancel.php:5
 msgid "Return"
-msgstr ""
+msgstr "戻る"
 
 #: ../form-template/paypal-return.php:18
 msgid "Please confirm the invoice above and accept payment."
-msgstr ""
+msgstr "支払い明細を確認の上、支払いを受諾してください。"
 
 #: ../form-template/paypal-return.php:20
 msgid "Confirm"
-msgstr ""
+msgstr "受諾"
 
 #: ../form-template/paypal-return.php:28
 msgid "Invoice No."
-msgstr ""
+msgstr "取引 No."
 
 #: ../form-template/paypal-return.php:35
 msgid "Your Name"
-msgstr ""
+msgstr "お名前"
 
 #: ../form-template/paypal-return.php:51
 msgid "Amount"
-msgstr ""
+msgstr "総額"
 
 #: ../form-template/paypal-success.php:2
 msgid "Thank you for purchasing."
-msgstr ""
+msgstr "ご購入ありがとうございました。"
 
 #: ../form-template/paypal-success.php:3
 msgid "You will be redirected to the purchased item page."
-msgstr ""
+msgstr "購入したアイテムのページに移動します。"
 
 #: ../form-template/paypal-success.php:6
 #, php-format
 msgid "%s seconds left"
-msgstr ""
+msgstr "のこり%s秒"
 
 #: ../form-template/paypal-success.php:9
 msgid "return now"
-msgstr ""
+msgstr "すぐに戻る"
+
+#: ../help/account.php:3
+msgid "Account"
+msgstr "アカウント"
+
+#: ../help/account.php:5
+#, php-format
+msgid "First of all, PayPal account is required. Get it <a href=\"%s\">here</a>."
+msgstr "なによりもまずPayPalのアカウントが必要です。<a href=\"%s\">ここ</a>で取得してください。"
+
+#: ../help/account.php:6
+msgid "If you already have an account, see section below."
+msgstr "すでに開かうとをお持ちの方は以下のセクションをお読みください。"
+
+#: ../help/account.php:8
+msgid "Step1 Get API Account, Password, Signature"
+msgstr "ステップ1 APIアカウント、パスワード、署名の取得"
+
+#: ../help/account.php:10
+msgid "This plugin uses ExpressCheckout API and it requires your user name and password."
+msgstr "このプラグインはExpressCheckout APIを使用するため、ユーザー名とパスワードが必要になります。"
+
+#: ../help/account.php:11
+msgid "For security reason, PayPal offers API credentials consisted of username alias, password and API signature. You have to get it."
+msgstr "セキュリティ上の理由からPayPalはユーザー名のエイリアス、パスワード、API署名からなるAPI認証方法を提供しています。それを取得しましょう。"
+
+#: ../help/account.php:15
+msgid "Log in to PayPal, and go to Seller Preference &gt; Tools &gt; API access."
+msgstr "PayPalにログインし、個人設定 &gt; APIアクセスに進んでください。"
+
+#: ../help/account.php:16
+msgid "Selecting option 2 and you can get API signature, API user name and API password."
+msgstr "オプション2を選ぶとAPI署名、APIユーザー名、APIパスワードが取得できます。"
+
+#: ../help/account.php:17
+#, php-format
+msgid "Copy and paste it to form on <a href=\"%s\">LWP Setting</a>."
+msgstr "それをコピーし、<a href=\"%s\">LWP 設定</a>ページのフォームにペーストしてください。"
+
+#: ../help/account.php:20
+msgid "Step2 Get PDT Token"
+msgstr "ステップ2 PDTトークンの取得"
+
+#: ../help/account.php:22
+msgid "Once you get API signatures, now you can get PDT token. It is required for this plugin's background process"
+msgstr "API署名を取得したら、PDTトークンを取得します。これはプラグインのバックグラウンド処理に必要です。"
+
+#: ../help/account.php:26
+msgid "On PayPal, go to Seller Preference &gt; Tools &gt; Web site setting."
+msgstr "PayPalの管理画面で 個人設定 &gt; ツール &gt; Webサイト設定 に進んでください。"
+
+#: ../help/account.php:27
+msgid "Check the radio button &quot;Express return&quot; to ON."
+msgstr "&quot;自動復帰&quot;のラジオボタンをONにしてください。"
+
+#: ../help/account.php:28
+msgid "Set return URL to your WordPress root. Generally it will be &quot;http://example.com&quot;."
+msgstr "復帰URLをWordPressのルートURLにします。&quot;http://example.com&quot;という具合です。"
+
+#: ../help/account.php:29
+msgid "Find section &quot;Payment Data Transfer&quot; and turn it ON."
+msgstr "&quot;支払いデータ転送&quot;というセクションを見つけ、ONにします。"
+
+#: ../help/account.php:30
+msgid "Now you can save canges. Teh other settigs are optional, so you can set them as you like."
+msgstr "それでは変更を保存してください。その他の設定はオプションとなります。お好きなように設定してください。"
+
+#: ../help/account.php:31
+#, php-format
+msgid "After save settings, you can get Token on &quot;Payment Data Transfer&quot; section. Copy and past it at <a href=\"%s\">LWP Setting</a>."
+msgstr "保存した後、&quot;支払いデータ転送&quot;のセクションにトークンが表示されます。それをコピーし、<a href=\"%s\">LWP 設定</a>にペーストしてください。"
+
+#: ../help/account.php:34
+msgid "Step3 Check on Sandbox"
+msgstr "ステップ3 Sandboxでのチェック"
+
+#: ../help/account.php:36
+msgid "Sandbox is development environment of PayPal. You can test if your settings are right with Sandbox."
+msgstr "サンドボックスとはPayPalが提供する開発環境です。Sandboxを使えば設定があっているかを確認することができます。"
+
+#: ../help/account.php:37
+msgid "To enable Sandbox, you have to get another account at <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>."
+msgstr "Sandboxを有効にするには、<a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>にアカウントが必要です。"
+
+#: ../help/account.php:38
+msgid "This process is little bit complicated, but payment transaction is very critical. It's worth to test with."
+msgstr "この手続は少し複雑ですが、決済処理はクリティカルです。テストした方が良いでしょう。"
+
+#: ../help/account.php:42
+msgid "Go to <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a> and create account."
+msgstr "<a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>に行き、アカウントを作成します。"
+
+#: ../help/account.php:43
+msgid "Log in to Sandbox and create 2 accounts. One for business account, another is customer account."
+msgstr "Sandboxにログインし、2つのアカウントを作成します。一つはビジネス用のアカウントで、もう一つは顧客用のアカウントです。"
+
+#: ../help/account.php:44
+#, php-format
+msgid "You can get account information of business account same as you get below. API user name, API password, API signature and PDT token. Set them on <a href=\"%1$s\">LWP Setting</a> and turn &quot;%2$s&quot; to ON."
+msgstr "上記で取得したように、ビジネスアカウント用のAPI認証情報を取得できます。APIユーザー名、APIパスワード、API署名とPDTトークンです。それらを<a href=\"%1$s\">LWP 設定</a>に保存し、&quot;%2$s&quot;をONにしてください。"
+
+#: ../help/account.php:45
+msgid "Keeping loggin in Sandbox, try to buy any of your items. After pushing &quot;Buy Now&quot;, you will be redirected to PayPal Sandbox. Then enter the customer account information you've created below."
+msgstr "Sandboxにログインしたまま、アイテムを購入してみましょう。&quot;Buy Now&quot;ボタンを押した後、PayPal Sandboxにリダイレクトされます。上で作った顧客用のアカウント情報を入力してみましょう。"
+
+#: ../help/account.php:46
+msgid "If everything is fine, you transaction will be completed. Check if you transaction is same as what you supposed."
+msgstr "うまく設定できていれば、決済処理は完了します。思った通りの結果が得られているか、確認してみてください。"
+
+#: ../help/account.php:50
+msgid "Every transactional information will be treated same in database. If you want know proper transactional statistics, don't use same settings both Sandbox and Productional environment on single WrodPress."
+msgstr "すべての決済情報はデータベース上で同じものとして扱われます。もし決済情報の正確な統計を知りたいばあいはSandboxと本番環境を同一のWordPressで試さないでください。"
+
+#: ../help/account.php:51
+msgid "Generally, you should make WordPress for development(ex. http//d.example.com) and test it with Sandbox."
+msgstr "よくあるケースとして、開発用のWordPressを用意し（ex. http://d.example.com）、Sandboxでテストを摺るのが良いでしょう。"
+
+#: ../help/account.php:52
+msgid "If everything is fine, try it on productional WordPress(ex. http://example.ecom). These are typical process for creating transacional Web site. Don't drive highway without enough excercise."
+msgstr "設定がうまく行ったら、本番環境のWordPress（ex. http://example.com）にインストールしてください。これは決済を伴うWebサイトでよくある開発プロセスです。練習もなしに高速道路を運転するのはやめましょう。"
+
+#: ../help/account.php:54
+msgid "About Micropayments"
+msgstr "MicroPaymentsについて"
+
+#: ../help/account.php:56
+msgid "<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank\">Micropayments</a> is PayPal's pricing for small amount. If you sell your items by small amount, consider to signup to Micropayments."
+msgstr "<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank\">Micropayments</a>とはPayPalが提供する小額決済用の価格設定です。アイテムを少額で販売するばあいはMicropaymentsを利用することを検討してください。"
+
+#: ../help/account.php:57
+msgid "If your item's price average is less than 25$, Micropayments is better solution. If not, Use normal pricing."
+msgstr "アイテムの決済単価が2300円程度よりも低い場合、Micropaymentsはよい選択です。そうでないばあいは通常の価格設定を使ってください。"
+
+#: ../help/account.php:58
+msgid "Anyway, who price your items is you and you are the most familiar with your item."
+msgstr "なにはともあれ、値付けをするのはあなたですし、あなたの商品に一番詳しいのもあなたです。"
+
+#: ../help/account.php:63
+msgid "Product slug will be displayed on PayPal's purchase history page. If you use PayPal with other commerce, this slug will helpful for distinguishing them from others."
+msgstr "商品スラッグはPayPalの取引履歴ページに表示されます。もしPayPalを他の商取引で使っているならば、このスラッグが他の取引と区別するために役立つでしょう。"
+
+#: ../help/account.php:64
+msgid "Your transaction will be displayed like <em>slug-000010</em>. You can easily find, sort, sum LWP transaction."
+msgstr "取引名は<em>slug-000010</em>という形式で表示されます。LWPの決済情報はこれで検索、ソート、合計摺ることができます。"
+
+#: ../help/customize.php:2
+msgid "How to customize"
+msgstr "カスタマイズ方法"
+
+#: ../help/customize.php:4
+msgid "This plugin offers some ways to customize."
+msgstr "このプラグインはいくつかのカスタマイズ方法を提供しています。"
+
+#: ../help/customize.php:6
+msgid "Default Functions"
+msgstr "デフォルトの機能"
+
+#: ../help/customize.php:8
+msgid "First of all, you'd better to know detail of LWP. Main functions are below."
+msgstr "まず最初に、LWPに詳しくなりましょう。主な機能は下記になります。"
+
+#: ../help/customize.php:11
+msgid "Display price and &quot;Buy Now&quot; button. This is a gate way to start transaction."
+msgstr "価格と&quot;いますぐ購入&quot;ボタンを表示する。これが決済処理の入り口となります。"
+
+#: ../help/customize.php:12
+msgid "Display transaction page. Transaction steps count 3. Confirmation, Complete and Cancel."
+msgstr "決済画面の表示。決済ステップは3種類あります。確認、完了またはキャンセルです。"
+
+#: ../help/customize.php:13
+msgid "Show purchase history. User can know what they bought and total cost."
+msgstr "購入履歴の表示。ユーザーは何を購入し、全部でいくらかかったのかを知ることができます。"
+
+#: ../help/customize.php:14
+msgid "Show download link and device types."
+msgstr "ダウンロードリンクとデバイスタイプの表示"
+
+#: ../help/customize.php:17
+msgid "You have no need to customize with normal usage, but customize and suit this plugin to your theme will be helpful for your customer."
+msgstr "通常の使い方をする限りはカスタマイズしなくても大丈夫ですが、カスタマイズしてテーマの雰囲気に合うようにすることであなたの顧客は安心するでしょう。"
+
+#: ../help/customize.php:19
+msgid "Customize Buy Now"
+msgstr "いますぐ購入をカスタマイズ"
+
+#: ../help/customize.php:21
+msgid "To customize &quot;Buy Now&quot; button, you have 2 ways."
+msgstr "&quot;いますぐ購入&quot;ボタンをカスタマイズするには2つの方法があります。"
+
+#: ../help/customize.php:24
+msgid "Use your own CSS. CSS knowledge required."
+msgstr "自分のCSSを使う。CSSの知識が必要です。"
+
+#: ../help/customize.php:25
+msgid "Quit auto output and edit theme files. Knowledge about WordPress theme system required."
+msgstr "自動出力をやめ、テーマファイルを編集する。WordPressのテーマシステムについての知識が必要です。"
+
+#: ../help/customize.php:27
+msgid "1. Use your own CSS"
+msgstr "1. 自分のCSSを使う"
+
+#: ../help/customize.php:30
+msgid "LWP automatically loads CSS file by default. It looks like above."
+msgstr "デフォルトの設定だと、LWPは自動でCSSを読み込みます。これは上のようになります。"
+
+#: ../help/customize.php:31
+msgid "WordPress has many themes and you may want make this form suit to you own theme."
+msgstr "WordPressはたくさんのテーマがあるため、ご自分のテーマにボタンの見栄えを合わせたいと思うことでしょう。"
+
+#: ../help/customize.php:32
+#, php-format
+msgid "In this case, turn auto load OFF at <a href=\"%s\">LWP Setting</a>. Now &quot;Buy Now&quot; button has no style and you can customize it's appearance."
+msgstr "その場合、<a href=\"%s\">LWP 設定</a>で自動読み込みをオフにしてください。これで&quot;いますぐ購入&quot;ボタンにスタイルが付与されなくなるので、外見をコントロールしやすくなります。"
+
+#: ../help/customize.php:34
+msgid "2. Create button by yourself"
+msgstr "2. 自分でボタンを出力する"
+
+#: ../help/customize.php:36
+msgid "&quot;Buy Now&quot; button will be displayed at bottom of the post content by default."
+msgstr "&quot;いますぐ購入&quot;ボタンはデフォルトの設定だと投稿本文の最後に出力されます。"
+
+#: ../help/customize.php:37
+msgid "But you probably want to change the place of button and LWP provides 3 way to do it"
+msgstr "ボタンの位置を変えたいという場合のために、LWPは3つの方法を提供しています。"
+
+#: ../help/customize.php:40
+#, php-format
+msgid "Sidebar Widgets. If your theme supports sidebar widget system, go to <a href=\"%s\">Theme &gt; Widgets</a> and install LWP sidebar widget."
+msgstr "サイドバーウィジェット。テーマがサイドバーウィジェットシステムをサポートしている場合、<a href=\"%s\">外観 &gt; ウィジェット</a>へ移動し、LWPサイドバーウィジェットをインストールしてください。"
+
+#: ../help/customize.php:41
+#, php-format
+msgid "Use short code. On visual editor, you can find &quot;%s&quot; list box. It inserts shortcode to display &quot;Buy Now&quot; button."
+msgstr "ショートコードを使う。ビジュアルエディタでは&quot;%s&quot;リストボックスがあります。このリストボックスは&quot;いますぐ購入&quot;ボタンを挿入します。"
+
+#: ../help/customize.php:42
+#, php-format
+msgid "Customize theme. The template tag lwp_buy_now() will display button. See detail at <a href=\"%s\" target=\"_blank\">function reference</a>."
+msgstr "テーマを編集する。テンプレートタグlwp_buy_now()はボタンを表示します。詳細は<a href=\"%s\" target=\"_blank\">テンプレートタグ</a>を見てください。"
+
+#: ../help/customize.php:44
+msgid "Customize Device list and Download list"
+msgstr "端末リストとダウンロードリストのカスタマイズ"
+
+#: ../help/customize.php:46
+#: ../help/customize.php:50
+#: ../help/customize.php:54
+msgid "Coming soon..."
+msgstr "準備中です。"
+
+#: ../help/customize.php:48
+msgid "Customize Form"
+msgstr "フォームをカスタマイズ"
+
+#: ../help/customize.php:52
+msgid "Make purchase history page"
+msgstr "購入履歴ページを作成する"
+
+#: ../help/customize.php:56
+msgid "Create custom post type by yourself"
+msgstr "カスタム投稿タイプを自分で作る"
+
+#: ../help/customize.php:58
+msgid "LWP provides the function to create custom post type because it is supposed that normal user sell perticullar type of contents like eBook or Music file."
+msgstr "LWPはカスタム投稿タイプを作成する機能を持っています。これは通常のユーザーは電子書籍や音楽ファイルといった特定の投稿タイプを販売すると考えられる為です。"
+
+#: ../help/customize.php:59
+msgid "But you may think of selling multiple types of contents(ex. music, movie, eBook and photo). In such case, LWP can recognize multiple custom post types as payable."
+msgstr "しかしなたら、複数のコンテンツ（ex. 映画、音楽、電子書籍、写真）を販売するケースがあるかもしれません。そのために、LWPは複数の投稿タイプを販売可能なものとして認識することができます。"
+
+#: ../help/customize.php:60
+msgid "Furthermore, you may want make some taxonomies for your items(ex. eBook genre)."
+msgstr "更に加えて、アイテムに対してなんらかのタクソノミー（ex. 電子書籍ジャンル）を付与したいと思うかもしれません。"
+
+#: ../help/customize.php:61
+msgid "What LWP do is &quot;making perticular post types payable&quot;. So you can easily add custom post types and make them payable."
+msgstr "LWPが行うのは&quot;特定の投稿タイプを課金可能にする&quot;ことだけです。投稿タイプを追加して支払い可能にすることは自由に行えます。"
+
+#: ../help/customize.php:62
+msgid "There are lots of plugins which enable you to add custom post types. Belows are list of them."
+msgstr "カスタム投稿タイプを追加するプラグインはたくさんあります。以下はそのリストです。"
+
+#: ../help/customize.php:65
+msgid "Custom Post Type UI"
+msgstr "Custom Post Type UI"
+
+#: ../help/customize.php:69
+msgid "They are 3rd party plugin and I don't test them all. Everything is at your own risk. Please try out on them carefully."
+msgstr "これらはサードパーティのプラグインであり、LWP作者はすべてを試したわけではありません。すべては自己責任出お願いします。十分にテストを行ってください。"
+
+#: ../help/dir.php:2
+msgid "Directory"
+msgstr "ディレクトリー"
+
+#: ../help/dir.php:3
+msgid "About file uploading system"
+msgstr "ファイルアップロードシステムについて"
+
+#: ../help/dir.php:5
+msgid "WordPress has original file uploading system. Nomal process is like below:"
+msgstr "WordPressは独自のファイルアップロードシステムを持っています。一連の処理は下記のようになっています。"
+
+#: ../help/dir.php:8
+msgid "Files are uploaded to /wp-content/uploads directory."
+msgstr "ファイルは/wp-content/uploadsディレクトリにアップロードされる。"
+
+#: ../help/dir.php:9
+msgid "After uploading has succeeded, files are accessile via HTTP. You can layout your image files to post content."
+msgstr "アップロードが成功すると、ファイルはHTTPでアクセスできるようになる。投稿内に画像を含めることもできる。"
+
+#: ../help/dir.php:11
+msgid "Protect you files"
+msgstr "ファイルの保護"
+
+#: ../help/dir.php:13
+msgid "This process above is quite proper for blog system. But if you sell your files with this plugin, this system is not enough."
+msgstr "上記のプロセスはブログシステムとして正常なものです。しかし、このプラグインでファイルを販売した場合、上記のシステムでは不十分です。"
+
+#: ../help/dir.php:14
+msgid "For example, if you uplaod sample.pdf with Media uploader, it is accessible with <em>http://example.com/wp-content/uploads/sample.pdf</em>."
+msgstr "例えば、メディアアップローダーでsample.pdfをアップロードした場合、それは<em>http://example.com/wp-content/uploads/sample.pdf</em>でアクセス可能になってしまいます。"
+
+#: ../help/dir.php:15
+msgid "So, LWP has another way of uploading and save files in different directory. It should be inaccessible with HTTP."
+msgstr "従って、LWPは別のアップロード方法を用いており、別のディレクトリに保存します。このディレクトリはHTTPでアクセスできてはなりません。"
+
+#: ../help/dir.php:16
+msgid "Only users who bought your item can access them. LWP has simple authenctication system to judge the user can access file or not."
+msgstr "購入したユーザーだけがファイルにアクセス出来ます。LWPはユーザーがファイルにアクセス可能か否かを判断する認証機能を持っています。"
+
+#: ../help/dir.php:18
+msgid "Normal setting"
+msgstr "通常設定"
+
+#: ../help/dir.php:20
+msgid "Let's assume the case that your WordPress is installed in directory <em>/home/your-name/public_html</em>."
+msgstr "WordPressが<em>/home/your-name/public_html</em>というディレクトリにインストールされているとしましょう。"
+
+#: ../help/dir.php:21
+msgid "In this case, the directory accessible via HTTP is only <em>/home/your-name/public_html</em>."
+msgstr "この場合、HTTPでアクセス可能なのは<em>/home/your-name/public_html</em>だけになります。"
+
+#: ../help/dir.php:24
+msgid "Create directory <em>/home/your-name/files</em>."
+msgstr "<em>/home/your-name/files</em>というディレクトリを作成しましょう。"
+
+#: ../help/dir.php:25
+msgid "Set this directory's permission to 707 with FTP tools."
+msgstr "このディレクトリのパーミッションをFTPツールなどで707に設定します。"
+
+#: ../help/dir.php:26
+#, php-format
+msgid "Set directory path at <a href=\"%s\">LWP Setting</a>."
+msgstr "<a href=\"%s\">LWP 設定</a>でディレクトリのパスを保存してください。"
+
+#: ../help/dir.php:29
+msgid "Now you finish protecting your files from non-customer."
+msgstr "これでファイルは購入していないユーザーからはアクセスできないようになりました。"
+
+#: ../help/dir.php:31
+msgid "No inaccessible directory"
+msgstr "アクセスできないディレクトリがない場合"
+
+#: ../help/dir.php:33
+msgid "Situation depends on your hosting service. Some of hosting service don't offer inaccessible directory and your root directory may accessible via HTTP."
+msgstr "利用しているホスティングサービスによって状況は変わります。いくつかのホスティングサービスはアクセス不可能なディレクトリを提供せず、ルートディレクトリがHTTPでアクセスできてしまうことがあります。"
+
+#: ../help/dir.php:34
+msgid "For example, your root directory is <em>/home/your-name/</em> and your domain is <em>http://your-name.example.com</em>."
+msgstr "例えば、ルートディレクトリが<em>/home/your-name/</em>であり、ドメインが<em>http://your-name.example.com</em>であるような場合です。"
+
+#: ../help/dir.php:35
+msgid "This is very typical for hosting sevices which provide free domain. Even if you get your own domain, such hosting service tends to assign your new domain to <em>/home/your-name/new-domain</em>"
+msgstr "これは無料ドメインを提供しているホスティングサービスによくある構成です。独自のドメインを設定したとしても、このようなホスティングサービスは新しいドメインを<em>/home/your-name/new-domain</em>などと設定することがあります。"
+
+#: ../help/dir.php:36
+msgid "So, how can you protect your files? Calm down, LWP provides protect method for such case."
+msgstr "それでは、どうやってファイルを保護したらよいのでしょうか？　落ち着いてください、LWPはこうした場合にもファイル保護の方法を持っています。"
+
+#: ../help/dir.php:37
+msgid "By default, LWP set file directory to <em>/wp-content/plugins/literally-wordpress/contents</em>. This direcotry has .htaccess file to protect your files from HTTP access."
+msgstr "デフォルトの設定だと、LWPはファイル保存ディレクトリを<em>/wp-content/plugins/literally-wordpress/contents</em>に設定します。このディレクトリには.htaccessが含まれており、フォルダ内へのHTTPアクセスを禁止しています。"
+
+#: ../help/dir.php:38
+msgid "So, if you don't have inaccessible directory, set it as default."
+msgstr "つまり、アクセス不可能なディレクトリがない場合は、デフォルトの設定のままで良いということです。"
+
+#: ../help/dir.php:42
+msgid "If your files are accessible via HTTP, an alert message will be displayed on admin panel."
+msgstr "ファイルがHTTPでアクセスできてしまう場合、アラートメッセージが管理画面に表示されます。"
 
 #: ../paypal/paypal_statics.php:203
 msgid "ÅLAND ISLANDS"
@@ -1027,19 +1628,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:204
 msgid "ALBANIA"
-msgstr ""
+msgstr "アルバニア"
 
 #: ../paypal/paypal_statics.php:205
 msgid "ALGERIA"
-msgstr ""
+msgstr "アルジェリア"
 
 #: ../paypal/paypal_statics.php:206
 msgid "AMERICAN SAMOA"
-msgstr ""
+msgstr "サモア"
 
 #: ../paypal/paypal_statics.php:207
 msgid "ANDORRA"
-msgstr ""
+msgstr "アンドラ"
 
 #: ../paypal/paypal_statics.php:208
 msgid "ANGUILLA"
@@ -1055,11 +1656,11 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:211
 msgid "ARGENTINA"
-msgstr ""
+msgstr "アルゼンチン"
 
 #: ../paypal/paypal_statics.php:212
 msgid "ARMENIA"
-msgstr ""
+msgstr "アルメニア"
 
 #: ../paypal/paypal_statics.php:213
 msgid "ARUBA"
@@ -1067,27 +1668,27 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:214
 msgid "AUSTRALIA"
-msgstr ""
+msgstr "オーストラリア"
 
 #: ../paypal/paypal_statics.php:215
 msgid "AUSTRIA"
-msgstr ""
+msgstr "オーストリア"
 
 #: ../paypal/paypal_statics.php:216
 msgid "BAHAMAS"
-msgstr ""
+msgstr "バハマ"
 
 #: ../paypal/paypal_statics.php:217
 msgid "BAHRAIN"
-msgstr ""
+msgstr "バーレーン"
 
 #: ../paypal/paypal_statics.php:218
 msgid "BARBADOS"
-msgstr ""
+msgstr "バルバドス"
 
 #: ../paypal/paypal_statics.php:219
 msgid "BELGIUM"
-msgstr ""
+msgstr "ベルギー"
 
 #: ../paypal/paypal_statics.php:220
 msgid "BELIZE"
@@ -1099,15 +1700,15 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:222
 msgid "BERMUDA"
-msgstr ""
+msgstr "バミューダ"
 
 #: ../paypal/paypal_statics.php:223
 msgid "BHUTAN"
-msgstr ""
+msgstr "ブータン"
 
 #: ../paypal/paypal_statics.php:224
 msgid "BOTSWANA"
-msgstr ""
+msgstr "ボツワナ"
 
 #: ../paypal/paypal_statics.php:225
 msgid "BOUVET ISLAND"
@@ -1115,7 +1716,7 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:226
 msgid "BRAZIL"
-msgstr ""
+msgstr "ブラジル"
 
 #: ../paypal/paypal_statics.php:227
 msgid "BRITISH INDIAN OCEAN TERRITORY"
@@ -1123,19 +1724,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:228
 msgid "BRUNEI DARUSSALAM"
-msgstr ""
+msgstr "ブルネイ"
 
 #: ../paypal/paypal_statics.php:229
 msgid "BULGARIA"
-msgstr ""
+msgstr "ブルガリア"
 
 #: ../paypal/paypal_statics.php:230
 msgid "BURKINA FASO"
-msgstr ""
+msgstr "ブルキナ・ファソ"
 
 #: ../paypal/paypal_statics.php:231
 msgid "CANADA"
-msgstr ""
+msgstr "カナダ"
 
 #: ../paypal/paypal_statics.php:232
 msgid "CAPE VERDE"
@@ -1143,7 +1744,7 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:233
 msgid "CAYMAN ISLANDS"
-msgstr ""
+msgstr "ケイマン諸島"
 
 #: ../paypal/paypal_statics.php:234
 msgid "CENTRAL AFRICAN REPUBLIC"
@@ -1151,15 +1752,15 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:235
 msgid "CHILE"
-msgstr ""
+msgstr "チリ"
 
 #: ../paypal/paypal_statics.php:236
 msgid "CHINA"
-msgstr ""
+msgstr "中国"
 
 #: ../paypal/paypal_statics.php:237
 msgid "CHRISTMAS ISLAND"
-msgstr ""
+msgstr "クリスマス諸島"
 
 #: ../paypal/paypal_statics.php:238
 msgid "COCOS (KEELING) ISLANDS"
@@ -1167,55 +1768,55 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:239
 msgid "COLOMBIA"
-msgstr ""
+msgstr "コロンビア"
 
 #: ../paypal/paypal_statics.php:240
 msgid "COOK ISLANDS"
-msgstr ""
+msgstr "クック諸島"
 
 #: ../paypal/paypal_statics.php:241
 msgid "COSTA RICA"
-msgstr ""
+msgstr "コスタ・リカ"
 
 #: ../paypal/paypal_statics.php:242
 msgid "CYPRUS"
-msgstr ""
+msgstr "キプロス"
 
 #: ../paypal/paypal_statics.php:243
 msgid "CZECH REPUBLIC"
-msgstr ""
+msgstr "チェコ共和国"
 
 #: ../paypal/paypal_statics.php:244
 msgid "DENMARK"
-msgstr ""
+msgstr "デンマーク"
 
 #: ../paypal/paypal_statics.php:245
 msgid "DJIBOUTI"
-msgstr ""
+msgstr "ヂブチ"
 
 #: ../paypal/paypal_statics.php:246
 msgid "DOMINICA"
-msgstr ""
+msgstr "ドミニカ"
 
 #: ../paypal/paypal_statics.php:247
 msgid "DOMINICAN REPUBLIC"
-msgstr ""
+msgstr "ドミニカ共和国"
 
 #: ../paypal/paypal_statics.php:248
 msgid "EGYPT"
-msgstr ""
+msgstr "エジプト"
 
 #: ../paypal/paypal_statics.php:249
 msgid "EL SALVADOR"
-msgstr ""
+msgstr "エルサルバドル"
 
 #: ../paypal/paypal_statics.php:250
 msgid "ESTONIA"
-msgstr ""
+msgstr "エストニア"
 
 #: ../paypal/paypal_statics.php:251
 msgid "FALKLAND ISLANDS (MALVINAS)"
-msgstr ""
+msgstr "フォークランド諸島"
 
 #: ../paypal/paypal_statics.php:252
 msgid "FAROE ISLANDS"
@@ -1223,23 +1824,23 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:253
 msgid "FIJI"
-msgstr ""
+msgstr "フィジー"
 
 #: ../paypal/paypal_statics.php:254
 msgid "FINLAND"
-msgstr ""
+msgstr "フィンランド"
 
 #: ../paypal/paypal_statics.php:255
 msgid "FRANCE"
-msgstr ""
+msgstr "フランス"
 
 #: ../paypal/paypal_statics.php:256
 msgid "FRENCH GUIANA"
-msgstr ""
+msgstr "仏領ギアナ"
 
 #: ../paypal/paypal_statics.php:257
 msgid "FRENCH POLYNESIA"
-msgstr ""
+msgstr "仏領ポリネシア"
 
 #: ../paypal/paypal_statics.php:258
 msgid "FRENCH SOUTHERN TERRITORIES"
@@ -1247,35 +1848,35 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:259
 msgid "GAMBIA"
-msgstr ""
+msgstr "ガンビア"
 
 #: ../paypal/paypal_statics.php:260
 msgid "GEORGIA"
-msgstr ""
+msgstr "ジョージア"
 
 #: ../paypal/paypal_statics.php:261
 msgid "GERMANY"
-msgstr ""
+msgstr "ドイツ"
 
 #: ../paypal/paypal_statics.php:262
 msgid "GHANA"
-msgstr ""
+msgstr "ガーナ"
 
 #: ../paypal/paypal_statics.php:263
 msgid "GIBRALTAR"
-msgstr ""
+msgstr "ジブラルタル"
 
 #: ../paypal/paypal_statics.php:264
 msgid "GREECE"
-msgstr ""
+msgstr "ギリシャ"
 
 #: ../paypal/paypal_statics.php:265
 msgid "GREENLAND"
-msgstr ""
+msgstr "グリーンランド"
 
 #: ../paypal/paypal_statics.php:266
 msgid "GRENADA"
-msgstr ""
+msgstr "グレナダ"
 
 #: ../paypal/paypal_statics.php:267
 msgid "GUADELOUPE"
@@ -1283,7 +1884,7 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:268
 msgid "GUAM"
-msgstr ""
+msgstr "グアム"
 
 #: ../paypal/paypal_statics.php:269
 msgid "GUERNSEY"
@@ -1295,35 +1896,35 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:271
 msgid "HOLY SEE (VATICAN CITY STATE)"
-msgstr ""
+msgstr "ヴァチカン市国"
 
 #: ../paypal/paypal_statics.php:272
 msgid "HONDURAS"
-msgstr ""
+msgstr "ホンジュラス"
 
 #: ../paypal/paypal_statics.php:273
 msgid "HONG KONG"
-msgstr ""
+msgstr "香港"
 
 #: ../paypal/paypal_statics.php:274
 msgid "HUNGARY"
-msgstr ""
+msgstr "ハンガリー"
 
 #: ../paypal/paypal_statics.php:275
 msgid "ICELAND"
-msgstr ""
+msgstr "アイスランド"
 
 #: ../paypal/paypal_statics.php:276
 msgid "INDIA"
-msgstr ""
+msgstr "インド"
 
 #: ../paypal/paypal_statics.php:277
 msgid "INDONESIA"
-msgstr ""
+msgstr "インドネシア"
 
 #: ../paypal/paypal_statics.php:278
 msgid "IRELAND"
-msgstr ""
+msgstr "アイルランド"
 
 #: ../paypal/paypal_statics.php:279
 msgid "ISLE OF MAN"
@@ -1331,19 +1932,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:280
 msgid "ISRAEL"
-msgstr ""
+msgstr "イスラエル"
 
 #: ../paypal/paypal_statics.php:281
 msgid "ITALY"
-msgstr ""
+msgstr "イタリア"
 
 #: ../paypal/paypal_statics.php:282
 msgid "JAMAICA"
-msgstr ""
+msgstr "ジャマイカ"
 
 #: ../paypal/paypal_statics.php:283
 msgid "JAPAN"
-msgstr ""
+msgstr "日本"
 
 #: ../paypal/paypal_statics.php:284
 msgid "JERSEY"
@@ -1351,31 +1952,31 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:285
 msgid "JORDAN"
-msgstr ""
+msgstr "ヨルダン"
 
 #: ../paypal/paypal_statics.php:286
 msgid "KAZAKHSTAN"
-msgstr ""
+msgstr "カザフスタン"
 
 #: ../paypal/paypal_statics.php:287
 msgid "KIRIBATI"
-msgstr ""
+msgstr "キリバツ"
 
 #: ../paypal/paypal_statics.php:288
 msgid "KOREA, REPUBLIC OF"
-msgstr ""
+msgstr "韓国"
 
 #: ../paypal/paypal_statics.php:289
 msgid "KUWAIT"
-msgstr ""
+msgstr "クウェート"
 
 #: ../paypal/paypal_statics.php:290
 msgid "KYRGYZSTAN"
-msgstr ""
+msgstr "キルギスタン"
 
 #: ../paypal/paypal_statics.php:291
 msgid "LATVIA"
-msgstr ""
+msgstr "ラトヴィア"
 
 #: ../paypal/paypal_statics.php:292
 msgid "LESOTHO"
@@ -1383,47 +1984,47 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:293
 msgid "LIECHTENSTEIN"
-msgstr ""
+msgstr "リヒテンシュタイン"
 
 #: ../paypal/paypal_statics.php:294
 msgid "LITHUANIA"
-msgstr ""
+msgstr "リトアニア"
 
 #: ../paypal/paypal_statics.php:295
 msgid "LUXEMBOURG"
-msgstr ""
+msgstr "ルクセンブルク"
 
 #: ../paypal/paypal_statics.php:296
 msgid "MACAO"
-msgstr ""
+msgstr "マカオ"
 
 #: ../paypal/paypal_statics.php:297
 msgid "MALAWI"
-msgstr ""
+msgstr "マラウィ"
 
 #: ../paypal/paypal_statics.php:298
 msgid "MALAYSIA"
-msgstr ""
+msgstr "マレーシア"
 
 #: ../paypal/paypal_statics.php:299
 msgid "MALTA"
-msgstr ""
+msgstr "マルタ"
 
 #: ../paypal/paypal_statics.php:300
 msgid "MARSHALL ISLANDS"
-msgstr ""
+msgstr "マーシャル諸島"
 
 #: ../paypal/paypal_statics.php:301
 msgid "MARTINIQUE"
-msgstr ""
+msgstr "マルティニーク島"
 
 #: ../paypal/paypal_statics.php:302
 msgid "MAURITANIA"
-msgstr ""
+msgstr "モーリタニア"
 
 #: ../paypal/paypal_statics.php:303
 msgid "MAURITIUS"
-msgstr ""
+msgstr "モーリシャス"
 
 #: ../paypal/paypal_statics.php:304
 msgid "MAYOTTE"
@@ -1431,23 +2032,23 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:305
 msgid "MEXICO"
-msgstr ""
+msgstr "メキシコ"
 
 #: ../paypal/paypal_statics.php:306
 msgid "MICRONESIA, FEDERATED STATES OF"
-msgstr ""
+msgstr "ミクロネシア連邦"
 
 #: ../paypal/paypal_statics.php:307
 msgid "MOLDOVA, REPUBLIC OF"
-msgstr ""
+msgstr "モルドヴァ"
 
 #: ../paypal/paypal_statics.php:308
 msgid "MONACO"
-msgstr ""
+msgstr "モナコ"
 
 #: ../paypal/paypal_statics.php:309
 msgid "MONGOLIA"
-msgstr ""
+msgstr "モンゴル"
 
 #: ../paypal/paypal_statics.php:310
 msgid "MONTSERRAT"
@@ -1455,15 +2056,15 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:311
 msgid "MOROCCO"
-msgstr ""
+msgstr "モロッコ"
 
 #: ../paypal/paypal_statics.php:312
 msgid "MOZAMBIQUE"
-msgstr ""
+msgstr "モザンビーク"
 
 #: ../paypal/paypal_statics.php:313
 msgid "NAMIBIA"
-msgstr ""
+msgstr "ナミビア"
 
 #: ../paypal/paypal_statics.php:314
 msgid "NAURU"
@@ -1471,71 +2072,71 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:315
 msgid "NEPAL"
-msgstr ""
+msgstr "ネパール"
 
 #: ../paypal/paypal_statics.php:316
 msgid "NETHERLANDS"
-msgstr ""
+msgstr "オランダ"
 
 #: ../paypal/paypal_statics.php:317
 msgid "NETHERLANDS ANTILLES"
-msgstr ""
+msgstr "ん"
 
 #: ../paypal/paypal_statics.php:318
 msgid "NEW CALEDONIA"
-msgstr ""
+msgstr "ニューカレドニア"
 
 #: ../paypal/paypal_statics.php:319
 msgid "NEW ZEALAND"
-msgstr ""
+msgstr "ニュージーランド"
 
 #: ../paypal/paypal_statics.php:320
 msgid "NICARAGUA"
-msgstr ""
+msgstr "ニカラグア"
 
 #: ../paypal/paypal_statics.php:321
 msgid "NIGER"
-msgstr ""
+msgstr "ナイジェリア"
 
 #: ../paypal/paypal_statics.php:322
 msgid "NIUE"
-msgstr ""
+msgstr "に"
 
 #: ../paypal/paypal_statics.php:323
 msgid "NORFOLK ISLAND"
-msgstr ""
+msgstr "ノーフォーク島"
 
 #: ../paypal/paypal_statics.php:324
 msgid "NORTHERN MARIANA ISLANDS"
-msgstr ""
+msgstr "北マリアナ諸島"
 
 #: ../paypal/paypal_statics.php:325
 msgid "NORWAY"
-msgstr ""
+msgstr "ノルウェー"
 
 #: ../paypal/paypal_statics.php:326
 msgid "OMAN"
-msgstr ""
+msgstr "オマーン"
 
 #: ../paypal/paypal_statics.php:327
 msgid "PALAU"
-msgstr ""
+msgstr "パラオ"
 
 #: ../paypal/paypal_statics.php:328
 msgid "PANAMA"
-msgstr ""
+msgstr "パナマ"
 
 #: ../paypal/paypal_statics.php:329
 msgid "PARAGUAY"
-msgstr ""
+msgstr "パラグアイ"
 
 #: ../paypal/paypal_statics.php:330
 msgid "PERU"
-msgstr ""
+msgstr "ペルー"
 
 #: ../paypal/paypal_statics.php:331
 msgid "PHILIPPINES"
-msgstr ""
+msgstr "フィリピン"
 
 #: ../paypal/paypal_statics.php:332
 msgid "PITCAIRN"
@@ -1543,19 +2144,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:333
 msgid "POLAND"
-msgstr ""
+msgstr "ポーランド"
 
 #: ../paypal/paypal_statics.php:334
 msgid "PORTUGAL"
-msgstr ""
+msgstr "ポルトガル"
 
 #: ../paypal/paypal_statics.php:335
 msgid "PUERTO RICO"
-msgstr ""
+msgstr "プエルト・リコ"
 
 #: ../paypal/paypal_statics.php:336
 msgid "QATAR"
-msgstr ""
+msgstr "がタール"
 
 #: ../paypal/paypal_statics.php:337
 msgid "REUNION"
@@ -1563,7 +2164,7 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:338
 msgid "ROMANIA"
-msgstr ""
+msgstr "ルーマニア"
 
 #: ../paypal/paypal_statics.php:339
 msgid "SAINT HELENA"
@@ -1587,11 +2188,11 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:344
 msgid "SAMOA"
-msgstr ""
+msgstr "サモア"
 
 #: ../paypal/paypal_statics.php:345
 msgid "SAN MARINO"
-msgstr ""
+msgstr "サン・マリノ"
 
 #: ../paypal/paypal_statics.php:346
 msgid "SAO TOME AND PRINCIPE"
@@ -1599,11 +2200,11 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:347
 msgid "SAUDI ARABIA"
-msgstr ""
+msgstr "サウジアラビア"
 
 #: ../paypal/paypal_statics.php:348
 msgid "SENEGAL"
-msgstr ""
+msgstr "セネガル"
 
 #: ../paypal/paypal_statics.php:349
 msgid "SEYCHELLES"
@@ -1611,23 +2212,23 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:350
 msgid "SINGAPORE"
-msgstr ""
+msgstr "シンガポール"
 
 #: ../paypal/paypal_statics.php:351
 msgid "SLOVAKIA"
-msgstr ""
+msgstr "スロバキア"
 
 #: ../paypal/paypal_statics.php:352
 msgid "SLOVENIA"
-msgstr ""
+msgstr "スロヴェニア"
 
 #: ../paypal/paypal_statics.php:353
 msgid "SOLOMON ISLANDS"
-msgstr ""
+msgstr "ソロモン諸島"
 
 #: ../paypal/paypal_statics.php:354
 msgid "SOUTH AFRICA"
-msgstr ""
+msgstr "南アフリカ"
 
 #: ../paypal/paypal_statics.php:355
 msgid "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
@@ -1635,11 +2236,11 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:356
 msgid "SPAIN"
-msgstr ""
+msgstr "スペイン"
 
 #: ../paypal/paypal_statics.php:357
 msgid "SURINAME"
-msgstr ""
+msgstr "す"
 
 #: ../paypal/paypal_statics.php:358
 msgid "SVALBARD AND JAN MAYEN"
@@ -1647,27 +2248,27 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:359
 msgid "SWAZILAND"
-msgstr ""
+msgstr "スワジランド"
 
 #: ../paypal/paypal_statics.php:360
 msgid "SWEDEN"
-msgstr ""
+msgstr "スウェーデン"
 
 #: ../paypal/paypal_statics.php:361
 msgid "SWITZERLAND"
-msgstr ""
+msgstr "スイス"
 
 #: ../paypal/paypal_statics.php:362
 msgid "TAIWAN, PROVINCE OF CHINA"
-msgstr ""
+msgstr "台湾"
 
 #: ../paypal/paypal_statics.php:363
 msgid "TANZANIA, UNITED REPUBLIC OF"
-msgstr ""
+msgstr "タンザニア共和国"
 
 #: ../paypal/paypal_statics.php:364
 msgid "THAILAND"
-msgstr ""
+msgstr "タイ"
 
 #: ../paypal/paypal_statics.php:365
 msgid "TOKELAU"
@@ -1675,19 +2276,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:366
 msgid "TONGA"
-msgstr ""
+msgstr "トンガ"
 
 #: ../paypal/paypal_statics.php:367
 msgid "TRINIDAD AND TOBAGO"
-msgstr ""
+msgstr "トリニダード・トバゴ"
 
 #: ../paypal/paypal_statics.php:368
 msgid "TUNISIA"
-msgstr ""
+msgstr "チュニジア"
 
 #: ../paypal/paypal_statics.php:369
 msgid "TURKEY"
-msgstr ""
+msgstr "トルコ"
 
 #: ../paypal/paypal_statics.php:370
 msgid "TURKS AND CAICOS ISLANDS"
@@ -1695,23 +2296,23 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:371
 msgid "TUVALU"
-msgstr ""
+msgstr "ツバル"
 
 #: ../paypal/paypal_statics.php:372
 msgid "UKRAINE"
-msgstr ""
+msgstr "ウクライナ"
 
 #: ../paypal/paypal_statics.php:373
 msgid "UNITED ARAB EMIRATES"
-msgstr ""
+msgstr "アラブ首長国連邦"
 
 #: ../paypal/paypal_statics.php:374
 msgid "UNITED KINGDOM"
-msgstr ""
+msgstr "イギリス"
 
 #: ../paypal/paypal_statics.php:375
 msgid "UNITED STATES"
-msgstr ""
+msgstr "アメリカ合衆国"
 
 #: ../paypal/paypal_statics.php:376
 msgid "UNITED STATES MINOR OUTLYING ISLANDS"
@@ -1719,11 +2320,11 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:377
 msgid "URUGUAY"
-msgstr ""
+msgstr "ウルグアイ"
 
 #: ../paypal/paypal_statics.php:378
 msgid "VIET NAM"
-msgstr ""
+msgstr "ヴェトナム"
 
 #: ../paypal/paypal_statics.php:379
 msgid "VIRGIN ISLANDS, BRITISH"
@@ -1739,19 +2340,19 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:382
 msgid "ZAMBIA"
-msgstr ""
+msgstr "ザンビア"
 
 #: ../paypal/paypal_statics.php:395
 msgid "Australian Dollar"
-msgstr ""
+msgstr "豪ドル"
 
 #: ../paypal/paypal_statics.php:396
 msgid "Brazilian Real"
-msgstr ""
+msgstr "ブラジルレアル"
 
 #: ../paypal/paypal_statics.php:397
 msgid "Canadian Dollar"
-msgstr ""
+msgstr "カナダドル"
 
 #: ../paypal/paypal_statics.php:398
 msgid "Czech Koruna"
@@ -1759,15 +2360,15 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:399
 msgid "Danish Krone"
-msgstr ""
+msgstr "デンマーククローネ"
 
 #: ../paypal/paypal_statics.php:400
 msgid "Euro"
-msgstr ""
+msgstr "ユーロ"
 
 #: ../paypal/paypal_statics.php:401
 msgid "Hong Kong Dollar"
-msgstr ""
+msgstr "香港ドル"
 
 #: ../paypal/paypal_statics.php:402
 msgid "Hungarian Forint"
@@ -1779,57 +2380,111 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:404
 msgid "Japanese Yen"
-msgstr ""
+msgstr "日本円"
 
 #: ../paypal/paypal_statics.php:405
 msgid "Malaysian Ringgit"
-msgstr ""
+msgstr "マレーシアリンギット"
 
 #: ../paypal/paypal_statics.php:406
 msgid "Mexican Peso"
-msgstr ""
+msgstr "メキシコペソ"
 
 #: ../paypal/paypal_statics.php:407
 msgid "Norwegian Krone"
-msgstr ""
+msgstr "ノルウェイクローネ"
 
 #: ../paypal/paypal_statics.php:408
 msgid "New Zealand Dollar"
-msgstr ""
+msgstr "ニュージーランドドル"
 
 #: ../paypal/paypal_statics.php:409
 msgid "Philippine Peso"
-msgstr ""
+msgstr "フィリピンペソ"
 
 #: ../paypal/paypal_statics.php:410
 msgid "Polish Zloty"
-msgstr ""
+msgstr "ポーランドズウォーティ"
 
 #: ../paypal/paypal_statics.php:411
 msgid "Pound Sterling"
-msgstr ""
+msgstr "イギリスポンド"
 
 #: ../paypal/paypal_statics.php:412
 msgid "Singapore Dollar"
-msgstr ""
+msgstr "シンガポールドル"
 
 #: ../paypal/paypal_statics.php:413
 msgid "Swedish Krona"
-msgstr ""
+msgstr "スウェーデンクローネ"
 
 #: ../paypal/paypal_statics.php:414
 msgid "Swiss Franc"
-msgstr ""
+msgstr "スイスフラン"
 
 #: ../paypal/paypal_statics.php:415
 msgid "Taiwan New Dollar"
-msgstr ""
+msgstr "台湾ドル"
 
 #: ../paypal/paypal_statics.php:416
 msgid "Thai Baht"
-msgstr ""
+msgstr "タイバーツ"
 
 #: ../paypal/paypal_statics.php:417
 msgid "U.S. Dollar"
-msgstr ""
+msgstr "USドル"
+
+#: ../widgets/buynow.php:21
+msgid "LWP Buy Now Widget"
+msgstr "LWPいますぐ購入ウィジェット"
+
+#: ../widgets/buynow.php:22
+msgid "Displays BuyNow button if post is payable."
+msgstr "投稿が購入可能な場合にいますぐ購入ボタンを表示します。"
+
+#: ../widgets/buynow.php:115
+msgid "Now on SALE!"
+msgstr "セール中！"
+
+#: ../widgets/buynow.php:119
+msgid "Widgets Title"
+msgstr "ウィジェットのタイトル"
+
+#: ../widgets/buynow.php:123
+msgid "Post ID to display"
+msgstr "表示する投稿ID"
+
+#: ../widgets/buynow.php:126
+msgid "Specify post's ID to display button outside singular page(ex. In category page) or leave it blank."
+msgstr "アイテムのページ以外（ex. カテゴリーページ）に表示したい場合は、投稿IDを指定してください。必要なければ空白にしてください。"
+
+#: ../widgets/buynow.php:130
+#: ../widgets/buynow.php:137
+msgid "Original Image src"
+msgstr "オリジナル画像のsrc"
+
+#: ../widgets/buynow.php:133
+msgid "Specify your original \"BuyNow\" button src. If you don't have, leave it blank and PayPal button will be displayed. Put word 'link', button will be displayed with normal link tag."
+msgstr "オリジナルの\"いますぐ購入\"ボタンのパスを指定してください。もしない場合は空白にしておけばPayPalのボタンが表示されます。'link'と入力すれば、通常のリンクタグで表示されます。"
+
+#: ../widgets/buynow.php:140
+#, php-format
+msgid "This words will be displayed after Title if on sale. %%end%% will be replaced by the campaign end date."
+msgstr "セール中の時にだけ表示されます。%end%はキャンペーンの終了日に置き換えられます。"
+
+#: ../widgets/buynow.php:144
+msgid "Show Timer"
+msgstr "タイマー表示"
+
+#: ../widgets/buynow.php:147
+msgid "Show"
+msgstr "表示する"
+
+#: ../widgets/buynow.php:151
+msgid "Don't show"
+msgstr "表示しない"
+
+#: ../widgets/buynow.php:154
+msgid "Timer will be displayed if post is on sale."
+msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
 

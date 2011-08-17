@@ -10,7 +10,7 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 		$book = wp_get_single_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 ?>
-<h3><?php $this->e('Update Trnasaction'); ?></h3>
+<h3><?php $this->e('Update Transaction'); ?></h3>
 <form method="post">
 	<?php wp_nonce_field("lwp_update_transaction"); ?>
 	<input type="hidden" name="transaction_id" value="<?php $this->h($transaction->ID);?>" />

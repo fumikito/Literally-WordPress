@@ -1,5 +1,5 @@
 <?php
-	/** @var $this Literally_WordPress */
+	/* @var $this Literally_WordPress */
 	
 	$file = false;
 	$uploading = false;
@@ -19,19 +19,19 @@
 		$uploaded = true;
 		//タイトルチェック
 		if(empty($_REQUEST["title"]))
-			$message[] = "タイトルが空です。";
+			$message[] = $this->_("Title is empty.");
 		//公開状態のチェック
 		if(!is_numeric($_REQUEST["public"]))
-			$message[] = "公開状態を選択してください。";
+			$message[] = $this->_ ('Select public status.');
 		//ファイルのチェック
 		if(empty($_FILES["file"]))
-			$message[] = "ファイルが指定されていません。";
+			$message[] = $this->_('No file is specified.');
 		//ファイルのエラーチェック
 		elseif($this->file_has_error($_FILES["file"]))
 			$message[] = $this->file_has_error($_FILES["file"]);
 		//対応端末のチェック
 		if(empty($_POST['devices']))
-			$message[] = "対応端末が指定されてません。";
+			$message[] = $this->_ ('No device is specified.');
 		//エラー状態のチェック
 		if(empty($message)){
 			$this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]);
@@ -52,9 +52,9 @@
 	){
 		$updated = true;
 		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]))
-			$message[] = "ファイルの更新に成功しました";
+			$message[] = $this->_ ('File is successfully updated.');
 		else
-			$message[] = "ファイルの更新に失敗しました";
+			$message[] = $this->_('Failed to update file.');
 	}
 	//削除完了アクション
 	elseif(
@@ -63,9 +63,9 @@
 	){
 		$deleted = true;
 		if($this->delete_file($_REQUEST["file_id"]))
-			$message[] = "削除しました。";
+			$message[] = $this->_('File deleted.');
 		else
-			$message[] = "削除に失敗しました";
+			$message[] = $this->_('Failed to delete file.');
 	}else
 		$uploading = true;
 	
@@ -89,13 +89,13 @@
 			wp_nonce_field("lwp_upload");
 		}
 	?>
-	<h3 class="media-title">電子書籍ファイルの管理</h3>
+	<h3 class="media-title"><?php $this->e('Manage files')?></h3>
 	<div class="media-items">
 		<h4 class="media-sub-title">
 		<?php if($updating || $updated): ?>
-			ファイルの情報を更新してください
+			<?php $this->e('Please update file information'); ?>
 		<?php else: ?>
-			ファイルをアップロードしてください
+			<?php $this->e('Please upload file'); ?>
 		<?php endif; ?>
 		</h4>
 		<?php if(!empty($message)): ?>
@@ -111,66 +111,66 @@
 			<tbody>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label for="title">名称</label>
+						<label for="title"><?php $this->e('Title'); ?></label>
 					</th>
 					<td class="field">
 						<input id="title" name="title" type="text" value="<?php if($updating || $updated) $this->h($file->name); ?>"/>
-						<p class="help">このファイルの名前です。例：iBooks用ePub【第二版】</p>
+						<p class="help"><?php $this->e('Name of this file. ex. ePub for iBooks(2nd Edition)'); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label>公開状態</label>
+						<label><?php $this->e('Public Status'); ?></label>
 					</th>
 					<td class="field">
-						<label><input name="public" type="radio" value="1"<?php if(!($updating || $updated) || $file->public == 1) echo ' checked="checked"'; ?> />公開</label>
-						<label><input name="public" type="radio" value="0"<?php if(($updating || $updated) && $file->public == 0) echo ' checked="checked"'; ?> />非公開</label>
-						<p class="help">このファイルの公開状態です。非公開になっているものはファイルが表示されません。</p>
+						<label><input name="public" type="radio" value="1"<?php if(!($updating || $updated) || $file->public == 1) echo ' checked="checked"'; ?> /><?php $this->e('Public'); ?></label>
+						<label><input name="public" type="radio" value="0"<?php if(($updating || $updated) && $file->public == 0) echo ' checked="checked"'; ?> /><?php $this->e('Private'); ?></label>
+						<p class="help"><?php $this->e('Public status of this file. Private files won\'t be displayed.'); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label>立ち読み</label>
+						<label><?php $this->e('Trial'); ?></label>
 					</th>
 					<td class="field">
-						<label><input name="free" type="radio" value="0"<?php if(!($updating || $updated) || $file->free == 0) echo ' checked="checked"'; ?> />できない</label>
-						<label><input name="free" type="radio" value="1"<?php if(($updating || $updated) && $file->free == 1) echo ' checked="checked"'; ?> />登録していればできる</label>
-						<label><input name="free" type="radio" value="2"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> />登録していなくてもできる</label>
+						<label><input name="free" type="radio" value="0"<?php if(!($updating || $updated) || $file->free == 0) echo ' checked="checked"'; ?> /><?php $this->e('Impossible'); ?></label>
+						<label><input name="free" type="radio" value="1"<?php if(($updating || $updated) && $file->free == 1) echo ' checked="checked"'; ?> /><?php $this->e('Possible for registered user'); ?></label>
+						<label><input name="free" type="radio" value="2"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> /><?php $this->e('Possible for everyone'); ?></label>
 						<p class="help">
-							「立ち読み」とは<strong>購入せずにすべてをダウンロードできる状態</strong>を意味します。<br />
-							「部分的な立ち読み」を提供したい場合は<strong>立ち読み用のファイル</strong>を用意した上で「できない」以外を指定してください。
+							<?php $this->e('Trial means <strong>user can download whole of the file</strong>.'); ?><br />
+							<?php printf($this->_('If you want provide partial trial, <strong>make a partial file</strong> and specify it as &quot;%s&quot;'), $this->_('Possible for everyone')); ?>
 						</p>
 					</td>
 				</tr>
 				<tr>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label>対応端末</label>
+						<label><?php $this->e('Devices'); ?></label>
 					</th>
 					<td class="field">
 						<?php foreach($devices as $d): ?>
 						<label><input name="devices[]" type="checkbox" value="<?php echo $d->ID; ?>"<?php if(($updating || $updated) && false !== array_search($d->ID, $devices_registered)) echo ' checked="checked"'; ?> /><?php echo $d->name; ?></label>　
 						<?php endforeach; ?>
 						<p class="help">
-							このファイルが対応する端末にチェックを入れてください。<br />
-							端末の登録は<a href="#" onclick="parent.location.href = '<?php echo admin_url(); ?>edit.php?post_type=ebook&page=lwp-devices';">端末設定ページ</a>で行ってください。
+							<?php $this->e('Check device which can read this file.'); ?><br />
+							<?php printf($this->_('To add device, go to %s.'), '<a href="#" onclick="parent.location.href = \''.admin_url('admin.php?page=lwp-devices').'\'">'.$this->_('Devices').'</a>'); ?>
 						</p>
 					</td>
 				</tr>
 				</tr>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label for="desc">説明</label>
+						<label for="desc"><?php $this->e('Description'); ?></label>
 					</th>
 					<td class="field">
 						<textarea id="desc" name="desc"><?php if($updating || $updated) $this->h($file->desc); ?></textarea>
-						<p class="help">※必要なら記入してください。</p>
+						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>
 				<?php if(!($updating || $updated)): ?>
 				<tr>
 					<th scope="row" valign="top" class="label">
-						<label for="file">ファイル</label>
+						<label for="file"><?php $this->e('File'); ?></label>
 					</th>
 					<td class="field">
 						<input id="file" name="file" type="file" />
@@ -180,9 +180,9 @@
 			</tbody>
 		</table>
 		<p class="submit">
-			<input type="submit" name="submit" value="<?php echo ($updating || $updated) ? '更新' : 'アップロード'; ?>" />
+			<input type="submit" name="submit" value="<?php echo ($updating || $updated) ? $this->_('Update') : $this->_('Add'); ?>" />
 			<?php if(($updating || $updated)): ?>
-			<a class="button" href="">新規登録へ</a>
+			<a class="button" href=""><?php $this->e('Go to add file'); ?></a>
 			<?php endif; ?>
 		</p>
 	</div>
@@ -191,18 +191,18 @@
 <?php if(!empty($files)): ?>
 <div id="media-upload">
 	<div id="media-items" style="margin:1em">
-		<h4 class="media-sub-title">登録済み電子書籍ファイル</h4>
+		<h4 class="media-sub-title"><?php $this->e('Registered files'); ?></h4>
 		<?php foreach($files as $f): ?>
 		<div class="media-item">
 			<form method="post" class="describe-toggle-on">
 				<?php wp_nonce_field("lwp_deleted"); ?>
 				<input type="hidden" value="<?php echo $f->ID; ?>" name="file_id" />
-				<input type="submit" class="button" value="削除" onclick="if(!confirm('削除してよろしいですか？')) return false;" />
+				<input type="submit" class="button" value="<?php $this->e('Delete') ?>" onclick="if(!confirm('<?php $this->e('Are you sure to delete?'); ?>')) return false;" />
 			</form>
 			<form method="post" class="describe-toggle-on">
 				<?php wp_nonce_field("lwp_update"); ?>
 				<input type="hidden" value="<?php echo $f->ID; ?>" name="file_id" />
-				<input type="submit" class="button" value="更新" />
+				<input type="submit" class="button" value="<?php $this->e('Update') ?>" />
 			</form>
 			<div class="filename">
 				<span class="title"><?php $this->h($f->name); ?></span>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 12:14+0900\n"
-"PO-Revision-Date: 2011-08-01 12:14+0900\n"
+"POT-Creation-Date: 2011-08-17 17:13+0900\n"
+"PO-Revision-Date: 2011-08-17 17:13+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -17,368 +17,436 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: ../functions.php:444
+#: ../functions.php:449
 msgid "Registered Files"
 msgstr ""
 
-#: ../functions.php:449
+#: ../functions.php:454
 msgid "File Name"
 msgstr ""
 
-#: ../functions.php:450
+#: ../functions.php:455
+#: ../admin/upload.php:163
 msgid "Description"
 msgstr ""
 
-#: ../functions.php:451
+#: ../functions.php:456
 msgid "Available with"
 msgstr ""
 
-#: ../functions.php:452
+#: ../functions.php:457
 msgid "Download"
 msgstr ""
 
-#: ../functions.php:460
+#: ../functions.php:465
 msgid "download"
 msgstr ""
 
-#: ../functions.php:461
+#: ../functions.php:466
 msgid "Unavailable"
 msgstr ""
 
-#: ../functions.php:462
+#: ../functions.php:467
 #, php-format
 msgid "File Size: %s"
 msgstr ""
 
-#: ../functions.php:463
+#: ../functions.php:468
 #, php-format
 msgid "Published: %s"
 msgstr ""
 
-#: ../functions.php:464
+#: ../functions.php:469
 #, php-format
 msgid "Updated: %s"
 msgstr ""
 
-#: ../functions.php:491
+#: ../functions.php:496
 msgid "Devices Available With"
 msgstr ""
 
-#: ../functions.php:496
+#: ../functions.php:501
 #: ../admin/devices.php:41
 #: ../admin/devices.php:50
 #: ../admin/devices.php:102
 msgid "Device Name"
 msgstr ""
 
-#: ../functions.php:497
+#: ../functions.php:502
 msgid "Avalability"
 msgstr ""
 
-#: ../functions.php:503
+#: ../functions.php:508
 msgid "Available"
 msgstr ""
 
-#: ../functions.php:503
+#: ../functions.php:508
 msgid "Unconfirmed"
 msgstr ""
 
-#: ../functions.php:605
+#: ../functions.php:616
+#: ../functions.php:621
 msgid "Buy Now"
 msgstr ""
 
-#: ../functions.php:638
+#: ../functions.php:640
+msgid "Left time: "
+msgstr ""
+
+#: ../functions.php:659
 msgid "day"
 msgstr ""
 
-#: ../functions.php:638
+#: ../functions.php:659
 msgid "days"
 msgstr ""
 
-#: ../functions.php:662
-#: ../admin/campaign.php:155
+#: ../functions.php:660
 #, php-format
-msgid "%d%%Off"
+msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr ""
 
-#: ../functions.php:687
+#: ../functions.php:662
+#, php-format
+msgid "<span class=\"hour\">%02d</span>h "
+msgstr ""
+
+#: ../functions.php:663
+#, php-format
+msgid "<span class=\"minutes\">%02d</span>m "
+msgstr ""
+
+#: ../functions.php:664
+#, php-format
+msgid "<span class=\"seconds\">%02d</span>s"
+msgstr ""
+
+#: ../functions.php:683
+#, php-format
+msgid "%d%% Off"
+msgstr ""
+
+#: ../functions.php:708
 #, php-format
 msgid "On SALE till %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:198
+#: ../literally-wordpress.class.php:206
 msgid "Add New"
 msgstr ""
 
-#: ../literally-wordpress.class.php:199
-#: ../literally-wordpress.class.php:201
+#: ../literally-wordpress.class.php:207
+#: ../literally-wordpress.class.php:209
 #, php-format
 msgid "Add New %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:200
+#: ../literally-wordpress.class.php:208
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:202
+#: ../literally-wordpress.class.php:210
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:203
+#: ../literally-wordpress.class.php:211
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:204
+#: ../literally-wordpress.class.php:212
 #, php-format
 msgid "No %s was found."
 msgstr ""
 
-#: ../literally-wordpress.class.php:205
+#: ../literally-wordpress.class.php:213
 #, php-format
 msgid "No %s was found in trash."
 msgstr ""
 
-#: ../literally-wordpress.class.php:237
+#: ../literally-wordpress.class.php:245
 msgid "Directory isn't writable."
 msgstr ""
 
-#: ../literally-wordpress.class.php:253
+#: ../literally-wordpress.class.php:261
 msgid "Directory is publically accessible via HTTP"
 msgstr ""
 
-#: ../literally-wordpress.class.php:259
+#: ../literally-wordpress.class.php:267
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr ""
 
-#: ../literally-wordpress.class.php:264
+#: ../literally-wordpress.class.php:272
 msgid "Currency code is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:268
+#: ../literally-wordpress.class.php:276
 msgid "Country code is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:272
+#: ../literally-wordpress.class.php:280
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr ""
 
-#: ../literally-wordpress.class.php:318
+#: ../literally-wordpress.class.php:324
 msgid "Literally WordPress Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:443
+#: ../literally-wordpress.class.php:457
 #: ../admin/setting.php:2
 msgid "General Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:443
+#: ../literally-wordpress.class.php:457
 msgid "Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:444
+#: ../literally-wordpress.class.php:458
 #: ../admin/management.php:2
 msgid "Customer Management"
 msgstr ""
 
-#: ../literally-wordpress.class.php:444
+#: ../literally-wordpress.class.php:458
 msgid "Customer"
 msgstr ""
 
-#: ../literally-wordpress.class.php:445
+#: ../literally-wordpress.class.php:459
 msgid "Campaing Management"
 msgstr ""
 
-#: ../literally-wordpress.class.php:445
+#: ../literally-wordpress.class.php:459
 msgid "Campaing"
 msgstr ""
 
-#: ../literally-wordpress.class.php:446
+#: ../literally-wordpress.class.php:460
 msgid "Device Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:446
+#: ../literally-wordpress.class.php:460
 msgid "Device"
 msgstr ""
 
-#: ../literally-wordpress.class.php:448
+#: ../literally-wordpress.class.php:462
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr ""
 
-#: ../literally-wordpress.class.php:448
+#: ../literally-wordpress.class.php:462
 msgid "Purchase"
 msgstr ""
 
-#: ../literally-wordpress.class.php:530
+#: ../literally-wordpress.class.php:552
 msgid "Literally WordPress Help"
 msgstr ""
 
-#: ../literally-wordpress.class.php:614
-#: ../literally-wordpress.class.php:1049
+#: ../literally-wordpress.class.php:636
+#: ../literally-wordpress.class.php:1071
 msgid "Price must be numeric."
 msgstr ""
 
-#: ../literally-wordpress.class.php:646
+#: ../literally-wordpress.class.php:668
 msgid "Literally WordPress"
 msgstr ""
 
-#: ../literally-wordpress.class.php:841
+#: ../literally-wordpress.class.php:863
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr ""
 
-#: ../literally-wordpress.class.php:844
+#: ../literally-wordpress.class.php:866
 msgid "Uploaded file size exceeds"
 msgstr ""
 
-#: ../literally-wordpress.class.php:847
+#: ../literally-wordpress.class.php:869
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr ""
 
-#: ../literally-wordpress.class.php:850
+#: ../literally-wordpress.class.php:872
 msgid "No file was uploaded."
 msgstr ""
 
-#: ../literally-wordpress.class.php:853
+#: ../literally-wordpress.class.php:875
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr ""
 
-#: ../literally-wordpress.class.php:856
+#: ../literally-wordpress.class.php:878
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 
-#: ../literally-wordpress.class.php:859
+#: ../literally-wordpress.class.php:881
 msgid "PHP stops uploading."
 msgstr ""
 
-#: ../literally-wordpress.class.php:941
+#: ../literally-wordpress.class.php:963
 msgid "Device added."
 msgstr ""
 
-#: ../literally-wordpress.class.php:943
+#: ../literally-wordpress.class.php:965
 msgid "Failed to add device."
 msgstr ""
 
-#: ../literally-wordpress.class.php:953
+#: ../literally-wordpress.class.php:975
 msgid "Device deleted."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1044
+#: ../literally-wordpress.class.php:1066
 msgid "Please select item."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1054
+#: ../literally-wordpress.class.php:1076
 msgid "Price is higher than original price."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1059
-#: ../literally-wordpress.class.php:1105
+#: ../literally-wordpress.class.php:1081
+#: ../literally-wordpress.class.php:1127
 msgid "Date format is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1064
+#: ../literally-wordpress.class.php:1086
 msgid "End date was past."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1080
+#: ../literally-wordpress.class.php:1102
 msgid "Campaign added."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1083
+#: ../literally-wordpress.class.php:1105
 msgid "Failed to add campaign."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1092
+#: ../literally-wordpress.class.php:1114
 msgid "Specified campaing doesn't exist"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1097
+#: ../literally-wordpress.class.php:1119
 msgid "Price should be numeric."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1100
+#: ../literally-wordpress.class.php:1122
 msgid "Campgin price is higher than original price."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1110
+#: ../literally-wordpress.class.php:1132
 msgid "End date is earlier than start date."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1126
+#: ../literally-wordpress.class.php:1148
 msgid "Successfully Updated."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1129
+#: ../literally-wordpress.class.php:1151
 msgid "Update Failed."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1137
+#: ../literally-wordpress.class.php:1159
 msgid "Campaign was deleted."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1140
+#: ../literally-wordpress.class.php:1162
 msgid "Failed to delete campaign."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1254
+#: ../literally-wordpress.class.php:1276
 msgid "You've kindly given a present."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1256
+#: ../literally-wordpress.class.php:1278
 msgid "Failed to give a present."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1387
+#: ../literally-wordpress.class.php:1409
 msgid "Purchase infomation updated."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1389
+#: ../literally-wordpress.class.php:1411
 msgid "Failed to update purchase infomration."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1416
+#: ../literally-wordpress.class.php:1438
 msgid "No content is specified."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1440
+#: ../literally-wordpress.class.php:1462
 msgid "This contents is not on sale."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1444
+#: ../literally-wordpress.class.php:1466
 msgid "Failed to make transaction."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1447
+#: ../literally-wordpress.class.php:1469
 #, php-format
 msgid "Transaction Error : %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1472
+#: ../literally-wordpress.class.php:1494
 msgid "Transaction Failed to finish."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1472
-#: ../literally-wordpress.class.php:1493
+#: ../literally-wordpress.class.php:1494
+#: ../literally-wordpress.class.php:1515
 msgid "Failed"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1479
+#: ../literally-wordpress.class.php:1501
 msgid "Failed to connect with PayPal."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1483
+#: ../literally-wordpress.class.php:1505
 msgid "Failed to get the transactional information."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1653
+#: ../literally-wordpress.class.php:1681
 msgid "You have no permission to access this file."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1653
+#: ../literally-wordpress.class.php:1681
 msgid "Permission Error"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1710
+msgid "Name"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1711
+#: ../admin/history.php:32
+#: ../admin/history.php:41
+#: ../admin/management.php:144
+#: ../admin/management.php:155
+msgid "Date"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1712
+#: ../admin/campaign.php:119
+#: ../admin/campaign.php:129
+#: ../admin/history.php:30
+#: ../admin/history.php:39
+#: ../form-template/edit-detail.php:8
+msgid "Price"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1713
+msgid "Payment Method"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1737
+#: ../admin/history.php:56
+#: ../admin/management.php:63
+msgid "Present"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1740
+msgid "Free Campaign"
+msgstr ""
+
+#: ../literally-wordpress.class.php:1753
+msgid "Total: "
+msgstr ""
+
+#: ../literally-wordpress.class.php:1756
+msgid "You have no transaction history. Try to get any!"
 msgstr ""
 
 #: ../admin/campaign.php:2
@@ -424,7 +492,7 @@ msgid "End Date"
 msgstr ""
 
 #: ../admin/campaign.php:65
-msgid "Return to cmapign page"
+msgid "Return to campaign page"
 msgstr ""
 
 #: ../admin/campaign.php:84
@@ -443,6 +511,7 @@ msgstr ""
 #: ../admin/campaign.php:169
 #: ../admin/devices.php:28
 #: ../admin/devices.php:74
+#: ../admin/upload.php:200
 msgid "Delete"
 msgstr ""
 
@@ -463,12 +532,9 @@ msgstr ""
 msgid "Period"
 msgstr ""
 
-#: ../admin/campaign.php:119
-#: ../admin/campaign.php:129
-#: ../admin/history.php:30
-#: ../admin/history.php:39
-#: ../form-template/edit-detail.php:8
-msgid "Price"
+#: ../admin/campaign.php:155
+#, php-format
+msgid "%d%%Off"
 msgstr ""
 
 #: ../admin/campaign.php:160
@@ -500,6 +566,8 @@ msgid "Add new campaing"
 msgstr ""
 
 #: ../admin/devices.php:2
+#: ../admin/upload.php:148
+#: ../admin/upload.php:156
 msgid "Devices"
 msgstr ""
 
@@ -606,21 +674,9 @@ msgstr ""
 msgid "Method"
 msgstr ""
 
-#: ../admin/history.php:32
-#: ../admin/history.php:41
-#: ../admin/management.php:144
-#: ../admin/management.php:155
-msgid "Date"
-msgstr ""
-
 #: ../admin/history.php:53
 #: ../admin/management.php:62
 msgid "PayPal"
-msgstr ""
-
-#: ../admin/history.php:56
-#: ../admin/management.php:63
-msgid "Present"
 msgstr ""
 
 #: ../admin/history.php:66
@@ -641,7 +697,7 @@ msgid "If purchased items were not displayed, please contact to Site administrat
 msgstr ""
 
 #: ../admin/management.php:13
-msgid "Update Trnasaction"
+msgid "Update Transaction"
 msgstr ""
 
 #: ../admin/management.php:24
@@ -821,16 +877,16 @@ msgstr ""
 msgid "Product slug"
 msgstr ""
 
+#: ../admin/setting.php:123
+msgid "Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account."
+msgstr ""
+
 #: ../admin/setting.php:125
 msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>"
 msgstr ""
 
 #: ../admin/setting.php:131
 msgid "Purchase History Page"
-msgstr ""
-
-#: ../admin/setting.php:135
-msgid "-------"
 msgstr ""
 
 #: ../admin/setting.php:141
@@ -914,6 +970,8 @@ msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS i
 msgstr ""
 
 #: ../admin/setting.php:234
+#: ../admin/upload.php:183
+#: ../admin/upload.php:205
 msgid "Update"
 msgstr ""
 
@@ -948,6 +1006,138 @@ msgstr ""
 msgid "See detail at %s."
 msgstr ""
 
+#: ../admin/setting.php:249
+#, php-format
+msgid "<a target=\"_blank\" href=\"%s\">Template Tags</a> are also available."
+msgstr ""
+
+#: ../admin/upload.php:22
+msgid "Title is empty."
+msgstr ""
+
+#: ../admin/upload.php:25
+msgid "Select public status."
+msgstr ""
+
+#: ../admin/upload.php:28
+msgid "No file is specified."
+msgstr ""
+
+#: ../admin/upload.php:34
+msgid "No device is specified."
+msgstr ""
+
+#: ../admin/upload.php:55
+msgid "File is successfully updated."
+msgstr ""
+
+#: ../admin/upload.php:57
+msgid "Failed to update file."
+msgstr ""
+
+#: ../admin/upload.php:66
+msgid "File deleted."
+msgstr ""
+
+#: ../admin/upload.php:68
+msgid "Failed to delete file."
+msgstr ""
+
+#: ../admin/upload.php:92
+msgid "Manage files"
+msgstr ""
+
+#: ../admin/upload.php:96
+msgid "Please update file information"
+msgstr ""
+
+#: ../admin/upload.php:98
+msgid "Please upload file"
+msgstr ""
+
+#: ../admin/upload.php:114
+msgid "Title"
+msgstr ""
+
+#: ../admin/upload.php:118
+msgid "Name of this file. ex. ePub for iBooks(2nd Edition)"
+msgstr ""
+
+#: ../admin/upload.php:123
+msgid "Public Status"
+msgstr ""
+
+#: ../admin/upload.php:126
+msgid "Public"
+msgstr ""
+
+#: ../admin/upload.php:127
+msgid "Private"
+msgstr ""
+
+#: ../admin/upload.php:128
+msgid "Public status of this file. Private files won't be displayed."
+msgstr ""
+
+#: ../admin/upload.php:133
+msgid "Trial"
+msgstr ""
+
+#: ../admin/upload.php:136
+msgid "Impossible"
+msgstr ""
+
+#: ../admin/upload.php:137
+msgid "Possible for registered user"
+msgstr ""
+
+#: ../admin/upload.php:138
+#: ../admin/upload.php:141
+msgid "Possible for everyone"
+msgstr ""
+
+#: ../admin/upload.php:140
+msgid "Trial means <strong>user can download whole of the file</strong>."
+msgstr ""
+
+#: ../admin/upload.php:141
+#, php-format
+msgid "If you want provide partial trial, <strong>make a partial file</strong> and specify it as &quot;%s&quot;"
+msgstr ""
+
+#: ../admin/upload.php:155
+msgid "Check device which can read this file."
+msgstr ""
+
+#: ../admin/upload.php:156
+#, php-format
+msgid "To add device, go to %s."
+msgstr ""
+
+#: ../admin/upload.php:167
+msgid "Enter if required."
+msgstr ""
+
+#: ../admin/upload.php:173
+msgid "File"
+msgstr ""
+
+#: ../admin/upload.php:183
+msgid "Add"
+msgstr ""
+
+#: ../admin/upload.php:185
+msgid "Go to add file"
+msgstr ""
+
+#: ../admin/upload.php:194
+msgid "Registered files"
+msgstr ""
+
+#: ../admin/upload.php:200
+msgid "Are you sure to delete?"
+msgstr ""
+
 #: ../assets/js/tinymce-lang.php:12
 msgid "Capability"
 msgstr ""
@@ -966,6 +1156,26 @@ msgstr ""
 
 #: ../assets/js/tinymce-lang.php:16
 msgid "Non Subscriber"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:17
+msgid "Add Buy Now"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:18
+msgid "Default Button"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:19
+msgid "Inline link tag"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:20
+msgid "Original Image"
+msgstr ""
+
+#: ../assets/js/tinymce-lang.php:21
+msgid "PUT_IMAGE_SRC_HERE"
 msgstr ""
 
 #: ../form-template/edit-detail.php:18
@@ -1019,6 +1229,397 @@ msgstr ""
 
 #: ../form-template/paypal-success.php:9
 msgid "return now"
+msgstr ""
+
+#: ../help/account.php:3
+msgid "Account"
+msgstr ""
+
+#: ../help/account.php:5
+#, php-format
+msgid "First of all, PayPal account is required. Get it <a href=\"%s\">here</a>."
+msgstr ""
+
+#: ../help/account.php:6
+msgid "If you already have an account, see section below."
+msgstr ""
+
+#: ../help/account.php:8
+msgid "Step1 Get API Account, Password, Signature"
+msgstr ""
+
+#: ../help/account.php:10
+msgid "This plugin uses ExpressCheckout API and it requires your user name and password."
+msgstr ""
+
+#: ../help/account.php:11
+msgid "For security reason, PayPal offers API credentials consisted of username alias, password and API signature. You have to get it."
+msgstr ""
+
+#: ../help/account.php:15
+msgid "Log in to PayPal, and go to Seller Preference &gt; Tools &gt; API access."
+msgstr ""
+
+#: ../help/account.php:16
+msgid "Selecting option 2 and you can get API signature, API user name and API password."
+msgstr ""
+
+#: ../help/account.php:17
+#, php-format
+msgid "Copy and paste it to form on <a href=\"%s\">LWP Setting</a>."
+msgstr ""
+
+#: ../help/account.php:20
+msgid "Step2 Get PDT Token"
+msgstr ""
+
+#: ../help/account.php:22
+msgid "Once you get API signatures, now you can get PDT token. It is required for this plugin's background process"
+msgstr ""
+
+#: ../help/account.php:26
+msgid "On PayPal, go to Seller Preference &gt; Tools &gt; Web site setting."
+msgstr ""
+
+#: ../help/account.php:27
+msgid "Check the radio button &quot;Express return&quot; to ON."
+msgstr ""
+
+#: ../help/account.php:28
+msgid "Set return URL to your WordPress root. Generally it will be &quot;http://example.com&quot;."
+msgstr ""
+
+#: ../help/account.php:29
+msgid "Find section &quot;Payment Data Transfer&quot; and turn it ON."
+msgstr ""
+
+#: ../help/account.php:30
+msgid "Now you can save canges. Teh other settigs are optional, so you can set them as you like."
+msgstr ""
+
+#: ../help/account.php:31
+#, php-format
+msgid "After save settings, you can get Token on &quot;Payment Data Transfer&quot; section. Copy and past it at <a href=\"%s\">LWP Setting</a>."
+msgstr ""
+
+#: ../help/account.php:34
+msgid "Step3 Check on Sandbox"
+msgstr ""
+
+#: ../help/account.php:36
+msgid "Sandbox is development environment of PayPal. You can test if your settings are right with Sandbox."
+msgstr ""
+
+#: ../help/account.php:37
+msgid "To enable Sandbox, you have to get another account at <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>."
+msgstr ""
+
+#: ../help/account.php:38
+msgid "This process is little bit complicated, but payment transaction is very critical. It's worth to test with."
+msgstr ""
+
+#: ../help/account.php:42
+msgid "Go to <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a> and create account."
+msgstr ""
+
+#: ../help/account.php:43
+msgid "Log in to Sandbox and create 2 accounts. One for business account, another is customer account."
+msgstr ""
+
+#: ../help/account.php:44
+#, php-format
+msgid "You can get account information of business account same as you get below. API user name, API password, API signature and PDT token. Set them on <a href=\"%1$s\">LWP Setting</a> and turn &quot;%2$s&quot; to ON."
+msgstr ""
+
+#: ../help/account.php:45
+msgid "Keeping loggin in Sandbox, try to buy any of your items. After pushing &quot;Buy Now&quot;, you will be redirected to PayPal Sandbox. Then enter the customer account information you've created below."
+msgstr ""
+
+#: ../help/account.php:46
+msgid "If everything is fine, you transaction will be completed. Check if you transaction is same as what you supposed."
+msgstr ""
+
+#: ../help/account.php:50
+msgid "Every transactional information will be treated same in database. If you want know proper transactional statistics, don't use same settings both Sandbox and Productional environment on single WrodPress."
+msgstr ""
+
+#: ../help/account.php:51
+msgid "Generally, you should make WordPress for development(ex. http//d.example.com) and test it with Sandbox."
+msgstr ""
+
+#: ../help/account.php:52
+msgid "If everything is fine, try it on productional WordPress(ex. http://example.ecom). These are typical process for creating transacional Web site. Don't drive highway without enough excercise."
+msgstr ""
+
+#: ../help/account.php:54
+msgid "About Micropayments"
+msgstr ""
+
+#: ../help/account.php:56
+msgid "<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank\">Micropayments</a> is PayPal's pricing for small amount. If you sell your items by small amount, consider to signup to Micropayments."
+msgstr ""
+
+#: ../help/account.php:57
+msgid "If your item's price average is less than 25$, Micropayments is better solution. If not, Use normal pricing."
+msgstr ""
+
+#: ../help/account.php:58
+msgid "Anyway, who price your items is you and you are the most familiar with your item."
+msgstr ""
+
+#: ../help/account.php:63
+msgid "Product slug will be displayed on PayPal's purchase history page. If you use PayPal with other commerce, this slug will helpful for distinguishing them from others."
+msgstr ""
+
+#: ../help/account.php:64
+msgid "Your transaction will be displayed like <em>slug-000010</em>. You can easily find, sort, sum LWP transaction."
+msgstr ""
+
+#: ../help/customize.php:2
+msgid "How to customize"
+msgstr ""
+
+#: ../help/customize.php:4
+msgid "This plugin offers some ways to customize."
+msgstr ""
+
+#: ../help/customize.php:6
+msgid "Default Functions"
+msgstr ""
+
+#: ../help/customize.php:8
+msgid "First of all, you'd better to know detail of LWP. Main functions are below."
+msgstr ""
+
+#: ../help/customize.php:11
+msgid "Display price and &quot;Buy Now&quot; button. This is a gate way to start transaction."
+msgstr ""
+
+#: ../help/customize.php:12
+msgid "Display transaction page. Transaction steps count 3. Confirmation, Complete and Cancel."
+msgstr ""
+
+#: ../help/customize.php:13
+msgid "Show purchase history. User can know what they bought and total cost."
+msgstr ""
+
+#: ../help/customize.php:14
+msgid "Show download link and device types."
+msgstr ""
+
+#: ../help/customize.php:17
+msgid "You have no need to customize with normal usage, but customize and suit this plugin to your theme will be helpful for your customer."
+msgstr ""
+
+#: ../help/customize.php:19
+msgid "Customize Buy Now"
+msgstr ""
+
+#: ../help/customize.php:21
+msgid "To customize &quot;Buy Now&quot; button, you have 2 ways."
+msgstr ""
+
+#: ../help/customize.php:24
+msgid "Use your own CSS. CSS knowledge required."
+msgstr ""
+
+#: ../help/customize.php:25
+msgid "Quit auto output and edit theme files. Knowledge about WordPress theme system required."
+msgstr ""
+
+#: ../help/customize.php:27
+msgid "1. Use your own CSS"
+msgstr ""
+
+#: ../help/customize.php:30
+msgid "LWP automatically loads CSS file by default. It looks like above."
+msgstr ""
+
+#: ../help/customize.php:31
+msgid "WordPress has many themes and you may want make this form suit to you own theme."
+msgstr ""
+
+#: ../help/customize.php:32
+#, php-format
+msgid "In this case, turn auto load OFF at <a href=\"%s\">LWP Setting</a>. Now &quot;Buy Now&quot; button has no style and you can customize it's appearance."
+msgstr ""
+
+#: ../help/customize.php:34
+msgid "2. Create button by yourself"
+msgstr ""
+
+#: ../help/customize.php:36
+msgid "&quot;Buy Now&quot; button will be displayed at bottom of the post content by default."
+msgstr ""
+
+#: ../help/customize.php:37
+msgid "But you probably want to change the place of button and LWP provides 3 way to do it"
+msgstr ""
+
+#: ../help/customize.php:40
+#, php-format
+msgid "Sidebar Widgets. If your theme supports sidebar widget system, go to <a href=\"%s\">Theme &gt; Widgets</a> and install LWP sidebar widget."
+msgstr ""
+
+#: ../help/customize.php:41
+#, php-format
+msgid "Use short code. On visual editor, you can find &quot;%s&quot; list box. It inserts shortcode to display &quot;Buy Now&quot; button."
+msgstr ""
+
+#: ../help/customize.php:42
+#, php-format
+msgid "Customize theme. The template tag lwp_buy_now() will display button. See detail at <a href=\"%s\" target=\"_blank\">function reference</a>."
+msgstr ""
+
+#: ../help/customize.php:44
+msgid "Customize Device list and Download list"
+msgstr ""
+
+#: ../help/customize.php:46
+#: ../help/customize.php:50
+#: ../help/customize.php:54
+msgid "Coming soon..."
+msgstr ""
+
+#: ../help/customize.php:48
+msgid "Customize Form"
+msgstr ""
+
+#: ../help/customize.php:52
+msgid "Make purchase history page"
+msgstr ""
+
+#: ../help/customize.php:56
+msgid "Create custom post type by yourself"
+msgstr ""
+
+#: ../help/customize.php:58
+msgid "LWP provides the function to create custom post type because it is supposed that normal user sell perticullar type of contents like eBook or Music file."
+msgstr ""
+
+#: ../help/customize.php:59
+msgid "But you may think of selling multiple types of contents(ex. music, movie, eBook and photo). In such case, LWP can recognize multiple custom post types as payable."
+msgstr ""
+
+#: ../help/customize.php:60
+msgid "Furthermore, you may want make some taxonomies for your items(ex. eBook genre)."
+msgstr ""
+
+#: ../help/customize.php:61
+msgid "What LWP do is &quot;making perticular post types payable&quot;. So you can easily add custom post types and make them payable."
+msgstr ""
+
+#: ../help/customize.php:62
+msgid "There are lots of plugins which enable you to add custom post types. Belows are list of them."
+msgstr ""
+
+#: ../help/customize.php:65
+msgid "Custom Post Type UI"
+msgstr ""
+
+#: ../help/customize.php:69
+msgid "They are 3rd party plugin and I don't test them all. Everything is at your own risk. Please try out on them carefully."
+msgstr ""
+
+#: ../help/dir.php:2
+msgid "Directory"
+msgstr ""
+
+#: ../help/dir.php:3
+msgid "About file uploading system"
+msgstr ""
+
+#: ../help/dir.php:5
+msgid "WordPress has original file uploading system. Nomal process is like below:"
+msgstr ""
+
+#: ../help/dir.php:8
+msgid "Files are uploaded to /wp-content/uploads directory."
+msgstr ""
+
+#: ../help/dir.php:9
+msgid "After uploading has succeeded, files are accessile via HTTP. You can layout your image files to post content."
+msgstr ""
+
+#: ../help/dir.php:11
+msgid "Protect you files"
+msgstr ""
+
+#: ../help/dir.php:13
+msgid "This process above is quite proper for blog system. But if you sell your files with this plugin, this system is not enough."
+msgstr ""
+
+#: ../help/dir.php:14
+msgid "For example, if you uplaod sample.pdf with Media uploader, it is accessible with <em>http://example.com/wp-content/uploads/sample.pdf</em>."
+msgstr ""
+
+#: ../help/dir.php:15
+msgid "So, LWP has another way of uploading and save files in different directory. It should be inaccessible with HTTP."
+msgstr ""
+
+#: ../help/dir.php:16
+msgid "Only users who bought your item can access them. LWP has simple authenctication system to judge the user can access file or not."
+msgstr ""
+
+#: ../help/dir.php:18
+msgid "Normal setting"
+msgstr ""
+
+#: ../help/dir.php:20
+msgid "Let's assume the case that your WordPress is installed in directory <em>/home/your-name/public_html</em>."
+msgstr ""
+
+#: ../help/dir.php:21
+msgid "In this case, the directory accessible via HTTP is only <em>/home/your-name/public_html</em>."
+msgstr ""
+
+#: ../help/dir.php:24
+msgid "Create directory <em>/home/your-name/files</em>."
+msgstr ""
+
+#: ../help/dir.php:25
+msgid "Set this directory's permission to 707 with FTP tools."
+msgstr ""
+
+#: ../help/dir.php:26
+#, php-format
+msgid "Set directory path at <a href=\"%s\">LWP Setting</a>."
+msgstr ""
+
+#: ../help/dir.php:29
+msgid "Now you finish protecting your files from non-customer."
+msgstr ""
+
+#: ../help/dir.php:31
+msgid "No inaccessible directory"
+msgstr ""
+
+#: ../help/dir.php:33
+msgid "Situation depends on your hosting service. Some of hosting service don't offer inaccessible directory and your root directory may accessible via HTTP."
+msgstr ""
+
+#: ../help/dir.php:34
+msgid "For example, your root directory is <em>/home/your-name/</em> and your domain is <em>http://your-name.example.com</em>."
+msgstr ""
+
+#: ../help/dir.php:35
+msgid "This is very typical for hosting sevices which provide free domain. Even if you get your own domain, such hosting service tends to assign your new domain to <em>/home/your-name/new-domain</em>"
+msgstr ""
+
+#: ../help/dir.php:36
+msgid "So, how can you protect your files? Calm down, LWP provides protect method for such case."
+msgstr ""
+
+#: ../help/dir.php:37
+msgid "By default, LWP set file directory to <em>/wp-content/plugins/literally-wordpress/contents</em>. This direcotry has .htaccess file to protect your files from HTTP access."
+msgstr ""
+
+#: ../help/dir.php:38
+msgid "So, if you don't have inaccessible directory, set it as default."
+msgstr ""
+
+#: ../help/dir.php:42
+msgid "If your files are accessible via HTTP, an alert message will be displayed on admin panel."
 msgstr ""
 
 #: ../paypal/paypal_statics.php:203
@@ -1831,5 +2432,59 @@ msgstr ""
 
 #: ../paypal/paypal_statics.php:417
 msgid "U.S. Dollar"
+msgstr ""
+
+#: ../widgets/buynow.php:21
+msgid "LWP Buy Now Widget"
+msgstr ""
+
+#: ../widgets/buynow.php:22
+msgid "Displays BuyNow button if post is payable."
+msgstr ""
+
+#: ../widgets/buynow.php:115
+msgid "Now on SALE!"
+msgstr ""
+
+#: ../widgets/buynow.php:119
+msgid "Widgets Title"
+msgstr ""
+
+#: ../widgets/buynow.php:123
+msgid "Post ID to display"
+msgstr ""
+
+#: ../widgets/buynow.php:126
+msgid "Specify post's ID to display button outside singular page(ex. In category page) or leave it blank."
+msgstr ""
+
+#: ../widgets/buynow.php:130
+#: ../widgets/buynow.php:137
+msgid "Original Image src"
+msgstr ""
+
+#: ../widgets/buynow.php:133
+msgid "Specify your original \"BuyNow\" button src. If you don't have, leave it blank and PayPal button will be displayed. Put word 'link', button will be displayed with normal link tag."
+msgstr ""
+
+#: ../widgets/buynow.php:140
+#, php-format
+msgid "This words will be displayed after Title if on sale. %%end%% will be replaced by the campaign end date."
+msgstr ""
+
+#: ../widgets/buynow.php:144
+msgid "Show Timer"
+msgstr ""
+
+#: ../widgets/buynow.php:147
+msgid "Show"
+msgstr ""
+
+#: ../widgets/buynow.php:151
+msgid "Don't show"
+msgstr ""
+
+#: ../widgets/buynow.php:154
+msgid "Timer will be displayed if post is on sale."
 msgstr ""
 

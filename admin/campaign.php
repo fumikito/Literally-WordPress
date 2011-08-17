@@ -62,7 +62,7 @@ $post = wp_get_single_post($campaign->book_id);
 		<input type="submit" value="更新" name="submit" class="primary-button" />
 	</p>
 </form>
-<a href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">&laquo;<?php $this->e('Return to cmapign page'); ?></a>
+<a href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">&laquo;<?php $this->e('Return to campaign page'); ?></a>
 <?php
 /*-------------------------------
  * 一覧表示
