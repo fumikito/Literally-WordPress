@@ -33,11 +33,13 @@ class PayPal_Statics {
 	public function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url) 
 	{
 		global $lwp;
-		$return_url = urlencode($return_url);
-		$cancel_url = urlencode($cancel_url);
+		self::log(var_export($return_url, true));
+		self::log(var_export($cancel_url, true));
+		$return_url = rawurlencode($return_url);
+		$cancel_url = rawurlencode($cancel_url);
 		//SetExpressCheckout APIに投げる値を作成
 		$nvpstr = "&AMT={$paymentAmount}&PAYMENTACTION=".self::PAYMENT_ACTION.
-			"&ReturnUrl={$return_url}&CANCELURL={$cancel_url}".
+			"&RETURNURL={$return_url}&CANCELURL={$cancel_url}".
 			"&CURRENCYCODE={$lwp->option['currency_code']}&LOCALECODE={$lwp->option['country_code']}".
 			"&NOSHIPPING=1&LANDINGPAGE=Billing&ALLOWNOTE=1&INVNUM={$invoice_number}";
 		//リクエストを取得
@@ -47,6 +49,8 @@ class PayPal_Statics {
 		if($ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING"){
 			return urldecode($resArray["TOKEN"]);
 		}else{
+			self::log(var_export($resArray, true));
+			self::log(var_export($nvpstr, true));
 			return false;
 		}
 	}
@@ -81,10 +85,10 @@ class PayPal_Statics {
 		$nvpstr .= '&CURRENCYCODE=' . $transaction_info['CURRENCYCODE'];
 		$resArray = self::hash_call("DoExpressCheckoutPayment",$nvpstr);
 		$ack = strtoupper($resArray["ACK"]);
-		var_dump($nvpstr);
 		if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
 			return true;
 		}else{
+			self::log(var_export($resArray, true));
 			return false;
 		}
 	}
@@ -465,6 +469,32 @@ class PayPal_Statics {
 		/** @var $lwp Literally_WordPress*/
 		global $lwp;
 		return __($string, $lwp->domain);
+	}
+	
+	/**
+	 * ログを書き込む
+	 * @param string $string
+	 * @return void
+	 */
+	private static function log($string){
+		//ファイルの存在を確認
+		$dir = dirname(__FILE__);
+		$file = $dir.DIRECTORY_SEPARATOR."log.txt";
+		if(file_exists($file)){
+			if(!is_writable($file)){
+				return false;
+			}
+		}else{
+			if(is_writable($dir)){
+				file_put_contents($file, '');
+			}else{
+				return false;
+			}
+		}
+		//ログを書き込み
+		$date = date('Y-m-d H:i:s');
+		$string = "[{$date}]\n".$string."\n\n";
+		file_put_contents($file, $string, FILE_APPEND);
 	}
 }
 

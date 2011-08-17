@@ -1433,19 +1433,19 @@ EOS;
 						//ユーザーがログインしていない
 						auth_redirect ($_SERVER["REQUEST_URI"]);
 						exit;
-					}elseif(!isset($_GET['lwp_id'])){
+					}elseif(!isset($_GET['lwp-id'])){
 						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
-					}elseif(lwp_price($_GET["lwp_id"]) < 1){
+					}elseif(lwp_price($_GET["lwp-id"]) < 1){
 						//セール中のため無料だが、本来は有料。トランザクションの必要がない
-						if(lwp_original_price($_GET['lwp_id']) > 0){
+						if(lwp_original_price($_GET['lwp-id']) > 0){
 							//購入済みにする
 							global $user_ID, $wpdb;
 							$wpdb->insert(
 								$this->transaction,
 								array(
 									"user_id" => $user_ID,
-									"book_id" => $_GET["lwp_id"],
+									"book_id" => $_GET["lwp-id"],
 									"price" => 0,
 									"status" => "SUCCESS",
 									"method" => "CAMPAIGN",
@@ -1455,13 +1455,13 @@ EOS;
 								array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
 							);
 							//サンキューページを表示する
-							header("Location: ".get_bloginfo("url")."?lwp=success&lwp_id={$_GET['lwp_id']}");
+							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$_GET['lwp-id']}");
 							exit;
 						}else{
 							//コンテンツが購入可能じゃない
 							$message = $this->_("This contents is not on sale.");
 						}
-					}elseif(!$this->start_transaction($user_ID, $_GET['lwp_id'])){
+					}elseif(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
 						//トランザクション作成に失敗
 						$message = $this->_("Failed to make transaction.");
 					}
@@ -1489,7 +1489,7 @@ EOS;
 								array("%s")
 							);
 							//サンキューページを表示する
-							header("Location: ".get_bloginfo("url")."?lwp=success&lwp_id={$post_id}"); 
+							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$post_id}"); 
 						}else{
 							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("backlink" => true));
 						}
@@ -1517,8 +1517,8 @@ EOS;
 					}
 					break;
 				case "success":
-					if(isset($_REQUEST['lwp_id'])){
-						$url = get_permalink($_REQUEST['lwp_id']);
+					if(isset($_REQUEST['lwp-id'])){
+						$url = get_permalink($_REQUEST['lwp-id']);
 					}else{
 						$url = get_bloginfo('url');
 					}
@@ -1547,7 +1547,7 @@ EOS;
 					$this->show_form("cancel", array("post_id" => $post_id));
 					break;
 				case "file":
-					$this->print_file($_REQUEST["lwp_file"], $post->ID, $user_ID);
+					$this->print_file($_REQUEST["lwp_file"], $user_ID);
 					break;
 			}
 		}
@@ -1573,7 +1573,7 @@ EOS;
 		//トランザクションを作る
 		$price = lwp_price($post_id);
 		//トークンを取得
-		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d", $post_id), get_bloginfo('url')."?lwp=confirm", get_bloginfo('url')."?lwp=cancel");
+		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d", $post_id), trailingslashit(get_bloginfo('url'))."/?lwp=confirm", trailingslashit(get_bloginfo('url'))."/?lwp=cancel");
 		if($token){
 			//トークンが帰ってきたら、データベースに保存
 			$wpdb->insert(

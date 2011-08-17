@@ -620,7 +620,7 @@ function lwp_buy_now($post = null, $btn_src = false)
 		}
 		$tag = "<img src=\"".htmlspecialchars($btn_src, ENT_QUOTES, 'utf-8')."\" alt=\"".$lwp->_('Buy Now')."\" />";
 	}
-	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp_id={$post_id}\">{$tag}</a>";
+	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp-id={$post_id}\">{$tag}</a>";
 }
 
 /**
@@ -724,7 +724,7 @@ function lwp_show_form($post = null, $btn_src = null){
 		$button = $btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post);
 		$button = "<p class=\"lwp-button\">{$button}</p>";
 	}else{
-		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(get_bloginfo('url')."?lwp=buy&lwp_id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
+		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(get_bloginfo('url')."?lwp=buy&lwp-id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
 	}
 	return <<<EOS
 <!-- Literally WordPress {$lwp->version} -->
