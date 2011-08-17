@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 17:13+0900\n"
-"PO-Revision-Date: 2011-08-17 17:26+0900\n"
+"POT-Creation-Date: 2011-08-17 18:32+0900\n"
+"PO-Revision-Date: 2011-08-17 18:35+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -448,6 +448,10 @@ msgstr "合計: "
 #: ../literally-wordpress.class.php:1756
 msgid "You have no transaction history. Try to get any!"
 msgstr "購入履歴はありません。購入をご検討ください。"
+
+#: ../literally-wordpress.class.php:1936
+msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
+msgstr "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権など、購入したユーザーに対して提供できるものはいくつかあります。"
 
 #: ../admin/campaign.php:2
 #: ../admin/history.php:59
@@ -2488,3 +2492,9 @@ msgstr "表示しない"
 msgid "Timer will be displayed if post is on sale."
 msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
 
+#~ msgid ""
+#~ "Make your WordPress payable. You can choose what you sell, file download "
+#~ "rights or rights to access file."
+#~ msgstr ""
+#~ "あなたのWordPressを課金可能にします。ファイルダウンロード権を売るのか、投"
+#~ "稿へのアクセス権を売るのか、選ぶことができます。"
