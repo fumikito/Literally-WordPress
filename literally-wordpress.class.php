@@ -437,11 +437,11 @@ EOS;
 		add_filter('the_content', array($this, "the_content"));
 		//設定でJSを出力するようになっていたら出力
 		if($this->option['load_assets'] > 0){
-			wp_enqueue_script("lwp-timer", $this->url."/assets/js/form-timer.js", array('jquery'), $this->version, true);
+			wp_enqueue_script("lwp-timer", $this->url."assets/js/form-timer.js", array('jquery'), $this->version, true);
 		}
 		//設定でCSSを出力するようになっていたら出力
 		if($this->option['load_assets'] > 1){
-			wp_enqueue_style("lwp-timer", $this->url."/assets/lwp-buynow.css", array(), $this->version);
+			wp_enqueue_style("lwp-timer", $this->url."assets/lwp-buynow.css", array(), $this->version);
 		}
 	}
 	
@@ -1926,5 +1926,13 @@ EOS;
 	 */
 	public function _($text){
 		return __($text, $this->domain);
+	}
+	
+	/**
+	 * 翻訳対象にならないものPoeditでひっかけるため
+	 * @return void
+	 */
+	private function ___(){
+		$this->_('This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.');
 	}
 }

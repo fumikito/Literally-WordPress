@@ -2,11 +2,15 @@
 /**
  * Plugin Name: Litteraly WordPress
  * Plugin URI: http://tech.hametuha.org/projects/lwp
- * Description: Making WordPress E-Book Store.
+ * Description: This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.
  * Author: Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
  * Version: 0.8
- * Author URI: http://hametuha.co.jp/
- * Package WordPress
+ * Author URI: http://takahashifumiki.com
+ * Text Domain: literally-wordpress
+ * Domain Path: /languages/
+ * 
+ * 
+ * @Package WordPress
  * License: GPLv2
  * 
  * This program is free software; you can redistribute it and/or modify 
