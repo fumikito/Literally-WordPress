@@ -27,9 +27,10 @@
 			 * @var {Function}
 			 */
 			createControl: function(name, controlManager){
+				var listBox = null;
 				switch(name){
 					case "lwpListBox":
-						var listBox = controlManager.createListBox('lwpListBox', {
+						listBox = controlManager.createListBox('lwpListBox', {
 							title: 'lwpShortCode.title',
 							onselect: function(val){
 								var current = tinyMCE.activeEditor.selection.getContent();
@@ -40,6 +41,30 @@
 						listBox.add('lwpShortCode.subscriber', "subscriber");
 						listBox.add('lwpShortCode.nonOwner', "non-owner");
 						listBox.add('lwpShortCode.nonSubscriber', "non-subscriber");
+						return listBox;
+						break;
+					case "lwpBuyNow":
+						listBox = controlManager.createListBox('lwpBuyNow', {
+							title: 'lwpShortCode.buyNow',
+							onselect: function(val){
+								var button = null;
+								switch(val){
+									case 'image':
+										button = '[buynow ' + tinyMCE.activeEditor.getLang('lwpShortCode.src_message') + ']';
+										break;
+									case 'noimage':
+										button = '[buynow link]';
+										break;
+									default:
+										button = '[buynow]';
+										break;
+								}
+								tinyMCE.activeEditor.selection.setContent(button);
+							}
+						});
+						listBox.add('lwpShortCode.deault', "default");
+						listBox.add('lwpShortCode.noimage', "noimage");
+						listBox.add('lwpShortCode.image', "image");
 						return listBox;
 						break;
 				}

@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Litteraly WordPress
- * Plugin URI: http://hametuha.co.jp/plugins/literally-wordpress
+ * Plugin URI: http://tech.hametuha.org/projects/lwp
  * Description: Making WordPress E-Book Store.
  * Author: Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
- * Version: 0.2
+ * Version: 0.8
  * Author URI: http://hametuha.co.jp/
  * Package WordPress
  * License: GPLv2

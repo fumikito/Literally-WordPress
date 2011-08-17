@@ -1,7 +1,7 @@
 <?php
 /**
  * Literally WordPressのユーザー関数
- *
+ * 
  * @package Literally WordPress
  * @author  Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
  */

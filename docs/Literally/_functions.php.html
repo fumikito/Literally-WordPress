@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs for page functions.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="file-name">/functions.php</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-functions">Functions</a>
+			</div>
+	<div class="info-box-body">	
+		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Literally WordPressのユーザー関数</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Takahashi Fumiki&lt;<a href="mailto:takahashi.fumiki@hametuha.co.jp">takahashi.fumiki@hametuha.co.jp</a>&gt;</li>
+			</ul>
+		
+			</div>
+</div>
+		
+
+	
+	
+	
+	<a name="sec-functions"></a>	
+	<div class="info-box">
+		<div class="info-box-title">Functions</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<span class="disabled">Functions</span>
+		</div>
+		<div class="info-box-body">	
+			<a name="functionlwp_ammount" id="functionlwp_ammount"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_ammount</span> (line <span class="line-number">50</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">deprecated:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">type</span>
+		<span class="method-name">
+			lwp_ammount
+		</span>
+					([<span class="var-type">type</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">type</span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_bought_books" id="functionlwp_bought_books"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_bought_books</span> (line <span class="line-number">528</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入した電子書籍のリストを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			lwp_bought_books
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$status</span> = <span class="var-default">&amp;quot;SUCCESS&amp;quot;</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$user_id</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$status</span><span class="var-description">: (optional) SUCCESS, Cancel, Errorのいずれか</span>			</li>
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$user_id</span><span class="var-description">: (optional) 指定しない場合は現在のユーザー</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_buy_now" id="functionlwp_buy_now"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_buy_now</span> (line <span class="line-number">597</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入ボタンを出力する</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.3</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			lwp_buy_now
+		</span>
+					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$btn_src</span> = <span class="var-default">false</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional) 投稿オブェクトまたは投稿ID。ループ内では指定する必要はありません。</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$btn_src</span><span class="var-description">: (optional) 購入ボタンまでのURL nullを渡すと画像ではなくaタグになる</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_campaign_end" id="functionlwp_campaign_end"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_campaign_end</span> (line <span class="line-number">100</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">キャンペーンの終了日を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_campaign_end
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$timestamp</span> = <span class="var-default">false</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional)</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$timestamp</span><span class="var-description">: (optional) タイムスタンプ型で取得する場合はtrue</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_campaign_timer" id="functionlwp_campaign_timer"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_campaign_timer</span> (line <span class="line-number">633</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">キャンペーンの終了日時をタグにして返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_campaign_timer
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$prefix</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$prefix</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_currency_code" id="functionlwp_currency_code"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_currency_code</span> (line <span class="line-number">150</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">現在設定されている通貨記号を返す</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.8</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_currency_code
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionlwp_currency_symbol" id="functionlwp_currency_symbol"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_currency_symbol</span> (line <span class="line-number">160</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">現在設定されている通貨の実態を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_currency_symbol
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionlwp_discout_rate" id="functionlwp_discout_rate"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_discout_rate</span> (line <span class="line-number">678</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">セール中の値引き率を返す</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.8</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_discout_rate
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_file_accessible" id="functionlwp_file_accessible"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_file_accessible</span> (line <span class="line-number">405</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルオブジェクトを受け取り、それが現在のユーザーにとって  アクセス可能かを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_file_accessible
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_file_link" id="functionlwp_file_link"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_file_link</span> (line <span class="line-number">247</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルへのリンクを返す</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.3</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_file_link
+		</span>
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$file_id</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$file_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_accessibility" id="functionlwp_get_accessibility"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_get_accessibility</span> (line <span class="line-number">380</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルのアクセス権を返す</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> owner, member, any, noneのいずれか</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_get_accessibility
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span><span class="var-description">: ファイルオブジェクト</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_date" id="functionlwp_get_date"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_get_date</span> (line <span class="line-number">430</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルの最終更新日を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string|void</span>
+		<span class="method-name">
+			lwp_get_date
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$registered</span> = <span class="var-default">true</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$echo</span> = <span class="var-default">true</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span><span class="var-description">: ファイルオブジェクト</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$registered</span><span class="var-description">: (optional) 最終更新日ではなく登録日を欲しい場合はfalse</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$echo</span><span class="var-description">: (optional) 出力したくない場合はfalse</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_devices" id="functionlwp_get_devices"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_get_devices</span> (line <span class="line-number">297</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">電子書籍のデバイス登録情報を返す</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> デバイス情報の配列。各要素はname(string), slug(string), valid(boolean)のキーを持つ</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			lwp_get_devices
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], <span class="var-type">object</span>&nbsp;<span class="var-name">$post(optional)</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post(optional)</span><span class="var-description">: 投稿オブジェクト。指定しない場合は現在の投稿</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_device_table" id="functionlwp_get_device_table"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_get_device_table</span> (line <span class="line-number">494</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">対応端末のテーブルを返す</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.8</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_get_device_table
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_ext" id="functionlwp_get_ext"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_get_ext</span> (line <span class="line-number">281</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルの拡張子を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_get_ext
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_files" id="functionlwp_get_files"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_get_files</span> (line <span class="line-number">221</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">投稿に所属するファイルを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			lwp_get_files
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$accessibility</span> = <span class="var-default">&amp;quot;all&amp;quot;</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$accessibility</span><span class="var-description">: (optional) ファイルのアクセス権限 all, owner, member, any</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional)</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_file_devices" id="functionlwp_get_file_devices"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_get_file_devices</span> (line <span class="line-number">346</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルオブジェクトを受け取り、対応しているデバイスを返す</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> デバイス名の配列。$slugをtrueにした場合、各要素は文字列ではなくnameとslugをキーに持つ配列となる。</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			lwp_get_file_devices
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$slug</span> = <span class="var-default">false</span>], <span class="var-type">boolean</span>&nbsp;<span class="var-name">$slug(optional)</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$slug(optional)</span><span class="var-description">: デバイスのスラッグが欲しい場合はtrue</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$slug</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_file_list" id="functionlwp_get_file_list"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_get_file_list</span> (line <span class="line-number">447</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">登録されているファイルのリストを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_get_file_list
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$accessibility</span> = <span class="var-default">&amp;quot;all&amp;quot;</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$accessibility</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_size" id="functionlwp_get_size"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_get_size</span> (line <span class="line-number">258</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ファイルサイズを取得する</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_get_size
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_get_tran" id="functionlwp_get_tran"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_get_tran</span> (line <span class="line-number">560</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">投稿に紐づいたユーザーの購入詳細を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">object</span>
+		<span class="method-name">
+			lwp_get_tran
+		</span>
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$book_id</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$user_id</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$book_id</span>			</li>
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$user_id</span><span class="var-description">: (optional) 指定しない場合は現在のユーザー</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_isbn" id="functionlwp_isbn"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_isbn</span> (line <span class="line-number">61</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">電子書籍のISBNを返す</p>
+	<ul class="tags">
+				<li><span class="field">deprecated:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_isbn
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional)ループ内で引数なしで使用すると、表示中の電子書籍のISBNを返します。</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_is_canceled" id="functionlwp_is_canceled"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_is_canceled</span> (line <span class="line-number">746</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入がキャンセルされたか否かを返す。</p>
+	<ul class="tags">
+				<li><span class="field">deprecated:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_canceled
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionlwp_is_free" id="functionlwp_is_free"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_is_free</span> (line <span class="line-number">36</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">対象とする電子書籍が0円かどうかを返す</p>
+<p class="description"><p>ループ内で使用した場合は現在の投稿。</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_free
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$original</span> = <span class="var-default">false</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$original</span><span class="var-description">: (optional) trueの場合は定価が無料のものを返す。falseの場合はキャンペーン期間を含める</span>			</li>
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional) 現在の投稿オブジェクト</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_is_owner" id="functionlwp_is_owner"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_is_owner</span> (line <span class="line-number">21</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ユーザーが電子書籍を所有しているか否かを返す</p>
+<p class="description"><p>ループ内で引数なしで利用すると、現在ログイン中のユーザーが表示中の  電子書籍を購入済みかどうかを判断します。</p></p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.2</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_owner
+		</span>
+					([<span class="var-type">object|int</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$user_id</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object|int</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional) 投稿オブジェクト</span>			</li>
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$user_id</span><span class="var-description">: (optional) ユーザーID</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_is_sample" id="functionlwp_is_sample"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_is_sample</span> (line <span class="line-number">71</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">指定された電子書籍ファイルオブジェクトが無料のものかどうかを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_sample
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_is_success" id="functionlwp_is_success"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_is_success</span> (line <span class="line-number">760</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入を完了して、成功したか否かを返す</p>
+	<ul class="tags">
+				<li><span class="field">deprecated:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_success
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionlwp_is_transaction_error" id="functionlwp_is_transaction_error"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_is_transaction_error</span> (line <span class="line-number">772</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入処理にエラーがあったか否かを返す</p>
+	<ul class="tags">
+				<li><span class="field">deprecated:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			lwp_is_transaction_error
+		</span>
+				()
+			</div>
+
+		
+	
+</div>
+<a name="functionlwp_on_sale" id="functionlwp_on_sale"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_on_sale</span> (line <span class="line-number">86</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">指定された投稿が指定された日付にキャンペーンを行っているかを返す</p>
+<p class="description"><p>ループ内で引数なしで使用すると、現在表示してるいる投稿がキャンペーン中か否かを示す</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">booelan</span>
+		<span class="method-name">
+			lwp_on_sale
+		</span>
+					([<span class="var-type">object|int</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$time</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object|int</span>
+				<span class="var-name">$post</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$time</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_original_price" id="functionlwp_original_price"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_original_price</span> (line <span class="line-number">208</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">電子書籍の定価を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			lwp_original_price
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional)ループ内で引数なしで使用すると、表示中の電子書籍の定価を返します。</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_price" id="functionlwp_price"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_price</span> (line <span class="line-number">127</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">電子書籍の価格を返す</p>
+<p class="description"><p>ループ内で引数なしで使用すると、表示中の電子書籍の定価を返します。  キャンペーン中はキャンペーン価格を返します。</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			lwp_price
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span><span class="var-description">: (optional)</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_show_form" id="functionlwp_show_form"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_show_form</span> (line <span class="line-number">698</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">購入用のフォームを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			lwp_show_form
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$btn_src</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$btn_src</span><span class="var-description">: (optional) Src of &quot;buy now&quot; button.</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_the_price" id="functionlwp_the_price"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">lwp_the_price</span> (line <span class="line-number">172</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">現在の価格を通貨記号付きで返す</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 0.8</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			lwp_the_price
+		</span>
+					([<span class="var-type">object</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$post</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionlwp_user_bought_price" id="functionlwp_user_bought_price"><!-- --></a>
+<div class="evenrow">
+	
+	<div>
+		<span class="method-title">lwp_user_bought_price</span> (line <span class="line-number">573</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">ユーザーがこれまでに購入した総額を返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			lwp_user_bought_price
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$user_id</span> = <span class="var-default">null</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$user_id</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="function_lwp_post_meta" id="function_lwp_post_meta"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">_lwp_post_meta</span> (line <span class="line-number">184</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">電子書籍のカスタムフィールドを返す</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_lwp_post_meta
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>, [<span class="var-type">int|object (optional)</span>&nbsp;<span class="var-name">$post</span> = <span class="var-default">null</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$single</span> = <span class="var-default">true</span>])
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$single</span><span class="var-description">: (optional) 配列で取得する場合はfalse</span>			</li>
+					<li>
+				<span class="var-type">int|object (optional)</span>
+				<span class="var-name">$post</span><span class="var-description">: ループ内で使用した場合は現在のポスト</span>			</li>
+				</ul>
+		
+	
+</div>
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 17 Aug 2011 15:35:07 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

@@ -120,7 +120,7 @@
 				<td>
 					<input id="product_slug" name="product_slug" type="text" value="<?php $this->h($this->option['slug']); ?>" />
 					<p class="description">
-						<?php $this-_e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
+						<?php $this->e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
 						<small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />
 						<?php $this->e('Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>'); ?>
 					</p>
@@ -132,7 +132,7 @@
 				</th>
 				<td>
 					<select id="mypage" name="mypage">
-						<option value="0"><?php $this->e('-------'); ?></option>
+						<option value="0"><?php echo '-------'; ?></option>
 						<?php foreach(get_pages() as $p): ?>
 						<option value="<?php echo $p->ID;?>"<?php if($p->ID == $this->option['mypage']) echo ' selected="selected"';?>><?php echo $p->post_title; ?></option>
 						<?php endforeach; ?>
@@ -245,5 +245,6 @@
 <h4><?php $this->e("Customize"); ?></h4>
 <p>
 	<?php $this->e("If you are a experienced developper, you can customize this plugin with template tags.");?><br />
-	<?php printf($this->_('See detail at %s.'), $this->help("customize", $this->_("Help")));?>
+	<?php printf($this->_('See detail at %s.'), $this->help("customize", $this->_("Help")));?><br />
+	<?php printf($this->_('<a target="_blank" href="%s">Template Tags</a> are also available.'), $this->url."docs/");?>
 </p>

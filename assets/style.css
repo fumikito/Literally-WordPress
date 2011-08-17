@@ -35,3 +35,20 @@ div.ebook{
 .help-wrap{
 	padding:10px 20px;
 }
+
+.help-wrap .alignleft{
+	float:left;
+	margin:0 20px 20px 0;
+}
+.help-wrap .alignright{
+	float:right;
+	margin:0 0 20px 20px;
+}
+.help-wrap .aligncenter{
+	margin:0 auto 20px;
+	display: block;
+}
+
+.help-wrap h2{
+	clear:both;
+}

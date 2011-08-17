@@ -186,7 +186,9 @@ class Literally_WordPress
 		add_action('widgets_init', array($this, 'widgets'));
 		
 		//ショートコードの追加
-		add_shortcode("lwp", array($this, "shortcode"));
+		add_shortcode("lwp", array($this, "shortcode_capability"));
+		//いますぐ購入ボタンのショートコード
+		add_shortcode('buynow', array($this, 'shortcode_buynow'));
 	}
 	
 	/**
@@ -1780,7 +1782,7 @@ EOS;
 	 * @param string $contents
 	 * @return string
 	 */
-	public function shortcode($atts, $contents = null){
+	public function shortcode_capability($atts, $contents = null){
 		//属性値を抽出
 		extract(shortcode_atts(array("user" => "owner"), $atts));
 		//省略形を優先する
@@ -1803,6 +1805,22 @@ EOS;
 				break;
 			default:
 				return wpautop($contents);
+		}
+	}
+	
+	/**
+	 * BuyNowボタンを出力する
+	 * 
+	 * @param type $atts
+	 * @return string
+	 */
+	public function shortcode_buynow($atts){
+		if(!isset($atts[0]) || !$atts[0]){
+			return lwp_buy_now(null, false);
+		}elseif($atts[0] == 'link'){
+			return lwp_buy_now(null, null);
+		}else{
+			return lwp_buy_now(null, $atts[0]);
 		}
 	}
 	
@@ -1833,6 +1851,7 @@ EOS;
 	 */
 	public function mce_button($buttons){
 		array_push($buttons, "lwpListBox", "separator");
+		array_push($buttons, 'lwpBuyNow', "separator");
 		return $buttons;
 	}
 	
