@@ -3,6 +3,7 @@
 <h3><?php $this->e("Donate"); ?></h3>
 <p>
 	<?php printf($this->_('This plugin was made by <a href="http://takahashifumiki.com" target="_blank">%1$s</a> of <a href="http://hametuha.co.jp" target="_blank">%2$s</a>. If you like this plugin, please vote <a href="http://wordpress.org/extend/plugins/literally-wordpress/" target="_blank">Here</a> or donate.'), $this->_("Takahashi Fumiki"), $this->_("Hametuha inc."));?><br />
+	<?php printf($this->_('If you have request or find bugs, please contact me at <a href="%1$s" target="_blank">plugin support page</a> or my <a href="%2$s" target="_blank">twitter account</a>.'), 'http://tech.hametuha.org/projects/lwp', 'https://twitter.com/#!/takahashifumiki');?><br />
 	&copy; 2011 <a href="http://takahashifumiki.com"><?php $this->e("Takahashi Fumiki"); ?></a>
 </p>
 
