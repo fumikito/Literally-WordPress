@@ -33,8 +33,6 @@ class PayPal_Statics {
 	public function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url) 
 	{
 		global $lwp;
-		self::log(var_export($return_url, true));
-		self::log(var_export($cancel_url, true));
 		$return_url = rawurlencode($return_url);
 		$cancel_url = rawurlencode($cancel_url);
 		//SetExpressCheckout APIに投げる値を作成

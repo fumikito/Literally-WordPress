@@ -3,7 +3,7 @@ Contributors: Takahashi_Fumiki
 Tags: payment, paypal
 Requires at least: 3.1
 Tested up to: 3.2
-Stable tag: 0.8
+Stable tag: 0.8.1
 
 This plugin enables 
 
@@ -60,6 +60,10 @@ You can visit plugin support page and feel free to ask questions.
 2. Such form will be dipslayed on your payable post.
 
 == Changelog ==
+
+= 0.8.1 =
+
+* Bug fix.
 
 = 0.8 =
 

@@ -138,7 +138,7 @@ else:
 							<td>
 								<p>
 									<strong>
-										<a href="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-campaign&amp;campaign=<?php echo $c->ID; ?>">
+										<a href="<?php echo admin_url('admin.php?page=lwp-campaign&campaign='.$c->ID); ?>">
 											<?php echo $p->post_title; ?>
 											<small>[<?php echo mysql2date("Y/m/d", $p->post_date); ?>]</small>
 										</a>
@@ -198,8 +198,8 @@ else:
 						<label for="book_id"><?php $this->e("Campaign Item");?></label>
 						<select id="book_id" name="book_id">
 							<option disabled="disabled" selected="selected"><?php $this->e("Select from here.");?></option>
-							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'], 'posts_per_page' => -1)) as $p): ?>
-							<?php if(true): ?>
+							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'], 'posts_per_page' => -1, 'post_status' => array('publish', 'future', 'draft'))) as $p): ?>
+							<?php if(lwp_original_price($p) > 0): ?>
 							<option value="<?php echo $p->ID; ?>"><?php echo $p->post_title; ?></option>
 							<?php endif; ?>
 							<?php endforeach; ?>

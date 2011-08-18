@@ -1573,7 +1573,7 @@ EOS;
 		//トランザクションを作る
 		$price = lwp_price($post_id);
 		//トークンを取得
-		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d", $post_id), trailingslashit(get_bloginfo('url'))."/?lwp=confirm", trailingslashit(get_bloginfo('url'))."/?lwp=cancel");
+		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time()), trailingslashit(get_bloginfo('url'))."/?lwp=confirm", trailingslashit(get_bloginfo('url'))."/?lwp=cancel");
 		if($token){
 			//トークンが帰ってきたら、データベースに保存
 			$wpdb->insert(
