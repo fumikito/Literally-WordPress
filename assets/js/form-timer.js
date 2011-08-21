@@ -20,7 +20,6 @@ jQuery(document).ready(function($){
 			var minutes = Math.floor(timestamp / 60);
 			var seconds = timestamp - minutes * 60;
 			
-			console.log(days, hours, minutes, seconds);
 			if($(object).find('.days').length > 0){
 				$(object).find('.days').text(days);
 			}
