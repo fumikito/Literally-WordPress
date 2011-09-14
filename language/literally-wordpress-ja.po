@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-08-18 00:32+0900\n"
-"PO-Revision-Date: 2011-08-18 00:33+0900\n"
+"PO-Revision-Date: 2011-09-14 13:45+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -627,7 +627,7 @@ msgstr "株式会社破滅派"
 #: ../admin/donate.php:6
 #, php-format
 msgid "If you have request or find bugs, please contact me at <a href=\"%1$s\" target=\"_blank\">plugin support page</a> or my <a href=\"%2$s\" target=\"_blank\">twitter account</a>."
-msgstr "リクエストがあったり、バグを発見した場合はa href=\"%1$s\" target=\"_blank\">プラグインサポートページ</a>か<a href=\"%2$s\" target=\"_blank\">Twitterアカウント</a>までコンタクトしてください。"
+msgstr "リクエストがあったり、バグを発見した場合は<a href=\"%1$s\" target=\"_blank\">プラグインサポートページ</a>か<a href=\"%2$s\" target=\"_blank\">Twitterアカウント</a>までコンタクトしてください。"
 
 #: ../admin/donate.php:16
 msgid "Donation Ammount"
@@ -940,7 +940,7 @@ msgstr "支払い可能な投稿タイプ"
 
 #: ../admin/setting.php:184
 msgid "You can manually make any post type payable. See detail at how to customize."
-msgstr "どの投稿タイプも手動で支払い可能に摺ることができます。詳細はカスタマイズ方法を御覧ください。"
+msgstr "どの投稿タイプも手動で支払い可能にすることができます。詳細はカスタマイズ方法を御覧ください。"
 
 #: ../admin/setting.php:191
 msgid "Automatic output"
@@ -1251,7 +1251,7 @@ msgstr "なによりもまずPayPalのアカウントが必要です。<a href=\
 
 #: ../help/account.php:6
 msgid "If you already have an account, see section below."
-msgstr "すでに開かうとをお持ちの方は以下のセクションをお読みください。"
+msgstr "すでにアカウントとをお持ちの方は以下のセクションをお読みください。"
 
 #: ../help/account.php:8
 msgid "Step1 Get API Account, Password, Signature"
@@ -1350,11 +1350,11 @@ msgstr "うまく設定できていれば、決済処理は完了します。思
 
 #: ../help/account.php:50
 msgid "Every transactional information will be treated same in database. If you want know proper transactional statistics, don't use same settings both Sandbox and Productional environment on single WrodPress."
-msgstr "すべての決済情報はデータベース上で同じものとして扱われます。もし決済情報の正確な統計を知りたいばあいはSandboxと本番環境を同一のWordPressで試さないでください。"
+msgstr "すべての決済情報はデータベース上で同じものとして扱われます。もし決済情報の正確な統計を知りたい場合はSandboxと本番環境を同一のWordPressで試さないでください。"
 
 #: ../help/account.php:51
 msgid "Generally, you should make WordPress for development(ex. http//d.example.com) and test it with Sandbox."
-msgstr "よくあるケースとして、開発用のWordPressを用意し（ex. http://d.example.com）、Sandboxでテストを摺るのが良いでしょう。"
+msgstr "よくあるケースとして、開発用のWordPressを用意し（ex. http://d.example.com）、Sandboxでテストをするのが良いでしょう。"
 
 #: ../help/account.php:52
 msgid "If everything is fine, try it on productional WordPress(ex. http://example.ecom). These are typical process for creating transacional Web site. Don't drive highway without enough excercise."
@@ -1370,7 +1370,7 @@ msgstr "<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank\">Mic
 
 #: ../help/account.php:57
 msgid "If your item's price average is less than 25$, Micropayments is better solution. If not, Use normal pricing."
-msgstr "アイテムの決済単価が2300円程度よりも低い場合、Micropaymentsはよい選択です。そうでないばあいは通常の価格設定を使ってください。"
+msgstr "アイテムの決済単価が2300円程度よりも低い場合、Micropaymentsはよい選択です。そうでない場合は通常の価格設定を使ってください。"
 
 #: ../help/account.php:58
 msgid "Anyway, who price your items is you and you are the most familiar with your item."
@@ -1382,7 +1382,7 @@ msgstr "商品スラッグはPayPalの取引履歴ページに表示されます
 
 #: ../help/account.php:64
 msgid "Your transaction will be displayed like <em>slug-000010</em>. You can easily find, sort, sum LWP transaction."
-msgstr "取引名は<em>slug-000010</em>という形式で表示されます。LWPの決済情報はこれで検索、ソート、合計摺ることができます。"
+msgstr "取引名は<em>slug-000010</em>という形式で表示されます。LWPの決済情報はこれで検索、ソート、合計することができます。"
 
 #: ../help/customize.php:2
 msgid "How to customize"
@@ -1508,7 +1508,7 @@ msgstr "LWPはカスタム投稿タイプを作成する機能を持っていま
 
 #: ../help/customize.php:59
 msgid "But you may think of selling multiple types of contents(ex. music, movie, eBook and photo). In such case, LWP can recognize multiple custom post types as payable."
-msgstr "しかしなたら、複数のコンテンツ（ex. 映画、音楽、電子書籍、写真）を販売するケースがあるかもしれません。そのために、LWPは複数の投稿タイプを販売可能なものとして認識することができます。"
+msgstr "しかしながら、複数のコンテンツ（ex. 映画、音楽、電子書籍、写真）を販売するケースがあるかもしれません。そのために、LWPは複数の投稿タイプを販売可能なものとして認識することができます。"
 
 #: ../help/customize.php:60
 msgid "Furthermore, you may want make some taxonomies for your items(ex. eBook genre)."
@@ -2165,7 +2165,7 @@ msgstr "プエルト・リコ"
 
 #: ../paypal/paypal_statics.php:340
 msgid "QATAR"
-msgstr "がタール"
+msgstr "カタール"
 
 #: ../paypal/paypal_statics.php:341
 msgid "REUNION"
