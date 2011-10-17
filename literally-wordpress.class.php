@@ -13,7 +13,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	public $version = "0.8";
+	public $version = "0.8.5";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -646,7 +646,7 @@ EOS;
 	 */
 	public function post_metabox_form()
 	{
-		$files = $this->get_files($_GET["post"]);
+		$files = isset($_GET['post']) ? $this->get_files($_GET["post"]) : array();
 		require_once $this->dir.DS."form-template".DS."edit-detail.php";
 	}
 	

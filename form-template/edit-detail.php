@@ -13,7 +13,7 @@
 		</tr>
 	</tbody>
 </table>
-<?php if(intval(get_post_meta($_GET["post"], "lwp_price", true) == 0)):?>
+<?php if(!isset($_GET['post']) || intval(get_post_meta($_GET["post"], "lwp_price", true) == 0)):?>
 <p class="error">
 	<?php $this->e("This post is free.");?>
 </p>
