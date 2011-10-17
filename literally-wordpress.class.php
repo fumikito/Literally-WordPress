@@ -360,7 +360,7 @@ class Literally_WordPress
 			$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
 			$sql = array();
 			$sql[] = <<<EOS
-				CREATE TABLE  `{$this->files}` (
+				CREATE TABLE `{$this->files}` (
 					`ID` INT NOT NULL AUTO_INCREMENT,
 					`book_id` BIGINT NOT NULL,
 					`name` VARCHAR( 255 ) NOT NULL,
@@ -370,11 +370,11 @@ class Literally_WordPress
 					`free` INT NOT NULL DEFAULT 0,
 					`registered` DATETIME NOT NULL,
 					`updated` DATETIME NOT NULL,
-					PRIMARY KEY  (`ID`)
+					PRIMARY KEY (`ID`)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE  `{$this->transaction}` (
+				CREATE TABLE `{$this->transaction}` (
 					`ID` BIGINT NOT NULL AUTO_INCREMENT,
 					`user_id` BIGINT NOT NULL,
 					`book_id` BIGINT NOT NULL,
@@ -385,17 +385,18 @@ EOS;
 					`payer_mail` VARCHAR (255) NOT NULL,
 					`registered` DATETIME NOT NULL,
 					`updated` DATETIME NOT NULL,
-					PRIMARY KEY  (`ID`)
+					`expires` DATETIME NOT NULL, 
+					PRIMARY KEY (`ID`)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE  `{$this->campaign}` (
+				CREATE TABLE `{$this->campaign}` (
 					`ID` INT NOT NULL AUTO_INCREMENT,
 					`book_id` BIGINT NOT NULL ,
 					`price` BIGINT NOT NULL ,
 					`start` DATETIME NOT NULL ,
 					`end` DATETIME NOT NULL,
-					PRIMARY KEY  (`ID`)
+					PRIMARY KEY (`ID`)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
@@ -407,11 +408,11 @@ EOS;
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE  `{$this->file_relationships}` (
+				CREATE TABLE `{$this->file_relationships}` (
 					`ID` BIGINT NOT NULL AUTO_INCREMENT,
 					`file_id` INT NOT NULL ,
 					`device_id` INT NOT NULL,
-					PRIMARY KEY  (`ID`)
+					PRIMARY KEY (`ID`)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			//テーブルの作成
