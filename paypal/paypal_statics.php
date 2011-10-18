@@ -464,7 +464,6 @@ class PayPal_Statics {
 	 * @return string 
 	 */
 	private static function _($string){
-		/** @var $lwp Literally_WordPress*/
 		global $lwp;
 		return __($string, $lwp->domain);
 	}
@@ -495,5 +494,3 @@ class PayPal_Statics {
 		file_put_contents($file, $string, FILE_APPEND);
 	}
 }
-
-?>
