@@ -1429,42 +1429,73 @@ EOS;
 		if(is_front_page() && isset($_GET["lwp"])){
 			switch($_GET["lwp"]){
 				case "buy": //リダイレクトかwp_die
+				case "transfer":
+					//そもそも購入可能かチェック
 					global $user_ID;
+					$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
 					if(!is_user_logged_in()){
 						//ユーザーがログインしていない
 						auth_redirect ($_SERVER["REQUEST_URI"]);
 						exit;
-					}elseif(!isset($_GET['lwp-id'])){
+					}elseif(!wp_get_single_post ($book_id)){
 						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
-					}elseif(lwp_price($_GET["lwp-id"]) < 1){
+					}elseif(lwp_price($book_id) < 1){
 						//セール中のため無料だが、本来は有料。トランザクションの必要がない
-						if(lwp_original_price($_GET['lwp-id']) > 0){
+						if(lwp_original_price($book_id) > 0){
 							//購入済みにする
 							global $user_ID, $wpdb;
 							$wpdb->insert(
 								$this->transaction,
 								array(
 									"user_id" => $user_ID,
-									"book_id" => $_GET["lwp-id"],
+									"book_id" => $book_id,
 									"price" => 0,
-									"status" => "SUCCESS",
-									"method" => "CAMPAIGN",
+									"status" => LWP_Payment_Status::SUCCESS,
+									"method" => LWP_Payment_Methods::CAMPAIGN,
 									"registered" => gmdate('Y-m-d H:i:s'),
 									"updated" => gmdate('Y-m-d H:i:s')
 								),
 								array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
 							);
 							//サンキューページを表示する
-							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$_GET['lwp-id']}");
+							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$book_id}");
 							exit;
 						}else{
 							//コンテンツが購入可能じゃない
 							$message = $this->_("This contents is not on sale.");
 						}
-					}elseif(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
-						//トランザクション作成に失敗
-						$message = $this->_("Failed to make transaction.");
+					}else{
+						//この時点で購入可能
+						if($_GET['lwp'] == 'transfer'){
+							if($this->option['transfer']){
+								//送金トランザクションを登録
+								$wpdb->insert(
+									$this->transaction,
+									array(
+										"user_id" => $user_ID,
+										"book_id" => $book_id,
+										"price" => lwp_price($book_id),
+										"status" => LWP_Payment_Status::START,
+										"method" => LWP_Payment_Methods::TRANSFER,
+										"registered" => gmdate('Y-m-d H:i:s'),
+										"updated" => gmdate('Y-m-d H:i:s')
+									),
+									array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
+								);
+								$this->show_form('transfer', array(
+									'post_id' => $book_id,
+									'transaction_id' => $wpdb->insert_id
+								));
+							}else{
+								$message = $this->_("Sorry, we can't accept this payment method.");
+							}
+						}else{
+							if(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
+								//トランザクション作成に失敗
+								$message = $this->_("Failed to make transaction.");
+							}
+						}
 					}
 					//エラーが起きた場合はwp_die
 					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('backlink' => true));
@@ -1478,7 +1509,7 @@ EOS;
 							$tran_id = $wpdb->update(
 								$this->transaction,
 								array(
-									"status" => "SUCCESS",
+									"status" => LWP_Payment_Status::SUCCESS,
 									"transaction_key" => $_POST['INVNUM'],
 									"payer_mail" => $_POST["EMAIL"],
 									'updated' => gmdate("Y-m-d H:i:s")
@@ -1536,7 +1567,7 @@ EOS;
 						$wpdb->update(
 							$this->transaction,
 							array(
-								"status" => "Cancel",
+								"status" => LWP_Payment_Status::CANCEL,
 								"updated" => gmdate("Y-m-d H:i:s")
 							),
 							array("transaction_key" => $token),
