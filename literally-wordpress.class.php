@@ -152,6 +152,17 @@ class Literally_WordPress
 			"password" => "",
 			"signature" => "",
         	"token" => "",
+			'transfer' => false,
+			"thankyou" => "",
+			"account" => $this->_("Hametu Bank
+Aoyama Branch(300)
+#000000
+Hametuha inc.
+"),
+			"transfer_footer" => "",
+			"notification" => "",
+			"notification_frequency" => 0,
+			"notification_limit" => 30,
         	"dir" => dirname(__FILE__).DS."contents",
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
@@ -582,6 +593,13 @@ EOS;
 				"password" => $_REQUEST["marchand_pass"],
 				'signature' => $_REQUEST['signature'],
 				"token" => $_REQUEST["token"],
+				"transfer" => (boolean)$_REQUEST['transfer'],
+				"account" => strip_tags($_REQUEST['account']),
+				"thankyou" => $_REQUEST['thankyou'],
+				"transfer_footer" => strip_tags($_REQUEST['transfer_footer']),
+				"notification" => strip_tags($_REQUEST["notification"]),
+				"notification_frequency" => (int) $_REQUEST['notification_frequency'],
+				"notification_limit" => (int) $_REQUEST['notification_limit'],
 				"dir" => $_REQUEST["dir"],
 				"slug" => $_REQUEST["product_slug"],
 				"mypage" => $_REQUEST["mypage"],

@@ -52,3 +52,7 @@ div.ebook{
 .help-wrap h2{
 	clear:both;
 }
+
+input.short{
+	width:3em;
+}

@@ -2,6 +2,7 @@
 <h2><?php $this->e("General Setting"); ?></h2>
 <form method="post">
 	<?php wp_nonce_field("lwp_update_option"); ?>
+	<h3><?php $this->e('PayPal Settings');?></h3>
 	<table class="form-table">
 		<tbody>
 			<tr>
@@ -93,6 +94,111 @@
 			</tr>
 			<tr>
 				<th valign="top">
+					<label for="product_slug"><?php $this->e('Product slug'); ?></label>
+				</th>
+				<td>
+					<input id="product_slug" name="product_slug" type="text" value="<?php $this->h($this->option['slug']); ?>" />
+					<p class="description">
+						<?php $this->e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
+						<small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />
+						<?php $this->e('Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>'); ?>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3><?php $this->e('Transfer Setting'); ?></h3>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th valign="top">
+					<label><?php $this->e('Accept Transfer'); ?></label>
+				</th>
+				<td>
+					<label><input type="radio" name="transfer" value="0" <?php if(!$this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Allow'); ?></label><br />
+					<label><input type="radio" name="transfer" value="1" <?php if($this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Disallow'); ?></label>
+					<p class="description">
+						<?php $this->e('If you accept transfer, users can pay with bank account or something that is not digital transaction.'); ?>
+						<?php $this->e('This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made.'); ?>	
+						<small>（<?php echo $this->help("transfer", $this->_("More &gt;"))?>）</small>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="account"><?php $this->e('Bank Account'); ?></label>
+				</th>
+				<td>
+					<textarea cols="40" rows="5" name="account" id="account"><?php $this->h($this->option['account'])?></textarea>
+					<p class="description">
+						<?php $this->e('This account will be shown on thank you screen and thank you mail. Please enter actual bank account which user can transfer their deposit to.'); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="thankyou"><?php $this->e('Thank you Message'); ?></label>
+				</th>
+				<td>
+					<textarea cols="40" rows="5" name="thankyou" id="thankyou"><?php $this->h($this->option['thankyou'])?></textarea>
+					<p class="description">
+						<?php $this->e('This message will be shown on thank you screen and thank you mail. You can use place holders below.'); ?><br />
+						<strong>%account%, %user_display%, %price%, %item%</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="transfer_footer"><?php $this->e('Mail Footer'); ?></label>
+				</th>
+				<td>
+					<textarea cols="40" rows="5" name="transfer_footer" id="transfer_footer"><?php $this->h($this->option['transfer_footer'])?></textarea>
+					<p class="description">
+						<?php $this->e('This footer is displayed on notify e-mail footer. You can use place holders below.'); ?><br />
+						<strong>%site_name%, %site_description%, %url%</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top">
+					<label for="notification"><?php $this->e('Notification Mail Body'); ?></label>
+				</th>
+				<td>
+					<textarea cols="40" rows="5" name="notification" id="notification"><?php $this->h($this->option['notification'])?></textarea>
+					<p class="description">
+						<?php $this->e('This message will be displayed on reminder for transfer. You can use place holders below.'); ?><br />
+						<strong>%item%, %price%, %user_display%, %account%</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th><label><?php $this->e('Notification Frequency'); ?></label></th>
+				<td>
+					<label>
+						<?php printf(
+								$this->_('Send reminder on every %s days'),
+								'<input class="short" type="text" name="notification_frequency" id="notification_frequency" value="'.intval($this->option['notification_frequency']).'" />'
+						);?>
+					</label><br />
+					<label>
+						<?php printf(
+								$this->_('Transaction expires by %s days'),
+								'<input class="short" type="text" name="notification_limit" id="notification_limit" value="'.intval($this->option['notification_limit']).'" />'
+						);?>
+					</label>
+					<p class="description">
+						<?php $this->e('If you don\'t want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past.'); ?><br />
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<h3><?php $this->e('WordPress Setting'); ?></h3>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th valign="top">
 					<label for="dir"><?php $this->e('Directory for File protection'); ?></label>
 				</th>
 				<td>
@@ -111,19 +217,6 @@
 						<?php printf($this->_('Directory is accessible via HTTP. See %s and prepend others from direct access.'), $this->help('dir', $this->_('Help'))); ?>
 					</p>
 					<?php endif; ?>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">
-					<label for="product_slug"><?php $this->e('Product slug'); ?></label>
-				</th>
-				<td>
-					<input id="product_slug" name="product_slug" type="text" value="<?php $this->h($this->option['slug']); ?>" />
-					<p class="description">
-						<?php $this->e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
-						<small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />
-						<?php $this->e('Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>'); ?>
-					</p>
 				</td>
 			</tr>
 			<tr>
