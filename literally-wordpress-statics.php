@@ -24,6 +24,19 @@ class LWP_Payment_Methods {
 	 * Name for Payment method for transafer.
 	 */
 	const TRANSFER = 'TRANSFER';
+	
+	/**
+	 * Returns all payment method.
+	 * @return array
+	 */
+	public static function get_all_methods(){
+		return array(
+			self::PAYPAL,
+			self::CAMPAIGN,
+			self::PRESENT,
+			self::TRANSFER
+		);
+	}
 }
 
 

@@ -40,7 +40,7 @@ if(literally_wordpress_check_version()){
 	//クラスファイル読み込み
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress.class.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."paypal".DIRECTORY_SEPARATOR."paypal_statics.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'literally-wordpress-static.php';
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'literally-wordpress-statics.php';
 	
 	/**
 	 * Literally_WordPressのインスタンス変数

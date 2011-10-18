@@ -25,10 +25,14 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 				<td>
 					<?php if($transaction->user_id): ?>
 						<input type="hidden" name="user_id" value="<?php echo $transaction->user_id;?>" />
-						<a href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>">
-							<?php echo $user->display_name;  ?>
-						</a>
-					<?php else: ?>
+						<?php if($user): ?>
+							<a href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>">
+								<?php echo $user->display_name;  ?>
+							</a>
+						<?php else: ?>
+							<?php $this->e('Deleted User'); ?>
+						<?php endif; ?>
+					<?php else: /* TODO: この例外処理はいらない？*/?>
 						<select name="user_id" id="user_id">
 							<option value="0" selected="selected" disabled="true"><?php $this->e("Select below");?></option>
 							<?php
@@ -59,8 +63,9 @@ EOS;
 				<th scope="row" valign="top"><label for="method"><?php $this->e('Method'); ?></label></th>
 				<td>
 					<select name="method" id="method">
-						<option value="PAYPAL"<?php if($transaction->method == "PAYPAL") echo ' selected="selected"';?>><?php $this->e("PayPal"); ?></option>
-						<option value="present"<?php if($transaction->method == "present") echo ' selected="selected"';?>><?php $this->e("Present"); ?></option>
+						<?php foreach(LWP_Payment_Methods::get_all_methods() as $method): ?>
+						<option value="<?php echo $method; ?>"<?php if($transaction->method == $method) echo ' selected="selected"';?>><?php $this->e($method); ?></option>
+						<?php endforeach; ?>
 					</select>
 				</td>
 			</tr>
@@ -81,8 +86,8 @@ EOS;
 				<th scope="row" valign="top"><label for="status"><?php $this->e("Status"); ?></label></th>
 				<td>
 					<select name="status" id="status">
-						<option value="CUCCESS"<?php if($transaction->status == "SUCCESS") echo ' selected="selected"';?>><?php $this->e("Success");  ?></option>
-						<option value="Cancel"<?php if($transaction->status == "Cancel") echo ' selected="selected"';?>><?php $this->e("Cancel"); ?></option>
+						<option value="CUCCESS"<?php if($transaction->status == "SUCCESS") echo ' selected="selected"';?>><?php $this->e(LWP_Payment_Status::SUCCESS);  ?></option>
+						<option value="Cancel"<?php if($transaction->status == "Cancel") echo ' selected="selected"';?>><?php $this->e(LWP_Payment_Status::CANCEL); ?></option>
 					</select>
 				</td>
 			</tr>
@@ -141,7 +146,8 @@ $length = count($this->get_transaction($ebook_id, $user_id, $status));
 				<th scope="col" classs="manage-column"><?php $this->e('Purchased Price'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Status'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Method'); ?></th>
-				<th scope="col" classs="manage-column"><?php $this->e('Date'); ?></th>
+				<th scope="col" classs="manage-column"><?php $this->e('Expires'); ?></th>
+				<th scope="col" classs="manage-column"><?php $this->e('Last Updated'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Detail'); ?></th>
 			</tr>
 		</thead>
@@ -152,7 +158,8 @@ $length = count($this->get_transaction($ebook_id, $user_id, $status));
 				<th scope="col" classs="manage-column"><?php $this->e('Purchased Price'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Status'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Method'); ?></th>
-				<th scope="col" classs="manage-column"><?php $this->e('Date'); ?></th>
+				<th scope="col" classs="manage-column"><?php $this->e('Expires'); ?></th>
+				<th scope="col" classs="manage-column"><?php $this->e('Last Updated'); ?></th>
 				<th scope="col" classs="manage-column"><?php $this->e('Detail'); ?></th>
 			</tr>
 		</tfoot>
@@ -160,11 +167,29 @@ $length = count($this->get_transaction($ebook_id, $user_id, $status));
 			<?php $counter = 0; foreach($transactions as $t): $counter++; $book = wp_get_single_post($t->book_id); $data = get_userdata($t->user_id); ?>
 			<tr<?php if($counter % 2 == 0) echo ' class="alternate"'; ?>>
 				<td><a href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}")?>"><?php echo $book->post_title; ?></a></td>
-				<td><a href="<?php echo admin_url("user-edit.php?user_id={$t->user_id}"); ?>"><?php echo $data->display_name; ?></a></td>
+				<td>
+					<?php if($data): ?>
+					<a href="<?php echo admin_url("user-edit.php?user_id={$t->user_id}"); ?>"><?php echo $data->display_name; ?></a>
+					<?php else: ?>
+					<?php $this->e('Deleted User'); ?>
+					<?php endif; ?>
+				</td>
 				<td><?php echo number_format($t->price)."({$this->option['currency_code']})"; ?></td>
-				<td><?php echo $t->status; ?></td>
-				<td><?php echo $t->method; ?></td>
-				<td><?php echo mysql2date(get_option('date_format'), $t->registered); ?></td>
+				<td><?php $this->e($t->status); ?></td>
+				<td><?php $this->e($t->method); ?></td>
+				<td>
+					<?php if($t->status == LWP_Payment_Status::SUCCESS): ?>
+						<?php if($t->expires == '0000-00-00 00:00:00'): ?>
+							<?php $this->e('No Limit.'); ?>
+						<?php else:?>
+							<?php echo mysql2date(get_option('date_format'), $t->expires); ?>
+							<stong><?php echo (strtotime($t->expires) < time()) ? $this->_('Expired'): $this->_('Valid');?></strong>
+						<?php endif; ?>
+					<?php else: ?>
+						<?php $this->e('Not valid.'); ?>
+					<?php endif; ?>
+				</td>
+				<td><?php echo mysql2date(get_option('date_format'), $t->updated); ?></td>
 				<td><p><a class="button" href="<?php echo admin_url("admin.php?page=lwp-management&transaction_id={$t->ID}"); ?>"><?php $this->e("Edit"); ?></a></p></td>
 			</tr>
 			<?php endforeach; ?>
