@@ -10,103 +10,91 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 		$book = wp_get_single_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 ?>
-<h3><?php $this->e('Update Transaction'); ?></h3>
-<form method="post">
-	<?php wp_nonce_field("lwp_update_transaction"); ?>
-	<input type="hidden" name="transaction_id" value="<?php $this->h($transaction->ID);?>" />
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row" valign="top"><?php $this->e('Item Name'); ?></th>
-				<td><a href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}"); ?>"><?php echo $book->post_title; ?></a></td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="user_id"><?php $this->e('User Name'); ?></label></th>
-				<td>
-					<?php if($transaction->user_id): ?>
-						<input type="hidden" name="user_id" value="<?php echo $transaction->user_id;?>" />
-						<?php if($user): ?>
-							<a href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>">
-								<?php echo $user->display_name;  ?>
-							</a>
-						<?php else: ?>
-							<?php $this->e('Deleted User'); ?>
-						<?php endif; ?>
-					<?php else: /* TODO: この例外処理はいらない？*/?>
-						<select name="user_id" id="user_id">
-							<option value="0" selected="selected" disabled="true"><?php $this->e("Select below");?></option>
-							<?php
-								$sql = <<<EOS
-									SELECT * FROM {$wpdb->users} as u
-									LEFT JOIN {$wpdb->usermeta} as m
-									ON u.ID = m.user_id AND m.meta_key = '{$wpdb->prefix}user_level'
-									WHERE m.meta_value = 0 
-EOS;
-								$users = $wpdb->get_results($sql);
-								foreach($users as $u):
-							?>
-								<option value="<?php echo $u->ID; ?>"><?php echo $u->display_name; ?></option>
-							<?php endforeach; ?>
-						</select>
-						<p class="error"><?php $this->e('This transaction doesn\'t relate to any account.');?><small>（<?php echo $this->help("account", $this->_("More &gt;")); ?>）</small></p>
+<h3><?php $this->e('Transaction Detail'); ?></h3>
+<table class="form-table">
+	<tbody>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Item Name'); ?></th>
+			<td><a href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}"); ?>"><?php echo $book->post_title; ?></a></td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('User Name'); ?></th>
+			<td>
+				<?php if($transaction->user_id): ?>
+					<input type="hidden" name="user_id" value="<?php echo $transaction->user_id;?>" />
+					<?php if($user): ?>
+						<a href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>">
+							<?php echo $user->display_name;  ?>
+						</a>
+					<?php else: ?>
+						<?php $this->e('Deleted User'); ?>
 					<?php endif; ?>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="price"><?php $this->e("Purchased Price"); ?></label></th>
-				<td>
-					<input id="price" type="text" name="price" value="<?php $this->h($transaction->price); ?>" />
-					<p class="description"><?php $this->e('Original Price'); ?>: <?php echo number_format( lwp_original_price($book->ID))." ({$this->option['currency_code']})";?></p>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="method"><?php $this->e('Method'); ?></label></th>
-				<td>
-					<select name="method" id="method">
-						<?php foreach(LWP_Payment_Methods::get_all_methods() as $method): ?>
-						<option value="<?php echo $method; ?>"<?php if($transaction->method == $method) echo ' selected="selected"';?>><?php $this->e($method); ?></option>
+				<?php else: /* TODO: この例外処理はいらない？*/?>
+					<select name="user_id" id="user_id">
+						<option value="0" selected="selected" disabled="true"><?php $this->e("Select below");?></option>
+						<?php
+							$sql = <<<EOS
+								SELECT * FROM {$wpdb->users} as u
+								LEFT JOIN {$wpdb->usermeta} as m
+								ON u.ID = m.user_id AND m.meta_key = '{$wpdb->prefix}user_level'
+								WHERE m.meta_value = 0 
+EOS;
+							$users = $wpdb->get_results($sql);
+							foreach($users as $u):
+						?>
+							<option value="<?php echo $u->ID; ?>"><?php echo $u->display_name; ?></option>
 						<?php endforeach; ?>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="payer_mail"><?php $this->e("Mail account for transaction");?></label></th>
-				<td>
-					<input readonly="readonly" class="regular-text" type="text" name="payer_mail" id="payer_mail" value="<?php $this->h($transaction->payer_mail); ?>" />
-					<?php if($transaction->payer_mail == $user->user_email):?>
-						<p class="description"><?php $this->e("This mail is same as the account mail."); ?></p>
-					<?php elseif($transaction->payer_mail == get_user_meta($transaction->user_id, "paypal")): ?>
-						<p class="description"><?php $this->e("This mail is same as PayPal mail of the user account.");?></p>
-					<?php else: ?>
-						<p class="error"><?php $this->e('This mail doesn\'t related to account information.');  ?></p>
+					<p class="error"><?php $this->e('This transaction doesn\'t relate to any account.');?><small>（<?php echo $this->help("account", $this->_("More &gt;")); ?>）</small></p>
+				<?php endif; ?>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Updated'); ?></th>
+			<td>
+				<?php echo mysql2date(get_option('date_format'), $transaction->updated); ?>
+				<small>（<?php $this->e('Registered'); ?>: <?php echo mysql2date(get_option('date_format'), $transaction->registered); ?>）</small>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e("Purchased Price"); ?></th>
+			<td>
+				<strong><?php echo number_format($transaction->price)." ({$this->option['currency_code']})"; ?></strong>
+				<p class="description"><?php $this->e('Original Price'); ?>: <?php echo number_format( lwp_original_price($book->ID))." ({$this->option['currency_code']})";?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Purchase Method'); ?></th>
+			<td>
+				<?php $this->e($transaction->method); ?>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e("Status"); ?></th>
+			<td>
+				<?php $this->e($transaction->status);?>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e("Expires"); ?></th>
+			<td>
+				<?php if($transaction->status == LWP_Payment_Status::SUCCESS): ?>
+					<?php if($transaction->expires == '0000-00-00 00:00:00'): ?>
+						<?php $this->e('No Limit.'); ?>
+					<?php else:?>
+						<?php echo mysql2date(get_option('date_format'), $transaction->expires); ?>
+						<stong><?php echo (strtotime($transaction->expires) < time()) ? $this->_('Expired'): $this->_('Valid');?></strong>
 					<?php endif; ?>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><label for="status"><?php $this->e("Status"); ?></label></th>
-				<td>
-					<select name="status" id="status">
-						<option value="CUCCESS"<?php if($transaction->status == "SUCCESS") echo ' selected="selected"';?>><?php $this->e(LWP_Payment_Status::SUCCESS);  ?></option>
-						<option value="Cancel"<?php if($transaction->status == "Cancel") echo ' selected="selected"';?>><?php $this->e(LWP_Payment_Status::CANCEL); ?></option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row" valign="top"><?php $this->e('Updated'); ?></th>
-				<td>
-					<?php echo mysql2date(get_option('date_format'), $transaction->updated); ?>
-					<small>（<?php $this->e('Registered'); ?>: <?php echo mysql2date(get_option('date_format'), $transaction->registered); ?>）</small>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<p class="submit">
-		<input type="submit" class="primary-button" value="更新" />
-	</p>
-	<p>
-		<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>">&laquo;<?php $this->e('Return to transaction list');?></a>
-	</p>
-</form>
+				<?php else: ?>
+					<?php $this->e('Not valid.'); ?>
+				<?php endif; ?>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>">&laquo;<?php $this->e('Return to transaction list');?></a>
+</p>
  
  	<?php endif; ?>
 <?php

@@ -26,16 +26,27 @@ class LWP_Payment_Methods {
 	const TRANSFER = 'TRANSFER';
 	
 	/**
+	 * Name for Payment method for refunding.
+	 * This method is special and should always hold egative value.
+	 */
+	const REFUND = 'REFUND';
+	
+	/**
 	 * Returns all payment method.
+	 * @param boolean $include_admin_method
 	 * @return array
 	 */
-	public static function get_all_methods(){
-		return array(
+	public static function get_all_methods($include_admin_method = false){
+		$methods =  array(
 			self::PAYPAL,
 			self::CAMPAIGN,
 			self::PRESENT,
 			self::TRANSFER
 		);
+		if($include_admin_method){
+			$methods[] = self::REFUND;
+		}
+		return $methods;
 	}
 }
 
@@ -63,12 +74,7 @@ class LWP_Payment_Status {
 	const START = 'START';
 	
 	/**
-	 * Transaction has started and is waiting for transfered.
+	 * Transaction was anyway diabled.
 	 */
-	const PENDING = 'PENDING';
-	
-	/**
-	 * Transaction has completed but refunded.
-	 */
-	const REFUND = 'REFUND';
+	const DISABLED = 'DISABLED';
 }
