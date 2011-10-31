@@ -13,7 +13,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	public $version = "0.8.5";
+	public $version = "0.8.6";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -393,6 +393,7 @@ EOS;
 					`status` VARCHAR( 45 ) NOT NULL,
 					`method` VARCHAR( 100 ) NOT NULL DEFAULT 'PAYPAL',
 					`transaction_key` VARCHAR (255) NOT NULL,
+					`transaction_id` VARCHAR (255) NOT NULL,
 					`payer_mail` VARCHAR (255) NOT NULL,
 					`registered` DATETIME NOT NULL,
 					`updated` DATETIME NOT NULL,
