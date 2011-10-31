@@ -471,6 +471,9 @@ EOS;
 		add_submenu_page("lwp-setting", $this->_("Customer Management"), $this->_("Customer"), 5, "lwp-management", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device"), 5, "lwp-devices", array($this, "load"));
+		if($this->option['transfer']){
+			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer"), 5, "lwp-transfer", array($this, "load"));
+		}
 		//顧客の購入履歴確認ページ
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
 	}
@@ -1432,6 +1435,47 @@ EOS;
 		}
 	}
 	
+	/**
+	 * 入金履歴を取得する
+	 * 
+	 * @global wpdb $wpdb
+	 * @param string $filter
+	 * @param int $post_id
+	 * @param int $user_id
+	 * @param int $page
+	 * @return array
+	 */
+	public function get_transfer($filter = 'all', $post_id = 0, $user_id = 0, $page = 1){
+		global $wpdb;
+		$offset = ($page - 1) * 20;
+		$wpdb->show_errors();
+		$sql = <<<EOS
+			SELECT
+				t.*, u.display_name, u.user_email, p.post_title
+			FROM {$this->transaction} AS t
+			LEFT JOIN {$wpdb->users} AS u
+			ON t.user_id = u.ID
+			LEFT JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+EOS;
+		$wheres = array("t.method = '".LWP_Payment_Methods::TRANSFER."'");
+		if($filter != 'all'){
+			$wheres[] = $wpdb->prepare("t.status = %s", $filter);
+		}
+		if($post_id > 0){
+			$wheres[] = $wpdb->prepare("t.book_id = %d", $post_id);
+		}
+		if($user_id > 0){
+			$wheres[] = $wpdb->prepare("t.user_id = %d", $user_id);
+		}
+		$sql .= ' WHERE '.implode(' AND ', $wheres);
+		$sql .= <<<EOS
+		ORDER BY t.registered DESC
+		LIMIT {$offset}, 20
+EOS;
+		return $wpdb->get_results($sql);
+	}
+	
 	//--------------------------------------------
 	//
 	// 公開画面
@@ -1446,11 +1490,11 @@ EOS;
 	public function manage_actions(){
 		//電子書籍の場合だけ実行
 		if(is_front_page() && isset($_GET["lwp"])){
+			global $user_ID, $wpdb;
 			switch($_GET["lwp"]){
 				case "buy": //リダイレクトかwp_die
 				case "transfer":
 					//そもそも購入可能かチェック
-					global $user_ID;
 					$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
 					if(!is_user_logged_in()){
 						//ユーザーがログインしていない
@@ -1463,7 +1507,6 @@ EOS;
 						//セール中のため無料だが、本来は有料。トランザクションの必要がない
 						if(lwp_original_price($book_id) > 0){
 							//購入済みにする
-							global $user_ID, $wpdb;
 							$wpdb->insert(
 								$this->transaction,
 								array(
@@ -1495,6 +1538,7 @@ EOS;
 										"user_id" => $user_ID,
 										"book_id" => $book_id,
 										"price" => lwp_price($book_id),
+										"transaction_key" => sprintf("%08d", $user_ID),
 										"status" => LWP_Payment_Status::START,
 										"method" => LWP_Payment_Methods::TRANSFER,
 										"registered" => gmdate('Y-m-d H:i:s'),
@@ -1520,7 +1564,6 @@ EOS;
 					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('backlink' => true));
 					break;
 				case "confirm": //コンファームかwp_die
-					global $wpdb;
 					if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
 						if(PayPal_Statics::do_transaction($_POST)){
 							//データを更新
@@ -1576,7 +1619,6 @@ EOS;
 					$this->show_form("success", array('link' => $url));
 					break;
 				case "cancel":
-					global $wpdb;
 					$post_id = $this->option['mypage'];
 					$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
 					if(!$token){

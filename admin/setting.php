@@ -115,8 +115,8 @@
 					<label><?php $this->e('Accept Transfer'); ?></label>
 				</th>
 				<td>
-					<label><input type="radio" name="transfer" value="0" <?php if(!$this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Allow'); ?></label><br />
-					<label><input type="radio" name="transfer" value="1" <?php if($this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Disallow'); ?></label>
+					<label><input type="radio" name="transfer" value="0" <?php if(!$this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Disallow'); ?></label><br />
+					<label><input type="radio" name="transfer" value="1" <?php if($this->option['transfer']) echo 'checked="checked"'; ?> /><?php $this->e('Allow'); ?></label>
 					<p class="description">
 						<?php $this->e('If you accept transfer, users can pay with bank account or something that is not digital transaction.'); ?>
 						<?php $this->e('This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made.'); ?>	
