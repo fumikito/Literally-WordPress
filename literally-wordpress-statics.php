@@ -25,11 +25,6 @@ class LWP_Payment_Methods {
 	 */
 	const TRANSFER = 'TRANSFER';
 	
-	/**
-	 * Name for Payment method for refunding.
-	 * This method is special and should always hold egative value.
-	 */
-	const REFUND = 'REFUND';
 	
 	/**
 	 * Returns all payment method.
@@ -43,9 +38,6 @@ class LWP_Payment_Methods {
 			self::PRESENT,
 			self::TRANSFER
 		);
-		if($include_admin_method){
-			$methods[] = self::REFUND;
-		}
 		return $methods;
 	}
 }
@@ -77,4 +69,9 @@ class LWP_Payment_Status {
 	 * Transaction was anyway diabled.
 	 */
 	const DISABLED = 'DISABLED';
+	
+	/**
+	 * Transaction was refunded
+	 */
+	const REFUND = 'REFUND';
 }

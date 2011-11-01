@@ -105,14 +105,14 @@ class Literally_WordPress
 	 * 
 	 * @var boolean
 	 */
-	private $error = false;
+	public $error = false;
 	
 	/**
 	 * エラーメッセージ
 	 * 
 	 * @var array
 	 */
-	private $message = array();
+	public $message = array();
 	
 	
 	
@@ -539,11 +539,12 @@ EOS;
 	public function admin_notice()
 	{
 		if(!empty($this->message)){
+			$class = $this->error ? 'error' : 'updated';
 			?>
-				<div class="update-nag">
+				<div class="<?php echo $class; ?>">
 					<ul>
 					<?php foreach($this->message as $m): ?>
-						<li><?php echo $m; ?></li>
+						<li><p><?php echo $m; ?></p></li>
 					<?php endforeach; ?>
 					</ul>
 				</div>
@@ -1435,46 +1436,6 @@ EOS;
 		}
 	}
 	
-	/**
-	 * 入金履歴を取得する
-	 * 
-	 * @global wpdb $wpdb
-	 * @param string $filter
-	 * @param int $post_id
-	 * @param int $user_id
-	 * @param int $page
-	 * @return array
-	 */
-	public function get_transfer($filter = 'all', $post_id = 0, $user_id = 0, $page = 1){
-		global $wpdb;
-		$offset = ($page - 1) * 20;
-		$wpdb->show_errors();
-		$sql = <<<EOS
-			SELECT
-				t.*, u.display_name, u.user_email, p.post_title
-			FROM {$this->transaction} AS t
-			LEFT JOIN {$wpdb->users} AS u
-			ON t.user_id = u.ID
-			LEFT JOIN {$wpdb->posts} AS p
-			ON t.book_id = p.ID
-EOS;
-		$wheres = array("t.method = '".LWP_Payment_Methods::TRANSFER."'");
-		if($filter != 'all'){
-			$wheres[] = $wpdb->prepare("t.status = %s", $filter);
-		}
-		if($post_id > 0){
-			$wheres[] = $wpdb->prepare("t.book_id = %d", $post_id);
-		}
-		if($user_id > 0){
-			$wheres[] = $wpdb->prepare("t.user_id = %d", $user_id);
-		}
-		$sql .= ' WHERE '.implode(' AND ', $wheres);
-		$sql .= <<<EOS
-		ORDER BY t.registered DESC
-		LIMIT {$offset}, 20
-EOS;
-		return $wpdb->get_results($sql);
-	}
 	
 	//--------------------------------------------
 	//
@@ -1544,7 +1505,7 @@ EOS;
 										"registered" => gmdate('Y-m-d H:i:s'),
 										"updated" => gmdate('Y-m-d H:i:s')
 									),
-									array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
+									array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
 								);
 								$this->show_form('transfer', array(
 									'post_id' => $book_id,
