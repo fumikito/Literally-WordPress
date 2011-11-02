@@ -1,7 +1,7 @@
 <?php /* @var $this Literally_WordPress */ ?>
 <h2><?php $this->e("Transfer Management"); ?></h2>
 
-<form method="get" action="<?php echo admin_url('admin.php?page=lwp-transfer'); ?>">
+<form method="get" action="<?php echo admin_url('admin.php'); ?>">
 	<input type="hidden" name="page" value="lwp-transfer" />
 <?php
 require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-transfers.php";

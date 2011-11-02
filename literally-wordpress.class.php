@@ -469,11 +469,11 @@ EOS;
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("Setting"), 5, "lwp-setting", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Customer Management"), $this->_("Customer"), 5, "lwp-management", array($this, "load"));
-		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
-		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device"), 5, "lwp-devices", array($this, "load"));
 		if($this->option['transfer']){
 			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer"), 5, "lwp-transfer", array($this, "load"));
 		}
+		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device"), 5, "lwp-devices", array($this, "load"));
 		//顧客の購入履歴確認ページ
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
 	}
