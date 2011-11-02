@@ -66,12 +66,20 @@ class LWP_Payment_Status {
 	const START = 'START';
 	
 	/**
-	 * Transaction was anyway diabled.
-	 */
-	const DISABLED = 'DISABLED';
-	
-	/**
 	 * Transaction was refunded
 	 */
 	const REFUND = 'REFUND';
+	
+	/**
+	 * Returns all Status
+	 * @return array
+	 */
+	public static function get_all_status(){
+		return array(
+			self::START,
+			self::CANCEL,
+			self::SUCCESS,
+			self::REFUND
+		);
+	}
 }

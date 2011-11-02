@@ -56,3 +56,24 @@ div.ebook{
 input.short{
 	width:3em;
 }
+
+/* Transaction Table*/
+.detail-table{
+	margin-bottom:20px;
+}
+.detail-table tbody th,
+.detail-table tbody td{
+	border-bottom:1px solid #eee;
+}
+.detail-table th{
+	font-weight:bold;
+}
+.detail-table tbody tr:nth-child(even) th,
+.detail-table tbody tr:nth-child(even) td{
+	background:#f9f9f9;
+}
+.form-table thead th,
+.form-table thead td{
+	background:#f0f0f0;
+	border-bottom:1px solid #eee;
+}

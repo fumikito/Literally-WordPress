@@ -304,13 +304,17 @@ Hametuha inc.
 		 */
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
+		//スタイルシート・JSの追加
+		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
+			add_action("admin_init", array($this, "assets"));
+		}
 		//オプション更新
 		if($this->is_admin("setting")){
-			add_action("admin_init", array($this, "option_update"));
+			add_action("admin_init", array($this, "update_option"));
 		}
 		//キャンペーン更新
 		if($this->is_admin("campaign")){
-			add_action("admin_init", array($this, "campaign_update"));
+			add_action("admin_init", array($this, "update_campaign"));
 		}
 		//トランザクション更新
 		if($this->is_admin("management")){
@@ -324,10 +328,6 @@ Hametuha inc.
 		add_action("edit_post", array($this, "post_update"));
 		//メニューの追加
 		add_action("admin_menu", array($this, "add_menu"));
-		//スタイルシート・JSの追加
-		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
-			add_action("admin_init", array($this, "assets"));
-		}
 		//メッセージの出力
 		add_action("admin_notice", array($this, "admin_notice"));
 		//メタボックスの追加
@@ -467,13 +467,13 @@ EOS;
 	{
 		//設定ページの追加
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
-		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("Setting"), 5, "lwp-setting", array($this, "load"));
-		add_submenu_page("lwp-setting", $this->_("Customer Management"), $this->_("Customer"), 5, "lwp-management", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("General Setting"), 'manage_options', "lwp-setting", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Transaction Management"), $this->_("Transaction Management"), 'edit_posts', "lwp-management", array($this, "load"));
 		if($this->option['transfer']){
-			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer"), 5, "lwp-transfer", array($this, "load"));
+			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management"), 'edit_posts', "lwp-transfer", array($this, "load"));
 		}
-		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing"), 5, "lwp-campaign", array($this, "load"));
-		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device"), 5, "lwp-devices", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
+		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
 		//顧客の購入履歴確認ページ
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
 	}
@@ -527,6 +527,46 @@ EOS;
 		wp_enqueue_style("lwp-admin", $this->url."/assets/style.css", array(), $this->version);
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
+		//In case management or campaign, load datepicker.
+		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
+			//datepickerを読み込み
+			wp_enqueue_script(
+				'jquery-datepicker',
+				$this->url."/assets/datepicker/jquery.ui.datepicker.js",
+				array("jquery", "jquery-ui-core"),
+				"1.8.9"
+			);
+			wp_enqueue_script(
+				'jquery-slider',
+				$this->url."/assets/datepicker/jquery.ui.slider.js",
+				array("jquery", "jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"),
+				"1.8.9"
+			);
+			wp_enqueue_script(
+				'jquery-datepicker-i18n',
+				$this->url."/assets/datepicker/i18n/jquery.ui.datepicker-ja.js",
+				array("jquery-ui-core", "jquery-datepicker"),
+				"1.8.13"
+			);
+			wp_enqueue_script(
+				'jquery-timepicker',
+				$this->url."/assets/datepicker/timepicker/timepicker.js",
+				array("jquery-datepicker"),
+				"1.8.9"
+			);
+			wp_enqueue_style(
+				'jquery-datepicker-style',
+				$this->url."/assets/datepicker/smoothness/jquery-ui.css",
+				array(),
+				"1.8.9"
+			);
+			wp_enqueue_script(
+				"jquery-datepicker-load",
+				$this->url."/assets/js/campaign.js",
+				array("jquery-datepicker"),
+				$this->version
+			);
+		}
 	}
 	
 	
@@ -585,7 +625,7 @@ EOS;
 	 * @since 0.3
 	 * @return void
 	 */
-	public function option_update()
+	public function update_option()
 	{
 		//要素が揃っていたら更新
 		if(
@@ -1042,46 +1082,9 @@ EOS;
 	*
 	* @return void
 	*/
-	public function campaign_update()
+	public function update_campaign()
 	{
 		global $wpdb;
-		//datepickerを読み込み
-		wp_enqueue_script(
-			'jquery-datepicker',
-			$this->url."/assets/datepicker/jquery.ui.datepicker.js",
-			array("jquery", "jquery-ui-core"),
-			"1.8.9"
-		);
-		wp_enqueue_script(
-			'jquery-slider',
-			$this->url."/assets/datepicker/jquery.ui.slider.js",
-			array("jquery", "jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"),
-			"1.8.9"
-		);
-		wp_enqueue_script(
-			'jquery-datepicker-i18n',
-			$this->url."/assets/datepicker/i18n/jquery.ui.datepicker-ja.js",
-			array("jquery-ui-core", "jquery-datepicker"),
-			"1.8.13"
-		);
-		wp_enqueue_script(
-			'jquery-timepicker',
-			$this->url."/assets/datepicker/timepicker/timepicker.js",
-			array("jquery-datepicker"),
-			"1.8.9"
-		);
-		wp_enqueue_style(
-			'jquery-datepicker-style',
-			$this->url."/assets/datepicker/smoothness/jquery-ui.css",
-			array(),
-			"1.8.9"
-		);
-		wp_enqueue_script(
-			"jquery-datepicker-load",
-			$this->url."/assets/js/campaign.js",
-			array("jquery-datepicker"),
-			$this->version
-		);
 		//キャンペーンの追加
 		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_add_campaign")){
 			//投稿の確認
@@ -1412,27 +1415,40 @@ EOS;
 	 */
 	public function update_transaction()
 	{
-		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_transaction")){
-			//データの更新
+		//Check nonce
+		if(isset($_REQUEST["_wpnonce"], $_REQUEST['transaction_id']) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_transaction")){
+			//Update Data
 			global $wpdb;
-			$req = $wpdb->update(
-				$this->transaction,
-				array(
-					"user_id" => $_REQUEST["user_id"],
-					"price" => $_REQUEST["price"],
-					"status" => $_REQUEST["status"],
-					"method" => $_REQUEST["method"],
-					"payer_mail" => $_REQUEST["payer_mail"],
-					"registered" => gmdate("Y-m-d H:i:s")
-				),
-				array("ID" => $_REQUEST["transaction_id"]),
-				array("%d", "%d", "%s", "%s", "%s", "%s"),
-				array("%d")
-			);
-			if($req)
-				$this->message[] = $this->_("Purchase infomation updated.");
-			else
-				$this->message[] = $this->_("Failed to update purchase infomration.");
+			$req = false;
+			if(isset($_REQUEST['status']) && false !== array_search($_REQUEST['status'], LWP_Payment_Status::get_all_status())){
+				$req = $wpdb->update(
+					$this->transaction,
+					array(
+						'status' => $_POST['status'],
+						'updated' => gmdate('Y-m-d H:i:s')
+					),
+					array('ID' => $_POST['transaction_id']),
+					array('%s', '%s'),
+					array('%d')
+				);
+			}
+			if(isset($_REQUEST['expires']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST['expires'])){
+				$req = $wpdb->update(
+					$this->transaction,
+					array(
+						'expires' => $_POST['expires'],
+						'updated' => gmdate('Y-m-d H:i:s')
+					),
+					array('ID' => $_POST['transaction_id']),
+					array('%s', '%s'),
+					array('%d')
+				);
+			}
+			if($req){
+				$this->message[] = $this->_("Transaction was updated.");
+			}else{
+				$this->message[] = $this->_("Failed to update transaction.");
+			}
 		}
 	}
 	
@@ -1928,6 +1944,7 @@ EOS;
 			case "setting":
 			case "management":
 			case "devices":
+			case "transfer":
 				return (isset($_GET["page"]) && $_GET["page"] == "lwp-{$page_name}");
 				break;
 			case "history":

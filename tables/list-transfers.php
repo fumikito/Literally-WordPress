@@ -201,11 +201,11 @@ EOS;
 					case LWP_Payment_Status::DISABLED:
 					case LWP_Payment_Status::REFUND:
 					case LWP_Payment_Status::SUCCESS:
-						return $lwp->_('OK');
+						return '--';
 						break;
 					case LWP_Payment_Status::START:
 						if($lwp->option['notification_limit'] < 1){
-							return $lwp->_('OK');
+							return '--';;
 						}else{
 							$past = ceil((time() - strtotime($item->updated)) / 60 / 60 / 24);
 							$diff = $lwp->option['notification_limit'] - $past;

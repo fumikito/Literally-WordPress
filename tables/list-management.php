@@ -155,14 +155,8 @@ EOS;
 		}else{
 			$target = '';
 		}
-		switch($target){
-			case LWP_Payment_Status::CANCEL:
-			case LWP_Payment_Status::DISABLED:
-			case LWP_Payment_Status::REFUND:
-			case LWP_Payment_Status::START:
-			case LWP_Payment_Status::SUCCESS:
-				return $filter = $target;
-				break;
+		if(false !== array_search($target, LWP_Payment_Status::get_all_status())){
+			$filter = $target;
 		}
 		return $filter;
 	}

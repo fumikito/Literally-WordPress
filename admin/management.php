@@ -11,43 +11,29 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 		$user = get_userdata($transaction->user_id);
 ?>
 <h3><?php $this->e('Transaction Detail'); ?></h3>
-<table class="form-table">
+<table class="form-table detail-table">
+	<thead>
+		<tr>
+			<th scope="row"><?php $this->e('Heading');?></th>
+			<th scope="row"><?php $this->e('Value');?></th>
+			<th scope="row"><?php $this->e('Action');?></th>
+		</tr>
+	</thead>
 	<tbody>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Item Name'); ?></th>
-			<td><a href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}"); ?>"><?php echo $book->post_title; ?></a></td>
+			<td><?php echo $book->post_title; ?></td>
+			<td><a class="button" href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}"); ?>"><?php $this->e('Edit'); ?></a></td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('User Name'); ?></th>
-			<td>
-				<?php if($transaction->user_id): ?>
-					<input type="hidden" name="user_id" value="<?php echo $transaction->user_id;?>" />
-					<?php if($user): ?>
-						<a href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>">
-							<?php echo $user->display_name;  ?>
-						</a>
-					<?php else: ?>
-						<?php $this->e('Deleted User'); ?>
-					<?php endif; ?>
-				<?php else: /* TODO: この例外処理はいらない？*/?>
-					<select name="user_id" id="user_id">
-						<option value="0" selected="selected" disabled="true"><?php $this->e("Select below");?></option>
-						<?php
-							$sql = <<<EOS
-								SELECT * FROM {$wpdb->users} as u
-								LEFT JOIN {$wpdb->usermeta} as m
-								ON u.ID = m.user_id AND m.meta_key = '{$wpdb->prefix}user_level'
-								WHERE m.meta_value = 0 
-EOS;
-							$users = $wpdb->get_results($sql);
-							foreach($users as $u):
-						?>
-							<option value="<?php echo $u->ID; ?>"><?php echo $u->display_name; ?></option>
-						<?php endforeach; ?>
-					</select>
-					<p class="error"><?php $this->e('This transaction doesn\'t relate to any account.');?><small>（<?php echo $this->help("account", $this->_("More &gt;")); ?>）</small></p>
-				<?php endif; ?>
-			</td>
+			<?php if($user): ?>
+				<td><?php echo $user->display_name;  ?></td>
+				<td><a class="button" href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>"><?php $this->e('Profile'); ?></a></td>
+			<?php else: ?>
+				<td><?php $this->e('Deleted User'); ?></td>
+				<td>---</td>
+			<?php endif; ?>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Updated'); ?></th>
@@ -55,6 +41,7 @@ EOS;
 				<?php echo mysql2date(get_option('date_format'), $transaction->updated); ?>
 				<small>（<?php $this->e('Registered'); ?>: <?php echo mysql2date(get_option('date_format'), $transaction->registered); ?>）</small>
 			</td>
+			<td>---</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e("Purchased Price"); ?></th>
@@ -62,17 +49,45 @@ EOS;
 				<strong><?php echo number_format($transaction->price)." ({$this->option['currency_code']})"; ?></strong>
 				<p class="description"><?php $this->e('Original Price'); ?>: <?php echo number_format( lwp_original_price($book->ID))." ({$this->option['currency_code']})";?></p>
 			</td>
+			<td>---</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Purchase Method'); ?></th>
 			<td>
 				<?php $this->e($transaction->method); ?>
 			</td>
+			<td>---</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e("Status"); ?></th>
 			<td>
 				<?php $this->e($transaction->status);?>
+			</td>
+			<td>
+				<form method="post">
+					<?php wp_nonce_field('lwp_update_transaction'); ?>
+					<input type="hidden" name="transaction_id" value="<?php echo $transaction->ID; ?>" />
+					<p>
+					<select name="status">
+						<?php foreach(LWP_Payment_Status::get_all_status() as $s): ?>
+						<?php if($s == LWP_Payment_Status::REFUND): ?>
+							<?php if($transaction->status == LWP_Payment_Status::SUCCESS): ?>
+								<?php $disabled = ($transaction->method == LWP_Payment_Methods::PAYPAL && 60 < ceil((time() - strtotime($transaction->updated)) / 60 / 60 / 24 )) ? ' disabled="disabled"' : '';  ?>
+								<option value="<?php echo $s; ?>"<?php echo $disabled; ?>><?php $this->e($s); ?></option>
+							<?php elseif($transaction->status == LWP_Payment_Status::REFUND): ?>
+								<option value="<?php echo $s; ?>" checked="checked"><?php $this->e($s);?></option>
+							<?php endif; ?>
+						<?php else: ?>
+							<option value="<?php echo $s; ?>"<?php if($s == $transaction->status) echo ' selected="selected"'; ?>><?php $this->e($s);?></option>
+						<?php endif; ?>
+						<?php endforeach; ?>
+					</select>
+					<?php submit_button($this->_('Update Status'), 'primary', 'update_transaction', false); ?>
+					</p>
+					<?php if($transaction->method == LWP_Payment_Methods::PAYPAL): ?>
+					<p class="description"><?php $this->e('<strong>Note:</strong> PayPal accepts refund by 60 days.'); ?></p>
+					<?php endif; ?>
+				</form>
 			</td>
 		</tr>
 		<tr>
@@ -82,18 +97,32 @@ EOS;
 					<?php if($transaction->expires == '0000-00-00 00:00:00'): ?>
 						<?php $this->e('No Limit.'); ?>
 					<?php else:?>
-						<?php echo mysql2date(get_option('date_format'), $transaction->expires); ?>
-						<stong><?php echo (strtotime($transaction->expires) < time()) ? $this->_('Expired'): $this->_('Valid');?></strong>
+						<strong><?php echo (strtotime($transaction->expires) < time()) ? $this->_('Expired'): $this->_('Valid');?></strong>
+						<span class="description">(<?php echo mysql2date(get_option('date_format'), $transaction->expires); ?>)</span>
 					<?php endif; ?>
 				<?php else: ?>
 					<?php $this->e('Not valid.'); ?>
+				<?php endif; ?>
+			</td>
+			<td>
+				<?php if($transaction->status == LWP_Payment_Status::SUCCESS || $transaction->expires != '0000-00-00 00:00:00'): ?>
+				<form method="post">
+					<?php wp_nonce_field('lwp_update_transaction'); ?>
+					<input type="hidden" name="transaction_id" value="<?php echo $transaction->ID; ?>" />
+					<p>
+						<input class="date-picker" type="text" name="expires" value="<?php echo $transaction->expires; ?>" />
+						<?php submit_button($this->_('Update Expiration'), 'primary', 'update_expires', false); ?>
+					</p>
+				</form>
+				<?php else: ?>
+				---
 				<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>
 </table>
 <p>
-	<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>">&laquo;<?php $this->e('Return to transaction list');?></a>
+	<a class="button" href="<?php echo admin_url('admin.php?page=lwp-management'); ?>">&laquo;<?php $this->e('Return to transaction list');?></a>
 </p>
  
  	<?php endif; ?>
