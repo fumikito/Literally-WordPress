@@ -67,6 +67,7 @@ class PayPal_Statics {
 		if($ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING"){	
 			return $resArray;
 		}else{
+			self::log(var_export($resArray, true));
 			return false;
 		}
 	}
@@ -75,7 +76,7 @@ class PayPal_Statics {
 	 * トランザクションを完了させる
 	 * 
 	 * @param array $transaction_info get_transaction_infoで取得した配列
-	 * @return boolean
+	 * @return boolean|string transaction idを返す
 	 */
 	public static function do_transaction($transaction_info)
 	{
@@ -84,7 +85,7 @@ class PayPal_Statics {
 		$resArray = self::hash_call("DoExpressCheckoutPayment",$nvpstr);
 		$ack = strtoupper($resArray["ACK"]);
 		if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
-			return true;
+			return $resArray['TRANSACTIONID'];
 		}else{
 			self::log(var_export($resArray, true));
 			return false;
@@ -475,8 +476,9 @@ class PayPal_Statics {
 	 */
 	private static function log($string){
 		//ファイルの存在を確認
-		$dir = dirname(__FILE__);
-		$file = $dir.DIRECTORY_SEPARATOR."log.txt";
+		$upload_dir = wp_upload_dir();
+		$dir = $upload_dir['basedir'];
+		$file = $dir.DIRECTORY_SEPARATOR."lwp-log.txt";
 		if(file_exists($file)){
 			if(!is_writable($file)){
 				return false;
@@ -484,6 +486,7 @@ class PayPal_Statics {
 		}else{
 			if(is_writable($dir)){
 				file_put_contents($file, '');
+				chmod($file, '0600');
 			}else{
 				return false;
 			}

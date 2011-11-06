@@ -1542,21 +1542,22 @@ EOS;
 					break;
 				case "confirm": //コンファームかwp_die
 					if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
-						if(PayPal_Statics::do_transaction($_POST)){
+						if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
 							//データを更新
-							$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $_POST["TOKEN"])); 
+							$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_id = %s", $_POST["TOKEN"])); 
 							$tran_id = $wpdb->update(
 								$this->transaction,
 								array(
 									"status" => LWP_Payment_Status::SUCCESS,
 									"transaction_key" => $_POST['INVNUM'],
+									"transaction_id" => $transaction_id,
 									"payer_mail" => $_POST["EMAIL"],
 									'updated' => gmdate("Y-m-d H:i:s")
 								),
 								array(
-									"transaction_key" => $_POST["TOKEN"]
+									"transaction_id" => $_POST["TOKEN"]
 								),
-								array("%s", "%s", "%s"),
+								array("%s", "%s", "%s", "%s", "%s"),
 								array("%s")
 							);
 							//サンキューページを表示する
@@ -1571,7 +1572,7 @@ EOS;
 						if(!$info){
 							$message = $this->_("Failed to connect with PayPal.");
 						}
-						$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE transaction_key = %s", $_REQUEST['token']));
+						$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE transaction_id = %s", $_REQUEST['token']));
 						if(!$transaction){
 							$message = $this->_("Failed to get the transactional information.");
 						}
@@ -1643,7 +1644,8 @@ EOS;
 		//トランザクションを作る
 		$price = lwp_price($post_id);
 		//トークンを取得
-		$token = PayPal_Statics::get_transaction_token($price, sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time()), trailingslashit(get_bloginfo('url'))."/?lwp=confirm", trailingslashit(get_bloginfo('url'))."/?lwp=cancel");
+		$invnum = sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time());
+		$token = PayPal_Statics::get_transaction_token($price, $invnum, untrailingslashit(get_bloginfo('url'))."/?lwp=confirm", untrailingslashit(get_bloginfo('url'))."/?lwp=cancel");
 		if($token){
 			//トークンが帰ってきたら、データベースに保存
 			$wpdb->insert(
@@ -1654,11 +1656,12 @@ EOS;
 					"price" => $price,
 					"status" => "START",
 					"method" => "PAYPAL",
-					"transaction_key" => $token,
+					"transaction_key" => $invnum,
+					"transaction_id" => $token,
 					"registered" => gmdate('Y-m-d H:i:s'),
 					"updated" => gmdate('Y-m-d H:i:s')
 				),
-				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
+				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
 			);
 			//PayPalにリダイレクト
 			PayPal_Statics::redirect($token);
