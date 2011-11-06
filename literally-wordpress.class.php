@@ -1415,22 +1415,45 @@ EOS;
 	 */
 	public function update_transaction()
 	{
-		//Check nonce
+		//Check nonce If this is a 
 		if(isset($_REQUEST["_wpnonce"], $_REQUEST['transaction_id']) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_transaction")){
 			//Update Data
 			global $wpdb;
 			$req = false;
 			if(isset($_REQUEST['status']) && false !== array_search($_REQUEST['status'], LWP_Payment_Status::get_all_status())){
-				$req = $wpdb->update(
-					$this->transaction,
-					array(
-						'status' => $_POST['status'],
-						'updated' => gmdate('Y-m-d H:i:s')
-					),
-					array('ID' => $_POST['transaction_id']),
-					array('%s', '%s'),
-					array('%d')
-				);
+				//If to make it refunded on paypal transaction, 
+				//change must be done in 60 days.
+				$flg = true;
+				$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_POST['transaction_id']));
+				if($_POST['status'] == LWP_Payment_Status::REFUND && $transaction->method == LWP_Payment_Methods::PAYPAL && $transaction->status == LWP_Payment_Status::SUCCESS){
+					//Check if refundable
+					$diff = floor((int)(strtotime(gmdate('Y-m-d H:i:s')) - strtotime($transaction->updated)) / 60 / 60 / 24);
+					if($diff > 60){ //Unrefundable
+						$this->message[] = $this->_("You can't refund via PayPal because 60 days have past since the transaction occurred.");
+						$this->error = true;
+						$flg = false;
+					}else{ //Refundable
+						if(PayPal_Statics::do_refund($transaction->transaction_id)){
+							$this->message[] = $this->_("Refund succeeded.");
+						}else{
+							$this->message[] = $this->_("Sorry, but PayPal denied.");
+							$this->error = true;
+							$flg = false;
+						}
+					}
+				}
+				if($flg){
+					$req = $wpdb->update(
+						$this->transaction,
+						array(
+							'status' => $_POST['status'],
+							'updated' => gmdate('Y-m-d H:i:s')
+						),
+						array('ID' => $_POST['transaction_id']),
+						array('%s', '%s'),
+						array('%d')
+					);
+				}
 			}
 			if(isset($_REQUEST['expires']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST['expires'])){
 				$req = $wpdb->update(

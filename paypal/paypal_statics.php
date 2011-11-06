@@ -93,6 +93,26 @@ class PayPal_Statics {
 	}
 	
 	/**
+	 * Try refunds
+	 * @param string $transacion_id
+	 * @param int $amount
+	 * @return string|false
+	 */
+	public static function do_refund($transacion_id, $amount = 0){
+		// TODO: Partial Refund
+		$type = 'Full';
+		$nvpStr = "&TRANSACTIONID=".(string)$transacion_id."&REFUNDTYPE={$type}";
+		$resArray = self::hash_call('RefundTransaction', $nvpStr);
+		$ack = strtoupper($resArray["ACK"]);
+		if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
+			return $resArray['REFUNDTRANSACTIONID'];
+		}else{
+			self::log(var_export($resArray, true));
+			return false;
+		}
+	}
+	
+	/**
 	 * API認証を利用してPaypalに対してAPIコールを行う
 	 * 
 	 * @since 0.8
