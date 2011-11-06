@@ -114,7 +114,11 @@ class Literally_WordPress
 	 */
 	public $message = array();
 	
-	
+	/**
+	 * Notification Utility
+	 * @var LWP_Notifier
+	 */
+	public $notifier = null;
 	
 		
 	//--------------------------------------------
@@ -153,14 +157,6 @@ class Literally_WordPress
 			"signature" => "",
         	"token" => "",
 			'transfer' => false,
-			"thankyou" => "",
-			"account" => $this->_("Hametu Bank
-Aoyama Branch(300)
-#000000
-Hametuha inc.
-"),
-			"transfer_footer" => "",
-			"notification" => "",
 			"notification_frequency" => 0,
 			"notification_limit" => 30,
         	"dir" => dirname(__FILE__).DS."contents",
@@ -192,14 +188,14 @@ Hametuha inc.
 		}
 		//投稿タイプの追加
 		add_action("init", array($this, "custom_post"));
-		
 		//ウィジェットの登録
 		add_action('widgets_init', array($this, 'widgets'));
-		
 		//ショートコードの追加
 		add_shortcode("lwp", array($this, "shortcode_capability"));
 		//いますぐ購入ボタンのショートコード
 		add_shortcode('buynow', array($this, 'shortcode_buynow'));
+		//Initialize Notification Utility
+		$this->notifier = new LWP_Notifier($this->option['transfer'], $this->option['notification_frequency'], $this->option['notification_limit']);
 	}
 	
 	/**
