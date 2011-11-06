@@ -624,6 +624,33 @@ function lwp_buy_now($post = null, $btn_src = false)
 }
 
 /**
+ * Return if current settings allows transfer or not
+ * @global Literally_WordPress $lwp
+ * @return boolean
+ */
+function lwp_can_transfer(){
+	global $lwp;
+	return (boolean)$lwp->option['transfer'];
+}
+
+/**
+ * Returns transfer transaction link
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return string
+ */
+function lwp_transafer_link($post = null){
+	global $lwp;
+	if(is_null($post)){
+		$post = get_post($post);
+	}else{
+		global $post;
+	}
+	return lwp_endpoint('transfer&lwp-id='.$post->ID);
+}
+
+/**
  * キャンペーンの終了日時をタグにして返す
  * @global object $post
  * @global Literally_WordPress $lwp

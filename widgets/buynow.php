@@ -78,6 +78,11 @@ EOS;
 					echo lwp_buy_now($post, $src);
 				}
 			?>
+			<?php if(lwp_can_transfer()): ?>
+			<p class="lwp-transfer">
+				<a href="<?php echo lwp_transafer_link($post); ?>"><?php $lwp->e("Pay from Bank Account"); ?></a>
+			</p>
+			<?php endif; ?>
 		</div>
 		<?php
 		echo <<<EOS
