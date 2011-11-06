@@ -1521,7 +1521,7 @@ EOS;
 								array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
 							);
 							//サンキューページを表示する
-							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$book_id}");
+							header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
 							exit;
 						}else{
 							//コンテンツが購入可能じゃない
@@ -1584,7 +1584,7 @@ EOS;
 								array("%s")
 							);
 							//サンキューページを表示する
-							header("Location: ".get_bloginfo("url")."?lwp=success&lwp-id={$post_id}"); 
+							header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
 						}else{
 							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("backlink" => true));
 						}
@@ -1632,11 +1632,11 @@ EOS;
 								"status" => LWP_Payment_Status::CANCEL,
 								"updated" => gmdate("Y-m-d H:i:s")
 							),
-							array("transaction_key" => $token),
+							array("transaction_id" => $token),
 							array("%s", "%s"),
 							array("%s")
 						);
-						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_key = %s", $token));
+						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_id = %s", $token));
 					}
 					$this->show_form("cancel", array("post_id" => $post_id));
 					break;
@@ -1668,7 +1668,7 @@ EOS;
 		$price = lwp_price($post_id);
 		//トークンを取得
 		$invnum = sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time());
-		$token = PayPal_Statics::get_transaction_token($price, $invnum, untrailingslashit(get_bloginfo('url'))."/?lwp=confirm", untrailingslashit(get_bloginfo('url'))."/?lwp=cancel");
+		$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'));
 		if($token){
 			//トークンが帰ってきたら、データベースに保存
 			$wpdb->insert(

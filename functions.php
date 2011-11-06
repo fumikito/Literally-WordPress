@@ -246,7 +246,7 @@ function lwp_get_files($accessibility = "all", $post = null)
  */
 function lwp_file_link($file_id)
 {
-	return get_bloginfo('url')."?lwp=file&lwp_file={$file_id}";
+	return lwp_endpoint('file')."&lwp_file={$file_id}";
 }
 
 /**
@@ -620,7 +620,7 @@ function lwp_buy_now($post = null, $btn_src = false)
 		}
 		$tag = "<img src=\"".htmlspecialchars($btn_src, ENT_QUOTES, 'utf-8')."\" alt=\"".$lwp->_('Buy Now')."\" />";
 	}
-	return "<a class=\"lwp-buynow\" href=\"".get_bloginfo('url')."?lwp=buy&lwp-id={$post_id}\">{$tag}</a>";
+	return "<a class=\"lwp-buynow\" href=\"".lwp_endpoint('buy')."&lwp-id={$post_id}\">{$tag}</a>";
 }
 
 /**
@@ -724,7 +724,7 @@ function lwp_show_form($post = null, $btn_src = null){
 		$button = $btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post);
 		$button = "<p class=\"lwp-button\">{$button}</p>";
 	}else{
-		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(get_bloginfo('url')."?lwp=buy&lwp-id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
+		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(lwp_endpoint('buy')."&lwp-id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
 	}
 	return <<<EOS
 <!-- Literally WordPress {$lwp->version} -->
@@ -761,6 +761,19 @@ function lwp_is_success()
 {
 	global $lwp;
 	return (isset($_GET["lwp_return"]) && $lwp->on_transaction && $lwp->transaction_status == "SUCCESS");
+}
+
+/**
+ * Return URL to LWP's endpoint considering SSL
+ * @param string $action Defautl 'buy'
+ * @return string 
+ */
+function lwp_endpoint($action = 'buy'){
+	$url = get_bloginfo('url');
+	if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
+		$url = str_replace('http:', 'https:', $url);
+	}
+	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?lwp=".(string)$action, (string)$action);
 }
 
 /**
