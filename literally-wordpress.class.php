@@ -323,7 +323,7 @@ class Literally_WordPress
 		//電子書籍のアップデート
 		add_action("edit_post", array($this, "post_update"));
 		//メニューの追加
-		add_action("admin_menu", array($this, "add_menu"));
+		add_action("admin_menu", array($this, "add_menu"), 1);
 		//メッセージの出力
 		add_action("admin_notice", array($this, "admin_notice"));
 		//メタボックスの追加
