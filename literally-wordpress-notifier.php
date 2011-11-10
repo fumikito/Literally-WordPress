@@ -31,13 +31,16 @@ class LWP_Notifier{
 	 */
 	private $post_type = "lwp_notification";
 	
+	/**
+	 * @var array
+	 */
 	private $parts = array(
-		'footer',
-		'bank',
-		'thanks',
-		'validated',
-		'reminder',
-		'expired'
+		'footer' => array('site_url', 'site_name'),
+		'bank' => array(),
+		'thanks' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'expires'),
+		'confirmed' => array('user_name', 'price', 'item_name', 'item_url', 'ordered', 'confirmed'),
+		'reminder' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'ordered', 'expires', 'past'),
+		'expired' => array('user_name', 'item_name', 'item_url', 'expired', 'ordered', 'past')
 	);
 	
 	/**
@@ -48,13 +51,14 @@ class LWP_Notifier{
 	 */
 	public function __construct($valid, $frequency_per_days, $limit_days) {
 		$this->valid = (boolean)$valid;
-		$this->frequency = (int)$frequency;
-		$this->limit = (int)$limit;
+		$this->frequency = (int)$frequency_per_days;
+		$this->limit = (int)$limit_days;
 		$this->admin_mail = get_option("admin_email");
 		if($this->valid){
 			//Create Post Type for Mail
 			add_action('init', array($this, 'register_post_type'));
 			add_action('admin_init', array($this, 'admin_init'));
+			add_action('admin_head', array($this, 'admin_head'));
 			add_filter('user_can_richedit', array($this, 'rich_edit'));
 		}
 	}
@@ -109,26 +113,112 @@ class LWP_Notifier{
 	public function admin_init(){
 		if(isset($_GET['page']) && false !== strpos($_GET['page'], 'lwp')){
 			global $wpdb, $lwp, $user_ID;
-			foreach($this->parts as $slug){
+			foreach($this->parts as $slug => $vars){
 				if(!$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, "lwp-".$slug))){
 					switch($slug){
-						case 'bank': $name = $this->_('Bank Account'); break;
-						case 'thanks': $name = $this->_('Thank you message'); break;
-						case 'confirmed': $name = $this->_('Comfirmed'); break;
-						case 'reminder': $name = $this->_('Reminder'); break;
-						case 'expired': $name = $this->_('Expired'); break;
-						default: $name = $this->_('Footer'); break;
+						case 'bank':
+							$name = $this->_('Bank Account');
+							$default = $this->_('Bank Name: Hametu Bank
+Branch: Aoyama (023)
+Account: Hametu Tarou
+No: 0000000
+');
+							break;
+						case 'thanks':
+							$name = $this->_('Thank you message');
+							$default = $this->_('Dear %user_name%,
+
+Thank you for ordering %item_name%.
+Please transfer deposit %price% to account below.
+
+%bank%
+
+This transaction will be expires at %expires%.
+
+See Item detail at:
+%item_url%
+');
+							break;
+						case 'confirmed':
+							$name = $this->_('Comfirmed');
+							$default = $this->_('
+Dear %user_name%,
+
+
+You ordered %item_name% at %ordered% and
+we confirmed your deposit. 
+
+Now you can access your item at:
+%item_url%
+');
+							break;
+						case 'reminder':
+							$name = $this->_('Reminder');
+							$default = $this->_('Dear %user_name%,
+
+
+You orderd %item_name% at %ordered%,
+but we have not confirmed the transfered deposit.
+
+Please transfer deposit to our account below:
+
+%bank%
+
+This transaction will be expires at %expires%.
+
+See Item detail at:
+%item_url%
+');
+							break;
+						case 'expired':
+							$name = $this->_('Expired');
+							$default = $this->_('Dear %user_name%,
+
+Your order has expired because %past% days has past.
+
+Item: %item_name%
+Orderd: %ordered%
+
+You can also get in touch this item again:
+%item_url%
+');
+							break;
+						default:
+							$name = $this->_('Footer');
+							$default = $this->_('
+								
+
+------------------------
+%site_name%
+%site_url%
+');
+							break;
 					}
 					wp_insert_post(array(
 						'post_title' => $name,
 						'post_name' => "lwp-".$slug,
 						'post_author' => $user_ID,
 						'post_type' => $this->post_type,
-						'post_status' => 'publish'
+						'post_status' => 'publish',
+						'post_content' => $default
 					));
 				}
 			}
 		}
+	}
+	
+	public function admin_head(){
+		?>
+<style type="text/css" id="lwp-notification-style">
+	dl.description dt{
+		font-weight: bold;
+		font-size:1.2em;
+	}
+	dl.description dd{
+		margin-bottom:1em;
+	}
+</style>
+		<?php
 	}
 	
 	/**
@@ -146,23 +236,18 @@ class LWP_Notifier{
 	public function meta_box($post, $metabox){
 		switch($post->post_name){
 			case 'lwp-footer':
-				$vars = array('url', 'site_name');
 				$desc = $this->_('This text will be used on footer of every mail to you user.');
 				break;
 			case 'lwp-bank':
-				$vars = array();
 				$desc = $this->_('This won\'t be displayed individually, but is used for other notifications.');
 				break;
 			case 'lwp-thanks':
-				$vars = array();
 				$desc = $this->_('This messages is displayed on thank-you page on your site and thank-you mail sent on success of the transaction.');
 				break;
 			case 'lwp-confirmed':
-				$vars = array();
 				$desc = $this->_('This messages will be sent via email when you change transfer status to success on admin panel.');
 				break;
 			case 'lwp-reminder':
-				$vars = array('name', 'ordered', 'expires', 'price', 'bank');
 				if($this->frequency > 0){
 					$desc = sprintf($this->_('This message is sent via email every %s days to users who do not transfer the deposit.'), $this->frequency);
 				}else{
@@ -170,16 +255,21 @@ class LWP_Notifier{
 				}
 				break;
 			case 'lwp-expired':
-				$vars = array('expired', 'name', 'orderd', 'past');
 				$desc = $this->_('This message will be sent when your customer miss the transaction time limit.');
 				break;
 		}
-		$var = implode(', ', array_map(create_function('$row', 'return "<strong>%".$row."%</strong>";'), $vars));
+		$var = implode(', ', array_map(create_function('$row', 'return "<strong>%".$row."%</strong>";'), $this->parts[str_replace('lwp-', '', $post->post_name)]));
 		?>
-		<p><?php printf($this->_('You can use these variables: %s'), $var); ?></p>
-		<p class="description">
-			<?php echo $desc; ?>
-		</p>
+		<dl class="description">
+			<dt><?php $this->e('About this notification'); ?></dt>
+			<dd><?php echo $desc; ?></dd>
+			<dt><?php $this->e('Mail Subject'); ?></dt>
+			<dd><?php $this->e('Title will be ussed as mail subject. You can change it as you like.'); ?></dd>
+			<dt><?php $this->e('Variants'); ?></dt>
+			<dd><?php printf($this->_('You can use these variables: %s'), $var); ?></dd>
+			<dt><?php $this->e('Caution'); ?></dt>
+			<dd><?php $this->e('Notification mail will be sent as plain text. <strong>DO NOT USE HTML</strong>.'); ?></dd>
+		</dl>
 		<?php
 	}
 	
@@ -200,18 +290,91 @@ class LWP_Notifier{
 		
 	}
 	
-	private function get_body($type = 'footer', $args = array()){
-		foreach((array)$args as $key => $val){
-			
+	/**
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param object $transaction
+	 * @param string $type
+	 * @return string
+	 */
+	private function get_body($transaction, $type = 'footer'){
+		global $lwp, $wpdb;
+		$body = $wpdb->get_var($wpdb->prepare("SELECT post_content FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, "lwp-".$type));
+		foreach($this->parts[$type] as $key){
+			switch ($key) {
+				case 'user_name':
+					$replaced = get_userdata($transaction->user_id)->display_name;
+					break;
+				case 'site_url':
+					$replaced = get_bloginfo('url');
+					break;
+				case 'site_name':
+					$replaced = get_bloginfo('name');
+					break;
+				case 'price':
+					$replaced = number_format($transaction->price);
+					break;
+				case 'item_name':
+					$replaced = $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
+					break;
+				case 'item_url':
+					$replaced = get_permalink($transaction->book_id);
+					break;
+				case 'ordered':
+					$replaced = mysql2date(get_option('date_format'), $transaction->registered, true);
+					break;
+				case 'expires':
+					$time = date('Y-m-d H:i:s', $this->limit * 60 * 60 * 24 + strtotime($transaction->registered));
+					$replaced = mysql2date(get_option('date_format'), $time, true);
+					break;
+				case 'past':
+					$replaced = ceil((strtotime(gmdate('Y-m-d H:i:s')) - strtotime($transaction->registered)) / 60 / 60 / 24);
+					break;
+				case 'bank':
+					$replaced = $this->get_body($transaction, 'bank');
+				default:
+					break;
+			}
+			$body = str_replace("%{$key}%", $replaced, $body);
 		}
-	}
-	
-	public function update($type, $content){
-		
+		return $body;
 	}
 	
 	private function get_mail($type){
 		
+	}
+	
+	/**
+	 * Send notification
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param object $transaction
+	 * @param string $type 
+	 * @return boolean
+	 */
+	public function notify($transaction, $type = 'confirmed'){
+		global $lwp, $wpdb;
+		$subject = get_bloginfo('name').' :: '.$wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, "lwp-".$type));
+		$to = $wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE ID = %d", $transaction->user_id));
+		$from = get_bloginfo('name')." <{$this->admin_mail}>";
+		$body = $this->get_body($transaction, $type).$this->get_body($transaction, 'footer');
+		$flg = apply_filters('lwp_notify', true, $type, compact('subject', 'to', 'from', 'body'));
+		if($flg){
+			return (boolean)wp_mail($to, $subject, $body, "From: {$from}\r\n\\");
+		}else{
+			return true;
+		}
+	}
+	
+	/**
+	 * Returns Thank you message
+	 * @param object $transaction
+	 * @return string
+	 */
+	public function get_thankyou($transaction){
+		$body = (string) $this->get_body($transaction, 'thanks');
+		$body = apply_filters('lwp_show_thank_you', $body, $transaction);
+		return wpautop($body);
 	}
 	
 	/**

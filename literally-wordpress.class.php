@@ -1542,9 +1542,14 @@ EOS;
 									),
 									array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
 								);
+								//Send Notification
+								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $wpdb->insert_id));
+								$notification_status = $this->notifier->notify($transaction, 'thanks');
+								//Show Form
 								$this->show_form('transfer', array(
 									'post_id' => $book_id,
-									'transaction_id' => $wpdb->insert_id
+									'transaction' => $transaction,
+									'notification' => $notification_status
 								));
 							}else{
 								$message = $this->_("Sorry, we can't accept this payment method.");
