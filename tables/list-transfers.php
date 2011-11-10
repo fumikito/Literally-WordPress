@@ -36,8 +36,8 @@ class LWP_List_Transfer extends WP_List_Table{
 			if(isset($_GET['transfer']) && is_array($_GET['transfer'])){
 				$transfes = $_GET['transfer'];
 				switch($this->current_action()){
-					case LWP_Payment_Status::CANCEL:
 					case LWP_Payment_Status::SUCCESS:
+					case LWP_Payment_Status::CANCEL:
 					case LWP_Payment_Status::START:
 						//Update Status
 						foreach($transfes as $transaction_id){
@@ -54,6 +54,9 @@ class LWP_List_Transfer extends WP_List_Table{
 								array('%s', '%s'),
 								array('%d', "%s")
 							);
+							if($this->current_action() == LWP_Payment_Status::SUCCESS){
+								$lwp->notifier->notify($wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)), 'confirmed');
+							}
 						}
 						$lwp->message[] = $lwp->_('Status updated.');
 						break;
@@ -198,7 +201,6 @@ EOS;
 			case 'notice';
 				switch($item->status){
 					case LWP_Payment_Status::CANCEL:
-					case LWP_Payment_Status::DISABLED:
 					case LWP_Payment_Status::REFUND:
 					case LWP_Payment_Status::SUCCESS:
 						return '--';
@@ -253,7 +255,6 @@ EOS;
 		}
 		switch($target){
 			case LWP_Payment_Status::CANCEL:
-			case LWP_Payment_Status::DISABLED:
 			case LWP_Payment_Status::REFUND:
 			case LWP_Payment_Status::START:
 			case LWP_Payment_Status::SUCCESS:
