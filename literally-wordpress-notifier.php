@@ -37,10 +37,10 @@ class LWP_Notifier{
 	private $parts = array(
 		'footer' => array('site_url', 'site_name'),
 		'bank' => array(),
-		'thanks' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'expires'),
+		'thanks' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'expires', 'code'),
 		'confirmed' => array('user_name', 'price', 'item_name', 'item_url', 'ordered', 'confirmed'),
-		'reminder' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'ordered', 'expires', 'past'),
-		'expired' => array('user_name', 'item_name', 'item_url', 'expired', 'ordered', 'past')
+		'reminder' => array('user_name', 'price', 'item_name', 'item_url', 'bank', 'ordered', 'expires', 'past', 'code'),
+		'expired' => array('user_name', 'item_name', 'item_url', 'expired', 'ordered', 'past', 'code')
 	);
 	
 	/**
@@ -137,6 +137,9 @@ Please transfer deposit %price% to account below.
 
 %bank%
 
+Enter the transfer code below if required.
+%code% 
+
 This transaction will be expires at %expires%.
 
 See Item detail at:
@@ -167,6 +170,9 @@ but we have not confirmed the transfered deposit.
 Please transfer deposit to our account below:
 
 %bank%
+
+Enter the transfer code below if required.
+%code% 
 
 This transaction will be expires at %expires%.
 
@@ -364,6 +370,9 @@ You can also get in touch this item again:
 					break;
 				case 'past':
 					$replaced = ceil((strtotime(gmdate('Y-m-d H:i:s')) - strtotime($transaction->registered)) / 60 / 60 / 24);
+					break;
+				case 'code':
+					$replaced = $transaction->transaction_key;
 					break;
 				case 'bank':
 					$replaced = $this->get_body($transaction, 'bank');
