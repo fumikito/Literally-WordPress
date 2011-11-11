@@ -672,7 +672,7 @@ function lwp_campaign_timer($post = null, $prefix = null){
 			return false;
 		}
 		//残り時間
-		$last = $end - time();
+		$last = $end - strtotime(date_i18n('Y-m-d H:i:s'));
 		$days = floor($last / (60 * 60 * 24));
 		$last -= $days * 60 * 60 * 24;
 		$hours = floor($last / (60 * 60));
