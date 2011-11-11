@@ -4,11 +4,11 @@ jQuery(document).ready(function($){
 		var strToTimestamp = function(object){
 			var time = 0;
 			if($(object).find(".day").length > 0){
-				time += parseInt($(object).find('.day').text()) * 60 * 60 * 24;
+				time += parseInt($(object).find('.day').text(), 10) * 60 * 60 * 24;
 			}
-			time += parseInt($(object).find('.hour').text()) * 60 * 60;
-			time += parseInt($(object).find('.minutes').text()) * 60;
-			time += parseInt($(object).find('.seconds').text());
+			time += parseInt($(object).find('.hour').text(), 10) * 60 * 60;
+			time += parseInt($(object).find('.minutes').text(), 10) * 60;
+			time += parseInt($(object).find('.seconds').text(), 10);
 			return time;
 		};
 		
