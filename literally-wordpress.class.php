@@ -186,8 +186,10 @@ class Literally_WordPress
 				array_push($this->option['payable_post_types'], $this->option['custom_post_type']['slug']);
 			}
 		}
-		//投稿タイプの追加
+		//Add Custom Post Type
 		add_action("init", array($this, "custom_post"));
+		//Register Script Library
+		add_action('init', array($this, 'register_assets'));
 		//ウィジェットの登録
 		add_action('widgets_init', array($this, 'widgets'));
 		//ショートコードの追加
@@ -237,6 +239,16 @@ class Literally_WordPress
 			);
 			register_post_type($this->option['custom_post_type']['slug'], $args);
 		}
+	}
+	
+	/**
+	 * Register Assets for this plugin.
+	 */
+	public function register_assets(){
+		wp_register_script("jquery-ui-slider", $this->url."/assets/datepicker/jquery-ui-slider.js", array("jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"), "1.8.12", !is_admin());
+		wp_register_script("jquery-ui-datepicker", $this->url."/assets/datepicker/jquery-ui-datepicker.js",array("jquery-ui-core") ,"1.8.12", !is_admin());
+		wp_register_script("jquery-ui-timepicker", $this->url."/assets/datepicker/jquery-ui-timepicker.js",array("jquery-ui-datepicker", 'jquery-ui-slider') ,"0.9.7", !is_admin());
+		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
 	}
 	
 	/**
@@ -302,7 +314,7 @@ class Literally_WordPress
 		add_action("admin_init", array($this, "validate"));
 		//スタイルシート・JSの追加
 		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
-			add_action("admin_init", array($this, "assets"));
+			add_action("admin_init", array($this, "admin_assets"));
 		}
 		//オプション更新
 		if($this->is_admin("setting")){
@@ -518,50 +530,46 @@ EOS;
 	 * 
 	 * @return void
 	 */
-	public function assets()
-	{
+	public function admin_assets(){
 		wp_enqueue_style("lwp-admin", $this->url."/assets/style.css", array(), $this->version);
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
 		//In case management or campaign, load datepicker.
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
+			wp_enqueue_style('jquery-ui-datepicker');
 			wp_enqueue_script(
-				'jquery-datepicker',
-				$this->url."/assets/datepicker/jquery.ui.datepicker.js",
-				array("jquery", "jquery-ui-core"),
-				"1.8.9"
-			);
-			wp_enqueue_script(
-				'jquery-slider',
-				$this->url."/assets/datepicker/jquery.ui.slider.js",
-				array("jquery", "jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"),
-				"1.8.9"
-			);
-			wp_enqueue_script(
-				'jquery-datepicker-i18n',
-				$this->url."/assets/datepicker/i18n/jquery.ui.datepicker-ja.js",
-				array("jquery-ui-core", "jquery-datepicker"),
-				"1.8.13"
-			);
-			wp_enqueue_script(
-				'jquery-timepicker',
-				$this->url."/assets/datepicker/timepicker/timepicker.js",
-				array("jquery-datepicker"),
-				"1.8.9"
-			);
-			wp_enqueue_style(
-				'jquery-datepicker-style',
-				$this->url."/assets/datepicker/smoothness/jquery-ui.css",
-				array(),
-				"1.8.9"
-			);
-			wp_enqueue_script(
-				"jquery-datepicker-load",
+				"lwp-datepicker-load",
 				$this->url."/assets/js/campaign.js",
-				array("jquery-datepicker"),
+				array("jquery-ui-timepicker"),
 				$this->version
 			);
+			for($i = 1; $i <= 12; $i++){
+				if(!$monthNames) $monthNames = array();
+				if(!$monthNamesShort) $monthNamesShort = array();
+				$month = gmmktime(0, 0, 0, $i, 1, 2011);
+				$monthNames[] = date_i18n('F', $month);
+				$monthNamesShort[] = date_i18n('M', $month);
+			}
+			$dayNames = array(__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday'));
+			$dayNamesShort = array(__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat'));
+			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', array(
+				'closeText' => $this->_('Close'),
+				'prevText' => $this->_('Prev'),
+				'nextText' => $this->_('Next'),
+				'monthNames' => implode(',', $monthNames),
+				'monthNamesShort' => implode(',', $monthNamesShort),
+				'dayNames' => implode(',', $dayNames),
+				'dayNamesShort' => implode(',', $dayNamesShort),
+				'dayNamesMin' => implode(',', $dayNamesShort),
+				'weekHeader' => $this->_('Week'),
+				'timeOnlyTitle' => $this->_('Time'),
+				'timeText' => $this->_('Time'),
+				'hourText' => $this->_('Hour'),
+				'minuteText' => $this->_('Minute'),
+				'secondText' => $this->_('Second'),
+				'currentText' => $this->_('Now')
+			));
 		}
 	}
 	
@@ -1085,18 +1093,17 @@ EOS;
 	
 	//--------------------------------------------
 	//
-	// キャンペーン
+	// Campaign
 	//
 	//--------------------------------------------
 
 	
 	/**
-	* キャンペーンページの更新で行われるアクション
-	*
-	* @return void
-	*/
-	public function update_campaign()
-	{
+	 * CRUD interface for Campaign
+	 * @global wpdb $wpdb 
+	 * @return void
+	 */
+	public function update_campaign(){
 		global $wpdb;
 		//キャンペーンの追加
 		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_add_campaign")){
@@ -1193,7 +1200,7 @@ EOS;
 			}
 		}
 		//キャンペーンの削除
-		elseif(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_delete_campaign") && is_array($_REQUEST["campaigns"])){
+		elseif(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "bulk-campaigns") && is_array($_REQUEST["campaigns"])){
 			$sql = "DELETE FROM {$this->campaign} WHERE ID IN (".implode(",", $_REQUEST["campaigns"]).")";
 			if($wpdb->query($sql))
 				$this->message[] = $this->_("Campaign was deleted.");
@@ -1223,7 +1230,7 @@ EOS;
 			$post_id = $post;
 		}
 		if(!$time){
-			$time = gmdate('Y-m-d H:i:s');
+			$time = date_i18n('Y-m-d H:i:s');
 		}
 		$sql = "SELECT ID FROM {$this->campaign} WHERE book_id = %d AND start <= %s AND end >= %s";
 		$req = $wpdb->get_row($wpdb->prepare($sql, $post_id, $time, $time));

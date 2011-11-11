@@ -37,10 +37,10 @@ $post = wp_get_single_post($campaign->book_id);
 		</tr>
 		<tr class="form-field">
 			<th valign="top">
-				<label for="start"><?php $this->e('Start Date'); ?></label>
+				<label for="start_date"><?php $this->e('Start Date'); ?></label>
 			</th>
 			<td>
-				<input type="text" name="start" id="start" value="<?php echo $campaign->start; ?>" class="date-picker" />
+				<input type="text" name="start" id="start_date" value="<?php echo $campaign->start; ?>" class="date-picker" />
 				<p class="description">
 					<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 				</p>
@@ -48,132 +48,34 @@ $post = wp_get_single_post($campaign->book_id);
 		</tr>
 		<tr class="form-field">
 			<th valign="top">
-				<label for="end"><?php $this->e('End Date'); ?></label>
+				<label for="end_date"><?php $this->e('End Date'); ?></label>
 			</th>
 			<td>
-				<input type="text" name="end" id="end" value="<?php echo $campaign->end; ?>" class="date-picker" />
+				<input type="text" name="end" id="end_date" value="<?php echo $campaign->end; ?>" class="date-picker" />
 				<p class="description">
 					<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 				</p>
 			</td>
 		</tr>
 	</table>
-	<p class="submit">
-		<input type="submit" value="更新" name="submit" class="primary-button" />
-	</p>
+	<?php	submit_button($this->_('Update')); ?>
 </form>
-<a href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">&laquo;<?php $this->e('Return to campaign page'); ?></a>
+<a class="button" href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">&laquo;<?php $this->e('Return to campaign page'); ?></a>
 <?php
 /*-------------------------------
  * 一覧表示
  */
-else:
-	//オフセットの有無を確認
-	$count = $wpdb->get_row("SELECT count(*) FROM {$this->campaign}")->{"count(*)"};
-	$pages = floor($count / 10);
-	$pages += ($count % 10 == 0) ? 0 : 1;
-	if(isset($_REQUEST["offset"]) && $_REQUEST["offset"] > 1 && $_REQUEST["offset"] <= $pages ){
-		$offset = (($_REQUEST["offset"] - 1) * 10).", ";
-		$curpage = $_REQUEST["offset"];
-	}else{
-		$offset = "";
-		$curpage = 1;
-	}
-	$sql = "SELECT * FROM {$this->campaign} ORDER BY `start` DESC LIMIT {$offset}10";
-	$campaigns = $wpdb->get_results($wpdb->prepare($sql));
-	$pagenator = "<small>".sprintf($this->_("Toatal %d:"), $count)." ";
-	for($i = 1; $i <= $pages; $i++){
-		if($i == $curpage){
-			$pagenator .= " {$i}";
-		}else{
-			$pagenator .= ' <a href="'.admin_url("admin.php?page=lwp-campaign&offset={$i}")."\">{$i}</a>";
-		}
-	}
-	$pagenator .= "</small>";
-?>
+else: ?>
 <div id="col-container">
 	<div id="col-right">
 		<div class="col-wrap">
 			<form method="post" action="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>">
-				<?php wp_nonce_field("lwp_delete_campaign"); ?>
-				<div class="tablenav">
-					<div class="alignleft actions">
-						<select name="action">
-							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
-							<option value="delete"><?php $this->e("Delete"); ?></option>
-						</select>
-						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="<?php $this->e("Apply"); ?>" />
-						<?php echo $pagenator; ?>
-						<br class="clear" />
-					</div>
-				</div>
-				<!-- .tablenav -->
-				<table class="widefat tag fixed" cellspacing="0">
-					<thead>
-						<tr>
-							<th class="manage-column check-column">
-								<input type="checkbox" />
-							</th>
-							<th class="manage-column"><?php $this->e("Item"); ?></th>
-							<th class="manage-column"><?php $this->e("Period"); ?></th>
-							<th class="manage-column"><?php $this->e("Price"); ?></th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th class="manage-column check-column">
-								<input type="checkbox" />
-							</th>
-							<th class="manage-column"><?php $this->e("Item"); ?></th>
-							<th class="manage-column"><?php $this->e("Period"); ?></th>
-							<th class="manage-column"><?php $this->e("Price"); ?></th>
-						</tr>
-					</tfoot>
-					<tbody>
-						<?php if($campaigns): $counter = 0; foreach($campaigns as $c): $counter++; $p = wp_get_single_post($c->book_id); ?>
-						<tr<?php if($counter % 2 == 1) echo ' class="alternate"'; ?>>
-							<th class="check-column">
-								<input type="checkbox" value="<?php echo $c->ID; ?>" name="campaigns[]" />
-							</th>
-							<td>
-								<p>
-									<strong>
-										<a href="<?php echo admin_url('admin.php?page=lwp-campaign&campaign='.$c->ID); ?>">
-											<?php echo $p->post_title; ?>
-											<small>[<?php echo mysql2date("Y/m/d", $p->post_date); ?>]</small>
-										</a>
-									</strong>
-								</p>
-							</td>
-							<td>
-								<p>
-									<?php echo mysql2date("Y/m/d", $c->start)." ~ ".mysql2date("Y/m/d", $c->end); ?>
-								</p>
-							</td>
-							<td>
-								<?php echo money_format('%7n', $c->price); ?>
-								<small>[<?php printf($this->_('%d%%Off'), (100 - round($c->price / get_post_meta($p->ID, "lwp_price", true) * 100)) ); ?>]</small>
-							</td>
-						</tr>
-						<?php endforeach; else: ?>
-						<tr>
-							<td colspan="4"><?php $this->e("No campaign registered."); ?></td>
-						</tr>
-						<?php endif; ?>
-					</tbody>
-				</table>
-				<div class="tablenav">
-					<div class="alignleft actions">
-						<select name="action">
-							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
-							<option value="delete"><?php $this->e("Delete"); ?></option>
-						</select>
-						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="<?php $this->e('Apply'); ?>" />
-						<?php echo $pagenator; ?>
-						<br class="clear" />
-					</div>
-				</div>
-				<!-- .tablenav -->
+				<?php
+					require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-campaign.php";
+					$list_table = new LWP_List_Campaigns();
+					$list_table->prepare_items();
+					$list_table->display();
+				?>
 			</form>
 			<div class="description">
 				<p>
@@ -221,7 +123,7 @@ else:
 					
 					<div class="form-field">
 						<label for="start"><?php $this->e('Start Date');?></label>
-						<input type="text" id="start" name="start" class="date-picker" />
+						<input type="text" id="start_date" name="start" class="date-picker" />
 						<p>
 							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>
@@ -230,7 +132,7 @@ else:
 					
 					<div class="form-field">
 						<label for="end"><?php $this->e('End Date');?></label>
-						<input type="text" id="end" name="end" class="date-picker" />
+						<input type="text" id="end_date" name="end" class="date-picker" />
 						<p>
 							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>

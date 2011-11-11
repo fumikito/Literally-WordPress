@@ -102,14 +102,14 @@ function lwp_campaign_end($post = null, $timestamp = false)
 	global $lwp;
 	if(!$post)
 		global $post;
-	$campaign = $lwp->get_campaign($post->ID, gmdate('Y-m-d H:i:s'));
+	$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
 	if(!$campaign)
 		return false;
 	else{
 		if($timestamp)
-			return strtotime(get_date_from_gmt($campaign->end));
+			return strtotime($campaign->end);
 		else
-			return mysql2date(get_option("date_format"), get_date_from_gmt ($campaign->end), false);
+			return mysql2date(get_option("date_format"), $campaign->end, false);
 	}
 }
 
@@ -133,7 +133,7 @@ function lwp_price($post = null)
 	}
 	if(lwp_on_sale($post)){
 		global $lwp;
-		$campaign = $lwp->get_campaign($post->ID, date('Y-m-d H:i:s'));
+		$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
 		return $campaign->price;
 	}else{
 		return lwp_original_price($post);

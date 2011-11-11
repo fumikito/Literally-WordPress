@@ -25,6 +25,8 @@ ePubやPDFなどの非公開ファイルを購入者がダウンロードでき�
 つまり、購入したユーザーだけが見ることのできる投稿です。
 どのようなサービスを提供するかはあなた次第です。
 
+Icon sets are provided by http://wefunction.com/2008/07/function-free-icon-set/
+
 == Installation ==
 
 Installation is easy, but you need activation after plugin installation.
