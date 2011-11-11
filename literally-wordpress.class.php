@@ -997,20 +997,19 @@ EOS;
 	
 	//--------------------------------------------
 	//
-	// 端末登録
+	// Device
 	//
 	//--------------------------------------------
 
 	/**
-	 * 端末を追加・削除する
-	 * 
+	 * CRUD interface for device
+	 * @global wpdb $wpdb
 	 * @return void
 	 */
-	public function update_devices()
-	{
-		//登録フォームのとき
+	public function update_devices(){
+		global $wpdb;
+		//Registere form
 		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "lwp_add_device")){
-			global $wpdb;
 			$req = $wpdb->insert(
 				$this->devices,
 				array(
@@ -1024,20 +1023,37 @@ EOS;
 			else
 				$this->message[] = $this->_("Failed to add device.");
 		}
-		//削除フォームのとき
-		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "lwp_delete_devices") && !empty($_POST['devices'])){
-			global $wpdb;
-			$ids = implode(',',$_POST['devices']);
-			$sql = "DELETE FROM {$this->devices} WHERE ID IN ({$ids})";
-			$wpdb->query($sql);
-			$sql = "DELETE FROM {$this->file_relationships} WHERE device_id IN ({$ids})";
-			$wpdb->query($sql);
-			$this->message[] = $this->_("Device deleted.");
+		//Bulk action
+		if(isset($_GET['devices'], $_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "bulk-devices") && !empty($_GET['devices'])){
+			switch($_GET['action']){
+				case "delete":
+					$ids = implode(',', array_map('intval', $_GET['devices']));
+					$sql = "DELETE FROM {$this->devices} WHERE ID IN ({$ids})";
+					$wpdb->query($sql);
+					$sql = "DELETE FROM {$this->file_relationships} WHERE device_id IN ({$ids})";
+					$wpdb->query($sql);
+					$this->message[] = $this->_("Device deleted.");
+					break;
+			}
+		}
+		//Update
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'edit_device')){
+			$wpdb->update(
+				$this->devices,
+				array(
+					'name' => (string)$_POST['device_name'],
+					'slug' => (string)$_POST['device_slug']
+				),
+				array('ID' => $_POST['device_id']),
+				array('%s', '%s'),
+				array('%d')
+			);
+			$this->message[] = $this->_('Device updated.');
 		}
 	}
 	
 	/**
-	 * デバイス情報を返す
+	 * Return device information
 	 * 
 	 * @since 0.3
 	 * @param object $file (optional) 指定した場合はファイルに紐づけられた端末を返す
@@ -1056,8 +1072,9 @@ EOS;
 				SELECT * FROM {$this->devices} as d
 				LEFT JOIN {$this->file_relationships} as f
 				ON d.ID = f.device_id
-				WHERE f.file_id = {$file_id}
+				WHERE f.file_id = %d
 EOS;
+			$sql = $wpdb->prepare($sql, $file_id);
 		}else{
 			$sql = "SELECT * FROM {$this->devices}";
 		}

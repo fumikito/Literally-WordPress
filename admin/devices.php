@@ -1,83 +1,53 @@
-<?php /* @var $this Literally_WordPress */ ?>
+<?php
+/* @var $this Literally_WordPress */
+/* @var $wpdb wpdb */
+?>
 <h2><?php $this->e("Devices"); ?></h2>
 
-<?php
-	//端末を取得
-	$devices = $wpdb->get_results("SELECT * FROM {$this->devices}");
-?>
-<script type="text/javascript">
-//<![CDATA[
-	function lwp_confirm_delete(event)
-	{
-		var select = jQuery(event.target).prev().attr("value");
-		if(select != "delete" || !confirm("<?php $this->e("You really delete this device?"); ?>")){
-			event.preventDefault();
-		}
-	}
-//]]>
-</script>
+<?php if(isset($_GET['device']) && ($device = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->devices} WHERE ID = %d", $_GET['device'])))): ?>
+
+<form method="post" action="<?php echo admin_url('admin.php?page=lwp-devices&device='.$device->ID);?>">
+	<?php wp_nonce_field('edit_device')?>
+	<input type="hidden" name="device_id" value="<?php echo esc_attr($device->ID); ?>" />
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th><label for="device_name"><?php $this->e('Device Name'); ?></label></th>
+				<td>
+					<input type="text" id="device_name" name="device_name" value="<?php echo esc_attr($device->name); ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th><label for="device_slug"><?php $this->e('Slug'); ?></label></th>
+				<td>
+					<input type="text" id="device_slug" name="device_slug" value="<?php echo esc_attr($device->slug); ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th><?php $this->e('Assigned'); ?></th>
+				<td><?php echo $wpdb->get_var($wpdb->prepare("SELECT COUNT(file_id) FROM {$this->file_relationships} WHERE device_id = %d", $device->ID));?></td>
+			</tr>
+		</tbody>
+	</table>
+	<?php	submit_button($this->_('Update')); ?>
+</form>
+<p>
+	<a class="button" href="<?php echo admin_url('admin.php?page=lwp-devices'); ?>"><?php $this->e('Return to list'); ?></a>
+</p>
+<?php else: ?>
+
 <div id="col-container">
 	<div id="col-right">
 		<div class="col-wrap">
-			<form method="post" action="<?php echo admin_url(); ?>edit.php?post_type=ebook&amp;page=lwp-devices">
+			<form method="get" action="<?php echo admin_url('admin.php'); ?>">
+				<input type="hidden" name="page" value="lwp-devices" />
 				<?php wp_nonce_field("lwp_delete_devices"); ?>
-				<div class="tablenav">
-					<div class="alignleft actions">
-						<select name="action">
-							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
-							<option value="delete"><?php $this->e("Delete"); ?></option>
-						</select>
-						<input type="submit" class="button-secondary action" id="doaction" name="doaction" value="<?php $this->e("Apply"); ?>" onclick="lwp_confirm_delete(event);"/>
-						<br class="clear" />
-					</div>
-				</div>
-				<!-- .tablenav -->
-				<table class="widefat tag fixed" cellspacing="0">
-					<thead>
-						<tr>
-							<th class="manage-column check-column">
-								<input type="checkbox" />
-							</th>
-							<th class="manage-column"><?php $this->e("Device Name"); ?></th>
-							<th class="manage-column"><?php $this->e("Slug"); ?></th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th class="manage-column check-column">
-								<input type="checkbox" />
-							</th>
-							<th class="manage-column"><?php $this->e("Device Name"); ?></th>
-							<th class="manage-column"><?php $this->e("Slug"); ?></th>
-						</tr>
-					</tfoot>
-					<tbody>
-						<?php if($devices): $counter = 0; foreach($devices as $d): $counter++; ?>
-						<tr<?php if($counter % 2 == 1) echo ' class="alternate"'; ?>>
-							<th class="check-column">
-								<input type="checkbox" value="<?php echo $d->ID; ?>" name="devices[]" />
-							</th>
-							<td><?php $this->h($d->name); ?></td>
-							<td><?php $this->h($d->slug); ?></td>
-						</tr>
-						<?php endforeach; else: ?>
-						<tr>
-							<td colspan="3"><?php $this->e("No device was registered."); ?></td>
-						</tr>
-						<?php endif; ?>
-					</tbody>
-				</table>
-				<div class="tablenav">
-					<div class="alignleft actions">
-						<select name="action">
-							<option selected="selected" value=""><?php $this->e("Action"); ?></option>
-							<option value="delete"><?php $this->e("Delete"); ?></option>
-						</select>
-						<input type="submit" class="button-secondary action" id="doaction2" name="doaction2" value="<?php $this->e("Apply"); ?>" onclick="lwp_confirm_delete(this);" />
-						<br class="clear" />
-					</div>
-				</div>
-				<!-- .tablenav -->
+				<?php
+					require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-devices.php";
+					$list_table = new LWP_List_Devices();
+					$list_table->prepare_items();
+					$list_table->display();
+				?>
 			</form>
 			<div class="description">
 				<p>
@@ -129,3 +99,4 @@
 	<!-- #col-left ends -->
 </div>
 <!-- #col-container -->
+<?php endif;
