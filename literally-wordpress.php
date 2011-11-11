@@ -49,7 +49,7 @@ if(literally_wordpress_check_version()){
 	 * @var Literally_WordPress
 	 */
 	$lwp = new Literally_WordPress();
-	
+
 	if(is_admin()){
 		//管理画面でのみ行うフックを登録
 		$lwp->admin_hooks();

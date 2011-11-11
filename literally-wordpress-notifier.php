@@ -60,6 +60,11 @@ class LWP_Notifier{
 			add_action('admin_init', array($this, 'admin_init'));
 			add_action('admin_head', array($this, 'admin_head'));
 			add_filter('user_can_richedit', array($this, 'rich_edit'));
+			//Register Cron
+			if ( !wp_next_scheduled( 'lwp_daily_notification' ) ) {
+				wp_schedule_event(time(), 'daily', 'lwp_daily_notification');
+			}
+			add_action('lwp_daily_notification', array($this, 'daily_cron'));
 		}
 	}
 	
@@ -68,7 +73,6 @@ class LWP_Notifier{
 	 */
 	public function register_post_type(){
 		global $lwp;
-		//投稿タイプを設定
 		$single = $this->_('Notification');
 		$plural = $this->_('Notifications');
 		$labels = array(
@@ -286,8 +290,39 @@ You can also get in touch this item again:
 		}
 	}
 	
-	public function register_cron(){
-		
+	/**
+	 * Check daily
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb 
+	 */
+	public function daily_cron(){
+		global $lwp, $wpdb;
+		if($this->valid){
+			//Retrieve expired transactions
+			$expired_date = date('Y-m-d H:i:s', strtotime(gmdate('Y-m-d H:i:s')) - $this->limit * 24 * 60 * 60);
+			$sql = $wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE registered <= %s AND method = %s AND status = %s", $expired_date, LWP_Payment_Methods::TRANSFER, LWP_Payment_Status::START);
+			$expired = $wpdb->get_results($sql);
+			foreach($expired as $e){
+				$wpdb->update(
+					$lwp->transaction,
+					array(
+						'status' => LWP_Payment_Status::CANCEL,
+						'updated' => gmdate('Y-m-d H:i:s')
+					),
+					array('ID' => $e->ID),
+					array('%s', '%s'),
+					array('%d')
+				);
+				$this->notify($e, 'expired');
+			}
+			
+			//Retrieve reminder
+			$sql = $wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE status = %s AND method = %s AND MOD(DATEDIFF(now(), registered), 7) = 0", LWP_Payment_Status::START, LWP_Payment_Methods::TRANSFER);
+			$reminded = $wpdb->get_results($sql);
+			foreach($reminded as $r){
+				$this->notify($r, 'reminder');
+			}
+		}
 	}
 	
 	/**
