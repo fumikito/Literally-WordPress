@@ -43,7 +43,7 @@ class LWP_Payment_Methods {
 	
 	private function _($text){
 		global $lwp;
-		$lwp->_('PayPal');
+		$lwp->_('PAYPAL');
 		$lwp->_('CAMPAIGN');
 		$lwp->_('present');
 		$lwp->_('TRANSFER');

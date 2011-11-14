@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 14:00+0900\n"
-"PO-Revision-Date: 2011-11-14 14:00+0900\n"
+"POT-Creation-Date: 2011-11-14 14:02+0900\n"
+"PO-Revision-Date: 2011-11-14 14:03+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -352,8 +352,7 @@ msgid "Notification mail will be sent as plain text. <strong>DO NOT USE HTML</st
 msgstr ""
 
 #: ../literally-wordpress-statics.php:46
-#: ../admin/history.php:53
-msgid "PayPal"
+msgid "PAYPAL"
 msgstr ""
 
 #: ../literally-wordpress-statics.php:47
@@ -894,6 +893,10 @@ msgstr ""
 #: ../admin/history.php:31
 #: ../admin/history.php:40
 msgid "Method"
+msgstr ""
+
+#: ../admin/history.php:53
+msgid "PayPal"
 msgstr ""
 
 #: ../admin/history.php:66

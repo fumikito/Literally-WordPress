@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 14:00+0900\n"
-"PO-Revision-Date: 2011-11-14 14:00+0900\n"
+"POT-Creation-Date: 2011-11-14 14:03+0900\n"
+"PO-Revision-Date: 2011-11-14 14:04+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -404,8 +404,7 @@ msgid "Notification mail will be sent as plain text. <strong>DO NOT USE HTML</st
 msgstr "通知メールはプレーンテキストとして送信されます。<strong>HTMLを使わないでください</strong>"
 
 #: ../literally-wordpress-statics.php:46
-#: ../admin/history.php:53
-msgid "PayPal"
+msgid "PAYPAL"
 msgstr "PayPal"
 
 #: ../literally-wordpress-statics.php:47
@@ -948,6 +947,10 @@ msgstr "アイテム名"
 msgid "Method"
 msgstr "支払い方法"
 
+#: ../admin/history.php:53
+msgid "PayPal"
+msgstr "PayPal"
+
 #: ../admin/history.php:66
 msgid "View Item"
 msgstr "アイテムを表示"
@@ -1031,7 +1034,7 @@ msgstr "ステータスを更新"
 
 #: ../admin/management.php:88
 msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
-msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。 accepts refund by 60 days."
+msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
 #: ../admin/management.php:94
 msgid "Expires"
