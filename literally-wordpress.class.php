@@ -159,7 +159,7 @@ class Literally_WordPress
 			'transfer' => false,
 			"notification_frequency" => 0,
 			"notification_limit" => 30,
-        	"dir" => dirname(__FILE__).DS."contents",
+        	"dir" => dirname(__FILE__).DIRECTORY_SEPARATOR."contents",
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
 			"country_code" => '',
@@ -266,8 +266,8 @@ class Literally_WordPress
 		//ファイルのアクセス可否を判断
 		if(false !== strpos($this->option["dir"], ABSPATH)){
 			//アクセスチェック用ファイルがなければ作成
-			if(!file_exists($this->option["dir"].DS."access"))
-				touch($this->option["dir"].DS."access");
+			if(!file_exists($this->option["dir"].DIRECTORY_SEPARATOR."access"))
+				touch($this->option["dir"].DIRECTORY_SEPARATOR."access");
 			//URL経由で取得
 			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $this->option["dir"]."/access");
 			$ch = curl_init($test_url);
@@ -495,13 +495,13 @@ EOS;
 	{
 		if(isset($_GET["page"]) && (false !== strpos($_GET["page"], "lwp-"))){
 			$slug = str_replace("lwp-", "", $_GET["page"]);
-			if(file_exists($this->dir.DS."admin".DS."{$slug}.php")){
+			if(file_exists($this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php")){
 				global $wpdb;
 				echo '<div class="wrap">';
 				do_action("admin_notice");
 				echo "<div class=\"icon32 ebook\"><br /></div>";
-				require_once $this->dir.DS."admin".DS."{$slug}.php";
-				require_once $this->dir.DS."admin".DS."donate.php";
+				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php";
+				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."donate.php";
 				echo "</div>\n<!-- .wrap ends -->";
 			}else
 				return;
@@ -510,7 +510,7 @@ EOS;
 			echo '<div class="wrap">';
 			do_action("admin_notice");
 			echo "<div class=\"icon32 ebook\"><br /></div>";
-			require_once $this->dir.DS."admin".DS."history.php";
+			require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."history.php";
 			echo "</div>\n<!-- .wrap ends -->";
 		}else{
 			return;
@@ -711,7 +711,7 @@ EOS;
 	public function post_metabox_form()
 	{
 		$files = isset($_GET['post']) ? $this->get_files($_GET["post"]) : array();
-		require_once $this->dir.DS."form-template".DS."edit-detail.php";
+		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail.php";
 	}
 	
 	//--------------------------------------------
@@ -751,7 +751,7 @@ EOS;
 	public function media_iframe()
 	{
 		media_upload_header();
-		require_once $this->dir.DS."admin".DS."upload.php";
+		require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."upload.php";
 	}
 	
 	/**
@@ -791,14 +791,14 @@ EOS;
 	{
 		var_dump($devices);
 		//ディレクトリの存在確認と作成
-		$book_dir = $this->option["dir"].DS.$book_id;
+		$book_dir = $this->option["dir"].DIRECTORY_SEPARATOR.$book_id;
 		if(!is_dir($book_dir))
 			if(!mkdir($book_dir))
 				return false;
 		//新しいファイル名の作成
 		$file = sanitize_file_name($file);
 		//ファイルの移動
-		if(!move_uploaded_file($path, $book_dir.DS.$file))
+		if(!move_uploaded_file($path, $book_dir.DIRECTORY_SEPARATOR.$file))
 			return false;
 		//データベースに書き込み
 		global $wpdb;
@@ -901,7 +901,7 @@ EOS;
 			return false;
 		}else{
 			//ファイルを削除する
-			if(!unlink($this->option["dir"].DS.$file->book_id.DS.$file->file))
+			if(!unlink($this->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file))
 				return false;
 			else{
 				if($wpdb->query("DELETE FROM {$this->files} WHERE ID = {$file->ID}")){
@@ -1285,7 +1285,7 @@ EOS;
 			)
 EOS;
 		$ebooks = $wpdb->get_results($wpdb->prepare($sql, $user_id));
-		require_once $this->dir.DS."form-template".DS."give-user.php";
+		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."give-user.php";
 	}
 	
 	/**
@@ -1769,7 +1769,7 @@ EOS;
 			$error = true;
 		}
 		//ファイルの所在を確認
-		$path = $this->option["dir"].DS.$file->book_id.DS.$file->file;
+		$path = $this->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
 		if(!file_exists($path)){
 			$error = true;
 		}

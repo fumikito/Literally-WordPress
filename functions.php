@@ -258,7 +258,7 @@ function lwp_file_link($file_id)
 function lwp_get_size($file)
 {
 	global $lwp;
-	$path = $lwp->option["dir"].DS.$file->book_id.DS.$file->file;
+	$path = $lwp->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
 	if(file_exists($path)){
 		$size = filesize($path);
 		if($size > 1000000){
@@ -281,7 +281,7 @@ function lwp_get_size($file)
 function lwp_get_ext($file)
 {
 	global $lwp;
-	$path = $lwp->option["dir"].DS.$file->book_id.DS.$file->file;
+	$path = $lwp->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
 	if(file_exists($path))
 		return pathinfo($path, PATHINFO_EXTENSION);
 	else

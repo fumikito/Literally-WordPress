@@ -12,7 +12,7 @@ require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))).DIRECTORY_SEP
 $endpoint = "https://www.paypal.com/cgi-bin/webscr";
 
 //ログ書き込み用ファイルを設定
-$path = $lwp->option["dir"].DS."log";
+$path = $lwp->option["dir"].DIRECTORY_SEPARATOR."log";
 
 //ログデータのセットアップ
 $time = date("Y-m-d H:i:s");

@@ -3,7 +3,7 @@
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))).DIRECTORY_SEPARATOR."wp-load.php";
 
 if(isset($_GET["name"])){
-	$path = $lwp->dir.DS."help".DS.str_replace(".", "", str_replace("/", "", $_GET['name'])).".php";
+	$path = $lwp->dir.DIRECTORY_SEPARATOR."help".DIRECTORY_SEPARATOR.str_replace(".", "", str_replace("/", "", $_GET['name'])).".php";
 	if(file_exists($path)):?><html>
 <head>
 	<title><?php $lwp->e("Literally WordPress Help"); ?></title>

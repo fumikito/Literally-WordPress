@@ -27,13 +27,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
  */
 
-/**
- * ディレクトリーセパレータ
- */
-if(!defined("DS")){
-	define("DS", DIRECTORY_SEPARATOR); 
-}
-
 //インストール要件を満たしているかを確認
 if(literally_wordpress_check_version()){
 		
@@ -58,7 +51,7 @@ if(literally_wordpress_check_version()){
 		$lwp->public_hooks();
 	}
 	//ユーザー関数の読み込み
-	require_once dirname(__FILE__).DS."functions.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."functions.php";
 	
 	//インストールスクリプトの登録
 	register_activation_hook(__FILE__, array($lwp, 'table_create'));
