@@ -323,10 +323,12 @@ You can also get in touch this item again:
 			}
 			
 			//Retrieve reminder
-			$sql = $wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE status = %s AND method = %s AND MOD(DATEDIFF(now(), registered), 7) = 0", LWP_Payment_Status::START, LWP_Payment_Methods::TRANSFER);
-			$reminded = $wpdb->get_results($sql);
-			foreach($reminded as $r){
-				$this->notify($r, 'reminder');
+			if($this->frequency > 0){
+				$sql = $wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE status = %s AND method = %s AND MOD(DATEDIFF(now(), registered), 7) = 0", LWP_Payment_Status::START, LWP_Payment_Methods::TRANSFER);
+				$reminded = $wpdb->get_results($sql);
+				foreach($reminded as $r){
+					$this->notify($r, 'reminder');
+				}
 			}
 		}
 	}

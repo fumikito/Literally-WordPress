@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 11:01+0900\n"
-"PO-Revision-Date: 2011-11-14 11:40+0900\n"
+"POT-Creation-Date: 2011-11-14 14:00+0900\n"
+"PO-Revision-Date: 2011-11-14 14:00+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -421,7 +421,7 @@ msgid "TRANSFER"
 msgstr "送金"
 
 #: ../literally-wordpress-statics.php:101
-msgid "Success"
+msgid "SUCCESS"
 msgstr "完了"
 
 #: ../literally-wordpress-statics.php:102
@@ -2919,6 +2919,10 @@ msgstr "残%d日"
 #: ../tables/list-management.php:259
 msgid "All Status"
 msgstr "すべてのステータス"
+
+#: ../tables/list-management.php:262
+msgid "Success"
+msgstr "完了"
 
 #: ../tables/list-management.php:263
 msgid "Refund"

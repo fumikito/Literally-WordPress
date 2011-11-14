@@ -98,7 +98,7 @@ class LWP_Payment_Status {
 	 */
 	private function _($text){
 		global $lwp;
-		$lwp->_('Success');
+		$lwp->_('SUCCESS');
 		$lwp->_('Cancel');
 		$lwp->_('START');
 		$lwp->_('REFUND');
