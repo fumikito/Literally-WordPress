@@ -163,7 +163,7 @@
 						<label for="desc"><?php $this->e('Description'); ?></label>
 					</th>
 					<td class="field">
-						<textarea id="desc" name="desc"><?php if($updating || $updated) $this->h($file->desc); ?></textarea>
+						<textarea id="desc" name="desc"><?php if($updating || $updated) $this->h($file->detail); ?></textarea>
 						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>

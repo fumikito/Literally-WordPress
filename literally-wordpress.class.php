@@ -840,8 +840,7 @@ EOS;
 	 * @param string $path
 	 * @return boolean
 	 */
-	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0)
-	{
+	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0){
 		//ディレクトリの存在確認と作成
 		$book_dir = $this->option["dir"].DIRECTORY_SEPARATOR.$book_id;
 		if(!is_dir($book_dir))
@@ -859,7 +858,7 @@ EOS;
 			array(
 				"book_id" => $book_id,
 				"name" => $name,
-				"desc" => $desc,
+				"detail" => $desc,
 				"file" => $file,
 				"public" => $public,
 				"free" => $free,

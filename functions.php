@@ -461,7 +461,7 @@ function lwp_get_file_list($accessibility = "all", $post = null){
 ";
 	foreach(lwp_get_files($accessibility, $post) as $file){
 		$ext = lwp_get_ext($file);
-		$desc = wpautop($file->desc);
+		$desc = wpautop($file->detail);
 		$button = lwp_file_accessible($file) ? "<a class=\"button lwp-dl\" href=\"".lwp_file_link($file->ID)."\">".$lwp->_('download')."</a>"
 											 : "<a class=\"button disabled\">".$lwp->_('Unavailable')."</a>";
 		$size = sprintf($lwp->_("File Size: %s"), lwp_get_size($file));
