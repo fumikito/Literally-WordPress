@@ -2,11 +2,10 @@
 /**
  * Literally WordPressの処理を行うクラス
  *
- * @package LIterally WordPress
+ * @package literally_Wordpress
  * @author  Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
  */
-class Literally_WordPress
-{
+class Literally_WordPress{
 	
 	/**
 	* バージョン
@@ -161,7 +160,6 @@ class Literally_WordPress
 			'transfer' => false,
 			"notification_frequency" => 0,
 			"notification_limit" => 30,
-        	"dir" => dirname(__FILE__).DIRECTORY_SEPARATOR."contents",
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
 			"country_code" => '',
@@ -171,6 +169,9 @@ class Literally_WordPress
 			"show_form" => true,
 			"load_assets" => 2
 		);
+		//Set up upload directory
+		$upload_dir = wp_upload_dir();
+		$default_option['dir'] = $upload_dir['basedir'].DIRECTORY_SEPARATOR."lwp";
 		foreach($default_option as $k => $v){
 			if(isset($saved_option[$k]))
 				$this->option[$k] = $saved_option[$k];
@@ -245,6 +246,7 @@ class Literally_WordPress
 	
 	/**
 	 * Register Assets for this plugin.
+	 * @return void
 	 */
 	public function register_assets(){
 		wp_register_script("jquery-ui-slider", $this->url."/assets/datepicker/jquery-ui-slider.js", array("jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"), "1.8.12", !is_admin());
@@ -253,62 +255,14 @@ class Literally_WordPress
 		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
 	}
 	
-	/**
-	 * プラグインを有効化しても問題がないかどうかチェックする
-	 * 
-	 * @return void
-	 */
-	public function validate()
-	{
-		//ディレクトリの書き込み可否を判断
-		if(!is_writable($this->option["dir"])){
-			$this->initialized = false;
-			$this->message["dir"] = $this->_('Directory isn\'t writable.');
-		}
-		//ファイルのアクセス可否を判断
-		if(false !== strpos($this->option["dir"], ABSPATH)){
-			//アクセスチェック用ファイルがなければ作成
-			if(!file_exists($this->option["dir"].DIRECTORY_SEPARATOR."access"))
-				touch($this->option["dir"].DIRECTORY_SEPARATOR."access");
-			//URL経由で取得
-			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $this->option["dir"]."/access");
-			$ch = curl_init($test_url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$req = curl_exec($ch);
-			//HTTPステータスコードを確認
-			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if($http_code == 200){
-				$this->initialized = false;
-				$this->message["access"] = $this->_('Directory is publically accessible via HTTP');
-			}
-		}
-		//課金できるかどうかチェック
-		if(empty($this->option["user_name"]) || empty($this->option["token"])){
-			$this->initialized = false;
-			$this->message["paypal"] = $this->_('Marchand ID and PDT Token required for transaction');
-		}
-		//通貨と国が設定されているかをチェック
-		if(false == array_key_exists($this->option['currency_code'], PayPal_Statics::currency_codes())){
-			$this->initialized = false;
-			$this->message["currency"] = $this->_("Currency code is invalid.");
-		}
-		if(false == array_key_exists($this->option['country_code'], PayPal_Statics::country_codes())){
-			$this->initialized = false;
-			$this->message["country"] = $this->_("Country code is invalid.");
-		}
-		//ユーザーが登録可能かチェック
-		if(!get_option("users_can_register")){
-			$this->message['registration'] = sprintf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php'));
-		}
-	}
+	
 	
 	/**
 	 * 管理画面のときにだけ行うフックの登録
 	 * 
 	 * @return void
 	 */
-	public function admin_hooks()
-	{
+	public function admin_hooks(){
 		/*--------------
 		 * アクションフック
 		 */
@@ -340,13 +294,10 @@ class Literally_WordPress
 		add_action("admin_menu", array($this, "add_menu"), 1);
 		//メッセージの出力
 		add_action("admin_notice", array($this, "admin_notice"));
-		
 		//ファイルアップロード用のタブを追加
 		add_action("media_upload_ebook", array($this, "generate_tab"));
-		
 		//ユーザーに書籍をプレゼントするフォーム
 		add_action("edit_user_profile", array($this, "give_user_form"));
-		
 		//書籍プレゼントが実行されたら
 		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 			add_action("profile_update", array($this, "give_user"));
@@ -364,6 +315,91 @@ class Literally_WordPress
 		add_filter("mce_external_languages", array($this, "mce_lang"));
 		add_filter("mce_buttons_2", array($this, "mce_button"));
 	}
+	
+	
+	
+	/**
+	 * プラグインを有効化しても問題がないかどうかチェックする
+	 * 
+	 * @return void
+	 */
+	public function validate(){
+		//Check directory's existance and if not, try to careate
+		if(!is_dir($this->option['dir']) || !file_exists($this->option['dir'])){
+			if(!mkdir($this->option['dir'], true)){
+				$this->initialized = false;
+				$this->message[] = sprintf($this->_('Can\'t make directory. Check parmissin of "%s"'), dirname($this->option['dir']));
+				$this->error = true;
+			}else{
+				@chmod($this->option['dir'], 0700);
+			}
+		}
+		//Check if directory is writable.
+		if(!is_writable($this->option["dir"])){
+			$this->initialized = false;
+			$this->message["dir"] = $this->_('Directory isn\'t writable.');
+			$this->error = true;
+		}
+		//Check if Directory is outside of plugin
+		if(0 === strpos(dirname(__FILE__), $this->option['dir'])){
+			$this->message[] = $this->_("Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating.");
+		}
+		//If contents folder is in document root tree, check it's accessibility
+		if(false !== strpos($this->option["dir"], ABSPATH)){
+			//Create access check file if not exists.
+			$access_check_file = $this->option["dir"].DIRECTORY_SEPARATOR."access";
+			if(!file_exists($access_check_file)){
+				@file_put_contents($access_check_file, $this->_('Warning! This file is accessible!'));
+			}
+			//Create .htaccess if not exists
+			$htaccess_path = $this->option["dir"].DIRECTORY_SEPARATOR.".htaccess";
+			$htaccess = <<<EOS
+<FilesMatch ".*$">
+        Order allow,deny
+        deny from all
+</FilesMatch>
+
+EOS;
+			if(!file_exists($htaccess_path)){
+				@file_put_contents($htaccess_path, $htaccess);
+			}
+			//Try to access via HTTP
+			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $access_check_file);
+			$ch = curl_init($test_url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$req = curl_exec($ch);
+			//Check HTTP status code
+			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			if($http_code == 200){
+				$this->initialized = false;
+				$this->message["access"] = $this->_('Directory is publically accessible via HTTP');
+				$this->error = true;
+			}
+		}
+		//課金できるかどうかチェック
+		if(empty($this->option["user_name"]) || empty($this->option["token"])){
+			$this->initialized = false;
+			$this->message["paypal"] = $this->_('Marchand ID and PDT Token required for transaction');
+			$this->error = true;
+		}
+		//通貨と国が設定されているかをチェック
+		if(false == array_key_exists($this->option['currency_code'], PayPal_Statics::currency_codes())){
+			$this->initialized = false;
+			$this->message["currency"] = $this->_("Currency code is invalid.");
+			$this->error = true;
+		}
+		if(false == array_key_exists($this->option['country_code'], PayPal_Statics::country_codes())){
+			$this->initialized = false;
+			$this->message["country"] = $this->_("Country code is invalid.");
+			$this->error = true;
+		}
+		//ユーザーが登録可能かチェック
+		if(!get_option("users_can_register")){
+			$this->message['registration'] = sprintf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php'));
+		}
+	}
+	
+	
 	
 	/**
 	* テーブル作成

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 14:02+0900\n"
-"PO-Revision-Date: 2011-11-14 14:03+0900\n"
+"POT-Creation-Date: 2011-11-15 01:32+0900\n"
+"PO-Revision-Date: 2011-11-15 01:32+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -139,44 +139,44 @@ msgid "Notifications"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:81
-#: ../literally-wordpress.class.php:215
+#: ../literally-wordpress.class.php:218
 msgid "Add New"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:82
 #: ../literally-wordpress-notifier.php:84
-#: ../literally-wordpress.class.php:216
-#: ../literally-wordpress.class.php:218
+#: ../literally-wordpress.class.php:219
+#: ../literally-wordpress.class.php:221
 #, php-format
 msgid "Add New %s"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:83
-#: ../literally-wordpress.class.php:217
+#: ../literally-wordpress.class.php:220
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:85
-#: ../literally-wordpress.class.php:219
+#: ../literally-wordpress.class.php:222
 #, php-format
 msgid "View %s"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:86
-#: ../literally-wordpress.class.php:220
+#: ../literally-wordpress.class.php:223
 #, php-format
 msgid "Search %s"
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:87
-#: ../literally-wordpress.class.php:221
+#: ../literally-wordpress.class.php:224
 #, php-format
 msgid "No %s was found."
 msgstr ""
 
 #: ../literally-wordpress-notifier.php:88
-#: ../literally-wordpress.class.php:222
+#: ../literally-wordpress.class.php:225
 #, php-format
 msgid "No %s was found in trash."
 msgstr ""
@@ -351,362 +351,375 @@ msgstr ""
 msgid "Notification mail will be sent as plain text. <strong>DO NOT USE HTML</strong>."
 msgstr ""
 
-#: ../literally-wordpress-statics.php:46
+#: ../literally-wordpress-statics.php:126
 msgid "PAYPAL"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:47
+#: ../literally-wordpress-statics.php:127
 msgid "CAMPAIGN"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:48
+#: ../literally-wordpress-statics.php:128
 msgid "present"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:49
+#: ../literally-wordpress-statics.php:129
 msgid "TRANSFER"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:101
+#: ../literally-wordpress-statics.php:182
 msgid "SUCCESS"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:102
+#: ../literally-wordpress-statics.php:183
 msgid "Cancel"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:103
+#: ../literally-wordpress-statics.php:184
 msgid "START"
 msgstr ""
 
-#: ../literally-wordpress-statics.php:104
+#: ../literally-wordpress-statics.php:185
 msgid "REFUND"
 msgstr ""
 
-#: ../literally-wordpress.class.php:264
+#: ../literally-wordpress.class.php:331
+#, php-format
+msgid "Can't make directory. Check parmissin of \"%s\""
+msgstr ""
+
+#: ../literally-wordpress.class.php:340
 msgid "Directory isn't writable."
 msgstr ""
 
-#: ../literally-wordpress.class.php:280
+#: ../literally-wordpress.class.php:345
+msgid "Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating."
+msgstr ""
+
+#: ../literally-wordpress.class.php:352
+msgid "Warning! This file is accessible!"
+msgstr ""
+
+#: ../literally-wordpress.class.php:375
 msgid "Directory is publically accessible via HTTP"
 msgstr ""
 
-#: ../literally-wordpress.class.php:286
+#: ../literally-wordpress.class.php:382
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr ""
 
-#: ../literally-wordpress.class.php:291
+#: ../literally-wordpress.class.php:388
 msgid "Currency code is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:295
+#: ../literally-wordpress.class.php:393
 msgid "Country code is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:299
+#: ../literally-wordpress.class.php:398
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr ""
 
-#: ../literally-wordpress.class.php:343
-msgid "Literally WordPress Setting"
-msgstr ""
-
-#: ../literally-wordpress.class.php:478
+#: ../literally-wordpress.class.php:514
 #: ../admin/setting.php:2
 msgid "General Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:479
+#: ../literally-wordpress.class.php:515
 msgid "Transaction Management"
 msgstr ""
 
-#: ../literally-wordpress.class.php:481
+#: ../literally-wordpress.class.php:517
 #: ../admin/transfer.php:2
 msgid "Transfer Management"
 msgstr ""
 
-#: ../literally-wordpress.class.php:483
+#: ../literally-wordpress.class.php:519
 msgid "Campaing Management"
 msgstr ""
 
-#: ../literally-wordpress.class.php:484
+#: ../literally-wordpress.class.php:520
 msgid "Device Setting"
 msgstr ""
 
-#: ../literally-wordpress.class.php:486
+#: ../literally-wordpress.class.php:522
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr ""
 
-#: ../literally-wordpress.class.php:486
+#: ../literally-wordpress.class.php:522
 msgid "Purchase"
 msgstr ""
 
-#: ../literally-wordpress.class.php:557
+#: ../literally-wordpress.class.php:525
+msgid "Literally WordPress Setting"
+msgstr ""
+
+#: ../literally-wordpress.class.php:597
 msgid "Close"
 msgstr ""
 
-#: ../literally-wordpress.class.php:558
+#: ../literally-wordpress.class.php:598
 msgid "Prev"
 msgstr ""
 
-#: ../literally-wordpress.class.php:559
+#: ../literally-wordpress.class.php:599
 msgid "Next"
 msgstr ""
 
-#: ../literally-wordpress.class.php:565
+#: ../literally-wordpress.class.php:605
 msgid "Week"
 msgstr ""
 
-#: ../literally-wordpress.class.php:566
-#: ../literally-wordpress.class.php:567
+#: ../literally-wordpress.class.php:606
+#: ../literally-wordpress.class.php:607
 msgid "Time"
 msgstr ""
 
-#: ../literally-wordpress.class.php:568
+#: ../literally-wordpress.class.php:608
 msgid "Hour"
 msgstr ""
 
-#: ../literally-wordpress.class.php:569
+#: ../literally-wordpress.class.php:609
 msgid "Minute"
 msgstr ""
 
-#: ../literally-wordpress.class.php:570
+#: ../literally-wordpress.class.php:610
 msgid "Second"
 msgstr ""
 
-#: ../literally-wordpress.class.php:571
+#: ../literally-wordpress.class.php:611
 msgid "Now"
 msgstr ""
 
-#: ../literally-wordpress.class.php:613
+#: ../literally-wordpress.class.php:653
 msgid "Literally WordPress Help"
 msgstr ""
 
-#: ../literally-wordpress.class.php:700
-#: ../literally-wordpress.class.php:1114
+#: ../literally-wordpress.class.php:740
+#: ../literally-wordpress.class.php:1154
 msgid "Price must be numeric."
 msgstr ""
 
-#: ../literally-wordpress.class.php:732
+#: ../literally-wordpress.class.php:772
 msgid "Literally WordPress"
 msgstr ""
 
-#: ../literally-wordpress.class.php:927
+#: ../literally-wordpress.class.php:967
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr ""
 
-#: ../literally-wordpress.class.php:930
+#: ../literally-wordpress.class.php:970
 msgid "Uploaded file size exceeds"
 msgstr ""
 
-#: ../literally-wordpress.class.php:933
+#: ../literally-wordpress.class.php:973
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr ""
 
-#: ../literally-wordpress.class.php:936
+#: ../literally-wordpress.class.php:976
 msgid "No file was uploaded."
 msgstr ""
 
-#: ../literally-wordpress.class.php:939
+#: ../literally-wordpress.class.php:979
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr ""
 
-#: ../literally-wordpress.class.php:942
+#: ../literally-wordpress.class.php:982
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 
-#: ../literally-wordpress.class.php:945
+#: ../literally-wordpress.class.php:985
 msgid "PHP stops uploading."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1026
+#: ../literally-wordpress.class.php:1066
 msgid "Device added."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1028
+#: ../literally-wordpress.class.php:1068
 msgid "Failed to add device."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1039
+#: ../literally-wordpress.class.php:1079
 msgid "Device deleted."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1055
+#: ../literally-wordpress.class.php:1095
 msgid "Device updated."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1109
+#: ../literally-wordpress.class.php:1149
 msgid "Please select item."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1119
+#: ../literally-wordpress.class.php:1159
 msgid "Price is higher than original price."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1124
-#: ../literally-wordpress.class.php:1170
+#: ../literally-wordpress.class.php:1164
+#: ../literally-wordpress.class.php:1210
 msgid "Date format is invalid."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1129
+#: ../literally-wordpress.class.php:1169
 msgid "End date was past."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1145
+#: ../literally-wordpress.class.php:1185
 msgid "Campaign added."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1148
+#: ../literally-wordpress.class.php:1188
 msgid "Failed to add campaign."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1157
+#: ../literally-wordpress.class.php:1197
 msgid "Specified campaing doesn't exist"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1162
+#: ../literally-wordpress.class.php:1202
 msgid "Price should be numeric."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1165
+#: ../literally-wordpress.class.php:1205
 msgid "Campgin price is higher than original price."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1175
+#: ../literally-wordpress.class.php:1215
 msgid "End date is earlier than start date."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1191
+#: ../literally-wordpress.class.php:1231
 msgid "Successfully Updated."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1194
+#: ../literally-wordpress.class.php:1234
 msgid "Update Failed."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1202
+#: ../literally-wordpress.class.php:1242
 msgid "Campaign was deleted."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1205
+#: ../literally-wordpress.class.php:1245
 msgid "Failed to delete campaign."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1319
+#: ../literally-wordpress.class.php:1359
 msgid "You've kindly given a present."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1321
+#: ../literally-wordpress.class.php:1361
 msgid "Failed to give a present."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1448
+#: ../literally-wordpress.class.php:1488
 msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1453
+#: ../literally-wordpress.class.php:1493
 msgid "Refund succeeded."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1455
+#: ../literally-wordpress.class.php:1495
 msgid "Sorry, but PayPal denied."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1487
+#: ../literally-wordpress.class.php:1527
 msgid "Transaction was updated."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1489
+#: ../literally-wordpress.class.php:1529
 msgid "Failed to update transaction."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1521
+#: ../literally-wordpress.class.php:1561
 msgid "No content is specified."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1544
+#: ../literally-wordpress.class.php:1584
 msgid "This contents is not on sale."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1575
+#: ../literally-wordpress.class.php:1615
 msgid "Sorry, we can't accept this payment method."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1580
+#: ../literally-wordpress.class.php:1620
 msgid "Failed to make transaction."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1585
+#: ../literally-wordpress.class.php:1625
 #, php-format
 msgid "Transaction Error : %s"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1610
+#: ../literally-wordpress.class.php:1650
 msgid "Transaction Failed to finish."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1610
-#: ../literally-wordpress.class.php:1631
+#: ../literally-wordpress.class.php:1650
+#: ../literally-wordpress.class.php:1671
 msgid "Failed"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1617
+#: ../literally-wordpress.class.php:1657
 msgid "Failed to connect with PayPal."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1621
+#: ../literally-wordpress.class.php:1661
 msgid "Failed to get the transactional information."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1798
+#: ../literally-wordpress.class.php:1838
 msgid "You have no permission to access this file."
 msgstr ""
 
-#: ../literally-wordpress.class.php:1798
+#: ../literally-wordpress.class.php:1838
 msgid "Permission Error"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1827
+#: ../literally-wordpress.class.php:1867
 msgid "Name"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1828
+#: ../literally-wordpress.class.php:1868
 #: ../admin/history.php:32
 #: ../admin/history.php:41
 msgid "Date"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1829
+#: ../literally-wordpress.class.php:1869
 #: ../admin/history.php:30
 #: ../admin/history.php:39
 #: ../form-template/edit-detail.php:8
 msgid "Price"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1830
+#: ../literally-wordpress.class.php:1870
 msgid "Payment Method"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1854
+#: ../literally-wordpress.class.php:1894
 #: ../admin/history.php:56
 msgid "Present"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1857
+#: ../literally-wordpress.class.php:1897
 msgid "Free Campaign"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1870
+#: ../literally-wordpress.class.php:1910
 msgid "Total: "
 msgstr ""
 
-#: ../literally-wordpress.class.php:1873
+#: ../literally-wordpress.class.php:1913
 msgid "You have no transaction history. Try to get any!"
 msgstr ""
 
-#: ../literally-wordpress.class.php:2054
+#: ../literally-wordpress.class.php:2094
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr ""
 
@@ -1030,13 +1043,13 @@ msgstr ""
 #: ../admin/setting.php:75
 #: ../admin/setting.php:86
 #: ../admin/setting.php:103
-#: ../admin/setting.php:123
-#: ../admin/setting.php:161
-#: ../admin/setting.php:188
-#: ../admin/setting.php:214
-#: ../admin/setting.php:231
-#: ../admin/setting.php:250
-#: ../admin/setting.php:273
+#: ../admin/setting.php:121
+#: ../admin/setting.php:148
+#: ../admin/setting.php:174
+#: ../admin/setting.php:191
+#: ../admin/setting.php:210
+#: ../admin/setting.php:233
+#: ../admin/setting.php:252
 msgid "More &gt;"
 msgstr ""
 
@@ -1086,8 +1099,8 @@ msgid "This Token might be incorrect. See %s and get correct PDT Token."
 msgstr ""
 
 #: ../admin/setting.php:90
-#: ../admin/setting.php:165
-#: ../admin/setting.php:170
+#: ../admin/setting.php:125
+#: ../admin/setting.php:130
 #: ../admin/setting.php:294
 msgid "Help"
 msgstr ""
@@ -1105,151 +1118,151 @@ msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID 
 msgstr ""
 
 #: ../admin/setting.php:110
-msgid "Transfer Setting"
-msgstr ""
-
-#: ../admin/setting.php:115
-msgid "Accept Transfer"
-msgstr ""
-
-#: ../admin/setting.php:118
-msgid "Disallow"
-msgstr ""
-
-#: ../admin/setting.php:119
-msgid "Allow"
-msgstr ""
-
-#: ../admin/setting.php:121
-msgid "If you accept transfer, users can pay with bank account or something that is not digital transaction."
-msgstr ""
-
-#: ../admin/setting.php:122
-msgid "This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made."
-msgstr ""
-
-#: ../admin/setting.php:128
-msgid "Notification Frequency"
-msgstr ""
-
-#: ../admin/setting.php:132
-#, php-format
-msgid "Send reminder on every %s days"
-msgstr ""
-
-#: ../admin/setting.php:138
-#, php-format
-msgid "Transaction expires by %s days"
-msgstr ""
-
-#: ../admin/setting.php:143
-msgid "If you don't want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past."
-msgstr ""
-
-#: ../admin/setting.php:150
 msgid "WordPress Setting"
 msgstr ""
 
-#: ../admin/setting.php:155
+#: ../admin/setting.php:115
 msgid "Directory for File protection"
 msgstr ""
 
-#: ../admin/setting.php:160
+#: ../admin/setting.php:120
 msgid "Directory to save files. This should be writable and innaccessible via HTTP."
 msgstr ""
 
-#: ../admin/setting.php:165
+#: ../admin/setting.php:125
 #, php-format
 msgid "Directory isn't writable. You can't upload files. See %s and set appropriate permission."
 msgstr ""
 
-#: ../admin/setting.php:170
+#: ../admin/setting.php:130
 #, php-format
 msgid "Directory is accessible via HTTP. See %s and prepend others from direct access."
 msgstr ""
 
-#: ../admin/setting.php:177
+#: ../admin/setting.php:137
 msgid "Purchase History Page"
 msgstr ""
 
-#: ../admin/setting.php:187
+#: ../admin/setting.php:147
 msgid "You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel."
 msgstr ""
 
-#: ../admin/setting.php:194
+#: ../admin/setting.php:154
 msgid "Custom Post Type"
 msgstr ""
 
-#: ../admin/setting.php:199
+#: ../admin/setting.php:159
 msgid "Custom post name"
 msgstr ""
 
-#: ../admin/setting.php:200
+#: ../admin/setting.php:160
 msgid "If not needed, leave it blank. ex: eBooks"
 msgstr ""
 
-#: ../admin/setting.php:204
+#: ../admin/setting.php:164
 msgid "Custom post name in Singular"
 msgstr ""
 
-#: ../admin/setting.php:205
+#: ../admin/setting.php:165
 msgid "If you don't specified, this same as above field. ex: eBook"
 msgstr ""
 
-#: ../admin/setting.php:209
+#: ../admin/setting.php:169
 msgid "Custom post slug"
 msgstr ""
 
-#: ../admin/setting.php:210
+#: ../admin/setting.php:170
 msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
 msgstr ""
 
-#: ../admin/setting.php:213
+#: ../admin/setting.php:173
 msgid "If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you."
 msgstr ""
 
-#: ../admin/setting.php:220
+#: ../admin/setting.php:180
 msgid "Payable Post Types"
 msgstr ""
 
-#: ../admin/setting.php:230
+#: ../admin/setting.php:190
 msgid "You can manually make any post type payable. See detail at how to customize."
 msgstr ""
 
-#: ../admin/setting.php:237
+#: ../admin/setting.php:197
 msgid "Automatic output"
 msgstr ""
 
-#: ../admin/setting.php:242
+#: ../admin/setting.php:202
 msgid "Show complete form"
 msgstr ""
 
-#: ../admin/setting.php:246
+#: ../admin/setting.php:206
 msgid "Manually display form"
 msgstr ""
 
-#: ../admin/setting.php:249
+#: ../admin/setting.php:209
 msgid "If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags."
 msgstr ""
 
-#: ../admin/setting.php:256
+#: ../admin/setting.php:216
 msgid "Assets Loading"
 msgstr ""
 
-#: ../admin/setting.php:261
+#: ../admin/setting.php:221
 msgid "Load plugin default CSS and JS"
 msgstr ""
 
-#: ../admin/setting.php:265
+#: ../admin/setting.php:225
 msgid "Load only JS"
 msgstr ""
 
-#: ../admin/setting.php:269
+#: ../admin/setting.php:229
 msgid "Load no Assets"
 msgstr ""
 
-#: ../admin/setting.php:272
+#: ../admin/setting.php:232
 msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign."
+msgstr ""
+
+#: ../admin/setting.php:239
+msgid "Transfer Setting"
+msgstr ""
+
+#: ../admin/setting.php:244
+msgid "Accept Transfer"
+msgstr ""
+
+#: ../admin/setting.php:247
+msgid "Disallow"
+msgstr ""
+
+#: ../admin/setting.php:248
+msgid "Allow"
+msgstr ""
+
+#: ../admin/setting.php:250
+msgid "If you accept transfer, users can pay with bank account or something that is not digital transaction."
+msgstr ""
+
+#: ../admin/setting.php:251
+msgid "This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made."
+msgstr ""
+
+#: ../admin/setting.php:257
+msgid "Notification Frequency"
+msgstr ""
+
+#: ../admin/setting.php:261
+#, php-format
+msgid "Send reminder on every %s days"
+msgstr ""
+
+#: ../admin/setting.php:267
+#, php-format
+msgid "Transaction expires by %s days"
+msgstr ""
+
+#: ../admin/setting.php:272
+msgid "If you don't want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past."
 msgstr ""
 
 #: ../admin/setting.php:283
@@ -2817,7 +2830,6 @@ msgid "No matching Campaign found."
 msgstr ""
 
 #: ../tables/list-campaign.php:102
-#: ../tables/list-management.php:260
 msgid "Start"
 msgstr ""
 
@@ -2836,7 +2848,6 @@ msgstr ""
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
-#: ../tables/list-management.php:285
 #, php-format
 msgid "%d per 1Page"
 msgstr ""
@@ -2846,6 +2857,7 @@ msgid "No matching device found."
 msgstr ""
 
 #: ../tables/list-management.php:103
+#: ../tables/list-transfers.php:135
 msgid "No matching transaction found."
 msgstr ""
 
@@ -2863,11 +2875,13 @@ msgid "No Limit"
 msgstr ""
 
 #: ../tables/list-management.php:220
+#: ../tables/list-transfers.php:215
 #, php-format
 msgid "%d days left"
 msgstr ""
 
 #: ../tables/list-management.php:259
+#: ../tables/list-transfers.php:299
 msgid "All Status"
 msgstr ""
 
