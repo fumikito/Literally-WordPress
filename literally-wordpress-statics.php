@@ -40,6 +40,14 @@ class LWP_Payment_Methods {
 		);
 		return $methods;
 	}
+	
+	private function _($text){
+		global $lwp;
+		$lwp->_('PayPal');
+		$lwp->_('CAMPAIGN');
+		$lwp->_('present');
+		$lwp->_('TRANSFER');
+	}
 }
 
 
@@ -81,5 +89,18 @@ class LWP_Payment_Status {
 			self::SUCCESS,
 			self::REFUND
 		);
+	}
+	
+	/**
+	 * For gettext
+	 * @global Literally_WordPress $lwp
+	 * @param string $text 
+	 */
+	private function _($text){
+		global $lwp;
+		$lwp->_('Success');
+		$lwp->_('Cancel');
+		$lwp->_('START');
+		$lwp->_('REFUND');
 	}
 }

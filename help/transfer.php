@@ -23,12 +23,12 @@
 	<?php $lwp->e('Your use\'s status changed, notification mail will be sent. Now your user know transaction was finished.'); ?>
 </p>
 <h2><?php $lwp->e('Customizing notification'); ?></h2>
-<p>
-	<?php printf($lwp->_('Making transfer allowed, you can access to <a href="%1$s" target="_top">%2$s</a>.'), admin_url('edit.php?post_type='.$lwp->notification->post_type), $lwp->_('Notification')); ?><br />
-	<?php $lwp->e('You can edit each notification message as custom post type.'); ?><br />
-	<?php $lwp->e('Required messages will be created automatically by this plugin. You don\'t have to create new notification message.');?><br />
-	<?php $lwp->e('Notifications accept place holder such as bank account, expiration date, item page\'s url and so on. For detail, see each notification\'s edit page.'); ?>
-</p>
+<ul>
+	<li><?php printf($lwp->_('Making transfer allowed, you can access to <a href="%1$s" target="_top">%2$s</a>.'), admin_url('edit.php?post_type='.$lwp->notification->post_type), $lwp->_('Notification')); ?></li>
+	<li><?php $lwp->e('You can edit each notification message as custom post type.'); ?></li>
+	<li><?php $lwp->e('Required messages will be created automatically by this plugin. You don\'t have to create new notification message.');?></li>
+	<li><?php $lwp->e('Notifications accept place holder such as bank account, expiration date, item page\'s url and so on. For detail, see each notification\'s edit page.'); ?></li>
+</ul>
 <p class="desc">
 	<strong><?php $lwp->e("Notes"); ?></strong>: 
 	<?php $lwp->e('Adding new notification is possible but meaningless.'); ?>

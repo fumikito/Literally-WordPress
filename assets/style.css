@@ -32,6 +32,8 @@ div.ebook{
 	font-family: Baskerville,Times,'Times New Roman',serif !important; 
 }
 
+
+/* Help Page */
 .help-wrap{
 	padding:10px 20px;
 }
@@ -49,10 +51,25 @@ div.ebook{
 	display: block;
 }
 
-.help-wrap h2{
-	clear:both;
+.help-wrap h1{
+	font-size: 3em;
+	margin-bottom:1em;
 }
 
+.help-wrap h2{
+	clear:both;
+	color:#444;
+	border-bottom:1px dotted #444;
+	padding-bottom:0.3em;
+	margin-bottom:0.7em;
+	margin-top:1em;
+}
+.help-wrap ul{
+	padding-left:2em;
+}
+.help-wrap ul li{
+	list-style: outside circle;
+}
 input.short{
 	width:3em;
 }
