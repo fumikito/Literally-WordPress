@@ -266,6 +266,8 @@ class Literally_WordPress{
 		/*--------------
 		 * アクションフック
 		 */
+		//Check table and 
+		add_action('plugins_loaded', array($this, 'table_create'));
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
 		//スタイルシート・JSの追加
@@ -411,64 +413,75 @@ EOS;
 		global $wpdb;
 		//バージョンの確認
 		if($this->version > $this->option['db_version']){
-			//$wpdb->show_errors();
+			$wpdb->show_errors();
+			//Change Field name because desc is 
+			$row = null;
+			foreach($wpdb->get_results("DESCRIBE {$this->files}") as $field){
+				if($field->Field == 'desc'){
+					$row = $field;
+					break;
+				}
+			}
+			if($field){
+				$wpdb->query("ALTER TABLE {$this->files} CHANGE COLUMN `desc` `detail` TEXT NOT NULL");
+			}
 			$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
 			$sql = array();
 			$sql[] = <<<EOS
-				CREATE TABLE `{$this->files}` (
-					`ID` INT NOT NULL AUTO_INCREMENT,
-					`book_id` BIGINT NOT NULL,
-					`name` VARCHAR( 255 ) NOT NULL,
-					`desc` TEXT NOT NULL,
-					`file` VARCHAR( 255 ) NOT NULL,
-					`public` INT NOT NULL DEFAULT 1,
-					`free` INT NOT NULL DEFAULT 0,
-					`registered` DATETIME NOT NULL,
-					`updated` DATETIME NOT NULL,
-					PRIMARY KEY (`ID`)
+				CREATE TABLE {$this->files} (
+					ID INT NOT NULL AUTO_INCREMENT,
+					book_id BIGINT NOT NULL,
+					name VARCHAR(255) NOT NULL,
+					detail TEXT NOT NULL,
+					file VARCHAR(255) NOT NULL,
+					public INT NOT NULL DEFAULT 1,
+					free INT NOT NULL DEFAULT 0,
+					registered DATETIME NOT NULL,
+					updated DATETIME NOT NULL,
+					PRIMARY KEY  (ID)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE `{$this->transaction}` (
-					`ID` BIGINT NOT NULL AUTO_INCREMENT,
-					`user_id` BIGINT NOT NULL,
-					`book_id` BIGINT NOT NULL,
-					`price` BIGINT NOT NULL,
-					`status` VARCHAR( 45 ) NOT NULL,
-					`method` VARCHAR( 100 ) NOT NULL DEFAULT 'PAYPAL',
-					`transaction_key` VARCHAR (255) NOT NULL,
-					`transaction_id` VARCHAR (255) NOT NULL,
-					`payer_mail` VARCHAR (255) NOT NULL,
-					`registered` DATETIME NOT NULL,
-					`updated` DATETIME NOT NULL,
-					`expires` DATETIME NOT NULL, 
-					PRIMARY KEY (`ID`)
+				CREATE TABLE {$this->transaction} (
+					ID BIGINT NOT NULL AUTO_INCREMENT,
+					user_id BIGINT NOT NULL,
+					book_id BIGINT NOT NULL,
+					price BIGINT NOT NULL,
+					status VARCHAR(45) NOT NULL,
+					method VARCHAR(100) NOT NULL DEFAULT 'PAYPAL',
+					transaction_key VARCHAR (255) NOT NULL,
+					transaction_id VARCHAR (255) NOT NULL,
+					payer_mail VARCHAR (255) NOT NULL,
+					registered DATETIME NOT NULL,
+					updated DATETIME NOT NULL,
+					expires DATETIME NOT NULL, 
+					PRIMARY KEY  (ID)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE `{$this->campaign}` (
-					`ID` INT NOT NULL AUTO_INCREMENT,
-					`book_id` BIGINT NOT NULL ,
-					`price` BIGINT NOT NULL ,
-					`start` DATETIME NOT NULL ,
-					`end` DATETIME NOT NULL,
-					PRIMARY KEY (`ID`)
+				CREATE TABLE {$this->campaign} (
+					ID INT NOT NULL AUTO_INCREMENT,
+					book_id BIGINT NOT NULL,
+					price BIGINT NOT NULL,
+					start DATETIME NOT NULL,
+					end DATETIME NOT NULL,
+					PRIMARY KEY  (ID)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE `{$this->devices}` (
-					`ID` BIGINT NOT NULL AUTO_INCREMENT,
-					`name` VARCHAR( 255 ) NOT NULL,
-					`slug` VARCHAR( 255 ) NOT NULL,
-					PRIMARY KEY  (`ID`)
+				CREATE TABLE {$this->devices} (
+					ID BIGINT NOT NULL AUTO_INCREMENT,
+					name VARCHAR(255) NOT NULL,
+					slug VARCHAR(255) NOT NULL,
+					PRIMARY KEY  (ID)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			$sql[] = <<<EOS
-				CREATE TABLE `{$this->file_relationships}` (
-					`ID` BIGINT NOT NULL AUTO_INCREMENT,
-					`file_id` INT NOT NULL ,
-					`device_id` INT NOT NULL,
-					PRIMARY KEY (`ID`)
+				CREATE TABLE {$this->file_relationships} (
+					ID BIGINT NOT NULL AUTO_INCREMENT,
+					file_id INT NOT NULL,
+					device_id INT NOT NULL,
+					PRIMARY KEY  (ID)
 				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 			//テーブルの作成
@@ -829,7 +842,6 @@ EOS;
 	 */
 	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0)
 	{
-		var_dump($devices);
 		//ディレクトリの存在確認と作成
 		$book_dir = $this->option["dir"].DIRECTORY_SEPARATOR.$book_id;
 		if(!is_dir($book_dir))
@@ -907,7 +919,6 @@ EOS;
 				}
 				foreach($devices as $d){
 					//デバイスIDが削除済みにも登録済みにも存在しない場合
-					var_dump($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d));
 					if(false === array_search($d, $deleted_ids) && !$wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d))){
 						$wpdb->insert(
 							$this->file_relationships,
