@@ -125,53 +125,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th valign="top">
-					<label for="account"><?php $this->e('Bank Account'); ?></label>
-				</th>
-				<td>
-					<textarea cols="40" rows="5" name="account" id="account"><?php $this->h($this->option['account'])?></textarea>
-					<p class="description">
-						<?php $this->e('This account will be shown on thank you screen and thank you mail. Please enter actual bank account which user can transfer their deposit to.'); ?>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">
-					<label for="thankyou"><?php $this->e('Thank you Message'); ?></label>
-				</th>
-				<td>
-					<textarea cols="40" rows="5" name="thankyou" id="thankyou"><?php $this->h($this->option['thankyou'])?></textarea>
-					<p class="description">
-						<?php $this->e('This message will be shown on thank you screen and thank you mail. You can use place holders below.'); ?><br />
-						<strong>%account%, %user_display%, %price%, %item%</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">
-					<label for="transfer_footer"><?php $this->e('Mail Footer'); ?></label>
-				</th>
-				<td>
-					<textarea cols="40" rows="5" name="transfer_footer" id="transfer_footer"><?php $this->h($this->option['transfer_footer'])?></textarea>
-					<p class="description">
-						<?php $this->e('This footer is displayed on notify e-mail footer. You can use place holders below.'); ?><br />
-						<strong>%site_name%, %site_description%, %url%</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<th valign="top">
-					<label for="notification"><?php $this->e('Notification Mail Body'); ?></label>
-				</th>
-				<td>
-					<textarea cols="40" rows="5" name="notification" id="notification"><?php $this->h($this->option['notification'])?></textarea>
-					<p class="description">
-						<?php $this->e('This message will be displayed on reminder for transfer. You can use place holders below.'); ?><br />
-						<strong>%item%, %price%, %user_display%, %account%</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
 				<th><label><?php $this->e('Notification Frequency'); ?></label></th>
 				<td>
 					<label>

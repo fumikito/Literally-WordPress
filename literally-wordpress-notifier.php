@@ -29,7 +29,7 @@ class LWP_Notifier{
 	/**
 	 * @var string
 	 */
-	private $post_type = "lwp_notification";
+	public $post_type = "lwp_notification";
 	
 	/**
 	 * @var array
