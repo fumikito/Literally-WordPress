@@ -33,21 +33,21 @@ class Literally_WordPress
 	 * 
 	 * @var string
 	 */
-	public $campaign = "campaign";
+	public $campaign = "";
 	
 	/**
 	* トランザクションテーブル
 	*
 	* @var string
 	*/
-	public $transaction = "transaction";
+	public $transaction = "";
 	
 	/**
 	* ファイルテーブル
 	*
 	* @var string
 	*/
-	public $files = "files";
+	public $files = "";
 	
 	
 	/**
@@ -55,7 +55,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	public $devices = "devices";
+	public $devices = "";
 	
 	
 	/**
@@ -63,7 +63,7 @@ class Literally_WordPress
 	*
 	* @var string
 	*/
-	public $file_relationships = "file_relationships";
+	public $file_relationships = "";
 	
 	/**
 	 * このプラグインディレクトリへのURL
@@ -90,6 +90,7 @@ class Literally_WordPress
 	 * トランザクションが成功しているかどうか
 	 * 
 	 * @var string
+	 * @deprecated
 	 */
 	public $transaction_status = "FAILED";
 	
@@ -130,6 +131,7 @@ class Literally_WordPress
 	/**
 	 * コンストラクター
 	 * 
+	 * @global wpdb $wpdb
 	 * @return void
 	 */
 	public function __construct()
@@ -139,11 +141,11 @@ class Literally_WordPress
 		$this->url = plugin_dir_url(__FILE__);
 		$this->dir = dirname(__FILE__);
 		//テーブル名の設定
-		$this->campaign = $wpdb->prefix."lwp_".$this->campaign;
-		$this->transaction = $wpdb->prefix."lwp_".$this->transaction;
-		$this->files = $wpdb->prefix."lwp_".$this->files;
-		$this->devices = $wpdb->prefix."lwp_".$this->devices;
-		$this->file_relationships = $wpdb->prefix."lwp_".$this->file_relationships;
+		$this->campaign = LWP_Tables::campaign();
+		$this->transaction = LWP_Tables::transaction();
+		$this->files = LWP_Tables::files();
+		$this->devices = LWP_Tables::devices();
+		$this->file_relationships = LWP_Tables::file_relationships();
 		//テキストドメインを設定する
 		load_plugin_textdomain($this->domain, false, basename($this->dir).DIRECTORY_SEPARATOR."language");
 		////オプションの設定

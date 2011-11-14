@@ -1,8 +1,88 @@
 <?php
 /**
+ * Static class which holds table names.
+ * 
+ * @package literally_wordpress
+ * @since 0.8.6
+ */
+class LWP_Tables{
+	
+	/**
+	 * Table prefix for this plugin
+	 */
+	const PREFIX = 'lwp_';
+	
+	/**
+	 * Returns Campaign table name
+	 * @return string
+	 */
+	public static function campaign(){
+		return self::get_name('campaign');
+	}
+	
+	/**
+	 * Returns transaction table name
+	 * @return string
+	 */
+	public static function transaction(){
+		return self::get_name('transaction');
+	}
+	
+	/**
+	 * Returns file table name
+	 * @return string
+	 */
+	public static function files(){
+		return self::get_name('files');
+	}
+	
+	/**
+	 * Returns device table name
+	 * @return string
+	 */
+	public static function devices(){
+		return self::get_name('devices');
+	}
+	
+	/**
+	 * Returns file_relationships table
+	 * @return string
+	 */
+	public static function file_relationships(){
+		return self::get_name('file_relationships');
+	}
+
+	/**
+	 * Create table name with prefix.
+	 * @global wpdb $wpdb
+	 * @param string $name
+	 * @return string
+	 */
+	public static function get_name($name){
+		global $wpdb;
+		return $wpdb->prefix.self::PREFIX.$name;
+	}
+	
+	/**
+	 * Returns table name
+	 * @return array
+	 */
+	public static function get_tables(){
+		$tables = array();
+		foreach(get_class_methods('LWP_Tables') as $method){
+			if(!preg_match('/^get_/', $method)){
+				$tables[] = self::$method();
+			}
+		}
+		return $tables;
+	}
+}
+
+/**
  * Static class which has names of Literally Wordpres's Payment Methods.
  *
  * @package literally worrdprss
+ * @since 0.8.6
  */
 class LWP_Payment_Methods {
 	/**
@@ -55,6 +135,7 @@ class LWP_Payment_Methods {
  * Static class which has names of Literally Wordpres's Payment Methods.
  *
  * @package literally worrdprss
+ * @since 0.8.6
  */
 class LWP_Payment_Status {
 	
