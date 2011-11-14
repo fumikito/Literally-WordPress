@@ -340,15 +340,13 @@ class Literally_WordPress
 		add_action("admin_menu", array($this, "add_menu"), 1);
 		//メッセージの出力
 		add_action("admin_notice", array($this, "admin_notice"));
-		//メタボックスの追加
-		foreach($this->option['payable_post_types'] as $post){
-			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
-		}
+		
 		//ファイルアップロード用のタブを追加
 		add_action("media_upload_ebook", array($this, "generate_tab"));
 		
 		//ユーザーに書籍をプレゼントするフォーム
 		add_action("edit_user_profile", array($this, "give_user_form"));
+		
 		//書籍プレゼントが実行されたら
 		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 			add_action("profile_update", array($this, "give_user"));
@@ -486,6 +484,10 @@ EOS;
 		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
 		//顧客の購入履歴確認ページ
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
+		//メタボックスの追加
+		foreach($this->option['payable_post_types'] as $post){
+			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
+		}
 	}
 	
 	/**
