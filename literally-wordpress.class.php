@@ -408,8 +408,7 @@ EOS;
 	*
 	* @return void
 	*/
-	public function table_create()
-	{
+	public function table_create(){
 		global $wpdb;
 		//バージョンの確認
 		if($this->version > $this->option['db_version']){
@@ -422,7 +421,7 @@ EOS;
 					break;
 				}
 			}
-			if($field){
+			if($row){
 				$wpdb->query("ALTER TABLE {$this->files} CHANGE COLUMN `desc` `detail` TEXT NOT NULL");
 			}
 			$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
