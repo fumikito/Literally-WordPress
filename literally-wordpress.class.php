@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.8.6";
+	public $version = "0.8.8";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -157,6 +157,9 @@ class Literally_WordPress{
 			"password" => "",
 			"signature" => "",
         	"token" => "",
+			"subscription" => false,
+			"subscription_post_types" => array(),
+			'subscription_format' => 'all',
 			'transfer' => false,
 			"notification_frequency" => 0,
 			"notification_limit" => 30,
@@ -189,6 +192,12 @@ class Literally_WordPress{
 				array_push($this->option['payable_post_types'], $this->option['custom_post_type']['slug']);
 			}
 		}
+		
+		//オプション更新
+		if($this->is_admin("setting")){
+			add_action('init', array($this, 'update_option'));
+		}
+		
 		//Add Custom Post Type
 		add_action("init", array($this, "custom_post"));
 		//Register Script Library
@@ -208,8 +217,7 @@ class Literally_WordPress{
 	*
 	* @return void
 	*/
-	public function custom_post()
-	{
+	public function custom_post(){
 		if(!empty($this->option['custom_post_type'])){
 			//投稿タイプを設定
 			$labels = array(
@@ -273,10 +281,6 @@ class Literally_WordPress{
 		//スタイルシート・JSの追加
 		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
 			add_action("admin_init", array($this, "admin_assets"));
-		}
-		//オプション更新
-		if($this->is_admin("setting")){
-			add_action("admin_init", array($this, "update_option"));
 		}
 		//キャンペーン更新
 		if($this->is_admin("campaign")){
@@ -685,7 +689,7 @@ EOS;
 	{
 		//要素が揃っていたら更新
 		if(
-			isset($_REQUEST["_wpnonce"]) && isset($_REQUEST["_wp_http_referer"])
+			isset($_REQUEST["_wpnonce"], $_REQUEST["_wp_http_referer"])
 			&& false !== strpos($_REQUEST["_wp_http_referer"], "lwp-setting")
 			&& wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_option")
 		){
@@ -703,7 +707,10 @@ EOS;
 				"currency_code" => $_REQUEST["currency_code"],
 				"country_code" => $_REQUEST["country_code"],
 				"show_form" => (boolean)($_REQUEST["show_form"] == 1),
-				"load_assets" => (int)$_REQUEST["load_assets"]
+				"load_assets" => (int)$_REQUEST["load_assets"],
+				"subscription" => (boolean)$_REQUEST['subscription'],
+				"subscription_post_types" => (array)$_REQUEST['subscription_post_types'],
+				'subscription_format' => (string)$_REQUEST['subscription_format'],
 			);
 			//sandbox
 			$new_option['sandbox'] = isset($_REQUEST['sandbox']) ? true : false;
