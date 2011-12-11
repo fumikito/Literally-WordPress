@@ -96,7 +96,7 @@ class LWP_Notifier{
 			'show_in_menu' => 'lwp-setting',
 			'query_var' => false,
 			'rewrite' => false,
-			'capability_type' => 'post',
+			'capability_type' => 'page',
 			'hierarchical' => false,
 			'menu_position' => 100,
 			'has_archive' => false,

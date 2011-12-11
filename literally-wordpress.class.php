@@ -120,6 +120,11 @@ class Literally_WordPress{
 	 */
 	public $notifier = null;
 	
+	/**
+	 * Subscription Utility
+	 * @var LWP_Subscription
+	 */
+	public $subscription = null;
 		
 	//--------------------------------------------
 	//
@@ -210,6 +215,8 @@ class Literally_WordPress{
 		add_shortcode('buynow', array($this, 'shortcode_buynow'));
 		//Initialize Notification Utility
 		$this->notifier = new LWP_Notifier($this->option['transfer'], $this->option['notification_frequency'], $this->option['notification_limit']);
+		//Initialize 
+		$this->subscription = new LWP_Subscription($this->option);
 	}
 	
 	/**
