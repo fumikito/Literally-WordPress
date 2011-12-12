@@ -292,6 +292,21 @@ EOS;
 	}
 	
 	/**
+	 * Returns subscription archive page
+	 * @return string
+	 */
+	public function get_subscription_post_type_page(){
+		if(!empty($this->post_types)){
+			foreach($this->post_types as $post_type){
+				$url = get_post_type_archive_link($post_type);
+			}
+			return $url;
+		}else{
+			return get_bloginfo('url');
+		}
+	}
+	
+	/**
 	 * Alias for gettext
 	 * @global Literally_WordPress $lwp
 	 * @param string $text 

@@ -41,17 +41,23 @@ class LWP_List_Transfer extends WP_List_Table{
 					case LWP_Payment_Status::START:
 						//Update Status
 						foreach($transfes as $transaction_id){
+							$to_update = array(
+								'updated' => gmdate('Y-m-d H:i:s'),
+								'status' => $this->current_action()
+							);
+							$where = array('%s', '%s');
+							if($this->current_action() == LWP_Payment_Status::SUCCESS){
+								$to_update['expires'] = lwp_expires_date((int)$wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+								$where[] = '%s';
+							}
 							$wpdb->update(
 								$lwp->transaction,
-								array(
-									'updated' => gmdate('Y-m-d H:i:s'),
-									'status' => $this->current_action()
-								),
+								$to_update,
 								array(
 									'ID' => $transaction_id,
 									'method' => LWP_Payment_Methods::TRANSFER
 								),
-								array('%s', '%s'),
+								$where,
 								array('%d', "%s")
 							);
 							if($this->current_action() == LWP_Payment_Status::SUCCESS){

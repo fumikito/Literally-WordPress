@@ -141,6 +141,29 @@ function lwp_price($post = null)
 }
 
 /**
+ * Returns days for expiration
+ * @param object $post
+ * @return int
+ */
+function lwp_expires($post = null){
+	return (int)_lwp_post_meta('_lwp_expires', $post);
+}
+
+/**
+ * Returns expires date in GMT
+ * @param object $post
+ * @return string
+ */
+function lwp_expires_date($post = null){
+	$expires = lwp_expires($post);
+	if($expires){
+		return date('Y-m-d H:i:s', strtotime(gmdate('Y-m-d H:i:s')) + (lwp_expires($post) * 24 * 60 * 60));
+	}else{
+		return '0000-00-00 00:00:00';
+	}
+}
+
+/**
  * 現在設定されている通貨記号を返す
  * 
  * @since 0.8

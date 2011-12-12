@@ -1583,6 +1583,7 @@ EOS;
 					}else{
 						$this->show_form('subscription', array(
 							'subscriptions' => $subscriptions,
+							'archive' => $this->subscription->get_subscription_post_type_page(),
 							'transaction' => (boolean)($_GET['lwp'] == 'subscription')
 						));
 					}
@@ -1600,7 +1601,6 @@ EOS;
 					}elseif(lwp_price($book_id) < 1){
 						//セール中のため無料だが、本来は有料。トランザクションの必要がない
 						if(lwp_original_price($book_id) > 0){
-							$expires = 
 							//購入済みにする
 							$wpdb->insert(
 								$this->transaction,
@@ -1611,9 +1611,10 @@ EOS;
 									"status" => LWP_Payment_Status::SUCCESS,
 									"method" => LWP_Payment_Methods::CAMPAIGN,
 									"registered" => gmdate('Y-m-d H:i:s'),
-									"updated" => gmdate('Y-m-d H:i:s')
+									"updated" => gmdate('Y-m-d H:i:s'),
+									'expires' => lwp_expires_date($book_id)
 								),
-								array("%d", "%d", "%d", "%s", "%s", "%s", "%s")
+								array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
 							);
 							//サンキューページを表示する
 							header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
@@ -1707,12 +1708,13 @@ EOS;
 									"transaction_key" => $_POST['INVNUM'],
 									"transaction_id" => $transaction_id,
 									"payer_mail" => $_POST["EMAIL"],
-									'updated' => gmdate("Y-m-d H:i:s")
+									'updated' => gmdate("Y-m-d H:i:s"),
+									'expires' => lwp_expires_date($post_id)
 								),
 								array(
 									"transaction_id" => $_POST["TOKEN"]
 								),
-								array("%s", "%s", "%s", "%s", "%s"),
+								array("%s", "%s", "%s", "%s", "%s", "%s"),
 								array("%s")
 							);
 							//サンキューページを表示する

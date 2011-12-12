@@ -40,6 +40,10 @@
 <p>
 	<a class="button" href="#" onclick="window.history.back(); return false;"><?php $this->e("Cancel"); ?></a>
 </p>
+<?php elseif(preg_match("/lwp/", $_SERVER["HTTP_REFERER"])): ?>
+<p>
+	<a class="button" href="<?php echo $archive; ?>"><?php $this->e("Return"); ?></a>
+</p>
 <?php else: ?>
 <p>
 	<a class="button" href="#" onclick="window.history.back(); return false;"><?php $this->e("Return"); ?></a>
