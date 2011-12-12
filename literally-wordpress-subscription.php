@@ -15,7 +15,7 @@ class LWP_Subscription {
 	/**
 	 * @var string
 	 */
-	private $post_type = 'lwp_subscription';
+	public $post_type = 'lwp_subscription';
 	
 	/**
 	 * @var array
@@ -153,11 +153,11 @@ class LWP_Subscription {
 					<tbody>
 						<tr>
 							<th><label for="subscription_price"><?php $this->e('Price'); ?>(<?php echo $lwp->option['currency_code']; ?>)</label></th>
-							<td><input style="width:5em;" type="text" name="subscription_price" id="subscription_price" value="<?php echo (int)get_post_meta($post->ID, '_lwp_subscription_price', true);  ?>" /></td>
+							<td><input style="width:5em;" type="text" name="subscription_price" id="subscription_price" value="<?php echo (int)get_post_meta($post->ID, 'lwp_price', true);  ?>" /></td>
 						</tr>
 						<tr>
 							<th><label for="subscription_expires"><?php $this->e('Expires'); ?>(<?php $this->e("Days"); ?>)</label></th>
-							<td><input style="width:3em;" type="text" name="subscription_expires" id="subscription_expires" value="<?php echo (int)get_post_meta($post->ID, '_lwp_subscription_expires', true);  ?>" /></td>
+							<td><input style="width:3em;" type="text" name="subscription_expires" id="subscription_expires" value="<?php echo (int)get_post_meta($post->ID, '_lwp_expires', true);  ?>" /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -172,8 +172,8 @@ class LWP_Subscription {
 	 */
 	public function edit_post($post_id){
 		if(isset($_REQUEST['_lwpnonce']) && wp_verify_nonce($_REQUEST['_lwpnonce'], 'lwp_subscription_setting')){
-			update_post_meta($post_id, '_lwp_subscription_price', (int)$_REQUEST['subscription_price']);
-			update_post_meta($post_id, '_lwp_subscription_expires', (int)$_REQUEST['subscription_expires']);
+			update_post_meta($post_id, 'lwp_price', (int)$_REQUEST['subscription_price']);
+			update_post_meta($post_id, '_lwp_expires', (int)$_REQUEST['subscription_expires']);
 		}
 	}
 	
@@ -259,7 +259,36 @@ EOS;
 		$atts = shortcode_atts(array(
 			
 		), $atts);
-		return admin_url();
+		return lwp_endpoint('subscription');
+	}
+	
+	/**
+	 * Returns subscription plans
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @return array 
+	 */
+	public function get_subscription_list(){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT p.post_title, p.ID, p.post_content, pm.meta_value AS price, pm2.meta_value AS expires
+			FROM {$wpdb->posts} AS p
+			INNER JOIN {$wpdb->postmeta} AS pm
+			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
+			INNER JOIN {$wpdb->postmeta} AS pm2
+			ON p.ID = pm2.post_id AND pm2.meta_key = '_lwp_expires'
+			WHERE p.post_type = %s AND p.post_status = 'publish'
+			ORDER BY CAST(pm.meta_value AS UNSIGNED) ASC
+EOS;
+		return $wpdb->get_results($wpdb->prepare($sql, $this->post_type));
+	}
+	
+	/**
+	 * Return subscription price lists page
+	 * @return string
+	 */
+	public function get_subscription_archive(){
+		return lwp_endpoint('pricelist');
 	}
 	
 	/**

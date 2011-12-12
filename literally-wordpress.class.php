@@ -1571,20 +1571,36 @@ EOS;
 		if(is_front_page() && isset($_GET["lwp"])){
 			global $user_ID, $wpdb;
 			switch($_GET["lwp"]){
-				case "buy": //リダイレクトかwp_die
-				case "transfer":
+				case "pricelist":
+				case "subscription":
+					//購入可能かチェックする
+					if($_GET['lwp'] == 'subscription' && !is_user_logged_in()){
+						auth_redirect($_SERVER["REQUEST_URI"]);
+					}elseif($_GET['lwp'] == 'subscription' && $this->subscription->is_subscriber()){
+						wp_die($this->_('You are already subscriber. You don\'t have to buy subscription.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
+					}elseif(!($subscriptions = $this->subscription->get_subscription_list()) || empty($subscriptions)){
+						wp_die($this->_('Sorry, but there is no subscription plan.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
+					}else{
+						$this->show_form('subscription', array(
+							'subscriptions' => $subscriptions,
+							'transaction' => (boolean)($_GET['lwp'] == 'subscription')
+						));
+					}
+					break;
+				case "buy": //フォーム表示かリダイレクトかwp_die
 					//そもそも購入可能かチェック
 					$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
 					if(!is_user_logged_in()){
 						//ユーザーがログインしていない
 						auth_redirect ($_SERVER["REQUEST_URI"]);
 						exit;
-					}elseif(!wp_get_single_post ($book_id)){
+					}elseif(!($book = wp_get_single_post ($book_id))){
 						//コンテンツが指定されていない
 						$message = $this->_("No content is specified.");
 					}elseif(lwp_price($book_id) < 1){
 						//セール中のため無料だが、本来は有料。トランザクションの必要がない
 						if(lwp_original_price($book_id) > 0){
+							$expires = 
 							//購入済みにする
 							$wpdb->insert(
 								$this->transaction,
@@ -1607,45 +1623,77 @@ EOS;
 							$message = $this->_("This contents is not on sale.");
 						}
 					}else{
-						//この時点で購入可能
-						if($_GET['lwp'] == 'transfer'){
-							if($this->option['transfer']){
-								//送金トランザクションを登録
-								$wpdb->insert(
-									$this->transaction,
-									array(
-										"user_id" => $user_ID,
-										"book_id" => $book_id,
-										"price" => lwp_price($book_id),
-										"transaction_key" => sprintf("%08d", $user_ID),
-										"status" => LWP_Payment_Status::START,
-										"method" => LWP_Payment_Methods::TRANSFER,
-										"registered" => gmdate('Y-m-d H:i:s'),
-										"updated" => gmdate('Y-m-d H:i:s')
-									),
-									array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
-								);
-								//Send Notification
-								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $wpdb->insert_id));
-								$notification_status = $this->notifier->notify($transaction, 'thanks');
-								//Show Form
-								$this->show_form('transfer', array(
-									'post_id' => $book_id,
-									'transaction' => $transaction,
-									'notification' => $notification_status
-								));
-							}else{
-								$message = $this->_("Sorry, we can't accept this payment method.");
+						//Start Transaction
+						if(isset($_GET['_wpnonce'], $_GET['lwp-method']) && wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow')){
+							//この時点で購入可能
+							switch($_GET['lwp-method']){
+								case 'transfer':
+									if($this->option['transfer']){
+										//Check if there is active transaction
+										$sql = <<<EOS
+											SELECT * FROM {$this->transaction}
+											WHERE user_id = %d AND book_id = %d AND status = %s AND DATE_ADD(registered, INTERVAL %d DAY) > NOW()
+EOS;
+										$transaction = $wpdb->get_row($wpdb->prepare($sql, $user_ID, $book_id, LWP_Payment_Status::START, $this->option['notification_limit']));
+										if(!$transaction){
+											//送金トランザクションを登録
+											$wpdb->insert(
+												$this->transaction,
+												array(
+													"user_id" => $user_ID,
+													"book_id" => $book_id,
+													"price" => lwp_price($book_id),
+													"transaction_key" => sprintf("%08d", $user_ID),
+													"status" => LWP_Payment_Status::START,
+													"method" => LWP_Payment_Methods::TRANSFER,
+													"registered" => gmdate('Y-m-d H:i:s'),
+													"updated" => gmdate('Y-m-d H:i:s')
+												),
+												array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
+											);
+											//Send Notification
+											$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $wpdb->insert_id));
+											$notification_status = $this->notifier->notify($transaction, 'thanks');
+										}else{
+											$notification_status = 'sent';
+										}
+										if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $book_id)) == $this->subscription->post_type){
+											$url = $this->subscription->get_subscription_archive();
+										}else{
+											$url = get_permalink($book_id);
+										}
+										//Show Form
+										$this->show_form('transfer', array(
+											'post_id' => $book_id,
+											'transaction' => $transaction,
+											'notification' => $notification_status,
+											'link' => $url
+										));
+									}else{
+										$message = $this->_("Sorry, we can't accept this payment method.");
+									}
+									break;
+								case 'paypal':
+									if(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
+										//トランザクション作成に失敗
+										$message = $this->_("Failed to make transaction.");
+									}
+									break;
+								default:
+									$message = $this->_("Wrong payment method is specified.");
+									break;
 							}
 						}else{
-							if(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
-								//トランザクション作成に失敗
-								$message = $this->_("Failed to make transaction.");
-							}
+							//Select Payment Method
+							$this->show_form('selection', array(
+								'post_id' => $book_id,
+								'price' => lwp_price($book_id),
+								'item' => $book->post_title
+							));
 						}
 					}
 					//エラーが起きた場合はwp_die
-					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('backlink' => true));
+					wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
 					break;
 				case "confirm": //コンファームかwp_die
 					if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
@@ -1670,7 +1718,7 @@ EOS;
 							//サンキューページを表示する
 							header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
 						}else{
-							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("backlink" => true));
+							wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("back_link" => true));
 						}
 					}else{
 						$message = "";
@@ -1685,26 +1733,35 @@ EOS;
 						}
 						$post = get_post($transaction->book_id);
 						if(empty($message)){
+							if($post->post_type == $this->subscription->post_type){
+								$link = $this->subscription->get_subscription_archive();
+							}else{
+								$link = get_permalink($post->ID);
+							}
 							$this->show_form("return", array(
 								"info" => $info,
 								"transaction" => $transaction,
-								"post" => $post
+								"post" => $post,
+								'link' => $link
 							));
 						}else{
-							wp_die($message, $this->_("Failed"), array("backlink" => true));
+							wp_die($message, $this->_("Failed"), array("back_link" => true));
 						}
 					}
 					break;
 				case "success":
 					if(isset($_REQUEST['lwp-id'])){
-						$url = get_permalink($_REQUEST['lwp-id']);
+						if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id'])) == $this->subscription->post_type){
+							$url = $this->subscription->get_subscription_archive();
+						}else{
+							$url = get_permalink($_REQUEST['lwp-id']);
+						}
 					}else{
 						$url = get_bloginfo('url');
 					}
 					$this->show_form("success", array('link' => $url));
 					break;
 				case "cancel":
-					$post_id = $this->option['mypage'];
 					$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
 					if(!$token){
 						$token = isset($_REQUEST['TOKEN']) ? $_REQUEST['TOKEN'] : null;
@@ -1721,8 +1778,21 @@ EOS;
 							array("%s")
 						);
 						$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_id = %s", $token));
+						$post = get_post($post_id);
+						if($post->post_type == $this->subscription->post_type){
+							$url = $this->subscription->get_subscription_archive();
+						}else{
+							$url = get_permalink($post->ID);
+						}
+					}elseif($this->option['mypage']){
+						$url = get_permalink($this->option['mypage']);
+					}else{
+						$url = get_bloginfo('url');
 					}
-					$this->show_form("cancel", array("post_id" => $post_id));
+					$this->show_form("cancel", array(
+						"post_id" => $post_id,
+						'link' => $url
+					));
 					break;
 				case "file":
 					$this->print_file($_REQUEST["lwp_file"], $user_ID);

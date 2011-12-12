@@ -1,3 +1,8 @@
+<p class="message notice">
+	<?php $this->e("Please confirm the invoice below and accept payment.");?>
+</p>
+
+	
 <form method="post">
 	<?php wp_nonce_field("lwp_confirm"); ?>
 	<input type="hidden" name="TOKEN" value="<?php echo $info['TOKEN']; ?>" />
@@ -6,22 +11,8 @@
 	<input type="hidden" name="CURRENCYCODE" value="<?php echo $this->option['currency_code']; ?>" />
 	<input type="hidden" name="INVNUM" value="<?php echo $info['INVNUM']; ?>" />
 	<input type="hidden" name="EMAIL" value="<?php echo $info['EMAIL']; ?>" />
+	
 	<table class="form-table">
-		<tfoot>
-			<tr>
-				<td>
-					<p>
-						<a href="<?php bloginfo('url'); ?>?lwp=cancel&amp;TOKEN=<?php echo $info['token']?>"><?php $this->e("Cancel");?></a>
-					</p>
-				</td>
-				<td>
-					<p><?php $this->e("Please confirm the invoice above and accept payment.");?></p>
-					<p class="submit">
-						<input type="submit" id="lwp-submit" value="<?php $this->e("Confirm"); ?>" />
-					</p>
-				</td>
-			</tr>
-		</tfoot>
 		<tbody>
 			<tr>
 				<th>
@@ -56,4 +47,10 @@
 			</tr>
 		</tbody>
 	</table>
+	<p class="submit">
+		<input type="submit" id="lwp-submit" class="button-primary" value="<?php $this->e("Confirm"); ?>" />
+	</p>
 </form>
+<p>
+	<a class="button" href="<?php echo lwp_endpoint('cancel'); ?>&amp;TOKEN=<?php echo $info['TOKEN']?>"><?php $this->e("Cancel");?></a>
+</p>

@@ -361,7 +361,11 @@ You can also get in touch this item again:
 					$replaced = $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
 					break;
 				case 'item_url':
-					$replaced = get_permalink($transaction->book_id);
+					if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id)) == $lwp->subscription->post_type){
+						$replaced = $lwp->subscription->get_subscription_archive();
+					}else{
+						$replaced = get_permalink($transaction->book_id);
+					}
 					break;
 				case 'ordered':
 					$replaced = mysql2date(get_option('date_format'), $transaction->registered, true);

@@ -121,6 +121,11 @@ class LWP_Payment_Methods {
 		return $methods;
 	}
 	
+	/**
+	 * Place holder for gettext
+	 * @global Literally_WordPress $lwp
+	 * @param string $text 
+	 */
 	private function _($text){
 		global $lwp;
 		$lwp->_('PAYPAL');

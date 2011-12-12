@@ -1,4 +1,4 @@
-<p>
+<p class="message success">
 	<?php $this->e("Thank you for purchasing."); ?><br />
 	<?php $this->e("You will be redirected to the purchased item page.");?><br />
 </p>
