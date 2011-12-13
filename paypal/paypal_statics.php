@@ -12,7 +12,7 @@ class PayPal_Statics {
 	 * APIのバージョン
 	 * @var string
 	 */
-	const VERSION = "74.0";
+	const VERSION = "84.0";
 	
 	/**
 	 * ExpressCheckoutで行う支払いアクション
@@ -36,7 +36,7 @@ class PayPal_Statics {
 		$return_url = rawurlencode($return_url);
 		$cancel_url = rawurlencode($cancel_url);
 		//SetExpressCheckout APIに投げる値を作成
-		$nvpstr = "&AMT={$paymentAmount}&PAYMENTACTION=".self::PAYMENT_ACTION.
+		$nvpstr = "&SOLUTIONTYPE=Sole&AMT={$paymentAmount}&PAYMENTACTION=".self::PAYMENT_ACTION.
 			"&RETURNURL={$return_url}&CANCELURL={$cancel_url}".
 			"&CURRENCYCODE={$lwp->option['currency_code']}&LOCALECODE={$lwp->option['country_code']}".
 			"&NOSHIPPING=1&LANDINGPAGE=Billing&ALLOWNOTE=1&INVNUM={$invoice_number}";
@@ -195,10 +195,12 @@ class PayPal_Statics {
 	
 	/**
 	 * PayPalのExpress Checkoutへリダイレクトする
-	 * @param type $token 
+	 * @param string $token
+	 * @param boolean $mobile
 	 */
 	public static function redirect($token = ""){
-		header("Location: ".self::url().$token);
+		$endpoint = self::url().$token;
+		header("Location: ".$endpoint);
 	}
 	
 	/**
@@ -210,8 +212,18 @@ class PayPal_Statics {
 	 */
 	private static function url(){
 		global $lwp;
-		return $lwp->option['sandbox'] ? "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token="
-									  : "https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=";
+		$endpoint = $lwp->option['sandbox'] ? "https://www.sandbox.paypal.com/webscr?cmd="
+									  : "https://www.paypal.com/cgi-bin/webscr?cmd=";
+		$endpoint .= self::need_mobile_checkout() ? "_express-checkout-mobile" : "_express-checkout";
+		return $endpoint."&useraction=commit&token=";
+	}
+	
+	/**
+	 * モバイルチェックアウトが必要か否かを返す
+	 * @return boolean
+	 */
+	private static function need_mobile_checkout(){
+		return (boolean)preg_match("/(iPhone|iPad|Android|BlackBerry|IEMobile)/", $_SERVER['HTTP_USER_AGENT']);
 	}
 	
 	/**
