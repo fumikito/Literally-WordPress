@@ -17,10 +17,26 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
-					<?php $this->e("You can pay with PayPal account or various credit cards.");?><br />
+					<?php $this->e("You can pay with PayPal account.");?><br />
 					<small>
 						<strong><?php $this->e('Note:');  ?></strong><br />
-						<?php $this->e('Clicking \'Next\', You will be redirect to PayPal web site. Logging in PayPal or Enter CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete.'); ?>
+						<?php $this->e('Clicking \'Next\', You will be redirect to PayPal web site. Logging in PayPal, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete.'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th class="lwp-column-method">
+					<label>
+						<img src="<?php echo $this->url; ?>/assets/icon-cc.png" width="130" height="80" alt="PayPal"><br />
+						<input type="radio" name="lwp-method" value="cc" />
+						<?php $this->e("Credit Card"); ?>
+					</label>
+				</th>
+				<td class="lwp-column-method-desc">
+					<?php $this->e("You can pay with various credit cards(VISA, Matercard, etc.) via PayPal.");?><br />
+					<small>
+						<strong><?php $this->e('Note:');  ?></strong><br />
+						<?php $this->e('Clicking \'Next\', You will be redirect to PayPal web site. Entering CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete.'); ?>
 					</small>
 				</td>
 			</tr>

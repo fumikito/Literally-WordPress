@@ -1675,7 +1675,9 @@ EOS;
 									}
 									break;
 								case 'paypal':
-									if(!$this->start_transaction($user_ID, $_GET['lwp-id'])){
+								case 'cc':
+									$billing = ($_GET['lwp-method'] == 'cc') ? true : false;
+									if(!$this->start_transaction($user_ID, $_GET['lwp-id'], $billing)){
 										//トランザクション作成に失敗
 										$message = $this->_("Failed to make transaction.");
 									}
@@ -1816,15 +1818,16 @@ EOS;
 	 * @global wpdb $wpdb
 	 * @param int $user_id
 	 * @param int $post_id
+	 * @param boolean $billing
 	 * @return boolean 失敗した時だけfalseを返す
 	 */
-	public function start_transaction($user_id, $post_id){
+	public function start_transaction($user_id, $post_id, $billing){
 		global $wpdb;
 		//トランザクションを作る
 		$price = lwp_price($post_id);
 		//トークンを取得
 		$invnum = sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time());
-		$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'));
+		$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'), $billing);
 		if($token){
 			//トークンが帰ってきたら、データベースに保存
 			$wpdb->insert(

@@ -28,18 +28,20 @@ class PayPal_Statics {
 	 * @param string $invoice_number
 	 * @param string $return_url
 	 * @param string $cancel_url
+	 * @param boolean $billing
 	 * @return string 
 	 */
-	public function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url) 
+	public function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url, $billing = true) 
 	{
 		global $lwp;
 		$return_url = rawurlencode($return_url);
 		$cancel_url = rawurlencode($cancel_url);
+		$landing_page = $billing ? 'Billing' : 'Login';
 		//SetExpressCheckout APIに投げる値を作成
 		$nvpstr = "&SOLUTIONTYPE=Sole&AMT={$paymentAmount}&PAYMENTACTION=".self::PAYMENT_ACTION.
 			"&RETURNURL={$return_url}&CANCELURL={$cancel_url}".
 			"&CURRENCYCODE={$lwp->option['currency_code']}&LOCALECODE={$lwp->option['country_code']}".
-			"&NOSHIPPING=1&LANDINGPAGE=Billing&ALLOWNOTE=1&INVNUM={$invoice_number}";
+			"&NOSHIPPING=1&LANDINGPAGE={$landing_page}&ALLOWNOTE=1&INVNUM={$invoice_number}";
 		//リクエストを取得
 		$resArray = self::hash_call("SetExpressCheckout", $nvpstr);
 		//レスポンスをチェック
