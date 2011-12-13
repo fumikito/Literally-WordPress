@@ -5,7 +5,7 @@
 <title><?php bloginfo('name'); ?></title>
 <?php wp_head(); ?>
 </head>
-<body class="lwp">
+<body <?php body_class('lwp'); ?>>
 	<div id="lwp-invoice" class="lwp-<?php echo $slug;?>">
 		<div class="header">
 			<h1><?php bloginfo('name'); ?></h1>

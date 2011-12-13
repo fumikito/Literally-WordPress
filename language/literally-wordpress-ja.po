@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-15 01:32+0900\n"
-"PO-Revision-Date: 2011-11-15 01:34+0900\n"
+"POT-Creation-Date: 2011-12-14 06:18+0900\n"
+"PO-Revision-Date: 2011-12-14 06:33+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -17,115 +17,119 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: ../functions.php:449
+#: ../functions.php:483
 msgid "Registered Files"
 msgstr "登録されたファイル"
 
-#: ../functions.php:454
+#: ../functions.php:488
 msgid "File Name"
 msgstr "ファイル名"
 
-#: ../functions.php:455
+#: ../functions.php:489
 #: ../admin/upload.php:163
 msgid "Description"
 msgstr "説明"
 
-#: ../functions.php:456
+#: ../functions.php:490
 msgid "Available with"
 msgstr "対応端末"
 
-#: ../functions.php:457
+#: ../functions.php:491
 msgid "Download"
 msgstr "ダウンロード"
 
-#: ../functions.php:465
+#: ../functions.php:499
 msgid "download"
 msgstr "ダウンロード"
 
-#: ../functions.php:466
+#: ../functions.php:500
 msgid "Unavailable"
 msgstr "利用不可能"
 
-#: ../functions.php:467
+#: ../functions.php:501
 #, php-format
 msgid "File Size: %s"
 msgstr "ファイルサイズ: %s"
 
-#: ../functions.php:468
+#: ../functions.php:502
 #, php-format
 msgid "Published: %s"
 msgstr "公開日: %s"
 
-#: ../functions.php:469
+#: ../functions.php:503
 #, php-format
 msgid "Updated: %s"
 msgstr "更新日: %s"
 
-#: ../functions.php:496
+#: ../functions.php:530
 msgid "Devices Available With"
 msgstr "対応端末"
 
-#: ../functions.php:501
+#: ../functions.php:535
 #: ../admin/devices.php:15
 #: ../admin/devices.php:72
 msgid "Device Name"
 msgstr "端末名"
 
-#: ../functions.php:502
+#: ../functions.php:536
 msgid "Avalability"
 msgstr "対応状況"
 
-#: ../functions.php:508
+#: ../functions.php:542
 msgid "Available"
 msgstr "確認済"
 
-#: ../functions.php:508
+#: ../functions.php:542
 msgid "Unconfirmed"
 msgstr "未確認"
 
-#: ../functions.php:616
-#: ../functions.php:621
+#: ../functions.php:649
+#: ../functions.php:654
 msgid "Buy Now"
 msgstr "いますぐ購入"
 
-#: ../functions.php:667
+#: ../functions.php:710
+msgid "Subscription list"
+msgstr "定期購読リスト"
+
+#: ../functions.php:743
 msgid "Left time: "
 msgstr "残り時間: "
 
-#: ../functions.php:686
+#: ../functions.php:762
 msgid "day"
 msgstr "日"
 
-#: ../functions.php:686
+#: ../functions.php:762
 msgid "days"
 msgstr "日"
 
-#: ../functions.php:687
+#: ../functions.php:763
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr "<span class=\"day\">%1$d</span>%2$s"
 
-#: ../functions.php:689
+#: ../functions.php:765
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr "<span class=\"hour\">%02d</span>時間 "
 
-#: ../functions.php:690
+#: ../functions.php:766
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr "<span class=\"minutes\">%02d</span>分 "
 
-#: ../functions.php:691
+#: ../functions.php:767
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr "<span class=\"seconds\">%02d</span>秒"
 
-#: ../functions.php:710
+#: ../functions.php:786
 #, php-format
 msgid "%d%% Off"
 msgstr "%d%% Off"
 
-#: ../functions.php:735
+#: ../functions.php:811
 #, php-format
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
@@ -139,44 +143,52 @@ msgid "Notifications"
 msgstr "通知"
 
 #: ../literally-wordpress-notifier.php:81
-#: ../literally-wordpress.class.php:218
+#: ../literally-wordpress-subscription.php:77
+#: ../literally-wordpress.class.php:233
 msgid "Add New"
 msgstr "新規追加"
 
 #: ../literally-wordpress-notifier.php:82
 #: ../literally-wordpress-notifier.php:84
-#: ../literally-wordpress.class.php:219
-#: ../literally-wordpress.class.php:221
+#: ../literally-wordpress-subscription.php:78
+#: ../literally-wordpress-subscription.php:80
+#: ../literally-wordpress.class.php:234
+#: ../literally-wordpress.class.php:236
 #, php-format
 msgid "Add New %s"
 msgstr "新規%s追加"
 
 #: ../literally-wordpress-notifier.php:83
-#: ../literally-wordpress.class.php:220
+#: ../literally-wordpress-subscription.php:79
+#: ../literally-wordpress.class.php:235
 #, php-format
 msgid "Edit %s"
 msgstr "%sを編集"
 
 #: ../literally-wordpress-notifier.php:85
-#: ../literally-wordpress.class.php:222
+#: ../literally-wordpress-subscription.php:81
+#: ../literally-wordpress.class.php:237
 #, php-format
 msgid "View %s"
 msgstr "%sを見る"
 
 #: ../literally-wordpress-notifier.php:86
-#: ../literally-wordpress.class.php:223
+#: ../literally-wordpress-subscription.php:82
+#: ../literally-wordpress.class.php:238
 #, php-format
 msgid "Search %s"
 msgstr "%sを検索"
 
 #: ../literally-wordpress-notifier.php:87
-#: ../literally-wordpress.class.php:224
+#: ../literally-wordpress-subscription.php:83
+#: ../literally-wordpress.class.php:239
 #, php-format
 msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
 #: ../literally-wordpress-notifier.php:88
-#: ../literally-wordpress.class.php:225
+#: ../literally-wordpress-subscription.php:84
+#: ../literally-wordpress.class.php:240
 #, php-format
 msgid "No %s was found in trash."
 msgstr "ゴミ箱に%sは見つかりませんでした"
@@ -403,375 +415,439 @@ msgstr "注意"
 msgid "Notification mail will be sent as plain text. <strong>DO NOT USE HTML</strong>."
 msgstr "通知メールはプレーンテキストとして送信されます。<strong>HTMLを使わないでください</strong>"
 
-#: ../literally-wordpress-statics.php:126
+#: ../literally-wordpress-statics.php:131
 msgid "PAYPAL"
 msgstr "PayPal"
 
-#: ../literally-wordpress-statics.php:127
+#: ../literally-wordpress-statics.php:132
 msgid "CAMPAIGN"
 msgstr "キャンペーン"
 
-#: ../literally-wordpress-statics.php:128
+#: ../literally-wordpress-statics.php:133
 msgid "present"
 msgstr "プレゼント"
 
-#: ../literally-wordpress-statics.php:129
+#: ../literally-wordpress-statics.php:134
 msgid "TRANSFER"
 msgstr "送金"
 
-#: ../literally-wordpress-statics.php:182
+#: ../literally-wordpress-statics.php:187
 msgid "SUCCESS"
 msgstr "完了"
 
-#: ../literally-wordpress-statics.php:183
+#: ../literally-wordpress-statics.php:188
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../literally-wordpress-statics.php:184
+#: ../literally-wordpress-statics.php:189
 msgid "START"
 msgstr "開始"
 
-#: ../literally-wordpress-statics.php:185
+#: ../literally-wordpress-statics.php:190
 msgid "REFUND"
 msgstr "返金"
 
-#: ../literally-wordpress.class.php:331
+#: ../literally-wordpress-subscription.php:72
+#: ../admin/setting.php:279
+msgid "Subscription"
+msgstr "定期購読"
+
+#: ../literally-wordpress-subscription.php:73
+msgid "Subscriptions"
+msgstr "定期購読"
+
+#: ../literally-wordpress-subscription.php:118
+msgid "Invitation for subscription"
+msgstr "定期購読のお願い"
+
+#: ../literally-wordpress-subscription.php:123
+msgid "This contents is for subscribers only."
+msgstr "このコンテンツは定期購読者専用です。"
+
+#: ../literally-wordpress-subscription.php:133
+msgid "Subscription Setting"
+msgstr "定期購読設定"
+
+#: ../literally-wordpress-subscription.php:146
+msgid "This contents will be displayed when your user access to page for subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. <strong>YOU CAN CHANGE POST'S TITLE.</strong>"
+msgstr "このコンテンツはユーザーが定期購読者専用ページへ訪れたとき表示されます。"
+
+#: ../literally-wordpress-subscription.php:147
+msgid "Allowed Shortcodes"
+msgstr "利用できるショートコード"
+
+#: ../literally-wordpress-subscription.php:151
+msgid "Output link to subscription page. Extra attributes are title and class."
+msgstr "定期購読申し込みページへのリンクを出力します。利用できる属性はtitleとclassです。"
+
+#: ../literally-wordpress-subscription.php:159
+msgid "Output link to subscription price list. Extra attributes are title, class, popup, width and height."
+msgstr "定期購読価格表へのリンクを出力します。利用できる属性はtitle, class, popup, width, heightです。"
+
+#: ../literally-wordpress-subscription.php:175
+#: ../literally-wordpress.class.php:1967
+#: ../admin/history.php:30
+#: ../admin/history.php:39
+msgid "Price"
+msgstr "価格"
+
+#: ../literally-wordpress-subscription.php:179
+#: ../admin/management.php:94
+msgid "Expires"
+msgstr "期限"
+
+#: ../literally-wordpress-subscription.php:179
+msgid "Days"
+msgstr "日"
+
+#: ../literally-wordpress-subscription.php:306
+msgid "Subscribe"
+msgstr "定期購読"
+
+#: ../literally-wordpress.class.php:344
 #, php-format
 msgid "Can't make directory. Check parmissin of \"%s\""
 msgstr "ディレクトリを作成できませんでした。\"%s\"のパーミッションを確認してください。"
 
-#: ../literally-wordpress.class.php:340
+#: ../literally-wordpress.class.php:353
 msgid "Directory isn't writable."
 msgstr "ディレクトリが書き込み不可能になっています"
 
-#: ../literally-wordpress.class.php:345
+#: ../literally-wordpress.class.php:358
 msgid "Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating."
 msgstr "コンテンツディレクトリがプラグインフォルダ内にあります。アップデート時に消されないよう、プラグインフォルダの外側に設置することをお勧めいたします。"
 
-#: ../literally-wordpress.class.php:352
+#: ../literally-wordpress.class.php:365
 msgid "Warning! This file is accessible!"
 msgstr "注意！このファイルはアクセスできます。"
 
-#: ../literally-wordpress.class.php:375
+#: ../literally-wordpress.class.php:388
 msgid "Directory is publically accessible via HTTP"
 msgstr "ディレクトリはHTTPでアクセスできてしまいます"
 
-#: ../literally-wordpress.class.php:382
+#: ../literally-wordpress.class.php:395
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../literally-wordpress.class.php:388
+#: ../literally-wordpress.class.php:401
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../literally-wordpress.class.php:393
+#: ../literally-wordpress.class.php:406
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../literally-wordpress.class.php:398
+#: ../literally-wordpress.class.php:411
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登録を許可してください。"
 
-#: ../literally-wordpress.class.php:514
+#: ../literally-wordpress.class.php:537
 #: ../admin/setting.php:2
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../literally-wordpress.class.php:515
+#: ../literally-wordpress.class.php:538
 msgid "Transaction Management"
 msgstr "決済管理"
 
-#: ../literally-wordpress.class.php:517
+#: ../literally-wordpress.class.php:540
 #: ../admin/transfer.php:2
 msgid "Transfer Management"
 msgstr "送金管理"
 
-#: ../literally-wordpress.class.php:519
+#: ../literally-wordpress.class.php:542
 msgid "Campaing Management"
 msgstr "キャンペーン管理"
 
-#: ../literally-wordpress.class.php:520
+#: ../literally-wordpress.class.php:543
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../literally-wordpress.class.php:522
+#: ../literally-wordpress.class.php:545
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr "購入履歴"
 
-#: ../literally-wordpress.class.php:522
+#: ../literally-wordpress.class.php:545
 msgid "Purchase"
 msgstr "購入"
 
-#: ../literally-wordpress.class.php:525
+#: ../literally-wordpress.class.php:548
 msgid "Literally WordPress Setting"
 msgstr "Literally WordPress設定"
 
-#: ../literally-wordpress.class.php:597
+#: ../literally-wordpress.class.php:620
 msgid "Close"
 msgstr "閉じる"
 
-#: ../literally-wordpress.class.php:598
+#: ../literally-wordpress.class.php:621
 msgid "Prev"
 msgstr "前へ"
 
-#: ../literally-wordpress.class.php:599
+#: ../literally-wordpress.class.php:622
 msgid "Next"
 msgstr "次"
 
-#: ../literally-wordpress.class.php:605
+#: ../literally-wordpress.class.php:628
 msgid "Week"
 msgstr "週"
 
-#: ../literally-wordpress.class.php:606
-#: ../literally-wordpress.class.php:607
+#: ../literally-wordpress.class.php:629
+#: ../literally-wordpress.class.php:630
 msgid "Time"
 msgstr "時間"
 
-#: ../literally-wordpress.class.php:608
+#: ../literally-wordpress.class.php:631
 msgid "Hour"
 msgstr "時間"
 
-#: ../literally-wordpress.class.php:609
+#: ../literally-wordpress.class.php:632
 msgid "Minute"
 msgstr "分"
 
-#: ../literally-wordpress.class.php:610
+#: ../literally-wordpress.class.php:633
 msgid "Second"
 msgstr "秒"
 
-#: ../literally-wordpress.class.php:611
+#: ../literally-wordpress.class.php:634
 msgid "Now"
 msgstr "いま"
 
-#: ../literally-wordpress.class.php:653
+#: ../literally-wordpress.class.php:676
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../literally-wordpress.class.php:740
-#: ../literally-wordpress.class.php:1154
+#: ../literally-wordpress.class.php:766
+#: ../literally-wordpress.class.php:1177
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../literally-wordpress.class.php:772
+#: ../literally-wordpress.class.php:798
 msgid "Literally WordPress"
 msgstr "Literally WordPress"
 
-#: ../literally-wordpress.class.php:967
+#: ../literally-wordpress.class.php:990
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超えています。"
 
-#: ../literally-wordpress.class.php:970
+#: ../literally-wordpress.class.php:993
 msgid "Uploaded file size exceeds"
 msgstr "アップロードされたファイルサイズが大きすぎます。"
 
-#: ../literally-wordpress.class.php:973
+#: ../literally-wordpress.class.php:996
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr "ファイルが完全にアップロードされませんでした。インターネット接続を確認してください。"
 
-#: ../literally-wordpress.class.php:976
+#: ../literally-wordpress.class.php:999
 msgid "No file was uploaded."
 msgstr "ファイルがアップロードされませんでした。"
 
-#: ../literally-wordpress.class.php:979
+#: ../literally-wordpress.class.php:1002
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:982
+#: ../literally-wordpress.class.php:1005
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:985
+#: ../literally-wordpress.class.php:1008
 msgid "PHP stops uploading."
 msgstr "PHPがアップロードを停止しました。"
 
-#: ../literally-wordpress.class.php:1066
+#: ../literally-wordpress.class.php:1089
 msgid "Device added."
 msgstr "端末が追加されました。"
 
-#: ../literally-wordpress.class.php:1068
+#: ../literally-wordpress.class.php:1091
 msgid "Failed to add device."
 msgstr "端末の追加に失敗しました。"
 
-#: ../literally-wordpress.class.php:1079
+#: ../literally-wordpress.class.php:1102
 msgid "Device deleted."
 msgstr "端末が削除されました。"
 
-#: ../literally-wordpress.class.php:1095
+#: ../literally-wordpress.class.php:1118
 msgid "Device updated."
 msgstr "端末が更新されました。"
 
-#: ../literally-wordpress.class.php:1149
+#: ../literally-wordpress.class.php:1172
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../literally-wordpress.class.php:1159
+#: ../literally-wordpress.class.php:1182
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1164
-#: ../literally-wordpress.class.php:1210
+#: ../literally-wordpress.class.php:1187
+#: ../literally-wordpress.class.php:1233
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../literally-wordpress.class.php:1169
+#: ../literally-wordpress.class.php:1192
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1185
+#: ../literally-wordpress.class.php:1208
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../literally-wordpress.class.php:1188
+#: ../literally-wordpress.class.php:1211
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../literally-wordpress.class.php:1197
+#: ../literally-wordpress.class.php:1220
 msgid "Specified campaing doesn't exist"
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../literally-wordpress.class.php:1202
+#: ../literally-wordpress.class.php:1225
 msgid "Price should be numeric."
 msgstr "価格は半角数字でなくてはなりません。"
 
-#: ../literally-wordpress.class.php:1205
+#: ../literally-wordpress.class.php:1228
 msgid "Campgin price is higher than original price."
 msgstr "キャンペーン価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1215
+#: ../literally-wordpress.class.php:1238
 msgid "End date is earlier than start date."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1231
+#: ../literally-wordpress.class.php:1254
 msgid "Successfully Updated."
 msgstr "更新しました。"
 
-#: ../literally-wordpress.class.php:1234
+#: ../literally-wordpress.class.php:1257
 msgid "Update Failed."
 msgstr "更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1242
+#: ../literally-wordpress.class.php:1265
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../literally-wordpress.class.php:1245
+#: ../literally-wordpress.class.php:1268
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../literally-wordpress.class.php:1359
+#: ../literally-wordpress.class.php:1382
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../literally-wordpress.class.php:1361
+#: ../literally-wordpress.class.php:1384
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../literally-wordpress.class.php:1488
+#: ../literally-wordpress.class.php:1511
 msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
 msgstr "トランザクションが発生してから60日が経過したため、PayPalでの返金はできません。"
 
-#: ../literally-wordpress.class.php:1493
+#: ../literally-wordpress.class.php:1516
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../literally-wordpress.class.php:1495
+#: ../literally-wordpress.class.php:1518
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../literally-wordpress.class.php:1527
+#: ../literally-wordpress.class.php:1550
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../literally-wordpress.class.php:1529
+#: ../literally-wordpress.class.php:1552
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1561
-msgid "No content is specified."
-msgstr "コンテンツが指定されていません。"
+#: ../literally-wordpress.class.php:1580
+msgid "You are already subscriber. You don't have to buy subscription."
+msgstr "あなたはすでに定期購読者になっています。購入する必要はありません。"
 
-#: ../literally-wordpress.class.php:1584
-msgid "This contents is not on sale."
-msgstr "このコンテンツはセール中ではありません。"
-
-#: ../literally-wordpress.class.php:1615
-msgid "Sorry, we can't accept this payment method."
-msgstr "この支払い方法は受け付けられません。"
-
-#: ../literally-wordpress.class.php:1620
-msgid "Failed to make transaction."
-msgstr "トランザクションを開始できませんでした。"
-
-#: ../literally-wordpress.class.php:1625
+#: ../literally-wordpress.class.php:1580
+#: ../literally-wordpress.class.php:1582
+#: ../literally-wordpress.class.php:1699
 #, php-format
 msgid "Transaction Error : %s"
 msgstr "トランザクションエラー: %s"
 
-#: ../literally-wordpress.class.php:1650
+#: ../literally-wordpress.class.php:1582
+msgid "Sorry, but there is no subscription plan."
+msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
+
+#: ../literally-wordpress.class.php:1600
+msgid "No content is specified."
+msgstr "コンテンツが指定されていません。"
+
+#: ../literally-wordpress.class.php:1624
+msgid "This contents is not on sale."
+msgstr "このコンテンツはセール中ではありません。"
+
+#: ../literally-wordpress.class.php:1674
+msgid "Sorry, we can't accept this payment method."
+msgstr "この支払い方法は受け付けられません。"
+
+#: ../literally-wordpress.class.php:1682
+msgid "Failed to make transaction."
+msgstr "トランザクションを開始できませんでした。"
+
+#: ../literally-wordpress.class.php:1686
+msgid "Wrong payment method is specified."
+msgstr "不正な支払い方法が指定されています。"
+
+#: ../literally-wordpress.class.php:1725
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../literally-wordpress.class.php:1650
-#: ../literally-wordpress.class.php:1671
+#: ../literally-wordpress.class.php:1725
+#: ../literally-wordpress.class.php:1752
 msgid "Failed"
 msgstr "失敗"
 
-#: ../literally-wordpress.class.php:1657
+#: ../literally-wordpress.class.php:1732
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../literally-wordpress.class.php:1661
+#: ../literally-wordpress.class.php:1736
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../literally-wordpress.class.php:1838
+#: ../literally-wordpress.class.php:1936
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../literally-wordpress.class.php:1838
+#: ../literally-wordpress.class.php:1936
 msgid "Permission Error"
 msgstr "アクセス権エラー"
 
-#: ../literally-wordpress.class.php:1867
+#: ../literally-wordpress.class.php:1965
 msgid "Name"
 msgstr "お名前"
 
-#: ../literally-wordpress.class.php:1868
+#: ../literally-wordpress.class.php:1966
 #: ../admin/history.php:32
 #: ../admin/history.php:41
 msgid "Date"
 msgstr "日付"
 
-#: ../literally-wordpress.class.php:1869
-#: ../admin/history.php:30
-#: ../admin/history.php:39
-#: ../form-template/edit-detail.php:8
-msgid "Price"
-msgstr "価格"
-
-#: ../literally-wordpress.class.php:1870
+#: ../literally-wordpress.class.php:1968
 msgid "Payment Method"
 msgstr "支払い方法"
 
-#: ../literally-wordpress.class.php:1894
+#: ../literally-wordpress.class.php:1992
 #: ../admin/history.php:56
 msgid "Present"
 msgstr "プレゼント"
 
-#: ../literally-wordpress.class.php:1897
+#: ../literally-wordpress.class.php:1995
 msgid "Free Campaign"
 msgstr "無料キャンペーン"
 
-#: ../literally-wordpress.class.php:1910
+#: ../literally-wordpress.class.php:2008
 msgid "Total: "
 msgstr "合計: "
 
-#: ../literally-wordpress.class.php:1913
+#: ../literally-wordpress.class.php:2011
 msgid "You have no transaction history. Try to get any!"
 msgstr "購入履歴はありません。購入をご検討ください。"
 
-#: ../literally-wordpress.class.php:2094
+#: ../literally-wordpress.class.php:2192
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権など、購入したユーザーに対して提供できるものはいくつかあります。"
 
@@ -819,7 +895,7 @@ msgstr "終了日"
 
 #: ../admin/campaign.php:61
 #: ../admin/devices.php:32
-#: ../admin/setting.php:280
+#: ../admin/setting.php:322
 #: ../admin/upload.php:183
 #: ../admin/upload.php:205
 msgid "Update"
@@ -1049,10 +1125,6 @@ msgstr "ステータスを更新"
 msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
-#: ../admin/management.php:94
-msgid "Expires"
-msgstr "期限"
-
 #: ../admin/management.php:98
 msgid "No Limit."
 msgstr "無期限"
@@ -1153,7 +1225,7 @@ msgstr "このトークンは間違っているかもしれません。%sを見�
 #: ../admin/setting.php:90
 #: ../admin/setting.php:125
 #: ../admin/setting.php:130
-#: ../admin/setting.php:294
+#: ../admin/setting.php:336
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -1284,10 +1356,12 @@ msgid "Accept Transfer"
 msgstr "送金の受付"
 
 #: ../admin/setting.php:247
+#: ../admin/setting.php:287
 msgid "Disallow"
 msgstr "許可しない"
 
 #: ../admin/setting.php:248
+#: ../admin/setting.php:288
 msgid "Allow"
 msgstr "許可する"
 
@@ -1317,38 +1391,67 @@ msgstr "トランザクションは%s日で期限切れになります。"
 msgid "If you don't want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past."
 msgstr "通知を送りたくない場合は通知頻度を0にしてください。送金によるトランザクションは期限日を過ぎると無効になります。"
 
-#: ../admin/setting.php:283
+#: ../admin/setting.php:284
+msgid "Accept Subscription"
+msgstr "定期購読の許可"
+
+#: ../admin/setting.php:293
+msgid "Subscription Post Type"
+msgstr "定期購読用投稿タイプ"
+
+#: ../admin/setting.php:306
+msgid "Subscription Format"
+msgstr "定期購読の形式"
+
+#: ../admin/setting.php:309
+msgid "More tag"
+msgstr "moreタグ"
+
+#: ../admin/setting.php:310
+msgid "Nextpage Tag"
+msgstr "nextpageタグ"
+
+#: ../admin/setting.php:311
+msgid "All"
+msgstr "コンテンツ全体"
+
+#: ../admin/setting.php:313
+#, php-format
+msgid "If you choose More Tag or Nextpage Tag, non subscriber can see the content before it and the invitation message after it. If you choose all, non subscriber saw only the invitation message. You can customize the invitation message at <a href=\"%s\">Subscription</a>."
+msgstr "moreタグまたはnextpageタグを選んだ場合、定期購読者でないユーザーにはそれらのタグより前のコンテンツと、それに続く勧誘メッセージが表示されます。コンテンツ全体を選んだ場合、定期購読者ではないユーザーには勧誘メッセージだけが表示されます。勧誘メッセージは<a href=\"%s\">定期購読</a>でカスタマイズできます。"
+
+#: ../admin/setting.php:325
 msgid "Notes"
 msgstr "注意"
 
-#: ../admin/setting.php:285
+#: ../admin/setting.php:327
 msgid "Permalink"
 msgstr "パーマリンク"
 
-#: ../admin/setting.php:287
+#: ../admin/setting.php:329
 #, php-format
 msgid "If permalink is enabled, custom post type page will return %s and won't be displayed."
 msgstr "パーマリンクが有効になっている場合、カスタム投稿タイプは %s となり、表示されません。"
 
-#: ../admin/setting.php:288
+#: ../admin/setting.php:330
 #, php-format
 msgid "Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display."
 msgstr "<a href=\"%1$s\">%2$s</a>へ行き、&quot;%3$s&quot;を押してください。これによってリライトルールがリセットされ、正しく表示されます。"
 
-#: ../admin/setting.php:291
+#: ../admin/setting.php:333
 msgid "Customize"
 msgstr "カスタマイズ"
 
-#: ../admin/setting.php:293
+#: ../admin/setting.php:335
 msgid "If you are a experienced developper, you can customize this plugin with template tags."
 msgstr "開発に慣れた方はテンプレートタグでこのプラグインをカスタマイズできます。"
 
-#: ../admin/setting.php:294
+#: ../admin/setting.php:336
 #, php-format
 msgid "See detail at %s."
 msgstr "詳しくは%sを見てください。"
 
-#: ../admin/setting.php:295
+#: ../admin/setting.php:337
 #, php-format
 msgid "<a target=\"_blank\" href=\"%s\">Template Tags</a> are also available."
 msgstr "<a target=\"_blank\" href=\"%s\">テンプレートタグ</a>も利用可能です。"
@@ -1537,34 +1640,113 @@ msgid "Transaction is canceled."
 msgstr "決済はキャンセルされました。"
 
 #: ../form-template/paypal-cancel.php:5
-#: ../form-template/paypal-transfer.php:7
+#: ../form-template/paypal-subscription.php:73
+#: ../form-template/paypal-subscription.php:75
+#: ../form-template/paypal-transfer.php:11
 msgid "Return"
 msgstr "戻る"
 
-#: ../form-template/paypal-return.php:18
-msgid "Please confirm the invoice above and accept payment."
+#: ../form-template/paypal-return.php:2
+msgid "Please confirm the invoice below and accept payment."
 msgstr "支払い明細を確認の上、支払いを受諾してください。"
 
-#: ../form-template/paypal-return.php:20
-msgid "Confirm"
-msgstr "受諾"
-
-#: ../form-template/paypal-return.php:28
+#: ../form-template/paypal-return.php:19
 msgid "Invoice No."
 msgstr "取引 No."
 
-#: ../form-template/paypal-return.php:35
+#: ../form-template/paypal-return.php:26
 msgid "Your Name"
 msgstr "お名前"
 
-#: ../form-template/paypal-return.php:43
-#: ../tables/list-campaign.php:101
+#: ../form-template/paypal-return.php:34
 msgid "Item"
 msgstr "アイテム"
 
-#: ../form-template/paypal-return.php:51
+#: ../form-template/paypal-return.php:42
 msgid "Amount"
 msgstr "総額"
+
+#: ../form-template/paypal-return.php:51
+msgid "Confirm"
+msgstr "受諾"
+
+#: ../form-template/paypal-selection.php:3
+#, php-format
+msgid "You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below."
+msgstr "<strong>%1$s</strong>を<strong>%2$s</strong>で購入しようとしています。支払い方法を以下から選んでください。"
+
+#: ../form-template/paypal-selection.php:20
+msgid "You can pay with PayPal account."
+msgstr "PayPalアカウントで支払うことができます。"
+
+#: ../form-template/paypal-selection.php:22
+#: ../form-template/paypal-selection.php:38
+#: ../form-template/paypal-selection.php:55
+msgid "Note:"
+msgstr "注意:"
+
+#: ../form-template/paypal-selection.php:23
+msgid "Clicking 'Next', You will be redirect to PayPal web site. Logging in PayPal, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
+msgstr "'次へ'をクリックすると、PayPalのwebサイトへ移動します。PayPalへログインし、再びこのサイトへ戻った後、支払いを受諾することで決済が完了します。"
+
+#: ../form-template/paypal-selection.php:32
+msgid "Credit Card"
+msgstr "クレジットカード"
+
+#: ../form-template/paypal-selection.php:36
+msgid "You can pay with various credit cards(VISA, Matercard, etc.) via PayPal."
+msgstr "PayPalを通じて各種クレジットカード（VISA、Mastercard他）で支払うことができます。"
+
+#: ../form-template/paypal-selection.php:39
+msgid "Clicking 'Next', You will be redirect to PayPal web site. Entering CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
+msgstr "'次へ'をクリックすると、PayPalのwebサイトへ移動します。クレジットカード番号を入力し、再びこのサイトへ戻った後、支払いを受諾することで決済が完了します。"
+
+#: ../form-template/paypal-selection.php:47
+#: ../form-template/paypal-selection.php:49
+#: ../help/transfer.php:2
+msgid "Transfer"
+msgstr "送金"
+
+#: ../form-template/paypal-selection.php:53
+msgid "You can pay through specified bank account. The account will be displayed on next page."
+msgstr "指定された金融機関への振込によって支払うことができます。口座は次のページで表示されます。"
+
+#: ../form-template/paypal-selection.php:56
+msgid "Transaction will not have been complete, unless you will send deposit to the specified bank account. This means you can't get contents immediately."
+msgstr "指定された口座に振り込むまで決済は完了しないため、すぐにコンテンツにアクセスすることはできません。"
+
+#: ../form-template/paypal-selection.php:64
+#: ../form-template/paypal-subscription.php:61
+msgid "Next &raquo;"
+msgstr "次へ &raquo;"
+
+#: ../form-template/paypal-subscription.php:3
+#, php-format
+msgid "%s's subscription plans are below."
+msgstr "%sの定期購読プランは以下になります。"
+
+#: ../form-template/paypal-subscription.php:7
+#, php-format
+msgid "You have subscription plan '%s'."
+msgstr "あなたの定期購読プランは'%s'です。"
+
+#: ../form-template/paypal-subscription.php:9
+msgid "Your subscription is unlimited."
+msgstr "あなたの定期購読プランは無期限です。"
+
+#: ../form-template/paypal-subscription.php:12
+#, php-format
+msgid "You got it at <strong>%s</strong> and it will be expired at <strong>%s</strong>."
+msgstr "<strong>%s</strong>に購入し、期限は<strong>%s</strong>までです。"
+
+#: ../form-template/paypal-subscription.php:19
+msgid "You have no subscription plan."
+msgstr "定期購読プランを購入していません。"
+
+#: ../form-template/paypal-subscription.php:23
+#, php-format
+msgid "Please select %s's subscription plan from the list below."
+msgstr "%sの定期購読プランを以下から選んでください。"
 
 #: ../form-template/paypal-success.php:2
 msgid "Thank you for purchasing."
@@ -1586,6 +1768,14 @@ msgstr "すぐに戻る"
 #: ../form-template/paypal-transfer.php:3
 msgid "Failed to send mail. Please note this page."
 msgstr "メールを送信できませんでした。このページをメモしておいてください。"
+
+#: ../form-template/paypal-transfer.php:5
+msgid "You have already ordered this item. Please see the note below."
+msgstr "このアイテムはすでに注文しています。以下の説明をお読みください。"
+
+#: ../form-template/paypal-transfer.php:7
+msgid "We send you a reminder mail to your registered addres."
+msgstr "登録されたアドレスにリマインダーメールをお送りしました。"
 
 #: ../help/account.php:3
 msgid "Account"
@@ -1978,10 +2168,6 @@ msgstr "つまり、アクセス不可能なディレクトリがない場合は
 msgid "If your files are accessible via HTTP, an alert message will be displayed on admin panel."
 msgstr "ファイルがHTTPでアクセスできてしまう場合、アラートメッセージが管理画面に表示されます。"
 
-#: ../help/transfer.php:2
-msgid "Transfer"
-msgstr "送金"
-
 #: ../help/transfer.php:3
 msgid "Aboutn transfer"
 msgstr "送金について"
@@ -2065,815 +2251,815 @@ msgstr "通知メッセージは銀行口座、期限、アイテムのURLなど
 msgid "Adding new notification is possible but meaningless."
 msgstr "新規通知を追加することはできますが、意味がありません。"
 
-#: ../paypal/paypal_statics.php:226
+#: ../paypal/paypal_statics.php:240
 msgid "ÅLAND ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:227
+#: ../paypal/paypal_statics.php:241
 msgid "ALBANIA"
 msgstr "アルバニア"
 
-#: ../paypal/paypal_statics.php:228
+#: ../paypal/paypal_statics.php:242
 msgid "ALGERIA"
 msgstr "アルジェリア"
 
-#: ../paypal/paypal_statics.php:229
+#: ../paypal/paypal_statics.php:243
 msgid "AMERICAN SAMOA"
 msgstr "サモア"
 
-#: ../paypal/paypal_statics.php:230
+#: ../paypal/paypal_statics.php:244
 msgid "ANDORRA"
 msgstr "アンドラ"
 
-#: ../paypal/paypal_statics.php:231
+#: ../paypal/paypal_statics.php:245
 msgid "ANGUILLA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:232
+#: ../paypal/paypal_statics.php:246
 msgid "ANTARCTICA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:233
+#: ../paypal/paypal_statics.php:247
 msgid "ANTIGUA AND BARBUDA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:234
+#: ../paypal/paypal_statics.php:248
 msgid "ARGENTINA"
 msgstr "アルゼンチン"
 
-#: ../paypal/paypal_statics.php:235
+#: ../paypal/paypal_statics.php:249
 msgid "ARMENIA"
 msgstr "アルメニア"
 
-#: ../paypal/paypal_statics.php:236
+#: ../paypal/paypal_statics.php:250
 msgid "ARUBA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:237
+#: ../paypal/paypal_statics.php:251
 msgid "AUSTRALIA"
 msgstr "オーストラリア"
 
-#: ../paypal/paypal_statics.php:238
+#: ../paypal/paypal_statics.php:252
 msgid "AUSTRIA"
 msgstr "オーストリア"
 
-#: ../paypal/paypal_statics.php:239
+#: ../paypal/paypal_statics.php:253
 msgid "BAHAMAS"
 msgstr "バハマ"
 
-#: ../paypal/paypal_statics.php:240
+#: ../paypal/paypal_statics.php:254
 msgid "BAHRAIN"
 msgstr "バーレーン"
 
-#: ../paypal/paypal_statics.php:241
+#: ../paypal/paypal_statics.php:255
 msgid "BARBADOS"
 msgstr "バルバドス"
 
-#: ../paypal/paypal_statics.php:242
+#: ../paypal/paypal_statics.php:256
 msgid "BELGIUM"
 msgstr "ベルギー"
 
-#: ../paypal/paypal_statics.php:243
+#: ../paypal/paypal_statics.php:257
 msgid "BELIZE"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:244
+#: ../paypal/paypal_statics.php:258
 msgid "BENIN"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:245
+#: ../paypal/paypal_statics.php:259
 msgid "BERMUDA"
 msgstr "バミューダ"
 
-#: ../paypal/paypal_statics.php:246
+#: ../paypal/paypal_statics.php:260
 msgid "BHUTAN"
 msgstr "ブータン"
 
-#: ../paypal/paypal_statics.php:247
+#: ../paypal/paypal_statics.php:261
 msgid "BOTSWANA"
 msgstr "ボツワナ"
 
-#: ../paypal/paypal_statics.php:248
+#: ../paypal/paypal_statics.php:262
 msgid "BOUVET ISLAND"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:249
+#: ../paypal/paypal_statics.php:263
 msgid "BRAZIL"
 msgstr "ブラジル"
 
-#: ../paypal/paypal_statics.php:250
+#: ../paypal/paypal_statics.php:264
 msgid "BRITISH INDIAN OCEAN TERRITORY"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:251
+#: ../paypal/paypal_statics.php:265
 msgid "BRUNEI DARUSSALAM"
 msgstr "ブルネイ"
 
-#: ../paypal/paypal_statics.php:252
+#: ../paypal/paypal_statics.php:266
 msgid "BULGARIA"
 msgstr "ブルガリア"
 
-#: ../paypal/paypal_statics.php:253
+#: ../paypal/paypal_statics.php:267
 msgid "BURKINA FASO"
 msgstr "ブルキナ・ファソ"
 
-#: ../paypal/paypal_statics.php:254
+#: ../paypal/paypal_statics.php:268
 msgid "CANADA"
 msgstr "カナダ"
 
-#: ../paypal/paypal_statics.php:255
+#: ../paypal/paypal_statics.php:269
 msgid "CAPE VERDE"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:256
+#: ../paypal/paypal_statics.php:270
 msgid "CAYMAN ISLANDS"
 msgstr "ケイマン諸島"
 
-#: ../paypal/paypal_statics.php:257
+#: ../paypal/paypal_statics.php:271
 msgid "CENTRAL AFRICAN REPUBLIC"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:258
+#: ../paypal/paypal_statics.php:272
 msgid "CHILE"
 msgstr "チリ"
 
-#: ../paypal/paypal_statics.php:259
+#: ../paypal/paypal_statics.php:273
 msgid "CHINA"
 msgstr "中国"
 
-#: ../paypal/paypal_statics.php:260
+#: ../paypal/paypal_statics.php:274
 msgid "CHRISTMAS ISLAND"
 msgstr "クリスマス諸島"
 
-#: ../paypal/paypal_statics.php:261
+#: ../paypal/paypal_statics.php:275
 msgid "COCOS (KEELING) ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:262
+#: ../paypal/paypal_statics.php:276
 msgid "COLOMBIA"
 msgstr "コロンビア"
 
-#: ../paypal/paypal_statics.php:263
+#: ../paypal/paypal_statics.php:277
 msgid "COOK ISLANDS"
 msgstr "クック諸島"
 
-#: ../paypal/paypal_statics.php:264
+#: ../paypal/paypal_statics.php:278
 msgid "COSTA RICA"
 msgstr "コスタ・リカ"
 
-#: ../paypal/paypal_statics.php:265
+#: ../paypal/paypal_statics.php:279
 msgid "CYPRUS"
 msgstr "キプロス"
 
-#: ../paypal/paypal_statics.php:266
+#: ../paypal/paypal_statics.php:280
 msgid "CZECH REPUBLIC"
 msgstr "チェコ共和国"
 
-#: ../paypal/paypal_statics.php:267
+#: ../paypal/paypal_statics.php:281
 msgid "DENMARK"
 msgstr "デンマーク"
 
-#: ../paypal/paypal_statics.php:268
+#: ../paypal/paypal_statics.php:282
 msgid "DJIBOUTI"
 msgstr "ヂブチ"
 
-#: ../paypal/paypal_statics.php:269
+#: ../paypal/paypal_statics.php:283
 msgid "DOMINICA"
 msgstr "ドミニカ"
 
-#: ../paypal/paypal_statics.php:270
+#: ../paypal/paypal_statics.php:284
 msgid "DOMINICAN REPUBLIC"
 msgstr "ドミニカ共和国"
 
-#: ../paypal/paypal_statics.php:271
+#: ../paypal/paypal_statics.php:285
 msgid "EGYPT"
 msgstr "エジプト"
 
-#: ../paypal/paypal_statics.php:272
+#: ../paypal/paypal_statics.php:286
 msgid "EL SALVADOR"
 msgstr "エルサルバドル"
 
-#: ../paypal/paypal_statics.php:273
+#: ../paypal/paypal_statics.php:287
 msgid "ESTONIA"
 msgstr "エストニア"
 
-#: ../paypal/paypal_statics.php:274
+#: ../paypal/paypal_statics.php:288
 msgid "FALKLAND ISLANDS (MALVINAS)"
 msgstr "フォークランド諸島"
 
-#: ../paypal/paypal_statics.php:275
+#: ../paypal/paypal_statics.php:289
 msgid "FAROE ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:276
+#: ../paypal/paypal_statics.php:290
 msgid "FIJI"
 msgstr "フィジー"
 
-#: ../paypal/paypal_statics.php:277
+#: ../paypal/paypal_statics.php:291
 msgid "FINLAND"
 msgstr "フィンランド"
 
-#: ../paypal/paypal_statics.php:278
+#: ../paypal/paypal_statics.php:292
 msgid "FRANCE"
 msgstr "フランス"
 
-#: ../paypal/paypal_statics.php:279
+#: ../paypal/paypal_statics.php:293
 msgid "FRENCH GUIANA"
 msgstr "仏領ギアナ"
 
-#: ../paypal/paypal_statics.php:280
+#: ../paypal/paypal_statics.php:294
 msgid "FRENCH POLYNESIA"
 msgstr "仏領ポリネシア"
 
-#: ../paypal/paypal_statics.php:281
+#: ../paypal/paypal_statics.php:295
 msgid "FRENCH SOUTHERN TERRITORIES"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:282
+#: ../paypal/paypal_statics.php:296
 msgid "GAMBIA"
 msgstr "ガンビア"
 
-#: ../paypal/paypal_statics.php:283
+#: ../paypal/paypal_statics.php:297
 msgid "GEORGIA"
 msgstr "ジョージア"
 
-#: ../paypal/paypal_statics.php:284
+#: ../paypal/paypal_statics.php:298
 msgid "GERMANY"
 msgstr "ドイツ"
 
-#: ../paypal/paypal_statics.php:285
+#: ../paypal/paypal_statics.php:299
 msgid "GHANA"
 msgstr "ガーナ"
 
-#: ../paypal/paypal_statics.php:286
+#: ../paypal/paypal_statics.php:300
 msgid "GIBRALTAR"
 msgstr "ジブラルタル"
 
-#: ../paypal/paypal_statics.php:287
+#: ../paypal/paypal_statics.php:301
 msgid "GREECE"
 msgstr "ギリシャ"
 
-#: ../paypal/paypal_statics.php:288
+#: ../paypal/paypal_statics.php:302
 msgid "GREENLAND"
 msgstr "グリーンランド"
 
-#: ../paypal/paypal_statics.php:289
+#: ../paypal/paypal_statics.php:303
 msgid "GRENADA"
 msgstr "グレナダ"
 
-#: ../paypal/paypal_statics.php:290
+#: ../paypal/paypal_statics.php:304
 msgid "GUADELOUPE"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:291
+#: ../paypal/paypal_statics.php:305
 msgid "GUAM"
 msgstr "グアム"
 
-#: ../paypal/paypal_statics.php:292
+#: ../paypal/paypal_statics.php:306
 msgid "GUERNSEY"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:293
+#: ../paypal/paypal_statics.php:307
 msgid "HEARD ISLAND AND MCDONALD ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:294
+#: ../paypal/paypal_statics.php:308
 msgid "HOLY SEE (VATICAN CITY STATE)"
 msgstr "ヴァチカン市国"
 
-#: ../paypal/paypal_statics.php:295
+#: ../paypal/paypal_statics.php:309
 msgid "HONDURAS"
 msgstr "ホンジュラス"
 
-#: ../paypal/paypal_statics.php:296
+#: ../paypal/paypal_statics.php:310
 msgid "HONG KONG"
 msgstr "香港"
 
-#: ../paypal/paypal_statics.php:297
+#: ../paypal/paypal_statics.php:311
 msgid "HUNGARY"
 msgstr "ハンガリー"
 
-#: ../paypal/paypal_statics.php:298
+#: ../paypal/paypal_statics.php:312
 msgid "ICELAND"
 msgstr "アイスランド"
 
-#: ../paypal/paypal_statics.php:299
+#: ../paypal/paypal_statics.php:313
 msgid "INDIA"
 msgstr "インド"
 
-#: ../paypal/paypal_statics.php:300
+#: ../paypal/paypal_statics.php:314
 msgid "INDONESIA"
 msgstr "インドネシア"
 
-#: ../paypal/paypal_statics.php:301
+#: ../paypal/paypal_statics.php:315
 msgid "IRELAND"
 msgstr "アイルランド"
 
-#: ../paypal/paypal_statics.php:302
+#: ../paypal/paypal_statics.php:316
 msgid "ISLE OF MAN"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:303
+#: ../paypal/paypal_statics.php:317
 msgid "ISRAEL"
 msgstr "イスラエル"
 
-#: ../paypal/paypal_statics.php:304
+#: ../paypal/paypal_statics.php:318
 msgid "ITALY"
 msgstr "イタリア"
 
-#: ../paypal/paypal_statics.php:305
+#: ../paypal/paypal_statics.php:319
 msgid "JAMAICA"
 msgstr "ジャマイカ"
 
-#: ../paypal/paypal_statics.php:306
+#: ../paypal/paypal_statics.php:320
 msgid "JAPAN"
 msgstr "日本"
 
-#: ../paypal/paypal_statics.php:307
+#: ../paypal/paypal_statics.php:321
 msgid "JERSEY"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:308
+#: ../paypal/paypal_statics.php:322
 msgid "JORDAN"
 msgstr "ヨルダン"
 
-#: ../paypal/paypal_statics.php:309
+#: ../paypal/paypal_statics.php:323
 msgid "KAZAKHSTAN"
 msgstr "カザフスタン"
 
-#: ../paypal/paypal_statics.php:310
+#: ../paypal/paypal_statics.php:324
 msgid "KIRIBATI"
 msgstr "キリバツ"
 
-#: ../paypal/paypal_statics.php:311
+#: ../paypal/paypal_statics.php:325
 msgid "KOREA, REPUBLIC OF"
 msgstr "韓国"
 
-#: ../paypal/paypal_statics.php:312
+#: ../paypal/paypal_statics.php:326
 msgid "KUWAIT"
 msgstr "クウェート"
 
-#: ../paypal/paypal_statics.php:313
+#: ../paypal/paypal_statics.php:327
 msgid "KYRGYZSTAN"
 msgstr "キルギスタン"
 
-#: ../paypal/paypal_statics.php:314
+#: ../paypal/paypal_statics.php:328
 msgid "LATVIA"
 msgstr "ラトヴィア"
 
-#: ../paypal/paypal_statics.php:315
+#: ../paypal/paypal_statics.php:329
 msgid "LESOTHO"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:316
+#: ../paypal/paypal_statics.php:330
 msgid "LIECHTENSTEIN"
 msgstr "リヒテンシュタイン"
 
-#: ../paypal/paypal_statics.php:317
+#: ../paypal/paypal_statics.php:331
 msgid "LITHUANIA"
 msgstr "リトアニア"
 
-#: ../paypal/paypal_statics.php:318
+#: ../paypal/paypal_statics.php:332
 msgid "LUXEMBOURG"
 msgstr "ルクセンブルク"
 
-#: ../paypal/paypal_statics.php:319
+#: ../paypal/paypal_statics.php:333
 msgid "MACAO"
 msgstr "マカオ"
 
-#: ../paypal/paypal_statics.php:320
+#: ../paypal/paypal_statics.php:334
 msgid "MALAWI"
 msgstr "マラウィ"
 
-#: ../paypal/paypal_statics.php:321
+#: ../paypal/paypal_statics.php:335
 msgid "MALAYSIA"
 msgstr "マレーシア"
 
-#: ../paypal/paypal_statics.php:322
+#: ../paypal/paypal_statics.php:336
 msgid "MALTA"
 msgstr "マルタ"
 
-#: ../paypal/paypal_statics.php:323
+#: ../paypal/paypal_statics.php:337
 msgid "MARSHALL ISLANDS"
 msgstr "マーシャル諸島"
 
-#: ../paypal/paypal_statics.php:324
+#: ../paypal/paypal_statics.php:338
 msgid "MARTINIQUE"
 msgstr "マルティニーク島"
 
-#: ../paypal/paypal_statics.php:325
+#: ../paypal/paypal_statics.php:339
 msgid "MAURITANIA"
 msgstr "モーリタニア"
 
-#: ../paypal/paypal_statics.php:326
+#: ../paypal/paypal_statics.php:340
 msgid "MAURITIUS"
 msgstr "モーリシャス"
 
-#: ../paypal/paypal_statics.php:327
+#: ../paypal/paypal_statics.php:341
 msgid "MAYOTTE"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:328
+#: ../paypal/paypal_statics.php:342
 msgid "MEXICO"
 msgstr "メキシコ"
 
-#: ../paypal/paypal_statics.php:329
+#: ../paypal/paypal_statics.php:343
 msgid "MICRONESIA, FEDERATED STATES OF"
 msgstr "ミクロネシア連邦"
 
-#: ../paypal/paypal_statics.php:330
+#: ../paypal/paypal_statics.php:344
 msgid "MOLDOVA, REPUBLIC OF"
 msgstr "モルドヴァ"
 
-#: ../paypal/paypal_statics.php:331
+#: ../paypal/paypal_statics.php:345
 msgid "MONACO"
 msgstr "モナコ"
 
-#: ../paypal/paypal_statics.php:332
+#: ../paypal/paypal_statics.php:346
 msgid "MONGOLIA"
 msgstr "モンゴル"
 
-#: ../paypal/paypal_statics.php:333
+#: ../paypal/paypal_statics.php:347
 msgid "MONTSERRAT"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:334
+#: ../paypal/paypal_statics.php:348
 msgid "MOROCCO"
 msgstr "モロッコ"
 
-#: ../paypal/paypal_statics.php:335
+#: ../paypal/paypal_statics.php:349
 msgid "MOZAMBIQUE"
 msgstr "モザンビーク"
 
-#: ../paypal/paypal_statics.php:336
+#: ../paypal/paypal_statics.php:350
 msgid "NAMIBIA"
 msgstr "ナミビア"
 
-#: ../paypal/paypal_statics.php:337
+#: ../paypal/paypal_statics.php:351
 msgid "NAURU"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:338
+#: ../paypal/paypal_statics.php:352
 msgid "NEPAL"
 msgstr "ネパール"
 
-#: ../paypal/paypal_statics.php:339
+#: ../paypal/paypal_statics.php:353
 msgid "NETHERLANDS"
 msgstr "オランダ"
 
-#: ../paypal/paypal_statics.php:340
+#: ../paypal/paypal_statics.php:354
 msgid "NETHERLANDS ANTILLES"
 msgstr "ん"
 
-#: ../paypal/paypal_statics.php:341
+#: ../paypal/paypal_statics.php:355
 msgid "NEW CALEDONIA"
 msgstr "ニューカレドニア"
 
-#: ../paypal/paypal_statics.php:342
+#: ../paypal/paypal_statics.php:356
 msgid "NEW ZEALAND"
 msgstr "ニュージーランド"
 
-#: ../paypal/paypal_statics.php:343
+#: ../paypal/paypal_statics.php:357
 msgid "NICARAGUA"
 msgstr "ニカラグア"
 
-#: ../paypal/paypal_statics.php:344
+#: ../paypal/paypal_statics.php:358
 msgid "NIGER"
 msgstr "ナイジェリア"
 
-#: ../paypal/paypal_statics.php:345
+#: ../paypal/paypal_statics.php:359
 msgid "NIUE"
 msgstr "に"
 
-#: ../paypal/paypal_statics.php:346
+#: ../paypal/paypal_statics.php:360
 msgid "NORFOLK ISLAND"
 msgstr "ノーフォーク島"
 
-#: ../paypal/paypal_statics.php:347
+#: ../paypal/paypal_statics.php:361
 msgid "NORTHERN MARIANA ISLANDS"
 msgstr "北マリアナ諸島"
 
-#: ../paypal/paypal_statics.php:348
+#: ../paypal/paypal_statics.php:362
 msgid "NORWAY"
 msgstr "ノルウェー"
 
-#: ../paypal/paypal_statics.php:349
+#: ../paypal/paypal_statics.php:363
 msgid "OMAN"
 msgstr "オマーン"
 
-#: ../paypal/paypal_statics.php:350
+#: ../paypal/paypal_statics.php:364
 msgid "PALAU"
 msgstr "パラオ"
 
-#: ../paypal/paypal_statics.php:351
+#: ../paypal/paypal_statics.php:365
 msgid "PANAMA"
 msgstr "パナマ"
 
-#: ../paypal/paypal_statics.php:352
+#: ../paypal/paypal_statics.php:366
 msgid "PARAGUAY"
 msgstr "パラグアイ"
 
-#: ../paypal/paypal_statics.php:353
+#: ../paypal/paypal_statics.php:367
 msgid "PERU"
 msgstr "ペルー"
 
-#: ../paypal/paypal_statics.php:354
+#: ../paypal/paypal_statics.php:368
 msgid "PHILIPPINES"
 msgstr "フィリピン"
 
-#: ../paypal/paypal_statics.php:355
+#: ../paypal/paypal_statics.php:369
 msgid "PITCAIRN"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:356
+#: ../paypal/paypal_statics.php:370
 msgid "POLAND"
 msgstr "ポーランド"
 
-#: ../paypal/paypal_statics.php:357
+#: ../paypal/paypal_statics.php:371
 msgid "PORTUGAL"
 msgstr "ポルトガル"
 
-#: ../paypal/paypal_statics.php:358
+#: ../paypal/paypal_statics.php:372
 msgid "PUERTO RICO"
 msgstr "プエルト・リコ"
 
-#: ../paypal/paypal_statics.php:359
+#: ../paypal/paypal_statics.php:373
 msgid "QATAR"
 msgstr "カタール"
 
-#: ../paypal/paypal_statics.php:360
+#: ../paypal/paypal_statics.php:374
 msgid "REUNION"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:361
+#: ../paypal/paypal_statics.php:375
 msgid "ROMANIA"
 msgstr "ルーマニア"
 
-#: ../paypal/paypal_statics.php:362
+#: ../paypal/paypal_statics.php:376
 msgid "SAINT HELENA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:363
+#: ../paypal/paypal_statics.php:377
 msgid "SAINT KITTS AND NEVIS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:364
+#: ../paypal/paypal_statics.php:378
 msgid "SAINT LUCIA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:365
+#: ../paypal/paypal_statics.php:379
 msgid "SAINT PIERRE AND MIQUELON"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:366
+#: ../paypal/paypal_statics.php:380
 msgid "SAINT VINCENT AND THE GRENADINES"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:367
+#: ../paypal/paypal_statics.php:381
 msgid "SAMOA"
 msgstr "サモア"
 
-#: ../paypal/paypal_statics.php:368
+#: ../paypal/paypal_statics.php:382
 msgid "SAN MARINO"
 msgstr "サン・マリノ"
 
-#: ../paypal/paypal_statics.php:369
+#: ../paypal/paypal_statics.php:383
 msgid "SAO TOME AND PRINCIPE"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:370
+#: ../paypal/paypal_statics.php:384
 msgid "SAUDI ARABIA"
 msgstr "サウジアラビア"
 
-#: ../paypal/paypal_statics.php:371
+#: ../paypal/paypal_statics.php:385
 msgid "SENEGAL"
 msgstr "セネガル"
 
-#: ../paypal/paypal_statics.php:372
+#: ../paypal/paypal_statics.php:386
 msgid "SEYCHELLES"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:373
+#: ../paypal/paypal_statics.php:387
 msgid "SINGAPORE"
 msgstr "シンガポール"
 
-#: ../paypal/paypal_statics.php:374
+#: ../paypal/paypal_statics.php:388
 msgid "SLOVAKIA"
 msgstr "スロバキア"
 
-#: ../paypal/paypal_statics.php:375
+#: ../paypal/paypal_statics.php:389
 msgid "SLOVENIA"
 msgstr "スロヴェニア"
 
-#: ../paypal/paypal_statics.php:376
+#: ../paypal/paypal_statics.php:390
 msgid "SOLOMON ISLANDS"
 msgstr "ソロモン諸島"
 
-#: ../paypal/paypal_statics.php:377
+#: ../paypal/paypal_statics.php:391
 msgid "SOUTH AFRICA"
 msgstr "南アフリカ"
 
-#: ../paypal/paypal_statics.php:378
+#: ../paypal/paypal_statics.php:392
 msgid "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:379
+#: ../paypal/paypal_statics.php:393
 msgid "SPAIN"
 msgstr "スペイン"
 
-#: ../paypal/paypal_statics.php:380
+#: ../paypal/paypal_statics.php:394
 msgid "SURINAME"
 msgstr "す"
 
-#: ../paypal/paypal_statics.php:381
+#: ../paypal/paypal_statics.php:395
 msgid "SVALBARD AND JAN MAYEN"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:382
+#: ../paypal/paypal_statics.php:396
 msgid "SWAZILAND"
 msgstr "スワジランド"
 
-#: ../paypal/paypal_statics.php:383
+#: ../paypal/paypal_statics.php:397
 msgid "SWEDEN"
 msgstr "スウェーデン"
 
-#: ../paypal/paypal_statics.php:384
+#: ../paypal/paypal_statics.php:398
 msgid "SWITZERLAND"
 msgstr "スイス"
 
-#: ../paypal/paypal_statics.php:385
+#: ../paypal/paypal_statics.php:399
 msgid "TAIWAN, PROVINCE OF CHINA"
 msgstr "台湾"
 
-#: ../paypal/paypal_statics.php:386
+#: ../paypal/paypal_statics.php:400
 msgid "TANZANIA, UNITED REPUBLIC OF"
 msgstr "タンザニア共和国"
 
-#: ../paypal/paypal_statics.php:387
+#: ../paypal/paypal_statics.php:401
 msgid "THAILAND"
 msgstr "タイ"
 
-#: ../paypal/paypal_statics.php:388
+#: ../paypal/paypal_statics.php:402
 msgid "TOKELAU"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:389
+#: ../paypal/paypal_statics.php:403
 msgid "TONGA"
 msgstr "トンガ"
 
-#: ../paypal/paypal_statics.php:390
+#: ../paypal/paypal_statics.php:404
 msgid "TRINIDAD AND TOBAGO"
 msgstr "トリニダード・トバゴ"
 
-#: ../paypal/paypal_statics.php:391
+#: ../paypal/paypal_statics.php:405
 msgid "TUNISIA"
 msgstr "チュニジア"
 
-#: ../paypal/paypal_statics.php:392
+#: ../paypal/paypal_statics.php:406
 msgid "TURKEY"
 msgstr "トルコ"
 
-#: ../paypal/paypal_statics.php:393
+#: ../paypal/paypal_statics.php:407
 msgid "TURKS AND CAICOS ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:394
+#: ../paypal/paypal_statics.php:408
 msgid "TUVALU"
 msgstr "ツバル"
 
-#: ../paypal/paypal_statics.php:395
+#: ../paypal/paypal_statics.php:409
 msgid "UKRAINE"
 msgstr "ウクライナ"
 
-#: ../paypal/paypal_statics.php:396
+#: ../paypal/paypal_statics.php:410
 msgid "UNITED ARAB EMIRATES"
 msgstr "アラブ首長国連邦"
 
-#: ../paypal/paypal_statics.php:397
+#: ../paypal/paypal_statics.php:411
 msgid "UNITED KINGDOM"
 msgstr "イギリス"
 
-#: ../paypal/paypal_statics.php:398
+#: ../paypal/paypal_statics.php:412
 msgid "UNITED STATES"
 msgstr "アメリカ合衆国"
 
-#: ../paypal/paypal_statics.php:399
+#: ../paypal/paypal_statics.php:413
 msgid "UNITED STATES MINOR OUTLYING ISLANDS"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:400
+#: ../paypal/paypal_statics.php:414
 msgid "URUGUAY"
 msgstr "ウルグアイ"
 
-#: ../paypal/paypal_statics.php:401
+#: ../paypal/paypal_statics.php:415
 msgid "VIET NAM"
 msgstr "ヴェトナム"
 
-#: ../paypal/paypal_statics.php:402
+#: ../paypal/paypal_statics.php:416
 msgid "VIRGIN ISLANDS, BRITISH"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:403
+#: ../paypal/paypal_statics.php:417
 msgid "VIRGIN ISLANDS, U.S."
 msgstr ""
 
-#: ../paypal/paypal_statics.php:404
+#: ../paypal/paypal_statics.php:418
 msgid "WALLIS AND FUTUNA"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:405
+#: ../paypal/paypal_statics.php:419
 msgid "ZAMBIA"
 msgstr "ザンビア"
 
-#: ../paypal/paypal_statics.php:418
+#: ../paypal/paypal_statics.php:432
 msgid "Australian Dollar"
 msgstr "豪ドル"
 
-#: ../paypal/paypal_statics.php:419
+#: ../paypal/paypal_statics.php:433
 msgid "Brazilian Real"
 msgstr "ブラジルレアル"
 
-#: ../paypal/paypal_statics.php:420
+#: ../paypal/paypal_statics.php:434
 msgid "Canadian Dollar"
 msgstr "カナダドル"
 
-#: ../paypal/paypal_statics.php:421
+#: ../paypal/paypal_statics.php:435
 msgid "Czech Koruna"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:422
+#: ../paypal/paypal_statics.php:436
 msgid "Danish Krone"
 msgstr "デンマーククローネ"
 
-#: ../paypal/paypal_statics.php:423
+#: ../paypal/paypal_statics.php:437
 msgid "Euro"
 msgstr "ユーロ"
 
-#: ../paypal/paypal_statics.php:424
+#: ../paypal/paypal_statics.php:438
 msgid "Hong Kong Dollar"
 msgstr "香港ドル"
 
-#: ../paypal/paypal_statics.php:425
+#: ../paypal/paypal_statics.php:439
 msgid "Hungarian Forint"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:426
+#: ../paypal/paypal_statics.php:440
 msgid "Israeli New Sheqel"
 msgstr ""
 
-#: ../paypal/paypal_statics.php:427
+#: ../paypal/paypal_statics.php:441
 msgid "Japanese Yen"
 msgstr "日本円"
 
-#: ../paypal/paypal_statics.php:428
+#: ../paypal/paypal_statics.php:442
 msgid "Malaysian Ringgit"
 msgstr "マレーシアリンギット"
 
-#: ../paypal/paypal_statics.php:429
+#: ../paypal/paypal_statics.php:443
 msgid "Mexican Peso"
 msgstr "メキシコペソ"
 
-#: ../paypal/paypal_statics.php:430
+#: ../paypal/paypal_statics.php:444
 msgid "Norwegian Krone"
 msgstr "ノルウェイクローネ"
 
-#: ../paypal/paypal_statics.php:431
+#: ../paypal/paypal_statics.php:445
 msgid "New Zealand Dollar"
 msgstr "ニュージーランドドル"
 
-#: ../paypal/paypal_statics.php:432
+#: ../paypal/paypal_statics.php:446
 msgid "Philippine Peso"
 msgstr "フィリピンペソ"
 
-#: ../paypal/paypal_statics.php:433
+#: ../paypal/paypal_statics.php:447
 msgid "Polish Zloty"
 msgstr "ポーランドズウォーティ"
 
-#: ../paypal/paypal_statics.php:434
+#: ../paypal/paypal_statics.php:448
 msgid "Pound Sterling"
 msgstr "イギリスポンド"
 
-#: ../paypal/paypal_statics.php:435
+#: ../paypal/paypal_statics.php:449
 msgid "Singapore Dollar"
 msgstr "シンガポールドル"
 
-#: ../paypal/paypal_statics.php:436
+#: ../paypal/paypal_statics.php:450
 msgid "Swedish Krona"
 msgstr "スウェーデンクローネ"
 
-#: ../paypal/paypal_statics.php:437
+#: ../paypal/paypal_statics.php:451
 msgid "Swiss Franc"
 msgstr "スイスフラン"
 
-#: ../paypal/paypal_statics.php:438
+#: ../paypal/paypal_statics.php:452
 msgid "Taiwan New Dollar"
 msgstr "台湾ドル"
 
-#: ../paypal/paypal_statics.php:439
+#: ../paypal/paypal_statics.php:453
 msgid "Thai Baht"
 msgstr "タイバーツ"
 
-#: ../paypal/paypal_statics.php:440
+#: ../paypal/paypal_statics.php:454
 msgid "U.S. Dollar"
 msgstr "USドル"
 
@@ -2882,6 +3068,7 @@ msgid "No matching Campaign found."
 msgstr "該当するキャンペーンは見つかりませんでした。"
 
 #: ../tables/list-campaign.php:102
+#: ../tables/list-management.php:260
 msgid "Start"
 msgstr "開始"
 
@@ -2900,6 +3087,8 @@ msgstr "%d%%Off"
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
+#: ../tables/list-management.php:285
+#: ../tables/list-transfers.php:318
 #, php-format
 msgid "%d per 1Page"
 msgstr "%d / 1ページ"
@@ -2909,7 +3098,7 @@ msgid "No matching device found."
 msgstr "該当する端末は見つかりませんでした。"
 
 #: ../tables/list-management.php:103
-#: ../tables/list-transfers.php:135
+#: ../tables/list-transfers.php:141
 msgid "No matching transaction found."
 msgstr "該当する決済情報は見つかりませんでした。"
 
@@ -2927,13 +3116,13 @@ msgid "No Limit"
 msgstr "期限なし"
 
 #: ../tables/list-management.php:220
-#: ../tables/list-transfers.php:215
+#: ../tables/list-transfers.php:221
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
 
 #: ../tables/list-management.php:259
-#: ../tables/list-transfers.php:299
+#: ../tables/list-transfers.php:305
 msgid "All Status"
 msgstr "すべてのステータス"
 
@@ -2949,19 +3138,19 @@ msgstr "返金"
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
 
-#: ../tables/list-transfers.php:61
+#: ../tables/list-transfers.php:67
 msgid "Status updated."
 msgstr "ステータスが更新されました。"
 
-#: ../tables/list-transfers.php:66
+#: ../tables/list-transfers.php:72
 msgid "No transaction is specified."
 msgstr "トランザクションが指定されていません。"
 
-#: ../tables/list-transfers.php:150
+#: ../tables/list-transfers.php:156
 msgid "Notification Code"
 msgstr "通知コード"
 
-#: ../tables/list-transfers.php:154
+#: ../tables/list-transfers.php:160
 msgid "Notice"
 msgstr "注意"
 
@@ -2973,55 +3162,54 @@ msgstr "LWPいますぐ購入ウィジェット"
 msgid "Displays BuyNow button if post is payable."
 msgstr "投稿が購入可能な場合にいますぐ購入ボタンを表示します。"
 
-#: ../widgets/buynow.php:83
-msgid "Pay from Bank Account"
-msgstr "振込で支払う"
-
-#: ../widgets/buynow.php:120
+#: ../widgets/buynow.php:115
 msgid "Now on SALE!"
 msgstr "セール中！"
 
-#: ../widgets/buynow.php:124
+#: ../widgets/buynow.php:119
 msgid "Widgets Title"
 msgstr "ウィジェットのタイトル"
 
-#: ../widgets/buynow.php:128
+#: ../widgets/buynow.php:123
 msgid "Post ID to display"
 msgstr "表示する投稿ID"
 
-#: ../widgets/buynow.php:131
+#: ../widgets/buynow.php:126
 msgid "Specify post's ID to display button outside singular page(ex. In category page) or leave it blank."
 msgstr "アイテムのページ以外（ex. カテゴリーページ）に表示したい場合は、投稿IDを指定してください。必要なければ空白にしてください。"
 
-#: ../widgets/buynow.php:135
-#: ../widgets/buynow.php:142
+#: ../widgets/buynow.php:130
+#: ../widgets/buynow.php:137
 msgid "Original Image src"
 msgstr "オリジナル画像のsrc"
 
-#: ../widgets/buynow.php:138
+#: ../widgets/buynow.php:133
 msgid "Specify your original \"BuyNow\" button src. If you don't have, leave it blank and PayPal button will be displayed. Put word 'link', button will be displayed with normal link tag."
 msgstr "オリジナルの\"いますぐ購入\"ボタンのパスを指定してください。もしない場合は空白にしておけばPayPalのボタンが表示されます。'link'と入力すれば、通常のリンクタグで表示されます。"
 
-#: ../widgets/buynow.php:145
+#: ../widgets/buynow.php:140
 #, php-format
 msgid "This words will be displayed after Title if on sale. %%end%% will be replaced by the campaign end date."
 msgstr "セール中の時にだけ表示されます。%end%はキャンペーンの終了日に置き換えられます。"
 
-#: ../widgets/buynow.php:149
+#: ../widgets/buynow.php:144
 msgid "Show Timer"
 msgstr "タイマー表示"
 
-#: ../widgets/buynow.php:152
+#: ../widgets/buynow.php:147
 msgid "Show"
 msgstr "表示する"
 
-#: ../widgets/buynow.php:156
+#: ../widgets/buynow.php:151
 msgid "Don't show"
 msgstr "表示しない"
 
-#: ../widgets/buynow.php:159
+#: ../widgets/buynow.php:154
 msgid "Timer will be displayed if post is on sale."
 msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
+
+#~ msgid "Pay from Bank Account"
+#~ msgstr "振込で支払う"
 
 #~ msgid "Setting"
 #~ msgstr "設定"

@@ -217,17 +217,19 @@ class LWP_Subscription {
 			switch($this->format){
 				case 'more':
 					$more_page = 0;
-					foreach($pages as $p){
-						$more_page++;
-						if(preg_match('/<!--more(.*?)?-->/', $p)){
-							break;
+					if(!empty($pages)){
+						foreach($pages as $p){
+							$more_page++;
+							if(preg_match('/<!--more(.*?)?-->/', $p)){
+								break;
+							}
 						}
-					}
-					if($page == $more_page){
-						$page_content = preg_split("/<!--more(.*?)?-->/", $pages[$page - 1]);
-						$content = apply_filters('the_content', $page_content[0]).$append;
-					}elseif($page > $more_page){
-						$content = $append;
+						if($page == $more_page){
+							$page_content = preg_split("/<!--more(.*?)?-->/", $pages[$page - 1]);
+							$content = apply_filters('the_content', $page_content[0]).$append;
+						}elseif($page > $more_page){
+							$content = $append;
+						}
 					}
 					break;
 				case 'nextpage':
