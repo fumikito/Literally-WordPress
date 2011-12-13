@@ -25,6 +25,17 @@ function lwp_is_owner($post = null, $user_id = null)
 }
 
 /**
+ * Returns is specified user is subscriber
+ * @global Literally_WordPress $lwp
+ * @param int $user_ID
+ * @return int
+ */
+function lwp_is_subscriber($user_ID = null){
+	global $lwp;
+	return $lwp->subscription->is_subscriber($user_ID);
+}
+
+/**
  * 対象とする電子書籍が0円かどうかを返す
  * 
  * ループ内で使用した場合は現在の投稿。
@@ -548,8 +559,7 @@ function lwp_get_device_table($post = null){
  * @param int $user_id (optional) 指定しない場合は現在のユーザー
  * @return array
  */
-function lwp_bought_books($status = "SUCCESS", $user_id = null)
-{
+function lwp_bought_books($status = "SUCCESS", $user_id = null){
 	global $lwp;
 	if(!$user_id){
 		global $user_ID;
@@ -671,6 +681,49 @@ function lwp_transafer_link($post = null){
 		global $post;
 	}
 	return lwp_endpoint('transfer&lwp-id='.$post->ID);
+}
+
+/**
+ * Returns if subscription is enabled
+ * @global Literally_WordPress $lwp 
+ */
+function lwp_is_subscribal(){
+	global $lwp;
+	return $lwp->subscription->enabled;
+}
+
+/**
+ * Output link to pricelist.
+ * @global Literally_WordPress $lwp
+ * @param string $text
+ * @param boolean $popup
+ * @param int $width
+ * @param int $height
+ * @param boolean $show 
+ * @param string $class
+ * @return string
+ */
+function lwp_subscription_link($text = '', $popup = true, $width = 640, $height = 450, $show = true, $class = ''){
+	global $lwp;
+	if(lwp_is_subscribal()){
+		if(empty($text)){
+			$text = $lwp->_('Subscription list');
+		}else{
+			$text = esc_html($text);
+		}
+		$href = $lwp->subscription->get_subscription_archive().($popup ? '&popup=true' : '');
+		$tag = '<a class="'.esc_attr($class).'" href="'.  esc_attr($href).'"';
+		if($popup){
+			$width = intval($width);
+			$height = intval($height);
+			$tag .= " onclick=\"if(window.open(this.href, 'lwpPricelist', 'width={$width}, height={$height}, menubar=no, toolbar=no, scrollbars=yes, location=no')) return false;\"";
+		}
+		$tag .= ">{$text}</a>";
+		if($show){
+			echo $tag;
+		}
+		return $tag;
+	}
 }
 
 /**

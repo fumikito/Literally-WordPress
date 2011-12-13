@@ -59,6 +59,7 @@ class LWP_Subscription {
 			add_action('edit_post', array($this, 'edit_post'));
 			add_filter('the_content', array($this, 'the_content'));
 			add_shortcode('lwp_subscribe', array($this, 'shortcode'));
+			add_shortcode('lwp_pricelist', array($this, 'shortcode_pricelist'));
 		}
 	}
 	
@@ -142,7 +143,26 @@ class LWP_Subscription {
 		switch($post->post_name){
 			case $this->invitation_slug:
 				?>
-				<p><?php $this->e('This contents will be displayed when your user access to page for subscribers only. <strong>YOU CAN CHANGE POST\'S TITLE.</strong>'); ?></p>
+				<p><?php $this->e('This contents will be displayed when your user access to page for subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. <strong>YOU CAN CHANGE POST\'S TITLE.</strong>'); ?></p>
+				<h4><?php $this->e('Allowed Shortcodes'); ?></h4>
+				<dl>
+					<dt><strong>[lwp_subscribe]</strong></dt>
+					<dd>
+						<?php $this->e("Output link to subscription page. Extra attributes are title and class."); ?><br />
+						<em class="description">
+							ex.<br />
+							[lwp_subscbribe title=here class=mylink]
+						</em>
+					</dd>
+					<dt><strong>[lwp_pricelist]</strong></dt>
+					<dd>
+						<?php $this->e("Output link to subscription price list. Extra attributes are title, class, popup, width and height."); ?><br />
+						<em class="description">
+							ex.<br />
+							[lwp_subscbribe title=here class=mylink popup=false]
+						</em>
+					</dd>
+				</dl>
 				<?php
 				break;
 			default:
@@ -227,7 +247,7 @@ class LWP_Subscription {
 	}
 	
 	/**
-	 * Returns if specified user is subascriber
+	 * Returns if specified user is subscriber
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @global int $user_ID
@@ -240,13 +260,37 @@ class LWP_Subscription {
 			global $user_ID;
 		}
 		$sql = <<<EOS
-			SELECT * FROM {$lwp->transaction} AS t
+			SELECT p.ID FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
 			WHERE t.status = %s AND t.user_id = %d AND p.post_type = %s
 			  AND ((t.expires = '0000-00-00 00:00:00') OR (t.expires > %s))
 EOS;
-		return (boolean)$wpdb->get_row($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS, $user_ID, $this->post_type, gmdate('Y-m-d H:i:s')));
+		return (int)$wpdb->get_var($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS, $user_ID, $this->post_type, gmdate('Y-m-d H:i:s')));
+	}
+	
+	/**
+	 * Returns specified user's active subscription
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @global int $user_ID
+	 * @param int $user_ID
+	 * @return object 
+	 */
+	public function get_subscription_owned_by($user_ID = null){
+		global $lwp, $wpdb;
+		if(is_null($user_ID)){
+			global $user_ID;
+		}
+		$sql = <<<EOS
+			SELECT t.*, p.ID AS post_id, p.post_title, p.post_content
+			FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE t.status = %s AND t.user_id = %d AND p.post_type = %s
+			  AND ((t.expires = '0000-00-00 00:00:00') OR (t.expires > %s))
+EOS;
+		return $wpdb->get_row($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS, $user_ID, $this->post_type, gmdate('Y-m-d H:i:s')));
 	}
 	
 	/**
@@ -257,9 +301,28 @@ EOS;
 	 */
 	public function shortcode($atts, $content = ''){
 		$atts = shortcode_atts(array(
-			
+			'title' => $this->_('Subscribe'),
+			'class' => ''
 		), $atts);
-		return lwp_endpoint('subscription');
+		$href = lwp_endpoint('subscription');
+		return '<a href="'.  esc_attr($href).'" class="'.  esc_attr($atts['class']).'">'.  esc_html($atts['title']).'</a>';
+	}
+	
+	/**
+	 * Return shortcode
+	 * @param array $atts
+	 * @param string $content
+	 * @return string
+	 */
+	public function shortcode_pricelist($atts, $content = ''){
+		extract(shortcode_atts(array(
+			'title' => '',
+			'popup' => true,
+			'width' => 640,
+			'height' => 450,
+			'class' => ''
+		), $atts));
+		return ($this->enabled) ? lwp_subscription_link($title, $popup, $width, $height, false, $class) : '';
 	}
 	
 	/**
