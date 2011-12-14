@@ -246,6 +246,6 @@ EOS;
 	}
 	
 	function get_table_classes() {
-		return array_merge(parent::get_table_classes(), array('lwp-table', 'form-table'));
+		return array_merge(parent::get_table_classes(), array('lwp-table'));
 	}
 }
