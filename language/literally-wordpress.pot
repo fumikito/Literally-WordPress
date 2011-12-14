@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 06:18+0900\n"
-"PO-Revision-Date: 2011-12-14 06:18+0900\n"
+"POT-Creation-Date: 2011-12-14 10:15+0900\n"
+"PO-Revision-Date: 2011-12-14 10:15+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -433,9 +433,6 @@ msgid "Output link to subscription price list. Extra attributes are title, class
 msgstr ""
 
 #: ../literally-wordpress-subscription.php:175
-#: ../literally-wordpress.class.php:1967
-#: ../admin/history.php:30
-#: ../admin/history.php:39
 msgid "Price"
 msgstr ""
 
@@ -515,10 +512,6 @@ msgstr ""
 #: ../literally-wordpress.class.php:545
 #: ../admin/history.php:2
 msgid "Purchase History"
-msgstr ""
-
-#: ../literally-wordpress.class.php:545
-msgid "Purchase"
 msgstr ""
 
 #: ../literally-wordpress.class.php:548
@@ -764,43 +757,11 @@ msgstr ""
 msgid "Permission Error"
 msgstr ""
 
-#: ../literally-wordpress.class.php:1965
-msgid "Name"
-msgstr ""
-
-#: ../literally-wordpress.class.php:1966
-#: ../admin/history.php:32
-#: ../admin/history.php:41
-msgid "Date"
-msgstr ""
-
-#: ../literally-wordpress.class.php:1968
-msgid "Payment Method"
-msgstr ""
-
-#: ../literally-wordpress.class.php:1992
-#: ../admin/history.php:56
-msgid "Present"
-msgstr ""
-
-#: ../literally-wordpress.class.php:1995
-msgid "Free Campaign"
-msgstr ""
-
-#: ../literally-wordpress.class.php:2008
-msgid "Total: "
-msgstr ""
-
-#: ../literally-wordpress.class.php:2011
-msgid "You have no transaction history. Try to get any!"
-msgstr ""
-
-#: ../literally-wordpress.class.php:2192
+#: ../literally-wordpress.class.php:2152
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr ""
 
 #: ../admin/campaign.php:2
-#: ../admin/history.php:59
 msgid "Campaign"
 msgstr ""
 
@@ -968,39 +929,11 @@ msgstr ""
 msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
 msgstr ""
 
-#: ../admin/history.php:14
-#, php-format
-msgid "%1$d - %2$d (Total: %3$d)"
-msgstr ""
-
-#: ../admin/history.php:29
-#: ../admin/history.php:38
-#: ../admin/management.php:24
-msgid "Item Name"
-msgstr ""
-
-#: ../admin/history.php:31
-#: ../admin/history.php:40
-msgid "Method"
-msgstr ""
-
-#: ../admin/history.php:53
-msgid "PayPal"
-msgstr ""
-
-#: ../admin/history.php:66
-msgid "View Item"
-msgstr ""
-
-#: ../admin/history.php:73
-msgid "You have purchased no item."
-msgstr ""
-
-#: ../admin/history.php:75
+#: ../admin/history.php:15
 msgid "Contact"
 msgstr ""
 
-#: ../admin/history.php:77
+#: ../admin/history.php:17
 #, php-format
 msgid "If purchased items were not displayed, please contact to Site administrator &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
 msgstr ""
@@ -1023,6 +956,10 @@ msgstr ""
 
 #: ../admin/management.php:19
 msgid "Action"
+msgstr ""
+
+#: ../admin/management.php:24
+msgid "Item Name"
 msgstr ""
 
 #: ../admin/management.php:26
@@ -1621,6 +1558,10 @@ msgstr ""
 #: ../form-template/paypal-selection.php:3
 #, php-format
 msgid "You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below."
+msgstr ""
+
+#: ../form-template/paypal-selection.php:16
+msgid "PayPal"
 msgstr ""
 
 #: ../form-template/paypal-selection.php:20
@@ -3035,6 +2976,7 @@ msgstr ""
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
+#: ../tables/list-history.php:237
 #: ../tables/list-management.php:285
 #: ../tables/list-transfers.php:318
 #, php-format
@@ -3045,28 +2987,51 @@ msgstr ""
 msgid "No matching device found."
 msgstr ""
 
-#: ../tables/list-management.php:103
-#: ../tables/list-transfers.php:141
-msgid "No matching transaction found."
+#: ../tables/list-history.php:29
+msgid "No matching history is found."
 msgstr ""
 
+#: ../tables/list-history.php:40
+msgid "Item Type"
+msgstr ""
+
+#: ../tables/list-history.php:43
+#: ../tables/list-management.php:119
+msgid "Method"
+msgstr ""
+
+#: ../tables/list-history.php:46
 #: ../tables/list-management.php:122
 msgid "Last Updated"
 msgstr ""
 
+#: ../tables/list-history.php:47
+#: ../tables/list-history.php:162
 #: ../tables/list-management.php:123
 #: ../tables/list-management.php:235
 msgid "Detail"
 msgstr ""
 
+#: ../tables/list-history.php:142
 #: ../tables/list-management.php:213
 msgid "No Limit"
 msgstr ""
 
+#: ../tables/list-history.php:149
 #: ../tables/list-management.php:220
 #: ../tables/list-transfers.php:221
 #, php-format
 msgid "%d days left"
+msgstr ""
+
+#: ../tables/list-history.php:220
+#: ../tables/list-management.php:271
+msgid "All Post Types"
+msgstr ""
+
+#: ../tables/list-management.php:103
+#: ../tables/list-transfers.php:141
+msgid "No matching transaction found."
 msgstr ""
 
 #: ../tables/list-management.php:259
@@ -3080,10 +3045,6 @@ msgstr ""
 
 #: ../tables/list-management.php:263
 msgid "Refund"
-msgstr ""
-
-#: ../tables/list-management.php:271
-msgid "All Post Types"
 msgstr ""
 
 #: ../tables/list-transfers.php:67

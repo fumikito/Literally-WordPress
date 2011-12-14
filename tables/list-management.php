@@ -212,7 +212,7 @@ EOS;
 				if($item->expires == '0000-00-00 00:00:00'){
 					return $lwp->_('No Limit');
 				}else{
-					$remain = ceil((strtotime($itme->expires) - time()) / 60 / 60 / 24);
+					$remain = ceil((strtotime($item->expires) - time()) / 60 / 60 / 24);
 					$string;
 					if($remain < 0){
 						$string = $lwp->_('Expired');

@@ -542,7 +542,7 @@ EOS;
 		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
 		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
 		//顧客の購入履歴確認ページ
-		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase"), 0, "lwp-history", array($this, "load"));
+		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
 		//メタボックスの追加
 		foreach($this->option['payable_post_types'] as $post){
 			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
@@ -1952,65 +1952,25 @@ EOS;
 		//本棚用のタグを作成
 		// TODO: タグを自動生成する必要はあるか？
 		if($this->option["mypage"] > 0 && is_page($this->option["mypage"])){
-			$book_shelf = "";
-			$sql = <<<EOS
-				SELECT * FROM {$this->transaction} AS t
-				LEFT JOIN {$wpdb->posts} AS p
-				ON t.book_id = p.ID
-				WHERE t.user_id = %d AND t.status = 'SUCCESS'
-				ORDER BY t.updated DESC
-EOS;
-			$histories = $wpdb->get_results($wpdb->prepare($sql, $user_ID));
-			if(!empty($histories)){
-				$book_name = $this->_('Name');
-				$bought_data = $this->_('Date');
-				$price = $this->_('Price');
-				$method = $this->_('Payment Method');
-				$book_shelf .= <<<EOS
-					<table class="lwp-table form-table">
-						<thead>
-							<tr>
-								<th>{$book_name}</th>
-								<th>{$bought_data}</th>
-								<th>{$method}</th>
-								<th>{$price}</th>
-							</tr>
-						</thead>
-EOS;
-				$total = 0;
-				$tbody = '';
-				foreach($histories as $h){
-					$title = '<a href="'.  get_permalink($h->ID).'">'.apply_filters('the_title', $h->post_title).'</a>';
-					$date = mysql2date(get_option('date_format'), $h->updated);
-					$price = lwp_currency_symbol().number_format($h->price);
-					$total += $h->price;
-					switch(strtolower($h->method)){
-						case 'paypal':
-							$method = 'PayPal';
-							break;
-						case 'present':
-							$method = $this->_('Present');
-							break;
-						case 'campaign':
-							$method = $this->_('Free Campaign');
-							break;
-					}
-					$tbody .= <<<EOS
-						<tr>
-							<td>{$title}</td>
-							<td>{$date}</td>
-							<td>{$method}</td>
-							<td>{$price}</td>
-						</tr>	
-EOS;
+			if(!class_exists('WP_List_Table')){
+				$path = ABSPATH.'wp-admin/includes/class-wp-list-table.php';
+				if(!file_exists($path)){
+					return $content;
+				}else{
+					require_once $path;
 				}
-				$total = lwp_currency_symbol().number_format($total);
-				$book_shelf .= "<tfoot><td>&nbsp;</td><td>&nbsp;</td><td>".$this->_('Total: ')."</td><td>{$total}</td></tfoot>";
-				$book_shelf .= "<tbody>{$tbody}</tbody></table>";
-			}else{
-				$book_shelf = '<p class="message error">'.$this->_('You have no transaction history. Try to get any!').'</p>';
 			}
-			return $book_shelf.$content;
+			
+			require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-history.php";
+			ob_start();
+			$table = new LWP_List_History();
+			$table->prepare_items();
+			do_action("admin_notice");
+			$table->search_box(__('Search'), 'q');
+			$table->display();
+			$book_shelf = ob_get_contents();
+			ob_end_clean();
+			return '<form id="book-shelf" method="get">'.$book_shelf.'</form>'.$content;
 		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
 			$content .= lwp_show_form();
 			//ダウンロード可能なファイルがあったらテーブルを出力

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 06:18+0900\n"
-"PO-Revision-Date: 2011-12-14 06:33+0900\n"
+"POT-Creation-Date: 2011-12-14 10:15+0900\n"
+"PO-Revision-Date: 2011-12-14 10:15+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -485,9 +485,6 @@ msgid "Output link to subscription price list. Extra attributes are title, class
 msgstr "定期購読価格表へのリンクを出力します。利用できる属性はtitle, class, popup, width, heightです。"
 
 #: ../literally-wordpress-subscription.php:175
-#: ../literally-wordpress.class.php:1967
-#: ../admin/history.php:30
-#: ../admin/history.php:39
 msgid "Price"
 msgstr "価格"
 
@@ -568,10 +565,6 @@ msgstr "端末設定"
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr "購入履歴"
-
-#: ../literally-wordpress.class.php:545
-msgid "Purchase"
-msgstr "購入"
 
 #: ../literally-wordpress.class.php:548
 msgid "Literally WordPress Setting"
@@ -816,43 +809,11 @@ msgstr "このファイルへのアクセス権がありません。"
 msgid "Permission Error"
 msgstr "アクセス権エラー"
 
-#: ../literally-wordpress.class.php:1965
-msgid "Name"
-msgstr "お名前"
-
-#: ../literally-wordpress.class.php:1966
-#: ../admin/history.php:32
-#: ../admin/history.php:41
-msgid "Date"
-msgstr "日付"
-
-#: ../literally-wordpress.class.php:1968
-msgid "Payment Method"
-msgstr "支払い方法"
-
-#: ../literally-wordpress.class.php:1992
-#: ../admin/history.php:56
-msgid "Present"
-msgstr "プレゼント"
-
-#: ../literally-wordpress.class.php:1995
-msgid "Free Campaign"
-msgstr "無料キャンペーン"
-
-#: ../literally-wordpress.class.php:2008
-msgid "Total: "
-msgstr "合計: "
-
-#: ../literally-wordpress.class.php:2011
-msgid "You have no transaction history. Try to get any!"
-msgstr "購入履歴はありません。購入をご検討ください。"
-
-#: ../literally-wordpress.class.php:2192
+#: ../literally-wordpress.class.php:2152
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権など、購入したユーザーに対して提供できるものはいくつかあります。"
 
 #: ../admin/campaign.php:2
-#: ../admin/history.php:59
 msgid "Campaign"
 msgstr "キャンペーン"
 
@@ -1020,39 +981,11 @@ msgstr "高橋文樹.comに戻る"
 msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
 msgstr "\"いますぐ購入\"ボタンを使っているのは、日本政府がPayPalに対して寄付の仲介をすることを許可していないためです。"
 
-#: ../admin/history.php:14
-#, php-format
-msgid "%1$d - %2$d (Total: %3$d)"
-msgstr "%1$d - %2$d (合計: %3$d)"
-
-#: ../admin/history.php:29
-#: ../admin/history.php:38
-#: ../admin/management.php:24
-msgid "Item Name"
-msgstr "アイテム名"
-
-#: ../admin/history.php:31
-#: ../admin/history.php:40
-msgid "Method"
-msgstr "支払い方法"
-
-#: ../admin/history.php:53
-msgid "PayPal"
-msgstr "PayPal"
-
-#: ../admin/history.php:66
-msgid "View Item"
-msgstr "アイテムを表示"
-
-#: ../admin/history.php:73
-msgid "You have purchased no item."
-msgstr "アイテムを購入していません。"
-
-#: ../admin/history.php:75
+#: ../admin/history.php:15
 msgid "Contact"
 msgstr "コンタクト"
 
-#: ../admin/history.php:77
+#: ../admin/history.php:17
 #, php-format
 msgid "If purchased items were not displayed, please contact to Site administrator &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
 msgstr "購入したアイテムが表示されない場合、サイト管理者 &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. に連絡してください。出来る限り早くお返事致します。"
@@ -1076,6 +1009,10 @@ msgstr "値"
 #: ../admin/management.php:19
 msgid "Action"
 msgstr "アクション"
+
+#: ../admin/management.php:24
+msgid "Item Name"
+msgstr "アイテム名"
 
 #: ../admin/management.php:26
 msgid "Edit"
@@ -1674,6 +1611,10 @@ msgstr "受諾"
 #, php-format
 msgid "You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below."
 msgstr "<strong>%1$s</strong>を<strong>%2$s</strong>で購入しようとしています。支払い方法を以下から選んでください。"
+
+#: ../form-template/paypal-selection.php:16
+msgid "PayPal"
+msgstr "PayPal"
 
 #: ../form-template/paypal-selection.php:20
 msgid "You can pay with PayPal account."
@@ -3087,6 +3028,7 @@ msgstr "%d%%Off"
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
+#: ../tables/list-history.php:237
 #: ../tables/list-management.php:285
 #: ../tables/list-transfers.php:318
 #, php-format
@@ -3097,29 +3039,52 @@ msgstr "%d / 1ページ"
 msgid "No matching device found."
 msgstr "該当する端末は見つかりませんでした。"
 
-#: ../tables/list-management.php:103
-#: ../tables/list-transfers.php:141
-msgid "No matching transaction found."
-msgstr "該当する決済情報は見つかりませんでした。"
+#: ../tables/list-history.php:29
+msgid "No matching history is found."
+msgstr "該当する購入履歴は見つかりませんでした。"
 
+#: ../tables/list-history.php:40
+msgid "Item Type"
+msgstr "種別"
+
+#: ../tables/list-history.php:43
+#: ../tables/list-management.php:119
+msgid "Method"
+msgstr "支払い方法"
+
+#: ../tables/list-history.php:46
 #: ../tables/list-management.php:122
 msgid "Last Updated"
 msgstr "最終更新"
 
+#: ../tables/list-history.php:47
+#: ../tables/list-history.php:162
 #: ../tables/list-management.php:123
 #: ../tables/list-management.php:235
 msgid "Detail"
 msgstr "詳細"
 
+#: ../tables/list-history.php:142
 #: ../tables/list-management.php:213
 msgid "No Limit"
 msgstr "期限なし"
 
+#: ../tables/list-history.php:149
 #: ../tables/list-management.php:220
 #: ../tables/list-transfers.php:221
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
+
+#: ../tables/list-history.php:220
+#: ../tables/list-management.php:271
+msgid "All Post Types"
+msgstr "すべての投稿タイプ"
+
+#: ../tables/list-management.php:103
+#: ../tables/list-transfers.php:141
+msgid "No matching transaction found."
+msgstr "該当する決済情報は見つかりませんでした。"
 
 #: ../tables/list-management.php:259
 #: ../tables/list-transfers.php:305
@@ -3133,10 +3098,6 @@ msgstr "完了"
 #: ../tables/list-management.php:263
 msgid "Refund"
 msgstr "返金"
-
-#: ../tables/list-management.php:271
-msgid "All Post Types"
-msgstr "すべての投稿タイプ"
 
 #: ../tables/list-transfers.php:67
 msgid "Status updated."
@@ -3207,6 +3168,39 @@ msgstr "表示しない"
 #: ../widgets/buynow.php:154
 msgid "Timer will be displayed if post is on sale."
 msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
+
+#~ msgid "Purchase"
+#~ msgstr "購入"
+
+#~ msgid "Name"
+#~ msgstr "お名前"
+
+#~ msgid "Date"
+#~ msgstr "日付"
+
+#~ msgid "Payment Method"
+#~ msgstr "支払い方法"
+
+#~ msgid "Present"
+#~ msgstr "プレゼント"
+
+#~ msgid "Free Campaign"
+#~ msgstr "無料キャンペーン"
+
+#~ msgid "Total: "
+#~ msgstr "合計: "
+
+#~ msgid "You have no transaction history. Try to get any!"
+#~ msgstr "購入履歴はありません。購入をご検討ください。"
+
+#~ msgid "%1$d - %2$d (Total: %3$d)"
+#~ msgstr "%1$d - %2$d (合計: %3$d)"
+
+#~ msgid "View Item"
+#~ msgstr "アイテムを表示"
+
+#~ msgid "You have purchased no item."
+#~ msgstr "アイテムを購入していません。"
 
 #~ msgid "Pay from Bank Account"
 #~ msgstr "振込で支払う"
