@@ -36,16 +36,18 @@ class LWP_List_History extends WP_List_Table {
 	 */
 	function get_columns() {
 		global $lwp;
-		return array(
+		$column = array(
 			'item_type' => $lwp->_('Item Type'),
 			'item_name' => $lwp->_("Item Name"),
 			'price' => $lwp->_("Purchased Price"),
 			'method' => $lwp->_('Method'),
 			'expires' => $lwp->_('Expires'),
 			'registered' => $lwp->_("Registered"),
-			'updated' => $lwp->_("Last Updated"),
-			'detail' => $lwp->_('Detail')
 		);
+		if(is_admin()){
+			$column['updated'] = $lwp->_("Last Updated");
+		}
+		return $column;
 	}
 	
 	/**
@@ -129,7 +131,8 @@ EOS;
 				}
 				break;
 			case 'item_name':
-				return $item->post_title;
+				$url = $item->post_type == $lwp->subscription->post_type ? $lwp->subscription->get_subscription_archive() : get_permalink($item->book_id);
+				return '<a href="'.$url.'">'.$item->post_title.'</a>';
 				break;
 			case 'price':
 				return number_format($item->price)." ({$lwp->option['currency_code']})";
@@ -156,10 +159,6 @@ EOS;
 				break;
 			case 'updated':
 				return mysql2date(get_option('date_format'), $item->updated, false);
-				break;
-			case 'detail';
-				$url = $item->post_type == $lwp->subscription->post_type ? $lwp->subscription->get_subscription_archive() : get_permalink($item->book_id);
-				return '<p><a class="button" href="'.$url.'">'.$lwp->_("Detail").'</a></p>';
 				break;
 		}
 	}
