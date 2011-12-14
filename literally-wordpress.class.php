@@ -839,7 +839,7 @@ EOS;
 			$query .= " ID = %d";
 			return $wpdb->get_row($wpdb->prepare($query, $file_id));
 		}else{
-			$query .= "book_id = %d";
+			$query .= " book_id = %d";
 			return $wpdb->get_results($wpdb->prepare($query, $book_id));
 		}
 	}
@@ -900,16 +900,18 @@ EOS;
 	/**
 	* ファイルテーブルを更新する
 	*
+	* @global wpdb $wpdb
 	* @return boolean
 	*/
 	private function update_file($file_id, $name, $devices, $desc, $public = 1, $free = 0)
 	{
 		global $wpdb;
+		$wpdb->show_errors();
 		$req = $wpdb->update(
 			$this->files,
 			array(
 				"name" => $name,
-				"desc" => $desc,
+				"description" => $desc,
 				"public" => $public,
 				"free" => $free,
 				"updated" => gmdate("Y-m-d H:i:s")
@@ -919,31 +921,20 @@ EOS;
 			array("%d")
 		);
 		if($req){
+			//このファイルに登録されたデバイスIDをすべて削除
+			$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE file_id = %d", $file_id));
 			if(!empty($devices)){
-				$deleted_ids = array();
-				//このファイルに登録されたデバイスIDをすべて取得
-				foreach($wpdb->get_results($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d", $file_id)) as $registered){
-					if(false === array_search($registered->device_id, $devices)){
-						//登録されたデバイスIDがPOSTされた値の中に見つからなかったら削除
-						$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE ID = %d", $registered->ID));
-						$deleted_ids[] = $registered->device_id;
-					}
-				}
 				foreach($devices as $d){
-					//デバイスIDが削除済みにも登録済みにも存在しない場合
-					if(false === array_search($d, $deleted_ids) && !$wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->file_relationships} WHERE file_id = %d AND device_id = %d", $file_id, $d))){
-						$wpdb->insert(
-							$this->file_relationships,
-							array(
-								"file_id" => $file_id,
-								"device_id" => $d
-							),
-							array("%d","%d")
-						);
-					}
+					//新しいデバイスを登録
+					$wpdb->insert(
+						$this->file_relationships,
+						array(
+							"file_id" => $file_id,
+							"device_id" => $d
+						),
+						array("%d","%d")
+					);
 				}
-			}else{
-				$wpdb->query($wpdb->parepare("DELETE FROM {$this->file_relationships} WHERE file_id = %d", $file_id));
 			}
 			return true;
 		}else

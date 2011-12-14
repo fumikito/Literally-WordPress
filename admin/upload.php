@@ -71,7 +71,7 @@
 	
 	//更新のとき
 	if($updating || $updated){
-		$file = $this->get_files($_REQUEST["post_id"], $_REQUEST["file_id"]);
+		$file = $this->get_files(null, $_REQUEST["file_id"]);
 		if($req = $this->get_devices($_REQUEST['file_id'])){
 			foreach($req as $r){
 				$devices_registered[] = $r->device_id;
