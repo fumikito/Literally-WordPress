@@ -1966,7 +1966,6 @@ EOS;
 			$table = new LWP_List_History();
 			$table->prepare_items();
 			do_action("admin_notice");
-			$table->search_box(__('Search'), 'q');
 			$table->display();
 			$book_shelf = ob_get_contents();
 			ob_end_clean();

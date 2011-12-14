@@ -84,7 +84,7 @@ EOS;
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
 		}
-		if(isset($_GET['q']) && !empty($_GET["q"])){
+		if(isset($_GET['s']) && !empty($_GET["s"])){
 			$where[] = $wpdb->prepare("((p.post_title LIKE %s) OR (p.post_content LIKE %s) OR (p.post_excerpt LIKE %s))", '%'.$_GET["s"].'%', '%'.$_GET["s"].'%', '%'.$_GET["s"].'%');
 		}
 		$sql .= ' WHERE '.implode(' AND ', $where);
