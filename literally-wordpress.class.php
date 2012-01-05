@@ -1906,6 +1906,13 @@ EOS;
 			$mime = $this->detect_mime($file->file);
 			$size = filesize($path);
 			$kb = 1024; //1kb
+			//If IE and under SSL, echo cache control.
+			// @see http://exe.tyo.ro/2010/01/nocachesslie.html
+			global $is_IE;
+			if($is_IE){
+				header("Cache-Control: public");
+				header("Pragma:");
+			}
 			header("Content-Type: {$mime}");
 			header("Content-Disposition: attachment; filename=\"{$file->file}\"");
 			header("Content-Length: {$size}");
