@@ -207,8 +207,7 @@ class LWP_Subscription {
 		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !$this->is_subscriber()){
 			//Get invitation message
 			$message = get_page_by_path($this->invitation_slug, 'OBJECT', $this->post_type);
-			remove_filter('the_content', array($this, 'the_content'));
-			$append = '<div class="lwp-invitation">'.apply_filters('the_content', $message->post_content).'</div>';
+			$append = '<div class="lwp-invitation">'.apply_filters('get_the_content', $message->post_content).'</div>';
 			//Get current page infomation
 			global $page, $pages;
 			if($page > count($pages)){
@@ -224,9 +223,9 @@ class LWP_Subscription {
 								break;
 							}
 						}
-						if($page == $more_page){
-							$page_content = preg_split("/<!--more(.*?)?-->/", $pages[$page - 1]);
-							$content = apply_filters('the_content', $page_content[0]).$append;
+						if($page == $more_page && preg_match("/<!--more(.*?)?-->/", $pages[$page - 1])){
+							$page_content = preg_split("/<span id=\"more-[0-9]+\"><\/span>/", $content);
+							$content = wpautop($page_content[0]).$append;
 						}elseif($page > $more_page){
 							$content = $append;
 						}
@@ -243,7 +242,6 @@ class LWP_Subscription {
 					$content = $append;
 					break;
 			}
-			add_filter('the_content', array($this, 'the_content'));
 		}
 		return $content;
 	}

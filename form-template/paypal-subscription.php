@@ -39,7 +39,7 @@
 							<?php if($this->subscription->is_subscriber() == $s->ID): ?>
 								<img src="<?php echo $this->url; ?>/assets/icon-check-on.png" width="32" heigth="32" alt="ON" />
 							<?php else: ?>
-								<img src="<?php echo $this->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="ON" />
+								<img src="<?php echo $this->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="OFF" />
 							<?php endif; ?>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -51,7 +51,7 @@
 				</td>
 				<td><?php echo $s->expires.' '; $this->e('Days');  ?></td>
 				<td><?php echo number_format($s->price)." (".$this->option['currency_code'].")"; ?></td>
-				<td><?php echo apply_filters('the_content', $s->post_content); ?></td>	
+				<td><?php echo wpautop($s->post_content); ?></td>	
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
