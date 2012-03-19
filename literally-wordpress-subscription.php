@@ -18,6 +18,11 @@ class LWP_Subscription {
 	public $post_type = 'lwp_subscription';
 	
 	/**
+	 * @var string
+	 */
+	public $free_meta_key = '_lwp_free_subscription';
+	
+	/**
 	 * @var array
 	 */
 	public $post_types = array();
@@ -124,6 +129,9 @@ class LWP_Subscription {
 				));
 			}
 		}
+		if($this->enabled){
+			add_action('add_meta_boxes', array($this, 'register_subscription_metabox'));
+		}
 	}
 	
 	/**
@@ -131,6 +139,15 @@ class LWP_Subscription {
 	 */
 	public function register_meta_box(){
 		add_meta_box('lwp-subscription', $this->_('Subscription Setting'), array($this, 'metabox_subscription'), $this->post_type, 'side', 'high');
+	}
+	
+	/**
+	 * Add metaboxes on edit page 
+	 */
+	public function register_subscription_metabox(){
+		foreach($this->post_types as $p_type){
+			add_meta_box('lwp-subscription-option', $this->_('Subscription Option'), array($this, 'metabox_subscription_option'), $p_type, 'side', 'high');
+		}
 	}
 	
 	/**
@@ -187,15 +204,42 @@ class LWP_Subscription {
 	}
 	
 	/**
+	 * Subscription Setting
+	 * @param object $post
+	 * @param array $metabox 
+	 */
+	public function metabox_subscription_option($post, $metabox){
+		wp_nonce_field('lwp_subscription_free', '_lwp_subscription_free', false);
+		?>
+		<p>
+			<label>
+				<input type="checkbox" name="lwp_subscription_free" value="1" <?php if(get_post_meta($post->ID, $this->free_meta_key, true)) echo ' checked="checked"'; ?>/>
+				<?php $this->e('Anyone can read this post'); ?>
+			</label>
+		</p>
+		<?php
+	}
+	
+	/**
 	 * Save subsctiption setting
 	 * @param int $post_id 
 	 */
 	public function edit_post($post_id){
+		//Save price
 		if(isset($_REQUEST['_lwpnonce']) && wp_verify_nonce($_REQUEST['_lwpnonce'], 'lwp_subscription_setting')){
 			update_post_meta($post_id, 'lwp_price', (int)$_REQUEST['subscription_price']);
 			update_post_meta($post_id, '_lwp_expires', (int)$_REQUEST['subscription_expires']);
 		}
+		//Save free setting
+		if(isset($_REQUEST['_lwp_subscription_free']) && wp_verify_nonce($_REQUEST['_lwp_subscription_free'], 'lwp_subscription_free')){
+			if(isset($_REQUEST['lwp_subscription_free']) && $_REQUEST['lwp_subscription_free']){
+				update_post_meta($post_id, $this->free_meta_key, true);
+			}else{
+				delete_post_meta($post_id, $this->free_meta_key);
+			}
+		}
 	}
+	
 	
 	
 	/**
@@ -204,7 +248,7 @@ class LWP_Subscription {
 	 * @return string
 	 */
 	public function the_content($content){
-		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !($this->is_subscriber() || current_user_can('edit_others_posts') || get_the_author_ID() == get_current_user_id())){
+		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !($this->is_subscriber() || current_user_can('edit_others_posts') || get_the_author_ID() == get_current_user_id()) && !lwp_is_free_subscription()){
 			//Get invitation message
 			$message = get_page_by_path($this->invitation_slug, 'OBJECT', $this->post_type);
 			$append = '<div class="lwp-invitation">'.apply_filters('get_the_content', $message->post_content).'</div>';
@@ -225,7 +269,9 @@ class LWP_Subscription {
 						}
 						if($page == $more_page && preg_match("/<!--more(.*?)?-->/", $pages[$page - 1])){
 							$page_content = preg_split("/<span id=\"more-[0-9]+\"><\/span>/", $content);
-							$content = wpautop($page_content[0]).$append;
+							remove_filter('the_content', array($this, 'the_content'));
+							$content = apply_filters('get_the_content', $page_content[0]).$append;
+							add_filter('the_content', array($this, 'the_content'));
 						}elseif($page > $more_page){
 							$content = $append;
 						}

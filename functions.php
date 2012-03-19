@@ -904,3 +904,17 @@ function lwp_history_url(){
 		return admin_url('profile.php?page=lwp-history');
 	}
 }
+
+/**
+ * Returns whether if current post is free for subscription
+ * @global Literally_WordPress $lwp
+ * @param int $post_id
+ * @return boolean 
+ */
+function lwp_is_free_subscription($post_id = null){
+	global $lwp;
+	if(is_null($post_id)){
+		$post_id = get_the_ID();
+	}
+	return (boolean)get_post_meta($post_id, $lwp->subscription->free_meta_key, true);
+}
