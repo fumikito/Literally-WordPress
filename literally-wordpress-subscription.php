@@ -204,7 +204,7 @@ class LWP_Subscription {
 	 * @return string
 	 */
 	public function the_content($content){
-		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !$this->is_subscriber()){
+		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !($this->is_subscriber() || current_user_can('edit_others_posts') || get_the_author_ID() == get_current_user_id())){
 			//Get invitation message
 			$message = get_page_by_path($this->invitation_slug, 'OBJECT', $this->post_type);
 			$append = '<div class="lwp-invitation">'.apply_filters('get_the_content', $message->post_content).'</div>';

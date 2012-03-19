@@ -890,3 +890,17 @@ function lwp_is_transaction_error()
 	global $lwp;
 	return (isset($_GET["lwp_return"]) && $lwp->on_transaction && ($lwp->transaction_status == "ERROR" || $lwp->transaction_status == "FAILED"));
 }
+
+/**
+ * 購入履歴ページへのリンクを返す
+ * @global Literally_WordPress $lwp
+ * @return string
+ */
+function lwp_history_url(){
+	global $lwp;
+	if($lwp->option['mypage']){
+		return get_permalink($lwp->option['mypage']);
+	}else{
+		return admin_url('profile.php?page=lwp-history');
+	}
+}
