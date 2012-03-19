@@ -339,7 +339,7 @@ class Literally_WordPress{
 	public function validate(){
 		//Check directory's existance and if not, try to careate
 		if(!is_dir($this->option['dir']) || !file_exists($this->option['dir'])){
-			if(!mkdir($this->option['dir'], true)){
+			if(!@mkdir($this->option['dir'], true)){
 				$this->initialized = false;
 				$this->message[] = sprintf($this->_('Can\'t make directory. Check parmissin of "%s"'), dirname($this->option['dir']));
 				$this->error = true;
@@ -423,7 +423,7 @@ EOS;
 		global $wpdb;
 		//バージョンの確認
 		if($this->version > $this->option['db_version']){
-			$wpdb->show_errors();
+			//$wpdb->show_errors();
 			//Change Field name because desc is 
 			$row = null;
 			foreach($wpdb->get_results("DESCRIBE {$this->files}") as $field){
@@ -1794,7 +1794,7 @@ EOS;
 					break;
 			}
 		}
-		if(is_page($this->option['mypage'])){
+		if($this->option['mypage'] && is_page($this->option['mypage'])){
 			if(!is_user_logged_in()){
 				auth_redirect();
 				die();
