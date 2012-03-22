@@ -1572,9 +1572,16 @@ EOS;
 					}elseif(!($subscriptions = $this->subscription->get_subscription_list()) || empty($subscriptions)){
 						wp_die($this->_('Sorry, but there is no subscription plan.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
 					}else{
+						$parent_url = get_bloginfo('url');
+						foreach($this->subscription->post_types as $post_type){
+							if($post_type != 'post' && $post_type != 'page' && ($url = get_post_type_archive_link($post_type))){
+								$parent_url = $url;
+							}
+						}
 						$this->show_form('subscription', array(
 							'subscriptions' => $subscriptions,
 							'archive' => $this->subscription->get_subscription_post_type_page(),
+							'url' => $parent_url,
 							'transaction' => (boolean)($_GET['lwp'] == 'subscription')
 						));
 					}
@@ -1747,7 +1754,7 @@ EOS;
 				case "success":
 					if(isset($_REQUEST['lwp-id'])){
 						if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id'])) == $this->subscription->post_type){
-							$url = $this->subscription->get_subscription_archive();
+							$url = $this->subscription->get_subscription_archive(true);
 						}else{
 							$url = get_permalink($_REQUEST['lwp-id']);
 						}

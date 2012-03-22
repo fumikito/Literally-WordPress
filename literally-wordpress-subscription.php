@@ -394,10 +394,11 @@ EOS;
 	
 	/**
 	 * Return subscription price lists page
+	 * @param boolean $need_return
 	 * @return string
 	 */
-	public function get_subscription_archive(){
-		return lwp_endpoint('pricelist');
+	public function get_subscription_archive($need_return = false){
+		return $need_return ? lwp_endpoint('pricelist').'&back=true' : lwp_endpoint('pricelist');
 	}
 	
 	/**

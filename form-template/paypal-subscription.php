@@ -68,11 +68,13 @@
 
 	<p>
 	<?php if(isset($_GET['popup']) && $_GET['popup']): ?>
-		<a class="button" href="#" onclick="window.close(); return false;"><?php $this->e("Close"); ?></a>
+		<a class="button" href="<?php bloginfo('url'); ?>" onclick="window.close(); return false;"><?php $this->e("Close"); ?></a>
 	<?php elseif(preg_match("/lwp/", $_SERVER["HTTP_REFERER"])): ?>
-		<a class="button" href="<?php echo $archive; ?>"><?php $this->e("Return"); ?></a></p>
+		<a class="button" href="<?php echo esc_attr($archive); ?>"><?php $this->e("Return"); ?></a></p>
+	<?php elseif(isset($_GET['back']) && $_GET['back']): ?>
+		<a class="button" href="<?php echo esc_attr($url); ?>"><?php $this->e("Return"); ?></a></p>
 	<?php else: ?>
-		<a class="button" href="#" onclick="window.history.back(); return false;"><?php $this->e("Return"); ?></a>
+		<a class="button" href="<?php bloginfo('url'); ?>" onclick="window.history.back(); return false;"><?php $this->e("Return"); ?></a>
 	<?php endif; ?>
 	</p>
 	
