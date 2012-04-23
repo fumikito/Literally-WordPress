@@ -393,6 +393,27 @@ EOS;
 	}
 	
 	/**
+	 * Return whether available subscription plan is registered.
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @return boolean
+	 */
+	public function has_plans(){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT DISTINCT count(p.ID)
+			FROM {$wpdb->posts} AS p
+			INNER JOIN {$wpdb->postmeta} AS pm
+			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
+			INNER JOIN {$wpdb->postmeta} AS pm2
+			ON p.ID = pm2.post_id AND pm2.meta_key = '_lwp_expires'
+			WHERE p.post_type = %s AND p.post_status = 'publish'
+			AND   CAST(pm.meta_value AS UNSIGNED) > 0
+EOS;
+		return (boolean)$wpdb->get_var($wpdb->prepare($sql, $this->post_type));
+	}
+	
+	/**
 	 * Return subscription price lists page
 	 * @param boolean $need_return
 	 * @return string

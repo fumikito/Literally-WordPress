@@ -1,4 +1,4 @@
-<?php /* @var $this Literally_WordPress */ ?>
+<?php /* @var $this Literally_WordPress */ /* @var $subscriptions WP_Query */ ?>
 <?php if(!$transaction): ?>
 	<p class="message notice"><?php printf($this->_("%s's subscription plans are below."), get_bloginfo('name')); ?></p>
 
@@ -27,16 +27,16 @@
 <?php endif; ?>
 	<table class="form-table">
 		<tbody>
-			<?php $counter = 0; foreach($subscriptions as $s): $counter++; ?>
+			<?php $counter = 0; if($subscriptions->have_posts()) while($subscriptions->have_posts()):  $subscriptions->the_post();  $counter++; ?>
 			<tr>
 				<th>
 					<?php if($transaction): ?>
-						<input type="radio" name="lwp-id" id="lwp-id-<?php echo $s->ID; ?>" value="<?php echo $s->ID; ?>" <?php if($counter == 1) echo 'checked="checked" '; ?>/>
+						<input type="radio" name="lwp-id" id="lwp-id-<?php the_ID(); ?>" value="<?php the_ID(); ?>" <?php if($counter == 1) echo 'checked="checked" '; ?>/>
 					<?php else: ?>
 						<?php if(!is_user_logged_in()): ?>
 							<?php echo $counter; ?>
 						<?php else: ?>
-							<?php if($this->subscription->is_subscriber() == $s->ID): ?>
+							<?php if($this->subscription->is_subscriber() == get_the_ID()): ?>
 								<img src="<?php echo $this->url; ?>/assets/icon-check-on.png" width="32" heigth="32" alt="ON" />
 							<?php else: ?>
 								<img src="<?php echo $this->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="OFF" />
@@ -45,15 +45,15 @@
 					<?php endif; ?>
 				</th>
 				<td>
-					<label for="lwp-id-<?php echo $s->ID; ?>">
-						<?php echo $s->post_title; ?>
+					<label for="lwp-id-<?php the_ID(); ?>">
+						<?php the_title(); ?>
 					</label>
 				</td>
-				<td><?php echo $s->expires.' '; $this->e('Days');  ?></td>
-				<td><?php echo number_format($s->price)." (".$this->option['currency_code'].")"; ?></td>
-				<td><?php echo wpautop($s->post_content); ?></td>	
+				<td><?php echo get_post_meta(get_the_ID(), '_lwp_expires', true).' '; $this->e('Days');  ?></td>
+				<td><?php echo lwp_the_price()." (".$this->option['currency_code'].")"; ?></td>
+				<td><?php the_content(); ?></td>	
 			</tr>
-			<?php endforeach; ?>
+			<?php endwhile;wp_reset_query(); ?>
 		</tbody>
 	</table>
 <?php if($transaction): ?>

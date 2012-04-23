@@ -1569,7 +1569,7 @@ EOS;
 						auth_redirect($_SERVER["REQUEST_URI"]);
 					}elseif($_GET['lwp'] == 'subscription' && $this->subscription->is_subscriber()){
 						wp_die($this->_('You are already subscriber. You don\'t have to buy subscription.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
-					}elseif(!($subscriptions = $this->subscription->get_subscription_list()) || empty($subscriptions)){
+					}elseif(!$this->subscription->has_plans()){
 						wp_die($this->_('Sorry, but there is no subscription plan.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
 					}else{
 						$parent_url = get_bloginfo('url');
@@ -1579,7 +1579,15 @@ EOS;
 							}
 						}
 						$this->show_form('subscription', array(
-							'subscriptions' => $subscriptions,
+							'subscriptions' => new WP_Query(array(
+								'post_type' => $this->subscription->post_type,
+								'post_status' => 'publish',
+								'meta_key' => 'lwp_price',
+								'meta_value_num' => 0,
+								'meta_compare' => '>=',
+								'orderby' => 'meta_value_num',
+								'order' => 'asc'
+							)),
 							'archive' => $this->subscription->get_subscription_post_type_page(),
 							'url' => $parent_url,
 							'total' => $_GET['lwp'] == 'subscription' ? 4 : 0,
