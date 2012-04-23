@@ -1,4 +1,5 @@
 <?php /* @var $this Literally_WordPress */?>
+
 <?php if(!$notification): ?>
 	<p class="message warning error"><?php $this->e('Failed to send mail. Please note this page.'); ?></p>
 <?php elseif($notification === 'sent'):?>

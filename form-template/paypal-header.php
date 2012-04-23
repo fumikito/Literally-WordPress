@@ -13,3 +13,4 @@
 		<!-- // .header -->
 		
 		<div class="main">
+			<?php _lwp_show_indicator($total, $current);?>

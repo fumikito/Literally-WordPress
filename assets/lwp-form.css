@@ -193,4 +193,62 @@ textarea{
 #lwp-invoice .footer{
 	text-align:center;
 }
-
+/* Indicator */
+.lwp-indicator{
+	text-align: right;
+	font-size:small;
+	height:15px;
+	line-height: 15px;
+	margin:10px 0;
+}
+.lwp-indicator-progress-bg{
+	display: inline-block;
+	width:100px;
+	height:13px;
+	border:1px solid #ccc;
+	margin-right:5px;
+	text-align: left;
+	background-color:#222;
+	background-image: linear-gradient(bottom, rgb(222,222,222) 28%, rgb(235,235,235) 84%);
+	background-image: -o-linear-gradient(bottom, rgb(222,222,222) 28%, rgb(235,235,235) 84%);
+	background-image: -moz-linear-gradient(bottom, rgb(222,222,222) 28%, rgb(235,235,235) 84%);
+	background-image: -webkit-linear-gradient(bottom, rgb(222,222,222) 28%, rgb(235,235,235) 84%);
+	background-image: -ms-linear-gradient(bottom, rgb(222,222,222) 28%, rgb(235,235,235) 84%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.28, rgb(222,222,222)),
+		color-stop(0.84, rgb(235,235,235))
+	);
+}
+.lwp-indicator-progress{
+	display:inline-block;
+	height:13px;
+	width: 0;
+	background-color: rgb(130,212,63);
+	background-image: linear-gradient(bottom, rgb(130,212,63) 28%, rgb(100,207,58) 67%, rgb(201,230,115) 84%);
+	background-image: -o-linear-gradient(bottom, rgb(130,212,63) 28%, rgb(100,207,58) 67%, rgb(201,230,115) 84%);
+	background-image: -moz-linear-gradient(bottom, rgb(130,212,63) 28%, rgb(100,207,58) 67%, rgb(201,230,115) 84%);
+	background-image: -webkit-linear-gradient(bottom, rgb(130,212,63) 28%, rgb(100,207,58) 67%, rgb(201,230,115) 84%);
+	background-image: -ms-linear-gradient(bottom, rgb(130,212,63) 28%, rgb(100,207,58) 67%, rgb(201,230,115) 84%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.28, rgb(130,212,63)),
+		color-stop(0.67, rgb(100,207,58)),
+		color-stop(0.84, rgb(201,230,115))
+	);
+}
+.lwp-indicator-text{
+	padding-top:1px;
+	vertical-align:top;
+	font-size:11px;
+	font-weight: bold;
+	color:#666;
+}
+.lwp-indicator-text strong{
+	vertical-align: top;
+	color:#000;
+}

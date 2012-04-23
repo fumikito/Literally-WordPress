@@ -6,6 +6,8 @@
  * @author  Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
  */
 
+//Load internal functions
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR."functions-internal.php";
 
 /**
  * ユーザーが電子書籍を所有しているか否かを返す
@@ -207,31 +209,6 @@ function lwp_the_price($post = null){
 	echo lwp_currency_symbol().number_format(lwp_price());
 }
 
-/**
- * 電子書籍のカスタムフィールドを返す
- * 
- * @param string $key
- * @param int|object (optional) ループ内で使用した場合は現在のポスト
- * @param boolean $single (optional) 配列で取得する場合はfalse
- * @return string
- */
-function _lwp_post_meta($key, $post = null, $single = true)
-{
-	if($post){
-		if(is_numeric($post)){
-			$post_id = $post;
-		}else{
-			$post_id = $post->ID;
-		}
-	}elseif(is_null($post)){
-		global $post;
-		$post_id = $post->ID;
-	}
-	if(!is_numeric($post_id))
-		return null;
-	else
-		return get_post_meta($post_id, $key, $single);
-}
 
 /**
  * 電子書籍の定価を返す

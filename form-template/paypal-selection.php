@@ -1,4 +1,5 @@
 <?php /* @var $this Literally_WordPress */?>
+
 <p class="message notice">
 	<?php printf($this->_('You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below.'), $item, number_format($price).'('.$this->option['currency_code'].')' ); ?>
 </p>

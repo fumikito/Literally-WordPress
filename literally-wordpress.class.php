@@ -857,12 +857,12 @@ EOS;
 		//ディレクトリの存在確認と作成
 		$book_dir = $this->option["dir"].DIRECTORY_SEPARATOR.$book_id;
 		if(!is_dir($book_dir))
-			if(!mkdir($book_dir))
+			if(!@mkdir($book_dir))
 				return false;
 		//新しいファイル名の作成
 		$file = sanitize_file_name($file);
 		//ファイルの移動
-		if(!move_uploaded_file($path, $book_dir.DIRECTORY_SEPARATOR.$file))
+		if(!@move_uploaded_file($path, $book_dir.DIRECTORY_SEPARATOR.$file))
 			return false;
 		//データベースに書き込み
 		global $wpdb;
@@ -1582,6 +1582,8 @@ EOS;
 							'subscriptions' => $subscriptions,
 							'archive' => $this->subscription->get_subscription_post_type_page(),
 							'url' => $parent_url,
+							'total' => $_GET['lwp'] == 'subscription' ? 4 : 0,
+							'current' => $_GET['lwp'] == 'subscription' ? 1 : 0,
 							'transaction' => (boolean)($_GET['lwp'] == 'subscription')
 						));
 					}
@@ -1622,6 +1624,9 @@ EOS;
 							$message = $this->_("This contents is not on sale.");
 						}
 					}else{
+						//Current step
+						$total = $book->post_type == $this->subscription->post_type ? 4 : 3;
+						$current = $book->post_type == $this->subscription->post_type ? 2 : 1;
 						//Start Transaction
 						if(isset($_GET['_wpnonce'], $_GET['lwp-method']) && wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow')){
 							//この時点で購入可能
@@ -1666,7 +1671,9 @@ EOS;
 											'post_id' => $book_id,
 											'transaction' => $transaction,
 											'notification' => $notification_status,
-											'link' => $url
+											'link' => $url,
+											'total' => $total,
+											'current' => $current+1
 										));
 									}else{
 										$message = $this->_("Sorry, we can't accept this payment method.");
@@ -1689,7 +1696,9 @@ EOS;
 							$this->show_form('selection', array(
 								'post_id' => $book_id,
 								'price' => lwp_price($book_id),
-								'item' => $book->post_title
+								'item' => $book->post_title,
+								'current' => $current,
+								'total' => $total
 							));
 						}
 					}
@@ -1744,7 +1753,9 @@ EOS;
 								"info" => $info,
 								"transaction" => $transaction,
 								"post" => $post,
-								'link' => $link
+								'link' => $link,
+								'total' => ($post->post_type == $this->subscription->post_type) ? 4 : 3,
+								'current' => ($post->post_type == $this->subscription->post_type) ? 3 : 2
 							));
 						}else{
 							wp_die($message, $this->_("Failed"), array("back_link" => true));
@@ -1753,7 +1764,8 @@ EOS;
 					break;
 				case "success":
 					if(isset($_REQUEST['lwp-id'])){
-						if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id'])) == $this->subscription->post_type){
+						$is_subscription = $wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id'])) == $this->subscription->post_type;
+						if($is_subscription){
 							$url = $this->subscription->get_subscription_archive(true);
 						}else{
 							$url = get_permalink($_REQUEST['lwp-id']);
@@ -1761,7 +1773,11 @@ EOS;
 					}else{
 						$url = get_bloginfo('url');
 					}
-					$this->show_form("success", array('link' => $url));
+					$this->show_form("success", array(
+						'link' => $url,
+						'total' => ($is_subscription) ? 4 : 3,
+						'current' => ($is_subscription) ? 4 : 3
+					));
 					break;
 				case "cancel":
 					$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
@@ -1793,7 +1809,9 @@ EOS;
 					}
 					$this->show_form("cancel", array(
 						"post_id" => $post_id,
-						'link' => $url
+						'link' => $url,
+						'total' => 3,
+						'current' => 3
 					));
 					break;
 				case "file":
