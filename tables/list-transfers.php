@@ -8,7 +8,6 @@
 class LWP_List_Transfer extends WP_List_Table{
 	
 	function __construct() {
-		global $lwp;
 		parent::__construct(array(
 			'singular' => 'transfer',
 			'plural' => 'transfers',

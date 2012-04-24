@@ -116,7 +116,7 @@ class LWP_Notifier{
 	 */
 	public function admin_init(){
 		if(isset($_GET['page']) && false !== strpos($_GET['page'], 'lwp')){
-			global $wpdb, $lwp, $user_ID;
+			global $wpdb, $user_ID;
 			foreach($this->parts as $slug => $vars){
 				if(!$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, "lwp-".$slug))){
 					switch($slug){
@@ -408,9 +408,9 @@ You can also get in touch this item again:
 		$to = $wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE ID = %d", $transaction->user_id));
 		$from = get_bloginfo('name')." <{$this->admin_mail}>";
 		$body = $this->get_body($transaction, $type).$this->get_body($transaction, 'footer');
-		$flg = apply_filters('lwp_notify', true, $type, compact('subject', 'to', 'from', 'body'));
-		if($flg){
-			return (boolean)wp_mail($to, $subject, $body, "From: {$from}\r\n\\");
+		$mail = apply_filters('lwp_notify', compact('subject', 'to', 'from', 'body'), $type);
+		if(is_array($mail) && !empty($mail)){
+			return (boolean)wp_mail($mail['to'], $mail['subject'], $mail['body'], "From: {$mail['from']}\r\n\\");
 		}else{
 			return true;
 		}

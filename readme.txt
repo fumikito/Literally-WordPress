@@ -2,8 +2,8 @@
 Contributors: Takahashi_Fumiki
 Tags: payment, paypal
 Requires at least: 3.1
-Tested up to: 3.3
-Stable tag: 0.8.8
+Tested up to: 3.3.2
+Stable tag: 0.8.10
 
 This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.
 
