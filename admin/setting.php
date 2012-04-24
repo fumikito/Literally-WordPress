@@ -317,6 +317,53 @@
 		</tbody>
 	</table>
 
+	<h3><?php $this->e('Reward Setting'); ?><small class="experimental"><?php $this->e('EXPERIMENTAL'); ?></small></h3>
+	<p class="description">
+		<?php $this->e('You can allow your users to promote your product and reward for them.'); ?>
+	</p>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th valign="top"><label><?php $this->e('Reward for promoter'); ?></label></th>
+				<td>
+					<label><input type="radio" name="reward_promoter" value="0" <?php if(!$this->option['reward_promoter']) echo 'checked="checked"'; ?> /><?php $this->e('Disable'); ?></label><br />
+					<label><input type="radio" name="reward_promoter" value="1" <?php if($this->option['reward_promoter']) echo 'checked="checked"'; ?> /><?php $this->e('Enable'); ?></label>
+					<p class="description">
+						<?php $this->e('If you wish to reward for your user who promote your product, enable this. Your users can promote your product and can manage there sales statistic.'); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top"><label for="reward_promotion_margin"><?php $this->e('Reward margin for promotion'); ?></label></th>
+				<td>
+					<input type="text" class="small-text" name="reward_promotion_margin" id="reward_promotion_margin" value="<?php echo esc_attr($this->option['reward_promotion_margin']); ?>" />%
+					<p class="description">
+						<?php $this->e('Specify back margin in percentage. This is global setting for promotion and you can override on each product individually.'); ?>
+					</p>
+				</td>
+			</tr>			
+			<tr>
+				<th valign="top"><label><?php $this->e('Reward for author'); ?></label></th>
+				<td>
+					<label><input type="radio" name="reward_author" value="0" <?php if(!$this->option['reward_author']) echo 'checked="checked"'; ?> /><?php $this->e('Disable'); ?></label><br />
+					<label><input type="radio" name="reward_author" value="1" <?php if($this->option['reward_author']) echo 'checked="checked"'; ?> /><?php $this->e('Enable'); ?></label>
+					<p class="description">
+						<?php $this->e('If you wish to reward for your authors, enable this. Your authors can see how much they sold their contents on sales report dashboard.'); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<th valign="top"><label for="reward_author_margin"><?php $this->e('Reward margin for author'); ?></label></th>
+				<td>
+					<input type="text" class="small-text" name="reward_author_margin" id="reward_author_margin" value="<?php echo esc_attr($this->option['reward_author_margin']); ?>" />%
+					<p class="description">
+						<?php $this->e('Specify back margin in percentage. This is global setting for author and you can override on each author individually.'); ?>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
 	
 	<p class="submit">
 		<input type="submit" class="button-primary" value="<?php $this->e("Update"); ?>" />
