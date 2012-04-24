@@ -327,6 +327,8 @@ class Literally_WordPress{
 		add_filter("mce_external_plugins", array($this, "mce_plugin"));
 		add_filter("mce_external_languages", array($this, "mce_lang"));
 		add_filter("mce_buttons_2", array($this, "mce_button"));
+		////Add Action links on plugin lists.
+		add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
 	}
 	
 	
@@ -657,6 +659,20 @@ EOS;
 				</div>
 			<?php
 		}
+	}
+	
+	/**
+	 * Add action link on plugin lists
+	 * @param array $links
+	 * @param string $file
+	 * @return string 
+	 */
+	public function plugin_page_link($links, $file){
+		if(false !== strpos($file, "literally-wordpress")){
+			$link = '<a href="'.admin_url('admin.php?page=lwp-setting').'">'.__('Settings').'</a>';
+			array_unshift( $links, $link);
+		}
+		return $links;
 	}
 	
 	/**
