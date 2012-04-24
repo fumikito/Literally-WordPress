@@ -690,7 +690,7 @@ EOS;
 			$url = $this->ssl($url);
 		}
 		$title_attr = $this->_('Literally WordPress Help'); 
-		$tag = "<a class=\"thickbox\" href=\"{$url}&amp;TB_ifrmae=1\" title=\"{$title_attr}\">{$title}</a>";
+		$tag = "<a class=\"thickbox\" href=\"{$url}&amp;TB_iframe=true\" title=\"{$title_attr}\">{$title}</a>";
 		return $tag;
 	}
 

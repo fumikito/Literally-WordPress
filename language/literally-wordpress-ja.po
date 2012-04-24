@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-14 10:15+0900\n"
-"PO-Revision-Date: 2011-12-14 10:15+0900\n"
+"POT-Creation-Date: 2012-04-24 11:51+0900\n"
+"PO-Revision-Date: 2012-04-24 11:59+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -17,119 +17,124 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: ../functions.php:483
+#: ../functions-internal.php:50
+#, php-format
+msgid "<strong>%1$d</strong> of %2$d Steps"
+msgstr "<strong>%1$d</strong> / %2$d ステップ"
+
+#: ../functions.php:460
 msgid "Registered Files"
 msgstr "登録されたファイル"
 
-#: ../functions.php:488
+#: ../functions.php:465
 msgid "File Name"
 msgstr "ファイル名"
 
-#: ../functions.php:489
+#: ../functions.php:466
 #: ../admin/upload.php:163
 msgid "Description"
 msgstr "説明"
 
-#: ../functions.php:490
+#: ../functions.php:467
 msgid "Available with"
 msgstr "対応端末"
 
-#: ../functions.php:491
+#: ../functions.php:468
 msgid "Download"
 msgstr "ダウンロード"
 
-#: ../functions.php:499
+#: ../functions.php:476
 msgid "download"
 msgstr "ダウンロード"
 
-#: ../functions.php:500
+#: ../functions.php:477
 msgid "Unavailable"
 msgstr "利用不可能"
 
-#: ../functions.php:501
+#: ../functions.php:478
 #, php-format
 msgid "File Size: %s"
 msgstr "ファイルサイズ: %s"
 
-#: ../functions.php:502
+#: ../functions.php:479
 #, php-format
 msgid "Published: %s"
 msgstr "公開日: %s"
 
-#: ../functions.php:503
+#: ../functions.php:480
 #, php-format
 msgid "Updated: %s"
 msgstr "更新日: %s"
 
-#: ../functions.php:530
+#: ../functions.php:507
 msgid "Devices Available With"
 msgstr "対応端末"
 
-#: ../functions.php:535
+#: ../functions.php:512
 #: ../admin/devices.php:15
 #: ../admin/devices.php:72
 msgid "Device Name"
 msgstr "端末名"
 
-#: ../functions.php:536
+#: ../functions.php:513
 msgid "Avalability"
 msgstr "対応状況"
 
-#: ../functions.php:542
+#: ../functions.php:519
 msgid "Available"
 msgstr "確認済"
 
-#: ../functions.php:542
+#: ../functions.php:519
 msgid "Unconfirmed"
 msgstr "未確認"
 
-#: ../functions.php:649
-#: ../functions.php:654
+#: ../functions.php:626
+#: ../functions.php:631
 msgid "Buy Now"
 msgstr "いますぐ購入"
 
-#: ../functions.php:710
+#: ../functions.php:687
 msgid "Subscription list"
 msgstr "定期購読リスト"
 
-#: ../functions.php:743
+#: ../functions.php:720
 msgid "Left time: "
 msgstr "残り時間: "
 
-#: ../functions.php:762
+#: ../functions.php:739
 msgid "day"
 msgstr "日"
 
-#: ../functions.php:762
+#: ../functions.php:739
 msgid "days"
 msgstr "日"
 
-#: ../functions.php:763
+#: ../functions.php:740
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr "<span class=\"day\">%1$d</span>%2$s"
 
-#: ../functions.php:765
+#: ../functions.php:742
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr "<span class=\"hour\">%02d</span>時間 "
 
-#: ../functions.php:766
+#: ../functions.php:743
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr "<span class=\"minutes\">%02d</span>分 "
 
-#: ../functions.php:767
+#: ../functions.php:744
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr "<span class=\"seconds\">%02d</span>秒"
 
-#: ../functions.php:786
+#: ../functions.php:763
 #, php-format
 msgid "%d%% Off"
 msgstr "%d%% Off"
 
-#: ../functions.php:811
+#: ../functions.php:788
 #, php-format
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
@@ -143,15 +148,15 @@ msgid "Notifications"
 msgstr "通知"
 
 #: ../literally-wordpress-notifier.php:81
-#: ../literally-wordpress-subscription.php:77
+#: ../literally-wordpress-subscription.php:82
 #: ../literally-wordpress.class.php:233
 msgid "Add New"
 msgstr "新規追加"
 
 #: ../literally-wordpress-notifier.php:82
 #: ../literally-wordpress-notifier.php:84
-#: ../literally-wordpress-subscription.php:78
-#: ../literally-wordpress-subscription.php:80
+#: ../literally-wordpress-subscription.php:83
+#: ../literally-wordpress-subscription.php:85
 #: ../literally-wordpress.class.php:234
 #: ../literally-wordpress.class.php:236
 #, php-format
@@ -159,35 +164,35 @@ msgid "Add New %s"
 msgstr "新規%s追加"
 
 #: ../literally-wordpress-notifier.php:83
-#: ../literally-wordpress-subscription.php:79
+#: ../literally-wordpress-subscription.php:84
 #: ../literally-wordpress.class.php:235
 #, php-format
 msgid "Edit %s"
 msgstr "%sを編集"
 
 #: ../literally-wordpress-notifier.php:85
-#: ../literally-wordpress-subscription.php:81
+#: ../literally-wordpress-subscription.php:86
 #: ../literally-wordpress.class.php:237
 #, php-format
 msgid "View %s"
 msgstr "%sを見る"
 
 #: ../literally-wordpress-notifier.php:86
-#: ../literally-wordpress-subscription.php:82
+#: ../literally-wordpress-subscription.php:87
 #: ../literally-wordpress.class.php:238
 #, php-format
 msgid "Search %s"
 msgstr "%sを検索"
 
 #: ../literally-wordpress-notifier.php:87
-#: ../literally-wordpress-subscription.php:83
+#: ../literally-wordpress-subscription.php:88
 #: ../literally-wordpress.class.php:239
 #, php-format
 msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
 #: ../literally-wordpress-notifier.php:88
-#: ../literally-wordpress-subscription.php:84
+#: ../literally-wordpress-subscription.php:89
 #: ../literally-wordpress.class.php:240
 #, php-format
 msgid "No %s was found in trash."
@@ -447,371 +452,392 @@ msgstr "開始"
 msgid "REFUND"
 msgstr "返金"
 
-#: ../literally-wordpress-subscription.php:72
+#: ../literally-wordpress-subscription.php:77
 #: ../admin/setting.php:279
 msgid "Subscription"
 msgstr "定期購読"
 
-#: ../literally-wordpress-subscription.php:73
+#: ../literally-wordpress-subscription.php:78
 msgid "Subscriptions"
 msgstr "定期購読"
 
-#: ../literally-wordpress-subscription.php:118
+#: ../literally-wordpress-subscription.php:123
 msgid "Invitation for subscription"
 msgstr "定期購読のお願い"
 
-#: ../literally-wordpress-subscription.php:123
+#: ../literally-wordpress-subscription.php:128
 msgid "This contents is for subscribers only."
 msgstr "このコンテンツは定期購読者専用です。"
 
-#: ../literally-wordpress-subscription.php:133
+#: ../literally-wordpress-subscription.php:141
 msgid "Subscription Setting"
 msgstr "定期購読設定"
 
-#: ../literally-wordpress-subscription.php:146
+#: ../literally-wordpress-subscription.php:149
+msgid "Subscription Option"
+msgstr "定期購読設定"
+
+#: ../literally-wordpress-subscription.php:163
 msgid "This contents will be displayed when your user access to page for subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. <strong>YOU CAN CHANGE POST'S TITLE.</strong>"
 msgstr "このコンテンツはユーザーが定期購読者専用ページへ訪れたとき表示されます。"
 
-#: ../literally-wordpress-subscription.php:147
+#: ../literally-wordpress-subscription.php:164
 msgid "Allowed Shortcodes"
 msgstr "利用できるショートコード"
 
-#: ../literally-wordpress-subscription.php:151
+#: ../literally-wordpress-subscription.php:168
 msgid "Output link to subscription page. Extra attributes are title and class."
 msgstr "定期購読申し込みページへのリンクを出力します。利用できる属性はtitleとclassです。"
 
-#: ../literally-wordpress-subscription.php:159
+#: ../literally-wordpress-subscription.php:176
 msgid "Output link to subscription price list. Extra attributes are title, class, popup, width and height."
 msgstr "定期購読価格表へのリンクを出力します。利用できる属性はtitle, class, popup, width, heightです。"
 
-#: ../literally-wordpress-subscription.php:175
+#: ../literally-wordpress-subscription.php:192
 msgid "Price"
 msgstr "価格"
 
-#: ../literally-wordpress-subscription.php:179
+#: ../literally-wordpress-subscription.php:196
 #: ../admin/management.php:94
 msgid "Expires"
 msgstr "期限"
 
-#: ../literally-wordpress-subscription.php:179
+#: ../literally-wordpress-subscription.php:196
 msgid "Days"
 msgstr "日"
 
-#: ../literally-wordpress-subscription.php:306
+#: ../literally-wordpress-subscription.php:217
+msgid "Anyone can read this post"
+msgstr "誰でもこの投稿を読むことができます"
+
+#: ../literally-wordpress-subscription.php:350
 msgid "Subscribe"
 msgstr "定期購読"
 
-#: ../literally-wordpress.class.php:344
+#: ../literally-wordpress.class.php:346
 #, php-format
 msgid "Can't make directory. Check parmissin of \"%s\""
 msgstr "ディレクトリを作成できませんでした。\"%s\"のパーミッションを確認してください。"
 
-#: ../literally-wordpress.class.php:353
+#: ../literally-wordpress.class.php:355
 msgid "Directory isn't writable."
 msgstr "ディレクトリが書き込み不可能になっています"
 
-#: ../literally-wordpress.class.php:358
+#: ../literally-wordpress.class.php:360
 msgid "Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating."
 msgstr "コンテンツディレクトリがプラグインフォルダ内にあります。アップデート時に消されないよう、プラグインフォルダの外側に設置することをお勧めいたします。"
 
-#: ../literally-wordpress.class.php:365
+#: ../literally-wordpress.class.php:367
 msgid "Warning! This file is accessible!"
 msgstr "注意！このファイルはアクセスできます。"
 
-#: ../literally-wordpress.class.php:388
+#: ../literally-wordpress.class.php:390
 msgid "Directory is publically accessible via HTTP"
 msgstr "ディレクトリはHTTPでアクセスできてしまいます"
 
-#: ../literally-wordpress.class.php:395
+#: ../literally-wordpress.class.php:397
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../literally-wordpress.class.php:401
+#: ../literally-wordpress.class.php:403
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../literally-wordpress.class.php:406
+#: ../literally-wordpress.class.php:408
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../literally-wordpress.class.php:411
+#: ../literally-wordpress.class.php:413
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登録を許可してください。"
 
-#: ../literally-wordpress.class.php:537
+#: ../literally-wordpress.class.php:539
 #: ../admin/setting.php:2
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../literally-wordpress.class.php:538
+#: ../literally-wordpress.class.php:540
 msgid "Transaction Management"
 msgstr "決済管理"
 
-#: ../literally-wordpress.class.php:540
+#: ../literally-wordpress.class.php:542
 #: ../admin/transfer.php:2
 msgid "Transfer Management"
 msgstr "送金管理"
 
-#: ../literally-wordpress.class.php:542
+#: ../literally-wordpress.class.php:544
 msgid "Campaing Management"
 msgstr "キャンペーン管理"
 
-#: ../literally-wordpress.class.php:543
+#: ../literally-wordpress.class.php:545
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../literally-wordpress.class.php:545
+#: ../literally-wordpress.class.php:547
 #: ../admin/history.php:2
 msgid "Purchase History"
 msgstr "購入履歴"
 
-#: ../literally-wordpress.class.php:548
+#: ../literally-wordpress.class.php:550
 msgid "Literally WordPress Setting"
 msgstr "Literally WordPress設定"
 
-#: ../literally-wordpress.class.php:620
+#: ../literally-wordpress.class.php:622
 msgid "Close"
 msgstr "閉じる"
 
-#: ../literally-wordpress.class.php:621
+#: ../literally-wordpress.class.php:623
 msgid "Prev"
 msgstr "前へ"
 
-#: ../literally-wordpress.class.php:622
+#: ../literally-wordpress.class.php:624
 msgid "Next"
 msgstr "次"
 
-#: ../literally-wordpress.class.php:628
+#: ../literally-wordpress.class.php:630
 msgid "Week"
 msgstr "週"
 
-#: ../literally-wordpress.class.php:629
-#: ../literally-wordpress.class.php:630
+#: ../literally-wordpress.class.php:631
+#: ../literally-wordpress.class.php:632
 msgid "Time"
 msgstr "時間"
 
-#: ../literally-wordpress.class.php:631
+#: ../literally-wordpress.class.php:633
 msgid "Hour"
 msgstr "時間"
 
-#: ../literally-wordpress.class.php:632
+#: ../literally-wordpress.class.php:634
 msgid "Minute"
 msgstr "分"
 
-#: ../literally-wordpress.class.php:633
+#: ../literally-wordpress.class.php:635
 msgid "Second"
 msgstr "秒"
 
-#: ../literally-wordpress.class.php:634
+#: ../literally-wordpress.class.php:636
 msgid "Now"
 msgstr "いま"
 
-#: ../literally-wordpress.class.php:676
+#: ../literally-wordpress.class.php:692
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../literally-wordpress.class.php:766
-#: ../literally-wordpress.class.php:1177
+#: ../literally-wordpress.class.php:782
+#: ../literally-wordpress.class.php:1184
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../literally-wordpress.class.php:798
+#: ../literally-wordpress.class.php:814
 msgid "Literally WordPress"
 msgstr "Literally WordPress"
 
-#: ../literally-wordpress.class.php:990
+#: ../literally-wordpress.class.php:997
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超えています。"
 
-#: ../literally-wordpress.class.php:993
+#: ../literally-wordpress.class.php:1000
 msgid "Uploaded file size exceeds"
 msgstr "アップロードされたファイルサイズが大きすぎます。"
 
-#: ../literally-wordpress.class.php:996
+#: ../literally-wordpress.class.php:1003
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr "ファイルが完全にアップロードされませんでした。インターネット接続を確認してください。"
 
-#: ../literally-wordpress.class.php:999
+#: ../literally-wordpress.class.php:1006
 msgid "No file was uploaded."
 msgstr "ファイルがアップロードされませんでした。"
 
-#: ../literally-wordpress.class.php:1002
+#: ../literally-wordpress.class.php:1009
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:1005
+#: ../literally-wordpress.class.php:1012
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせてください。"
 
-#: ../literally-wordpress.class.php:1008
+#: ../literally-wordpress.class.php:1015
 msgid "PHP stops uploading."
 msgstr "PHPがアップロードを停止しました。"
 
-#: ../literally-wordpress.class.php:1089
+#: ../literally-wordpress.class.php:1096
 msgid "Device added."
 msgstr "端末が追加されました。"
 
-#: ../literally-wordpress.class.php:1091
+#: ../literally-wordpress.class.php:1098
 msgid "Failed to add device."
 msgstr "端末の追加に失敗しました。"
 
-#: ../literally-wordpress.class.php:1102
+#: ../literally-wordpress.class.php:1109
 msgid "Device deleted."
 msgstr "端末が削除されました。"
 
-#: ../literally-wordpress.class.php:1118
+#: ../literally-wordpress.class.php:1125
 msgid "Device updated."
 msgstr "端末が更新されました。"
 
-#: ../literally-wordpress.class.php:1172
+#: ../literally-wordpress.class.php:1179
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../literally-wordpress.class.php:1182
+#: ../literally-wordpress.class.php:1189
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1187
-#: ../literally-wordpress.class.php:1233
+#: ../literally-wordpress.class.php:1194
+#: ../literally-wordpress.class.php:1240
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../literally-wordpress.class.php:1192
+#: ../literally-wordpress.class.php:1199
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1208
+#: ../literally-wordpress.class.php:1215
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../literally-wordpress.class.php:1211
+#: ../literally-wordpress.class.php:1218
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../literally-wordpress.class.php:1220
+#: ../literally-wordpress.class.php:1227
 msgid "Specified campaing doesn't exist"
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../literally-wordpress.class.php:1225
+#: ../literally-wordpress.class.php:1232
 msgid "Price should be numeric."
 msgstr "価格は半角数字でなくてはなりません。"
 
-#: ../literally-wordpress.class.php:1228
+#: ../literally-wordpress.class.php:1235
 msgid "Campgin price is higher than original price."
 msgstr "キャンペーン価格が定価よりも高くなっています。"
 
-#: ../literally-wordpress.class.php:1238
+#: ../literally-wordpress.class.php:1245
 msgid "End date is earlier than start date."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../literally-wordpress.class.php:1254
+#: ../literally-wordpress.class.php:1261
 msgid "Successfully Updated."
 msgstr "更新しました。"
 
-#: ../literally-wordpress.class.php:1257
+#: ../literally-wordpress.class.php:1264
 msgid "Update Failed."
 msgstr "更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1265
+#: ../literally-wordpress.class.php:1272
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../literally-wordpress.class.php:1268
+#: ../literally-wordpress.class.php:1275
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../literally-wordpress.class.php:1382
+#: ../literally-wordpress.class.php:1389
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../literally-wordpress.class.php:1384
+#: ../literally-wordpress.class.php:1391
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../literally-wordpress.class.php:1511
+#: ../literally-wordpress.class.php:1518
 msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
 msgstr "トランザクションが発生してから60日が経過したため、PayPalでの返金はできません。"
 
-#: ../literally-wordpress.class.php:1516
+#: ../literally-wordpress.class.php:1523
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../literally-wordpress.class.php:1518
+#: ../literally-wordpress.class.php:1525
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../literally-wordpress.class.php:1550
+#: ../literally-wordpress.class.php:1557
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../literally-wordpress.class.php:1552
+#: ../literally-wordpress.class.php:1559
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../literally-wordpress.class.php:1580
+#: ../literally-wordpress.class.php:1587
 msgid "You are already subscriber. You don't have to buy subscription."
 msgstr "あなたはすでに定期購読者になっています。購入する必要はありません。"
 
-#: ../literally-wordpress.class.php:1580
-#: ../literally-wordpress.class.php:1582
-#: ../literally-wordpress.class.php:1699
+#: ../literally-wordpress.class.php:1587
+#: ../literally-wordpress.class.php:1589
+#: ../literally-wordpress.class.php:1730
 #, php-format
 msgid "Transaction Error : %s"
 msgstr "トランザクションエラー: %s"
 
-#: ../literally-wordpress.class.php:1582
+#: ../literally-wordpress.class.php:1589
 msgid "Sorry, but there is no subscription plan."
 msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
 
-#: ../literally-wordpress.class.php:1600
+#: ../literally-wordpress.class.php:1624
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../literally-wordpress.class.php:1624
+#: ../literally-wordpress.class.php:1648
 msgid "This contents is not on sale."
 msgstr "このコンテンツはセール中ではありません。"
 
-#: ../literally-wordpress.class.php:1674
+#: ../literally-wordpress.class.php:1703
 msgid "Sorry, we can't accept this payment method."
 msgstr "この支払い方法は受け付けられません。"
 
-#: ../literally-wordpress.class.php:1682
+#: ../literally-wordpress.class.php:1711
 msgid "Failed to make transaction."
 msgstr "トランザクションを開始できませんでした。"
 
-#: ../literally-wordpress.class.php:1686
+#: ../literally-wordpress.class.php:1715
 msgid "Wrong payment method is specified."
 msgstr "不正な支払い方法が指定されています。"
 
-#: ../literally-wordpress.class.php:1725
+#: ../literally-wordpress.class.php:1756
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../literally-wordpress.class.php:1725
-#: ../literally-wordpress.class.php:1752
+#: ../literally-wordpress.class.php:1756
+#: ../literally-wordpress.class.php:1785
 msgid "Failed"
 msgstr "失敗"
 
-#: ../literally-wordpress.class.php:1732
+#: ../literally-wordpress.class.php:1763
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../literally-wordpress.class.php:1736
+#: ../literally-wordpress.class.php:1767
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../literally-wordpress.class.php:1936
+#: ../literally-wordpress.class.php:1983
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../literally-wordpress.class.php:1936
+#: ../literally-wordpress.class.php:1983
 msgid "Permission Error"
 msgstr "アクセス権エラー"
 
-#: ../literally-wordpress.class.php:2152
+#: ../literally-wordpress.class.php:2198
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権など、購入したユーザーに対して提供できるものはいくつかあります。"
+
+#: ../literally-wordpress.php:58
+#, php-format
+msgid "Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s."
+msgstr "Literally WordPressは有効化されましたが、利用できません。このプラグインはPHPバージョン5以上を必要とします。あなたのPHPは%1$sです。"
+
+#: ../literally-wordpress.php:59
+msgid " Furthermore, this plugin needs cURL module."
+msgstr "加えて、このプラグインはcURLモジュールを必要としています。"
+
+#: ../literally-wordpress.php:60
+msgid " Please contact to your server administrator to change server configuration."
+msgstr "サーバ管理者に連絡を取り、設定を変えてもらってください。"
 
 #: ../admin/campaign.php:2
 msgid "Campaign"
@@ -1545,6 +1571,7 @@ msgid "Non Subscriber"
 msgstr "購読者ではない"
 
 #: ../assets/js/tinymce-lang.php:17
+#: ../help/customize.php:41
 msgid "Add Buy Now"
 msgstr "いますぐ購入を追加"
 
@@ -1579,7 +1606,8 @@ msgstr "決済はキャンセルされました。"
 #: ../form-template/paypal-cancel.php:5
 #: ../form-template/paypal-subscription.php:73
 #: ../form-template/paypal-subscription.php:75
-#: ../form-template/paypal-transfer.php:11
+#: ../form-template/paypal-subscription.php:77
+#: ../form-template/paypal-transfer.php:12
 msgid "Return"
 msgstr "戻る"
 
@@ -1607,56 +1635,56 @@ msgstr "総額"
 msgid "Confirm"
 msgstr "受諾"
 
-#: ../form-template/paypal-selection.php:3
+#: ../form-template/paypal-selection.php:4
 #, php-format
 msgid "You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below."
 msgstr "<strong>%1$s</strong>を<strong>%2$s</strong>で購入しようとしています。支払い方法を以下から選んでください。"
 
-#: ../form-template/paypal-selection.php:16
+#: ../form-template/paypal-selection.php:17
 msgid "PayPal"
 msgstr "PayPal"
 
-#: ../form-template/paypal-selection.php:20
+#: ../form-template/paypal-selection.php:21
 msgid "You can pay with PayPal account."
 msgstr "PayPalアカウントで支払うことができます。"
 
-#: ../form-template/paypal-selection.php:22
-#: ../form-template/paypal-selection.php:38
-#: ../form-template/paypal-selection.php:55
+#: ../form-template/paypal-selection.php:23
+#: ../form-template/paypal-selection.php:39
+#: ../form-template/paypal-selection.php:56
 msgid "Note:"
 msgstr "注意:"
 
-#: ../form-template/paypal-selection.php:23
+#: ../form-template/paypal-selection.php:24
 msgid "Clicking 'Next', You will be redirect to PayPal web site. Logging in PayPal, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
 msgstr "'次へ'をクリックすると、PayPalのwebサイトへ移動します。PayPalへログインし、再びこのサイトへ戻った後、支払いを受諾することで決済が完了します。"
 
-#: ../form-template/paypal-selection.php:32
+#: ../form-template/paypal-selection.php:33
 msgid "Credit Card"
 msgstr "クレジットカード"
 
-#: ../form-template/paypal-selection.php:36
+#: ../form-template/paypal-selection.php:37
 msgid "You can pay with various credit cards(VISA, Matercard, etc.) via PayPal."
 msgstr "PayPalを通じて各種クレジットカード（VISA、Mastercard他）で支払うことができます。"
 
-#: ../form-template/paypal-selection.php:39
+#: ../form-template/paypal-selection.php:40
 msgid "Clicking 'Next', You will be redirect to PayPal web site. Entering CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
 msgstr "'次へ'をクリックすると、PayPalのwebサイトへ移動します。クレジットカード番号を入力し、再びこのサイトへ戻った後、支払いを受諾することで決済が完了します。"
 
-#: ../form-template/paypal-selection.php:47
-#: ../form-template/paypal-selection.php:49
+#: ../form-template/paypal-selection.php:48
+#: ../form-template/paypal-selection.php:50
 #: ../help/transfer.php:2
 msgid "Transfer"
 msgstr "送金"
 
-#: ../form-template/paypal-selection.php:53
+#: ../form-template/paypal-selection.php:54
 msgid "You can pay through specified bank account. The account will be displayed on next page."
 msgstr "指定された金融機関への振込によって支払うことができます。口座は次のページで表示されます。"
 
-#: ../form-template/paypal-selection.php:56
+#: ../form-template/paypal-selection.php:57
 msgid "Transaction will not have been complete, unless you will send deposit to the specified bank account. This means you can't get contents immediately."
 msgstr "指定された口座に振り込むまで決済は完了しないため、すぐにコンテンツにアクセスすることはできません。"
 
-#: ../form-template/paypal-selection.php:64
+#: ../form-template/paypal-selection.php:65
 #: ../form-template/paypal-subscription.php:61
 msgid "Next &raquo;"
 msgstr "次へ &raquo;"
@@ -1689,32 +1717,32 @@ msgstr "定期購読プランを購入していません。"
 msgid "Please select %s's subscription plan from the list below."
 msgstr "%sの定期購読プランを以下から選んでください。"
 
-#: ../form-template/paypal-success.php:2
+#: ../form-template/paypal-success.php:3
 msgid "Thank you for purchasing."
 msgstr "ご購入ありがとうございました。"
 
-#: ../form-template/paypal-success.php:3
+#: ../form-template/paypal-success.php:4
 msgid "You will be redirected to the purchased item page."
 msgstr "購入したアイテムのページに移動します。"
 
-#: ../form-template/paypal-success.php:6
+#: ../form-template/paypal-success.php:7
 #, php-format
 msgid "%s seconds left"
 msgstr "のこり%s秒"
 
-#: ../form-template/paypal-success.php:9
+#: ../form-template/paypal-success.php:10
 msgid "return now"
 msgstr "すぐに戻る"
 
-#: ../form-template/paypal-transfer.php:3
+#: ../form-template/paypal-transfer.php:4
 msgid "Failed to send mail. Please note this page."
 msgstr "メールを送信できませんでした。このページをメモしておいてください。"
 
-#: ../form-template/paypal-transfer.php:5
+#: ../form-template/paypal-transfer.php:6
 msgid "You have already ordered this item. Please see the note below."
 msgstr "このアイテムはすでに注文しています。以下の説明をお読みください。"
 
-#: ../form-template/paypal-transfer.php:7
+#: ../form-template/paypal-transfer.php:8
 msgid "We send you a reminder mail to your registered addres."
 msgstr "登録されたアドレスにリマインダーメールをお送りしました。"
 
@@ -1962,49 +1990,128 @@ msgstr "テーマを編集する。テンプレートタグlwp_buy_now()はボ�
 msgid "Customize Device list and Download list"
 msgstr "端末リストとダウンロードリストのカスタマイズ"
 
-#: ../help/customize.php:46
-#: ../help/customize.php:50
-#: ../help/customize.php:54
-msgid "Coming soon..."
-msgstr "準備中です。"
+#: ../help/customize.php:45
+msgid "Device list"
+msgstr "端末リスト"
 
-#: ../help/customize.php:48
+#: ../help/customize.php:46
+msgid "Device list is a simple list of registered devices. It helps informing your user if your products are available or not. Especially, digital contents such as ebook, audio or video needs appropriate devices to play, so you should display the device list. If you want display device list manually, code is below:"
+msgstr "端末リストは登録された端末のシンプルなリストです。あなたの顧客にとって、商品を利用できるかを判断するために役立つでしょう。とりわけ、電子書籍や音楽、ビデオなどのデジタルコンテンツは再生するための端末が必要となるため、端末リストは表示すべきです。手動で端末リストを表示する場合は以下のようなコードを書いてください。"
+
+#: ../help/customize.php:49
+msgid "Get device"
+msgstr "端末を取得"
+
+#: ../help/customize.php:53
+msgid "Process each device. <code>Try var_dump($d)</code>."
+msgstr "それぞれの端末を処理。<code>var_dump($d)</code>を試してください。"
+
+#: ../help/customize.php:57
+msgid "OK"
+msgstr "OK"
+
+#: ../help/customize.php:57
+msgid "NG"
+msgstr "NG"
+
+#: ../help/customize.php:63
+msgid "Download list"
+msgstr "ダウンロードスト"
+
+#: ../help/customize.php:65
+msgid "Download list is a simple list of registered files. You may provide multiple files as one product for various reason. Saving bandwidth, Providing trial file, and so on. Download list helps your customer to test what they can archive. To display download list manually, see the code blow:"
+msgstr "ダウンロードリストは登録されたファイルのシンプルなリストです。お試しファイルの提供など、様々な理由から、複数のファイルを一つの商品として提供したい場合があるでしょう。ダウンロードリストはユーザーにとって何が手に入るかを知るために有用です。ダウンロードリストを手動で提供する場合は以下のようなコードを書いてください。"
+
+#: ../help/customize.php:69
+msgid "You get file list and loop it."
+msgstr "ファイルリストを取得し、ループさせます。"
+
+#: ../help/customize.php:73
+msgid "You can get file extention."
+msgstr "拡張子を取得できます。"
+
+#: ../help/customize.php:75
+msgid "You can get device list in array with which the file is available."
+msgstr "ファイルを利用できる端末のリストを配列で取得できます。"
+
+#: ../help/customize.php:77
+msgid "This tells you who can access this file."
+msgstr "このファイルにアクセスできる人がわかります。"
+
+#: ../help/customize.php:92
+msgid "If downloadable, display link."
+msgstr "ダウンロード可能なら、リンクを表示します。"
+
+#: ../help/customize.php:95
+msgid "File is only for owner and current user is owner."
+msgstr "ファイルは購入者のみダウンロードでき、現在のユーザーは購入者である。"
+
+#: ../help/customize.php:98
+msgid "File is downloadable for every registered user."
+msgstr "ファイルは誰でもダウンロードできます。"
+
+#: ../help/customize.php:101
+msgid "Any wan can download."
+msgstr "誰でもダウンロードできる。"
+
+#: ../help/customize.php:109
+msgid "If not, show how to download."
+msgstr "違ったら、ダウンロード方法を表示"
+
+#: ../help/customize.php:111
+msgid "Cannot download."
+msgstr "ダウンロードできません。"
+
+#: ../help/customize.php:116
+msgid "Downloadable after purchase"
+msgstr "購入後ダウンロード可能"
+
+#: ../help/customize.php:119
+msgid "Only member can download"
+msgstr "登録したユーザーだけダウンロードできる"
+
+#: ../help/customize.php:132
 msgid "Customize Form"
 msgstr "フォームをカスタマイズ"
 
-#: ../help/customize.php:52
+#: ../help/customize.php:134
+#: ../help/customize.php:138
+msgid "Coming soon..."
+msgstr "準備中です。"
+
+#: ../help/customize.php:136
 msgid "Make purchase history page"
 msgstr "購入履歴ページを作成する"
 
-#: ../help/customize.php:56
+#: ../help/customize.php:140
 msgid "Create custom post type by yourself"
 msgstr "カスタム投稿タイプを自分で作る"
 
-#: ../help/customize.php:58
+#: ../help/customize.php:142
 msgid "LWP provides the function to create custom post type because it is supposed that normal user sell perticullar type of contents like eBook or Music file."
 msgstr "LWPはカスタム投稿タイプを作成する機能を持っています。これは通常のユーザーは電子書籍や音楽ファイルといった特定の投稿タイプを販売すると考えられる為です。"
 
-#: ../help/customize.php:59
+#: ../help/customize.php:143
 msgid "But you may think of selling multiple types of contents(ex. music, movie, eBook and photo). In such case, LWP can recognize multiple custom post types as payable."
 msgstr "しかしながら、複数のコンテンツ（ex. 映画、音楽、電子書籍、写真）を販売するケースがあるかもしれません。そのために、LWPは複数の投稿タイプを販売可能なものとして認識することができます。"
 
-#: ../help/customize.php:60
+#: ../help/customize.php:144
 msgid "Furthermore, you may want make some taxonomies for your items(ex. eBook genre)."
 msgstr "更に加えて、アイテムに対してなんらかのタクソノミー（ex. 電子書籍ジャンル）を付与したいと思うかもしれません。"
 
-#: ../help/customize.php:61
+#: ../help/customize.php:145
 msgid "What LWP do is &quot;making perticular post types payable&quot;. So you can easily add custom post types and make them payable."
 msgstr "LWPが行うのは&quot;特定の投稿タイプを課金可能にする&quot;ことだけです。投稿タイプを追加して支払い可能にすることは自由に行えます。"
 
-#: ../help/customize.php:62
+#: ../help/customize.php:146
 msgid "There are lots of plugins which enable you to add custom post types. Belows are list of them."
 msgstr "カスタム投稿タイプを追加するプラグインはたくさんあります。以下はそのリストです。"
 
-#: ../help/customize.php:65
+#: ../help/customize.php:149
 msgid "Custom Post Type UI"
 msgstr "Custom Post Type UI"
 
-#: ../help/customize.php:69
+#: ../help/customize.php:153
 msgid "They are 3rd party plugin and I don't test them all. Everything is at your own risk. Please try out on them carefully."
 msgstr "これらはサードパーティのプラグインであり、LWP作者はすべてを試したわけではありません。すべては自己責任出お願いします。十分にテストを行ってください。"
 
@@ -3028,9 +3135,9 @@ msgstr "%d%%Off"
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
-#: ../tables/list-history.php:237
+#: ../tables/list-history.php:236
 #: ../tables/list-management.php:285
-#: ../tables/list-transfers.php:318
+#: ../tables/list-transfers.php:317
 #, php-format
 msgid "%d per 1Page"
 msgstr "%d / 1ページ"
@@ -3052,42 +3159,40 @@ msgstr "種別"
 msgid "Method"
 msgstr "支払い方法"
 
-#: ../tables/list-history.php:46
+#: ../tables/list-history.php:48
 #: ../tables/list-management.php:122
 msgid "Last Updated"
 msgstr "最終更新"
 
-#: ../tables/list-history.php:47
-#: ../tables/list-history.php:162
-#: ../tables/list-management.php:123
-#: ../tables/list-management.php:235
-msgid "Detail"
-msgstr "詳細"
-
-#: ../tables/list-history.php:142
+#: ../tables/list-history.php:145
 #: ../tables/list-management.php:213
 msgid "No Limit"
 msgstr "期限なし"
 
-#: ../tables/list-history.php:149
+#: ../tables/list-history.php:152
 #: ../tables/list-management.php:220
-#: ../tables/list-transfers.php:221
+#: ../tables/list-transfers.php:220
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
 
-#: ../tables/list-history.php:220
+#: ../tables/list-history.php:219
 #: ../tables/list-management.php:271
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
 
 #: ../tables/list-management.php:103
-#: ../tables/list-transfers.php:141
+#: ../tables/list-transfers.php:140
 msgid "No matching transaction found."
 msgstr "該当する決済情報は見つかりませんでした。"
 
+#: ../tables/list-management.php:123
+#: ../tables/list-management.php:235
+msgid "Detail"
+msgstr "詳細"
+
 #: ../tables/list-management.php:259
-#: ../tables/list-transfers.php:305
+#: ../tables/list-transfers.php:304
 msgid "All Status"
 msgstr "すべてのステータス"
 
@@ -3099,19 +3204,19 @@ msgstr "完了"
 msgid "Refund"
 msgstr "返金"
 
-#: ../tables/list-transfers.php:67
+#: ../tables/list-transfers.php:66
 msgid "Status updated."
 msgstr "ステータスが更新されました。"
 
-#: ../tables/list-transfers.php:72
+#: ../tables/list-transfers.php:71
 msgid "No transaction is specified."
 msgstr "トランザクションが指定されていません。"
 
-#: ../tables/list-transfers.php:156
+#: ../tables/list-transfers.php:155
 msgid "Notification Code"
 msgstr "通知コード"
 
-#: ../tables/list-transfers.php:160
+#: ../tables/list-transfers.php:159
 msgid "Notice"
 msgstr "注意"
 

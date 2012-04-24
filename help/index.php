@@ -18,7 +18,6 @@ if(isset($_GET["name"])){
 	<script type="text/javascript" src="<?php echo $dir; ?>syntax/shBrushPhp.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
-			alert('hoge');
 			SyntaxHighlighter.all();
 		//]]>
 	</script>
