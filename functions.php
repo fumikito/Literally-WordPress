@@ -218,7 +218,7 @@ function lwp_the_price($post = null){
  */
 function lwp_original_price($post = null)
 {
-	return (int) _lwp_post_meta("lwp_price", $post);
+	return (float) _lwp_post_meta("lwp_price", $post);
 }
 
 

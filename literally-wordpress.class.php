@@ -759,8 +759,8 @@ EOS;
 	{
 		if(isset($_REQUEST["_lwpnonce"]) && wp_verify_nonce($_REQUEST["_lwpnonce"], "lwp_price")){
 			//価格を登録（必須のため、なければエラー）
-			$price = preg_replace("/[^0-9]/", "", mb_convert_kana($_REQUEST["lwp_price"], "n"));
-			if(preg_match("/^[0-9]+$/", $price)){
+			$price = preg_replace("/[^0-9.]/", "", mb_convert_kana($_REQUEST["lwp_price"], "n"));
+			if(preg_match("/^[0-9.]+$/", $price)){
 				update_post_meta($_POST["ID"], "lwp_price", $price);
 			}else{
 				$this->message[] = $this->_("Price must be numeric.");
@@ -1193,7 +1193,7 @@ EOS;
 						"start" => $_REQUEST["start"],
 						"end" => $_REQUEST["end"]
 					),
-					array("%d", "%d", "%s", "%s")
+					array("%d", "%f", "%s", "%s")
 				);
 				if($wpdb->insert_id)
 					$this->message[] = $this->_("Campaign added.");
