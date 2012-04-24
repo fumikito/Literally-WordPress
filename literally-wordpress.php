@@ -27,10 +27,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
  */
 
-//インストール要件を満たしているかを確認
-if(literally_wordpress_check_version()){
+//Check requirements.
+if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 		
-	//クラスファイル読み込み
+	//Load class files.
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress.class.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."paypal".DIRECTORY_SEPARATOR."paypal_statics.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'literally-wordpress-statics.php';
@@ -38,58 +38,33 @@ if(literally_wordpress_check_version()){
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress-subscription.php";
 	
 	/**
-	 * Literally_WordPressのインスタンス変数
+	 * Instance of Literally_WordPress
 	 *
 	 * @var Literally_WordPress
 	 */
 	$lwp = new Literally_WordPress();
 
 	if(is_admin()){
-		//管理画面でのみ行うフックを登録
+		//Hooks only for admin panels.
 		$lwp->admin_hooks();
 	}else{
-		//公開画面でのみ行うフック
+		//Hooks only for public area
 		$lwp->public_hooks();
 	}
-	//ユーザー関数の読み込み
+	//Load user functions.
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."functions.php";
-	
+	//For poedit scraping. It won't be executed.
+	if(false){
+		$lwp->_('Literally WordPress is activated but isn\'t available. This plugin needs PHP version 5<. Your PHP version is %1$s.');
+		$lwp->_(' Furthermore, this plugin needs cURL module.');
+		$lwp->_(' Please contact to your server administrator to change server configuration.');
+	}
 }else{
-	add_action("admin_notice", "literally_WordPress_failed");
-}
-
-
-/**
- * インストール要件を満たしていないときに実行する関数
- *
- * @return void
- */
-function literally_WordPress_failed(){
 	load_plugin_textdomain('literally-wordpress', false, basename(__FILE__).DIRECTORY_SEPARATOR."language");
-	?>
-		<div class='update-nag'>
-			<ul>
-				<li><?php printf(__('Literally WordPress is activated but isn\'t available. This plugin needs PHP version 5<. Your PHP version is %1$s', 'literally-wordpress'), phpversion()); ?></li>
-				<?php if(!function_exists("curl_init")): ?>
-				<li><?php _e('This plugin needs curl module. Please contact to your server administrator to check if cUrl is available.', 'literally-wordpress');?></li>
-				<?php endif; ?>
-			</ul>
-		</div>
-	<?php
-}
-
-/**
- * インストール要件を満たしているかをチェック
- *
- * @return boolean
- */
-function literally_wordpress_check_version(){
-	$version = explode(".", PHP_VERSION);
-	if($version[0] > 4)
-		if(function_exists("curl_init"))
-			return true;
-		else
-			return false;
-	else
-		return false;	
+	$error_msg = sprintf(__('Literally WordPress is activated but isn\'t available. This plugin needs PHP version 5<. Your PHP version is %1$s.', 'literally-wordpress'), phpversion());
+	if(!function_exists('curl_init')){
+		$error_msg .= __(' Furthermore, this plugin needs cURL module.', 'literally-wordpress');
+	}
+	$error_msg .= __(' Please contact to your server administrator to change server configuration.');
+	add_action('admin_notices', create_function('', 'echo "<div id=\"message\" class=\"error\"><p><strong>'.$error_msg.'</strong></p></div>"; '));
 }
