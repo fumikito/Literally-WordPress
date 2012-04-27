@@ -5,12 +5,7 @@
  * @author Takahashi Fumiki
  * @package literally_wordpress
  */
-class LWP_Subscription {
-	
-	/**
-	 * @var boolean
-	 */
-	public $enabled = false;
+class LWP_Subscription extends Literally_WordPress_Common{
 	
 	/**
 	 * @var string
@@ -38,10 +33,11 @@ class LWP_Subscription {
 	private $invitation_slug = 'lwp-invitation';
 	
 	/**
-	 * Constructor
+	 * Setup option
+	 * @see Literally_WordPress_Common
 	 * @param array $option
 	 */
-	public function __construct($option) {
+	protected function set_option($option) {
 		$option = shortcode_atts(array(
 			'subscription' => false,
 			'subscription_post_types' => array(),
@@ -58,6 +54,13 @@ class LWP_Subscription {
 				$this->format = 'all';
 				break;
 		}
+	}
+	
+	/**
+	 * Register actions
+	 * @see Literally_WordPress_Common
+	 */
+	protected function on_construct() {
 		if($this->enabled){
 			add_action('init', array($this, 'register_post_type'));
 			add_action('admin_init', array($this, 'admin_init'));
@@ -378,7 +381,7 @@ EOS;
 	 * @return array 
 	 */
 	public function get_subscription_list(){
-		global $lwp, $wpdb;
+		global $wpdb;
 		$sql = <<<EOS
 			SELECT p.post_title, p.ID, p.post_content, pm.meta_value AS price, pm2.meta_value AS expires
 			FROM {$wpdb->posts} AS p
@@ -399,7 +402,7 @@ EOS;
 	 * @return boolean
 	 */
 	public function has_plans(){
-		global $lwp, $wpdb;
+		global $wpdb;
 		$sql = <<<EOS
 			SELECT DISTINCT count(p.ID)
 			FROM {$wpdb->posts} AS p
@@ -428,33 +431,13 @@ EOS;
 	 */
 	public function get_subscription_post_type_page(){
 		if(!empty($this->post_types)){
+			$url = '';
 			foreach($this->post_types as $post_type){
 				$url = get_post_type_archive_link($post_type);
 			}
 			return $url;
 		}else{
-			return get_bloginfo('url');
+			return home_url();
 		}
-	}
-	
-	/**
-	 * Alias for gettext
-	 * @global Literally_WordPress $lwp
-	 * @param string $text 
-	 * @return string
-	 */
-	private function _($text){
-		global $lwp;
-		return $lwp->_($text);
-	}
-	
-	/**
-	 * Alias for gettext
-	 * @global Literally_WordPress $lwp
-	 * @param string $text 
-	 */
-	private function e($text){
-		global $lwp;
-		$lwp->e($text);
 	}
 }

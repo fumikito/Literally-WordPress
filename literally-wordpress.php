@@ -31,11 +31,14 @@
 if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 		
 	//Load class files.
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress-core.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-core.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'literally-wordpress-statics.php';
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."paypal".DIRECTORY_SEPARATOR."paypal_statics.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'literally-wordpress-statics.php';
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress-notifier.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."literally-wordpress-subscription.php";
+	//Subclass
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-common.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-notifier.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-subscription.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-reward.php";
 	
 	/**
 	 * Instance of Literally_WordPress
