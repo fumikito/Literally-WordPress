@@ -91,7 +91,9 @@ class LWP_Reward extends Literally_WordPress_Common{
 	protected function on_construct(){
 		if($this->is_enabled()){
 			add_action('lwp_payable_post_type_metabox', array($this, 'metabox_margin'), 10, 2);
-			add_action('save_post', array($this, 'save_post'), 10, 2);
+			add_action('save_post', array($this, 'save_post'));
+			add_action('edit_user_profile', array($this, 'edit_user_profile'));
+			add_action("profile_update", array($this, "profile_update"), 10, 2);
 		}
 	}
 	
@@ -132,6 +134,68 @@ class LWP_Reward extends Literally_WordPress_Common{
 				delete_post_meta($post_id, $this->promotion_margin_key);
 			}else{
 				update_post_meta($post_id, $this->promotion_margin_key, (int)$_REQUEST['lwp_post_margin']);
+			}
+		}
+	}
+	
+	/**
+	 * Show setting form on edit user screen
+	 * @param WP_User $user 
+	 */
+	public function edit_user_profile($user){
+		if($this->promotable || ($this->rewardable && user_can($user, 'edit_posts'))):
+			?>
+			<h3><?php $this->e('This user\'s reward setting '); ?></h3>
+			<table class="form-table">
+				<tbody>
+					<tr>
+						<th valign="top"><label><?php $this->e('About personal reward setting'); ?></label></th>
+						<td>
+							<p class="description">
+								<?php printf($this->_('You can set personal coefficient for this user. Current promotional margin default is %1$d, so if you set %2$.1f, this user can get %3$d%%. If you want reward for royal user, this setting helps otherwise leave it blank. Maximum margin can be limited on <a href="%4$s">Setting</a>'), $this->promotion_margin, 1.2, 1.2 * $this->promotion_margin, admin_url('admin.php?page=lwp-setting')); ?>
+							</p>
+						</td>
+					</tr>
+					<?php if($this->promotable): wp_nonce_field('lwp_personal_promotion_ratio', '_lwppersonalpromotion', false); ?>
+					<tr>
+						<th valign="top"><label for="reward_personal_coefficient"><?php $this->e('Promotion coefficient'); ?></label></th>
+						<td>
+							<input class="small-text" type="text" name="reward_personal_coefficient" id="reward_personal_coefficient" value="<?php echo esc_attr(get_user_meta($user->ID, $this->promotion_personal_margin, true)); ?>" /><strong><?php $this->e('* MUST BE FLOAT'); ?></strong>
+						</td>
+					</tr>
+					<?php endif; ?>
+					<?php if($this->rewardable && user_can($user, 'edit_posts')): wp_nonce_field('lwp_personal_author_ratio', '_lwppersonalauthor', false); ?>
+					<tr>
+						<th valign="top"><label for="reward_author_coefficient"><?php $this->e('Author coefficient'); ?></label></th>
+						<td>
+							<input type="text" class="small-text" name="reward_author_coefficient" id="reward_author_coefficient" value="<?php echo esc_attr(get_user_meta($user->ID, $this->author_personal_margin, true)); ?>" /><strong><?php $this->e('* MUST BE FLOAT'); ?></strong>
+						</td>
+					</tr>
+					<?php endif; ?>
+				</tbody>
+			</table>
+			<?php
+		endif; 
+	}
+	
+	/**
+	 * Update user personal setting
+	 * @param int $user_id
+	 * @param WP_User $old_data 
+	 */
+	public function profile_update($user_id, $old_data){
+		if(isset($_REQUEST['_lwppersonalpromotion'], $_REQUEST['reward_personal_coefficient']) && wp_verify_nonce($_REQUEST['_lwppersonalpromotion'], 'lwp_personal_promotion_ratio')){
+			if(empty($_REQUEST['reward_personal_coefficient'])){
+				delete_user_meta($user_id, $this->promotion_personal_margin);
+			}else{
+				update_user_meta($user_id, $this->promotion_personal_margin, (float)$_REQUEST['reward_personal_coefficient']);
+			}
+		}
+		if(isset($_REQUEST['_lwppersonalauthor'], $_REQUEST['reward_author_coefficient']) && wp_verify_nonce($_REQUEST['_lwppersonalauthor'], 'lwp_personal_author_ratio')){
+			if(empty($_REQUEST['reward_author_coefficient'])){
+				delete_user_meta($user_id, $this->author_personal_margin);
+			}else{
+				update_user_meta($user_id, $this->author_personal_margin, (float)$_REQUEST['reward_author_coefficient']);
 			}
 		}
 	}
