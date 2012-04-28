@@ -206,3 +206,71 @@ class LWP_Payment_Status {
 		$lwp->_('REFUND');
 	}
 }
+
+/**
+ * Static class for Promotion log
+ * @since 0.9
+ */
+class LWP_Promotion_TYPE{
+	/**
+	 * Promoted by user 
+	 */
+	const PROMOTION = 'PROMOTION';
+	
+	/**
+	 * Sold by author himself 
+	 */
+	const SELL = 'SELL';
+	
+	/**
+	 * Returns all type name
+	 * @return array
+	 */
+	public static function get_all_type(){
+		return array(
+			self::PROMOTION,
+			self::SELL
+		);
+	}
+	
+	/**
+	 * For gettext scraping 
+	 * @global Literally_WordPress $lwp
+	 */
+	private function _(){
+		global $lwp;
+		$lwp->_('PROMOTION');
+		$lwp->_('SELL');
+	}
+}
+
+/**
+ * Statics for Promotion status 
+ */
+class LWP_Promotion_Status{
+	/**
+	 * User visited through promotion
+	 */
+	const LANDING = 'LANDING';
+	
+	/**
+	 * User entered register through promotion
+	 */
+	const CHECK_IN = 'CHECK_IN';
+	
+	/**
+	 * User finished shopping through promotion
+	 */
+	const CHECK_OUT = 'CHECK_OUT';
+	
+	/**
+	 * For poedit scraping not executed
+	 * @global Literally_WordPress $lwp 
+	 */
+	private function _(){
+		global $lwp;
+		$lwp->_('LANDING');
+		$lwp->_('CHECK_IN');
+		$lwp->_('CHECK_OUT');
+	}
+}

@@ -409,7 +409,7 @@ EOS;
 			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $access_check_file);
 			$ch = curl_init($test_url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$req = curl_exec($ch);
+			curl_exec($ch);
 			//Check HTTP status code
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			if($http_code == 200){
