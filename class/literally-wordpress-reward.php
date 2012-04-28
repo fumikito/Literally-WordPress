@@ -76,11 +76,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
 		$this->promotion_margin = (int) $option['reward_promotion_margin'];
-		$this->promotion_max = $option['reward_promotion_max'];
-		$this->rewardable = $option['reward_author_margin'];
-		$this->author_margin = $option['reward_author'];
-		$this->author_max = $option['reward_author_max'];
-		$this->minimum_request = $option['reward_minimum'];
+		$this->promotion_max = (int)$option['reward_promotion_max'];
+		$this->rewardable = (boolean)$option['reward_author'];
+		$this->author_margin = (int)$option['reward_author_margin'];
+		$this->author_max = (int)$option['reward_author_max'];
+		$this->minimum_request = (float)$option['reward_minimum'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
 	
@@ -160,6 +160,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 					<tr>
 						<th valign="top"><label for="reward_personal_coefficient"><?php $this->e('Promotion coefficient'); ?></label></th>
 						<td>
+							<?php printf($this->_('Default %d%%: '), $this->promotion_margin); ?>
 							<input class="small-text" type="text" name="reward_personal_coefficient" id="reward_personal_coefficient" value="<?php echo esc_attr(get_user_meta($user->ID, $this->promotion_personal_margin, true)); ?>" /><strong><?php $this->e('* MUST BE FLOAT'); ?></strong>
 						</td>
 					</tr>
@@ -168,6 +169,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 					<tr>
 						<th valign="top"><label for="reward_author_coefficient"><?php $this->e('Author coefficient'); ?></label></th>
 						<td>
+							<?php printf($this->_('Default %d%%: '), $this->author_margin); ?>
 							<input type="text" class="small-text" name="reward_author_coefficient" id="reward_author_coefficient" value="<?php echo esc_attr(get_user_meta($user->ID, $this->author_personal_margin, true)); ?>" /><strong><?php $this->e('* MUST BE FLOAT'); ?></strong>
 						</td>
 					</tr>
