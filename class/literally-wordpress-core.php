@@ -642,7 +642,7 @@ EOS;
 		wp_enqueue_script("thickbox");
 		//On setting page, load tab js
 		if($this->is_admin('setting')){
-			wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', array('jquery-ui-tabs'), $this->version);
+			wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', $this->version);
 		}
 		//In case management or campaign, load datepicker.
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
