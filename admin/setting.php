@@ -355,7 +355,16 @@
 							<?php $this->e('Specify back margin in percentage. This is global setting for promotion and you can override on each product individually.'); ?>
 						</p>
 					</td>
-				</tr>			
+				</tr>
+				<tr>
+					<th valign="top"><label for="reward_promotion_max"><?php $this->e("Maximum promotion margin"); ?></label></th>
+					<td>
+						<input type="text" class="small-text" name="reward_promotion_max" id="reward_promotion_max" value="<?php echo esc_attr($this->option['reward_promotion_max']); ?>" />%
+						<p class="description">
+							<?php $this->e("You can override margin per posts and users. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."); ?>
+						</p>
+					</td>
+				</tr>
 				<tr>
 					<th valign="top"><label><?php $this->e('Reward for author'); ?></label></th>
 					<td>
@@ -372,6 +381,15 @@
 						<input type="text" class="small-text" name="reward_author_margin" id="reward_author_margin" value="<?php echo esc_attr($this->option['reward_author_margin']); ?>" />%
 						<p class="description">
 							<?php $this->e('Specify back margin in percentage. This is global setting for author and you can override on each author individually.'); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><label for="reward_author_max"><?php $this->e("Maximum author margin"); ?></label></th>
+					<td>
+						<input type="text" class="small-text" name="reward_author_max" id="reward_author_max" value="<?php echo esc_attr($this->option['reward_author_max']); ?>" />%
+						<p class="description">
+							<?php $this->e("You can override margin per authors. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."); ?>
 						</p>
 					</td>
 				</tr>

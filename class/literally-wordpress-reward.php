@@ -17,6 +17,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 	private $promotion_margin = 0;
 	
 	/**
+	 * @var int
+	 */
+	private $promotion_max = 90;
+	
+	/**
 	 * @var boolean
 	 */
 	private $rewardable = false;
@@ -25,6 +30,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * @var int
 	 */
 	private $author_margin = 0;
+	
+	/**
+	 * @var int
+	 */
+	private $author_max = 90;
 	
 	/**
 	 * @var int
@@ -58,14 +68,18 @@ class LWP_Reward extends Literally_WordPress_Common{
 		$option = shortcode_atts(array(
 			"reward_promoter" => $this->promotable,
 			"reward_promotion_margin" => $this->promotion_margin,
+			"reward_promotion_max" => $this->promotion_max,
 			"reward_author" => $this->rewardable,
 			"reward_author_margin" => $this->author_margin,
+			"reward_author_max" => $this->author_max,
 			"reward_minimum" => $this->minimum_request
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
 		$this->promotion_margin = (int) $option['reward_promotion_margin'];
+		$this->promotion_max = $option['reward_promotion_max'];
 		$this->rewardable = $option['reward_author_margin'];
 		$this->author_margin = $option['reward_author'];
+		$this->author_max = $option['reward_author_max'];
 		$this->minimum_request = $option['reward_minimum'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
@@ -77,6 +91,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	protected function on_construct(){
 		if($this->is_enabled()){
 			add_action('lwp_payable_post_type_metabox', array($this, 'metabox_margin'), 10, 2);
+			add_action('save_post', array($this, 'save_post'), 10, 2);
 		}
 	}
 	
