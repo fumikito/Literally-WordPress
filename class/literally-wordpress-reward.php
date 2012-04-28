@@ -27,6 +27,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 	private $author_margin = 0;
 	
 	/**
+	 * @var int
+	 */
+	private $minimum_request = 0;
+	
+	/**
 	 * Setup option
 	 * @see Literally_WordPress_Common
 	 * @param array $option 
@@ -36,12 +41,14 @@ class LWP_Reward extends Literally_WordPress_Common{
 			"reward_promoter" => $this->promotable,
 			"reward_promotion_margin" => $this->promotion_margin,
 			"reward_author" => $this->rewardable,
-			"reward_author_margin" => $this->author_margin
+			"reward_author_margin" => $this->author_margin,
+			"reward_minimum" => $this->minimum_request
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
 		$this->promotion_margin = (int) $option['reward_promotion_margin'];
 		$this->rewardable = $option['reward_author_margin'];
 		$this->author_margin = $option['reward_author'];
+		$this->minimum_request = $option['reward_minimum'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
 	

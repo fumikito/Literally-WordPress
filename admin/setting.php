@@ -375,6 +375,15 @@
 						</p>
 					</td>
 				</tr>
+				<tr>
+					<th valign="top"><label for="reward_minimum"><?php $this->e("Reward minimum amount"); ?></label></th>
+					<td>
+						<input type="text" class="small-text" name="reward_minimum" id="reward_minimum" value="<?php echo esc_attr($this->option['reward_minimum']); ?>" /><?php echo lwp_currency_code();?>
+						<p class="description">
+							<?php $this->e("Your partners can request payment for reward if reward amount is above this value."); ?>
+						</p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div><!-- #tab4 -->
