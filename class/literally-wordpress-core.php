@@ -822,10 +822,9 @@ EOS;
 	 * 
 	 * @return void
 	 */
-	public function post_update()
-	{
+	public function post_update(){
 		if(isset($_REQUEST["_lwpnonce"]) && wp_verify_nonce($_REQUEST["_lwpnonce"], "lwp_price")){
-			//価格を登録（必須のため、なければエラー）
+			//Required. so empty, show error message
 			$price = preg_replace("/[^0-9.]/", "", mb_convert_kana($_REQUEST["lwp_price"], "n"));
 			if(preg_match("/^[0-9.]+$/", $price)){
 				update_post_meta($_POST["ID"], "lwp_price", $price);
@@ -839,12 +838,14 @@ EOS;
 	/**
 	 * 投稿ページに追加するフォーム
 	 * 
+	 * @param object $post
+	 * @param array $metabox
 	 * @return void
 	 */
-	public function post_metabox_form()
-	{
-		$files = isset($_GET['post']) ? $this->get_files($_GET["post"]) : array();
+	public function post_metabox_form($post, $metabox){
+		$files = $this->get_files($post->ID);
 		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail.php";
+		do_action('lwp_payable_post_type_metabox', $post, $metabox);
 	}
 	
 	//--------------------------------------------

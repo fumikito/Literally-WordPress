@@ -51,7 +51,7 @@ class Literally_WordPress_Common {
 	 * @global Literally_WordPress $lwp
 	 * @param string $text 
 	 */
-	public function _e($text){
+	public function e($text){
 		global $lwp;
 		$lwp->e($text);
 	}
