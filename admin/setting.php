@@ -1,6 +1,6 @@
 <?php /* @var $this Literally_WordPress */ ?>
 <h2 class="nav-tab-wrapper">
-	<a class="nav-tab nav-tab-active" href="#tab-1"><?php $this->e("Required Setting"); ?></a>
+	<a class="nav-tab nav-tab-active" href="#tab-1"><?php $this->e("LWP Required Setting"); ?></a>
 	<a class="nav-tab" href="#tab-2"><?php $this->e('Transfer Setting'); ?></a>
 	<a class="nav-tab" href="#tab-3"><?php $this->e("Subscription"); ?></a>
 	<a class="nav-tab" href="#tab-4"><?php $this->e('Reward Setting'); ?></a>	

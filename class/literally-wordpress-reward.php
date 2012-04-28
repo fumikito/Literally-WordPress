@@ -121,4 +121,18 @@ class LWP_Reward extends Literally_WordPress_Common{
 			</p>
 		<?php
 	}
+	
+	/**
+	 * Executed on saving post to save postmeta
+	 * @param int $post_id
+	 */
+	public function save_post($post_id){
+		if(isset($_REQUEST['_lwpmarginnonce'], $_REQUEST['lwp_post_margin']) && wp_verify_nonce($_REQUEST['_lwpmarginnonce'], 'lwp_individual_margin')){
+			if(empty($_REQUEST['lwp_post_margin'])){
+				delete_post_meta($post_id, $this->promotion_margin_key);
+			}else{
+				update_post_meta($post_id, $this->promotion_margin_key, (int)$_REQUEST['lwp_post_margin']);
+			}
+		}
+	}
 }
