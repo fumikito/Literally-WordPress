@@ -4,6 +4,7 @@
  *
  * @author Takahashi Fumiki
  * @package literally_wordpress
+ * @since 0.8.8
  */
 class LWP_Subscription extends Literally_WordPress_Common{
 	
@@ -202,6 +203,7 @@ class LWP_Subscription extends Literally_WordPress_Common{
 					</tbody>
 				</table>
 				<?php
+				do_action('lwp_payable_post_type_metabox', $post, $metabox);
 				break;
 		}
 	}

@@ -556,24 +556,35 @@ EOS;
 	}
 	
 	/**
-	 * 管理画面にサブメニューを追加する
+	 * Add submenues to Admin Panel
 	 * 
 	 * @return void
 	 */
 	public function add_menu()
 	{
-		//設定ページの追加
+		//Setting Pagees
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("General Setting"), 'manage_options', "lwp-setting", array($this, "load"));
+		//Transaction list
 		add_submenu_page("lwp-setting", $this->_("Transaction Management"), $this->_("Transaction Management"), 'edit_posts', "lwp-management", array($this, "load"));
-		if($this->option['transfer']){
+		//Transfer Page if enabled
+		if($this->notifier->is_enabled()){
 			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management"), 'edit_posts', "lwp-transfer", array($this, "load"));
 		}
-		add_submenu_page("lwp-setting", $this->_("Campaing Management"), $this->_("Campaing Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
+		//Campaign setting
+		add_submenu_page("lwp-setting", $this->_("Campaign Management"), $this->_("Campaign Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
+		//Device setting
 		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
-		//顧客の購入履歴確認ページ
+		//Purchase history
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
-		//メタボックスの追加
+		//Reward Page if enabled
+		if($this->reward->is_enabled()){
+			//admin
+			add_submenu_page("lwp-setting", $this->_("Reward Management"), $this->_('Reward Management'), 'edit_posts', "lwp-reward", array($this, 'load'));
+			//Personal
+			add_users_page($this->_("Reward"), $this->_("Reward"), 'read', "lwp-personal-reward", array($this, 'load'));
+		}
+		//Add metaboxes
 		foreach($this->option['payable_post_types'] as $post){
 			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
 		}
@@ -588,16 +599,18 @@ EOS;
 	{
 		if(isset($_GET["page"]) && (false !== strpos($_GET["page"], "lwp-"))){
 			$slug = str_replace("lwp-", "", $_GET["page"]);
+			global $wpdb;
+			echo '<div class="wrap">';
+			do_action("admin_notice");
+			echo "<div class=\"icon32 ebook\"><br /></div>";
 			if(file_exists($this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php")){
-				global $wpdb;
-				echo '<div class="wrap">';
-				do_action("admin_notice");
-				echo "<div class=\"icon32 ebook\"><br /></div>";
 				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php";
-				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."donate.php";
-				echo "</div>\n<!-- .wrap ends -->";
-			}else
-				return;
+			}else{
+				$error = $this->_('This page does not exist. Template not found.'); 
+				echo '<h2>Error</h2><div class="error"><p>'.$error.'</p></div>';
+			}
+			require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."donate.php";
+			echo "</div>\n<!-- .wrap ends -->";
 		}elseif(false !== strpos($_SERVER["REQUEST_URI"], "users.php")){
 			global $wpdb;
 			echo '<div class="wrap">';
@@ -624,16 +637,20 @@ EOS;
 	 * @return void
 	 */
 	public function admin_assets(){
-		wp_enqueue_style("lwp-admin", $this->url."/assets/style.css", array(), $this->version);
+		wp_enqueue_style("lwp-admin", $this->url."assets/style.css", array(), $this->version);
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
+		//On setting page, load tab js
+		if($this->is_admin('setting')){
+			wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', array('jquery-ui-tabs'), $this->version);
+		}
 		//In case management or campaign, load datepicker.
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
 			wp_enqueue_style('jquery-ui-datepicker');
 			wp_enqueue_script(
 				"lwp-datepicker-load",
-				$this->url."/assets/js/campaign.js",
+				$this->url."assets/js/campaign.js",
 				array("jquery-ui-timepicker"),
 				$this->version
 			);

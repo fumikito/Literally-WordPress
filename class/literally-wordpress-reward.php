@@ -54,4 +54,8 @@ class LWP_Reward extends Literally_WordPress_Common{
 			
 		}
 	}
+	
+	public function admin_init(){
+		
+	}
 }
