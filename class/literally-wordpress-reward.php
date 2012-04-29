@@ -183,9 +183,8 @@ class LWP_Reward extends Literally_WordPress_Common{
 	/**
 	 * Update user personal setting
 	 * @param int $user_id
-	 * @param WP_User $old_data 
 	 */
-	public function profile_update($user_id, $old_data){
+	public function profile_update($user_id){
 		if(isset($_REQUEST['_lwppersonalpromotion'], $_REQUEST['reward_personal_coefficient']) && wp_verify_nonce($_REQUEST['_lwppersonalpromotion'], 'lwp_personal_promotion_ratio')){
 			if(empty($_REQUEST['reward_personal_coefficient'])){
 				delete_user_meta($user_id, $this->promotion_personal_margin);

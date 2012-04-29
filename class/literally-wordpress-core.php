@@ -311,8 +311,8 @@ class Literally_WordPress{
 		/*--------------
 		 * アクションフック
 		 */
-		//Check table and 
-		add_action('plugins_loaded', array($this, 'table_create'));
+		//Check table and create if not exits
+		add_action('admin_init', array($this, 'check_table'));
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
 		//スタイルシート・JSの追加
@@ -447,93 +447,25 @@ EOS;
 	
 	
 	/**
-	* テーブル作成
-	*
-	* @return void
-	*/
-	public function table_create(){
-		global $wpdb;
-		//バージョンの確認
-		if(version_compare($this->version, $this->option['db_version']) > 0){
-			//$wpdb->show_errors();
-			//Change Field name because desc is reserved words for MySQL.
-			$row = null;
-			foreach($wpdb->get_results("DESCRIBE {$this->files}") as $field){
-				if($field->Field == 'desc'){
-					$row = $field;
-					break;
-				}
-			}
-			if($row){
-				$wpdb->query("ALTER TABLE {$this->files} CHANGE COLUMN `desc` `detail` TEXT NOT NULL");
-			}
-			//Create SQL for table
-			$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
-			$sql = array();
-			$sql[] = <<<EOS
-				CREATE TABLE {$this->files} (
-					ID INT NOT NULL AUTO_INCREMENT,
-					book_id BIGINT NOT NULL,
-					name VARCHAR(255) NOT NULL,
-					detail TEXT NOT NULL,
-					file VARCHAR(255) NOT NULL,
-					public INT NOT NULL DEFAULT 1,
-					free INT NOT NULL DEFAULT 0,
-					registered DATETIME NOT NULL,
-					updated DATETIME NOT NULL,
-					PRIMARY KEY  (ID)
-				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
-EOS;
-			$sql[] = <<<EOS
-				CREATE TABLE {$this->transaction} (
-					ID BIGINT NOT NULL AUTO_INCREMENT,
-					user_id BIGINT NOT NULL,
-					book_id BIGINT NOT NULL,
-					price BIGINT NOT NULL,
-					status VARCHAR(45) NOT NULL,
-					method VARCHAR(100) NOT NULL DEFAULT 'PAYPAL',
-					transaction_key VARCHAR (255) NOT NULL,
-					transaction_id VARCHAR (255) NOT NULL,
-					payer_mail VARCHAR (255) NOT NULL,
-					registered DATETIME NOT NULL,
-					updated DATETIME NOT NULL,
-					expires DATETIME NOT NULL, 
-					PRIMARY KEY  (ID)
-				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
-EOS;
-			$sql[] = <<<EOS
-				CREATE TABLE {$this->campaign} (
-					ID INT NOT NULL AUTO_INCREMENT,
-					book_id BIGINT NOT NULL,
-					price BIGINT NOT NULL,
-					start DATETIME NOT NULL,
-					end DATETIME NOT NULL,
-					PRIMARY KEY  (ID)
-				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
-EOS;
-			$sql[] = <<<EOS
-				CREATE TABLE {$this->devices} (
-					ID BIGINT NOT NULL AUTO_INCREMENT,
-					name VARCHAR(255) NOT NULL,
-					slug VARCHAR(255) NOT NULL,
-					PRIMARY KEY  (ID)
-				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
-EOS;
-			$sql[] = <<<EOS
-				CREATE TABLE {$this->file_relationships} (
-					ID BIGINT NOT NULL AUTO_INCREMENT,
-					file_id INT NOT NULL,
-					device_id INT NOT NULL,
-					PRIMARY KEY  (ID)
-				) ENGINE = MYISAM DEFAULT CHARSET = {$char};
-EOS;
-			//テーブルの作成
-			require_once ABSPATH."wp-admin/includes/upgrade.php";
-			foreach($sql as $s){
-				dbDelta($s);
-			}
-			$this->option['db_version'] = $this->version;
+	 * Create table if not exist
+	 *
+	 * @return void
+	 */
+	public function check_table(){
+		//Check if table needs update
+		if(version_compare(LWP_Tables::VERSION, $this->option['db_version']) > 0){
+			//Alter table if required
+			LWP_Tables::alter_table($this->option['db_version']);
+			//Create table
+			LWP_Tables::create();
+			//Save version number
+			$this->option['db_version'] = LWP_Tables::VERSION;
 			update_option("literally_wordpress_option", $this->option);
+			//Show message if current user is admin
+			if(current_user_can('manage_options')){
+				$message = str_replace("'", '\'', $this->_('Literally WordPress successfully upgrades database.'));
+				add_action('admin_notices', create_function('$a', "echo '<div id=\"message\" class=\"updated\"><p>{$message}</p></div>';"));
+			}
 		}
 	}
 	
@@ -542,8 +474,7 @@ EOS;
 	 * 
 	 * @return void
 	 */
-	public function public_hooks()
-	{
+	public function public_hooks(){
 		//ヘッダー部分でリクエストの内容をチェックする
 		add_action("template_redirect", array($this, "manage_actions"));
 		//the_contentにフックをかける
@@ -594,7 +525,7 @@ EOS;
 	}
 	
 	/**
-	 * 管理画面用のファイルを読み込む
+	 * Loads template for admin panel
 	 * 
 	 * @return void
 	 */

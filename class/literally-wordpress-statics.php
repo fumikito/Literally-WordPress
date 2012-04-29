@@ -8,6 +8,11 @@
 class LWP_Tables{
 	
 	/**
+	 * Table version 
+	 */
+	const VERSION = '0.9';
+	
+	/**
 	 * Table prefix for this plugin
 	 */
 	const PREFIX = 'lwp_';
@@ -91,6 +96,135 @@ class LWP_Tables{
 			}
 		}
 		return $tables;
+	}
+	
+	/**
+	 * Alter table if required (because db_delta is buggy)
+	 * @global wpdb $wpdb 
+	 */
+	public static function alter_table($current_version){
+		global $wpdb;
+		//Change Field name because desc is reserved words for MySQL.
+		//since 0.8.8
+		if(version_compare('0.8.9', $current_version) > 0){
+			$row = null;
+			foreach($wpdb->get_results("DESCRIBE ".self::files()) as $field){
+				if($field->Field == 'desc'){
+					$row = $field;
+					break;
+				}
+			}
+			if($row){
+				$wpdb->query("ALTER TABLE ".self::files()." CHANGE COLUMN `desc` `detail` TEXT NOT NULL");
+			}
+		}
+	}
+	
+	/**
+	 * Create tables 
+	 */
+	public static function create(){
+		$char = defined("DB_CHARSET") ? DB_CHARSET : "utf8";
+		$sql = array();
+		//Create files table
+		$files = self::files();
+		$sql[] = <<<EOS
+			CREATE TABLE {$files} (
+				ID INT NOT NULL AUTO_INCREMENT,
+				book_id BIGINT NOT NULL,
+				name VARCHAR(255) NOT NULL,
+				detail TEXT NOT NULL,
+				file VARCHAR(255) NOT NULL,
+				public INT NOT NULL DEFAULT 1,
+				free INT NOT NULL DEFAULT 0,
+				registered DATETIME NOT NULL,
+				updated DATETIME NOT NULL,
+				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create transactios table
+		$transactions = self::transaction();
+		$sql[] = <<<EOS
+			CREATE TABLE {$transactions} (
+				ID BIGINT NOT NULL AUTO_INCREMENT,
+				user_id BIGINT NOT NULL,
+				book_id BIGINT NOT NULL,
+				price BIGINT NOT NULL,
+				status VARCHAR(45) NOT NULL,
+				method VARCHAR(100) NOT NULL DEFAULT 'PAYPAL',
+				transaction_key VARCHAR (255) NOT NULL,
+				transaction_id VARCHAR (255) NOT NULL,
+				payer_mail VARCHAR (255) NOT NULL,
+				registered DATETIME NOT NULL,
+				updated DATETIME NOT NULL,
+				expires DATETIME NOT NULL, 
+				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create campaign table
+		$campaign = self::campaign();
+		$sql[] = <<<EOS
+			CREATE TABLE {$campaign} (
+				ID INT NOT NULL AUTO_INCREMENT,
+				book_id BIGINT NOT NULL,
+				price BIGINT NOT NULL,
+				start DATETIME NOT NULL,
+				end DATETIME NOT NULL,
+				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create device table
+		$devices = self::devices();
+		$sql[] = <<<EOS
+			CREATE TABLE {$devices} (
+				ID BIGINT NOT NULL AUTO_INCREMENT,
+				name VARCHAR(255) NOT NULL,
+				slug VARCHAR(255) NOT NULL,
+				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create relationships table
+		$relationships = self::file_relationships();
+		$sql[] = <<<EOS
+			CREATE TABLE {$relationships} (
+				ID BIGINT NOT NULL AUTO_INCREMENT,
+				file_id INT NOT NULL,
+				device_id INT NOT NULL,
+				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create promotion log
+		$promotion_logs = self::promotion_logs();
+		$sql[] = <<<EOS
+			CREATE TABLE {$promotion_logs} (
+				ID BIGINT NOT NULL AUTO_INCREMENT,
+				transaction_id BIGINT NOT NULL,
+				user_id BIGINT NOT NULL,
+				reason VARCHAR(25) NOT NULL,
+				estimated_reward BIGINT NOT NULL,
+				PRIMARY KEY (ID),
+				INDEX promoter(user_id)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char}
+EOS;
+		//Create reward table
+		$reward = self::reward_logs();
+		$sql[] = <<<EOS
+			CREATE TABLE {$reward} (
+				ID BIGINT NOT NULL AUTO_INCREMENT,
+				user_id BIGINT NOT NULL,
+				price INT NOT NULL,
+				status VARCHAR(20) NOT NULL,
+				registered DATETIME NOT NULL,
+				updated DATETIME NOT NULL,
+				PRIMARY KEY (ID),
+				INDEX requester(user_id, updated)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char}
+EOS;
+		//Do dbDelta with praying...
+		require_once ABSPATH."wp-admin/includes/upgrade.php";
+		foreach($sql as $s){
+			dbDelta($s);
+		}
 	}
 }
 
