@@ -21,6 +21,17 @@
 	<?php $this->e('Users contribution list is below.'); ?>
 </p>
 
+<form method="get">
+	<input type="hidden" name="page" value="lwp-reward" /> 
+	<?php
+		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-reward-history.php";
+		$table = new LWP_List_Reward_History();
+		$table->prepare_items();
+		$table->search_box(__('Search'), 'q');
+		$table->display();
+	?>
+</form>
+
 <?php elseif($_GET['tab'] == 'request'): ?>
 <p class="description">
 	<?php $this->e('User payment requests are below.'); ?>

@@ -226,7 +226,7 @@ EOS;
 				foreach($post_types as $post_type => $label): ?>
 				<option value="<?php echo $post_type; if($post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php echo $label; ?></option>
 				<?php endforeach; ?>
-				<?php if($lwp->subscription->enabled): ?>
+				<?php if($lwp->subscription->is_enabled()): ?>
 				<option value="<?php echo $lwp->subscription->post_type; if($lwp->subscription->post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php $lwp->e('Subscription'); ?></option>
 				<?php endif; ?>
 			</select>
