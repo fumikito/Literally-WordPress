@@ -516,7 +516,9 @@ EOS;
 			//admin
 			add_submenu_page("lwp-setting", $this->_("Reward Management"), $this->_('Reward Management'), 'edit_posts', "lwp-reward", array($this, 'load'));
 			//Personal
-			add_users_page($this->_("Reward"), $this->_("Reward"), 'read', "lwp-personal-reward", array($this, 'load'));
+			if($this->reward->promotable || ($this->reward->rewardable && current_user_can('edit_posts'))){
+				add_users_page($this->_("Reward"), $this->_("Reward"), 'read', "lwp-personal-reward", array($this, 'load'));
+			}
 		}
 		//Add metaboxes
 		foreach($this->option['payable_post_types'] as $post){
@@ -536,7 +538,8 @@ EOS;
 			global $wpdb;
 			echo '<div class="wrap">';
 			do_action("admin_notice");
-			echo "<div class=\"icon32 ebook\"><br /></div>";
+			$class_name = (basename($_SERVER['SCRIPT_FILENAME']) == 'users.php') ? 'icon-users' : 'ebook';
+			echo "<div class=\"icon32 {$class_name}\"><br /></div>";
 			if(file_exists($this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php")){
 				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php";
 			}else{

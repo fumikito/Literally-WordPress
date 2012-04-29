@@ -9,7 +9,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	/**
 	 * @var boolean
 	 */
-	private $promotable = false;
+	public $promotable = false;
 	
 	/**
 	 * @var int
@@ -24,7 +24,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	/**
 	 * @var boolean
 	 */
-	private $rewardable = false;
+	public $rewardable = false;
 	
 	/**
 	 * @var int

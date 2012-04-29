@@ -11,13 +11,20 @@
 	</a>
 </h2>
 
+<?php do_action('admin_notice'); ?>
+
 <?php if(!isset($_GET['tab'])): ?>
 ダッシュボード
 
 <?php elseif($_GET['tab'] == 'history'): ?>
-履歴
+<p class="description">
+	<?php $this->e('Users contribution list is below.'); ?>
+</p>
 
 <?php elseif($_GET['tab'] == 'request'): ?>
-リクエスト一覧
+<p class="description">
+	<?php $this->e('User payment requests are below.'); ?>
+</p>
+
 
 <?php endif; ?>
