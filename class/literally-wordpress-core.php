@@ -698,7 +698,7 @@ EOS;
 			&& false !== strpos($_REQUEST["_wp_http_referer"], "lwp-setting")
 			&& wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_option")
 		){
-			$new_option = array(
+			$new_option = shortcode_atts($this->option, array(
 				"user_name" => $_REQUEST["user_name"],
 				"password" => $_REQUEST["marchand_pass"],
 				'signature' => $_REQUEST['signature'],
@@ -723,7 +723,7 @@ EOS;
 				"subscription" => (boolean)$_REQUEST['subscription'],
 				"subscription_post_types" => (array)$_REQUEST['subscription_post_types'],
 				'subscription_format' => (string)$_REQUEST['subscription_format'],
-			);
+			));
 			//sandbox
 			$new_option['sandbox'] = isset($_REQUEST['sandbox']) ? true : false;
 			if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){

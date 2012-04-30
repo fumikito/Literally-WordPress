@@ -377,34 +377,3 @@ class LWP_Promotion_TYPE{
 		$lwp->_('SELL');
 	}
 }
-
-/**
- * Statics for Promotion status 
- */
-class LWP_Promotion_Status{
-	/**
-	 * User visited through promotion
-	 */
-	const LANDING = 'LANDING';
-	
-	/**
-	 * User entered register through promotion
-	 */
-	const CHECK_IN = 'CHECK_IN';
-	
-	/**
-	 * User finished shopping through promotion
-	 */
-	const CHECK_OUT = 'CHECK_OUT';
-	
-	/**
-	 * For poedit scraping not executed
-	 * @global Literally_WordPress $lwp 
-	 */
-	private function _(){
-		global $lwp;
-		$lwp->_('LANDING');
-		$lwp->_('CHECK_IN');
-		$lwp->_('CHECK_OUT');
-	}
-}

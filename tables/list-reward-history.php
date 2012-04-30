@@ -100,7 +100,7 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'user' :
-				return '<a href="'.admin_url('user-edit.php?user_id='.$item->user_id).'">'.$item->display_name.'</a>';
+				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.$item->user_id).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
 				break;
 			case 'price':
 				return number_format($item->price);

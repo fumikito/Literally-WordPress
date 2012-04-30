@@ -200,4 +200,96 @@ class LWP_Reward extends Literally_WordPress_Common{
 			}
 		}
 	}
+	
+	/**
+	 * Return currently set promotion margin
+	 * @global object $post
+	 * @param object $post
+	 * @return int 
+	 */
+	public function get_current_promotion_margin($post = null){
+		if(is_null($post)){
+			global $post;
+		}else{
+			$post = get_post($post);
+		}
+		$personal_setting = get_post_meta($post->ID, $this->promotion_margin_key, true);
+		return (int)($personal_setting ? $personal_setting : $this->promotion_margin);
+	}
+	
+	/**
+	 * Save promotion on current margin
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $transaction_id
+	 * @param int $user_id 
+	 */
+	public function save_promotion_log($transaction_id, $user_id){
+		if($this->promotable){
+			global $lwp, $wpdb;
+			//TODO: fix if cart is implemented
+			$post_ids = array($wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+			//Check if personal settign is registered
+			$user_coefficient = get_user_meta($user_id, $this->promotion_personal_margin, true);
+			if(!$user_coefficient){
+				$user_coefficient = 1;
+			}
+			//Calculate all promotion
+			$total = 0;
+			foreach($post_ids as $post_id){
+				$ratio = min($this->get_current_promotion_margin($post_id) * $user_coefficient, $this->promotion_max);
+				$total += round(lwp_price($post_id) * $ratio / 100);
+			}
+			//Save promotion log
+			$wpdb->insert(
+				$lwp->promotion_logs,
+				array(
+					'transaction_id' => $transaction_id,
+					'user_id' => $user_id,
+					'reason' => LWP_Promotion_TYPE::PROMOTION,
+					'estimated_reward' => $total
+				),
+				array('%d', '%d', '%s', '%d')
+			);
+		}
+	}
+	
+	/**
+	 * Save author promotion log
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $transaction_id 
+	 */
+	public function save_author_log($transaction_id){
+		if($this->rewardable){
+			global $lwp, $wpdb;
+			//TODO: fix if cart is implemented
+			$post_ids = array($wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+			//Loop on each post
+			$result = array();
+			foreach($post_ids as $post_id){
+				$post_author = $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $post_id));
+				$personal_margin = get_user_meta($post_author, $this->promotion_personal_margin, true);
+				$margin = $personal_margin ? $personal_margin : $this->author_margin;
+				if(isset($result[$post_author])){
+					$result[$post_author] += (int)(lwp_price($post_id) * $margin / 100);
+				}else{
+					$result[$post_author] = (int)(lwp_price($post_id) * $margin / 100);
+				}
+			}
+			//Save
+			foreach($result as $user_id => $price){
+				$wpdb->insert(
+					$lwp->promotion_logs,
+					array(
+						'transaction_id' => $transaction_id,
+						'user_id' => $user_id,
+						'reason' => LWP_Promotion_TYPE::SELL,
+						'estimated_reward' => $price
+					),
+					array("%d", "%d", "%s", "%d")
+				);
+			}
+		}
+	}
 }
