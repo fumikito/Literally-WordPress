@@ -39,6 +39,7 @@ for($i = 0; $i < 30; $i++){
 
 <form method="get">
 	<input type="hidden" name="page" value="lwp-reward" /> 
+	<input type="hidden" name="tab" value="history" />
 	<?php
 		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-reward-history.php";
 		$table = new LWP_List_Reward_History();
