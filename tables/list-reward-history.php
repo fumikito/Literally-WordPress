@@ -6,9 +6,12 @@
  */
 class LWP_List_Reward_History extends WP_List_Table{
 	
+	var $user_id = 0;
+	
 	var $start = 0;
 	
-	function __construct(){
+	function __construct($user_id = 0){
+		$this->user_id = $user_id;
 		parent::__construct(array(
 			'singular' => 'history',
 			'plural' => 'histories',
@@ -34,11 +37,13 @@ class LWP_List_Reward_History extends WP_List_Table{
 			'reason' => $lwp->_('Reason'),
 			'action' => $lwp->_('Action')
 		);
+		if($this->user_id){
+			unset($column['user']);
+		}
 		return $column;
 	}
 	
 	function get_sortable_columns() {
-		global $lwp;
 		return array(
 			'registered' => array('registered', false),
 			'updated' => array('updated', false),
@@ -79,6 +84,10 @@ class LWP_List_Reward_History extends WP_List_Table{
 EOS;
 		//WHERE
 		$where = array();
+		//User
+		if($this->user_id){
+			$where[] = $wpdb->prepare("(p.user_id = %d)", $this->user_id);
+		}
 		//Search query
 		if(isset($_GET['s']) && !empty($_GET['s'])){
 			$where[] = $wpdb->prepare("(u.display_name LIKE %s)", '%'.(string)$_GET['s'].'%');

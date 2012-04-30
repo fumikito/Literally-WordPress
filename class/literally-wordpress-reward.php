@@ -292,4 +292,86 @@ class LWP_Reward extends Literally_WordPress_Common{
 			}
 		}
 	}
+	
+	/**
+	 * Create request and enquuee
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @return int\WP_Error 
+	 */
+	public function make_request($user_id){
+		global $lwp, $wpdb;
+		//check if requestable
+		if(!$this->is_enabled()){
+			return new WP_Error('fail', $this->_('You cannot make payment request.'));
+		}
+		//Check if sutisfies minimum requirements
+		
+		if(!$this->is_enabled()){
+			return new WP_Error('fail', $this->_('You cannot make payment request.').' '.sprintf($lwp->_('Minimum request must be more than %d (%s)'), $this->minimum_request, lwp_currency_code()));
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param string $status
+	 * @param string $from
+	 * @param string $to
+	 * @return int 
+	 */
+	public function get_total_reward($user_id, $status = LWP_Payment_Status::SUCCESS, $from = null, $to = null){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(r.estimated_reward) FROM {$lwp->promotion_logs} AS r
+			INNER JOIN {$lwp->transaction} AS t
+			ON r.transaction_id = t.ID
+EOS;
+		$where = array(
+			$wpdb->prepare("r.user_id = %d", $user_id)
+		);
+		if(false !== array_search($status, LWP_Payment_Status::get_all_status())){
+			$where[] = $wpdb->prepare("t.status = %s", $status);
+		}
+		if($from){
+			$where[] = $wpdb->prepare("t.registered >= %s", $from);
+		}
+		if($to){
+			$where[] = $wpdb->prepare("t.registered <= %s", $to);
+		}
+		$sql .= ' WHERE '.implode(' AND ', $where);
+		return (int)$wpdb->get_var($sql);
+	}
+	
+	/**
+	 * Returns total request amount between specified period
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param string $status
+	 * @param string $from
+	 * @param string $to
+	 * @return int 
+	 */
+	public function get_requested_reward($user_id, $status = LWP_Payment_Status,$from = null, $to = null){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(r.price) FROM {$lwp->reward_logs} AS r
+			WHERE user_id = %d
+EOS;
+		if(false !== array_search($status, LWP_Payment_Status::get_all_status())){
+			$sql .= $wpdb->prepare(" AND r.status = %s", $status);
+		}
+		if($from){
+			$sql .= $wpdb->prepare(" AND r.registered >= %s", $from);
+		}
+		if($to){
+			$sql .= $wpdb->prepare(" AND r.registered <= %s", $to);
+		}
+		return (int)$wpdb->get_var($wpdb->prepare($sql, $user_id));
+	}
 }

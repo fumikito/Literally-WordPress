@@ -37,9 +37,8 @@
 	<input type="hidden" name="tab" value="history" />
 	<?php
 		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-reward-history.php";
-		$table = new LWP_List_Reward_History();
+		$table = new LWP_List_Reward_History(get_current_user_id());
 		$table->prepare_items();
-		$table->search_box(__('Search'), 'q');
 		$table->display();
 	?>
 </form>
@@ -49,5 +48,7 @@
 <p class="description">
 	<?php $this->e('You can request payment for your contribution.'); ?>
 </p>
+
+		<?php var_dump($this->reward->get_total_reward(get_current_user_id()), $this->reward->get_requested_reward(get_current_user_id())); ?>
 
 <?php endif; ?>
