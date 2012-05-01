@@ -35,10 +35,11 @@ class LWP_List_Reward_History extends WP_List_Table{
 			'updated' => $lwp->_('Updated'),
 			'status' => $lwp->_('Status'),
 			'reason' => $lwp->_('Reason'),
-			'action' => $lwp->_('Action')
+			'transaction' => $lwp->_('Transaction')
 		);
 		if($this->user_id){
 			unset($column['user']);
+			unset($column['action']);
 		}
 		return $column;
 	}
@@ -169,8 +170,8 @@ EOS;
 			case 'reason':
 				return $lwp->_($item->reason);
 				break;
-			case 'action':
-				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->transaction_id).'">'.$lwp->_('Edit').'</a>';
+			case 'transaction':
+				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->transaction_id).'">'.$lwp->_('Detail').'</a>';
 				break;
 		}
 	}

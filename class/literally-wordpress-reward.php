@@ -41,6 +41,25 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 */
 	private $minimum_request = 0;
 	
+	
+	/**
+	 * Payment request limit
+	 * @var int
+	 */
+	private $request_limit = 1;
+	
+	/**
+	 * Payment at this month
+	 * @var int
+	 */
+	private $pay_month_after = 0;
+	
+	/**
+	 * Payment at this day
+	 * @var int
+	 */
+	private $pay_at_day = 30;
+	
 	/**
 	 * Metakey of postmeta
 	 * @var string
@@ -58,6 +77,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * @var string
 	 */
 	private $author_personal_margin = '_lwp_author_margin';
+
+	/**
+	 * Notice for promoters 
+	 * @var string 
+	 */
+	private $notice = '';
 	
 	/**
 	 * Setup option
@@ -72,7 +97,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 			"reward_author" => $this->rewardable,
 			"reward_author_margin" => $this->author_margin,
 			"reward_author_max" => $this->author_max,
-			"reward_minimum" => $this->minimum_request
+			"reward_minimum" => $this->minimum_request,
+			"reward_request_limit" => $this->request_limit,
+			"reward_pay_at" => $this->pay_at_day,
+			"reward_pay_after_month" => $this->pay_month_after,
+			"reward_notice" => $this->notice
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
 		$this->promotion_margin = (int) $option['reward_promotion_margin'];
@@ -81,6 +110,10 @@ class LWP_Reward extends Literally_WordPress_Common{
 		$this->author_margin = (int)$option['reward_author_margin'];
 		$this->author_max = (int)$option['reward_author_max'];
 		$this->minimum_request = (float)$option['reward_minimum'];
+		$this->request_limit = (int) $option['reward_request_limit'];
+		$this->pay_at_day = (int) $option['reward_pay_at'];
+		$this->pay_month_after = (int) $option['reward_pay_after_month'];
+		$this->notice = (string) $option['reward_notice'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
 	
@@ -90,6 +123,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 */
 	protected function on_construct(){
 		if($this->is_enabled()){
+			add_action("admin_init", array($this, 'admin_init'));
 			add_action('lwp_payable_post_type_metabox', array($this, 'metabox_margin'), 10, 2);
 			add_action('save_post', array($this, 'save_post'));
 			add_action('edit_user_profile', array($this, 'edit_user_profile'));
@@ -97,8 +131,32 @@ class LWP_Reward extends Literally_WordPress_Common{
 		}
 	}
 	
+	/**
+	 * Executed at amin_init
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp 
+	 */
 	public function admin_init(){
-		
+		global $wpdb, $lwp;
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_reward_request_'.get_current_user_id()) && ($amount = $this->user_rest_amount(get_current_user_id(), true))){
+			$result = $wpdb->insert(
+				$lwp->reward_logs,
+				array(
+					'user_id' => get_current_user_id(),
+					'price' => $amount,
+					'status' => LWP_Payment_Status::START,
+					'registered' => date_i18n('Y-m-d H:i:s'),
+					'updated' => date_i18n('Y-m-d H:i:s')
+				),
+				array('%d', '%d', '%s', '%s', '%s')
+			);
+			if($result){
+				$lwp->message[] = $this->_('Request is accepted.');
+			}else{
+				$lwp->message[] = $this->_('Your request is wrong.');
+				$lwp->error = true;
+			}
+		}
 	}
 	
 	/**
@@ -373,5 +431,177 @@ EOS;
 			$sql .= $wpdb->prepare(" AND r.registered <= %s", $to);
 		}
 		return (int)$wpdb->get_var($wpdb->prepare($sql, $user_id));
+	}
+	
+	/**
+	 * Returns payment notice 
+	 * @return string
+	 */
+	public function get_notice(){
+		$notice = $this->notice;
+		foreach($this->get_notice_placeholders() as $placeholder => $desc){
+			if(false !== strpos($notice, $placeholder)){
+				switch($placeholder){
+					case '%limit%':
+						$replace = $this->request_limit;
+						break;
+					case '%payment_month%':
+						$replace = $this->pay_month_after;
+						break;
+					case '%payment_day%':
+						$replace = $this->pay_at_day;
+						break;
+					case '%min%':
+						$replace = $this->minimum_request;
+						break;
+					default:
+						$replace = false;
+						break;
+				}
+				if($replace){
+					$notice = str_replace($placeholder, $replace, $notice);
+				}
+			}
+		}
+		return apply_filters('lwp_reward_notice', $notice);
+	}
+	
+	/**
+	 * Returns 
+	 * @return string
+	 */
+	public function get_raw_notice(){
+		return $this->notice;
+	}
+	
+	/**
+	 * Returns array of placeholders for notice
+	 * @return array
+	 */
+	public function get_notice_placeholders(){
+		return array(
+			'%limit%' => $this->_('Payment request limit'),
+			'%payment_month%' => $this->_('Payment after this month'),
+			'%payment_day%' => $this->_('Payment at this day'),
+			'%min%' => $this->_('Minimum required amount for request')
+		);
+	}
+	
+	/**
+	 * Returns if user is requesting
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @return boolean 
+	 */
+	public function is_user_requesting($user_id){
+		global $lwp, $wpdb;
+		if(date('j') > $this->request_limit){
+			//Paytime limit is exceeded, limit is nextmonth
+			$month_from = date('n');
+			$month_to = date('n') + 1;
+		}else{
+			//Payment limit isnot exceeded, limit is this month
+			$month_from = date('n') - 1;
+			$month_to = date('n');
+		}
+		$year_from = date('Y');
+		$year_to = date('Y');
+		if($month_from < 1){
+			$year_from--;
+			$month_from += 12;
+		}
+		if($month_to > 12){
+			$year_to++;
+			$month_to -= 12;
+		}
+		$to = date("Y-m-d H:i:s", mktime(23, 59, 59, $month_to, $this->request_limit, $year_to));
+		$from = date("Y-m-d H:i:s", mktime(00, 00, 00, $month_from, $this->request_limit, $year_from));
+		$sql = <<<EOS
+			SELECT ID FROM {$lwp->reward_logs}
+			WHERE user_id = %d
+			  AND registered <= %s
+			  AND registered >= %s
+EOS;
+		return (boolean)$wpdb->get_var($wpdb->prepare($sql, $user_id, $to, $from));
+	}
+
+	/**
+	 * Get user's requestable amount
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param boolean $exclude_payment_queue
+	 * @return float 
+	 */
+	public function user_rest_amount($user_id, $exclude_payment_queue = false){
+		global $lwp, $wpdb;
+		//Get payed queue
+		$sql = <<<EOS
+			SELECT SUM(price) FROM {$lwp->reward_logs}
+			WHERE user_id = %d
+EOS;
+		if($exclude_payment_queue){
+			$sql .= $wpdb->prepare(" AND status = %s", LWP_Payment_Status::SUCCESS);
+		}
+		$payed = $wpdb->get_var($wpdb->prepare($sql, $user_id));
+		//Get promotion fee
+		$sql = <<<EOS
+			SELECT SUM(p.estimated_reward)
+			FROM {$lwp->promotion_logs} AS p
+			INNER JOIN {$lwp->transaction} AS t
+			ON p.transaction_id = t.ID
+			WHERE p.user_id = %d
+			  AND t.status = %s
+EOS;
+		$price = $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS));
+		//Calculate
+		return (float)($price - $payed);
+	}
+	
+	/**
+	 * Reward amount which user have got
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @return float 
+	 */
+	public function user_reward_amount($user_id){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(price) FROM {$lwp->reward_logs}
+			WHERE user_id = %d AND status = %s
+EOS;
+		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS));
+	}
+	
+	/**
+	 * Rest value to get paid
+	 * @param int $user_id
+	 * @return float
+	 */
+	public function required_payment_for_user($user_id){
+		return $this->minimum_request - $this->user_rest_amount($user_id);
+	}
+	
+	/**
+	 * Returns next pay day
+	 * @param string $format Date format
+	 * @return string
+	 */
+	public function next_pay_day($format = null){
+		if(is_null($format)){
+			$format = get_option('date_format');
+		}
+		$year = date('Y');
+		$month = date('n') + $this->pay_month_after;
+		if(date('j') > $this->request_limit){
+			$month++;
+		}
+		if($month > 12){
+			$year++;
+			$month -= 12;
+		}
+		return date($format, mktime(0, 0, 0, $month, $this->pay_at_day, $year));
 	}
 }

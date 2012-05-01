@@ -4,10 +4,10 @@
 		<?php $this->e('Reward Dashboard'); ?>
 	</a>
 	<a href="<?php echo admin_url('admin.php?page=lwp-reward&tab=history'); ?>" class="nav-tab<?php if(isset($_GET['tab']) && $_GET['tab'] == 'history') echo ' nav-tab-active';?>">
-		<?php $this->e('Reward History'); ?>
+		<?php $this->e('History'); ?>
 	</a>
 	<a href="<?php echo admin_url('admin.php?page=lwp-reward&tab=request'); ?>" class="nav-tab<?php if(isset($_GET['tab']) && $_GET['tab'] == 'request') echo ' nav-tab-active';?>">
-		<?php $this->e('Reward Request'); ?>
+		<?php $this->e('Request'); ?>
 	</a>
 </h2>
 
@@ -50,9 +50,21 @@ for($i = 0; $i < 30; $i++){
 </form>
 
 <?php elseif($_GET['tab'] == 'request'): ?>
+
 <p class="description">
 	<?php $this->e('User payment requests are below.'); ?>
 </p>
+
+<form method="get">
+	<input type="hidden" name="page" value="lwp-reward" /> 
+	<input type="hidden" name="tab" value="request" />
+	<?php
+		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-reward-request.php";
+		$table = new LWP_List_Reward_Request();
+		$table->prepare_items();
+		$table->display();
+	?>
+</form>
 
 
 <?php endif; ?>

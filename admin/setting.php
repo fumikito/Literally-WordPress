@@ -5,7 +5,8 @@
 	<a class="nav-tab" href="#tab-3"><?php $this->e("Subscription"); ?></a>
 	<a class="nav-tab" href="#tab-4"><?php $this->e('Reward Setting'); ?></a>	
 </h2>
-<form method="post">
+
+<form id="lwp-setting-form" method="post" action="<?php echo admin_url('admin.php?page=lwp-setting'); ?>">
 	<?php wp_nonce_field("lwp_update_option"); ?>
 	
 	<div id="tab-1">
@@ -399,6 +400,43 @@
 						<input type="text" class="small-text" name="reward_minimum" id="reward_minimum" value="<?php echo esc_attr($this->option['reward_minimum']); ?>" /><?php echo lwp_currency_code();?>
 						<p class="description">
 							<?php $this->e("Your partners can request payment for reward if reward amount is above this value."); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><label><?php $this->e("Reward Request"); ?></label></th>
+					<td>
+						<?php
+							$select = '<select name="reward_pay_after_month">';
+							foreach(range(0,2) as $i){
+								$select .= '<option value="'.$i.'"';
+								if($this->option['reward_pay_after_month'] == $i){
+									$select .= ' selected="selected"';
+								}
+								$select .= '>'.($i ? sprintf($this->_('%d month after'), $i) : $this->_('That month'));
+								$select .= '</option>';
+							}
+							$select .= '</select>';
+							printf(
+								$this->_('If reward amount exceeds %1$d (%2$s), user can request payment once until %3$s on every month. Reward will be paid at %4$s on %5$s'),
+								$this->option['reward_minimum'], lwp_currency_code(), 
+								'<input type="text" class="small-text" name="reward_request_limit" value="'.$this->option['reward_request_limit'].'" />',
+								'<input type="text" class="small-text" name="reward_pay_at" value="'.$this->option['reward_pay_at'].'" />',
+								$select
+							);
+						?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><label for="reward_notice"><?php $this->e("Reward Notice"); ?></label></th>
+					<td>
+						<textarea cols="80" rows="5" name="reward_notice" id="reward_notice"><?php echo esc_html($this->reward->get_raw_notice());  ?></textarea>
+						<p class="description">
+							<?php $this->e('This will be displayed on profile page. You can use placeholders: '); ?>
+							<?php foreach($this->reward->get_notice_placeholders() as $placeholder => $desc): ?>
+								<code><?php echo $placeholder;?></code>
+								<small><?php echo esc_html($desc); ?></small> | 
+							<?php endforeach; ?>
 						</p>
 					</td>
 				</tr>

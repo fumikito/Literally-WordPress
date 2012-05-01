@@ -42,13 +42,28 @@ class LWP_List_Reward_Request extends WP_List_Table{
 		$page = isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
 		$offset = ($page - 1) * $per_page;
 		$this->start = $offset;
+		//Process Action
+		if(isset($_GET['reward'], $_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'bulk-requests') && is_array($_GET['reward']) && false !== array_search($this->current_action(), LWP_Payment_Status::get_all_status())){
+			foreach($_GET['reward'] as $reward_id){
+				$wpdb->update(
+					$lwp->reward_logs,
+					array(
+						'status' => $this->current_action(),
+						'updated' => date_i18n('Y-m-d H:i:s')
+					),
+					array('ID' => $reward_id),
+					array('%s', '%s'),
+					array("%d")
+				);
+			}
+		}
 		//Create SQL
 		$sql = <<<EOS
 			SELECT SQL_CALC_FOUND_ROWS
-				*
+				r.*, u.display_name
 			FROM {$lwp->reward_logs} AS r
 			LEFT JOIN {$wpdb->users} AS u
-			ON p.user_id = u.ID
+			ON r.user_id = u.ID
 EOS;
 		//WHERE
 		$where = array();
@@ -95,17 +110,15 @@ EOS;
 	function get_columns(){
 		global $lwp;
 		$column = array(
+			'cb' => '<input type="checkbox" />',
 			'user' => $lwp->_('User name'),
 			'price' => $lwp->_('Price'),
-			'reward' => $lwp->_('Reward'),
 			'registered' => $lwp->_('Registered'),
 			'updated' => $lwp->_('Updated'),
-			'status' => $lwp->_('Status'),
-			'action' => $lwp->_('Action')
+			'status' => $lwp->_('Status')
 		);
 		if($this->user_id){
 			unset($column['user']);
-			unset($column['action']);
 		}
 		return $column;
 	}
@@ -118,6 +131,19 @@ EOS;
 		);
 	}
 
+	function get_bulk_actions() {
+		global $lwp;
+		return array(
+			LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
+			LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
+			LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
+			LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND)
+		);
+	}
+	
+	function column_cb($item){
+		return sprintf('<input type="checkbox" name="%s[]" value="%d" />', 'reward', $item->ID);
+	}
 	
 	function column_default($item, $column_name){
 		global $lwp;
@@ -126,7 +152,7 @@ EOS;
 				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.$item->user_id).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
 				break;
 			case 'price':
-				return number_format($item->price);
+				return number_format($item->price).' ('.lwp_currency_code().')';
 				break;
 			case 'registered':
 				return mysql2date(get_option('date_format'), $item->registered);
