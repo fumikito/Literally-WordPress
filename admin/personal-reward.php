@@ -19,10 +19,37 @@
 <?php if(!isset($_GET['tab'])): ?>
 ダッシュボード
 
+
+
+
+
 <?php elseif($_GET['tab'] == 'link' && $this->reward->promotable): ?>
 <p class="description">
 	<?php $this->e('You can get promotion link below.'); ?>
 </p>
+<?php
+	$payable_post_types = $this->option['payable_post_types'];
+	if($this->subscription->is_enabled()){
+		$payable_post_types[] = $this->subscription->post_type;
+	}
+	if(empty($payable_post_types))	:
+?>
+	<div class="error"><p><?php $this->e('Sorry, but there is nothing to promote.'); ?></p></div>
+<?php else: ?>
+	<form method="get">
+		<input type="hidden" name="page" value="lwp-personal-reward" /> 
+		<input type="hidden" name="tab" value="link" />
+	<?php
+		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-promotable-posts.php";
+		$table = new LWP_List_Promotable_Posts($payable_post_types, get_current_user_id());
+		$table->prepare_items();
+		$table->display();
+	?>
+	</form>
+<?php endif; ?>
+
+
+
 
 
 <?php elseif($_GET['tab'] == 'history'): ?>

@@ -39,7 +39,7 @@ class LWP_List_Reward_History extends WP_List_Table{
 		);
 		if($this->user_id){
 			unset($column['user']);
-			unset($column['action']);
+			unset($column['transaction']);
 		}
 		return $column;
 	}
