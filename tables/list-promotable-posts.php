@@ -25,6 +25,9 @@ class LWP_List_Promotable_Posts extends WP_List_Table{
 		$lwp->e('No matching post is found.');
 	}
 	
+	function get_table_classes() {
+			return array( 'widefat', $this->_args['plural'] );
+	}
 	
 	/**
 	 * 
@@ -47,53 +50,72 @@ class LWP_List_Promotable_Posts extends WP_List_Table{
 		$offset = ($page - 1) * $per_page;
 		$this->start = $offset;
 		
+		//TODO: Fix sold count if cart system is implemented
 		//Create SQL
 		$sql = <<<EOS
 			SELECT DISTINCT SQL_CALC_FOUND_ROWS
-				p.*, pm.meta_value AS price
+				p.*, pm1.meta_value AS price, COALESCE(pm2.meta_value, %d) AS margin, t.sold
 			FROM {$wpdb->posts} AS p
-			LEFT JOIN {$wpdb->postmeta} AS pm
-			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
+			LEFT JOIN {$wpdb->postmeta} AS pm1
+			ON p.ID = pm1.post_id AND pm1.meta_key = 'lwp_price'
+			LEFT JOIN {$wpdb->postmeta} AS pm2
+			ON p.ID = pm2.post_id AND pm2.meta_key = '{$lwp->reward->promotion_margin_key}'
+			LEFT JOIN (
+				SELECT book_id, COUNT(book_id) AS sold FROM {$lwp->transaction}
+				WHERE status = %s
+				GROUP BY book_id
+			) AS t
+			ON t.book_id = p.ID
 EOS;
+		$sql = $wpdb->prepare($sql, $lwp->reward->promotion_margin, LWP_Payment_Status::SUCCESS);
 		//WHERE
 		$where = array(
 			"p.post_status = 'publish'",
-			"p.post_type IN (".implode(',', array_map(create_function('$post_type', 'return "\'".$post_type."\'";'), $this->post_types)).")"
+			"pm1.meta_value IS NOT NULL",
+			"pm1.meta_value > 0"
 		);
 		//User
 		if($this->user_id){
 			//$where[] = $wpdb->prepare("(r.user_id = %d)", $this->user_id);
 		}
-		//status
-		if(isset($_GET['status']) && $_GET['status'] != 'all'){
-			switch($_GET['status']){
-				case LWP_Payment_Status::CANCEL:
-				case LWP_Payment_Status::REFUND:
-				case LWP_Payment_Status::START:
-				case LWP_Payment_Status::SUCCESS:
-					$where[] = $wpdb->prepare("(r.status = %s)", $_GET['status']);
-					break;
-			}
+		//post_type
+		if(isset($_GET['type']) && (false !== array_search((string)$_GET['type'], $this->post_types))){
+			$where[] = $wpdb->prepare("(p.post_type = %s)", (string)$_GET['type']);
+		}else{
+			$where[] = "p.post_type IN (".implode(',', array_map(create_function('$post_type', 'return "\'".$post_type."\'";'), $this->post_types)).")";
 		}
+		//Search
+		if(isset($_GET['s']) && !empty($_GET['s'])){
+			$where[] = $wpdb->prepare("p.post_title LIKE %s", '%'.(string)$_GET['s'].'%');
+		}
+		//Create where section
 		if(!empty($where)){
 			$sql .= ' WHERE '.implode(' AND ', $where);
 		}
 		//ORDER
 		$order_by = 'p.post_date';
-		if(isset($_GET['order_by'])){
-			switch($_GET['order_by']){
+		if(isset($_GET['orderby'])){
+			switch($_GET['orderby']){
 				case 'published':
+					$order_by = "p.post_date";
+					break;
 				case 'price':
+					$order_by = "CAST(pm1.meta_value AS UNSIGNED)";
+					break;
 				case 'margin':
-				case 'sold':	
+					$order_by = $wpdb->prepare("CAST(COALESCE(pm2.meta_value, %d) AS UNSIGNED)",  $lwp->reward->promotion_margin);
+					break;
+				case 'reward':
+					$order_by = $wpdb->prepare("(CAST(pm1.meta_value AS UNSIGNED) * CAST(COALESCE(pm2.meta_value, %d) AS UNSIGNED) / 100)",  $lwp->reward->promotion_margin);
+					break;
+				case 'sold':
+					$order_by = "t.sold";
 					break;
 			}
 		}
 		$order = (isset($_GET['order']) && $_GET['order'] == 'asc') ? 'ASC' : 'DESC';
 		$sql .= " ORDER BY {$order_by} {$order}";
 		$sql .= " LIMIT {$offset}, {$per_page}";
-		var_dump($sql);
-		$wpdb->show_errors();
 		$this->items = $wpdb->get_results($sql);
 		$this->set_pagination_args(array(
 			'total_items' => (int) $wpdb->get_var('SELECT FOUND_ROWS()'),
@@ -105,13 +127,14 @@ EOS;
 	function get_columns(){
 		global $lwp;
 		$column = array(
-			'name' => $lwp->_('Name'),
 			'type' => $lwp->_('Type'),
-			'url' => 'URL',
+			'name' => $lwp->_('Name'),
 			'price' => $lwp->_('Price'),
 			'margin' => $lwp->_('Margin'),
+			'reward' => $lwp->_('Reward'),
 			'published' => $lwp->_('Published'),
-			'sold' => $lwp->_('Sold')
+			'sold' => $lwp->_('Sold'),
+			'url' => 'URL'
 		);
 		return $column;
 	}
@@ -121,34 +144,38 @@ EOS;
 			'published' => array('published', false),
 			'price' => array('price', false),
 			'margin' => array('margin', false),
-			'sold' => array('sold', false)
+			'sold' => array('sold', false),
+			'reward' => array('reward', false)
 		);
 	}
 	
 	function column_default($item, $column_name){
 		global $lwp;
 		switch($column_name){
+			case 'type':
+				$obj = get_post_type_object($item->post_type);
+				return $obj->labels->name;
 			case 'name' :
-				return $item->post_title;
-				break;
-			case 'url':
-				return get_permalink($item->ID);
+				return '<a href="'.get_permalink($item->ID).'">'.apply_filters('the_title', $item->post_title, $item->ID).'</a>';
 				break;
 			case 'price':
 				return number_format($item->price);
 				break;
 			case 'margin':
-				return number_format($item->price);
+				return number_format(min($item->margin, $lwp->reward->promotion_max));
+				break;
+			case 'reward':
+				return number_format($item->price * min($item->margin, $lwp->reward->promotion_max) / 100);
 				break;
 			case 'published':
 				return mysql2date(get_option('date_format'), $item->post_date);
 				break;
-			case 'type':
-				$obj = get_post_type_object($item->post_type);
-				return $obj->labels->name;
 				break;
 			case 'sold':
-				return 0;
+				return number_format($item->sold);
+				break;
+			case 'url':
+				return '<input type="text" class="small-text" value="'.$lwp->reward->get_promotion_link($item->ID, get_current_user_id()).'" onclick="this.select();" />';
 				break;
 		}
 	}

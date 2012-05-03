@@ -43,6 +43,7 @@
 		require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-promotable-posts.php";
 		$table = new LWP_List_Promotable_Posts($payable_post_types, get_current_user_id());
 		$table->prepare_items();
+		$table->search_box(__('Search'), 's');
 		$table->display();
 	?>
 	</form>

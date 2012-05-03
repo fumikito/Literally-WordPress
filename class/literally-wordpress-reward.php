@@ -14,12 +14,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	/**
 	 * @var int
 	 */
-	private $promotion_margin = 0;
+	public $promotion_margin = 0;
 	
 	/**
 	 * @var int
 	 */
-	private $promotion_max = 90;
+	public $promotion_max = 90;
 	
 	/**
 	 * @var boolean
@@ -29,12 +29,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	/**
 	 * @var int
 	 */
-	private $author_margin = 0;
+	public $author_margin = 0;
 	
 	/**
 	 * @var int
 	 */
-	private $author_max = 90;
+	public $author_max = 90;
 	
 	/**
 	 * @var int
@@ -64,7 +64,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * Metakey of postmeta
 	 * @var string
 	 */
-	private $promotion_margin_key = '_lwp_promotion_margin';
+	public $promotion_margin_key = '_lwp_promotion_margin';
 	
 	/**
 	 * Metakey of usermeta
@@ -603,5 +603,18 @@ EOS;
 			$month -= 12;
 		}
 		return date($format, mktime(0, 0, 0, $month, $this->pay_at_day, $year));
+	}
+	
+	/**
+	 * Returns promotion link
+	 * @param int $post_id
+	 * @param int $user_id
+	 * @return string 
+	 */
+	public function get_promotion_link($post_id, $user_id){
+		$base = get_permalink($post_id);
+		$glue = (false !== strpos($base, '?')) ? '?' : '&';
+		$base .= $glue.'_lwpp='.$user_id;
+		return $base;
 	}
 }
