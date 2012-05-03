@@ -202,8 +202,10 @@ EOS;
 				user_id BIGINT NOT NULL,
 				reason VARCHAR(25) NOT NULL,
 				estimated_reward BIGINT NOT NULL,
+				start_post_id BIGINT NOT NULL,
+				referer TEXT NOT NULL,
 				PRIMARY KEY (ID),
-				INDEX promoter(user_id)
+				INDEX promoter(user_id, reason)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char}
 EOS;
 		//Create reward table

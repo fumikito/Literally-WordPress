@@ -282,7 +282,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * @param int $transaction_id
 	 * @param int $user_id 
 	 */
-	public function save_promotion_log($transaction_id, $user_id){
+	public function save_promotion_log($transaction_id, $user_id, $start_post_id, $referer){
 		if($this->promotable){
 			global $lwp, $wpdb;
 			//TODO: fix if cart is implemented
@@ -305,9 +305,11 @@ class LWP_Reward extends Literally_WordPress_Common{
 					'transaction_id' => $transaction_id,
 					'user_id' => $user_id,
 					'reason' => LWP_Promotion_TYPE::PROMOTION,
-					'estimated_reward' => $total
+					'estimated_reward' => $total,
+					'start_post_id' => $start_post_id,
+					'referer' => $referer
 				),
-				array('%d', '%d', '%s', '%d')
+				array('%d', '%d', '%s', '%d', '%d', '%s')
 			);
 		}
 	}
