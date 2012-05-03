@@ -85,6 +85,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	private $notice = '';
 	
 	/**
+	 * Where proxy cache is on
+	 * @var type 
+	 */
+	private $use_proxy = false;
+	
+	/**
 	 * Setup option
 	 * @see Literally_WordPress_Common
 	 * @param array $option 
@@ -101,7 +107,8 @@ class LWP_Reward extends Literally_WordPress_Common{
 			"reward_request_limit" => $this->request_limit,
 			"reward_pay_at" => $this->pay_at_day,
 			"reward_pay_after_month" => $this->pay_month_after,
-			"reward_notice" => $this->notice
+			"reward_notice" => $this->notice,
+			"use_proxy" => $this->use_proxy
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
 		$this->promotion_margin = (int) $option['reward_promotion_margin'];
@@ -114,6 +121,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 		$this->pay_at_day = (int) $option['reward_pay_at'];
 		$this->pay_month_after = (int) $option['reward_pay_after_month'];
 		$this->notice = (string) $option['reward_notice'];
+		$this->use_proxy = (boolean) $option['use_proxy'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
 	
@@ -123,11 +131,24 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 */
 	protected function on_construct(){
 		if($this->is_enabled()){
+			//Register hooks
 			add_action("admin_init", array($this, 'admin_init'));
 			add_action('lwp_payable_post_type_metabox', array($this, 'metabox_margin'), 10, 2);
 			add_action('save_post', array($this, 'save_post'));
 			add_action('edit_user_profile', array($this, 'edit_user_profile'));
 			add_action("profile_update", array($this, "profile_update"), 10, 2);
+			//Start session
+			if(!isset($_SESSION)){
+				session_start();
+			}
+			//If user proxy, session write on ajax. if not, use template_redirect
+			if($this->use_proxy){
+				add_action("wp_ajax_nopriv_lwp_session_write", array($this, 'session_ajax'));
+				add_action("wp_ajax_lwp_session_write", array($this, 'session_ajax'));
+				add_action("wp_enqueue_scripts", array($this, 'session_write_script'));
+			}else{
+				add_action("template_redirect", array($this, "template_redirect"));
+			}
 		}
 	}
 	
@@ -307,7 +328,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 					'reason' => LWP_Promotion_TYPE::PROMOTION,
 					'estimated_reward' => $total,
 					'start_post_id' => $start_post_id,
-					'referer' => $referer
+					'referrer' => $referer
 				),
 				array('%d', '%d', '%s', '%d', '%d', '%s')
 			);
@@ -615,8 +636,80 @@ EOS;
 	 */
 	public function get_promotion_link($post_id, $user_id){
 		$base = get_permalink($post_id);
-		$glue = (false !== strpos($base, '?')) ? '?' : '&';
+		$glue = (false === strpos($base, '?')) ? '?' : '&';
 		$base .= $glue.'_lwpp='.$user_id;
 		return $base;
+	}
+	
+	/**
+	 * Get promoter's ID if set
+	 * @global wpdb $wpdb
+	 * @return int
+	 */
+	public function get_promoter_from_url(){
+		$promoter = 0;
+		if(isset($_GET['_lwpp']) && is_numeric($_GET['_lwpp'])){
+			global $wpdb;
+			if($wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->users} WHERE ID = %d"))){
+				$promoter = intval($_GET['_lwpp']);
+			}
+		}
+		return $promoter;
+	}
+	
+	/**
+	 * Executed on construct 
+	 */
+	public function template_redirect(){
+		$promoter = $this->get_promoter_from_url();
+		if($promoter){
+			//Set session
+			$this->set_session($this->get_promoter_from_url(), get_the_ID());
+		}
+	}
+	
+	/**
+	 * Set session with current page
+	 * @param int $promoter_id
+	 * @param int $post_id 
+	 * @param string $referrer
+	 */
+	private function set_session($promoter_id, $post_id, $referrer = null){
+		if(isset($_SESSION)){
+			$_SESSION['_lwpp'] = array(
+				'promoter' => $promoter_id,
+				'post_id' => $post_id,
+				'referrer' => $referrer ? $referrer : $_SERVER['HTTP_REFERER']
+			);
+		}
+	}
+	
+	/**
+	 * If proxy cache is on, enqueue JS to write session.
+	 * @global Literally_WordPress $lwp 
+	 */
+	public function session_write_script(){
+		global $lwp;
+		if(is_singular()){
+			wp_enqueue_script('lwp-session-writer', $this->url.'assets/js/session-writer.js', array('jquery'), $lwp->version, false);
+			wp_localize_script('lwp-session-writer', 'LWPSESSION', array(
+				'endpoint' => is_ssl() ? admin_url('admin-ajax.php') : str_replace("https://", "http://", admin_url('admin-ajax.php')),
+				'action' => 'lwp_session_write',
+				'postId' => get_the_ID()
+			));
+		}
+	}
+	
+	/**
+	 * Handle ajax action to write session
+	 * @global Literally_WordPress $lwp 
+	 */
+	public function session_ajax(){
+		if(isset($_REQUEST['user_id'], $_REQUEST['post_id'], $_REQUEST['referrer'])){
+			$this->set_session($_REQUEST['user_id'], $_REQUEST['post_id'], $_REQUEST['referrer']);
+			header('Content-Type: application/json');
+			echo json_encode($_SESSION);
+			die();
+		}
 	}
 }

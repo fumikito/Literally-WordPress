@@ -29,8 +29,8 @@ class Literally_WordPress_Common {
 	 * Constructor 
 	 */
 	public function __construct($option = array()) {
-		$this->dir = plugin_dir_path(dirname(dirname(__FILE__)));
-		$this->url = plugin_dir_url(dirname(dirname(__FILE__)));
+		$this->dir = plugin_dir_path(dirname(__FILE__));
+		$this->url = plugin_dir_url(dirname(__FILE__));
 		$this->set_option($option);
 		$this->on_construct();
 	}
