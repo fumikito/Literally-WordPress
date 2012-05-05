@@ -1640,6 +1640,8 @@ EOS;
 								),
 								array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
 							);
+							//Execute hook.
+							do_action('lwp_create_transaction', $wpdb->insert_id);
 							//サンキューページを表示する
 							header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
 							exit;
@@ -1679,6 +1681,8 @@ EOS;
 												),
 												array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
 											);
+											//Execute hook
+											do_action('lwp_create_transaction', $wpdb->insert_id);
 											//Send Notification
 											$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $wpdb->insert_id));
 											$notification_status = $this->notifier->notify($transaction, 'thanks');
@@ -1885,6 +1889,8 @@ EOS;
 				),
 				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
 			);
+			//Execute hook
+			do_action('lwp_create_transaction', $wpdb->insert_id);
 			//PayPalにリダイレクト
 			PayPal_Statics::redirect($token);
 			exit;

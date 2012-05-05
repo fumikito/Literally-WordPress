@@ -137,6 +137,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 			add_action('save_post', array($this, 'save_post'));
 			add_action('edit_user_profile', array($this, 'edit_user_profile'));
 			add_action("profile_update", array($this, "profile_update"), 10, 2);
+			add_action('lwp_create_transaction', array($this, 'on_transaction_created'));
 			//Start session
 			if(!isset($_SESSION)){
 				session_start();
@@ -345,37 +346,38 @@ class LWP_Reward extends Literally_WordPress_Common{
 		if($this->rewardable){
 			global $lwp, $wpdb;
 			//TODO: fix if cart is implemented
-			$post_ids = array($wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
-			//Loop on each post
-			$result = array();
-			foreach($post_ids as $post_id){
-				$post_author = $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $post_id));
-				$personal_margin = get_user_meta($post_author, $this->promotion_personal_margin, true);
-				$margin = $personal_margin ? $personal_margin : $this->author_margin;
-				if(isset($result[$post_author])){
-					$result[$post_author] += (int)(lwp_price($post_id) * $margin / 100);
-				}else{
-					$result[$post_author] = (int)(lwp_price($post_id) * $margin / 100);
-				}
-			}
+			//Get post_id
+			$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id));
+			//Get post_author
+			$post_author = $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $post_id));
+			//Get margin
+			$personal_margin = get_user_meta($post_author, $this->promotion_personal_margin, true);
+			$margin = $personal_margin ? $personal_margin : $this->author_margin;
+			//Calculate transaction price minus promotion fee
+			$sql = <<<EOS
+				SELECT (t.price - COALESCE(p.estimated_reward, 0))
+				FROM {$lwp->transaction} AS t
+				LEFT JOIN {$lwp->promotion_logs} AS p
+				ON p.transaction_id = t.ID
+				WHERE t.ID = %d
+EOS;
+			$price = $wpdb->get_var($wpdb->prepare($sql, $transaction_id)) * $margin / 100;
 			//Save
-			foreach($result as $user_id => $price){
-				$wpdb->insert(
-					$lwp->promotion_logs,
-					array(
-						'transaction_id' => $transaction_id,
-						'user_id' => $user_id,
-						'reason' => LWP_Promotion_TYPE::SELL,
-						'estimated_reward' => $price
-					),
-					array("%d", "%d", "%s", "%d")
-				);
-			}
+			$wpdb->insert(
+				$lwp->promotion_logs,
+				array(
+					'transaction_id' => $transaction_id,
+					'user_id' => $post_author,
+					'reason' => LWP_Promotion_TYPE::SELL,
+					'estimated_reward' => $price
+				),
+				array("%d", "%d", "%s", "%d")
+			);
 		}
 	}
 	
 	/**
-	 * Create request and enquuee
+	 * Create request and enqueue
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param int $user_id
@@ -388,7 +390,6 @@ class LWP_Reward extends Literally_WordPress_Common{
 			return new WP_Error('fail', $this->_('You cannot make payment request.'));
 		}
 		//Check if sutisfies minimum requirements
-		
 		if(!$this->is_enabled()){
 			return new WP_Error('fail', $this->_('You cannot make payment request.').' '.sprintf($lwp->_('Minimum request must be more than %d (%s)'), $this->minimum_request, lwp_currency_code()));
 		}
@@ -710,6 +711,40 @@ EOS;
 			header('Content-Type: application/json');
 			echo json_encode($_SESSION);
 			die();
+		}
+	}
+	
+	/**
+	 * Hook on transaction creation
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $transaction_id 
+	 */
+	public function on_transaction_created($transaction_id){
+		global $lwp, $wpdb;
+		//If session is set, this transaction is promoted one.
+		if($this->promotable && isset($_SESSION['_lwpp']) && is_array($_SESSION['_lwpp'])){
+			$session = shortcode_atts(array(
+				'promoter' => 0,
+				'post_id' => 0,
+				'referrer' => ''
+			), $_SESSION['_lwpp']);
+			//Check if promoter is not author when reward is enabled.
+			//FIXME: Cart is implemented, fix it.
+			$sql = <<<EOS
+				SELECT p.post_author FROM {$lwp->transaction} AS t
+				INNER JOIN {$wpdb->posts} AS p
+				ON t.book_id = p.ID
+				WHERE t.ID = %d
+EOS;
+			if(!$this->rewardable || ($session['promoter'] != $wpdb->get_var($wpdb->prepare($sql, $transaction_id))) ){
+				$this->save_promotion_log($transaction_id, $session['promoter'], $session['post_id'], $session['referrer']);
+			}
+			unset($_SESSION['_lwpp']);
+		}
+		//Save reward log
+		if($this->rewardable){
+			$this->save_author_log($transaction_id);
 		}
 	}
 }
