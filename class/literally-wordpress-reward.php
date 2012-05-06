@@ -876,7 +876,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'lwp_area_chart')){
 			global $lwp, $wpdb;
 			if($_REQUEST['user_id'] == 0){
-				if(!current_user_can('edit_posts')){
+				if(current_user_can('edit_posts')){
 					$user_id = 0;
 				}else{
 					die();
