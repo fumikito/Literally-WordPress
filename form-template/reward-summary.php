@@ -49,7 +49,7 @@ $referrer = $this->reward->get_top_referrer($from, $to, $user_id);
 		<li><a href="#tabs-sold"><?php $this->e('Fixed'); ?></a></li>
 		<li><a href="#tabs-referrer"><?php $this->e('Referrer'); ?></a></li>
 		<?php if(!$user_id): ?>
-			<li><a href="#tabs-reward"><?php $this->e('Author'); ?></a></li>
+			<li><a href="#tabs-reward"><?php $this->e('Promoter'); ?></a></li>
 		<?php endif; ?>
 	</ul>
 	<div id="tabs-promotion">
@@ -140,7 +140,39 @@ $referrer = $this->reward->get_top_referrer($from, $to, $user_id);
 	</div>
 	<?php if(!$user_id): ?>
 		<div id="tabs-reward">
-
+			<?php $promoters = $this->reward->get_top_promoter($from, $to); ?>
+			<?php if(empty($promoters)): ?>
+				<p class="error"><?php $this->e('No Data'); ?></p>
+			<?php else: ?>
+				<table class="widefat">
+					<thead>
+						<tr>
+							<th scope="col">&nbsp;</th>
+							<th scope="col"><?php $this->e('Name'); ?></th>
+							<th scope="col"><?php $this->e('Sold'); ?></th>
+							<th scope="col"><?php $this->e('Promoted'); ?></th>
+							<th scope="col"><?php $this->e('Reward'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $counter = 0; foreach($promoters as $ref): $counter++; ?>
+							<tr<?php if($counter % 2 == 0) echo ' class="alternate"';?>>
+								<th scope="row"><?php echo $counter;?></th>
+								<td>
+									<?php if($ref->display_name): ?>
+										<a href="<?php echo admin_url('user-edit.php?user_id='.$ref->user_id); ?>"><?php echo esc_html($ref->display_name); ?></a>
+									<?php else: ?>
+										<?php $this->e('Deleted User'); ?>
+									<?php endif; ?>
+								</td>
+								<td><?php echo number_format($ref->sold)." (".lwp_currency_code().')';  ?></td>
+								<td><?php echo number_format($ref->promoted)." (".lwp_currency_code().')';  ?></td>
+								<td><?php echo number_format($ref->total)." (".lwp_currency_code().')';  ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 </div>

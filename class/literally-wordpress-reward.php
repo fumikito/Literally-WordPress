@@ -785,7 +785,6 @@ EOS;
 		$sql .= " ORDER BY total DESC";
 		//Limit
 		$sql .= $wpdb->prepare(" LIMIT %d", $limit);
-		$wpdb->show_errors();
 		return $wpdb->get_results($sql);
 	}
 	
@@ -829,8 +828,57 @@ EOS;
 		$sql .= " ORDER BY total DESC";
 		//Limit
 		$sql .= $wpdb->prepare(" LIMIT %d", $limit);
-		$wpdb->show_errors();
 		return $wpdb->get_results($sql);
+	}
+	
+	/**
+	 * Get top promoter 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $from
+	 * @param string $to
+	 * @param string $status
+	 * @param int $limit
+	 * @return array 
+	 */
+	public function get_top_promoter($from, $to, $status = LWP_Payment_Status::SUCCESS, $limit = 10){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT
+				SUM(p.estimated_reward) AS total,
+				p.user_id, u.display_name,
+				SUM(CASE p.reason
+					WHEN %s THEN p.estimated_reward
+					ELSE 0 END
+				) AS sold,
+				SUM(CASE p.reason
+					WHEN %s THEN p.estimated_reward
+					ELSE 0 END
+				) AS promoted
+			FROM {$lwp->promotion_logs} AS p
+			INNER JOIN {$lwp->transaction} AS t
+			ON p.transaction_id = t.ID
+			LEFT JOIN {$wpdb->users} AS u
+			ON p.user_id = u.ID
+EOS;
+		//Create Where
+		$wheres = array(
+			$wpdb->prepare("t.registered >= %s", $from),
+			$wpdb->prepare("t.registered <= %s", $to),
+		);
+		if(!is_null($status)){
+			$wheres[] = $wpdb->prepare("t.status = %s", $status);
+		}
+		if(!empty($wheres)){
+			$sql .= ' WHERE '.implode(' AND ', $wheres);
+		}
+		//Group by 
+		$sql .= ' GROUP BY p.user_id';
+		//Order by
+		$sql .= " ORDER BY total DESC";
+		//Limit
+		$sql .= $wpdb->prepare(" LIMIT %d", $limit);
+		return $wpdb->get_results($wpdb->prepare($sql, LWP_Promotion_TYPE::SELL, LWP_Promotion_TYPE::PROMOTION));
 	}
 	
 	/**
