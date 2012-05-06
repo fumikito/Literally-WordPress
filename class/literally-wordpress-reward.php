@@ -138,6 +138,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 			add_action('edit_user_profile', array($this, 'edit_user_profile'));
 			add_action("profile_update", array($this, "profile_update"), 10, 2);
 			add_action('lwp_create_transaction', array($this, 'on_transaction_created'));
+			add_action('wp_ajax_lwp_area_chart', array($this, 'ajax_area_chart'));
 			//Start session
 			if(!isset($_SESSION)){
 				session_start();
@@ -745,6 +746,193 @@ EOS;
 		//Save reward log
 		if($this->rewardable){
 			$this->save_author_log($transaction_id);
+		}
+	}
+	
+	/**
+	 * Get top referrer
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $from
+	 * @param string $to
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array 
+	 */
+	public function get_top_referrer($from, $to, $user_id = 0, $limit = 10){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUBSTRING_INDEX(p.referrer, '/', 3) AS domain, SUM(p.estimated_reward) AS total, COUNT(p.ID) AS num
+			FROM {$lwp->promotion_logs} AS p
+			INNER JOIN {$lwp->transaction} AS t
+			ON p.transaction_id = t.ID
+EOS;
+		//Create Where
+		$wheres = array(
+			$wpdb->prepare("t.registered >= %s", $from),
+			$wpdb->prepare("t.registered <= %s", $to),
+			$wpdb->prepare("t.status = %s", LWP_Payment_Status::SUCCESS)
+		);
+		if($user_id){
+			$wheres[] = $wpdb->prepare("p.user_id = %d", $user_id);
+		}
+		if(!empty($wheres)){
+			$sql .= ' WHERE '.implode(' AND ', $wheres);
+		}
+		//Group by 
+		$sql .= ' GROUP BY domain';
+		//Order by
+		$sql .= " ORDER BY total DESC";
+		//Limit
+		$sql .= $wpdb->prepare(" LIMIT %d", $limit);
+		$wpdb->show_errors();
+		return $wpdb->get_results($sql);
+	}
+	
+	/**
+	 * Get recent promotion
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $from
+	 * @param string $to
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array 
+	 */
+	public function get_top_promotion($from, $to, $user_id = 0, $status = LWP_Payment_Status::SUCCESS, $limit = 10){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT t.book_id AS post_id, SUM(p.estimated_reward) AS total, COUNT(t.ID) AS num, p2.post_title
+			FROM {$lwp->promotion_logs} AS p
+			INNER JOIN {$lwp->transaction} AS t
+			ON p.transaction_id = t.ID
+			INNER JOIN {$wpdb->posts} AS p2
+			ON t.book_id = p2.ID
+EOS;
+		//Create Where
+		$wheres = array(
+			$wpdb->prepare("t.registered >= %s", $from),
+			$wpdb->prepare("t.registered <= %s", $to),
+		);
+		if(!is_null($status)){
+			$wheres[] = $wpdb->prepare("t.status = %s", $status);
+		}
+		if($user_id){
+			$wheres[] = $wpdb->prepare("p.user_id = %d", $user_id);
+		}
+		if(!empty($wheres)){
+			$sql .= ' WHERE '.implode(' AND ', $wheres);
+		}
+		//Group by 
+		$sql .= ' GROUP BY t.book_id';
+		//Order by
+		$sql .= " ORDER BY total DESC";
+		//Limit
+		$sql .= $wpdb->prepare(" LIMIT %d", $limit);
+		$wpdb->show_errors();
+		return $wpdb->get_results($sql);
+	}
+	
+	/**
+	 * Get estimated reawrd 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $from
+	 * @param string $to
+	 * @param int $user_id
+	 * @param string $status
+	 * @return float
+	 */
+	public function get_estimated_reward($from, $to, $user_id = 0, $status = null){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(p.estimated_reward)
+			FROM {$lwp->promotion_logs} AS p
+			INNER JOIN {$lwp->transaction} AS t
+			ON p.transaction_id = t.ID
+EOS;
+		//Create Where
+		$wheres = array(
+			$wpdb->prepare("t.registered >= %s", $from),
+			$wpdb->prepare("t.registered <= %s", $to),
+		);
+		if($user_id){
+			$wheres[] = $wpdb->prepare("p.user_id = %d", $user_id);
+		}
+		if(!is_null($status)){
+			$wheres[] = $wpdb->prepare("t.status = %s", $status);
+		}
+		$sql .= ' WHERE '.implode(' AND ', $wheres);
+		return (float)$wpdb->get_var($sql);
+	}
+	
+	
+	/**
+	 * Handle Ajax request and returns data for area chart 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb 
+	 */
+	public function ajax_area_chart(){
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'lwp_area_chart')){
+			global $lwp, $wpdb;
+			if($_REQUEST['user_id'] == 0){
+				if(!current_user_can('edit_posts')){
+					$user_id = 0;
+				}else{
+					die();
+				}
+			}else{
+				$user_id = get_current_user_id();
+			}
+			$where = $user_id ? $wpdb->prepare(" p.user_id = %d", $user_id)." AND " : '';
+			$sql = <<<EOS
+				SELECT
+					DATE(t.registered) AS date,
+					SUM(
+						CASE t.status
+							WHEN %s THEN p.estimated_reward
+							ELSE 0
+						END
+					) AS fixed,
+					SUM(
+						CASE t.status
+							WHEN %s THEN p.estimated_reward
+							ELSE 0
+						END
+					) AS unfixed					
+				FROM {$lwp->promotion_logs} AS p
+				INNER JOIN {$lwp->transaction} AS t
+				ON p.transaction_id = t.ID
+				WHERE {$where}
+					  t.registered >= %s AND t.registered <= %s
+				GROUP BY date
+				ORDER BY date ASC
+EOS;
+			
+			//echo JSON
+			//Get Date Record
+			$result = $wpdb->get_results($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS, LWP_Payment_Status::START, $_REQUEST['from'], $_REQUEST['to']), ARRAY_A);
+			//Create date array
+			$date_array = array();
+			$cur_date = $_REQUEST['from'];
+			do{
+				$array = array(
+					'date' => $cur_date,
+					'fixed' => 0,
+					'unfixed' => 0
+				);
+				foreach($result as $r){
+					if($r['date'] == $cur_date){
+						$array = $r;
+						break;
+					}
+				}
+				$date_array[] = $array;
+				$cur_date = date('Y-m-d', strtotime($cur_date) + 60 * 60 * 24);
+			}while(strtotime($cur_date) <= strtotime($_REQUEST['to']));
+			header('Content-Type: application/json');
+			echo json_encode($date_array);
+			die();
 		}
 	}
 }

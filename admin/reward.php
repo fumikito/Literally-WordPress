@@ -14,23 +14,10 @@
 <?php do_action('admin_notice'); ?>
 
 <?php if(!isset($_GET['tab'])): ?>
-ダッシュボード
+<?php require_once $this->dir.'/form-template/reward-summary.php';?>
 
-<?php
-/*	Dammy Data
-for($i = 0; $i < 30; $i++){
-		$user_id = rand(1, 13);
-		$tran_id = rand(33,73);
-		$tag = rand(0, 1);
-		if($tag){
-			$this->reward->save_promotion_log($tran_id, $user_id);
-		}else{
-			$this->reward->save_author_log($tran_id);
-		}
-	}
- * 
- */
-?>
+
+
 
 <?php elseif($_GET['tab'] == 'history'): ?>
 <p class="description">

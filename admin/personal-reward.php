@@ -17,10 +17,7 @@
 </h2>
 
 <?php if(!isset($_GET['tab'])): ?>
-ダッシュボード
-
-
-
+<?php require_once $this->dir.'/form-template/reward-summary.php';?>
 
 
 <?php elseif($_GET['tab'] == 'link' && $this->reward->promotable): ?>

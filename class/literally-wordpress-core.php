@@ -303,6 +303,7 @@ class Literally_WordPress{
 		wp_register_script("jquery-ui-datepicker", $this->url."/assets/datepicker/jquery-ui-datepicker.js",array("jquery-ui-core") ,"1.8.12", !is_admin());
 		wp_register_script("jquery-ui-timepicker", $this->url."/assets/datepicker/jquery-ui-timepicker.js",array("jquery-ui-datepicker", 'jquery-ui-slider') ,"0.9.7", !is_admin());
 		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
+		wp_register_script('google-jsapi', 'https://www.google.com/jsapi', array(), null, !is_admin());
 	}
 	
 	
@@ -596,31 +597,25 @@ EOS;
 				array("jquery-ui-timepicker"),
 				$this->version
 			);
-			for($i = 1; $i <= 12; $i++){
-				if(!$monthNames) $monthNames = array();
-				if(!$monthNamesShort) $monthNamesShort = array();
-				$month = gmmktime(0, 0, 0, $i, 1, 2011);
-				$monthNames[] = date_i18n('F', $month);
-				$monthNamesShort[] = date_i18n('M', $month);
-			}
-			$dayNames = array(__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday'));
-			$dayNamesShort = array(__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat'));
-			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', array(
-				'closeText' => $this->_('Close'),
-				'prevText' => $this->_('Prev'),
-				'nextText' => $this->_('Next'),
-				'monthNames' => implode(',', $monthNames),
-				'monthNamesShort' => implode(',', $monthNamesShort),
-				'dayNames' => implode(',', $dayNames),
-				'dayNamesShort' => implode(',', $dayNamesShort),
-				'dayNamesMin' => implode(',', $dayNamesShort),
-				'weekHeader' => $this->_('Week'),
-				'timeOnlyTitle' => $this->_('Time'),
-				'timeText' => $this->_('Time'),
-				'hourText' => $this->_('Hour'),
-				'minuteText' => $this->_('Minute'),
-				'secondText' => $this->_('Second'),
-				'currentText' => $this->_('Now')
+			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', LWP_Datepicker_Helper::get_config_array());
+		}
+		//Incase Reward dashboard, Load datepicker and tab UI
+		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
+			//Load Datepicker
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script('lwp-reward-summary', $this->url.'assets/js/reward-summary.js', array('google-jsapi', 'jquery-form', 'jquery-ui-datepicker', 'jquery-ui-tabs'), $this->version);
+			wp_localize_script('lwp-reward-summary', 'LWP', array_merge(
+				LWP_Datepicker_Helper::get_config_array(),
+				array(
+					'pieChartTitle' => $this->_('Reward Amount Summary'),
+					'pieChartLabel' => $this->_('Status'),
+					'pieChartUnit' => lwp_currency_code(),
+					'pieChartFixed' => $this->_('Fixed'),
+					'pieChartStart' => $this->_('Unfixed'),
+					'pieChartLost' => $this->_('Lost'),
+					'areaChartTitle' => $this->_('Daily Report'),
+					'areaChartLabel' => $this->_('Date')
+				)
 			));
 		}
 	}

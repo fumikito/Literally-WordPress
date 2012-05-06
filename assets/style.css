@@ -98,3 +98,26 @@ input.short{
 	background:#f0f0f0;
 	border-bottom:1px solid #eee;
 }
+
+/* Summary Table */
+#lwp-dashboard-amount{
+	width: 50%;
+	float:left;
+	min-width: 400px;
+	}
+	#lwp-dashboard-amount .pie-chart{
+		width:400px;
+		height:400px;
+	}
+#lwp-dashboard-ranking{
+	width:45%;
+	float:right;
+	margin-top:20px;
+}
+#lwp-dashboard-daily{
+	clear:both;
+	padding-top: 25px;
+	}
+	#lwp-dashboard-daily .area-chart{
+		height:400px;
+	}
