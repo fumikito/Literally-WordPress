@@ -79,6 +79,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	private $author_personal_margin = '_lwp_author_margin';
 
 	/**
+	 * Metakey of usermeta of contact information
+	 * @var string
+	 */
+	private $user_contact_key = '_lwp_reward_contact';
+	
+	/**
 	 * Notice for promoters 
 	 * @var string 
 	 */
@@ -169,6 +175,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 */
 	public function admin_init(){
 		global $wpdb, $lwp;
+		//Update request
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_reward_request_'.get_current_user_id()) && ($amount = $this->user_rest_amount(get_current_user_id(), true))){
 			$result = $wpdb->insert(
 				$lwp->reward_logs,
@@ -186,6 +193,14 @@ class LWP_Reward extends Literally_WordPress_Common{
 			}else{
 				$lwp->message[] = $this->_('Your request is wrong.');
 				$lwp->error = true;
+			}
+		}
+		//Update contact information
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_update_user_contact_'.get_current_user_id())){
+			if(empty($_REQUEST['contact'])){
+				delete_user_meta(get_current_user_id(), $this->user_contact_key);
+			}else{
+				update_user_meta(get_current_user_id(), $this->user_contact_key, (string)$_REQUEST['contact']);
 			}
 		}
 	}
@@ -471,7 +486,33 @@ EOS;
 	 * @return string
 	 */
 	public function get_contact_description(){
-		return $this->contact;
+		return apply_filters('lwp_reward_contact_description', $this->contact);
+	}
+	
+	/**
+	 * Returns if user has enough information to pay reward
+	 * @param int $user_id
+	 * @return boolean 
+	 */
+	public function has_satisfied_information($user_id = 0){
+		if(empty($this->contact)){
+			return true;
+		}else{
+			if(!$user_id){
+				return empty($this->contact);
+			}else{
+				return (boolean) get_user_meta($user_id, $this->user_contact_key, true);
+			}
+		}
+	}
+	
+	/**
+	 * Returns user contact infromation
+	 * @param int $user_id
+	 * @return string 
+	 */
+	public function get_user_contact($user_id){
+		return (string)get_user_meta($user_id, $this->user_contact_key, true);
 	}
 	
 	/**

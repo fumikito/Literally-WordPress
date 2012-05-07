@@ -96,6 +96,19 @@
 	<div id="col-left">
 		<div class="col-wrap">
 			<div class="form-wrap">
+				<?php $description = $this->reward->get_contact_description(); if(!empty($description)): ?>
+				<h3><?php $this->e('Payment Contact'); ?></h3>
+				<div class="form-field">
+					<form method="post">
+						<?php wp_nonce_field('lwp_update_user_contact_'.get_current_user_id());?>
+						<textarea rows="5" name="contact"><?php echo esc_html($this->reward->get_user_contact(get_current_user_id())); ?></textarea>
+						<p class="description"><?php echo nl2br($description); ?></p>
+						<p class="submit">
+							<input type="submit" value="<?php $this->e('Update');?>" id="submit" name="submit" class="button">
+						</p>
+					</form>
+				</div>
+				<?php endif; ?>
 				<h3><?php $this->e('Make Payment Request'); ?></h3>
 				<div class="form-field">
 					<label><?php $this->e("Current Status");?></label>
@@ -125,20 +138,26 @@
 					</table>
 				</div>
 				<!-- .form-field ends -->
-				<?php if($this->reward->user_rest_amount(get_current_user_id()) > 0 && !$this->reward->is_user_requesting(get_current_user_id())): ?>
-				<form method="post" action="<?php echo admin_url('users.php?page=lwp-personal-reward&tab=request'); ?>">
-					<?php wp_nonce_field("lwp_reward_request_".get_current_user_id()); ?>
-					<div class="form-field">
-						<label><?php $this->e("Request");?></label>
-						<?php echo wpautop($this->reward->get_notice()); ?>
-					</div>
-					<!-- .form-field ends -->
-					
-					<p class="submit">
-						<input type="submit" value="<?php $this->e('Request');?>" id="submit" name="submit" class="button">
-					</p>
-					<!-- .submit ends -->
-				</form>
+				<?php if($this->reward->user_rest_amount(get_current_user_id()) > 0 ): ?>
+					<?php if($this->reward->is_user_requesting(get_current_user_id())): ?>
+						<div class="updated"><p><?php $this->e('You are requesting.'); ?></p></div>
+					<?php elseif(!$this->reward->has_satisfied_information(get_current_user_id())): ?>
+						<div class="error"><p><?php $this->e('You do not have enought information to get reward.'); ?></p></div>
+					<?php else: ?>
+						<form method="post" action="<?php echo admin_url('users.php?page=lwp-personal-reward&tab=request'); ?>">
+							<?php wp_nonce_field("lwp_reward_request_".get_current_user_id()); ?>
+							<div class="form-field">
+								<label><?php $this->e("Request");?></label>
+								<?php echo wpautop($this->reward->get_notice()); ?>
+							</div>
+							<!-- .form-field ends -->
+
+							<p class="submit">
+								<input type="submit" value="<?php $this->e('Request');?>" id="submit" name="submit" class="button-primary">
+							</p>
+							<!-- .submit ends -->
+						</form>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 			<!-- .form-wrap ends -->
