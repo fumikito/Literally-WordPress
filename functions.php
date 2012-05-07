@@ -884,6 +884,7 @@ function lwp_history_url(){
 
 /**
  * Returns whether if current post is free for subscription
+ * @since 0.8.8
  * @global Literally_WordPress $lwp
  * @param int $post_id
  * @return boolean 
@@ -894,4 +895,63 @@ function lwp_is_free_subscription($post_id = null){
 		$post_id = get_the_ID();
 	}
 	return (boolean)get_post_meta($post_id, $lwp->subscription->free_meta_key, true);
+}
+
+
+/**
+ * Returns if promotable on current settig 
+ * @since 0.9
+ * @global Literally_WordPress $lwp
+ * @return boolean
+ */
+function lwp_is_promotable(){
+	global $lwp;
+	return $lwp->reward->promotable;
+}
+
+/**
+ * Print current reward
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post 
+ */
+function the_lwp_reward($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	$margin = $lwp->reward->get_current_promotion_margin($post);
+	if(is_user_logged_in()){
+		$margin *= $lwp->reward->get_user_coefficient(get_current_user_id());
+	}
+	$price = number_format(lwp_price($post) * $margin / 100);
+	echo apply_filters('the_lwp_reward', $price.' ('.lwp_currency_code().')', $price);
+}
+
+/**
+ * Print promotion link
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post 
+ */
+function the_lwp_promotion_link($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(is_user_logged_in()){
+		echo $lwp->reward->get_promotion_link($post->ID, get_current_user_id());
+	}else{
+		echo get_permalink($post->ID);
+	}
+}
+
+/**
+ * Returns personal reward dashboard link
+ * @return string
+ */
+function lwp_reward_link(){
+	return admin_url('users.php?page=lwp-personal-reward');
 }

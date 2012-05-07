@@ -322,6 +322,16 @@ class LWP_Reward extends Literally_WordPress_Common{
 	}
 	
 	/**
+	 * Returns user's coefficient
+	 * @param int $user_id
+	 * @return float 
+	 */
+	public function get_user_coefficient($user_id){
+		$coefficient = get_user_meta($user_id, $this->promotion_personal_margin, true);
+		return $coefficient ? (float)$coefficient : 1;
+	}
+	
+	/**
 	 * Save promotion on current margin
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
