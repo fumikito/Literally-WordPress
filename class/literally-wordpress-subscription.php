@@ -38,7 +38,7 @@ class LWP_Subscription extends Literally_WordPress_Common{
 	 * @see Literally_WordPress_Common
 	 * @param array $option
 	 */
-	protected function set_option($option) {
+	public function set_option($option) {
 		$option = shortcode_atts(array(
 			'subscription' => false,
 			'subscription_post_types' => array(),

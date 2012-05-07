@@ -33,13 +33,16 @@ class Literally_WordPress_Common {
 		$this->url = plugin_dir_url(dirname(__FILE__));
 		$this->set_option($option);
 		$this->on_construct();
+		add_action('lwp_update_option', array($this, 'set_option'));
 	}
 	
 	/**
 	 * Executed on constructor
 	 * @param type $option 
 	 */
-	protected function set_option($option = array()){}
+	public function set_option($option = array()){
+		$this->option = $option;
+	}
 	
 	/**
 	 * Executed on construct 

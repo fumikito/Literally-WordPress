@@ -43,7 +43,7 @@ class LWP_Notifier extends Literally_WordPress_Common{
 	 * @see Literally_WordPress_Common
 	 * @param array $option
 	 */
-	protected function set_option($option) {
+	public function set_option($option) {
 		$option = shortcode_atts(array(
 			'transfer' => false,
 			"notification_frequency" => 0,

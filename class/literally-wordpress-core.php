@@ -750,6 +750,7 @@ EOS;
 			}
 			update_option("literally_wordpress_option", $new_option);
 			$this->option = $new_option;
+			add_action('lwp_update_option', $this->option);
 		}
 	}
 	

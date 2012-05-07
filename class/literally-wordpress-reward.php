@@ -85,6 +85,12 @@ class LWP_Reward extends Literally_WordPress_Common{
 	private $notice = '';
 	
 	/**
+	 * Contact information to pay for
+	 * @var string
+	 */
+	private $contact = '';
+	
+	/**
 	 * Where proxy cache is on
 	 * @var type 
 	 */
@@ -95,7 +101,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * @see Literally_WordPress_Common
 	 * @param array $option 
 	 */
-	protected function set_option($option = array()) {
+	public function set_option($option = array()) {
 		$option = shortcode_atts(array(
 			"reward_promoter" => $this->promotable,
 			"reward_promotion_margin" => $this->promotion_margin,
@@ -108,6 +114,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 			"reward_pay_at" => $this->pay_at_day,
 			"reward_pay_after_month" => $this->pay_month_after,
 			"reward_notice" => $this->notice,
+			"reward_contact" => $this->contact,
 			"use_proxy" => $this->use_proxy
 		), $option);
 		$this->promotable = (boolean) $option['reward_promoter'];
@@ -121,6 +128,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 		$this->pay_at_day = (int) $option['reward_pay_at'];
 		$this->pay_month_after = (int) $option['reward_pay_after_month'];
 		$this->notice = (string) $option['reward_notice'];
+		$this->contact = (string) $option['reward_contact'];
 		$this->use_proxy = (boolean) $option['use_proxy'];
 		$this->enabled = (boolean)($this->promotable || $this->rewardable);
 	}
