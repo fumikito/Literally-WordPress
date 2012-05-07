@@ -111,7 +111,9 @@ EOS;
 		global $lwp;
 		$column = array(
 			'cb' => '<input type="checkbox" />',
+			'payday' => $lwp->_('Pay Day'),
 			'user' => $lwp->_('User name'),
+			'contact' => $lwp->_('Contact'),
 			'price' => $lwp->_('Price'),
 			'registered' => $lwp->_('Registered'),
 			'updated' => $lwp->_('Updated'),
@@ -119,6 +121,7 @@ EOS;
 		);
 		if($this->user_id){
 			unset($column['user']);
+			unset($column['contact']);
 		}
 		return $column;
 	}
@@ -148,8 +151,15 @@ EOS;
 	function column_default($item, $column_name){
 		global $lwp;
 		switch($column_name){
+			case 'payday':
+				return $lwp->reward->next_pay_day(null, $item->registered);
+				break;
 			case 'user' :
 				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.$item->user_id).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
+				break;
+			case 'contact':
+				$contact = $lwp->reward->get_user_contact($item->user_id);
+				return !empty($contact) ? nl2br(esc_html($contact)) : '-';
 				break;
 			case 'price':
 				return number_format($item->price).' ('.lwp_currency_code().')';

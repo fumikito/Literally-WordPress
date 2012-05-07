@@ -669,14 +669,20 @@ EOS;
 	/**
 	 * Returns next pay day
 	 * @param string $format Date format
+	 * @param string $time Date time format
 	 * @return string
 	 */
-	public function next_pay_day($format = null){
+	public function next_pay_day($format = null, $time = null){
 		if(is_null($format)){
 			$format = get_option('date_format');
 		}
-		$year = date('Y');
-		$month = date('n') + $this->pay_month_after;
+		if(is_null($time)){
+			$time = time();
+		}else{
+			$time = strtotime($time);
+		}
+		$year = date('Y', $time);
+		$month = date('n', $time) + $this->pay_month_after;
 		if(date('j') > $this->request_limit){
 			$month++;
 		}
@@ -787,19 +793,20 @@ EOS;
 				'post_id' => 0,
 				'referrer' => ''
 			), $_SESSION['_lwpp']);
-			//Check if promoter is not author when reward is enabled.
+			//Check if promoter is not author when reward is enabled, if promoter is not transaction user.
 			//FIXME: Cart is implemented, fix it.
 			$sql = <<<EOS
-				SELECT p.post_author FROM {$lwp->transaction} AS t
+				SELECT p.post_author, t.user_id FROM {$lwp->transaction} AS t
 				INNER JOIN {$wpdb->posts} AS p
 				ON t.book_id = p.ID
 				WHERE t.ID = %d
 EOS;
-			if(!$this->rewardable || ($session['promoter'] != $wpdb->get_var($wpdb->prepare($sql, $transaction_id))) ){
+			$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id));
+			if( (!$this->rewardable || ($session['promoter'] != $transaction->post_author)) && $session['promoter'] != $transaction->user_id ){
 				$this->save_promotion_log($transaction_id, $session['promoter'], $session['post_id'], $session['referrer']);
 			}
-			unset($_SESSION['_lwpp']);
 		}
+		unset($_SESSION['_lwpp']);
 		//Save reward log
 		if($this->rewardable){
 			$this->save_author_log($transaction_id);
