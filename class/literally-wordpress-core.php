@@ -200,6 +200,7 @@ class Literally_WordPress{
 			"reward_pay_at" => 25,
 			"reward_pay_after_month" => 0,
 			"reward_notice" => '',
+			"reward_contact" => '',
 			"use_proxy" => false,
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
@@ -717,6 +718,7 @@ EOS;
 				"reward_pay_at" => (int) $_REQUEST['reward_pay_at'],
 				"reward_pay_after_month" => (int) $_REQUEST['reward_pay_after_month'],
 				"reward_notice" => (string) $_REQUEST['reward_notice'],
+				"reward_contact" => (string) $_REQUEST['reward_contact'],
 				"use_proxy" => (boolean) $_REQUEST['use_proxy'],
 				"dir" => $_REQUEST["dir"],
 				"slug" => $_REQUEST["product_slug"],
@@ -750,7 +752,7 @@ EOS;
 			}
 			update_option("literally_wordpress_option", $new_option);
 			$this->option = $new_option;
-			add_action('lwp_update_option', $this->option);
+			do_action('lwp_update_option', $this->option);
 		}
 	}
 	

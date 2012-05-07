@@ -467,6 +467,14 @@ EOS;
 	}
 	
 	/**
+	 * Returns contact description
+	 * @return string
+	 */
+	public function get_contact_description(){
+		return $this->contact;
+	}
+	
+	/**
 	 * Returns payment notice 
 	 * @return string
 	 */

@@ -441,6 +441,15 @@
 					</td>
 				</tr>
 				<tr>
+					<th valign="top"><label for="reward_contact"><?php $this->e("Contact information for reward"); ?></label></th>
+					<td>
+						<textarea cols="80" rows="5" name="reward_contact" id="reward_contact" placeholder="<?php $this->e('i.e. To get reward payed, you have to enter bank account. All information for transfer is required.'); ?>"><?php echo esc_html($this->reward->get_contact_description());  ?></textarea>
+						<p class="description">
+							<?php $this->e('If you need some additional information on payment besides WordPress Default(i.e. Bank account required), enter description. If it is not blank, This description will be displayed on payment request page.'); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top"><label><?php $this->e('Use Cache Engine'); ?></label></th>
 					<td>
 						<label><input type="radio" name="use_proxy" value="0" <?php if(!$this->option['use_proxy']) echo 'checked="checked"'; ?> /><?php $this->e('Disable'); ?></label><br />
