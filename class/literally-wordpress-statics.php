@@ -455,6 +455,7 @@ class LWP_Datepicker_Helper{
 			'currentText' => $lwp->_('Now'),
 			'showMonthAfterYear' => (boolean)(get_locale() == 'ja'),
 			'yearSuffix' => (get_locale() == 'ja') ? '年' : '',
+			'changeYear' => true,
 			'alertOldStart' => $lwp->_('Start date must be earlier than end date.')
 		);
 	}
