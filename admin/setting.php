@@ -4,6 +4,7 @@
 	<a class="nav-tab" href="#tab-2"><?php $this->e('Transfer Setting'); ?></a>
 	<a class="nav-tab" href="#tab-3"><?php $this->e("Subscription"); ?></a>
 	<a class="nav-tab" href="#tab-4"><?php $this->e('Reward Setting'); ?></a>	
+	<a class="nav-tab" href="#tab-5"><?php $this->e('Event Participation'); ?></a>	
 </h2>
 
 <form id="lwp-setting-form" method="post" action="<?php echo admin_url('admin.php?page=lwp-setting'); ?>">
@@ -462,6 +463,39 @@
 			</tbody>
 		</table>
 	</div><!-- #tab4 -->
+	
+	
+	<div id="tab-5">
+		<h3><?php $this->e("Event Participation"); ?></h3>
+		<table class="form-table">
+			<tbody>
+				<tr>
+					<th valign="top">
+						<label><?php $this->e('Event Post Type'); ?></label>
+					</th>
+					<td>
+						<?php foreach(get_post_types('', 'object') as $post_type): if(false === array_search($post_type->name, array('revision', 'nav_menu_item', 'page', 'attachment', 'lwp_notification'))): ?>
+							<label>
+								<input type="checkbox" name="event_post_types[]" value="<?php echo $post_type->name; ?>" <?php if(false !== array_search($post_type->name, $this->option['event_post_types'])) echo 'checked="checked" '; ?>/>
+								<?php echo $post_type->labels->name; ?>
+							</label>&nbsp;
+						<?php endif; endforeach; ?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top">
+						<label><?php $this->e('What is Event?'); ?></label>
+					</th>
+					<td>
+						<p class="description">
+							<?php $this->e("Event means real event like lunch party, poetry reading or else."); ?>
+						</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div><!-- #tab5 -->
+
 	
 	<p class="submit">
 		<input type="submit" class="button-primary" value="<?php $this->e("Update"); ?>" />

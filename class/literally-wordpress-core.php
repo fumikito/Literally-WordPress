@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.9.0";
+	public $version = "0.9.1";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -144,6 +144,12 @@ class Literally_WordPress{
 	 */
 	public $reward = null;
 	
+	/**
+	 * Event Controller
+	 * @var LWP_Event
+	 */
+	public $event = null;
+	
 	//--------------------------------------------
 	//
 	// 初期化処理
@@ -202,6 +208,7 @@ class Literally_WordPress{
 			"reward_notice" => '',
 			"reward_contact" => '',
 			"use_proxy" => false,
+			'event_post_types' => array(),
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
 			"country_code" => '',
@@ -253,6 +260,8 @@ class Literally_WordPress{
 		$this->subscription = new LWP_Subscription($this->option);
 		//Initialize Reward
 		$this->reward = new LWP_Reward($this->option);
+		//Initialize Event
+		$this->event = new LWP_Event($this->option);
 	}
 	
 	/**
@@ -691,8 +700,7 @@ EOS;
 	 * @since 0.3
 	 * @return void
 	 */
-	public function update_option()
-	{
+	public function update_option(){
 		//要素が揃っていたら更新
 		if(
 			isset($_REQUEST["_wpnonce"], $_REQUEST["_wp_http_referer"])
@@ -720,6 +728,7 @@ EOS;
 				"reward_notice" => (string) $_REQUEST['reward_notice'],
 				"reward_contact" => (string) $_REQUEST['reward_contact'],
 				"use_proxy" => (boolean) $_REQUEST['use_proxy'],
+				'event_post_types' => (array) $_REQUEST['event_post_types'],
 				"dir" => $_REQUEST["dir"],
 				"slug" => $_REQUEST["product_slug"],
 				"mypage" => $_REQUEST["mypage"],
