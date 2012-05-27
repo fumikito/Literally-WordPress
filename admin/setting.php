@@ -474,7 +474,7 @@
 						<label><?php $this->e('Event Post Type'); ?></label>
 					</th>
 					<td>
-						<?php foreach(get_post_types('', 'object') as $post_type): if(false === array_search($post_type->name, array('revision', 'nav_menu_item', 'page', 'attachment', 'lwp_notification'))): ?>
+						<?php foreach(get_post_types('', 'object') as $post_type): if(false === array_search($post_type->name, array('revision', 'nav_menu_item', 'page', 'attachment', 'lwp_notification', $this->event->post_type))): ?>
 							<label>
 								<input type="checkbox" name="event_post_types[]" value="<?php echo $post_type->name; ?>" <?php if(false !== array_search($post_type->name, $this->option['event_post_types'])) echo 'checked="checked" '; ?>/>
 								<?php echo $post_type->labels->name; ?>

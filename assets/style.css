@@ -121,3 +121,41 @@ input.short{
 	#lwp-dashboard-daily .area-chart{
 		height:400px;
 	}
+
+/* Event Detail */	
+div.postbox h4 {
+	font-size: 12px;
+	padding: 0 6px 6px;
+	margin-right: 6px;
+	margin-left: 6px;
+	line-height: 1.5;
+	border-bottom: 1px solid #DFDFDF;
+}
+.postbox .form-table label{
+	font-weight: bold;
+}
+#lwp-event-setting{
+	
+}
+#cancel-date-list{
+	background: #fff;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 3px;
+	-kml-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 5px;
+	margin-bottom: 5px;
+	}
+	#cancel-date-list li{
+		margin: 3px 0;
+		}
+		#cancel-date-list li.no-cancelable-date{
+			color: #ccc;
+			text-align: center;
+		}
+		#ticket_post_content{
+			width: 90%;
+			resize: vertical;
+		}
+		

@@ -332,9 +332,7 @@ class Literally_WordPress{
 		//課金有効かどうかの判断
 		add_action("admin_init", array($this, "validate"));
 		//スタイルシート・JSの追加
-		if(isset($_GET["page"]) && false !== strpos($_GET["page"], "lwp-")){
-			add_action("admin_init", array($this, "admin_assets"));
-		}
+		add_action("admin_enqueue_scripts", array($this, "admin_assets"));
 		//キャンペーン更新
 		if($this->is_admin("campaign")){
 			add_action("admin_init", array($this, "update_campaign"));
@@ -535,6 +533,10 @@ EOS;
 			if($this->reward->promotable || ($this->reward->rewardable && current_user_can('edit_posts'))){
 				add_users_page($this->_("Reward"), $this->_("Reward"), 'read', "lwp-personal-reward", array($this, 'load'));
 			}
+		}
+		//Event page if enabled
+		if($this->event->is_enabled()){
+			add_submenu_page("lwp-setting", $this->_('Event Management'), $this->_('Event Management'), 'edit_posts', "lwp-event", array($this, 'load'));
 		}
 		//Add metaboxes
 		foreach($this->option['payable_post_types'] as $post){
