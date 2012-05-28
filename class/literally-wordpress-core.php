@@ -630,6 +630,18 @@ EOS;
 				)
 			));
 		}
+		//Add event helper on post edit page
+		if(false !== array_search(basename($_SERVER['SCRIPT_FILENAME']), array('post.php', 'post-new.php') )){
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script('lwp-event-helper', $this->url.'assets/js/event-helper.js', array('jquery-ui-datepicker'), $this->version);
+			wp_localize_script('lwp-event-helper', 'LWP', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
+				'endpoint' => admin_url('admin-ajax.php'),
+				'cancelLimitPlaceHolder' => $this->_('Cacnelable till %1$s days before, %2$s %'),
+				'deleteButtonLabel' => $this->_('Delete'),
+				'deleteConfirmation' => $this->_('Are you sure to delete this ticket?'),
+				'editButtonLabel' => $this->_('Edit')
+			)));
+		}
 	}
 	
 	

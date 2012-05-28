@@ -153,9 +153,28 @@ div.postbox h4 {
 		#cancel-date-list li.no-cancelable-date{
 			color: #ccc;
 			text-align: center;
+			display: none;
+		}
+		#cancel-date-list.zero .no-cancelable-date{
+			display: block;
 		}
 		#ticket_post_content{
 			width: 90%;
 			resize: vertical;
 		}
-		
+#ticket_cancel{
+	float: right;
+}
+.postbox .ticket-status .editting,
+.postbox .ticket-status-editting .newly-add{
+	display: none;
+}
+#ticket-list-table{
+	table-layout: auto;
+	}
+	#ticket-list-table td.loading{
+		background: transparent url('./indicator-postbox.gif') right center no-repeat;
+	}
+	.postbox p.loading{
+		background: transparent url('./indicator-postbox.gif') center center no-repeat;
+	}
