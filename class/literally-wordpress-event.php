@@ -62,6 +62,7 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('save_post', array($this, 'save_post'));
 			add_action('wp_ajax_lwp_edit_ticket', array($this, 'update_ticket'));
 			add_action('wp_ajax_lwp_delete_ticket', array($this, 'delete_ticket'));
+			add_action('wp_ajax_lwp_get_ticket', array($this, 'get_ticket'));
 		}
 	}
 	
@@ -158,48 +159,50 @@ class LWP_Event extends Literally_WordPress_Common {
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_event_detail')){
 			global $wpdb;
 			$parent = (int) $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['post_parent']));
-			$post_arr =  array(
-				'post_title' => (string) $_REQUEST['post_title'],
-				'post_content' => (string) $_REQUEST['post_content'],
-				'post_parent' => (int) $_REQUEST['post_parent'],
-				'post_author' => $parent,
-				'post_status' => 'publish',
-				'post_type' => $this->post_type
-			);
-			$status = true;
-			if(intval($_REQUEST['post_id']) > 0){
-				$post_arr['ID'] = intval($_REQUEST['post_id']);
-				$result = wp_update_post($post_arr);
-				if(!$result){
-					$status = false;
-				}
-				$mode = 'update';
+			if(!user_can_edit_post(get_current_user_id(), $_REQUEST['post_parent'])){
+				$status = false;
 			}else{
-				$post_id = wp_insert_post($post_arr, true);
-				if(is_wp_error($post_id)){
-					$status = false;
+				$post_arr =  array(
+					'post_title' => (string) $_REQUEST['post_title'],
+					'post_content' => (string) $_REQUEST['post_content'],
+					'post_parent' => (int) $_REQUEST['post_parent'],
+					'post_author' => $parent,
+					'post_status' => 'publish',
+					'post_type' => $this->post_type
+				);
+				$status = true;
+				if(intval($_REQUEST['post_id']) > 0){
+					$post_arr['ID'] = intval($_REQUEST['post_id']);
+					$post_id = wp_update_post($post_arr);
+					if(!$post_id){
+						$status = false;
+					}
+					$mode = 'update';
+				}else{
+					$post_id = wp_insert_post($post_arr, true);
+					if(is_wp_error($post_id)){
+						$status = false;
+					}
+					$mode = 'insert';
 				}
-				$mode = 'insert';
-			}
-			if($status){
-				$post = wp_get_single_post($post_id);
-				update_post_meta($post->ID, $this->meta_stock, intval($_REQUEST['stock']));
-				update_post_meta($post->ID, 'lwp_price', $_REQUEST['price']);
+				if($status){
+					$post = wp_get_single_post($post_id);
+					update_post_meta($post->ID, $this->meta_stock, intval($_REQUEST['stock']));
+					update_post_meta($post->ID, 'lwp_price', $_REQUEST['price']);
+				}
 			}
 			header("Content-Type: application/json; charset=utf-8");
-			echo json_encode(array(
+			$json = array(
 				'status' => $status,
 				'mode' => $mode,
 				'message' => $this->_('Failed to edit ticket'),
-				'post_id' => $post->ID,
-				'post_title' => $post->post_title,
-				'post_content' => mb_substr($post->post_title, 0, 20, 'utf-8'),
-				'price' => numberformat(get_post_meta($post->ID, 'lwp_price', true)),
-				'stock' => numberformat(get_post_meta($post->ID, $this->meta_stock, true))
-			));
-			die();
-		}else{
-			echo 'hoge';
+				'post_id' => $status ? $post->ID : 0,
+				'post_title' => $status ? $post->post_title : '',
+				'post_content' => $status ? mb_substr($post->post_content, 0, 20, 'utf-8').'...' : '',
+				'price' => $status ? number_format(get_post_meta($post->ID, 'lwp_price', true)) : 0,
+				'stock' => $status ? number_format(get_post_meta($post->ID, $this->meta_stock, true)) : 0
+			);
+			echo json_encode($json);
 			die();
 		}
 	}
@@ -217,6 +220,31 @@ class LWP_Event extends Literally_WordPress_Common {
 				wp_delete_post($_REQUEST['post_id']);
 			}else{
 				$json['status'] = false;
+				$json['message'] = $this->_('You have no permission to edit this ticket.');
+			}
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode($json);
+			die();
+		}
+	}
+	
+	/**
+	 * Returns ticket information via Ajax 
+	 */
+	public function get_ticket(){
+		if(isset($_REQUEST['_wpnonce'], $_REQUEST['post_id']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_event_detail')){
+			$json = array(
+				'status' => false,
+				'message' => ''
+			);
+			$post = wp_get_single_post($_REQUEST['post_id']);
+			if($post){
+				$json['status'] = true;
+				$json['post_title'] = $post->post_title;
+				$json['post_content'] = $post->post_content;
+				$json['price'] = get_post_meta($post->ID, 'lwp_price', true);
+				$json['stock'] = get_post_meta($post->ID, $this->meta_stock, true);
+			}else{
 				$json['message'] = $this->_('You have no permission to edit this ticket.');
 			}
 			header('Content-Type: application/json; charset=utf-8');

@@ -168,7 +168,10 @@ div.postbox h4 {
 .postbox .ticket-status .editting,
 .postbox .ticket-status-editting .newly-add{
 	display: none;
-}
+	}
+	.postbox .ticket-status-editting .editting{
+		display: inline;
+	}
 #ticket-list-table{
 	table-layout: auto;
 	}

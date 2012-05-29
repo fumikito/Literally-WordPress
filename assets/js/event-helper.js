@@ -13,10 +13,14 @@ jQuery(document).ready(function($){
 			$('input[name=ticket_id]').val(0);
 			$('#ticket_price, #ticket_post_title, #ticket_stock').val('');
 			$('#ticket_post_content').val('');
+			$('.ticket-status').removeClass('ticket-status-editting');
+			$('#lwp-event-edit-form').effect('highlight');
 		},
 		deleteLimit: function(e){
 			e.preventDefault();
-			$(this).parents('li').remove();
+			$(this).parents('li').effect('highlight', {}, 'normal', function(){
+				$(this).remove();
+			});
 			if($('#cancel-date-list li').length <= 1){
 				$('#cancel-date-list').addClass('zero');
 			}
@@ -32,9 +36,10 @@ jQuery(document).ready(function($){
 					post_id: ticketID
 				}, function(result){
 					if(result.status){
-						TicketForm.clear();
-						$('#ticket-' + ticketID).fadeOut('normal', function(){
-							$(this).remove();
+						$('#ticket-' + ticketID).effect('highlight', {}, 'normal', function(){
+							$(this).fadeOut('normal', function(){
+								$(this).remove();
+							});
 						});
 					}else{
 						$(this).parents('td').removeClass('loading');
@@ -44,14 +49,36 @@ jQuery(document).ready(function($){
 			}
 		},
 		editTicket: function(e){
-			alert('編集するよ！');
+			e.preventDefault();
+			var link = $(this);
+			link.parents('td').addClass('loading');
+			var ticketID = parseInt($(this).parents('tr').attr('id').replace(/ticket-/, ''), 10);
+			$.post(LWP.endpoint, {
+				action: 'lwp_get_ticket',
+				_wpnonce: $('input[name=_lwpeventnonce]').val(),
+				post_id: ticketID
+			}, function(result){
+				link.parents('td').removeClass('loading');
+				$('#lwp-event-edit-form').effect('highlight');
+				if(result.status){
+					$('.ticket-status').addClass('ticket-status-editting')
+					$('input[name=ticket_id]').val(ticketID);
+					$('#ticket_post_title').val(result.post_title);
+					$('#ticket_post_content').val(result.post_content);
+					$('#ticket_price').val(result.price);
+					$('#ticket_stock').val(result.stock);
+					
+				}else{
+					alert(result.message);
+				}
+			});
 		}
 	};
 	
 	//Clear form
 	$('#ticket_cancel').click(function(e){
 		e.preventDefault();
-		TickerForm.clear();
+		TicketForm.clear();
 	});
 	
 	//Add cancel limit
@@ -88,13 +115,16 @@ jQuery(document).ready(function($){
 			price: $('#ticket_price').val(),
 			stock: $('#ticket_stock').val()
 		}, function(result){
-			console.log(result);
 			$('#ticket_submit').parents('p.submit').removeClass('loading');
 			if(result.status){
 				var tr;
 				if(result.mode == 'update'){
 					tr = $('#ticket-' + result.post_id);
 					tr.find('th').text(result.post_title);
+					tr.find('td:eq(0)').text(result.post_content);
+					tr.find('td:eq(1)').text(result.price);
+					tr.find('td:eq(2)').text(result.stock);
+					tr.effect('highlight');
 				}else{
 					tr = $('<tr id="ticket-' + result.post_id + '"></tr>').css('display', 'none');
 					tr.html(
@@ -107,10 +137,12 @@ jQuery(document).ready(function($){
 					);
 					$('#ticket-list-table tbody').append(tr);
 					tr.fadeIn('normal', function(){
-						$(this).find('.ticket-edit').click();
+						$(this).find('.ticket-edit').click(TicketForm.editTicket);
 						$(this).find('.ticket-delete').click(TicketForm.deleteTicket);
+						$(this).effect('highlight');
 					});
 				}
+				TicketForm.clear();
 			}else{
 				alert(result.message);
 			}
@@ -118,4 +150,6 @@ jQuery(document).ready(function($){
 	});
 	//Ticket delete
 	$('.ticket-delete').click(TicketForm.deleteTicket);
+	//Ticket edit
+	$('.ticket-edit').click(TicketForm.editTicket);
 });
