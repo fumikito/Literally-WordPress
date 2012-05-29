@@ -58,3 +58,23 @@ function _lwp_show_indicator($total = null, $current = null){
 EOS;
 	echo apply_filters('lwp_show_indicator', $markup, $total, $current);
 }
+
+/**
+ * Disaply ticket list 
+ */
+function _lwp_show_ticket(){
+	?>
+		<li class="ticket-<?php the_ID(); ?>">
+			<div class="ticket-title">
+				<strong><?php the_title(); ?></strong>
+				&nbsp; <?php lwp_the_price();?>
+			</div>
+			<div class="ticket-content">
+				<?php the_content(); ?>
+				<p class="lwp-buynow">
+					<?php echo lwp_buy_now();?>
+				</p>
+			</div>
+		</li>
+	<?php
+}

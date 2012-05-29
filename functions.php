@@ -955,3 +955,55 @@ function the_lwp_promotion_link($post = null){
 function lwp_reward_link(){
 	return admin_url('users.php?page=lwp-personal-reward');
 }
+
+
+/**
+ * Returns if post has tikcets.
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post if not specified, use current post.
+ * @return boolean 
+ */
+function lwp_has_ticket($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	return $lwp->event->has_tickets($post->ID);
+}
+
+/**
+ * Display tickets. Use inside loop
+ * @global Literally_WordPress $lwp
+ * @param string|array $args 
+ */
+function lwp_list_tickets($args = ''){
+	global $lwp;
+	$args = wp_parse_args($args, array(
+		'post_id' => get_the_ID(),
+		'callback' => '',
+		'orderby' => 'date',
+		'order' => 'desc'
+	));
+	$query = array(
+		'post_parent' => $args['post_id'],
+		'post_type' => $lwp->event->post_type,
+		'status' => 'publish',
+		'posts_per_page' => -1,
+		'orderby' => 'date'
+	);
+	global $post;
+	$old_post = $post;
+	$new_query = new WP_Query($query);
+	if($new_query->have_posts()){
+		while($new_query->have_posts()){
+			$new_query->the_post(); 
+			if(!empty($args['callback']) && function_exists($args['callback'])){
+				call_user_func($args['callback']);
+			}else{
+				_lwp_show_ticket();
+			}
+		}
+	}
+	setup_postdata($old_post);
+}

@@ -152,6 +152,21 @@ class LWP_Event extends Literally_WordPress_Common {
 	}
 	
 	/**
+	 * Returns if specified post has tickets
+	 * @global wpdb $wpdb
+	 * @param int $post_id
+	 * @return boolean
+	 */
+	public function has_tickets($post_id){
+		global $wpdb;
+		$sql = <<<EOS
+			SELECT COUNT(ID) FROM {$wpdb->posts}
+			WHERE post_type = %s AND post_parent = %d AND post_status = 'publish'
+EOS;
+		return (boolean) $wpdb->get_var($wpdb->prepare($sql, $post_id));
+	}
+	
+	/**
 	 * Update ticket information 
 	 * @global wpdb $wpdb
 	 */
