@@ -167,6 +167,53 @@ EOS;
 	}
 	
 	/**
+	 * Returns if user is participating 
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $user_id
+	 * @param int $post_id
+	 * @return boolean
+	 */
+	public function is_participating($user_id, $post_id){
+		global $wpdb, $lwp;
+		$sql = <<<EOS
+			SELECT t.ID FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE t.user_id = %d AND t.status = %s AND p.post_parent = %d
+EOS;
+		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS,$post_id));
+	}
+	
+	/**
+	 * Returns cancel condition with specified timestamp
+	 * @param int $post_id
+	 * @param int $timestamp
+	 * @return array array which has key 'days' and 'ratio'
+	 */
+	public function get_current_cancel_condition($post_id, $timestamp = false){
+		if(!$timestamp){
+			$timestamp = time();
+		}
+		$limit = false;
+		$selling_limits = get_post_meta($post_id, $this->meta_selling_limit, true);
+		$cancel_limits = get_post_meta($post_id, $this->meta_cancel_limits, true);
+		if($cancel_limits && $selling_limits && is_array($cancel_limits)){
+			$selling_limits = strtotime($selling_limits);
+			for($i = count($cancel_limits) - 1; $i >= 0; $i--){
+				//Check if current time doesn't exceed limit
+				if($selling_limits - $cancel_limits[$i]['days'] * 60 * 60 * 24 < $timestamp){
+					continue;
+				}else{
+					$limit = $cancel_limits[$i];
+					break;
+				}
+			}
+		}
+		return $limit;
+	}
+	
+	/**
 	 * Update ticket information 
 	 * @global wpdb $wpdb
 	 */

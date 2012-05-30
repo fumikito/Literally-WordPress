@@ -849,7 +849,7 @@ function lwp_is_success()
  * @return string 
  */
 function lwp_endpoint($action = 'buy'){
-	$url = get_bloginfo('url');
+	$url = home_url();
 	if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
 		$url = str_replace('http:', 'https:', $url);
 	}
@@ -973,6 +973,66 @@ function lwp_has_ticket($post = null){
 }
 
 /**
+ * Returns selling limit string
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param string $format Default is WordPress default
+ * @param object $post
+ * @return string 
+ */
+function lwp_selling_limit($format = null, $post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	if(is_null($format)){
+		$format = get_option('date_format');
+	}
+	$limit = get_post_meta($post->ID, $lwp->event->meta_selling_limit, true);
+	if($limit){
+		return mysql2date($format, $limit);
+	}else{
+		return '';
+	}
+}
+
+/**
+ * Returns if current ticket is cancelable
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return boolean
+ */
+function lwp_is_cancelable($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	$condition = $lwp->event->get_current_cancel_condition($post->ID);
+	return (boolean)$condition;
+}
+
+/**
+ * Returnd current tickets cancel ratio
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return int 
+ */
+function lwp_current_cancel_ratio($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	$condition = $lwp->event->get_current_cancel_condition($post->ID);
+	if(isset($condition['ratio'])){
+		return $condition['ratio'];
+	}else{
+		return 0;
+	}
+}
+
+/**
  * Display tickets. Use inside loop
  * @global Literally_WordPress $lwp
  * @param string|array $args 
@@ -994,16 +1054,47 @@ function lwp_list_tickets($args = ''){
 	);
 	global $post;
 	$old_post = $post;
+	$parent_id = get_the_ID();
 	$new_query = new WP_Query($query);
 	if($new_query->have_posts()){
 		while($new_query->have_posts()){
-			$new_query->the_post(); 
+			$new_query->the_post();
 			if(!empty($args['callback']) && function_exists($args['callback'])){
-				call_user_func($args['callback']);
+				call_user_func_array($args['callback'], array($parent_id));
 			}else{
-				_lwp_show_ticket();
+				_lwp_show_ticket($parent_id);
 			}
 		}
 	}
 	setup_postdata($old_post);
+}
+
+/**
+ * Returns cancel url for ticket
+ * @return string
+ */
+function lwp_cancel_url($post = null){
+	if(is_null($post)){
+		global $post;
+	}
+	return lwp_endpoint('ticket-cancel').'&lwp-ticket='.$post->ID;
+}
+
+/**
+ * Returns if current user is participating this event
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return boolean 
+ */
+function lwp_is_participating($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}
+	if(is_user_logged_in()){
+		return $lwp->event->is_participating(get_current_user_id(), $post->ID);
+	}else{
+		return false;
+	}
 }

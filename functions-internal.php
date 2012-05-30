@@ -61,8 +61,11 @@ EOS;
 
 /**
  * Disaply ticket list 
+ * @global Literally_WordPress $lwp
+ * @param int $parent_id
  */
-function _lwp_show_ticket(){
+function _lwp_show_ticket($parent_id){
+	global $lwp;
 	?>
 		<li class="ticket-<?php the_ID(); ?>">
 			<div class="ticket-title">
@@ -71,7 +74,7 @@ function _lwp_show_ticket(){
 			</div>
 			<div class="ticket-content">
 				<?php the_content(); ?>
-				<p class="lwp-buynow">
+				<p class="lwp-buy-ticket-buy">
 					<?php echo lwp_buy_now();?>
 				</p>
 			</div>
