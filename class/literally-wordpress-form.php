@@ -206,7 +206,7 @@ EOS;
 					case 'paypal':
 					case 'cc':
 						$billing = ($_GET['lwp-method'] == 'cc') ? true : false;
-						if(!$lwp->start_transaction($user_ID, $_GET['lwp-id'], $billing)){
+						if(!$lwp->start_transaction(get_current_user_id(), $_GET['lwp-id'], $billing)){
 							//Failed to create transaction
 							$message = $this->_("Failed to make transaction.");
 						}
@@ -248,7 +248,7 @@ EOS;
 						'LASTNAME' => 'Test',
 						'FIRSTNAME' => 'User'
 					),
-					"transaction" => $transaction,
+					"transaction" => null,
 					"post" => $post,
 					'link' => get_permalink($post->ID),
 					'total' => 4,
@@ -292,9 +292,9 @@ EOS;
 		}else{
 			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
 				//データを更新
-				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$this->transaction} WHERE transaction_id = %s", $_POST["TOKEN"])); 
-				$tran_id = $wpdb->update(
-					$this->transaction,
+				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE transaction_id = %s", $_POST["TOKEN"])); 
+				$wpdb->update(
+					$lwp->transaction,
 					array(
 						"status" => LWP_Payment_Status::SUCCESS,
 						"transaction_key" => $_POST['INVNUM'],
