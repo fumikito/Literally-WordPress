@@ -157,7 +157,7 @@ class LWP_Form extends Literally_WordPress_Common{
 						if($lwp->option['transfer']){
 							//Check if there is active transaction
 							$sql = <<<EOS
-								SELECT * FROM {$this->transaction}
+								SELECT * FROM {$lwp->transaction}
 								WHERE user_id = %d AND book_id = %d AND status = %s AND DATE_ADD(registered, INTERVAL %d DAY) > NOW()
 EOS;
 							$transaction = $wpdb->get_row($wpdb->prepare($sql, get_current_user_id(), $book_id, LWP_Payment_Status::START, $lwp->option['notification_limit']));
@@ -166,10 +166,10 @@ EOS;
 								$wpdb->insert(
 									$lwp->transaction,
 									array(
-										"user_id" => $user_ID,
+										"user_id" => get_current_user_id(),
 										"book_id" => $book_id,
 										"price" => lwp_price($book_id),
-										"transaction_key" => sprintf("%08d", $user_ID),
+										"transaction_key" => sprintf("%08d", get_current_user_id()),
 										"status" => LWP_Payment_Status::START,
 										"method" => LWP_Payment_Methods::TRANSFER,
 										"registered" => gmdate('Y-m-d H:i:s'),
@@ -180,7 +180,7 @@ EOS;
 								//Execute hook
 								do_action('lwp_create_transaction', $wpdb->insert_id);
 								//Send Notification
-								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $wpdb->insert_id));
+								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id));
 								$notification_status = $lwp->notifier->notify($transaction, 'thanks');
 							}else{
 								$notification_status = 'sent';
@@ -221,7 +221,12 @@ EOS;
 		wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
 	}
 	
-	
+	/**
+	 * Handle Confirm action
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param boolean $is_sandbox 
+	 */
 	private function handle_confirm($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be login
@@ -315,6 +320,7 @@ EOS;
 	
 	/**
 	 * Handle success page
+	 * 
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
@@ -404,10 +410,6 @@ EOS;
 	 * @param type $is_sandbox 
 	 */
 	private function handle_file($is_sandbox = false){
-		//First of all, user must be login
-		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
-		}
 		global $lwp;
 		$lwp->print_file($_REQUEST["lwp_file"], get_current_user_id());
 	}

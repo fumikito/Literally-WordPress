@@ -498,7 +498,7 @@ EOS;
 	 */
 	public function public_hooks(){
 		//Highjack frontpage request if lwp is set
-		add_action("template_redirect", array($this, "manage_actions"));
+		add_action("template_redirect", array($this->form, "manage_actions"));
 		//Redirect to auth page if user is not logged in
 		add_action("template_redirect", array($this, "protect_user_page"));
 		//the_contentにフックをかける
