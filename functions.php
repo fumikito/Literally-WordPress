@@ -984,6 +984,8 @@ function lwp_selling_limit($format = null, $post = null){
 	global $lwp;
 	if(is_null($post)){
 		global $post;
+	}else{
+		$post = get_post($post);
 	}
 	if(is_null($format)){
 		$format = get_option('date_format');
@@ -1007,6 +1009,8 @@ function lwp_is_cancelable($post = null){
 	global $lwp;
 	if(is_null($post)){
 		global $post;
+	}else{
+		$post = get_post($post);
 	}
 	$condition = $lwp->event->get_current_cancel_condition($post->ID);
 	return (boolean)$condition;
@@ -1023,6 +1027,8 @@ function lwp_current_cancel_ratio($post = null){
 	global $lwp;
 	if(is_null($post)){
 		global $post;
+	}else{
+		$post = get_post($post);
 	}
 	$condition = $lwp->event->get_current_cancel_condition($post->ID);
 	if(isset($condition['ratio'])){
@@ -1076,8 +1082,57 @@ function lwp_list_tickets($args = ''){
 function lwp_cancel_url($post = null){
 	if(is_null($post)){
 		global $post;
+	}else{
+		$post = get_post($post);
 	}
-	return lwp_endpoint('ticket-cancel').'&lwp-ticket='.$post->ID;
+	return lwp_endpoint('ticket-cancel').'&lwp-event='.$post->ID;
+}
+
+/**
+ * Returns ticket price when user bought (use inside ticket loop)
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @param int $user_id
+ * @return string 
+ */
+function lwp_ticket_bought_price($post = null, $user_id = null){
+	global $wpdb, $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(is_null($user_id)){
+		$user_id = get_current_user_id();
+	}
+	return $wpdb->get_var($wpdb->prepare("SELECT price FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d", $post->ID, $user_id));
+}
+
+
+/**
+ * Returns currently refundable price
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @param int $user_id
+ * @return int 
+ */
+function lwp_ticket_refund_price($post = null, $user_id = null){
+	global $wpdb, $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(is_null($user_id)){
+		$user_id = get_current_user_id();
+	}
+	$bought = lwp_ticket_bought_price($post, $user_id);
+	$ratio = lwp_current_cancel_ratio($post->post_parent);
+	return $bought * $ratio / 100;
 }
 
 /**

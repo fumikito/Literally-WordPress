@@ -14,7 +14,7 @@ class LWP_Form extends Literally_WordPress_Common{
 	public function manage_actions(){
 		//If action is set, call each method
 		if($this->get_current_action() && is_front_page()){
-			$action = 'handle_'.$this->get_current_action();
+			$action = 'handle_'.$this->make_hungalian($this->get_current_action());
 			if(method_exists($this, $action)){
 				$this->{$action}();
 			}else{
@@ -230,9 +230,7 @@ EOS;
 	private function handle_confirm($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be login
-		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
-		}
+		$this->kill_anonymous_user();
 		//If sandbox, just show form
 		if($is_sandbox){
 			$post = $this->get_random_post();
@@ -328,9 +326,7 @@ EOS;
 	private function handle_success($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be login
-		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
-		}
+		$this->kill_anonymous_user();
 		//Change transaction status
 		if(isset($_REQUEST['lwp-id'])){
 			$post_type = $wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id']));
@@ -360,15 +356,14 @@ EOS;
 	 */
 	private function handle_cancel($is_sandbox = false){
 		global $wpdb, $lwp;
-		//First of all, user must be login
-		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
-		}
-
+		//First of all, user must be logged in.
+		$this->kill_anonymous_user();
+		//Get token from request
 		$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
 		if(!$token){
 			$token = isset($_REQUEST['TOKEN']) ? $_REQUEST['TOKEN'] : null;
 		}
+		//Update transaction
 		if($token){
 			$wpdb->update(
 				$this->transaction,
@@ -412,6 +407,53 @@ EOS;
 	private function handle_file($is_sandbox = false){
 		global $lwp;
 		$lwp->print_file($_REQUEST["lwp_file"], get_current_user_id());
+	}
+	
+	
+	private function handle_ticket_cancel($is_sandbox = false){
+		global $lwp, $wpdb;
+		//First of all, user must be logged in.
+		$this->kill_anonymous_user();
+		//Get Event ID and get ticket list
+		$event_id = isset($_REQUEST['lwp-event']) ? intval($_REQUEST['lwp-event']) : false;
+		//If event dosen't exist, stop processing.
+		if(!$event_id || !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_status = 'publish'", $event_id))){
+			wp_die($this->_('Sorry, but you specified unexistant event.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		//Check if currently cancelable
+		$limit = $lwp->event->get_current_cancel_condition($event_id);
+		$cancel_limit_time = date_i18n(get_option('date_format'), lwp_selling_limit('U', $event_id) - (60 * 60 * 24 * $limit['days']));
+		if(!$limit){
+			wp_die(sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		//Get cancelable ticket
+		$tickets = $lwp->event->get_cancelable_tickets(get_current_user_id(), $event_id);
+		if(empty($tickets)){
+			wp_die($this->_('Sorry, but you have no ticket to cancel.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		//Show Form
+		$this->show_form('cancel-ticket', array(
+			'query' => new WP_Query(array(
+				'post_type' => $lwp->event->post_type,
+				'post__in' => $tickets
+			)),
+			'event' => $event_id,
+			'event_type' => get_post_type_object($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $event_id))),
+			'limit' => $cancel_limit_time,
+			'ratio' => $limit['ratio'],
+			'total' => 2,
+			'current' => 1
+		));
+		
+	}
+	
+	/**
+	 * Stop processing transaction of not logged in user. 
+	 */
+	private function kill_anonymous_user(){
+		if(!is_user_logged_in()){
+			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
 	}
 	
 	/**
@@ -473,5 +515,14 @@ EOS;
 			ORDER BY RAND()
 EOS;
 		return $wpdb->get_row($sql);
+	}
+	
+	/**
+	 * Change method name to hungalian 
+	 * @param string $method
+	 * @return string 
+	 */
+	private function make_hungalian($method){
+		return str_replace("-", "_", strtolower(trim($method)));
 	}
 }
