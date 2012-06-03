@@ -317,6 +317,11 @@ class LWP_Payment_Status {
 	const REFUND = 'REFUND';
 	
 	/**
+	 * Transation is required to refund 
+	 */
+	const REFUND_REQUESTING = 'REFUND_REQUESTING';
+	
+	/**
 	 * Returns all Status
 	 * @return array
 	 */
@@ -325,7 +330,8 @@ class LWP_Payment_Status {
 			self::START,
 			self::CANCEL,
 			self::SUCCESS,
-			self::REFUND
+			self::REFUND,
+			self::REFUND_REQUESTING
 		);
 	}
 	
@@ -340,6 +346,7 @@ class LWP_Payment_Status {
 		$lwp->_('Cancel');
 		$lwp->_('START');
 		$lwp->_('REFUND');
+		$lwp->_('REFUND_REQUESTING');
 	}
 }
 

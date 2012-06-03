@@ -213,6 +213,8 @@ EOS;
 		return $limit;
 	}
 	
+	
+	
 	/**
 	 * Returns ticket id from event's ID
 	 * @global wpdb $wpdb

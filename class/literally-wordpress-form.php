@@ -453,11 +453,79 @@ EOS;
 	}
 	
 	/**
+	 * 
+	 * @param type $is_sandbox 
+	 */
+	private function handle_ticket_cancel_complete($is_sandbox = false){
+		global $wpdb, $lwp;
+		//First of all, user must be logged in
+		$this->kill_anonymous_user();
+		//Check nonce
+		if(!isset($_REQUEST['_wpnonce'], $_REQUEST['ticket_id']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_cancel')){
+			wp_die($this->_('Sorry, but You might make unexpected action.').' '.$this->_('Cannot pass security check.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		//Get ticket id to cancel
+		$ticket_id = (int) $_REQUEST['ticket_id'];
+		//Get transaction
+		$sql = <<<EOS
+			SELECT * FROM {$lwp->transaction}
+			WHERE book_id = %d AND user_id = %d AND status = %s
+EOS;
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $ticket_id, get_current_user_id(), LWP_Payment_Status::SUCCESS));
+		//Check if cancelable transaction exists
+		$event_id = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
+		$current_condition = $lwp->event->get_current_cancel_condition($event_id);
+		if(!$transaction || empty($current_condition)){
+			wp_die($this->_('Sorry, but the tikcet id you specified is not cancelable.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		//Check if paypal refund is available
+		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
+			wp_die(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), sprintf($this->_("Request Time Out : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 408));
+		}
+		//Now, let's start refund action
+		$bought_price = $transaction->price;
+		$refund_price = $bought_price * $current_condition['ratio'] / 100;
+		$status = false;
+		if($refund_price == 0){
+			$status = LWP_Payment_Status::REFUND;
+		}else{
+			if($transaction->method == LWP_Payment_Methods::PAYPAL){
+				//Do paypal refunding. In case of refund 0, just change status
+				if(PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
+					$status = LWP_Payment_Status::REFUND;
+				}else{
+					wp_die(sprintf($this->_('Sorry, but PayPal denies refunding. Please contact to %1$s administrator.'), get_bloginfo('name')), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+				}
+			}elseif($transaction->method == LWP_Payment_Methods::TRANSFER){
+				$status = LWP_Payment_Status::REFUND_REQUESTING;
+			}
+		}
+		//Update transaction status
+		$wpdb->update(
+			$lwp->transaction,
+			array(
+				'status' => $status,
+				'updated' => gmdate('Y-m-d H:i:s')
+			),
+			array('ID' => $transaction->ID),
+			array('%s', '%s'),
+			array('%d')
+		);
+		//Show Form
+		$this->show_form('cancel-ticket-success', array(
+			'link' => get_permalink($event_id),
+			'event' => get_the_title($event_id),
+			'ticket' => get_the_title($transaction->book_id),
+			'transfer' => $transaction->method == LWP_Payment_Methods::TRANSFER
+		));
+	}
+	
+	/**
 	 * Stop processing transaction of not logged in user. 
 	 */
 	private function kill_anonymous_user(){
 		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Access Forbidden : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
 		}
 	}
 	

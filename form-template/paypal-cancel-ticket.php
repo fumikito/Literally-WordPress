@@ -4,7 +4,7 @@
 	<?php printf($this->_('You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please select ticket below. You can cancel in this condition till %3$s'), $event_type->labels->name, get_the_title($event), $limit); ?>
 </p>
 
-<form method="post" action="<?php echo lwp_endpoint('tikcet-cancel-complete'); ?>">
+<form method="post" action="<?php echo lwp_endpoint('ticket-cancel-complete'); ?>">
 	<?php wp_nonce_field('lwp_ticket_cancel', '_wpnonce', false); ?>
 	<table class="form-table lwp-ticket-table" id="lwp-ticket-table-cancel">
 		<thead>
