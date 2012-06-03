@@ -400,7 +400,7 @@ EOS;
 	}
 	
 	/**
-	 * 
+	 * Output file
 	 * @global Literally_WordPress $lwp
 	 * @param type $is_sandbox 
 	 */
@@ -409,7 +409,12 @@ EOS;
 		$lwp->print_file($_REQUEST["lwp_file"], get_current_user_id());
 	}
 	
-	
+	/**
+	 * Show list of tickets to cancel
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox 
+	 */
 	private function handle_ticket_cancel($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in.

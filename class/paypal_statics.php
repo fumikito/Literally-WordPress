@@ -12,7 +12,7 @@ class PayPal_Statics {
 	 * APIのバージョン
 	 * @var string
 	 */
-	const VERSION = "84.0";
+	const VERSION = "90.0";
 	
 	/**
 	 * ExpressCheckoutで行う支払いアクション
@@ -97,13 +97,18 @@ class PayPal_Statics {
 	/**
 	 * Try refunds
 	 * @param string $transacion_id
-	 * @param int $amount
+	 * @param int $amount (optional) 0 if full refund
 	 * @return string|false
 	 */
 	public static function do_refund($transacion_id, $amount = 0){
-		// TODO: Partial Refund
-		$type = 'Full';
+		global $lwp;
+		// Check if pertal refund or not
+		$type = ($amount === 0) ? 'Full' : 'Partial';
 		$nvpStr = "&TRANSACTIONID=".(string)$transacion_id."&REFUNDTYPE={$type}";
+		//If refund, specify amount
+		if($amount > 0){
+			$nvpStr .= "&AMT=".$amount."CURRENCYCODE=".$lwp->option['currency_code'];
+		}
 		$resArray = self::hash_call('RefundTransaction', $nvpStr);
 		$ack = strtoupper($resArray["ACK"]);
 		if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
@@ -112,6 +117,21 @@ class PayPal_Statics {
 			self::log(var_export($resArray, true));
 			return false;
 		}
+	}
+	
+	/**
+	 * Check if Specified can be refunded.
+	 * @param string $transaction_date Date of transaction made success
+	 * @param int $time timestamp
+	 * @return boolean
+	 */
+	public static function is_refundable($transaction_date, $time = null){
+		if(is_null($time)){
+			$time = strtotime(gmdate('Y-m-d H:i:s'));
+		}
+		$transaction_date = strtotime($transaction_date);
+		$past = $time - $transaction_date;
+		return ($past / 60 / 60 / 24 <= 60);
 	}
 	
 	/**

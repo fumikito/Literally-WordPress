@@ -1565,8 +1565,7 @@ EOS;
 				$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_POST['transaction_id']));
 				if($_POST['status'] == LWP_Payment_Status::REFUND && $transaction->method == LWP_Payment_Methods::PAYPAL && $transaction->status == LWP_Payment_Status::SUCCESS){
 					//Check if refundable
-					$diff = floor((int)(strtotime(gmdate('Y-m-d H:i:s')) - strtotime($transaction->updated)) / 60 / 60 / 24);
-					if($diff > 60){ //Unrefundable
+					if(!PayPal_Statics::is_refundable($transaction->updated)){ //Unrefundable
 						$this->message[] = $this->_("You can't refund via PayPal because 60 days have past since the transaction occurred.");
 						$this->error = true;
 						$flg = false;
