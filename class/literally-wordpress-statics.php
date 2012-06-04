@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9';
+	const VERSION = '0.9.1';
 	
 	/**
 	 * Table prefix for this plugin
@@ -150,6 +150,7 @@ EOS;
 				user_id BIGINT NOT NULL,
 				book_id BIGINT NOT NULL,
 				price BIGINT NOT NULL,
+				num INT NOT NULL DEFAULT 1,
 				status VARCHAR(45) NOT NULL,
 				method VARCHAR(100) NOT NULL DEFAULT 'PAYPAL',
 				transaction_key VARCHAR (255) NOT NULL,
