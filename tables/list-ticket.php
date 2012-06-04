@@ -77,6 +77,9 @@ EOS;
 		if(isset($_GET['s']) && !empty($_GET["s"])){
 			$where[] = $wpdb->prepare("((p.post_title LIKE %s) OR (p.post_content LIKE %s) OR (p.post_excerpt LIKE %s))", '%'.$_GET["s"].'%', '%'.$_GET["s"].'%', '%'.$_GET["s"].'%');
 		}
+		if(isset($_GET['ticket']) && $_GET['ticket'] != 'all'){
+			$where[] = $wpdb->prepare("(t.book_id = %d)", $_GET['ticket']);
+		}
 		$sql .= ' WHERE '.implode(' AND ', $where);
 		//ORDER
 		$order_by = 't.updated';
@@ -123,7 +126,7 @@ EOS;
 				return number_format_i18n($item->num * $item->price).' '.  lwp_currency_code();
 				break;
 			case 'actions':
-				return '<a href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Detail').'</a>';
+				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Detail').'</a>';
 				break;
 		}
 	}
@@ -157,6 +160,14 @@ EOS;
 		return $filter;
 	}
 	
+	function get_ticket(){
+		$filter = 'all';
+		if(isset($_GET['ticket']) && !$_GET['ticket'] != 'all'){
+			$filter = intval($_GET['ticket']);
+		}
+		return $filter;
+	}
+	
 	/**
 	 *
 	 * @return int
@@ -171,7 +182,7 @@ EOS;
 	
 	
 	function extra_tablenav($which) {
-		global $lwp;
+		global $lwp, $wpdb;
 		if($which == 'top'):
 		?>
 		<div class="alignleft acitions">
@@ -184,6 +195,17 @@ EOS;
 				foreach($status as $key => $val): ?>
 					<option value="<?php echo $key; if($key == $this->get_status()) echo '" selected="selected'?>"><?php echo $val; ?></option>
 				<?php endforeach; ?>
+			</select>
+			<select name="ticket">
+				<?php
+					$option = array('all' => $lwp->_('All Tickets'));
+					foreach($wpdb->get_results($wpdb->prepare("SELECT ID, post_title FROM {$wpdb->posts} WHERE post_parent = %d AND post_type = %s", $_GET['event_id'], $lwp->event->post_type)) as $post){
+						$option[$post->ID] = $post->post_title;
+					}
+					foreach($option as $id => $title){
+						echo '<option value='.$id.'"'.($this->get_ticket() == $id ? ' selected="selected"' : '').">".$title.'</option>';
+					}
+				?>
 			</select>
 			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
