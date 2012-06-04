@@ -155,7 +155,7 @@ class LWP_Event extends Literally_WordPress_Common {
 	 * Returns if specified post has tickets
 	 * @global wpdb $wpdb
 	 * @param int $post_id
-	 * @return boolean
+	 * @return int
 	 */
 	public function has_tickets($post_id){
 		global $wpdb;
@@ -163,7 +163,27 @@ class LWP_Event extends Literally_WordPress_Common {
 			SELECT COUNT(ID) FROM {$wpdb->posts}
 			WHERE post_type = %s AND post_parent = %d AND post_status = 'publish'
 EOS;
-		return (boolean) $wpdb->get_var($wpdb->prepare($sql, $post_id));
+		return (int) $wpdb->get_var($wpdb->prepare($sql, $this->post_type, $post_id));
+	}
+	
+	/**
+	 * Returns ticket id of specified post
+	 * @global wpdb $wpdb
+	 * @param int $event_id
+	 * @return array 
+	 */
+	public function get_chicket_ids($event_id){
+		global $wpdb;
+		$chicket_ids = array();
+		$sql = <<<EOS
+			SELECT ID FROM {$wpdb->posts}
+			WHERE post_type = %s AND post_parent = %d
+			ORDER BY post_date DESC
+EOS;
+		foreach($wpdb->get_results($wpdb->prepare($sql, $this->post_type, $event_id)) as $ticket){
+			$chicket_ids[] = $ticket->ID;
+		}
+		return $chicket_ids;
 	}
 	
 	/**
@@ -183,6 +203,17 @@ EOS;
 			WHERE t.user_id = %d AND t.status = %s AND p.post_parent = %d
 EOS;
 		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS,$post_id));
+	}
+	
+	/**
+	 * Get event id from ticket's id
+	 * @global wpdb $wpdb
+	 * @param int $ticket_id
+	 * @return int 
+	 */
+	public function get_event_from_ticket_id($ticket_id){
+		global $wpdb;
+		return (int)$wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $ticket_id));
 	}
 	
 	/**

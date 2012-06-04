@@ -33,13 +33,14 @@ class LWP_List_Transfer extends WP_List_Table{
 		//If action is specified, do it.
 		if($this->current_action() && isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], "bulk-{$this->_args['plural']}")){
 			if(isset($_GET['transfer']) && is_array($_GET['transfer'])){
-				$transfes = $_GET['transfer'];
+				$transfers = $_GET['transfer'];
 				switch($this->current_action()){
 					case LWP_Payment_Status::SUCCESS:
 					case LWP_Payment_Status::CANCEL:
 					case LWP_Payment_Status::START:
+					case LWP_Payment_Status::REFUND:
 						//Update Status
-						foreach($transfes as $transaction_id){
+						foreach($transfers as $transaction_id){
 							$to_update = array(
 								'updated' => gmdate('Y-m-d H:i:s'),
 								'status' => $this->current_action()
@@ -210,6 +211,11 @@ EOS;
 					case LWP_Payment_Status::SUCCESS:
 						return '--';
 						break;
+					case LWP_Payment_Status::REFUND_REQUESTING:
+						$condition = $lwp->event->get_current_cancel_condition($lwp->event->get_event_from_ticket_id($item->book_id), strtotime($item->updated));
+						$ratio = $condition ? $condition['ratio'] : 0;
+						return $lwp->_('Refund :')." ".number_format_i18n($item->price * $ratio / 100)." ".lwp_currency_code().' <small>('.$ratio.'%)</small>';
+						break;
 					case LWP_Payment_Status::START:
 						if($lwp->option['notification_limit'] < 1){
 							return '--';;
@@ -263,6 +269,7 @@ EOS;
 			case LWP_Payment_Status::REFUND:
 			case LWP_Payment_Status::START:
 			case LWP_Payment_Status::SUCCESS:
+			case LWP_Payment_Status::REFUND_REQUESTING:
 				return $filter = $target;
 				break;
 		}
@@ -289,7 +296,8 @@ EOS;
 		return array(
 			LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
 			LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
-			LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START)
+			LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
+			LWP_Payment_Status::REFUND	 => $lwp->_(LWP_Payment_Status::REFUND)
 		);
 	}
 	
@@ -302,10 +310,11 @@ EOS;
 				<?php
 				$status = array(
 					'all' => $lwp->_('All Status'),
-				 LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
-				 LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
-				 LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
-				 LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND)
+					LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
+					LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
+					LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
+					LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND),
+					LWP_Payment_Status::REFUND_REQUESTING => $lwp->_(LWP_Payment_Status::REFUND_REQUESTING)
 				);
 				foreach($status as $s => $val): ?>
 				<option value="<?php echo $s; if($s == $this->get_filter()) echo '" selected="selected'?>"><?php echo $val; ?></option>
