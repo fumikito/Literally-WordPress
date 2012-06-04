@@ -1111,6 +1111,19 @@ function lwp_ticket_bought_price($post = null, $user_id = null){
 }
 
 
+function lwp_bought_num($post = null, $user_id = null){
+	global $wpdb, $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(is_null($user_id)){
+		$user_id = get_current_user_id();
+	}
+	
+}
+
 /**
  * Returns currently refundable price
  * @global wpdb $wpdb

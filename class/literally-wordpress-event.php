@@ -257,18 +257,14 @@ EOS;
 	public function get_cancelable_tickets($user_id, $event_id){
 		global $wpdb, $lwp;
 		$sql = <<<EOS
-			SELECT t.book_id FROM {$lwp->transaction} AS t
+			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
 			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
 EOS;
-		$results = $wpdb->get_results($wpdb->prepare($sql, $event_id, $user_id, LWP_Payment_Status::SUCCESS));
-		$ticket_ids = array();
-		foreach($results as $result){
-			$ticket_ids[] = intval($result->book_id);
-		}
-		return $ticket_ids;
+		return $wpdb->get_results($wpdb->prepare($sql, $event_id, $user_id, LWP_Payment_Status::SUCCESS));
 	}
+	
 	
 	public function is_refundable($ticket_id, $date){
 		

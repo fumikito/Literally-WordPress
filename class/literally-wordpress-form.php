@@ -438,10 +438,7 @@ EOS;
 		}
 		//Show Form
 		$this->show_form('cancel-ticket', array(
-			'query' => new WP_Query(array(
-				'post_type' => $lwp->event->post_type,
-				'post__in' => $tickets
-			)),
+			'tickets' => $tickets,
 			'event' => $event_id,
 			'event_type' => get_post_type_object($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $event_id))),
 			'limit' => $cancel_limit_time,
@@ -469,7 +466,7 @@ EOS;
 		//Get transaction
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction}
-			WHERE book_id = %d AND user_id = %d AND status = %s
+			WHERE ID = %d AND user_id = %d AND status = %s
 EOS;
 		$transaction = $wpdb->get_row($wpdb->prepare($sql, $ticket_id, get_current_user_id(), LWP_Payment_Status::SUCCESS));
 		//Check if cancelable transaction exists
@@ -484,7 +481,7 @@ EOS;
 		}
 		//Now, let's start refund action
 		$bought_price = $transaction->price;
-		$refund_price = $bought_price * $current_condition['ratio'] / 100;
+		$refund_price = round($bought_price * $current_condition['ratio'] / 100);
 		$status = false;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;
