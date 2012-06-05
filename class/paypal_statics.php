@@ -12,7 +12,7 @@ class PayPal_Statics {
 	 * APIのバージョン
 	 * @var string
 	 */
-	const VERSION = "90.0";
+	const VERSION = "88.0";
 	
 	/**
 	 * ExpressCheckoutで行う支払いアクション

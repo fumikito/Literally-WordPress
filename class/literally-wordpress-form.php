@@ -106,7 +106,14 @@ class LWP_Form extends Literally_WordPress_Common{
 		//Let's start transaction!
 		//Get book id
 		$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
-		if(!($book = wp_get_single_post ($book_id)) || false === array_search($book->post_type, $lwp->option['payable_post_types'])){
+		$post_types = $lwp->option['payable_post_types'];
+		if($lwp->event->enabled){
+			$post_types[] = $lwp->event->post_type;
+		}
+		if($lwp->subscription->enabled){
+			$post_types[] = $lwp->subscription->post_type;
+		}
+		if(!($book = wp_get_single_post ($book_id)) || false === array_search($book->post_type, $post_types)){
 			//If specified content doesn't exist, die.
 			$message = $this->_("No content is specified.");
 		}elseif(lwp_price($book_id) < 1){
@@ -138,8 +145,8 @@ class LWP_Form extends Literally_WordPress_Common{
 			}
 		}else{
 			//Current step
-			$total = $book->post_type == $this->subscription->post_type ? 4 : 3;
-			$current = $book->post_type == $this->subscription->post_type ? 2 : 1;
+			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
+			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
 			//Start Transaction
 			if(!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow')){
 				//Select Payment Method and show form
