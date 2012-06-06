@@ -1205,6 +1205,21 @@ function lwp_cancel_url($post = null){
 }
 
 /**
+ * Returns ticket list
+ * @global object $post
+ * @param object $post
+ * @return string 
+ */
+function lwp_ticket_url($post = null){
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	return lwp_endpoint('ticket-list').'&lwp-event='.$post->ID;
+}
+
+/**
  * Returns ticket price when user bought (use inside ticket loop)
  * @global wpdb $wpdb
  * @global Literally_WordPress $lwp

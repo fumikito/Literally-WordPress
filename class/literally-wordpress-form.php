@@ -525,6 +525,50 @@ EOS;
 	}
 	
 	/**
+	 * Shows ticket list user bought
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox 
+	 */
+	private function handle_ticket_list($is_sandbox = false){
+		global $lwp, $wpdb;
+		//First of all, user must be logged in
+		$this->kill_anonymous_user();
+		//Chcek if event id is set
+		if(
+			!isset($_GET['lwp-event'])
+				||
+			!($event = wp_get_single_post($_GET['lwp-event']))
+				||
+			(false === array_search($event->post_type, $lwp->event->post_types))
+		){
+			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		}
+		$event_type = get_post_type_object($event->post_type);
+		//Get tickets
+		$sql = <<<EOS
+			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
+			ORDER BY t.updated DESC
+EOS;
+			$wpdb->show_errors();
+		$tickets = $wpdb->get_results($wpdb->prepare($sql, $event->ID, get_current_user_id(), LWP_Payment_Status::SUCCESS));
+		//Check if ticket found.
+		if(empty($tickets)){
+			wp_die($this->_('Sorry, but you have no tikcet to display.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		$this->show_form('event-tickets', array(
+			'title' => $event->post_title,
+			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
+			'link' => get_permalink($event->ID),
+			'post_type' => $event_type->labels->name,
+			'tickets' => $tickets
+		));
+	}
+	
+	/**
 	 * Stop processing transaction of not logged in user. 
 	 */
 	private function kill_anonymous_user(){
