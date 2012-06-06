@@ -553,18 +553,20 @@ EOS;
 			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
 			ORDER BY t.updated DESC
 EOS;
-			$wpdb->show_errors();
 		$tickets = $wpdb->get_results($wpdb->prepare($sql, $event->ID, get_current_user_id(), LWP_Payment_Status::SUCCESS));
 		//Check if ticket found.
 		if(empty($tickets)){
 			wp_die($this->_('Sorry, but you have no tikcet to display.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
 		}
+		$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
 		$this->show_form('event-tickets', array(
 			'title' => $event->post_title,
 			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
 			'link' => get_permalink($event->ID),
 			'post_type' => $event_type->labels->name,
-			'tickets' => $tickets
+			'tickets' => $tickets,
+			'check_url' => $check_url,
+			'qr_src' => '//chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.rawurlencode($check_url)
 		));
 	}
 	

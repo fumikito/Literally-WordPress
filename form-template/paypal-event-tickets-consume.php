@@ -10,7 +10,7 @@
 			<th scope="col"><?php $this->e('Ticket Name'); ?></th>
 			<th scope="col"><?php $this->e('Bought');?></th>
 			<th scope="col"><?php $this->e('Price'); ?></th>
-			<th scope="col"><?php $this->e('Quantity'); ?></th>
+			<th scope="col"><?php $this->e('Number'); ?></th>
 			<th scope="col"><?php $this->e('Consumed'); ?></th>
 		</tr>
 	</thead>
@@ -24,9 +24,6 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
-<p class="check-url-image center">
-	<img src="<?php echo $qr_src; ?>" alt="<?php echo $check_url; ?>" height="150" width="150" />
-</p>
 <p>
 	<a class="button" href="<?php echo $link; ?>"><?php printf($this->_("Return to %s"), $title); ?></a>
 </p>

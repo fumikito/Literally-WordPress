@@ -1220,6 +1220,26 @@ function lwp_ticket_url($post = null){
 }
 
 /**
+ * Returns form to consume ticket
+ * @global object $post
+ * @param int $user_id
+ * @param string $post
+ * @return string 
+ */
+function lwp_ticket_check_url($user_id = null, $post = null){
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(is_null($user_id)){
+		$user_id = get_current_user_id();
+	}
+	$user_login = get_userdata($user_id)->user_email;
+	return lwp_endpoint('ticket-consume').'&lwp-event='.$post->ID.'&u='.  rawurlencode(base64_encode($user_login));
+}
+
+/**
  * Returns ticket price when user bought (use inside ticket loop)
  * @global wpdb $wpdb
  * @global Literally_WordPress $lwp
