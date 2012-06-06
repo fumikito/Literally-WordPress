@@ -630,7 +630,32 @@ function lwp_buy_now($post = null, $btn_src = false)
 		}
 		$tag = "<img src=\"".htmlspecialchars($btn_src, ENT_QUOTES, 'utf-8')."\" alt=\"".$lwp->_('Buy Now')."\" />";
 	}
-	return "<a class=\"lwp-buynow\" href=\"".lwp_endpoint('buy')."&lwp-id={$post_id}\">{$tag}</a>";
+	return "<a class=\"lwp-buynow\" href=\"".  lwp_buy_url($post)."\">{$tag}</a>";
+}
+
+/**
+ * Returns url to buy page
+ * @global object $post
+ * @param object $post
+ * @return string 
+ */
+function lwp_buy_url($post = null){
+	//Get post object
+	if(!$post){
+		global $post;
+		$post_id = $post->ID;
+	}elseif(is_numeric($post)){
+		$post_id = $post;
+	}elseif(is_object($post) && isset($post->ID)){
+		$post_id = $post->ID;
+	}else{
+		return;
+	}
+	//Check if it is payable
+	if(lwp_is_free(true, $post)){
+		return;
+	}
+	return lwp_endpoint('buy').'&lwp-id='.$post_id;
 }
 
 /**
@@ -1039,6 +1064,34 @@ function lwp_current_cancel_ratio($post = null){
 }
 
 /**
+ * Display list of cancel condition 
+ * @global Literally_WordPress $lwp
+ * @param array|string $args
+ */
+function lwp_list_cancel_condition($args = array()){
+	global $lwp;
+	$args = wp_parse_args($args, array(
+		'callback' => '',
+		'post' => get_the_ID(),
+		'before' => '<ol class="lwp-event-cancel-conditions">',
+		'after' => '</ol>'
+	));
+	$limit = get_post_meta($args['post'], $lwp->event->meta_selling_limit, true);
+	$conditions = get_post_meta($args['post'], $lwp->event->meta_cancel_limits, true);
+	if(!empty($conditions)){
+		echo $args['before'];
+		foreach($conditions as $condition){
+			if(function_exists($args['callback'])){
+				call_user_func_array($args['callback'], array($limit, $condition['days'], $condition['ratio']));
+			}else{
+				_lwp_show_condition($limit, $condition['days'], $condition['ratio']);
+			}
+		}
+		echo $args['after'];
+	}
+}
+
+/**
  * Display tickets. Use inside loop
  * @global Literally_WordPress $lwp
  * @param string|array $args 
@@ -1059,7 +1112,7 @@ function lwp_list_tickets($args = ''){
 		'orderby' => 'date'
 	);
 	global $post;
-	$old_post = $post;
+	$old_post = clone $post;
 	$parent_id = get_the_ID();
 	$new_query = new WP_Query($query);
 	if($new_query->have_posts()){
@@ -1071,8 +1124,71 @@ function lwp_list_tickets($args = ''){
 				_lwp_show_ticket($parent_id);
 			}
 		}
+		$post = $old_post;
+		setup_postdata($old_post);
 	}
-	setup_postdata($old_post);
+}
+
+
+/**
+ * Returns ticket stock
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @global object $post
+ * @param boolean $raw Set true if original stock value required.
+ * @param int $post
+ * @return int 
+ */
+function lwp_get_ticket_stock($raw = false, $post = null){
+	global $lwp, $wpdb;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$stock = get_post_meta($post->ID, $lwp->event->meta_stock, true);
+	if(!$stock || $raw){
+		return (int)$stock;
+	}
+	//Get bought ticket count
+	$sold = lwp_get_ticket_sold($post);
+	return $stock - $sold;
+}
+
+/**
+ * Returns ticket sold. Use inside ticket loop
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @global object $post
+ * @param mixed $post
+ * @return int
+ */
+function lwp_get_ticket_sold($post = null){
+	global $lwp, $wpdb;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	return (int)$wpdb->get_var($wpdb->prepare("SELECT SUM(num) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s", $post->ID, LWP_Payment_Status::SUCCESS));
+}
+
+/**
+ * Displays tikcet sold count.
+ * @param mixed $post 
+ */
+function lwp_the_ticket_sold($post = null){
+	echo number_format_i18n(lwp_get_ticket_sold($post));
+}
+
+/**
+ * Displays ticket stock. Use inside ticket loop
+ * @param boolean $raw If set to true, displays original stock value.
+ * @param object $post 
+ */
+function lwp_the_ticket_stock($raw = false, $post = null){
+	$stock = lwp_get_ticket_stock($raw, $post);
+	echo number_format_i18n($stock);
 }
 
 /**
@@ -1159,6 +1275,8 @@ function lwp_is_participating($post = null){
 	global $lwp;
 	if(is_null($post)){
 		global $post;
+	}else{
+		$post = get_post($post);
 	}
 	if(is_user_logged_in()){
 		return $lwp->event->is_participating(get_current_user_id(), $post->ID);

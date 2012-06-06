@@ -60,6 +60,19 @@ EOS;
 }
 
 /**
+ * Callback function for lwp_list_cancel_condition
+ * @param string $limit
+ * @param int $days_before
+ * @param string $ratio 
+ */
+function _lwp_show_condition($limit, $days_before, $ratio){
+	$limit = strtotime($limit) - ($days_before * 60 * 60 * 24);
+	echo '<li>';
+	printf('By %1$s, %2$s', date_i18n(get_option('date_format'), $limit), $ratio.'%');
+	echo '</li>';
+}
+
+/**
  * Disaply ticket list 
  * @global Literally_WordPress $lwp
  * @param int $parent_id
