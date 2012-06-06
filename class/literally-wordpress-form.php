@@ -533,7 +533,9 @@ EOS;
 	private function handle_ticket_list($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
-		$this->kill_anonymous_user();
+		if(!is_user_logged_in()){
+			auth_redirect();
+		}
 		//Chcek if event id is set
 		if(
 			!isset($_GET['lwp-event'])
@@ -542,7 +544,7 @@ EOS;
 				||
 			(false === array_search($event->post_type, $lwp->event->post_types))
 		){
-			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
 		}
 		$event_type = get_post_type_object($event->post_type);
 		//Get tickets
@@ -567,6 +569,72 @@ EOS;
 			'tickets' => $tickets,
 			'check_url' => $check_url,
 			'qr_src' => '//chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.rawurlencode($check_url)
+		));
+	}
+	
+	/**
+	 * Show form to edit ticket status.
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox 
+	 */
+	private function handle_ticket_consume($is_sandbox = false){
+		global $lwp, $wpdb;
+		//First of all, user must be logged in
+		if(!is_user_logged_in()){
+			auth_redirect();
+		}
+		//Get event object
+		$event = isset($_GET['lwp-event']) ? wp_get_single_post($_GET['lwp-event']) : false;
+		if(!$event){
+			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		//Get user
+		$user_hash = isset($_GET['u']) ? $_GET['u'] : '';
+		$user = get_user_by_email(base64_decode($user_hash));
+		if(!$user){
+			wp_die($this->_('Sorry, but specified user is not found.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		//Check if current user' has's capability
+		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			wp_die($this->_('Sorry, but you have no capability to consume ticket.'), sprintf($this->_("Access Forbidden : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
+		}
+		//if nonce is ok, update
+		if(isset($_POST['_wpnonce'], $_POST['ticket']) && is_array($_POST['ticket']) && wp_verify_nonce($_POST['_wpnonce'], 'lwp_ticket_consume_'.get_current_user_id())){
+			foreach($_POST['ticket'] as $ticket_id => $consumed){
+				$consumed = min($wpdb->get_var($wpdb->prepare("SELECT num FROM {$lwp->transaction} WHERE ID = %d", $ticket_id)), absint($consumed));
+				$wpdb->update(
+					$lwp->transaction,
+					array('consumed' => $consumed),
+					array('ID' => $ticket_id),
+					array('%d'),
+					array('%d')
+				);
+			}
+			$updated = true;
+		}else{
+			$updated = false;
+		}
+		//Now let's get tickets
+		$sql = <<<EOS
+			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
+EOS;
+		$tickets = $wpdb->get_results($wpdb->prepare($sql, $event->ID, $user->ID, LWP_Payment_Status::SUCCESS));
+		if(empty($tickets)){
+			wp_die(sprintf($this->_('Sorry, but %s has no ticket on this event.'), $user->display_name), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		//Show Form
+		$this->show_form('event-tickets-consume', array(
+			'updated' => $updated,
+			'action' => lwp_ticket_check_url($user->ID, $event),
+			'tickets' => $tickets,
+			'user' => $user,
+			'link' => get_permalink($event->ID),
+			'title' => apply_filters('the_title', $event->post_title),
+			'post_type' => get_post_type_object($event->post_type)->labels->name
 		));
 	}
 	
