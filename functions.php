@@ -1173,6 +1173,8 @@ function lwp_get_ticket_sold($post = null){
 	return (int)$wpdb->get_var($wpdb->prepare("SELECT SUM(num) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s", $post->ID, LWP_Payment_Status::SUCCESS));
 }
 
+
+
 /**
  * Displays tikcet sold count.
  * @param mixed $post 
@@ -1317,5 +1319,65 @@ function lwp_is_participating($post = null){
 		return $lwp->event->is_participating(get_current_user_id(), $post->ID);
 	}else{
 		return false;
+	}
+}
+
+/**
+ * Returns participants number of event
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return int 
+ */
+function lwp_participants_number($post = null){
+	global $lwp, $wpdb;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$sql = <<<EOS
+		SELECT COUNT(DISTINCT t.user_id) FROM {$lwp->transaction} AS t
+		INNER JOIN {$wpdb->posts} AS p
+		ON t.book_id = p.ID
+		WHERE p.post_parent = %d AND t.status = %s
+EOS;
+	return (int)$wpdb->get_var($wpdb->prepare($sql, $post->ID, LWP_Payment_Status::SUCCESS));
+}
+
+/**
+ * Display list of participants
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @param array $args 
+ */
+function lwp_list_participants($args = array()){
+	global $lwp, $wpdb;
+	$args = wp_parse_args($args, array(
+		'post_id' => get_the_ID(),
+		'callback' => '_lwp_list_participant',
+		'per_page' => get_option('posts_per_page'),
+		'page' => 1
+	));
+	$per_page = (int)$args['per_page'];
+	$offset = intval(max(0, ($args['page'] - 1)) * $per_page);
+	$sql = <<<EOS
+		SELECT DISTINCT u.ID FROM {$wpdb->users} AS u
+		INNER JOIN {$lwp->transaction} AS t
+		ON u.ID = t.user_id
+		INNER JOIN {$wpdb->posts} AS p
+		ON t.book_id = p.ID
+		WHERE p.post_parent = %d AND t.status = %s
+		GROUP BY u.ID
+		ORDER BY t.updated DESC
+EOS;
+	if($per_page){
+		$sql .= " LIMIT {$offset}, {$per_page}";
+	}
+	$participants = $wpdb->get_results($wpdb->prepare($sql, $args['post_id'], LWP_Payment_Status::SUCCESS));
+	foreach($participants as $user){
+		if(function_exists($args['callback'])){
+			call_user_func_array($args['callback'], array(get_userdata($user->ID), $args['post_id']));
+		}
 	}
 }

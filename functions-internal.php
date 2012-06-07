@@ -94,3 +94,19 @@ function _lwp_show_ticket($parent_id){
 		</li>
 	<?php
 }
+
+/**
+ * Show user list
+ * @global Literally_WordPress $lwp
+ * @param WP_User $user
+ * @param int $post_id 
+ */
+function _lwp_list_participant($user, $post_id){
+	global $lwp;
+	?>
+		<li class="lwp-participant participant-<?php echo $user->ID?>">
+			<?php echo get_avatar($user->user_email, 24);?>
+			<?php echo $user->display_name; ?>さん
+		</li>
+	<?php
+}
