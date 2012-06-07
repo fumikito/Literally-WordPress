@@ -115,8 +115,22 @@ class LWP_Form extends Literally_WordPress_Common{
 		}
 		if(!($book = wp_get_single_post ($book_id)) || false === array_search($book->post_type, $post_types)){
 			//If specified content doesn't exist, die.
-			$message = $this->_("No content is specified.");
-		}elseif(lwp_price($book_id) < 1){
+			wp_die($this->_("No content is specified."), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		//If tickett is specified, check selling limit
+		if($book->post_type == $lwp->event->post_type){
+			$selling_limit = get_post_meta($book->post_parent, $lwp->event->meta_selling_limit, true);
+			if($selling_limit){
+				//Selling limit is found, so check if it's oudated
+				$limit = strtotime($selling_limit) + 60 * 60 * 24 - 1;
+				$current = strtotime(gmdate('Y-m-d H:i:s'));
+				if($limit < $current){
+					wp_die($this->_("Selling limit has been past. There is no ticket available."), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+				}
+			}
+		}
+		//All green, start transaction
+		if(lwp_price($book_id) < 1){
 			//Content is free
 			if(lwp_original_price($book_id) > 0){
 				//Original price is not free, temporally free.
@@ -140,8 +154,8 @@ class LWP_Form extends Literally_WordPress_Common{
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
 				exit;
 			}else{
-				//Content is not available.
-				$message = $this->_("This contents is not on sale.");
+				//Item is not available.
+				wp_die($this->_("This itme is not on sale."), sprintf($this->_('Access Forbidden : %s'), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
 			}
 		}else{
 			//Current step
@@ -194,6 +208,8 @@ EOS;
 							}
 							if($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $book_id)) == $this->subscription->post_type){
 								$url = $this->subscription->get_subscription_archive();
+							}elseif($book->post_type == $lwp->event->post_type){
+								$url = get_permalink($book->post_parent);
 							}else{
 								$url = get_permalink($book_id);
 							}
@@ -213,7 +229,7 @@ EOS;
 					case 'paypal':
 					case 'cc':
 						$billing = ($_GET['lwp-method'] == 'cc') ? true : false;
-						if(!$lwp->start_transaction(get_current_user_id(), $_GET['lwp-id'], $billing)){
+						if(!$lwp->start_transaction(get_current_user_id(), $book_id, $billing)){
 							//Failed to create transaction
 							$message = $this->_("Failed to make transaction.");
 						}
@@ -224,7 +240,7 @@ EOS;
 				}
 			}
 		}
-		//Her you are... Something is wrong. Just show message and die.
+		//Here you are... Something is wrong. Just show message and die.
 		wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
 	}
 	
