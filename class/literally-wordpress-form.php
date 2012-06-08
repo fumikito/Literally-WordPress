@@ -655,6 +655,11 @@ EOS;
 		));
 	}
 	
+	private function handle_ticket_owner($is_sandbox = false){
+		global $lwp, $wpdb;
+		
+	}
+	
 	/**
 	 * Stop processing transaction of not logged in user. 
 	 */

@@ -1381,3 +1381,36 @@ EOS;
 		}
 	}
 }
+
+/**
+ * Returns token check url
+ * @global object $post
+ * @param object $post
+ * @return string 
+ */
+function lwp_ticket_token_url($post = null){
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	return lwp_endpoint('ticket-owner').'&event_id='.$post->ID;
+}
+
+/**
+ * Show button to check token
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post 
+ */
+function lwp_token_chekcer($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	if(user_can_edit_post(get_current_user_id(), $post->ID)){
+		echo '<a class="button" href="'.  lwp_ticket_token_url($post).'">'.$lwp->_('Check Token').'</a>';
+	}
+}
