@@ -582,9 +582,10 @@ EOS;
 			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
 			'link' => get_permalink($event->ID),
 			'post_type' => $event_type->labels->name,
+			'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 			'tickets' => $tickets,
 			'check_url' => $check_url,
-			'qr_src' => '//chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.rawurlencode($check_url)
+			'qr_src' => $lwp->event->get_qrcode($check_url, 200)
 		));
 	}
 	

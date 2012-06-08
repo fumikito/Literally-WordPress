@@ -371,4 +371,57 @@ EOS;
 			die();
 		}
 	}
+	
+	/**
+	 * Retruns url of QR Code
+	 * @param string $url
+	 * @param int $size 
+	 * @param string $protocol null, http or https. Default null.
+	 */
+	public function get_qrcode($url, $size = 200, $protocol = null){
+		if(is_null($protocol)){
+			$p = '//';
+		}else{
+			$p = $protocol.'://';
+		}
+		$size = intval($size);
+		return "{$p}chart.googleapis.com/chart?chs={$size}x{$size}&cht=qr&chl=".rawurlencode($url);
+	}
+	
+	/**
+	 * Generate token for particular user
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $event_id
+	 * @param int $user_id
+	 * @return string 
+	 */
+	public function generate_token($event_id, $user_id){
+		global $wpdb, $lwp;
+		$salt = hexdec($this->get_salt());
+		$salt *= $event_id;
+		$salt *= $user_id;
+		return strtoupper(base_convert($salt, 10, 36));
+	}
+	
+	/**
+	 * Returns
+	 * @param int $event_id
+	 * @param string $token
+	 * @return int
+	 */
+	public function parse_token($event_id, $token){
+		$origin = base_convert(strtolower($token), 36, 10);
+		$salt = hexdec($this->get_salt());
+		var_dump(func_get_args(), $origin, $salt);
+		return $origin / $salt / $event_id;
+	}
+	
+	/**
+	 * Get salt.
+	 * @return string 
+	 */
+	private function get_salt(){
+		return substr(md5(defined('SECURE_AUTH_SALT') ? SECURE_AUTH_SALT : 'literallywordpress'), 0, 4);
+	}
 }

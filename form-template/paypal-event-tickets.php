@@ -26,7 +26,7 @@
 </table>
 <p class="check-url-image center">
 	<?php $this->e('Please keep this code private.'); ?><br />
-	<strong>84234230</strong><br />
+	<strong><?php echo $token; ?></strong><br />
 	<img src="<?php echo $qr_src; ?>" alt="<?php echo $check_url; ?>" height="150" width="150" />
 </p>
 <p class="submit">
