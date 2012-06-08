@@ -25,7 +25,11 @@
 	</tbody>
 </table>
 <p class="check-url-image center">
+	<strong>84234230</strong><br />
 	<img src="<?php echo $qr_src; ?>" alt="<?php echo $check_url; ?>" height="150" width="150" />
+</p>
+<p class="submit">
+	<a id="lwp-submit" class="button-primary" href="#" onclick="window.print(); return false;"><?php $this->e("Print"); ?></a>
 </p>
 <p>
 	<a class="button" href="<?php echo $link; ?>"><?php printf($this->_("Return to %s"), $title); ?></a>

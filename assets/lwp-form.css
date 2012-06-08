@@ -175,6 +175,17 @@ textarea{
 	border:1px solid #dfdfdf;
 }
 
+#lwp-invoice p.check-url-image{
+	text-align: center;
+	margin: 1em;
+	}
+	#lwp-invoice p.check-url-image strong{
+		font-size: 1.6em;
+		letter-spacing: 0.25em;
+		margin: 0.5em 0;
+		font-family:'Consolas', 'Courrier', 'andale mono', 'lucida console', 'Osaka-mono', 'Osaka－等幅', 'Meiryo UI', monospace;
+	}
+
 
 
 #lwp-invoice .header{

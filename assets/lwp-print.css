@@ -1,0 +1,48 @@
+@charset 'utf-8';
+
+body{
+	padding: 2em;
+	font-size: 9pt;
+}
+#lwp-invoice .header{
+		
+	}
+	#lwp-invoice .header h1{
+		font-size: 2em;
+	}
+
+p.submit,
+a.button{
+	display: none;
+}
+
+p.check-url-image{
+	text-align: center;
+	margin: 1em;
+	}
+	p.check-url-image strong{
+		font-size: 1.6em;
+		letter-spacing: 0.25em;
+		margin: 0.5em 0;
+		font-family:'Consolas', 'Courrier', 'andale mono', 'lucida console', 'Osaka-mono', 'Osaka－等幅', 'Meiryo UI', monospace;
+	}
+#lwp-invoice .footer{
+	text-align: center;
+}
+.form-table{
+	width: 100%;
+	border-collapse: collapse;
+	}
+	.form-table th,
+	.form-table td{
+		padding: 0.25em;
+		text-align: left;
+		border-bottom: 1px solid #ccc;
+	}
+	.form-table thead th,
+	.form-table thead td,
+	.form-table tfoot th,
+	.form-table tfoot td{
+		border-bottom: 3px double #ccc;
+		border-top: 3px double #ccc;
+	}

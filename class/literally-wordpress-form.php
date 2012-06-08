@@ -688,15 +688,17 @@ EOS;
 		extract($args);
 		$filename = "paypal-{$slug}.php";
 		//テーマテンプレートに存在するかどうか調べる
-		if(file_exists(TEMPLATEPATH.DIRECTORY_SEPARATOR.$filename)){
+		if(file_exists(get_template_directory().DIRECTORY_SEPARATOR.$filename)){
 			//テンプレートがあれば読み込む
-			require_once TEMPLATEPATH.DIRECTORY_SEPARATOR.$filename;
+			require_once get_template_directory().DIRECTORY_SEPARATOR.$filename;
 		}else{
 			//なければ自作
 			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
 			//CSS-js読み込み
-			$css = (file_exists(TEMPLATEPATH.DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
-			wp_enqueue_style("lwp-form", $css, array(), $lwp->version);
+			$css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
+			$print_css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_template_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
+			wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
+			wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
 			wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery"), $lwp->version, true);
 			require_once $parent_directory."paypal-header.php";
 			require_once $parent_directory.$filename;
