@@ -1,7 +1,7 @@
 <?php /* @var $this LWP_Form */?>
 
 <p class="message notice">
-	<?php printf($this->_('Below is the tickets you bought for %1$s <strong>&quot;%2$s&quot;</strong>.'), $post_type, $title, $limit); ?>
+	<?php printf($this->_('Below is the tickets you bought for %1$s <strong>&quot;%2$s&quot;</strong>. Print or bookmark this page and keep it accessible.'), $post_type, $title, $limit); ?>
 </p>
 
 <table class="form-table lwp-ticket-table" id="lwp-ticket-table-list">
@@ -31,6 +31,9 @@
 	<strong><?php echo $token; ?></strong><br />
 	<img src="<?php echo $qr_src; ?>" alt="<?php echo $check_url; ?>" height="150" width="150" />
 </p>
+<?php if(!empty($footer_note)): ?>
+<div class="ticket-footer-note"><?php echo $footer_note; ?></div>
+<?php endif; ?>
 <p class="submit">
 	<a id="lwp-submit" class="button-primary" href="#" onclick="window.print(); return false;"><?php $this->e("Print"); ?></a>
 </p>

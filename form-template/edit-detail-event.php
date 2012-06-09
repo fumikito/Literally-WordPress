@@ -40,6 +40,13 @@
 				<p class="description"><?php $this->e('If you specify cancelable date, user can cancel transaction after payment.'); ?></p>
 			</td>
 		</tr>
+		<tr>
+			<th valign="top"><label for="event_footer_note"><?php $this->e('Ticket Footer Note'); ?></label></th>
+			<td>
+				<textarea id="event_footer_note" name="event_footer_note" rows="5" style="width:90%;"><?php echo esc_html($this->get_footer_note($post->ID, true)); ?></textarea><br />
+				<label><input type="checkbox" name="event_footer_note_autop" value="1"<?php if($this->footer_note_needs_autop($post->ID)) echo ' checked="checked"'; ?> /><?php $this->e('Auto format'); ?></label>
+			</td>
+		</tr>
 	</tbody>
 </table>
 

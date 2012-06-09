@@ -585,7 +585,8 @@ EOS;
 			'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 			'tickets' => $tickets,
 			'check_url' => $check_url,
-			'qr_src' => $lwp->event->get_qrcode($check_url, 200)
+			'qr_src' => $lwp->event->get_qrcode($check_url, 200),
+			'footer_note' => $lwp->event->get_footer_note($event->ID)
 		));
 	}
 	

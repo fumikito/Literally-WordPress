@@ -35,7 +35,18 @@ class LWP_Event extends Literally_WordPress_Common {
 	 * @var string
 	 */
 	public $meta_stock = '_lwp_ticket_stock';
-
+	
+	/**
+	 * Key name of event's post meta
+	 * @var string
+	 */
+	public $meta_footer_note = '_lwp_event_footer_note';
+	
+	
+	public $ticket_detal = array(
+		'site_name', 'site_url', ''
+	);
+	
 	/**
 	 * Setup option 
 	 * 
@@ -147,6 +158,15 @@ class LWP_Event extends Literally_WordPress_Common {
 				update_post_meta($post_id, $this->meta_cancel_limits, $cancel_limits);
 			}else{
 				delete_post_meta($post_id, $this->meta_cancel_limits);
+			}
+			//Save footer note
+			if(isset($_REQUEST['event_footer_note']) && !empty($_REQUEST['event_footer_note'])){
+				update_post_meta($post_id, $this->meta_footer_note, array(
+					'text' => (string) $_REQUEST['event_footer_note'],
+					'autop' => (boolean) (isset($_REQUEST['event_footer_note_autop']) && $_REQUEST['event_footer_note_autop'])
+				));
+			}else{
+				delete_post_meta($post_id, $this->meta_footer_note);
 			}
 		}
 	}
@@ -425,5 +445,40 @@ EOS;
 	 */
 	private function get_salt(){
 		return substr(md5(defined('SECURE_AUTH_SALT') ? SECURE_AUTH_SALT : 'literallywordpress'), 0, 4);
+	}
+	
+	/**
+	 * Returns footer note text for event.
+	 * @param int $post_id
+	 * @param boolean $raw
+	 * @return string 
+	 */
+	public function get_footer_note($post_id, $raw = false){
+		$footer_note = get_post_meta($post_id, $this->meta_footer_note, true);
+		if($footer_note && isset($footer_note['text'])){
+			if($raw){
+				return $footer_note['text'];
+			}else{
+				$footer_note_text = $footer_note['text'];
+				foreach($this->ticket_detal as $key){
+					
+				}
+				return ($this->footer_note_needs_autop($post_id))
+						? wpautop($footer_note_text)
+						: $footer_note_text;
+			}
+		}else{
+			return '';
+		}
+	}
+	
+	/**
+	 * Returns is footer notes needs autop
+	 * @param int $post_id
+	 * @return boolean 
+	 */
+	public function footer_note_needs_autop($post_id){
+		$footer_note = get_post_meta($post_id, $this->meta_footer_note, true);
+		return isset($footer_note['autop']) && $footer_note['autop'];
 	}
 }
