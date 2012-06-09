@@ -405,16 +405,18 @@ EOS;
 	}
 	
 	/**
-	 * Returns
+	 * Returns userid by parsing token
+	 * @global wpdb $wpdb
 	 * @param int $event_id
 	 * @param string $token
 	 * @return int
 	 */
 	public function parse_token($event_id, $token){
+		global $wpdb;
 		$origin = base_convert(strtolower($token), 36, 10);
 		$salt = hexdec($this->get_salt());
-		var_dump(func_get_args(), $origin, $salt);
-		return $origin / $salt / $event_id;
+		$user_id = $origin / $salt / $event_id;
+		return (int)$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->users} WHERE ID = %d", $user_id));
 	}
 	
 	/**

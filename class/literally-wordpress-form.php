@@ -612,7 +612,7 @@ EOS;
 		if(!$user){
 			wp_die($this->_('Sorry, but specified user is not found.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
 		}
-		//Check if current user' has's capability
+		//Check if current user has capability
 		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
 			wp_die($this->_('Sorry, but you have no capability to consume ticket.'), sprintf($this->_("Access Forbidden : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
 		}
@@ -655,9 +655,41 @@ EOS;
 		));
 	}
 	
+	/**
+	 * Displays form to find ticket owner
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox 
+	 */
 	private function handle_ticket_owner($is_sandbox = false){
 		global $lwp, $wpdb;
-		
+		//First of all, user must be logged in
+		$this->kill_anonymous_user();
+		$event_id = isset($_GET['event_id']) ? $_GET['event_id'] : '';
+		$event = wp_get_single_post($event_id);
+		if(!$event){
+			wp_die($this->_('Sorry, but event is not found.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+		}
+		//Check if Error occurs
+		$error = false;
+		if(isset($_REQUEST['_wpnonce'], $_REQUEST['code']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_owner_'.$event->ID)){
+			$user_id = $lwp->event->parse_token($event->ID, $_REQUEST['code']);
+			if($user_id){
+				header('Location: '.lwp_ticket_check_url($user_id, $event));
+				die();
+			}else{
+				$error = true;
+			}
+		}
+		//Event is found. Show inter face 
+		$this->show_form('event-user', array(
+			'error' => $error,
+			'event_id' => $event->ID,
+			'title' => apply_filters('the_title', $event->post_title),
+			'post_type' => get_post_type_object($event->post_type)->labels->name,
+			'link' => get_permalink($event->ID),
+			'action' => lwp_endpoint('ticket-owner').'&event_id='.$event->ID,
+		));
 	}
 	
 	/**

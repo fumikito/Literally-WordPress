@@ -16,11 +16,13 @@
 	</thead>
 	<tbody>
 		<?php foreach($tickets as $ticket): ?>
-			<th scope="row"><?php echo apply_filters('the_title', $ticket->post_title);?></th>
-			<td><?php echo mysql2date(get_option('date_format'), $ticket->updated);?></td>
-			<td><?php echo number_format_i18n($ticket->price).' '.lwp_currency_code();?></td>
-			<td><?php echo number_format_i18n($ticket->num); ?></td>
-			<td><?php echo number_format_i18n($ticket->consumed); ?></td>
+			<tr>
+				<th scope="row"><?php echo apply_filters('the_title', $ticket->post_title);?></th>
+				<td><?php echo mysql2date(get_option('date_format'), $ticket->updated);?></td>
+				<td><?php echo number_format_i18n($ticket->price).' '.lwp_currency_code();?></td>
+				<td><?php echo number_format_i18n($ticket->num); ?></td>
+				<td><?php echo number_format_i18n($ticket->consumed); ?></td>
+			</tr>
 		<?php endforeach; ?>
 	</tbody>
 </table>
