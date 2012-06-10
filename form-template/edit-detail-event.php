@@ -1,5 +1,29 @@
 <?php /* @var $this LWP_Event */ /* @var $post object */ ?>
 <?php wp_nonce_field('lwp_event_detail', '_lwpeventnonce'); ?>
+<h4><?php $this->e('Event Information'); ?></h4>
+<table class="form-table" id="">
+	<tr>
+		<th valign="top"><?php $this->e('Participants'); ?></th>
+		<td>
+			<?php
+				$participants = lwp_participants_number($post);
+				printf('<strong>%s</strong> People', number_format($participants));
+			?>
+			<?php if($participants): ?>
+				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact').'&amp;'.'event_id='.$post->ID; ?>"><?php $this->e('Contact them'); ?></a>
+			<?php endif; ?>
+			<?php if(current_user_can('edit_others_posts')): ?>
+				<a class="button" href="<?php echo admin_url('admin.php').'?page=lwp-event&amp;event_id'.$post->ID; ?>"><?php $this->e('Show list'); ?></a>
+			<?php endif; ?>
+		</td>
+	</tr>
+	<tr>
+		<th valign="top"><?php $this->e('Ticket Sold'); ?></th>
+		<td>
+			<?php echo number_format($this->get_event_transaction_total($post->ID)).' '.lwp_currency_code();?>
+		</td>
+	</tr>
+</table>
 
 <h4><?php $this->e('Ticket Sale Setting');?></h4>
 <table class="form-table" id="lwp-event-setting">

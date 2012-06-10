@@ -483,6 +483,13 @@
 					</td>
 				</tr>
 				<tr>
+					<th valign="top"><label for="event_signature"><?php $this->e('Mail Signature'); ?></label></th>
+					<td>
+						<textarea rows="5" style="width:90%;" name="event_signature" id="event_signature"><?php echo esc_html($this->event->get_signature()); ?></textarea>
+						<p class="description"><?php $this->e('This text will be used for every mail to participants'); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top">
 						<label><?php $this->e('What is Event?'); ?></label>
 					</th>

@@ -42,6 +42,11 @@ class LWP_Event extends Literally_WordPress_Common {
 	 */
 	public $meta_footer_note = '_lwp_event_footer_note';
 	
+	/**
+	 * Footer signature display on mail
+	 * @var string
+	 */
+	private $_signature = '';
 	
 	public $ticket_detal = array(
 		'site_name', 'site_url', ''
@@ -55,9 +60,11 @@ class LWP_Event extends Literally_WordPress_Common {
 	 */
 	public function set_option($option){
 		$option = shortcode_atts(array(
-			'event_post_types' => array()
+			'event_post_types' => array(),
+			'event_signature' => ''
 		), $option);
 		$this->post_types = $option['event_post_types'];
+		$this->_signature = (string)$option['event_signature'];
 		$this->enabled = !empty($option['event_post_types']);
 	}
 	
@@ -125,6 +132,7 @@ class LWP_Event extends Literally_WordPress_Common {
 	public function display_metabox($post){
 		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail-event.php";
 	}
+	
 	
 	/**
 	 * Save event meta information
@@ -234,6 +242,24 @@ EOS;
 	public function get_event_from_ticket_id($ticket_id){
 		global $wpdb;
 		return (int)$wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $ticket_id));
+	}
+	
+	/**
+	 * Returns event total sales
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $event_id
+	 * @return int 
+	 */
+	public function get_event_transaction_total($event_id){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(t.price) FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE p.post_parent = %d
+EOS;
+		return $wpdb->get_var($wpdb->prepare($sql, $event_id));
 	}
 	
 	/**
@@ -480,5 +506,13 @@ EOS;
 	public function footer_note_needs_autop($post_id){
 		$footer_note = get_post_meta($post_id, $this->meta_footer_note, true);
 		return isset($footer_note['autop']) && $footer_note['autop'];
+	}
+	
+	/**
+	 * Returns signature
+	 * @return string 
+	 */
+	public function get_signature(){
+		return (string)$this->_signature;
 	}
 }

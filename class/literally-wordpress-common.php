@@ -77,4 +77,18 @@ class Literally_WordPress_Common {
 	public function is_enabled(){
 		return $this->enabled;
 	}
+	
+	/**
+	 * Call wp_die shorthand
+	 * @param string|array $message If array, apply sprintf
+	 * @param int $status_code HTTP Status code
+	 * @param boolean $backlink Default true
+	 */
+	public function kill($message, $status_code = 400, $backlink = true){
+		wp_die(
+			(is_array($message) ? call_user_func_array('sprintf', $message) : (string)$message), 
+			sprintf("%s : %s", get_status_header_desc($status_code), get_bloginfo('name')),
+			array('back_link' => $backlink, 'response' => $status_code)
+		);
+	}
 }

@@ -18,7 +18,7 @@ class LWP_Form extends Literally_WordPress_Common{
 			if(method_exists($this, $action)){
 				$this->{$action}();
 			}else{
-				wp_die($this->_('Sorry, but You might make unexpected action.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+				$this->kill($this->_('Sorry, but You might make unexpected action.'), 400);
 			}
 		}
 	}
@@ -42,9 +42,9 @@ class LWP_Form extends Literally_WordPress_Common{
 		if($is_subscription && !is_user_logged_in()){
 			auth_redirect($_SERVER["REQUEST_URI"]);
 		}elseif($is_subscription && $lwp->subscription->is_subscriber()){
-			wp_die($this->_('You are already subscriber. You don\'t have to buy subscription.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
+			$this->kill($this->_('You are already subscriber. You don\'t have to buy subscription.'), 409);
 		}elseif(!$lwp->subscription->has_plans()){
-			wp_die($this->_('Sorry, but there is no subscription plan.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true));
+			$this->kill($this->_('Sorry, but there is no subscription plan.'), 404);
 		}
 		//If not redirected, action is proper.
 		//Let's show subsctiption lists.
@@ -100,7 +100,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				));
 			}else{
 				//Post not found
-				wp_die($this->_('Mmm... Cannot find product. Please check if you have payable post.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('response' => 500));
+				$this->kill($this->_('Mmm... Cannot find product. Please check if you have payable post.'), 404);
 			}
 		}
 		//Let's start transaction!
@@ -115,7 +115,7 @@ class LWP_Form extends Literally_WordPress_Common{
 		}
 		if(!($book = wp_get_single_post ($book_id)) || false === array_search($book->post_type, $post_types)){
 			//If specified content doesn't exist, die.
-			wp_die($this->_("No content is specified."), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_("No content is specified."), 404);
 		}
 		//If tickett is specified, check selling limit
 		if($book->post_type == $lwp->event->post_type){
@@ -125,7 +125,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				$limit = strtotime($selling_limit) + 60 * 60 * 24 - 1;
 				$current = strtotime(gmdate('Y-m-d H:i:s'));
 				if($limit < $current){
-					wp_die($this->_("Selling limit has been past. There is no ticket available."), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
 				}
 			}
 		}
@@ -155,7 +155,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				exit;
 			}else{
 				//Item is not available.
-				wp_die($this->_("This itme is not on sale."), sprintf($this->_('Access Forbidden : %s'), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
+				$this->kill($this->_("This itme is not on sale."), 403);
 			}
 		}else{
 			//Current step
@@ -241,7 +241,7 @@ EOS;
 			}
 		}
 		//Here you are... Something is wrong. Just show message and die.
-		wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+		$this->kill($message);
 	}
 	
 	/**
@@ -277,7 +277,7 @@ EOS;
 				));
 			}else{
 				//Post not found
-				wp_die($this->_('Mmm... Cannot find product. Please check if you have payable post.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('response' => 500));
+				$this->kill($this->_('Mmm... Cannot find product. Please check if you have payable post.'), 404);
 			}
 		}
 		if(!isset($_POST["_wpnonce"]) || !wp_verify_nonce($_POST["_wpnonce"], "lwp_confirm")){
@@ -308,7 +308,7 @@ EOS;
 					'current' => ($post->post_type == $lwp->subscription->post_type) ? 3 : 2
 				));
 			}else{
-				wp_die($message, sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array("back_link" => true));
+				$this->kill($message);
 			}
 		}else{
 			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
@@ -333,7 +333,7 @@ EOS;
 				//サンキューページを表示する
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
 			}else{
-				wp_die($this->_("Transaction Failed to finish."), $this->_("Failed"), array("back_link" => true));
+				$this->kill($this->_("Transaction Failed to finish."));
 			}
 		}
 	}
@@ -446,18 +446,18 @@ EOS;
 		$event_id = isset($_REQUEST['lwp-event']) ? intval($_REQUEST['lwp-event']) : false;
 		//If event dosen't exist, stop processing.
 		if(!$event_id || !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_status = 'publish'", $event_id))){
-			wp_die($this->_('Sorry, but you specified unexistant event.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			$this->kill($this->_('Sorry, but you specified unexistant event.'), 404);
 		}
 		//Check if currently cancelable
 		$limit = $lwp->event->get_current_cancel_condition($event_id);
 		$cancel_limit_time = date_i18n(get_option('date_format'), lwp_selling_limit('U', $event_id) - (60 * 60 * 24 * $limit['days']));
 		if(!$limit){
-			wp_die(sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			$this->kill(sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), 410);
 		}
 		//Get cancelable ticket
 		$tickets = $lwp->event->get_cancelable_tickets(get_current_user_id(), $event_id);
 		if(empty($tickets)){
-			wp_die($this->_('Sorry, but you have no ticket to cancel.'), sprintf($this->_("Transaction Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			$this->kill($this->_('Sorry, but you have no ticket to cancel.'), 404);
 		}
 		//Show Form
 		$this->show_form('cancel-ticket', array(
@@ -482,7 +482,7 @@ EOS;
 		$this->kill_anonymous_user();
 		//Check nonce
 		if(!isset($_REQUEST['_wpnonce'], $_REQUEST['ticket_id']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_cancel')){
-			wp_die($this->_('Sorry, but You might make unexpected action.').' '.$this->_('Cannot pass security check.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			$this->kill($this->_('Sorry, but You might make unexpected action.').' '.$this->_('Cannot pass security check.'), 400);
 		}
 		//Get ticket id to cancel
 		$ticket_id = (int) $_REQUEST['ticket_id'];
@@ -496,11 +496,11 @@ EOS;
 		$event_id = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
 		$current_condition = $lwp->event->get_current_cancel_condition($event_id);
 		if(!$transaction || empty($current_condition)){
-			wp_die($this->_('Sorry, but the tikcet id you specified is not cancelable.'), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+			$this->kill($this->_('Sorry, but the tikcet id you specified is not cancelable.'), 400);
 		}
 		//Check if paypal refund is available
 		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
-			wp_die(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), sprintf($this->_("Request Time Out : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 408));
+			$this->kill(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), 410);
 		}
 		//Now, let's start refund action
 		$bought_price = $transaction->price;
@@ -514,7 +514,7 @@ EOS;
 				if(PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
 					$status = LWP_Payment_Status::REFUND;
 				}else{
-					wp_die(sprintf($this->_('Sorry, but PayPal denies refunding. Please contact to %1$s administrator.'), get_bloginfo('name')), sprintf($this->_("Internal Server Error : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 500));
+					$this->kill(sprintf($this->_('Sorry, but PayPal denies refunding. Please contact to %1$s administrator.'), get_bloginfo('name')), 500);
 				}
 			}elseif($transaction->method == LWP_Payment_Methods::TRANSFER){
 				$status = LWP_Payment_Status::REFUND_REQUESTING;
@@ -560,7 +560,7 @@ EOS;
 				||
 			(false === array_search($event->post_type, $lwp->event->post_types))
 		){
-			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_('Sorry, but no event is specified.'), 404);
 		}
 		$event_type = get_post_type_object($event->post_type);
 		//Get tickets
@@ -574,7 +574,7 @@ EOS;
 		$tickets = $wpdb->get_results($wpdb->prepare($sql, $event->ID, get_current_user_id(), LWP_Payment_Status::SUCCESS));
 		//Check if ticket found.
 		if(empty($tickets)){
-			wp_die($this->_('Sorry, but you have no tikcet to display.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_('Sorry, but you have no tikcet to display.'), 404);
 		}
 		$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
 		$this->show_form('event-tickets', array(
@@ -605,17 +605,17 @@ EOS;
 		//Get event object
 		$event = isset($_GET['lwp-event']) ? wp_get_single_post($_GET['lwp-event']) : false;
 		if(!$event){
-			wp_die($this->_('Sorry, but no event is specified.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_('Sorry, but no event is specified.'), 404);
 		}
 		//Get user
 		$user_hash = isset($_GET['u']) ? $_GET['u'] : '';
 		$user = get_user_by_email(base64_decode($user_hash));
 		if(!$user){
-			wp_die($this->_('Sorry, but specified user is not found.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_('Sorry, but specified user is not found.'), 404);
 		}
 		//Check if current user has capability
 		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
-			wp_die($this->_('Sorry, but you have no capability to consume ticket.'), sprintf($this->_("Access Forbidden : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
+			$this->kill($this->_('Sorry, but you have no capability to consume ticket.'), 403);
 		}
 		//if nonce is ok, update
 		if(isset($_POST['_wpnonce'], $_POST['ticket']) && is_array($_POST['ticket']) && wp_verify_nonce($_POST['_wpnonce'], 'lwp_ticket_consume_'.get_current_user_id())){
@@ -642,7 +642,7 @@ EOS;
 EOS;
 		$tickets = $wpdb->get_results($wpdb->prepare($sql, $event->ID, $user->ID, LWP_Payment_Status::SUCCESS));
 		if(empty($tickets)){
-			wp_die(sprintf($this->_('Sorry, but %s has no ticket on this event.'), $user->display_name), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill(sprintf($this->_('Sorry, but %s has no ticket on this event.'), $user->display_name), 404);
 		}
 		//Show Form
 		$this->show_form('event-tickets-consume', array(
@@ -669,7 +669,7 @@ EOS;
 		$event_id = isset($_GET['event_id']) ? $_GET['event_id'] : '';
 		$event = wp_get_single_post($event_id);
 		if(!$event){
-			wp_die($this->_('Sorry, but event is not found.'), sprintf($this->_("Not Found : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 404));
+			$this->kill($this->_('Sorry, but event is not found.'), 404);
 		}
 		//Check if Error occurs
 		$error = false;
@@ -698,7 +698,7 @@ EOS;
 	 */
 	private function kill_anonymous_user(){
 		if(!is_user_logged_in()){
-			wp_die($this->_('You must be logged in to process transaction.'), sprintf($this->_("Access Forbidden : %s"), get_bloginfo('name')), array('back_link' => true, 'response' => 403));
+			$this->kill($this->_('You must be logged in to process transaction.'), 403);
 		}
 	}
 	
@@ -725,6 +725,7 @@ EOS;
 	private function show_form($slug, $args = array()){
 		global $lwp;
 		extract($args);
+		$slug = basename($slug);
 		$filename = "paypal-{$slug}.php";
 		//テーマテンプレートに存在するかどうか調べる
 		if(file_exists(get_template_directory().DIRECTORY_SEPARATOR.$filename)){
@@ -740,7 +741,9 @@ EOS;
 			wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
 			wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery"), $lwp->version, true);
 			require_once $parent_directory."paypal-header.php";
+			do_action('lwp_before_form', $slug, $args);
 			require_once $parent_directory.$filename;
+			do_action('lwp_after_form', $slug, $args);
 			require_once $parent_directory."paypal-footer.php";
 		}
 		exit;
