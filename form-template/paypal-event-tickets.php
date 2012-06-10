@@ -11,7 +11,7 @@
 			<th scope="col"><?php $this->e('Bought');?></th>
 			<th scope="col"><?php $this->e('Price'); ?></th>
 			<th scope="col"><?php $this->e('Quantity'); ?></th>
-			<th scope="col"><?php $this->e('Consumed'); ?></th>
+			<th scope="col"><?php $this->e('Rest'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,7 +21,7 @@
 				<td><?php echo mysql2date(get_option('date_format'), $ticket->updated);?></td>
 				<td><?php echo number_format_i18n($ticket->price).' '.lwp_currency_code();?></td>
 				<td><?php echo number_format_i18n($ticket->num); ?></td>
-				<td><?php echo number_format_i18n($ticket->consumed); ?></td>
+				<td><?php echo ($ticket->num <= $ticket->consumed) ? $this->_('Used') : number_format_i18n($tikcet->num - $ticket->consumed); ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

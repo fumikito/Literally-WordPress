@@ -1263,7 +1263,14 @@ function lwp_ticket_bought_price($post = null, $user_id = null){
 	return $wpdb->get_var($wpdb->prepare("SELECT price FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d", $post->ID, $user_id));
 }
 
-
+/**
+ * Displays ticket quantity
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @global type $post
+ * @param type $post
+ * @param type $user_id 
+ */
 function lwp_bought_num($post = null, $user_id = null){
 	global $wpdb, $lwp;
 	if(is_null($post)){
