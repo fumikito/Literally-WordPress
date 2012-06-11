@@ -238,7 +238,7 @@ EOS;
 				<?php endforeach; ?>
 			</select>
 			
-			<?php submit_button(__('Filter'), 'secondary', '', false); ?>
+			<input type="submit" class="button-secondary" value="<?php _e('Filter'); ?>" />
 		</div>
 		<?php
 		endif;
