@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
-<title><?php bloginfo('name'); ?></title>
+<title><?php echo esc_html($meta_title); ?></title>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class('lwp'); ?>>

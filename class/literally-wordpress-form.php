@@ -7,6 +7,12 @@
 class LWP_Form extends Literally_WordPress_Common{
 	
 	/**
+	 * Localize script
+	 * @var array 
+	 */
+	private $_LWP = array();
+	
+	/**
 	 * Manage form action to lwp endpoint
 	 * 
 	 * @return void
@@ -473,7 +479,7 @@ EOS;
 	}
 	
 	/**
-	 * 
+	 * Cancel ticket
 	 * @param type $is_sandbox 
 	 */
 	private function handle_ticket_cancel_complete($is_sandbox = false){
@@ -671,6 +677,10 @@ EOS;
 		if(!$event){
 			$this->kill($this->_('Sorry, but event is not found.'), 404);
 		}
+		//Check user capability
+		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			$this->kill($this->_('Sorry, but you have no permission.'), 403);
+		}
 		//Check if Error occurs
 		$error = false;
 		if(isset($_REQUEST['_wpnonce'], $_REQUEST['code']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_owner_'.$event->ID)){
@@ -694,11 +704,62 @@ EOS;
 	}
 	
 	/**
+	 * Contact to participants
+	 * @param boolean $is_sandbox 
+	 */
+	private function handle_ticket_contact($is_sandbox = false){
+		global $lwp;
+		//First of all, user must be logged in
+		$this->kill_anonymous_user();
+		//Get event ID
+		if(!isset($_GET['event_id']) || !($event = wp_get_single_post($_GET['event_id']))){
+			$this->kill($this->_('Sorry, but no event is specified.'), 404);
+		}
+		//Check user capability
+		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			$this->kill($this->_('You do not have capability to contact participants.'), 403);
+		}
+		//Create mail options
+		$current_user = get_userdata(get_current_user_id());
+		$options = array(
+			'admin' => sprintf($this->_('Admin email <%s>'), get_option('admin_email')),
+			'you' => sprintf($this->_('Your email <%s>'), $current_user->user_email)
+		);
+		if(current_user_can('edit_others_posts')){
+			$post_author = get_userdata($event->post_author);
+			$options['author'] = sprintf($this->_('Post author email <%s>'), $post_author->user_email);
+		}
+		//Pass variables to JS
+		$this->_LWP = array(
+			'labelConfirm' => $this->_('Are you sure to send this mail?'),
+			'labelSending' => $this->_('Sending&hellip;'),
+			'labelInvalidFrom' => $this->_('Please specify mail from.'),
+			'labelInvalidSubject' => $this->_('Subject is empty.'),
+			'labelInvalidBody' => $this->_('Mail body is empty'),
+			'labelSent' => $this->_('Send')
+		);
+		//Show form
+		$this->show_form('event-contact', array(
+			'participants' => lwp_participants_number($event),
+			'post_type' => get_post_type_object($event->post_type)->labels->name,
+			'event_id' => $event->ID,
+			'title' => apply_filters('the_title', $event->post_title),
+			'signature' => wpautop($lwp->event->get_signature()),
+			'options' => $options,
+			'loader' => '<img class="indicator" alt="Loading..." style="display:none;" width="16" height="16" src="'.$this->url.'assets/indicator-postbox.gif" />'
+		));
+	}
+	
+	/**
 	 * Stop processing transaction of not logged in user. 
 	 */
-	private function kill_anonymous_user(){
+	private function kill_anonymous_user($kill = true){
 		if(!is_user_logged_in()){
-			$this->kill($this->_('You must be logged in to process transaction.'), 403);
+			if($kill){
+				$this->kill($this->_('You must be logged in to process transaction.'), 403);
+			}else{
+				auth_redirect();
+			}
 		}
 	}
 	
@@ -724,6 +785,46 @@ EOS;
 	 */
 	private function show_form($slug, $args = array()){
 		global $lwp;
+		switch($slug){
+			case 'selection':
+				$meta_title = $this->_('Select Payment');
+				break;
+			case 'transfer':
+				$meta_title = $this->_('Transfer Accepted');
+				break;
+			case 'return':
+				$meta_title = $this->_('Payment Confirmation');
+				break;
+			case 'success':
+				$meta_title = $this->_('Transaction Completed');
+				break;
+			case 'cancel':
+				$meta_title = $this->_('Transaciton Canceled');
+				break;
+			case 'cancel-ticket':
+				$meta_title = $this->_('Ticket Cancel');
+				break;
+			case 'cancel-ticket-success':
+				$meta_title = $this->_('Ticket Canceled');
+				break;
+			case 'event-tickets':
+				$meta_title = $this->_('Ticket List');
+				break;
+			case 'event-tickets-consume':
+				$meta_title = $this->_('Ticket Status');
+				break;
+			case 'event-user':
+				$meta_title = $this->_('Find User');
+				break;
+			case 'event-contact':
+				$meta_title = $this->_('Contact to participants');
+				break;
+			default:
+				$meta_title = '';
+				break;
+		}
+		$args['meta_title'] = $meta_title.' : '.get_bloginfo('name');
+		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);
 		$slug = basename($slug);
 		$filename = "paypal-{$slug}.php";
@@ -734,12 +835,7 @@ EOS;
 		}else{
 			//なければ自作
 			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
-			//CSS-js読み込み
-			$css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
-			$print_css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_template_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
-			wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
-			wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
-			wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery"), $lwp->version, true);
+			add_action('wp_enqueue_scripts', array($this, 'enqueue_form_scripts'));
 			require_once $parent_directory."paypal-header.php";
 			do_action('lwp_before_form', $slug, $args);
 			require_once $parent_directory.$filename;
@@ -747,6 +843,22 @@ EOS;
 			require_once $parent_directory."paypal-footer.php";
 		}
 		exit;
+	}
+	
+	/**
+	 * Do enqueue scripts 
+	 */
+	public function enqueue_form_scripts(){
+		global $lwp;
+		//CSS-js読み込み
+		$css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
+		$print_css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_template_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
+		wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
+		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
+		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form"), $lwp->version, true);
+		if(!empty($this->_LWP)){
+			wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
+		}
 	}
 	
 	/**

@@ -48,9 +48,6 @@ class LWP_Event extends Literally_WordPress_Common {
 	 */
 	private $_signature = '';
 	
-	public $ticket_detal = array(
-		'site_name', 'site_url', ''
-	);
 	
 	/**
 	 * Setup option 
@@ -81,6 +78,7 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('wp_ajax_lwp_edit_ticket', array($this, 'update_ticket'));
 			add_action('wp_ajax_lwp_delete_ticket', array($this, 'delete_ticket'));
 			add_action('wp_ajax_lwp_get_ticket', array($this, 'get_ticket'));
+			add_action('wp_ajax_lwp_contact_participants', array($this, 'contact_participants'));
 		}
 	}
 	
@@ -419,6 +417,94 @@ EOS;
 	}
 	
 	/**
+	 * Do ajax mail sending
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb 
+	 */
+	public function contact_participants(){
+		global $lwp, $wpdb;
+		header('Content-Type: application/json; charset=utf-8');
+		$json = array(
+			'success' => false,
+			'message' => array()
+		);
+		//Check nonce
+		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id'], $_REQUEST['from'], $_REQUEST['subject'], $_REQUEST['body']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_contact_participants_'.get_current_user_id())){
+			//Get Event and check nonce
+			if(($event = wp_get_single_post($_REQUEST['event_id'])) && false !== array_search($event->post_type, $this->post_types) && user_can_edit_post(get_current_user_id(), $event->ID)){
+				//Check from and permisson
+				if(false !== array_search($_REQUEST['from'], array('admin', 'you', 'author')) && (current_user_can('edit_others_posts') || $_REQUEST['from'] != 'author')){
+					switch($_REQUEST['from']){
+						case 'you':
+							$user = get_userdata(get_current_user_id());
+							$from = $user->display_name.' <'.$user->user_email.'>';
+							break;
+						case 'author':
+							$user = get_userdata($event->post_author);
+							$from = $user->display_name.' <'.$user->user_email.'>';
+							break;
+						default:
+							$from = get_bloginfo('name').' <'.get_option('admin_email').'>';
+							break;
+					}
+					if(empty($_REQUEST['subject'])){
+						$json['message'][] = $this->_('Mail Subject is empty.');
+					}
+					if(empty($_REQUEST['body'])){
+						$json['message'][] = $this->_('Mail body is empty.');
+					}
+					if(empty($json['message'])){
+						//Now start sending email.
+						//Fisrt, get all participants email.
+						$sql = <<<EOS
+							SELECT DISTINCT u.ID, u.user_email, u.display_name FROM {$wpdb->users} AS u
+							INNER JOIN {$lwp->transaction} AS t
+							ON u.ID = t.user_id
+							INNER JOIN {$wpdb->posts} AS p
+							ON t.book_id = p.ID
+							WHERE p.post_parent = %d AND p.post_type = %s AND t.status = %s
+EOS;
+						$users = $wpdb->get_results($wpdb->prepare($sql, $event->ID, $this->post_type, LWP_Payment_Status::SUCCESS));
+						if(empty($users)){
+							$json['message'][] = $this->_('Participants not found.');
+						}else{
+							//Let's send.
+							$to = array();
+							$sent = 0;
+							$failed = 0;
+							set_time_limit(0);
+							$body = (string)$_REQUEST['body'];
+							$body = str_replace('%code%', lwp_ticket_url($event), $body).$this->get_signature();
+							$headers = "From: {$from}\r\n";
+							foreach($users as $user){
+								$replaced_body = str_replace('%ticket_url%', lwp_ticket_check_url($user->ID, $event), $body);
+								$replaced_body = str_replace('%user_email%', $user->user_email, $body);
+								$replaced_body = str_replace('%display_name%', $user->display_name, $body);
+								
+								if(wp_mail($user_mail->user_email, (string)$_REQUEST['subject'], $replaced_body, $headers)){
+									$sent++;
+								}else{
+									$failed++;
+								}
+							}
+							$json['success'] = true;
+							$json['message'][] = sprintf($this->_('Finish sending: %1$d success, %2$d failed'), $sent, $failed);
+						}
+					}
+				}else{
+					$json['message'][] = $this->_('You can send email only from Admin email or yours.');
+				}
+			}else{
+				$json['message'][] = $this->_('Cannot send email. You do not have permission or event not found.');
+			}
+		}else{
+			$json['message'][] = $this->_('You have no capability to contact participants');
+		}
+		echo json_encode($json);
+		die();
+	}
+	
+	/**
 	 * Retruns url of QR Code
 	 * @param string $url
 	 * @param int $size 
@@ -486,9 +572,6 @@ EOS;
 				return $footer_note['text'];
 			}else{
 				$footer_note_text = $footer_note['text'];
-				foreach($this->ticket_detal as $key){
-					
-				}
 				return ($this->footer_note_needs_autop($post_id))
 						? wpautop($footer_note_text)
 						: $footer_note_text;
