@@ -574,7 +574,7 @@ EOS;
 		if(isset($_GET["page"]) && (false !== strpos($_GET["page"], "lwp-"))){
 			$slug = str_replace("lwp-", "", $_GET["page"]);
 			global $wpdb;
-			echo '<div class="wrap">';
+			echo '<div class="wrap lwp-wrap">';
 			do_action("admin_notice");
 			$class_name = (basename($_SERVER['SCRIPT_FILENAME']) == 'users.php') ? 'icon-users' : 'ebook';
 			echo "<div class=\"icon32 {$class_name}\"><br /></div>";

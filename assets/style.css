@@ -13,26 +13,22 @@ div.ebook{
 	background:url(./book_32.png) left top no-repeat;
 }
 
-.wrap h3{
+.lwp-wrap h3{
 	font-size:22px;
 	margin: 2em 0 1em;
 	padding-bottom:10px;
 	border-bottom:1px dotted #ccc;
 }
-.wrap h3 .experimental{
+.lwp-wrap h3 .experimental{
 	color:#888;
 	margin-left:5px;
 	font-size:0.5em;
 }
-.wrap h4{
+.lwp-wrap h4{
 	font-size:18px;
 	color:#666;
 }
-
-.wrap h4:before{
-	content: "√"
-}
-.wrap em{
+.lwp-wrap em{
 	font-family: Baskerville,Times,'Times New Roman',serif !important; 
 }
 
@@ -123,7 +119,7 @@ input.short{
 	}
 
 /* Event Detail */	
-div.postbox h4 {
+#lwp-event-detail h4 {
 	font-size: 12px;
 	padding: 0 6px 6px;
 	margin-right: 6px;
