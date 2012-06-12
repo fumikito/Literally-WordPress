@@ -650,6 +650,10 @@ EOS;
 				)
 			));
 		}
+		//Load event management helper
+		if(isset($_GET['page']) && $_GET['page'] == 'lwp-event'){
+			wp_enqueue_script('lwp-event', $this->url.'assets/js/event-manager.js', array('jquery'), $this->version);
+		}
 		//Add event helper on post edit page
 		if(false !== array_search(basename($_SERVER['SCRIPT_FILENAME']), array('post.php', 'post-new.php') )){
 			wp_enqueue_style('jquery-ui-datepicker');

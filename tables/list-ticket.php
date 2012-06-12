@@ -34,8 +34,9 @@ class LWP_List_Ticket extends WP_List_Table {
 			'user' => $lwp->_('User Name'),
 			'updated' => $lwp->_('Updated'),
 			'status' => $lwp->_("Status"),
-			'number' => $lwp->_('Number'),
 			'price' => $lwp->_('Price'),
+			'number' => $lwp->_('Quantity'),
+			'consumed' => $lwp->_('Consumed'),
 			'actions' => $lwp->_('Actions')
 		);
 		return $column;
@@ -120,7 +121,10 @@ EOS;
 				return $lwp->_($item->status);
 				break;
 			case 'number':
-				return $item->num;
+				return number_format_i18n($item->num);
+				break;
+			case 'consumed':
+				return number_format_i18n($item->consumed);
 				break;
 			case 'price':
 				return number_format_i18n($item->num * $item->price).' '.  lwp_currency_code();

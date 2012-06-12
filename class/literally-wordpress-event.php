@@ -79,6 +79,7 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('wp_ajax_lwp_delete_ticket', array($this, 'delete_ticket'));
 			add_action('wp_ajax_lwp_get_ticket', array($this, 'get_ticket'));
 			add_action('wp_ajax_lwp_contact_participants', array($this, 'contact_participants'));
+			add_action('wp_ajax_lwp_event_csv_output', array($this, 'output_csv'));
 		}
 	}
 	
@@ -597,5 +598,95 @@ EOS;
 	 */
 	public function get_signature(){
 		return (string)$this->_signature;
+	}
+	
+	/**
+	 * Output CSV
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp 
+	 */
+	public function output_csv(){
+		global $wpdb, $lwp;
+		//Check nonce
+		if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_event_csv_output')){
+			status_header(403);
+			die();
+		}
+		//Get Event
+		if(!isset($_REQUEST['event_id']) || !($event = wp_get_single_post($_REQUEST['event_id'])) || false === array_search($event->post_type, $this->post_types)){
+			status_header(404);
+			$this->e('Event not found.');
+			die();
+		}
+		//Create Query
+		$sql = <<<EOS
+			SELECT DISTINCT
+				t.*, p.post_title, u.user_email, u.display_name
+			FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			INNER JOIN {$wpdb->users} AS u
+			ON t.user_id = u.ID
+EOS;
+		//Detect ticket to retrieve
+		if(isset($_REQUEST['ticket']) && is_numeric($_REQUEST['ticket'])){
+			$wheres = array($wpdb->prepare("p.ID = %d", $_REQUEST['ticket']));
+		}else{
+			$wheres = array($wpdb->prepare("p.post_parent = %d", $event->ID));
+		}
+		//Detct ticket status
+		if(isset($_REQUEST['status']) && $_REQUEST['status'] != 'all'){
+			$wheres[] = $wpdb->prepare("t.status = %s", $_REQUEST['status']);
+		}
+		$sql .= ' WHERE '.implode(' AND ', $wheres);
+		//Order by
+		$sql .= ' ORDER BY u.ID ASC, t.updated DESC';
+		//Let's get results
+		$results = $wpdb->get_results($sql);
+		//Check result
+		if(empty($results)){
+			status_header(404);
+			$this->e('No ticket match your qriteria.: '.$wpdb->last_query);
+			die();
+		}
+		//Start output csv
+		header('Content-Type: application/x-csv');
+		header("Content-Disposition: attachment; filename=".rawurlencode($event->post_title).".csv");
+		global $is_IE;
+		if($is_IE){
+			header("Cache-Control: public");
+			header("Pragma:");
+		}
+		$out = fopen('php://output', 'w');
+		$first_row = apply_filters('lwp_output_csv_header', array(
+			$this->_('Code'),
+			$this->_('User Name'),
+			$this->_('Email'),
+			$this->_('Ticket Name'),
+			$this->_('Price'),
+			$this->_('Quantity'),
+			$this->_('Consumed'),
+			$this->_('Updated'),
+			$this->_('Transaction Status')
+		));
+		mb_convert_variables('sjis-win', 'utf-8', $first_row);
+		fputcsv($out, $first_row);
+		foreach($results as $result){
+			$row = apply_filters('lwp_output_csv_row', array(
+				$this->generate_token($event->ID, $result->user_id), //Token
+				$result->display_name,
+				$result->user_email,
+				$result->post_title,
+				$result->price,
+				$result->num,
+				$result->consumed,
+				$result->updated,
+				$this->_($result->status)
+			), $result);
+			mb_convert_variables('sjis-win', 'utf-8', $row);
+			fputcsv($out, $row);
+		}
+		fclose($out);
+		die();
 	}
 }
