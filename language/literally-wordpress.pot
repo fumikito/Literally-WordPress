@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-07 18:16+0900\n"
-"PO-Revision-Date: 2012-05-07 18:16+0900\n"
+"POT-Creation-Date: 2012-06-12 11:55+0900\n"
+"PO-Revision-Date: 2012-06-12 11:57+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -93,62 +93,66 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: ../functions.php:687
+#: ../functions.php:712
 msgid "Subscription list"
 msgstr ""
 
-#: ../functions.php:720
+#: ../functions.php:745
 msgid "Left time: "
 msgstr ""
 
-#: ../functions.php:739
+#: ../functions.php:764
 msgid "day"
 msgstr ""
 
-#: ../functions.php:739
+#: ../functions.php:764
 msgid "days"
 msgstr ""
 
-#: ../functions.php:740
+#: ../functions.php:765
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr ""
 
-#: ../functions.php:742
+#: ../functions.php:767
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr ""
 
-#: ../functions.php:743
+#: ../functions.php:768
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr ""
 
-#: ../functions.php:744
+#: ../functions.php:769
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr ""
 
-#: ../functions.php:763
+#: ../functions.php:788
 #, php-format
 msgid "%d%% Off"
 msgstr ""
 
-#: ../functions.php:788
+#: ../functions.php:813
 #, php-format
 msgid "On SALE till %s"
 msgstr ""
 
-#: ../literally-wordpress.php:61
+#: ../functions.php:1421
+msgid "Check Token"
+msgstr ""
+
+#: ../literally-wordpress.php:63
 #, php-format
 msgid "Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s."
 msgstr ""
 
-#: ../literally-wordpress.php:62
+#: ../literally-wordpress.php:64
 msgid " Furthermore, this plugin needs cURL module."
 msgstr ""
 
-#: ../literally-wordpress.php:63
+#: ../literally-wordpress.php:65
 msgid " Please contact to your server administrator to change server configuration."
 msgstr ""
 
@@ -196,7 +200,7 @@ msgstr ""
 #: ../admin/campaign.php:61
 #: ../admin/devices.php:32
 #: ../admin/personal-reward.php:107
-#: ../admin/setting.php:467
+#: ../admin/setting.php:508
 #: ../admin/upload.php:183
 #: ../admin/upload.php:205
 msgid "Update"
@@ -319,6 +323,24 @@ msgstr ""
 
 #: ../admin/donate.php:37
 msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
+msgstr ""
+
+#: ../admin/event.php:4
+msgid "Event Management"
+msgstr ""
+
+#: ../admin/event.php:8
+#, php-format
+msgid "%s Detail"
+msgstr ""
+
+#: ../admin/event.php:26
+#, php-format
+msgid "You can get participants list of <strong>%1$s</strong> in status below."
+msgstr ""
+
+#: ../admin/event.php:27
+msgid "Get CSV"
 msgstr ""
 
 #: ../admin/history.php:2
@@ -536,445 +558,470 @@ msgid "LWP Required Setting"
 msgstr ""
 
 #: ../admin/setting.php:4
-#: ../admin/setting.php:250
+#: ../admin/setting.php:251
 msgid "Transfer Setting"
 msgstr ""
 
 #: ../admin/setting.php:5
-#: ../admin/setting.php:292
+#: ../admin/setting.php:293
 msgid "Subscription"
 msgstr ""
 
 #: ../admin/setting.php:6
-#: ../admin/setting.php:335
+#: ../admin/setting.php:336
 msgid "Reward Setting"
 msgstr ""
 
-#: ../admin/setting.php:13
+#: ../admin/setting.php:7
+#: ../admin/setting.php:469
+msgid "Event Participation"
+msgstr ""
+
+#: ../admin/setting.php:14
 msgid "PayPal Settings"
 msgstr ""
 
-#: ../admin/setting.php:18
+#: ../admin/setting.php:19
 msgid "Use Sandbox"
 msgstr ""
 
-#: ../admin/setting.php:23
+#: ../admin/setting.php:24
 msgid "This is a develop enviorment."
 msgstr ""
 
-#: ../admin/setting.php:26
+#: ../admin/setting.php:27
 msgid "Sandbox means develop enviorment. You can test your settings by checking above."
 msgstr ""
 
-#: ../admin/setting.php:26
-#: ../admin/setting.php:61
-#: ../admin/setting.php:72
-#: ../admin/setting.php:83
-#: ../admin/setting.php:94
-#: ../admin/setting.php:111
-#: ../admin/setting.php:129
-#: ../admin/setting.php:156
-#: ../admin/setting.php:182
-#: ../admin/setting.php:199
-#: ../admin/setting.php:218
-#: ../admin/setting.php:241
-#: ../admin/setting.php:263
+#: ../admin/setting.php:27
+#: ../admin/setting.php:62
+#: ../admin/setting.php:73
+#: ../admin/setting.php:84
+#: ../admin/setting.php:95
+#: ../admin/setting.php:112
+#: ../admin/setting.php:130
+#: ../admin/setting.php:157
+#: ../admin/setting.php:183
+#: ../admin/setting.php:200
+#: ../admin/setting.php:219
+#: ../admin/setting.php:242
+#: ../admin/setting.php:264
 msgid "More &gt;"
 msgstr ""
 
-#: ../admin/setting.php:32
+#: ../admin/setting.php:33
 msgid "Country Code"
 msgstr ""
 
-#: ../admin/setting.php:44
+#: ../admin/setting.php:45
 msgid "Currency Code"
 msgstr ""
 
-#: ../admin/setting.php:56
+#: ../admin/setting.php:57
 msgid "PayPal API User Name"
 msgstr ""
 
-#: ../admin/setting.php:61
+#: ../admin/setting.php:62
 msgid "PayPal API User Name issued by PayPal."
 msgstr ""
 
-#: ../admin/setting.php:67
+#: ../admin/setting.php:68
 msgid "PayPal Password"
 msgstr ""
 
-#: ../admin/setting.php:72
+#: ../admin/setting.php:73
 msgid "API password issued by PayPal"
 msgstr ""
 
-#: ../admin/setting.php:78
+#: ../admin/setting.php:79
 msgid "PayPal Signature"
 msgstr ""
 
-#: ../admin/setting.php:83
+#: ../admin/setting.php:84
 msgid "API signature issued by PayPal"
 msgstr ""
 
-#: ../admin/setting.php:89
+#: ../admin/setting.php:90
 msgid "PayPal PDT Token"
 msgstr ""
 
-#: ../admin/setting.php:94
+#: ../admin/setting.php:95
 msgid "Token issued by PayPal. Required for transaction."
 msgstr ""
 
-#: ../admin/setting.php:98
+#: ../admin/setting.php:99
 #, php-format
 msgid "This Token might be incorrect. See %s and get correct PDT Token."
 msgstr ""
 
-#: ../admin/setting.php:98
-#: ../admin/setting.php:133
-#: ../admin/setting.php:138
-#: ../admin/setting.php:481
+#: ../admin/setting.php:99
+#: ../admin/setting.php:134
+#: ../admin/setting.php:139
+#: ../admin/setting.php:522
 msgid "Help"
 msgstr ""
 
-#: ../admin/setting.php:105
+#: ../admin/setting.php:106
 msgid "Product slug"
 msgstr ""
 
-#: ../admin/setting.php:110
+#: ../admin/setting.php:111
 msgid "Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account."
 msgstr ""
 
-#: ../admin/setting.php:112
+#: ../admin/setting.php:113
 msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>"
 msgstr ""
 
-#: ../admin/setting.php:118
+#: ../admin/setting.php:119
 msgid "WordPress Setting"
 msgstr ""
 
-#: ../admin/setting.php:123
+#: ../admin/setting.php:124
 msgid "Directory for File protection"
 msgstr ""
 
-#: ../admin/setting.php:128
+#: ../admin/setting.php:129
 msgid "Directory to save files. This should be writable and innaccessible via HTTP."
 msgstr ""
 
-#: ../admin/setting.php:133
+#: ../admin/setting.php:134
 #, php-format
 msgid "Directory isn't writable. You can't upload files. See %s and set appropriate permission."
 msgstr ""
 
-#: ../admin/setting.php:138
+#: ../admin/setting.php:139
 #, php-format
 msgid "Directory is accessible via HTTP. See %s and prepend others from direct access."
 msgstr ""
 
-#: ../admin/setting.php:145
+#: ../admin/setting.php:146
 msgid "Purchase History Page"
 msgstr ""
 
-#: ../admin/setting.php:155
+#: ../admin/setting.php:156
 msgid "You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel."
 msgstr ""
 
-#: ../admin/setting.php:162
+#: ../admin/setting.php:163
 msgid "Custom Post Type"
 msgstr ""
 
-#: ../admin/setting.php:167
+#: ../admin/setting.php:168
 msgid "Custom post name"
 msgstr ""
 
-#: ../admin/setting.php:168
+#: ../admin/setting.php:169
 msgid "If not needed, leave it blank. ex: eBooks"
 msgstr ""
 
-#: ../admin/setting.php:172
+#: ../admin/setting.php:173
 msgid "Custom post name in Singular"
 msgstr ""
 
-#: ../admin/setting.php:173
+#: ../admin/setting.php:174
 msgid "If you don't specified, this same as above field. ex: eBook"
 msgstr ""
 
-#: ../admin/setting.php:177
+#: ../admin/setting.php:178
 msgid "Custom post slug"
 msgstr ""
 
-#: ../admin/setting.php:178
+#: ../admin/setting.php:179
 msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
 msgstr ""
 
-#: ../admin/setting.php:181
+#: ../admin/setting.php:182
 msgid "If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you."
 msgstr ""
 
-#: ../admin/setting.php:188
+#: ../admin/setting.php:189
 msgid "Payable Post Types"
 msgstr ""
 
-#: ../admin/setting.php:198
+#: ../admin/setting.php:199
 msgid "You can manually make any post type payable. See detail at how to customize."
 msgstr ""
 
-#: ../admin/setting.php:205
+#: ../admin/setting.php:206
 msgid "Automatic output"
 msgstr ""
 
-#: ../admin/setting.php:210
+#: ../admin/setting.php:211
 msgid "Show complete form"
 msgstr ""
 
-#: ../admin/setting.php:214
+#: ../admin/setting.php:215
 msgid "Manually display form"
 msgstr ""
 
-#: ../admin/setting.php:217
+#: ../admin/setting.php:218
 msgid "If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags."
 msgstr ""
 
-#: ../admin/setting.php:224
+#: ../admin/setting.php:225
 msgid "Assets Loading"
 msgstr ""
 
-#: ../admin/setting.php:229
+#: ../admin/setting.php:230
 msgid "Load plugin default CSS and JS"
 msgstr ""
 
-#: ../admin/setting.php:233
+#: ../admin/setting.php:234
 msgid "Load only JS"
 msgstr ""
 
-#: ../admin/setting.php:237
+#: ../admin/setting.php:238
 msgid "Load no Assets"
 msgstr ""
 
-#: ../admin/setting.php:240
+#: ../admin/setting.php:241
 msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign."
 msgstr ""
 
-#: ../admin/setting.php:255
+#: ../admin/setting.php:256
 msgid "Accept Transfer"
-msgstr ""
-
-#: ../admin/setting.php:258
-#: ../admin/setting.php:300
-msgid "Disallow"
 msgstr ""
 
 #: ../admin/setting.php:259
 #: ../admin/setting.php:301
+msgid "Disallow"
+msgstr ""
+
+#: ../admin/setting.php:260
+#: ../admin/setting.php:302
 msgid "Allow"
 msgstr ""
 
-#: ../admin/setting.php:261
+#: ../admin/setting.php:262
 msgid "If you accept transfer, users can pay with bank account or something that is not digital transaction."
 msgstr ""
 
-#: ../admin/setting.php:262
+#: ../admin/setting.php:263
 msgid "This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made."
 msgstr ""
 
-#: ../admin/setting.php:268
+#: ../admin/setting.php:269
 msgid "Notification Frequency"
 msgstr ""
 
-#: ../admin/setting.php:272
+#: ../admin/setting.php:273
 #, php-format
 msgid "Send reminder on every %s days"
 msgstr ""
 
-#: ../admin/setting.php:278
+#: ../admin/setting.php:279
 #, php-format
 msgid "Transaction expires by %s days"
 msgstr ""
 
-#: ../admin/setting.php:283
+#: ../admin/setting.php:284
 msgid "If you don't want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past."
 msgstr ""
 
-#: ../admin/setting.php:297
+#: ../admin/setting.php:298
 msgid "Accept Subscription"
 msgstr ""
 
-#: ../admin/setting.php:306
+#: ../admin/setting.php:307
 msgid "Subscription Post Type"
 msgstr ""
 
-#: ../admin/setting.php:319
+#: ../admin/setting.php:320
 msgid "Subscription Format"
 msgstr ""
 
-#: ../admin/setting.php:322
+#: ../admin/setting.php:323
 msgid "More tag"
 msgstr ""
 
-#: ../admin/setting.php:323
+#: ../admin/setting.php:324
 msgid "Nextpage Tag"
 msgstr ""
 
-#: ../admin/setting.php:324
+#: ../admin/setting.php:325
 msgid "All"
 msgstr ""
 
-#: ../admin/setting.php:326
+#: ../admin/setting.php:327
 #, php-format
 msgid "If you choose More Tag or Nextpage Tag, non subscriber can see the content before it and the invitation message after it. If you choose all, non subscriber saw only the invitation message. You can customize the invitation message at <a href=\"%s\">Subscription</a>."
 msgstr ""
 
-#: ../admin/setting.php:335
+#: ../admin/setting.php:336
 msgid "EXPERIMENTAL"
 msgstr ""
 
-#: ../admin/setting.php:337
+#: ../admin/setting.php:338
 msgid "You can allow your users to promote your product and reward for them."
 msgstr ""
 
-#: ../admin/setting.php:342
+#: ../admin/setting.php:343
 msgid "Reward for promoter"
-msgstr ""
-
-#: ../admin/setting.php:344
-#: ../admin/setting.php:372
-#: ../admin/setting.php:455
-msgid "Disable"
 msgstr ""
 
 #: ../admin/setting.php:345
 #: ../admin/setting.php:373
 #: ../admin/setting.php:456
+msgid "Disable"
+msgstr ""
+
+#: ../admin/setting.php:346
+#: ../admin/setting.php:374
+#: ../admin/setting.php:457
 msgid "Enable"
 msgstr ""
 
-#: ../admin/setting.php:347
+#: ../admin/setting.php:348
 msgid "If you wish to reward for your user who promote your product, enable this. Your users can promote your product and can manage there sales statistic."
 msgstr ""
 
-#: ../admin/setting.php:352
+#: ../admin/setting.php:353
 msgid "Reward margin for promotion"
 msgstr ""
 
-#: ../admin/setting.php:356
+#: ../admin/setting.php:357
 msgid "Specify back margin in percentage. This is global setting for promotion and you can override on each product individually."
 msgstr ""
 
-#: ../admin/setting.php:361
+#: ../admin/setting.php:362
 msgid "Maximum promotion margin"
 msgstr ""
 
-#: ../admin/setting.php:365
+#: ../admin/setting.php:366
 msgid "You can override margin per posts and users. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."
 msgstr ""
 
-#: ../admin/setting.php:370
+#: ../admin/setting.php:371
 msgid "Reward for author"
 msgstr ""
 
-#: ../admin/setting.php:375
+#: ../admin/setting.php:376
 msgid "If you wish to reward for your authors, enable this. Your authors can see how much they sold their contents on sales report dashboard."
 msgstr ""
 
-#: ../admin/setting.php:380
+#: ../admin/setting.php:381
 msgid "Reward margin for author"
 msgstr ""
 
-#: ../admin/setting.php:384
+#: ../admin/setting.php:385
 msgid "Specify back margin in percentage. This is global setting for author and you can override on each author individually."
 msgstr ""
 
-#: ../admin/setting.php:389
+#: ../admin/setting.php:390
 msgid "Maximum author margin"
 msgstr ""
 
-#: ../admin/setting.php:393
+#: ../admin/setting.php:394
 msgid "You can override margin per authors. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."
 msgstr ""
 
-#: ../admin/setting.php:398
+#: ../admin/setting.php:399
 msgid "Reward minimum amount"
 msgstr ""
 
-#: ../admin/setting.php:402
+#: ../admin/setting.php:403
 msgid "Your partners can request payment for reward if reward amount is above this value."
 msgstr ""
 
-#: ../admin/setting.php:407
+#: ../admin/setting.php:408
 msgid "Reward Request"
 msgstr ""
 
-#: ../admin/setting.php:416
+#: ../admin/setting.php:417
 #, php-format
 msgid "%d month after"
 msgstr ""
 
-#: ../admin/setting.php:416
+#: ../admin/setting.php:417
 msgid "That month"
 msgstr ""
 
-#: ../admin/setting.php:421
+#: ../admin/setting.php:422
 #, php-format
 msgid "If reward amount exceeds %1$d (%2$s), user can request payment once until %3$s on every month. Reward will be paid at %4$s on %5$s"
 msgstr ""
 
-#: ../admin/setting.php:431
+#: ../admin/setting.php:432
 msgid "Reward Notice"
 msgstr ""
 
-#: ../admin/setting.php:435
+#: ../admin/setting.php:436
 msgid "This will be displayed on profile page. You can use placeholders: "
 msgstr ""
 
-#: ../admin/setting.php:444
+#: ../admin/setting.php:445
 msgid "Contact information for reward"
 msgstr ""
 
-#: ../admin/setting.php:446
+#: ../admin/setting.php:447
 msgid "i.e. To get reward payed, you have to enter bank account. All information for transfer is required."
 msgstr ""
 
-#: ../admin/setting.php:448
+#: ../admin/setting.php:449
 msgid "If you need some additional information on payment besides WordPress Default(i.e. Bank account required), enter description. If it is not blank, This description will be displayed on payment request page."
 msgstr ""
 
-#: ../admin/setting.php:453
+#: ../admin/setting.php:454
 msgid "Use Cache Engine"
 msgstr ""
 
-#: ../admin/setting.php:458
+#: ../admin/setting.php:459
 msgid "If you use cache plugin or proxy cache(i.e. Nginx), enable this. LWP output js to help session tracking."
 msgstr ""
 
-#: ../admin/setting.php:470
+#: ../admin/setting.php:474
+msgid "Event Post Type"
+msgstr ""
+
+#: ../admin/setting.php:486
+msgid "Mail Signature"
+msgstr ""
+
+#: ../admin/setting.php:489
+msgid "This text will be used for every mail to participants"
+msgstr ""
+
+#: ../admin/setting.php:494
+msgid "What is Event?"
+msgstr ""
+
+#: ../admin/setting.php:498
+msgid "Event means real event like lunch party, poetry reading or else."
+msgstr ""
+
+#: ../admin/setting.php:511
 msgid "Notes"
 msgstr ""
 
-#: ../admin/setting.php:472
+#: ../admin/setting.php:513
 msgid "Permalink"
 msgstr ""
 
-#: ../admin/setting.php:474
+#: ../admin/setting.php:515
 #, php-format
 msgid "If permalink is enabled, custom post type page will return %s and won't be displayed."
 msgstr ""
 
-#: ../admin/setting.php:475
+#: ../admin/setting.php:516
 #, php-format
 msgid "Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display."
 msgstr ""
 
-#: ../admin/setting.php:478
+#: ../admin/setting.php:519
 msgid "Customize"
 msgstr ""
 
-#: ../admin/setting.php:480
+#: ../admin/setting.php:521
 msgid "If you are a experienced developper, you can customize this plugin with template tags."
 msgstr ""
 
-#: ../admin/setting.php:481
+#: ../admin/setting.php:522
 #, php-format
 msgid "See detail at %s."
 msgstr ""
 
-#: ../admin/setting.php:482
+#: ../admin/setting.php:523
 #, php-format
 msgid "<a target=\"_blank\" href=\"%s\">Template Tags</a> are also available."
 msgstr ""
@@ -1154,14 +1201,17 @@ msgstr ""
 msgid "PUT_IMAGE_SRC_HERE"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:269
+#: ../class/literally-wordpress-core.php:287
+#: ../class/literally-wordpress-event.php:96
 #: ../class/literally-wordpress-notifier.php:87
 #: ../class/literally-wordpress-subscription.php:86
 msgid "Add New"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:270
-#: ../class/literally-wordpress-core.php:272
+#: ../class/literally-wordpress-core.php:288
+#: ../class/literally-wordpress-core.php:290
+#: ../class/literally-wordpress-event.php:97
+#: ../class/literally-wordpress-event.php:99
 #: ../class/literally-wordpress-notifier.php:88
 #: ../class/literally-wordpress-notifier.php:90
 #: ../class/literally-wordpress-subscription.php:87
@@ -1170,343 +1220,606 @@ msgstr ""
 msgid "Add New %s"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:271
+#: ../class/literally-wordpress-core.php:289
+#: ../class/literally-wordpress-event.php:98
 #: ../class/literally-wordpress-notifier.php:89
 #: ../class/literally-wordpress-subscription.php:88
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:273
+#: ../class/literally-wordpress-core.php:291
+#: ../class/literally-wordpress-event.php:100
 #: ../class/literally-wordpress-notifier.php:91
 #: ../class/literally-wordpress-subscription.php:90
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:274
+#: ../class/literally-wordpress-core.php:292
+#: ../class/literally-wordpress-event.php:101
 #: ../class/literally-wordpress-notifier.php:92
 #: ../class/literally-wordpress-subscription.php:91
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:275
+#: ../class/literally-wordpress-core.php:293
+#: ../class/literally-wordpress-event.php:102
 #: ../class/literally-wordpress-notifier.php:93
 #: ../class/literally-wordpress-subscription.php:92
 #, php-format
 msgid "No %s was found."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:276
+#: ../class/literally-wordpress-core.php:294
+#: ../class/literally-wordpress-event.php:103
 #: ../class/literally-wordpress-notifier.php:94
 #: ../class/literally-wordpress-subscription.php:93
 #, php-format
 msgid "No %s was found in trash."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:383
+#: ../class/literally-wordpress-core.php:399
 #, php-format
 msgid "Can't make directory. Check parmissin of \"%s\""
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:392
+#: ../class/literally-wordpress-core.php:408
 msgid "Directory isn't writable."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:397
+#: ../class/literally-wordpress-core.php:413
 msgid "Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:404
+#: ../class/literally-wordpress-core.php:420
 msgid "Warning! This file is accessible!"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:427
+#: ../class/literally-wordpress-core.php:443
 msgid "Directory is publically accessible via HTTP"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:434
+#: ../class/literally-wordpress-core.php:450
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:440
+#: ../class/literally-wordpress-core.php:456
 msgid "Currency code is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:445
+#: ../class/literally-wordpress-core.php:461
 msgid "Country code is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:450
+#: ../class/literally-wordpress-core.php:466
 #, php-format
 msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:473
+#: ../class/literally-wordpress-core.php:489
 msgid "Literally WordPress successfully upgrades database."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:508
+#: ../class/literally-wordpress-core.php:535
 msgid "General Setting"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:510
+#: ../class/literally-wordpress-core.php:537
 msgid "Transaction Management"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:516
+#: ../class/literally-wordpress-core.php:543
 msgid "Campaign Management"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:518
+#: ../class/literally-wordpress-core.php:545
 msgid "Device Setting"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:524
+#: ../class/literally-wordpress-core.php:551
 msgid "Reward Management"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:527
+#: ../class/literally-wordpress-core.php:554
 msgid "Reward"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:532
+#: ../class/literally-wordpress-core.php:563
 msgid "Literally WordPress Setting"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:553
+#: ../class/literally-wordpress-core.php:584
 msgid "This page does not exist. Template not found."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:611
+#: ../class/literally-wordpress-core.php:642
 msgid "Reward Amount Summary"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:614
+#: ../class/literally-wordpress-core.php:645
 msgid "Fixed"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:615
+#: ../class/literally-wordpress-core.php:646
 msgid "Unfixed"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:616
+#: ../class/literally-wordpress-core.php:647
 msgid "Lost"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:617
+#: ../class/literally-wordpress-core.php:648
 msgid "Daily Report"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:618
+#: ../class/literally-wordpress-core.php:649
 msgid "Date"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:675
+#: ../class/literally-wordpress-core.php:663
+#: ../form-template/edit-detail-event.php:47
+msgid "Cacnelable till %1$s days before, %2$s %"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:665
+msgid "Are you sure to delete this ticket?"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:722
 msgid "Literally WordPress Help"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:778
-#: ../class/literally-wordpress-core.php:1182
+#: ../class/literally-wordpress-core.php:826
+#: ../class/literally-wordpress-core.php:1230
 msgid "Price must be numeric."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:812
+#: ../class/literally-wordpress-core.php:860
 msgid "Literally WordPress"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:995
+#: ../class/literally-wordpress-core.php:1043
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:998
+#: ../class/literally-wordpress-core.php:1046
 msgid "Uploaded file size exceeds"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1001
+#: ../class/literally-wordpress-core.php:1049
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1004
+#: ../class/literally-wordpress-core.php:1052
 msgid "No file was uploaded."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1007
+#: ../class/literally-wordpress-core.php:1055
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1010
+#: ../class/literally-wordpress-core.php:1058
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1013
+#: ../class/literally-wordpress-core.php:1061
 msgid "PHP stops uploading."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1094
+#: ../class/literally-wordpress-core.php:1142
 msgid "Device added."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1096
+#: ../class/literally-wordpress-core.php:1144
 msgid "Failed to add device."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1107
+#: ../class/literally-wordpress-core.php:1155
 msgid "Device deleted."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1123
+#: ../class/literally-wordpress-core.php:1171
 msgid "Device updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1177
+#: ../class/literally-wordpress-core.php:1225
 msgid "Please select item."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1187
+#: ../class/literally-wordpress-core.php:1235
 msgid "Price is higher than original price."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1192
-#: ../class/literally-wordpress-core.php:1238
+#: ../class/literally-wordpress-core.php:1240
+#: ../class/literally-wordpress-core.php:1286
 msgid "Date format is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1197
+#: ../class/literally-wordpress-core.php:1245
 msgid "End date was past."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1213
+#: ../class/literally-wordpress-core.php:1261
 msgid "Campaign added."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1216
+#: ../class/literally-wordpress-core.php:1264
 msgid "Failed to add campaign."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1225
+#: ../class/literally-wordpress-core.php:1273
 msgid "Specified campaing doesn't exist"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1230
+#: ../class/literally-wordpress-core.php:1278
 msgid "Price should be numeric."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1233
+#: ../class/literally-wordpress-core.php:1281
 msgid "Campgin price is higher than original price."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1243
+#: ../class/literally-wordpress-core.php:1291
 msgid "End date is earlier than start date."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1259
+#: ../class/literally-wordpress-core.php:1307
 msgid "Successfully Updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1262
+#: ../class/literally-wordpress-core.php:1310
 msgid "Update Failed."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1270
+#: ../class/literally-wordpress-core.php:1318
 msgid "Campaign was deleted."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1273
+#: ../class/literally-wordpress-core.php:1321
 msgid "Failed to delete campaign."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1387
+#: ../class/literally-wordpress-core.php:1447
 msgid "You've kindly given a present."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1389
+#: ../class/literally-wordpress-core.php:1449
 msgid "Failed to give a present."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1516
+#: ../class/literally-wordpress-core.php:1575
 msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1521
+#: ../class/literally-wordpress-core.php:1580
 msgid "Refund succeeded."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1523
+#: ../class/literally-wordpress-core.php:1582
 msgid "Sorry, but PayPal denied."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1555
+#: ../class/literally-wordpress-core.php:1614
 msgid "Transaction was updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1557
+#: ../class/literally-wordpress-core.php:1616
 msgid "Failed to update transaction."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1585
-msgid "You are already subscriber. You don't have to buy subscription."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1585
-#: ../class/literally-wordpress-core.php:1587
-#: ../class/literally-wordpress-core.php:1732
-#, php-format
-msgid "Transaction Error : %s"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1587
-msgid "Sorry, but there is no subscription plan."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1622
-msgid "No content is specified."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1648
-msgid "This contents is not on sale."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1705
-msgid "Sorry, we can't accept this payment method."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1713
-msgid "Failed to make transaction."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1717
-msgid "Wrong payment method is specified."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1758
-msgid "Transaction Failed to finish."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1758
-#: ../class/literally-wordpress-core.php:1787
-msgid "Failed"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1765
-msgid "Failed to connect with PayPal."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1769
-msgid "Failed to get the transactional information."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:1987
+#: ../class/literally-wordpress-core.php:1733
 msgid "You have no permission to access this file."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1987
+#: ../class/literally-wordpress-core.php:1733
 msgid "Permission Error"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:2202
+#: ../class/literally-wordpress-core.php:1948
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:90
+msgid "Ticket"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:91
+msgid "Tickets"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:123
+msgid "Event Setting"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:362
+msgid "Failed to edit ticket"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:387
+#: ../class/literally-wordpress-event.php:412
+msgid "You have no permission to edit this ticket."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:452
+msgid "Mail Subject is empty."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:455
+msgid "Mail body is empty."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:470
+msgid "Participants not found."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:492
+#, php-format
+msgid "Finish sending: %1$d success, %2$d failed"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:496
+msgid "You can send email only from Admin email or yours."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:499
+msgid "Cannot send email. You do not have permission or event not found."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:502
+msgid "You have no capability to contact participants"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:618
+msgid "Event not found."
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:649
+msgid "No ticket match your qriteria.: "
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:662
+msgid "Code"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:664
+msgid "Email"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:665
+#: ../form-template/edit-detail-event.php:113
+#: ../form-template/paypal-cancel-ticket.php:13
+msgid "Ticket Name"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:666
+#: ../class/literally-wordpress-subscription.php:196
+#: ../form-template/edit-detail-event.php:83
+#: ../form-template/edit-detail.php:11
+#: ../form-template/paypal-cancel-ticket.php:15
+msgid "Price"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:667
+msgid "Quantity"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:668
+msgid "Consumed"
+msgstr ""
+
+#: ../class/literally-wordpress-event.php:670
+msgid "Transaction Status"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:27
+#: ../class/literally-wordpress-form.php:491
+msgid "Sorry, but You might make unexpected action."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:51
+msgid "You are already subscriber. You don't have to buy subscription."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:53
+msgid "Sorry, but there is no subscription plan."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:109
+#: ../class/literally-wordpress-form.php:286
+msgid "Mmm... Cannot find product. Please check if you have payable post."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:124
+msgid "No content is specified."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:134
+msgid "Selling limit has been past. There is no ticket available."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:164
+msgid "This itme is not on sale."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:232
+msgid "Sorry, but we can't accept this payment method."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:240
+msgid "Failed to make transaction."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:244
+msgid "Wrong payment method is specified."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:295
+msgid "Failed to connect with PayPal."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:299
+msgid "Failed to get the transactional information."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:342
+msgid "Transaction Failed to finish."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:455
+msgid "Sorry, but you specified unexistant event."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:461
+#, php-format
+msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:466
+msgid "Sorry, but you have no ticket to cancel."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:491
+msgid "Cannot pass security check."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:505
+msgid "Sorry, but the tikcet id you specified is not cancelable."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:509
+#, php-format
+msgid "Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:523
+#, php-format
+msgid "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:569
+#: ../class/literally-wordpress-form.php:614
+#: ../class/literally-wordpress-form.php:716
+msgid "Sorry, but no event is specified."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:583
+msgid "Sorry, but you have no tikcet to display."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:620
+msgid "Sorry, but specified user is not found."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:624
+msgid "Sorry, but you have no capability to consume ticket."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:651
+#, php-format
+msgid "Sorry, but %s has no ticket on this event."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:678
+msgid "Sorry, but event is not found."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:682
+msgid "Sorry, but you have no permission."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:720
+msgid "You do not have capability to contact participants."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:725
+#, php-format
+msgid "Admin email <%s>"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:726
+#, php-format
+msgid "Your email <%s>"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:730
+#, php-format
+msgid "Post author email <%s>"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:734
+msgid "Are you sure to send this mail?"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:735
+msgid "Sending&hellip;"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:736
+msgid "Please specify mail from."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:737
+msgid "Subject is empty."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:738
+msgid "Mail body is empty"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:739
+#: ../form-template/paypal-event-contact.php:42
+msgid "Send"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:759
+msgid "You must be logged in to process transaction."
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:790
+msgid "Select Payment"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:793
+msgid "Transfer Accepted"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:796
+msgid "Payment Confirmation"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:799
+msgid "Transaction Completed"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:802
+msgid "Transaciton Canceled"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:805
+msgid "Ticket Cancel"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:808
+msgid "Ticket Canceled"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:811
+#: ../form-template/edit-detail-event.php:77
+msgid "Ticket List"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:814
+msgid "Ticket Status"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:817
+msgid "Find User"
+msgstr ""
+
+#: ../class/literally-wordpress-form.php:820
+msgid "Contact to participants"
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:82
@@ -1761,88 +2074,89 @@ msgstr ""
 msgid "Minimum required amount for request"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:283
+#: ../class/literally-wordpress-statics.php:285
 msgid "PAYPAL"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:284
+#: ../class/literally-wordpress-statics.php:286
 msgid "CAMPAIGN"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:285
+#: ../class/literally-wordpress-statics.php:287
 msgid "present"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:286
+#: ../class/literally-wordpress-statics.php:288
 msgid "TRANSFER"
-msgstr ""
+msgstr "Transfer"
 
-#: ../class/literally-wordpress-statics.php:339
+#: ../class/literally-wordpress-statics.php:347
 msgid "SUCCESS"
-msgstr ""
+msgstr "Success"
 
-#: ../class/literally-wordpress-statics.php:340
-#: ../form-template/paypal-return.php:55
-#: ../form-template/paypal-selection.php:69
-#: ../form-template/paypal-subscription.php:65
+#: ../class/literally-wordpress-statics.php:348
+#: ../form-template/paypal-cancel-ticket.php:44
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
-#: ../class/literally-wordpress-statics.php:341
+#: ../class/literally-wordpress-statics.php:349
 msgid "START"
-msgstr ""
+msgstr "Start"
 
-#: ../class/literally-wordpress-statics.php:342
+#: ../class/literally-wordpress-statics.php:350
 msgid "REFUND"
-msgstr ""
+msgstr "Refund"
 
-#: ../class/literally-wordpress-statics.php:378
+#: ../class/literally-wordpress-statics.php:351
+msgid "REFUND_REQUESTING"
+msgstr "Refund requesting"
+
+#: ../class/literally-wordpress-statics.php:387
 msgid "PROMOTION"
-msgstr ""
+msgstr "Promotion"
 
-#: ../class/literally-wordpress-statics.php:379
+#: ../class/literally-wordpress-statics.php:388
 msgid "SELL"
-msgstr ""
+msgstr "Sell"
 
-#: ../class/literally-wordpress-statics.php:441
-#: ../form-template/paypal-subscription.php:71
+#: ../class/literally-wordpress-statics.php:450
 msgid "Close"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:442
+#: ../class/literally-wordpress-statics.php:451
 msgid "Prev"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:443
+#: ../class/literally-wordpress-statics.php:452
 msgid "Next"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:449
+#: ../class/literally-wordpress-statics.php:458
 msgid "Week"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:450
-#: ../class/literally-wordpress-statics.php:451
+#: ../class/literally-wordpress-statics.php:459
+#: ../class/literally-wordpress-statics.php:460
 msgid "Time"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:452
+#: ../class/literally-wordpress-statics.php:461
 msgid "Hour"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:453
+#: ../class/literally-wordpress-statics.php:462
 msgid "Minute"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:454
+#: ../class/literally-wordpress-statics.php:463
 msgid "Second"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:455
+#: ../class/literally-wordpress-statics.php:464
 msgid "Now"
 msgstr ""
 
-#: ../class/literally-wordpress-statics.php:458
+#: ../class/literally-wordpress-statics.php:468
 msgid "Start date must be earlier than end date."
 msgstr ""
 
@@ -1882,13 +2196,7 @@ msgstr ""
 msgid "Output link to subscription price list. Extra attributes are title, class, popup, width and height."
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:196
-#: ../form-template/edit-detail.php:11
-msgid "Price"
-msgstr ""
-
 #: ../class/literally-wordpress-subscription.php:200
-#: ../form-template/paypal-subscription.php:52
 msgid "Days"
 msgstr ""
 
@@ -1900,816 +2208,909 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
-#: ../class/paypal_statics.php:240
+#: ../class/paypal_statics.php:260
 msgid "ÅLAND ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:241
+#: ../class/paypal_statics.php:261
 msgid "ALBANIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:242
+#: ../class/paypal_statics.php:262
 msgid "ALGERIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:243
+#: ../class/paypal_statics.php:263
 msgid "AMERICAN SAMOA"
 msgstr ""
 
-#: ../class/paypal_statics.php:244
+#: ../class/paypal_statics.php:264
 msgid "ANDORRA"
 msgstr ""
 
-#: ../class/paypal_statics.php:245
+#: ../class/paypal_statics.php:265
 msgid "ANGUILLA"
 msgstr ""
 
-#: ../class/paypal_statics.php:246
+#: ../class/paypal_statics.php:266
 msgid "ANTARCTICA"
 msgstr ""
 
-#: ../class/paypal_statics.php:247
+#: ../class/paypal_statics.php:267
 msgid "ANTIGUA AND BARBUDA"
 msgstr ""
 
-#: ../class/paypal_statics.php:248
+#: ../class/paypal_statics.php:268
 msgid "ARGENTINA"
 msgstr ""
 
-#: ../class/paypal_statics.php:249
+#: ../class/paypal_statics.php:269
 msgid "ARMENIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:250
+#: ../class/paypal_statics.php:270
 msgid "ARUBA"
 msgstr ""
 
-#: ../class/paypal_statics.php:251
+#: ../class/paypal_statics.php:271
 msgid "AUSTRALIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:252
+#: ../class/paypal_statics.php:272
 msgid "AUSTRIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:253
+#: ../class/paypal_statics.php:273
 msgid "BAHAMAS"
 msgstr ""
 
-#: ../class/paypal_statics.php:254
+#: ../class/paypal_statics.php:274
 msgid "BAHRAIN"
 msgstr ""
 
-#: ../class/paypal_statics.php:255
+#: ../class/paypal_statics.php:275
 msgid "BARBADOS"
 msgstr ""
 
-#: ../class/paypal_statics.php:256
+#: ../class/paypal_statics.php:276
 msgid "BELGIUM"
 msgstr ""
 
-#: ../class/paypal_statics.php:257
+#: ../class/paypal_statics.php:277
 msgid "BELIZE"
 msgstr ""
 
-#: ../class/paypal_statics.php:258
+#: ../class/paypal_statics.php:278
 msgid "BENIN"
 msgstr ""
 
-#: ../class/paypal_statics.php:259
+#: ../class/paypal_statics.php:279
 msgid "BERMUDA"
 msgstr ""
 
-#: ../class/paypal_statics.php:260
+#: ../class/paypal_statics.php:280
 msgid "BHUTAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:261
+#: ../class/paypal_statics.php:281
 msgid "BOTSWANA"
 msgstr ""
 
-#: ../class/paypal_statics.php:262
+#: ../class/paypal_statics.php:282
 msgid "BOUVET ISLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:263
+#: ../class/paypal_statics.php:283
 msgid "BRAZIL"
 msgstr ""
 
-#: ../class/paypal_statics.php:264
+#: ../class/paypal_statics.php:284
 msgid "BRITISH INDIAN OCEAN TERRITORY"
 msgstr ""
 
-#: ../class/paypal_statics.php:265
+#: ../class/paypal_statics.php:285
 msgid "BRUNEI DARUSSALAM"
 msgstr ""
 
-#: ../class/paypal_statics.php:266
+#: ../class/paypal_statics.php:286
 msgid "BULGARIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:267
+#: ../class/paypal_statics.php:287
 msgid "BURKINA FASO"
 msgstr ""
 
-#: ../class/paypal_statics.php:268
+#: ../class/paypal_statics.php:288
 msgid "CANADA"
 msgstr ""
 
-#: ../class/paypal_statics.php:269
+#: ../class/paypal_statics.php:289
 msgid "CAPE VERDE"
 msgstr ""
 
-#: ../class/paypal_statics.php:270
+#: ../class/paypal_statics.php:290
 msgid "CAYMAN ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:271
+#: ../class/paypal_statics.php:291
 msgid "CENTRAL AFRICAN REPUBLIC"
 msgstr ""
 
-#: ../class/paypal_statics.php:272
+#: ../class/paypal_statics.php:292
 msgid "CHILE"
 msgstr ""
 
-#: ../class/paypal_statics.php:273
+#: ../class/paypal_statics.php:293
 msgid "CHINA"
 msgstr ""
 
-#: ../class/paypal_statics.php:274
+#: ../class/paypal_statics.php:294
 msgid "CHRISTMAS ISLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:275
+#: ../class/paypal_statics.php:295
 msgid "COCOS (KEELING) ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:276
+#: ../class/paypal_statics.php:296
 msgid "COLOMBIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:277
+#: ../class/paypal_statics.php:297
 msgid "COOK ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:278
+#: ../class/paypal_statics.php:298
 msgid "COSTA RICA"
 msgstr ""
 
-#: ../class/paypal_statics.php:279
+#: ../class/paypal_statics.php:299
 msgid "CYPRUS"
 msgstr ""
 
-#: ../class/paypal_statics.php:280
+#: ../class/paypal_statics.php:300
 msgid "CZECH REPUBLIC"
 msgstr ""
 
-#: ../class/paypal_statics.php:281
+#: ../class/paypal_statics.php:301
 msgid "DENMARK"
 msgstr ""
 
-#: ../class/paypal_statics.php:282
+#: ../class/paypal_statics.php:302
 msgid "DJIBOUTI"
 msgstr ""
 
-#: ../class/paypal_statics.php:283
+#: ../class/paypal_statics.php:303
 msgid "DOMINICA"
 msgstr ""
 
-#: ../class/paypal_statics.php:284
+#: ../class/paypal_statics.php:304
 msgid "DOMINICAN REPUBLIC"
 msgstr ""
 
-#: ../class/paypal_statics.php:285
+#: ../class/paypal_statics.php:305
 msgid "EGYPT"
 msgstr ""
 
-#: ../class/paypal_statics.php:286
+#: ../class/paypal_statics.php:306
 msgid "EL SALVADOR"
 msgstr ""
 
-#: ../class/paypal_statics.php:287
+#: ../class/paypal_statics.php:307
 msgid "ESTONIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:288
+#: ../class/paypal_statics.php:308
 msgid "FALKLAND ISLANDS (MALVINAS)"
 msgstr ""
 
-#: ../class/paypal_statics.php:289
+#: ../class/paypal_statics.php:309
 msgid "FAROE ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:290
+#: ../class/paypal_statics.php:310
 msgid "FIJI"
 msgstr ""
 
-#: ../class/paypal_statics.php:291
+#: ../class/paypal_statics.php:311
 msgid "FINLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:292
+#: ../class/paypal_statics.php:312
 msgid "FRANCE"
 msgstr ""
 
-#: ../class/paypal_statics.php:293
+#: ../class/paypal_statics.php:313
 msgid "FRENCH GUIANA"
 msgstr ""
 
-#: ../class/paypal_statics.php:294
+#: ../class/paypal_statics.php:314
 msgid "FRENCH POLYNESIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:295
+#: ../class/paypal_statics.php:315
 msgid "FRENCH SOUTHERN TERRITORIES"
 msgstr ""
 
-#: ../class/paypal_statics.php:296
+#: ../class/paypal_statics.php:316
 msgid "GAMBIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:297
+#: ../class/paypal_statics.php:317
 msgid "GEORGIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:298
+#: ../class/paypal_statics.php:318
 msgid "GERMANY"
 msgstr ""
 
-#: ../class/paypal_statics.php:299
+#: ../class/paypal_statics.php:319
 msgid "GHANA"
 msgstr ""
 
-#: ../class/paypal_statics.php:300
+#: ../class/paypal_statics.php:320
 msgid "GIBRALTAR"
 msgstr ""
 
-#: ../class/paypal_statics.php:301
+#: ../class/paypal_statics.php:321
 msgid "GREECE"
 msgstr ""
 
-#: ../class/paypal_statics.php:302
+#: ../class/paypal_statics.php:322
 msgid "GREENLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:303
+#: ../class/paypal_statics.php:323
 msgid "GRENADA"
 msgstr ""
 
-#: ../class/paypal_statics.php:304
+#: ../class/paypal_statics.php:324
 msgid "GUADELOUPE"
 msgstr ""
 
-#: ../class/paypal_statics.php:305
+#: ../class/paypal_statics.php:325
 msgid "GUAM"
 msgstr ""
 
-#: ../class/paypal_statics.php:306
+#: ../class/paypal_statics.php:326
 msgid "GUERNSEY"
 msgstr ""
 
-#: ../class/paypal_statics.php:307
+#: ../class/paypal_statics.php:327
 msgid "HEARD ISLAND AND MCDONALD ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:308
+#: ../class/paypal_statics.php:328
 msgid "HOLY SEE (VATICAN CITY STATE)"
 msgstr ""
 
-#: ../class/paypal_statics.php:309
+#: ../class/paypal_statics.php:329
 msgid "HONDURAS"
 msgstr ""
 
-#: ../class/paypal_statics.php:310
+#: ../class/paypal_statics.php:330
 msgid "HONG KONG"
 msgstr ""
 
-#: ../class/paypal_statics.php:311
+#: ../class/paypal_statics.php:331
 msgid "HUNGARY"
 msgstr ""
 
-#: ../class/paypal_statics.php:312
+#: ../class/paypal_statics.php:332
 msgid "ICELAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:313
+#: ../class/paypal_statics.php:333
 msgid "INDIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:314
+#: ../class/paypal_statics.php:334
 msgid "INDONESIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:315
+#: ../class/paypal_statics.php:335
 msgid "IRELAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:316
+#: ../class/paypal_statics.php:336
 msgid "ISLE OF MAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:317
+#: ../class/paypal_statics.php:337
 msgid "ISRAEL"
 msgstr ""
 
-#: ../class/paypal_statics.php:318
+#: ../class/paypal_statics.php:338
 msgid "ITALY"
 msgstr ""
 
-#: ../class/paypal_statics.php:319
+#: ../class/paypal_statics.php:339
 msgid "JAMAICA"
 msgstr ""
 
-#: ../class/paypal_statics.php:320
+#: ../class/paypal_statics.php:340
 msgid "JAPAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:321
+#: ../class/paypal_statics.php:341
 msgid "JERSEY"
 msgstr ""
 
-#: ../class/paypal_statics.php:322
+#: ../class/paypal_statics.php:342
 msgid "JORDAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:323
+#: ../class/paypal_statics.php:343
 msgid "KAZAKHSTAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:324
+#: ../class/paypal_statics.php:344
 msgid "KIRIBATI"
 msgstr ""
 
-#: ../class/paypal_statics.php:325
+#: ../class/paypal_statics.php:345
 msgid "KOREA, REPUBLIC OF"
 msgstr ""
 
-#: ../class/paypal_statics.php:326
+#: ../class/paypal_statics.php:346
 msgid "KUWAIT"
 msgstr ""
 
-#: ../class/paypal_statics.php:327
+#: ../class/paypal_statics.php:347
 msgid "KYRGYZSTAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:328
+#: ../class/paypal_statics.php:348
 msgid "LATVIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:329
+#: ../class/paypal_statics.php:349
 msgid "LESOTHO"
 msgstr ""
 
-#: ../class/paypal_statics.php:330
+#: ../class/paypal_statics.php:350
 msgid "LIECHTENSTEIN"
 msgstr ""
 
-#: ../class/paypal_statics.php:331
+#: ../class/paypal_statics.php:351
 msgid "LITHUANIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:332
+#: ../class/paypal_statics.php:352
 msgid "LUXEMBOURG"
 msgstr ""
 
-#: ../class/paypal_statics.php:333
+#: ../class/paypal_statics.php:353
 msgid "MACAO"
 msgstr ""
 
-#: ../class/paypal_statics.php:334
+#: ../class/paypal_statics.php:354
 msgid "MALAWI"
 msgstr ""
 
-#: ../class/paypal_statics.php:335
+#: ../class/paypal_statics.php:355
 msgid "MALAYSIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:336
+#: ../class/paypal_statics.php:356
 msgid "MALTA"
 msgstr ""
 
-#: ../class/paypal_statics.php:337
+#: ../class/paypal_statics.php:357
 msgid "MARSHALL ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:338
+#: ../class/paypal_statics.php:358
 msgid "MARTINIQUE"
 msgstr ""
 
-#: ../class/paypal_statics.php:339
+#: ../class/paypal_statics.php:359
 msgid "MAURITANIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:340
+#: ../class/paypal_statics.php:360
 msgid "MAURITIUS"
 msgstr ""
 
-#: ../class/paypal_statics.php:341
+#: ../class/paypal_statics.php:361
 msgid "MAYOTTE"
 msgstr ""
 
-#: ../class/paypal_statics.php:342
+#: ../class/paypal_statics.php:362
 msgid "MEXICO"
 msgstr ""
 
-#: ../class/paypal_statics.php:343
+#: ../class/paypal_statics.php:363
 msgid "MICRONESIA, FEDERATED STATES OF"
 msgstr ""
 
-#: ../class/paypal_statics.php:344
+#: ../class/paypal_statics.php:364
 msgid "MOLDOVA, REPUBLIC OF"
 msgstr ""
 
-#: ../class/paypal_statics.php:345
+#: ../class/paypal_statics.php:365
 msgid "MONACO"
 msgstr ""
 
-#: ../class/paypal_statics.php:346
+#: ../class/paypal_statics.php:366
 msgid "MONGOLIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:347
+#: ../class/paypal_statics.php:367
 msgid "MONTSERRAT"
 msgstr ""
 
-#: ../class/paypal_statics.php:348
+#: ../class/paypal_statics.php:368
 msgid "MOROCCO"
 msgstr ""
 
-#: ../class/paypal_statics.php:349
+#: ../class/paypal_statics.php:369
 msgid "MOZAMBIQUE"
 msgstr ""
 
-#: ../class/paypal_statics.php:350
+#: ../class/paypal_statics.php:370
 msgid "NAMIBIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:351
+#: ../class/paypal_statics.php:371
 msgid "NAURU"
 msgstr ""
 
-#: ../class/paypal_statics.php:352
+#: ../class/paypal_statics.php:372
 msgid "NEPAL"
 msgstr ""
 
-#: ../class/paypal_statics.php:353
+#: ../class/paypal_statics.php:373
 msgid "NETHERLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:354
+#: ../class/paypal_statics.php:374
 msgid "NETHERLANDS ANTILLES"
 msgstr ""
 
-#: ../class/paypal_statics.php:355
+#: ../class/paypal_statics.php:375
 msgid "NEW CALEDONIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:356
+#: ../class/paypal_statics.php:376
 msgid "NEW ZEALAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:357
+#: ../class/paypal_statics.php:377
 msgid "NICARAGUA"
 msgstr ""
 
-#: ../class/paypal_statics.php:358
+#: ../class/paypal_statics.php:378
 msgid "NIGER"
 msgstr ""
 
-#: ../class/paypal_statics.php:359
+#: ../class/paypal_statics.php:379
 msgid "NIUE"
 msgstr ""
 
-#: ../class/paypal_statics.php:360
+#: ../class/paypal_statics.php:380
 msgid "NORFOLK ISLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:361
+#: ../class/paypal_statics.php:381
 msgid "NORTHERN MARIANA ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:362
+#: ../class/paypal_statics.php:382
 msgid "NORWAY"
 msgstr ""
 
-#: ../class/paypal_statics.php:363
+#: ../class/paypal_statics.php:383
 msgid "OMAN"
 msgstr ""
 
-#: ../class/paypal_statics.php:364
+#: ../class/paypal_statics.php:384
 msgid "PALAU"
 msgstr ""
 
-#: ../class/paypal_statics.php:365
+#: ../class/paypal_statics.php:385
 msgid "PANAMA"
 msgstr ""
 
-#: ../class/paypal_statics.php:366
+#: ../class/paypal_statics.php:386
 msgid "PARAGUAY"
 msgstr ""
 
-#: ../class/paypal_statics.php:367
+#: ../class/paypal_statics.php:387
 msgid "PERU"
 msgstr ""
 
-#: ../class/paypal_statics.php:368
+#: ../class/paypal_statics.php:388
 msgid "PHILIPPINES"
 msgstr ""
 
-#: ../class/paypal_statics.php:369
+#: ../class/paypal_statics.php:389
 msgid "PITCAIRN"
 msgstr ""
 
-#: ../class/paypal_statics.php:370
+#: ../class/paypal_statics.php:390
 msgid "POLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:371
+#: ../class/paypal_statics.php:391
 msgid "PORTUGAL"
 msgstr ""
 
-#: ../class/paypal_statics.php:372
+#: ../class/paypal_statics.php:392
 msgid "PUERTO RICO"
 msgstr ""
 
-#: ../class/paypal_statics.php:373
+#: ../class/paypal_statics.php:393
 msgid "QATAR"
 msgstr ""
 
-#: ../class/paypal_statics.php:374
+#: ../class/paypal_statics.php:394
 msgid "REUNION"
 msgstr ""
 
-#: ../class/paypal_statics.php:375
+#: ../class/paypal_statics.php:395
 msgid "ROMANIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:376
+#: ../class/paypal_statics.php:396
 msgid "SAINT HELENA"
 msgstr ""
 
-#: ../class/paypal_statics.php:377
+#: ../class/paypal_statics.php:397
 msgid "SAINT KITTS AND NEVIS"
 msgstr ""
 
-#: ../class/paypal_statics.php:378
+#: ../class/paypal_statics.php:398
 msgid "SAINT LUCIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:379
+#: ../class/paypal_statics.php:399
 msgid "SAINT PIERRE AND MIQUELON"
 msgstr ""
 
-#: ../class/paypal_statics.php:380
+#: ../class/paypal_statics.php:400
 msgid "SAINT VINCENT AND THE GRENADINES"
 msgstr ""
 
-#: ../class/paypal_statics.php:381
+#: ../class/paypal_statics.php:401
 msgid "SAMOA"
 msgstr ""
 
-#: ../class/paypal_statics.php:382
+#: ../class/paypal_statics.php:402
 msgid "SAN MARINO"
 msgstr ""
 
-#: ../class/paypal_statics.php:383
+#: ../class/paypal_statics.php:403
 msgid "SAO TOME AND PRINCIPE"
 msgstr ""
 
-#: ../class/paypal_statics.php:384
+#: ../class/paypal_statics.php:404
 msgid "SAUDI ARABIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:385
+#: ../class/paypal_statics.php:405
 msgid "SENEGAL"
 msgstr ""
 
-#: ../class/paypal_statics.php:386
+#: ../class/paypal_statics.php:406
 msgid "SEYCHELLES"
 msgstr ""
 
-#: ../class/paypal_statics.php:387
+#: ../class/paypal_statics.php:407
 msgid "SINGAPORE"
 msgstr ""
 
-#: ../class/paypal_statics.php:388
+#: ../class/paypal_statics.php:408
 msgid "SLOVAKIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:389
+#: ../class/paypal_statics.php:409
 msgid "SLOVENIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:390
+#: ../class/paypal_statics.php:410
 msgid "SOLOMON ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:391
+#: ../class/paypal_statics.php:411
 msgid "SOUTH AFRICA"
 msgstr ""
 
-#: ../class/paypal_statics.php:392
+#: ../class/paypal_statics.php:412
 msgid "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:393
+#: ../class/paypal_statics.php:413
 msgid "SPAIN"
 msgstr ""
 
-#: ../class/paypal_statics.php:394
+#: ../class/paypal_statics.php:414
 msgid "SURINAME"
 msgstr ""
 
-#: ../class/paypal_statics.php:395
+#: ../class/paypal_statics.php:415
 msgid "SVALBARD AND JAN MAYEN"
 msgstr ""
 
-#: ../class/paypal_statics.php:396
+#: ../class/paypal_statics.php:416
 msgid "SWAZILAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:397
+#: ../class/paypal_statics.php:417
 msgid "SWEDEN"
 msgstr ""
 
-#: ../class/paypal_statics.php:398
+#: ../class/paypal_statics.php:418
 msgid "SWITZERLAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:399
+#: ../class/paypal_statics.php:419
 msgid "TAIWAN, PROVINCE OF CHINA"
 msgstr ""
 
-#: ../class/paypal_statics.php:400
+#: ../class/paypal_statics.php:420
 msgid "TANZANIA, UNITED REPUBLIC OF"
 msgstr ""
 
-#: ../class/paypal_statics.php:401
+#: ../class/paypal_statics.php:421
 msgid "THAILAND"
 msgstr ""
 
-#: ../class/paypal_statics.php:402
+#: ../class/paypal_statics.php:422
 msgid "TOKELAU"
 msgstr ""
 
-#: ../class/paypal_statics.php:403
+#: ../class/paypal_statics.php:423
 msgid "TONGA"
 msgstr ""
 
-#: ../class/paypal_statics.php:404
+#: ../class/paypal_statics.php:424
 msgid "TRINIDAD AND TOBAGO"
 msgstr ""
 
-#: ../class/paypal_statics.php:405
+#: ../class/paypal_statics.php:425
 msgid "TUNISIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:406
+#: ../class/paypal_statics.php:426
 msgid "TURKEY"
 msgstr ""
 
-#: ../class/paypal_statics.php:407
+#: ../class/paypal_statics.php:427
 msgid "TURKS AND CAICOS ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:408
+#: ../class/paypal_statics.php:428
 msgid "TUVALU"
 msgstr ""
 
-#: ../class/paypal_statics.php:409
+#: ../class/paypal_statics.php:429
 msgid "UKRAINE"
 msgstr ""
 
-#: ../class/paypal_statics.php:410
+#: ../class/paypal_statics.php:430
 msgid "UNITED ARAB EMIRATES"
 msgstr ""
 
-#: ../class/paypal_statics.php:411
+#: ../class/paypal_statics.php:431
 msgid "UNITED KINGDOM"
 msgstr ""
 
-#: ../class/paypal_statics.php:412
+#: ../class/paypal_statics.php:432
 msgid "UNITED STATES"
 msgstr ""
 
-#: ../class/paypal_statics.php:413
+#: ../class/paypal_statics.php:433
 msgid "UNITED STATES MINOR OUTLYING ISLANDS"
 msgstr ""
 
-#: ../class/paypal_statics.php:414
+#: ../class/paypal_statics.php:434
 msgid "URUGUAY"
 msgstr ""
 
-#: ../class/paypal_statics.php:415
+#: ../class/paypal_statics.php:435
 msgid "VIET NAM"
 msgstr ""
 
-#: ../class/paypal_statics.php:416
+#: ../class/paypal_statics.php:436
 msgid "VIRGIN ISLANDS, BRITISH"
 msgstr ""
 
-#: ../class/paypal_statics.php:417
+#: ../class/paypal_statics.php:437
 msgid "VIRGIN ISLANDS, U.S."
 msgstr ""
 
-#: ../class/paypal_statics.php:418
+#: ../class/paypal_statics.php:438
 msgid "WALLIS AND FUTUNA"
 msgstr ""
 
-#: ../class/paypal_statics.php:419
+#: ../class/paypal_statics.php:439
 msgid "ZAMBIA"
 msgstr ""
 
-#: ../class/paypal_statics.php:432
+#: ../class/paypal_statics.php:452
 msgid "Australian Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:433
+#: ../class/paypal_statics.php:453
 msgid "Brazilian Real"
 msgstr ""
 
-#: ../class/paypal_statics.php:434
+#: ../class/paypal_statics.php:454
 msgid "Canadian Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:435
+#: ../class/paypal_statics.php:455
 msgid "Czech Koruna"
 msgstr ""
 
-#: ../class/paypal_statics.php:436
+#: ../class/paypal_statics.php:456
 msgid "Danish Krone"
 msgstr ""
 
-#: ../class/paypal_statics.php:437
+#: ../class/paypal_statics.php:457
 msgid "Euro"
 msgstr ""
 
-#: ../class/paypal_statics.php:438
+#: ../class/paypal_statics.php:458
 msgid "Hong Kong Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:439
+#: ../class/paypal_statics.php:459
 msgid "Hungarian Forint"
 msgstr ""
 
-#: ../class/paypal_statics.php:440
+#: ../class/paypal_statics.php:460
 msgid "Israeli New Sheqel"
 msgstr ""
 
-#: ../class/paypal_statics.php:441
+#: ../class/paypal_statics.php:461
 msgid "Japanese Yen"
 msgstr ""
 
-#: ../class/paypal_statics.php:442
+#: ../class/paypal_statics.php:462
 msgid "Malaysian Ringgit"
 msgstr ""
 
-#: ../class/paypal_statics.php:443
+#: ../class/paypal_statics.php:463
 msgid "Mexican Peso"
 msgstr ""
 
-#: ../class/paypal_statics.php:444
+#: ../class/paypal_statics.php:464
 msgid "Norwegian Krone"
 msgstr ""
 
-#: ../class/paypal_statics.php:445
+#: ../class/paypal_statics.php:465
 msgid "New Zealand Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:446
+#: ../class/paypal_statics.php:466
 msgid "Philippine Peso"
 msgstr ""
 
-#: ../class/paypal_statics.php:447
+#: ../class/paypal_statics.php:467
 msgid "Polish Zloty"
 msgstr ""
 
-#: ../class/paypal_statics.php:448
+#: ../class/paypal_statics.php:468
 msgid "Pound Sterling"
 msgstr ""
 
-#: ../class/paypal_statics.php:449
+#: ../class/paypal_statics.php:469
 msgid "Singapore Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:450
+#: ../class/paypal_statics.php:470
 msgid "Swedish Krona"
 msgstr ""
 
-#: ../class/paypal_statics.php:451
+#: ../class/paypal_statics.php:471
 msgid "Swiss Franc"
 msgstr ""
 
-#: ../class/paypal_statics.php:452
+#: ../class/paypal_statics.php:472
 msgid "Taiwan New Dollar"
 msgstr ""
 
-#: ../class/paypal_statics.php:453
+#: ../class/paypal_statics.php:473
 msgid "Thai Baht"
 msgstr ""
 
-#: ../class/paypal_statics.php:454
+#: ../class/paypal_statics.php:474
 msgid "U.S. Dollar"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:3
+msgid "Event Information"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:6
+msgid "Participants"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:13
+msgid "Contact them"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:16
+msgid "Show list"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:21
+msgid "Ticket Sold"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:28
+msgid "Ticket Sale Setting"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:33
+msgid "Limit to sell"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:41
+msgid "Limit to cancel"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:52
+msgid "You do not specify cancel limit, so user cannot cancel."
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:57
+#, php-format
+msgid "User can cancel ticket %1$s days before selling limit. Refund is %2$s%%."
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:64
+msgid "If you specify cancelable date, user can cancel transaction after payment."
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:68
+msgid "Ticket Footer Note"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:71
+msgid "Auto format"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:81
+msgid "Name"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:84
+msgid "Stock"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:107
+msgid "Ticket form"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:117
+msgid "Added as new ticket."
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:118
+msgid "Editting existing ticket."
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:123
+msgid "Ticket Description"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:129
+msgid "Ticket Price"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:135
+msgid "Ticket Stock"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:143
+msgid "Clear form"
+msgstr ""
+
+#: ../form-template/edit-detail-event.php:144
+msgid "Edit ticket"
 msgstr ""
 
 #: ../form-template/edit-detail.php:21
@@ -2720,16 +3121,131 @@ msgstr ""
 msgid "This Post has no files. You can add files from media uploader."
 msgstr ""
 
+#: ../form-template/paypal-cancel-ticket-success.php:3
+#, php-format
+msgid "You have successfully canceled <strong>%1$s</strong> of %2$s."
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket-success.php:4
+#, php-format
+msgid "You will be redirected to <strong>%s</strong>"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket-success.php:7
+#, php-format
+msgid "%s seconds left"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket-success.php:10
+msgid "return now"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket.php:4
+#, php-format
+msgid "You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please select ticket below. You can cancel in this condition till %3$s"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket.php:14
+msgid "Bought"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket.php:16
+msgid "Refund"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket.php:17
+msgid "Ratio"
+msgstr ""
+
+#: ../form-template/paypal-cancel-ticket.php:48
+#: ../form-template/paypal-event-contact.php:46
+#, php-format
+msgid "Return to %s"
+msgstr ""
+
 #: ../form-template/paypal-cancel.php:2
 msgid "Transaction is canceled."
 msgstr ""
 
 #: ../form-template/paypal-cancel.php:5
-#: ../form-template/paypal-subscription.php:73
-#: ../form-template/paypal-subscription.php:75
-#: ../form-template/paypal-subscription.php:77
-#: ../form-template/paypal-transfer.php:12
 msgid "Return"
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:3
+#, php-format
+msgid "You are about to send email to %1$s participants of %2$s <strong>%3$s</strong>. Please be patient till sending process finishes even if number of participants is huge."
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:12
+msgid "From"
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:22
+msgid "Subject"
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:23
+msgid "ex. What you need for our event."
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:26
+msgid "Mail Body"
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:28
+msgid "Dear %user_display%"
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:29
+#, php-format
+msgid "You can user %1$s and %2$s as placeholder."
+msgstr ""
+
+#: ../form-template/paypal-event-contact.php:33
+msgid "Signature"
+msgstr ""
+
+#: ../form-template/paypal-event-tickets-consume.php:4
+msgid "Successfully updated."
+msgstr ""
+
+#: ../form-template/paypal-event-tickets-consume.php:8
+#, php-format
+msgid "Below is the tickets %1$s&lt;%2$s&gt; bought for %3$s <strong>&quot;%4$s&quot;</strong>."
+msgstr ""
+
+#: ../form-template/paypal-event-tickets.php:4
+#, php-format
+msgid "Below is the tickets you bought for %1$s <strong>&quot;%2$s&quot;</strong>. Print or bookmark this page and keep it accessible."
+msgstr ""
+
+#: ../form-template/paypal-event-tickets.php:14
+msgid "Rest"
+msgstr ""
+
+#: ../form-template/paypal-event-tickets.php:24
+msgid "Used"
+msgstr ""
+
+#: ../form-template/paypal-event-tickets.php:30
+msgid "Please keep this code private."
+msgstr ""
+
+#: ../form-template/paypal-event-tickets.php:38
+msgid "Print"
+msgstr ""
+
+#: ../form-template/paypal-event-user.php:4
+msgid "Code is wrong."
+msgstr ""
+
+#: ../form-template/paypal-event-user.php:8
+#, php-format
+msgid "Please enter code for %1$s <strong>&quot;%2$s&quot;</strong>."
+msgstr ""
+
+#: ../form-template/paypal-event-user.php:21
+msgid "Verify"
 msgstr ""
 
 #: ../form-template/paypal-return.php:2
@@ -2793,6 +3309,7 @@ msgstr ""
 
 #: ../form-template/paypal-selection.php:48
 #: ../form-template/paypal-selection.php:50
+#: ../help/transfer.php:2
 msgid "Transfer"
 msgstr ""
 
@@ -2843,15 +3360,6 @@ msgstr ""
 
 #: ../form-template/paypal-success.php:4
 msgid "You will be redirected to the purchased item page."
-msgstr ""
-
-#: ../form-template/paypal-success.php:7
-#, php-format
-msgid "%s seconds left"
-msgstr ""
-
-#: ../form-template/paypal-success.php:10
-msgid "return now"
 msgstr ""
 
 #: ../form-template/paypal-transfer.php:4
@@ -2908,13 +3416,7 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-#: ../form-template/reward-summary.php:151
-#: ../tables/list-promotable-posts.php:131
-msgid "Name"
-msgstr ""
-
 #: ../form-template/reward-summary.php:152
-#: ../tables/list-promotable-posts.php:136
 msgid "Sold"
 msgstr ""
 
@@ -3499,16 +4001,59 @@ msgstr ""
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
+#: ../tables/list-event.php:203
 #: ../tables/list-history.php:236
 #: ../tables/list-management.php:285
 #: ../tables/list-reward-history.php:200
-#: ../tables/list-transfers.php:317
+#: ../tables/list-ticket.php:217
+#: ../tables/list-transfers.php:326
 #, php-format
 msgid "%d per 1Page"
 msgstr ""
 
 #: ../tables/list-devices.php:78
 msgid "No matching device found."
+msgstr ""
+
+#: ../tables/list-event.php:22
+msgid "No matching event is found."
+msgstr ""
+
+#: ../tables/list-event.php:33
+msgid "Event Type"
+msgstr ""
+
+#: ../tables/list-event.php:34
+msgid "Event Name"
+msgstr ""
+
+#: ../tables/list-event.php:35
+#: ../tables/list-promotable-posts.php:135
+msgid "Published"
+msgstr ""
+
+#: ../tables/list-event.php:36
+msgid "Selling Limit"
+msgstr ""
+
+#: ../tables/list-event.php:38
+#: ../tables/list-ticket.php:40
+msgid "Actions"
+msgstr ""
+
+#: ../tables/list-event.php:134
+#: ../tables/list-management.php:123
+#: ../tables/list-management.php:235
+#: ../tables/list-reward-history.php:174
+#: ../tables/list-ticket.php:133
+msgid "Detail"
+msgstr ""
+
+#: ../tables/list-event.php:189
+#: ../tables/list-history.php:219
+#: ../tables/list-management.php:271
+#: ../tables/list-promotable-posts.php:189
+msgid "All Post Types"
 msgstr ""
 
 #: ../tables/list-history.php:29
@@ -3538,39 +4083,24 @@ msgstr ""
 
 #: ../tables/list-history.php:152
 #: ../tables/list-management.php:220
-#: ../tables/list-transfers.php:220
+#: ../tables/list-transfers.php:226
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: ../tables/list-history.php:219
-#: ../tables/list-management.php:271
-#: ../tables/list-promotable-posts.php:189
-msgid "All Post Types"
-msgstr ""
-
 #: ../tables/list-management.php:103
-#: ../tables/list-transfers.php:140
+#: ../tables/list-transfers.php:141
 msgid "No matching transaction found."
 msgstr ""
 
-#: ../tables/list-management.php:123
-#: ../tables/list-management.php:235
-#: ../tables/list-reward-history.php:174
-msgid "Detail"
-msgstr ""
-
 #: ../tables/list-management.php:259
-#: ../tables/list-transfers.php:304
+#: ../tables/list-ticket.php:195
+#: ../tables/list-transfers.php:312
 msgid "All Status"
 msgstr ""
 
 #: ../tables/list-management.php:262
 msgid "Success"
-msgstr ""
-
-#: ../tables/list-management.php:263
-msgid "Refund"
 msgstr ""
 
 #: ../tables/list-promotable-posts.php:25
@@ -3579,10 +4109,6 @@ msgstr ""
 
 #: ../tables/list-promotable-posts.php:130
 msgid "Type"
-msgstr ""
-
-#: ../tables/list-promotable-posts.php:135
-msgid "Published"
 msgstr ""
 
 #: ../tables/list-reward-history.php:30
@@ -3611,20 +4137,32 @@ msgstr ""
 msgid "Pay Day"
 msgstr ""
 
-#: ../tables/list-transfers.php:66
+#: ../tables/list-ticket.php:22
+msgid "No matching ticket is found."
+msgstr ""
+
+#: ../tables/list-ticket.php:205
+msgid "All Tickets"
+msgstr ""
+
+#: ../tables/list-transfers.php:67
 msgid "Status updated."
 msgstr ""
 
-#: ../tables/list-transfers.php:71
+#: ../tables/list-transfers.php:72
 msgid "No transaction is specified."
 msgstr ""
 
-#: ../tables/list-transfers.php:155
+#: ../tables/list-transfers.php:156
 msgid "Notification Code"
 msgstr ""
 
-#: ../tables/list-transfers.php:159
+#: ../tables/list-transfers.php:160
 msgid "Notice"
+msgstr ""
+
+#: ../tables/list-transfers.php:217
+msgid "Refund :"
 msgstr ""
 
 #: ../widgets/buynow.php:21
