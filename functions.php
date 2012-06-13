@@ -1173,7 +1173,41 @@ function lwp_get_ticket_sold($post = null){
 	return (int)$wpdb->get_var($wpdb->prepare("SELECT SUM(num) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s", $post->ID, LWP_Payment_Status::SUCCESS));
 }
 
+/**
+ * Show Event start date
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param string $format
+ * @param object $post
+ * @param boolean $_end 
+ * @return string|false 
+ */
+function lwp_event_starts($format = null, $post = null, $_end = false){
+	global $lwp;
+	if(is_null($format)){
+		$format = get_option('date_format');
+	}else{
+		$format = (string)$format;
+	}
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$key = $_end ? $lwp->event->meta_end : $lwp->event->meta_start;
+	$meta = get_post_meta($post->ID, $key, true);
+	return $meta ? mysql2date($format, $meta) : false;
+}
 
+/**
+ * Returns event end date if registered.
+ * @param string $format Dateformat
+ * @param object $post 
+ * @return string|false
+ */
+function lwp_event_ends($format = null, $post = null){
+	return lwp_event_starts($format, $post, true);
+}
 
 /**
  * Displays tikcet sold count.

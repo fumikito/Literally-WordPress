@@ -7,6 +7,7 @@ jQuery(document).ready(function($){
 		}
 	}
 	$('.date-picker').datepicker(LWP);
+	$('.time-picker').datetimepicker(LWP);
 	
 	var TicketForm = {
 		clear: function(){

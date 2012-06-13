@@ -3,11 +3,25 @@
 <h4><?php $this->e('Event Information'); ?></h4>
 <table class="form-table" id="">
 	<tr>
+		<th valign="top"><?php $this->e('Event Period'); ?></th>
+		<td>
+			<label>
+				<?php $this->e('Start at'); ?>
+				<input type="text" class="time-picker" name="event_start_time" id="event_start_time" value="<?php echo esc_attr(get_post_meta($post->ID, $this->meta_start, true)); ?>" />
+			</label>
+			-
+			<label>
+				<?php $this->e('Ends at'); ?>
+				<input type="text" class="time-picker" name="event_end_time" id="event_end_time" value="<?php echo esc_attr(get_post_meta($post->ID, $this->meta_end, true)); ?>" />
+			</label>
+		</td>
+	</tr>
+	<tr>
 		<th valign="top"><?php $this->e('Participants'); ?></th>
 		<td>
 			<?php
 				$participants = lwp_participants_number($post);
-				printf('<strong>%s</strong> People', number_format($participants));
+				printf($this->_('<strong>%s</strong> People'), number_format($participants));
 			?>
 			<?php if($participants): ?>
 				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact').'&amp;'.'event_id='.$post->ID; ?>"><?php $this->e('Contact them'); ?></a>

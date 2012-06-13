@@ -637,7 +637,7 @@ EOS;
 		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
 			//Load Datepicker
 			wp_enqueue_style('jquery-ui-datepicker');
-			wp_enqueue_script('lwp-reward-summary', $this->url.'assets/js/reward-summary.js', array('google-jsapi', 'jquery-form', 'jquery-ui-datepicker', 'jquery-ui-tabs'), $this->version);
+			wp_enqueue_script('lwp-reward-summary', $this->url.'assets/js/reward-summary.js', array('google-jsapi', 'jquery-form', 'jquery-ui-datepicke', 'jquery-ui-tabs'), $this->version);
 			wp_localize_script('lwp-reward-summary', 'LWP', array_merge(
 				LWP_Datepicker_Helper::get_config_array(),
 				array(
@@ -659,7 +659,7 @@ EOS;
 		//Add event helper on post edit page
 		if(false !== array_search(basename($_SERVER['SCRIPT_FILENAME']), array('post.php', 'post-new.php') )){
 			wp_enqueue_style('jquery-ui-datepicker');
-			wp_enqueue_script('lwp-event-helper', $this->url.'assets/js/event-helper.js', array('jquery-effects-highlight', 'jquery-ui-datepicker'), $this->version);
+			wp_enqueue_script('lwp-event-helper', $this->url.'assets/js/event-helper.js', array('jquery-effects-highlight', 'jquery-ui-timepicker'), $this->version);
 			wp_localize_script('lwp-event-helper', 'LWP', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
 				'endpoint' => admin_url('admin-ajax.php'),
 				'cancelLimitPlaceHolder' => $this->_('Cacnelable till %1$s days before, %2$s'),

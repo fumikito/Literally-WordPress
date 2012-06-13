@@ -19,6 +19,18 @@ class LWP_Event extends Literally_WordPress_Common {
 	public $post_type = 'lwp-ticket';
 	
 	/**
+	 * Key name of post meta for event start
+	 * @var string 
+	 */
+	public $meta_start = '_lwp_event_start';
+	
+	/**
+	 * Key name of post meta for event ends
+	 * @var string
+	 */
+	public $meta_end = '_lwp_event_end';
+	
+	/**
 	 * Key name of post meta for Selling limit
 	 * @var string
 	 */
@@ -155,6 +167,14 @@ class LWP_Event extends Literally_WordPress_Common {
 	 */
 	public function save_post($post_id){
 		if(isset($_REQUEST['_lwpeventnonce']) && wp_verify_nonce($_REQUEST['_lwpeventnonce'], 'lwp_event_detail')){
+			//Save start and end
+			foreach(array('start' => $this->meta_start, 'end' => $this->meta_end) as $key => $key_name){
+				if(isset($_REQUEST["event_{$key}_time"]) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["event_{$key}_time"])){
+					update_post_meta($post_id, $key_name, $_REQUEST["event_{$key}_time"]);
+				}else{
+					delete_post_meta($post_id, $key_name);
+				}
+			}
 			//Save selling limit
 			if(isset($_REQUEST['event_selling_limit']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/u", $_REQUEST['event_selling_limit'])){
 				update_post_meta($post_id, $this->meta_selling_limit, $_REQUEST['event_selling_limit']);
