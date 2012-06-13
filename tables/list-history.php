@@ -115,23 +115,29 @@ EOS;
 	
 	/**
 	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
 	 * @param Object $item
 	 * @param string $column_name
 	 * @return string
 	 */
 	function column_default($item, $column_name){
-		global $lwp;
+		global $lwp, $wpdb;
 		switch($column_name){
 			case 'item_type':
 				if($item->post_type == $lwp->subscription->post_type){
 					return $lwp->_('Subscription');
 				}else{
-					$label = get_post_types(array('name' => $item->post_type), 'objects');
-					return current($label)->labels->name;
+					return get_post_type_object($item->post_type)->labels->name;
 				}
 				break;
 			case 'item_name':
-				$url = $item->post_type == $lwp->subscription->post_type ? $lwp->subscription->get_subscription_archive() : get_permalink($item->book_id);
+				if($item->post_type == $lwp->subscription->post_type){
+					$url = $lwp->subscription->get_subscription_archive();
+				}elseif($item->post_type == $lwp->event->post_type){
+					$url = lwp_ticket_url($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $item->book_id)));
+				}else{
+					$url = get_permalink($item->book_id);
+				}
 				return '<a href="'.$url.'">'.$item->post_title.'</a>';
 				break;
 			case 'price':
