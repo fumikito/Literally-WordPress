@@ -52,10 +52,28 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 			<td>---</td>
 		</tr>
 		<tr>
+			<th scope="row" valign="top"><?php $this->e('Quantity'); ?></th>
+			<td><?php echo number_format_i18n($transaction->num); ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Consumed'); ?></th>
+			<td><?php echo number_format_i18n($transaction->consumed); ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
 			<th scope="row" valign="top"><?php $this->e('Purchase Method'); ?></th>
 			<td>
 				<?php $this->e($transaction->method); ?>
+				<?php if($transaction->method == LWP_Payment_Methods::PAYPAL): ?>
+				<br /><small><?php printf($this->_('Transaction ID: %s'), $transaction->transaction_id); ?></small>
+				<?php endif; ?>
 			</td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Invoice Num'); ?></th>
+			<td><?php echo esc_html($transaction->transaction_key); ?></td>
 			<td>---</td>
 		</tr>
 		<tr>
