@@ -85,15 +85,19 @@ jQuery(document).ready(function($){
 	$('#lwp-cancel-add').click(function(e){
 		e.preventDefault();
 		var days = parseInt($('input[name=cancel_limit]').val(), 10);
-		var ratio = Math.min(parseInt($('input[name=cancel_ratio]').val(), 10), 100);
-		var markup = LWP.cancelLimitPlaceHolder.
-			replace(/%1\$s/, '<input type="text" class="small-text" readonly="readonly" name="cancel_limit_day[]" value="' + days + '" />').
-			replace(/%2\$s/, '<input type="text" class="small-text" readonly="readonly" name="cancel_limit_ratio[]" value="' + ratio + '" />') + 
-			'<a class="button" href="#">' + LWP.deleteButtonLabel + '</a>';
-		var li = $('<li>' + markup + '</li>');
-		$('#cancel-date-list').removeClass('zero').append(li);
-		li.find('a').click(TicketForm.deleteLimit);
-		$('input[name=cancel_limit], input[name=cancel_ratio]').val('');
+		var ratio = $('input[name=cancel_ratio]').val();
+		if(!ratio.match(/^-?[0-9]+%?$/)){
+			alert(LWP.wrongRatio);
+		}else{
+			var markup = LWP.cancelLimitPlaceHolder.
+				replace(/%1\$s/, '<input type="text" class="small-text" readonly="readonly" name="cancel_limit_day[]" value="' + days + '" />').
+				replace(/%2\$s/, '<input type="text" class="small-text" readonly="readonly" name="cancel_limit_ratio[]" value="' + ratio + '" />') + 
+				'<a class="button" href="#">' + LWP.deleteButtonLabel + '</a>';
+			var li = $('<li>' + markup + '</li>');
+			$('#cancel-date-list').removeClass('zero').append(li);
+			li.find('a').click(TicketForm.deleteLimit);
+			$('input[name=cancel_limit], input[name=cancel_ratio]').val('');
+		}
 	});
 	//Add delete function
 	$('#cancel-date-list li a').click(TicketForm.deleteLimit);

@@ -107,7 +107,7 @@ class PayPal_Statics {
 		$nvpStr = "&TRANSACTIONID=".(string)$transacion_id."&REFUNDTYPE={$type}";
 		//If refund, specify amount
 		if($amount > 0){
-			$nvpStr .= "&AMT=".$amount."CURRENCYCODE=".$lwp->option['currency_code'];
+			$nvpStr .= "&AMT=".$amount."&CURRENCYCODE=".$lwp->option['currency_code'];
 		}
 		$resArray = self::hash_call('RefundTransaction', $nvpStr);
 		$ack = strtoupper($resArray["ACK"]);

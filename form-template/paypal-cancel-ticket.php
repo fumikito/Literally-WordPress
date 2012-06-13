@@ -14,7 +14,7 @@
 				<th scope="col"><?php $this->e('Bought');?></th>
 				<th scope="col"><?php $this->e('Price'); ?></th>
 				<th scope="col"><?php $this->e('Refund'); ?></th>
-				<th scope="col"><?php $this->e('Ratio'); ?></th>
+				<th scope="col"><?php $this->e('Condition'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,10 +31,10 @@
 					<?php echo number_format_i18n($ticket->price)." ".lwp_currency_code();?>
 				</td>
 				<td class="lwp-column-refund">
-					<?php echo number_format_i18n(lwp_ticket_refund_price($ticket->book_id) * $ticket->num).' '.lwp_currency_code();?>
+					<?php echo number_format_i18n(lwp_ticket_refund_price($ticket->ID)).' '.lwp_currency_code();?>
 				</td>
 				<td class="lwp-column-refund">
-					<strong><?php echo $ratio; ?>%</strong>
+					<strong><?php echo $ratio; ?></strong>
 				</td>
 			</tr>
 			<?php endforeach; ?>

@@ -44,7 +44,7 @@
 				<ul id="cancel-date-list"<?php if(empty($limits)) echo 'class="zero"'; ?>>
 					<?php if(!empty($limits)) foreach($limits as $limit): ?>
 						<li><?php printf(
-							$this->_('Cacnelable till %1$s days before, %2$s %'),
+							$this->_('Cacnelable till %1$s days before, %2$s'),
 							'<input type="text" class="small-text" readonly="readonly" name="cancel_limit_day[]" value="'.$limit['days'].'" />',
 							'<input type="text" class="small-text" readonly="readonly" name="cancel_limit_ratio[]" value="'. $limit['ratio'] .'" />'
 						);?><a class="button" href="#"><?php $this->e('Delete'); ?></a></li>
@@ -54,14 +54,21 @@
 				<p>
 					<?php
 						printf(
-							$this->_('User can cancel ticket %1$s days before selling limit. Refund is %2$s%%.'),
+							$this->_('User can cancel ticket %1$s days before selling limit. Refund is %2$s.'),
 							'<input type="text" name="cancel_limit" class="small-text" value="" />',
 							'<input type="text" name="cancel_ratio" class="small-text" value="" />'
 						);
 					?>
 					<a href="#" id="lwp-cancel-add" class="button"><?php $this->e('Add'); ?></a>
 				</p>
-				<p class="description"><?php $this->e('If you specify cancelable date, user can cancel transaction after payment.'); ?></p>
+				<p class="description">
+					<?php $this->e('If you specify cancelable date, user can cancel transaction after payment.'); ?><br />
+					<?php $this->e('You can specify percentage(ex. 50%), number(ex. 100). If you specified positive number, that amount will be refunded. Negative number specified, refund amount results paid price minus it.'); ?><br />
+					<?php $this->e('<strong>Example: </strong>');?><br />
+					<?php printf($this->_('Price %1$s and Refund %2$s -&gt; %3$s back.'), '$1,000', '50%', '$500'); ?><br />
+					<?php printf($this->_('Price %1$s and Refund %2$s -&gt; %3$s back.'), '$1,000', '-200', '$800'); ?><br />
+					<?php printf($this->_('Price %1$s and Refund %2$s -&gt; %3$s back.'), '$1,000', '300', '$300'); ?>
+				</p>
 			</td>
 		</tr>
 		<tr>

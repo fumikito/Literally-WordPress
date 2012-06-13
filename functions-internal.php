@@ -61,14 +61,26 @@ EOS;
 
 /**
  * Callback function for lwp_list_cancel_condition
+ * @global Literally_WordPress $lwp
  * @param string $limit
  * @param int $days_before
  * @param string $ratio 
  */
 function _lwp_show_condition($limit, $days_before, $ratio){
+	global $lwp;
 	$limit = strtotime($limit) - ($days_before * 60 * 60 * 24);
+	$returns = '';
+	if(preg_match("/%$/", $ratio)){
+		//Percentage
+		$returns = $ratio;
+	}elseif(preg_match("/^-[0-9]+$/", $ratio)){
+		$returns = sprintf($lwp->_('Bought price - %s'), ($ratio * -1).' '.lwp_currency_code());
+	}else{
+		$returns = $ratio.' '.lwp_currency_code();
+	}
+	
 	echo '<li>';
-	printf('By %1$s, %2$s', date_i18n(get_option('date_format'), $limit), $ratio.'%');
+	printf('By %1$s, %2$s', date_i18n(get_option('date_format'), $limit), $returns);
 	echo '</li>';
 }
 

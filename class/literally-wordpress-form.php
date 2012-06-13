@@ -469,13 +469,21 @@ EOS;
 		if(empty($tickets)){
 			$this->kill($this->_('Sorry, but you have no ticket to cancel.'), 404);
 		}
+		//Check condition
+		if(preg_match("/%$/", $limit['ratio'])){
+			$ratio = $limit['ratio'];
+		}elseif(preg_match("/^-[0-9]+$/", $limit['ratio'])){
+			$ratio = sprintf($this->_('%s charged.'), preg_replace("/[^0-9]/", '', $limit['ratio']).' '.lwp_currency_code());
+		}else{
+			$ratio = preg_replace("/[^0-9]/", '', $limit['ratio']).' '.lwp_currency_code();
+		}
 		//Show Form
 		$this->show_form('cancel-ticket', array(
 			'tickets' => $tickets,
 			'event' => $event_id,
 			'event_type' => get_post_type_object($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $event_id))),
 			'limit' => $cancel_limit_time,
-			'ratio' => $limit['ratio'],
+			'ratio' => $ratio,
 			'total' => 2,
 			'current' => 1
 		));
@@ -513,8 +521,7 @@ EOS;
 			$this->kill(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), 410);
 		}
 		//Now, let's start refund action
-		$bought_price = $transaction->price;
-		$refund_price = round($bought_price * $current_condition['ratio'] / 100);
+		$refund_price = lwp_ticket_refund_price($transaction);
 		$status = false;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;

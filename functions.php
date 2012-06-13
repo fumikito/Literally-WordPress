@@ -1288,24 +1288,23 @@ function lwp_bought_num($post = null, $user_id = null){
  * Returns currently refundable price
  * @global wpdb $wpdb
  * @global Literally_WordPress $lwp
- * @global object $post
- * @param object $post
- * @param int $user_id
+ * @param object|int $ticket
  * @return int 
  */
-function lwp_ticket_refund_price($post = null, $user_id = null){
+function lwp_ticket_refund_price($ticket){
 	global $wpdb, $lwp;
-	if(is_null($post)){
-		global $post;
+	if(is_numeric($ticket)){
+		$ticket = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $ticket));
+	}
+	$ratio = lwp_current_cancel_ratio($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $ticket->book_id)));
+	if(preg_match("/^[0-9]+%$/", $ratio)){
+		$return = round($ticket->price * preg_replace("/[^0-9]/", '', $ratio) / 100);
+	}elseif(preg_match("/^-[0-9]+$/", $ratio)){
+		$return = $ticket->price - preg_replace("/[^0-9]/", '', $ratio);
 	}else{
-		$post = get_post($post);
+		$return = preg_replace("/[^0-9]/", "", $ratio);
 	}
-	if(is_null($user_id)){
-		$user_id = get_current_user_id();
-	}
-	$bought = lwp_ticket_bought_price($post, $user_id);
-	$ratio = lwp_current_cancel_ratio($post->post_parent);
-	return $bought * $ratio / 100;
+	return $return;
 }
 
 /**
