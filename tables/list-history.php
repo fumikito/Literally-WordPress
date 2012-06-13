@@ -92,13 +92,13 @@ EOS;
 		$sql .= ' WHERE '.implode(' AND ', $where);
 		//ORDER
 		$order_by = 't.registered';
-		if(isset($_GET['order_by'])){
-			switch($_GET['order_by']){
+		if(isset($_GET['orderby'])){
+			switch($_GET['orderby']){
 				case 'updated':
 				case 'registered':
 				case 'expires':
 				case 'price':
-					$order_by = 't.'.(string)$_GET['order_by'];
+					$order_by = 't.'.(string)$_GET['orderby'];
 					break;
 			}
 		}
