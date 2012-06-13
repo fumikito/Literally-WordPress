@@ -136,7 +136,7 @@ class LWP_Form extends Literally_WordPress_Common{
 			}
 		}
     //Let's do action hook to delegate transaction to other plugin
-    do_action('lwp_before_transaction', $book, lwp_buy_url($book));
+    do_action('lwp_before_transaction', $book);
 		//All green, start transaction
 		if(lwp_price($book_id) < 1){
 			//Content is free
@@ -170,7 +170,8 @@ class LWP_Form extends Literally_WordPress_Common{
 			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
 			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
 			//Start Transaction
-			if(!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow')){
+      //If payment selection required or nonce isn't corret, show form.
+			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
 				$this->show_form('selection', array(
 					'post_id' => $book_id,
@@ -181,7 +182,8 @@ class LWP_Form extends Literally_WordPress_Common{
 				));
 			}else{
 				//User selected payment method and start transaction
-				switch($_GET['lwp-method']){
+        $method = isset($_GET['lwp-method']) ? $_GET['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
+				switch($method){
 					case 'transfer':
 						if($lwp->option['transfer']){
 							//Check if there is active transaction
@@ -236,7 +238,7 @@ EOS;
 						break;
 					case 'paypal':
 					case 'cc':
-						$billing = ($_GET['lwp-method'] == 'cc') ? true : false;
+						$billing = ($method == 'cc') ? true : false;
 						if(!$lwp->start_transaction(get_current_user_id(), $book_id, $billing)){
 							//Failed to create transaction
 							$message = $this->_("Failed to make transaction.");
@@ -847,12 +849,21 @@ EOS;
 		exit;
 	}
 	
+  /**
+   * Returns if payment slection can be skipped
+   * @global Literally_WordPress $lwp 
+   */
+  private function can_skip_payment_selection(){
+    global $lwp;
+    return !($lwp->option['transfer']);
+  }
+  
 	/**
 	 * Do enqueue scripts 
 	 */
 	public function enqueue_form_scripts(){
 		global $lwp;
-		//CSS-js読み込み
+		//Load CSS, JS
 		$css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
 		$print_css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_template_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
 		wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
@@ -861,8 +872,11 @@ EOS;
 		if(!empty($this->_LWP)){
 			wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
 		}
+    //Do action hook for other plugins
+    do_action('lwp_form_enqueue_scripts');
 	}
 	
+  
 	/**
 	 * Returns random post if exists for sand box
 	 * @global wpdb $wpdb
