@@ -48,6 +48,17 @@ class LWP_Event extends Literally_WordPress_Common {
 	 */
 	private $_signature = '';
 	
+	/**
+	 * Mail body sent on transaction
+	 * @var string 
+	 */
+	private $_mail_body = '';
+	
+	/**
+	 * Place holder to replace mail
+	 * @var array
+	 */
+	private $_place_holders = array();
 	
 	/**
 	 * Setup option 
@@ -58,10 +69,12 @@ class LWP_Event extends Literally_WordPress_Common {
 	public function set_option($option){
 		$option = shortcode_atts(array(
 			'event_post_types' => array(),
+			'event_mail_body' => '',
 			'event_signature' => ''
 		), $option);
 		$this->post_types = $option['event_post_types'];
 		$this->_signature = (string)$option['event_signature'];
+		$this->_mail_body = (string)$option['event_mail_body'];
 		$this->enabled = !empty($option['event_post_types']);
 	}
 	
@@ -80,6 +93,9 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('wp_ajax_lwp_get_ticket', array($this, 'get_ticket'));
 			add_action('wp_ajax_lwp_contact_participants', array($this, 'contact_participants'));
 			add_action('wp_ajax_lwp_event_csv_output', array($this, 'output_csv'));
+			if(!empty($this->_mail_body)){
+				add_action('lwp_update_transaction', array($this, 'send_email'));
+			}
 		}
 	}
 	
@@ -688,5 +704,103 @@ EOS;
 		}
 		fclose($out);
 		die();
+	}
+	
+	/**
+	 * Send email on transaction
+	 * @param int $transaction_id 
+	 */
+	public function send_email($transaction_id){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT t.*, p.post_parent, p.post_title FROM {$lwp->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			WHERE t.ID = %d AND p.post_type = %s
+EOS;
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id, $this->post_type));
+		if(!$transaction){
+			return;
+		}
+		$user = get_userdata($transaction->user_id);
+		$body = $this->get_mail_body($transaction)."\r\n".$this->get_signature();
+		$to = $user->user_email;
+		$from = get_bloginfo('name')." <".get_option('admin_email').">";
+		$subect = get_bloginfo('name').' : '.$this->_('Thank you for participating');
+		$args = apply_filters('lwp_ticket_complete_mail', array(
+			'to' => $to,
+			'from' => $from,
+			'subject' => $subect,
+			'body' => $body
+		));
+		return wp_mail($args['to'], $args['subject'], $args['body'], 'FROM: '.$from."\r\n");
+	}
+	
+	/**
+	 * Returns mail body. if transaction set, parse it.
+	 * @global $wpdb;
+	 * @param object $transaction
+	 * @return string
+	 */
+	public function get_mail_body($transaction = null){
+		if(is_null($transaction)){
+			return $this->_mail_body;
+		}else{
+			global $wpdb;
+			$body = $this->_mail_body;
+			$user = get_userdata($transaction->user_id);
+			$event = wp_get_single_post($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id)));
+			foreach($this->get_place_holders() as $key => $desc){
+				switch($key){
+					case 'user_name':
+						$repl = $user->display_name;
+						break;
+					case 'user_email':
+						$repl = $user->user_email;
+						break;
+					case 'event_name':
+						$repl = apply_filters('the_title', $event->post_title);
+						break;
+					case 'event_url':
+						$repl = get_permalink($event->ID);
+						break;
+					case 'ticket_name':
+						$repl = get_the_title($transaction->book_id);
+						break;
+					case 'ticket_url':
+						$repl = lwp_ticket_url($event);
+						break;
+					case 'code':
+						$repl = $this->generate_token($event->ID, $user->ID);
+						break;
+					default:
+						$repl = false;
+						break;
+				}
+				if($repl){
+					$body = str_replace("%{$key}%", $repl, $body);
+				}
+			}
+			return $body;
+		}
+	}
+	
+	/**
+	 * Returns place holders
+	 * @return array 
+	 */
+	public function get_place_holders(){
+		if(empty($this->_place_holders)){
+			$this->_place_holders = array(
+				'user_name' => $this->_('Display name of user'),
+				'user_email' => $this->_('User email'),
+				'event_name' => $this->_('Event name'),
+				'event_url' => $this->_('Event\'s permalink'),
+				'ticket_name' => $this->_('Ticket name'),
+				'ticket_url' => $this->_('Ticket list page url'),
+				'code' => $this->_('Code to identify user')
+			);
+		}
+		return $this->_place_holders;
 	}
 }

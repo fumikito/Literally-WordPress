@@ -216,6 +216,7 @@ class Literally_WordPress{
 			"reward_contact" => '',
 			"use_proxy" => false,
 			'event_post_types' => array(),
+			'event_mail_body' => '',
 			'event_signature' => get_bloginfo('name')."\n".get_bloginfo('url')."\n".get_option('admin_email'),
 			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 			"currency_code" => '',
@@ -770,6 +771,7 @@ EOS;
 				"reward_contact" => (string) $_REQUEST['reward_contact'],
 				"use_proxy" => (boolean) $_REQUEST['use_proxy'],
 				'event_post_types' => (array) $_REQUEST['event_post_types'],
+				'event_mail_body' => (string) $_REQUEST['event_mail_body'],
 				'event_signature' => (string) $_REQUEST['event_signature'],
 				"dir" => $_REQUEST["dir"],
 				"slug" => $_REQUEST["product_slug"],
@@ -1437,8 +1439,8 @@ EOS;
 					"user_id" => $user_id,
 					"book_id" => $_REQUEST["ebook_id"],
 					"price" => 0,
-					"status" => "SUCCESS",
-					"method" => "present",
+					"status" => LWP_Payment_Status::SUCCESS,
+					"method" => LWP_Payment_Methods::PRESENT,
 					"transaction_key" => "",
 					"payer_mail" => $data->user_email,
 					"registered" => date('Y-m-d H:i:s'),
@@ -1446,10 +1448,14 @@ EOS;
 				),
 				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
 			);
-			if($wpdb->insert_id)
+			if($wpdb->insert_id){
 				$this->message[] = $this->_("You've kindly given a present.");
-			else
+				//Do hook
+				do_action('lwp_create_transaction', $wpdb->insert_id);
+				do_action('lwp_update_transaction', $wpdb->insert_id);
+			}else{
 				$this->message[] = $this->_("Failed to give a present.");
+			}
 		}
 	}
 	

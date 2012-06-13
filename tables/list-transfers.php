@@ -62,6 +62,8 @@ class LWP_List_Transfer extends WP_List_Table{
 							);
 							if($this->current_action() == LWP_Payment_Status::SUCCESS){
 								$lwp->notifier->notify($wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)), 'confirmed');
+								//Do action hook
+								do_action('lwp_update_transaction', $transaction_id);
 							}
 						}
 						$lwp->message[] = $lwp->_('Status updated.');

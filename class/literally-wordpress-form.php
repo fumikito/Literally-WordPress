@@ -158,6 +158,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				);
 				//Execute hook.
 				do_action('lwp_create_transaction', $wpdb->insert_id);
+				do_action('lwp_update_transaction', $wpdb->insert_id);
 				//Redirect to success page
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
 				exit;
@@ -340,6 +341,8 @@ EOS;
 					array("%s", "%s", "%s", "%s", "%s", "%s"),
 					array("%s")
 				);
+				//Do action hook on transaction updated
+				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
 				//サンキューページを表示する
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
 			}else{

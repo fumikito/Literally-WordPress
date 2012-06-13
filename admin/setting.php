@@ -482,6 +482,16 @@
 			<tbody>
 				<tr>
 					<th valign="top">
+						<label><?php $this->e('What is Event?'); ?></label>
+					</th>
+					<td>
+						<p class="description">
+							<?php $this->e("Event means real event like lunch party, poetry reading or else."); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top">
 						<label><?php $this->e('Event Post Type'); ?></label>
 					</th>
 					<td>
@@ -494,20 +504,22 @@
 					</td>
 				</tr>
 				<tr>
+					<th valign="top"><label for="event_mail_body"><?php $this->e('Mail Body'); ?></label></th>
+					<td>
+						<textarea rows="10" style="width:90%;" name="event_mail_body" id="event_mail_body"><?php echo esc_html($this->event->get_mail_body()); ?></textarea>
+						<p class="description">
+							<?php $this->e('This mail will be sent when transaction completed. You can use place holders: '); ?>
+							<?php foreach($this->event->get_place_holders() as $key => $desc): ?>
+							<strong>%<?php echo $key; ?>%</strong><small>(<?php echo esc_html($desc); ?>)</small>, 
+							<?php endforeach; ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top"><label for="event_signature"><?php $this->e('Mail Signature'); ?></label></th>
 					<td>
 						<textarea rows="5" style="width:90%;" name="event_signature" id="event_signature"><?php echo esc_html($this->event->get_signature()); ?></textarea>
 						<p class="description"><?php $this->e('This text will be used for every mail to participants'); ?></p>
-					</td>
-				</tr>
-				<tr>
-					<th valign="top">
-						<label><?php $this->e('What is Event?'); ?></label>
-					</th>
-					<td>
-						<p class="description">
-							<?php $this->e("Event means real event like lunch party, poetry reading or else."); ?>
-						</p>
 					</td>
 				</tr>
 			</tbody>
