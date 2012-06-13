@@ -135,6 +135,8 @@ class LWP_Form extends Literally_WordPress_Common{
 				}
 			}
 		}
+    //Let's do action hook to delegate transaction to other plugin
+    do_action('lwp_before_transaction', $book, lwp_buy_url($book));
 		//All green, start transaction
 		if(lwp_price($book_id) < 1){
 			//Content is free
