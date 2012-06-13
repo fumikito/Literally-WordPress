@@ -855,7 +855,7 @@ EOS;
    */
   private function can_skip_payment_selection(){
     global $lwp;
-    return !($lwp->option['transfer']);
+    return $lwp->option['skip_payment_selection'] && !($lwp->option['transfer']);
   }
   
 	/**

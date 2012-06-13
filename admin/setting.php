@@ -114,6 +114,17 @@
 						</p>
 					</td>
 				</tr>
+        <tr>
+					<tr>
+						<th valign="top"><?php $this->e('Payment Selection'); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="skip_payment_selection" value="1" <?php if($this->option['skip_payment_selection']) echo 'checked="checked" ';?>/>
+								<?php $this->e('Skip payment selection form if PayPal is only available payment method.'); ?>
+							</label>
+						</td>
+					</tr>
+        </tr>
 			</tbody>
 		</table>
 		<h3><?php $this->e('WordPress Setting'); ?></h3>
