@@ -511,14 +511,13 @@ EOS;
 							$failed = 0;
 							set_time_limit(0);
 							$body = (string)$_REQUEST['body'];
-							$body = str_replace('%code%', lwp_ticket_url($event), $body).$this->get_signature();
+							$body = str_replace('%ticket_url%', lwp_ticket_url($event), $body)."\r\n".$this->get_signature();
 							$headers = "From: {$from}\r\n";
 							foreach($users as $user){
-								$replaced_body = str_replace('%ticket_url%', lwp_ticket_check_url($user->ID, $event), $body);
-								$replaced_body = str_replace('%user_email%', $user->user_email, $body);
-								$replaced_body = str_replace('%display_name%', $user->display_name, $body);
-								
-								if(wp_mail($user_mail->user_email, (string)$_REQUEST['subject'], $replaced_body, $headers)){
+								$replaced_body = str_replace('%code%', $this->generate_token($event->ID, $user->ID), $body);
+								$replaced_body = str_replace('%user_email%', $user->user_email, $replaced_body);
+								$replaced_body = str_replace('%display_name%', $user->display_name, $replaced_body);
+								if(wp_mail($user->user_email, (string)$_REQUEST['subject'], $replaced_body, $headers)){
 									$sent++;
 								}else{
 									$failed++;

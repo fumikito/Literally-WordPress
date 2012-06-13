@@ -760,7 +760,8 @@ EOS;
 			'title' => apply_filters('the_title', $event->post_title),
 			'signature' => wpautop($lwp->event->get_signature()),
 			'options' => $options,
-			'loader' => '<img class="indicator" alt="Loading..." style="display:none;" width="16" height="16" src="'.$this->url.'assets/indicator-postbox.gif" />'
+			'loader' => '<img class="indicator" alt="Loading..." style="display:none;" width="16" height="16" src="'.$this->url.'assets/indicator-postbox.gif" />',
+			'link' => admin_url('post.php?post='.$event->ID.'&action=edit')
 		));
 	}
 	

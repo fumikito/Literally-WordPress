@@ -1016,11 +1016,11 @@ function lwp_selling_limit($format = null, $post = null){
 		$format = get_option('date_format');
 	}
 	$limit = get_post_meta($post->ID, $lwp->event->meta_selling_limit, true);
-	if($limit){
-		return mysql2date($format, $limit);
-	}else{
+	if(!$limit){
 		return '';
 	}
+	$limit = (strtotime($limit) + (60 * 60 * 24) - 1);
+	return date_i18n($format, $limit);
 }
 
 /**
