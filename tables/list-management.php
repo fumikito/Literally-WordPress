@@ -53,6 +53,12 @@ EOS;
 		if($post_type != 'all'){
 			$wheres[] = $wpdb->prepare('p.post_type = %s', $post_type);
 		}
+		if(isset($_REQUEST['from']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['from'])){
+			$wheres[] = $wpdb->prepare('t.registered >= %s', $_REQUEST['from'].' 00:00:00');
+		}
+		if(isset($_REQUEST['to']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['to'])){
+			$wheres[] = $wpdb->prepare('t.registered <= %s', $_REQUEST['to'].' 23:59:59');
+		}
 		if(isset($_GET['s']) && !empty($_GET['s'])){
 			$like_string = preg_replace("/^'(.+)'$/", '$1', $wpdb->prepare("%s", $_GET['s']));
 			$wheres[] = <<<EOS
@@ -67,13 +73,13 @@ EOS;
 			$sql .= ' WHERE '.implode(' AND ', $wheres);
 		}
 		$order_by = 't.registered';
-		if(isset($_GET['order_by'])){
-			switch($_GET['order_by']){
+		if(isset($_GET['orderby'])){
+			switch($_GET['orderby']){
 				case 'updated':
 				case 'registered':
 				case 'expires':
 				case 'price':
-					$order_by = 't.'.(string)$_GET['order_by'];
+					$order_by = 't.'.(string)$_GET['orderby'];
 					break;
 			}
 		}
@@ -197,7 +203,7 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'user':
-				return '<a href="'.admin_url('user_edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>';
+				return $item->display_name ? '<a href="'.admin_url('user_edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
 				break;
 			case 'item_name':
 				return '<a href="'.admin_url('post.php?post='.intval($item->book_id)."&action=edit").'">'.$item->post_title.'</a>';
@@ -250,7 +256,7 @@ EOS;
 	
 	function extra_tablenav($which) {
 		global $lwp;
-		$nombre = ($which == 'top') ?  '' : "2";
+		if($which != 'top') return;
 		?>
 		<div class="alignleft acitions">
 			<select name="status<?php echo $nombre; ?>">
@@ -269,7 +275,14 @@ EOS;
 			<select name="post_types<?php echo $nombre; ?>">
 				<?php
 				$post_types = array('all' => $lwp->_('All Post Types'));
-				foreach($lwp->option['payable_post_types'] as $p){
+				$post_type_labels = $lwp->option['payable_post_types'];
+				if($lwp->event->is_enabled()){
+					$post_type_labels[] = $lwp->event->post_type;
+				}
+				if($lwp->subscription->is_enabled()){
+					$post_type_labels[] = $lwp->subscription->post_type;
+				}
+				foreach($post_type_labels as $p){
 					$object = get_post_types(array('name' => $p), 'objects');
 					foreach($object as $post_type){
 						$post_types[$p] = $post_type->labels->name;
@@ -279,6 +292,8 @@ EOS;
 				<option value="<?php echo $post_type; if($post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php echo $label; ?></option>
 				<?php endforeach; ?>
 			</select>
+			<input style="width: 6em;" placeholder="<?php $lwp->e('Date From'); ?>" type="text" name="from" class="date-picker" value="<?php if(isset($_REQUEST['from'])) echo esc_attr($_REQUEST['from']); ?>" />
+			<input style="width: 6em;" placeholder="<?php $lwp->e('Date To'); ?>" type="text" name="to" class="date-picker" value="<?php if(isset($_REQUEST['to'])) echo esc_attr($_REQUEST['to']); ?>" />
 			<select name="per_page<?php echo $nombre; ?>">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>

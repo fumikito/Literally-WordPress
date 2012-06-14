@@ -49,22 +49,18 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	 */
 	$lwp = new Literally_WordPress();
 
-	if(is_admin()){
-		//Hooks only for admin panels.
-		$lwp->admin_hooks();
-	}else{
-		//Hooks only for public area
-		$lwp->public_hooks();
-	}
 	//Load user functions.
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."functions.php";
+	
 	//For poedit scraping. It won't be executed.
 	if(false){
 		$lwp->_('Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s.');
 		$lwp->_(' Furthermore, this plugin needs cURL module.');
 		$lwp->_(' Please contact to your server administrator to change server configuration.');
 	}
+	
 }else{
+	
 	load_plugin_textdomain('literally-wordpress', false, basename(__FILE__).DIRECTORY_SEPARATOR."language");
 	$error_msg = sprintf(__('Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s.', 'literally-wordpress'), phpversion());
 	if(!function_exists('curl_init')){

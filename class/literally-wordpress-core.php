@@ -168,14 +168,11 @@ class Literally_WordPress{
 	 * @global wpdb $wpdb
 	 * @return void
 	 */
-	public function __construct()
-	{
-		global $wpdb;
-		//初期値の設定
+	public function __construct(){
+		//Set plugin directory
 		$this->url = plugin_dir_url(dirname(__FILE__));
 		$this->dir = dirname(dirname(__FILE__));
-		
-		//テーブル名の設定
+		//Get talbe names
 		$this->campaign = LWP_Tables::campaign();
 		$this->transaction = LWP_Tables::transaction();
 		$this->files = LWP_Tables::files();
@@ -183,59 +180,54 @@ class Literally_WordPress{
 		$this->file_relationships = LWP_Tables::file_relationships();
 		$this->reward_logs = LWP_Tables::reward_logs();
 		$this->promotion_logs = LWP_Tables::promotion_logs();
-		//テキストドメインを設定する
+		//Load text domain
 		load_plugin_textdomain($this->domain, false, basename($this->dir).DIRECTORY_SEPARATOR."language");
-		////オプションの設定
-		$this->option = array();
-		$saved_option = get_option("literally_wordpress_option");
-		$default_option =  array(
-			"db_version" => 0,
-			"sandbox" => false,
-        	"user_name" => "",
-			"password" => "",
-			"signature" => "",
-        	"token" => "",
-			"skip_payment_selection" => false,
-			"subscription" => false,
-			"subscription_post_types" => array(),
-			'subscription_format' => 'all',
-			'transfer' => false,
-			"notification_frequency" => 0,
-			"notification_limit" => 30,
-			"reward_promoter" => false,
-			"reward_promotion_margin" => 0,
-			"reward_promotion_max" => 90,
-			"reward_author" => false,
-			"reward_author_margin" => 0,
-			"reward_author_max" => 90,
-			"reward_minimum" => 0,
-			"reward_request_limit" => 10,
-			"reward_pay_at" => 25,
-			"reward_pay_after_month" => 0,
-			"reward_notice" => '',
-			"reward_contact" => '',
-			"use_proxy" => false,
-			'event_post_types' => array(),
-			'event_mail_body' => '',
-			'event_signature' => get_bloginfo('name')."\n".get_bloginfo('url')."\n".get_option('admin_email'),
-			"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
-			"currency_code" => '',
-			"country_code" => '',
-			"mypage" => 0,
-			"custom_post_type" => array(),
-			"payable_post_types" => array(),
-			"show_form" => true,
-			"load_assets" => 2
-		);
+		//Get Option
 		//Set up upload directory
 		$upload_dir = wp_upload_dir();
-		$default_option['dir'] = $upload_dir['basedir'].DIRECTORY_SEPARATOR."lwp";
-		foreach($default_option as $k => $v){
-			if(isset($saved_option[$k]))
-				$this->option[$k] = $saved_option[$k];
-			else
-				$this->option[$k] = $v;
-		}
+		$this->option = wp_parse_args(
+			get_option("literally_wordpress_option", array()),
+			array(
+				"db_version" => 0,
+				"dir" => $upload_dir['basedir'].DIRECTORY_SEPARATOR."lwp",
+				"sandbox" => false,
+				"user_name" => "",
+				"password" => "",
+				"signature" => "",
+				"token" => "",
+				"skip_payment_selection" => false,
+				"subscription" => false,
+				"subscription_post_types" => array(),
+				'subscription_format' => 'all',
+				'transfer' => false,
+				"notification_frequency" => 0,
+				"notification_limit" => 30,
+				"reward_promoter" => false,
+				"reward_promotion_margin" => 0,
+				"reward_promotion_max" => 90,
+				"reward_author" => false,
+				"reward_author_margin" => 0,
+				"reward_author_max" => 90,
+				"reward_minimum" => 0,
+				"reward_request_limit" => 10,
+				"reward_pay_at" => 25,
+				"reward_pay_after_month" => 0,
+				"reward_notice" => '',
+				"reward_contact" => '',
+				"use_proxy" => false,
+				'event_post_types' => array(),
+				'event_mail_body' => '',
+				'event_signature' => get_bloginfo('name')."\n".get_bloginfo('url')."\n".get_option('admin_email'),
+				"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
+				"currency_code" => '',
+				"country_code" => '',
+				"mypage" => 0,
+				"custom_post_type" => array(),
+				"payable_post_types" => array(),
+				"show_form" => true,
+				"load_assets" => 2
+			)
+		);
 		// 作成したカスタムポストタイプが
 		// Payableオプションに入っていなかったら追加する
 		// あと、単数形が指定されていなかったら同じにする
@@ -248,21 +240,6 @@ class Literally_WordPress{
 			}
 		}
 		
-		//オプション更新
-		if($this->is_admin("setting")){
-			add_action('init', array($this, 'update_option'));
-		}
-		
-		//Add Custom Post Type
-		add_action("init", array($this, "custom_post"));
-		//Register Script Library
-		add_action('init', array($this, 'register_assets'));
-		//ウィジェットの登録
-		add_action('widgets_init', array($this, 'widgets'));
-		//ショートコードの追加
-		add_shortcode("lwp", array($this, "shortcode_capability"));
-		//いますぐ購入ボタンのショートコード
-		add_shortcode('buynow', array($this, 'shortcode_buynow'));
 		//Register form action
 		$this->form = new LWP_Form($this->option);
 		//Initialize Notification Utility
@@ -273,6 +250,84 @@ class Literally_WordPress{
 		$this->reward = new LWP_Reward($this->option);
 		//Initialize Event
 		$this->event = new LWP_Event($this->option);
+		
+		//Register hooks
+		$this->register_hooks();
+	}
+	
+	/**
+	 * Register all hooks. 
+	 */
+	private function register_hooks(){
+		//Add Custom Post Type
+		add_action("init", array($this, "custom_post"));
+		//Register Script Library
+		add_action('init', array($this, 'register_assets'));
+		//ウィジェットの登録
+		add_action('widgets_init', array($this, 'widgets'));
+		//ショートコードの追加
+		add_shortcode("lwp", array($this, "shortcode_capability"));
+		//いますぐ購入ボタンのショートコード
+		add_shortcode('buynow', array($this, 'shortcode_buynow'));
+		//CSV Download Ajax
+		add_action('wp_ajax_lwp_transaction_csv_output', array($this, 'ouput_csv'));
+		if(is_admin()){ //Hooks only for admin panels.
+			//Add hook to update option
+			if($this->is_admin("setting")){
+				add_action('init', array($this, 'update_option'));
+			}
+			//Check table and create if not exits
+			add_action('admin_init', array($this, 'check_table'));
+			//課金有効かどうかの判断
+			add_action("admin_init", array($this, "validate"));
+			//スタイルシート・JSの追加
+			add_action("admin_enqueue_scripts", array($this, "admin_assets"));
+			//キャンペーン更新
+			if($this->is_admin("campaign")){
+				add_action("admin_init", array($this, "update_campaign"));
+			}
+			//トランザクション更新
+			if($this->is_admin("management")){
+				add_action("admin_init", array($this, "update_transaction"));
+			}
+			//端末更新
+			if($this->is_admin("devices")){
+				add_action("admin_init", array($this, "update_devices"));
+			}
+			//電子書籍のアップデート
+			add_action("edit_post", array($this, "post_update"));
+			//メニューの追加
+			add_action("admin_menu", array($this, "add_menu"), 1);
+			//メッセージの出力
+			add_action("admin_notices", array($this, "admin_notice"));
+			//ファイルアップロード用のタブを追加
+			add_action("media_upload_ebook", array($this, "generate_tab"));
+			//ユーザーに書籍をプレゼントするフォーム
+			add_action("edit_user_profile", array($this, "give_user_form"));
+			//書籍プレゼントが実行されたら
+			if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
+				add_action("profile_update", array($this, "give_user"));
+			}
+			//ファイルアップロードのタブ生成アクションを追加するフィルター
+			add_filter("media_upload_tabs", array($this, "upload_tab"));
+			//ファイルアップロード可能な拡張子を追加する
+			add_filter("upload_mimes", array($this, "upload_mimes"));
+			//tinyMCEにボタンを追加する
+			add_filter("mce_external_plugins", array($this, "mce_plugin"));
+			add_filter("mce_external_languages", array($this, "mce_lang"));
+			add_filter("mce_buttons_2", array($this, "mce_button"));
+			////Add Action links on plugin lists.
+			add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
+		}else{ //Hooks only for public area
+			//Highjack frontpage request if lwp is set
+			add_action("template_redirect", array($this->form, "manage_actions"));
+			//Redirect to auth page if user is not logged in
+			add_action("template_redirect", array($this, "protect_user_page"));
+			//the_contentにフックをかける
+			add_filter('the_content', array($this, "the_content"));
+			//Load public assets
+			add_action('wp_enqueue_scripts', array($this, 'load_public_assets'));
+		}
 	}
 	
 	/**
@@ -326,66 +381,6 @@ class Literally_WordPress{
 		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
 		wp_register_script('google-jsapi', 'https://www.google.com/jsapi', array(), null, !is_admin());
 	}
-	
-	
-	
-	/**
-	 * 管理画面のときにだけ行うフックの登録
-	 * 
-	 * @return void
-	 */
-	public function admin_hooks(){
-		/*--------------
-		 * アクションフック
-		 */
-		//Check table and create if not exits
-		add_action('admin_init', array($this, 'check_table'));
-		//課金有効かどうかの判断
-		add_action("admin_init", array($this, "validate"));
-		//スタイルシート・JSの追加
-		add_action("admin_enqueue_scripts", array($this, "admin_assets"));
-		//キャンペーン更新
-		if($this->is_admin("campaign")){
-			add_action("admin_init", array($this, "update_campaign"));
-		}
-		//トランザクション更新
-		if($this->is_admin("management")){
-			add_action("admin_init", array($this, "update_transaction"));
-		}
-		//端末更新
-		if($this->is_admin("devices")){
-			add_action("admin_init", array($this, "update_devices"));
-		}
-		//電子書籍のアップデート
-		add_action("edit_post", array($this, "post_update"));
-		//メニューの追加
-		add_action("admin_menu", array($this, "add_menu"), 1);
-		//メッセージの出力
-		add_action("admin_notice", array($this, "admin_notice"));
-		//ファイルアップロード用のタブを追加
-		add_action("media_upload_ebook", array($this, "generate_tab"));
-		//ユーザーに書籍をプレゼントするフォーム
-		add_action("edit_user_profile", array($this, "give_user_form"));
-		//書籍プレゼントが実行されたら
-		if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
-			add_action("profile_update", array($this, "give_user"));
-		}
-		
-		/*--------------
-		 * フィルターフック
-		 */
-		//ファイルアップロードのタブ生成アクションを追加するフィルター
-		add_filter("media_upload_tabs", array($this, "upload_tab"));
-		//ファイルアップロード可能な拡張子を追加する
-		add_filter("upload_mimes", array($this, "upload_mimes"));
-		//tinyMCEにボタンを追加する
-		add_filter("mce_external_plugins", array($this, "mce_plugin"));
-		add_filter("mce_external_languages", array($this, "mce_lang"));
-		add_filter("mce_buttons_2", array($this, "mce_button"));
-		////Add Action links on plugin lists.
-		add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
-	}
-	
 	
 	
 	/**
@@ -470,7 +465,6 @@ EOS;
 	}
 	
 	
-	
 	/**
 	 * Create table if not exist
 	 *
@@ -495,23 +489,6 @@ EOS;
 	}
 	
 	/**
-	 * 公開画面で登録するフック
-	 * 
-	 * @return void
-	 */
-	public function public_hooks(){
-		//Highjack frontpage request if lwp is set
-		add_action("template_redirect", array($this->form, "manage_actions"));
-		//Redirect to auth page if user is not logged in
-		add_action("template_redirect", array($this, "protect_user_page"));
-		//the_contentにフックをかける
-		add_filter('the_content', array($this, "the_content"));
-		//Load public assets
-		add_action('wp_enqueue_scripts', array($this, 'load_public_assets'));
-	}
-	
-	
-	/**
 	 * Load assets for public page 
 	 */
 	public function load_public_assets(){
@@ -530,8 +507,7 @@ EOS;
 	 * 
 	 * @return void
 	 */
-	public function add_menu()
-	{
+	public function add_menu(){
 		//Setting Pagees
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("General Setting"), 'manage_options', "lwp-setting", array($this, "load"));
@@ -571,13 +547,11 @@ EOS;
 	 * 
 	 * @return void
 	 */
-	public function load()
-	{
+	public function load(){
 		if(isset($_GET["page"]) && (false !== strpos($_GET["page"], "lwp-"))){
 			$slug = str_replace("lwp-", "", $_GET["page"]);
 			global $wpdb;
 			echo '<div class="wrap lwp-wrap">';
-			do_action("admin_notice");
 			$class_name = (basename($_SERVER['SCRIPT_FILENAME']) == 'users.php') ? 'icon-users' : 'ebook';
 			echo "<div class=\"icon32 {$class_name}\"><br /></div>";
 			if(file_exists($this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php")){
@@ -591,7 +565,6 @@ EOS;
 		}elseif(false !== strpos($_SERVER["REQUEST_URI"], "users.php")){
 			global $wpdb;
 			echo '<div class="wrap">';
-			do_action("admin_notice");
 			echo "<div class=\"icon32 ebook\"><br /></div>";
 			require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."history.php";
 			echo "</div>\n<!-- .wrap ends -->";
@@ -633,6 +606,12 @@ EOS;
 			);
 			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', LWP_Datepicker_Helper::get_config_array());
 		}
+		//In management page, do csv output
+		if($this->is_admin('management') && !isset($_REQUEST['transaction_id'])){
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script('lwp-output-csv-transaction', $this->url.'assets/js/management-helper.js', array('jquery-ui-datepicker'), $this->version);
+			wp_localize_script('lwp-output-csv-transaction', 'LWP', LWP_Datepicker_Helper::get_config_array());
+		}
 		//Incase Reward dashboard, Load datepicker and tab UI
 		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
 			//Load Datepicker
@@ -673,13 +652,12 @@ EOS;
 	
 	
 	/**
-	 * 管理画面でメッセージを発行する
+	 * Show message on admin panel
 	 * 
 	 * @since 0.3
 	 * @return void
 	 */
-	public function admin_notice()
-	{
+	public function admin_notice(){
 		if(!empty($this->message)){
 			$class = $this->error ? 'error' : 'updated';
 			?>
@@ -803,7 +781,12 @@ EOS;
 					array_push($new_option['payable_post_types'], $post_type);
 				}
 			}
-			update_option("literally_wordpress_option", $new_option);
+			if(update_option("literally_wordpress_option", $new_option)){
+				$this->message[] = $this->_('Option updated.');
+			}else{
+				$this->error = true;
+				$this->message[] = $this->_('Failed to updated options.');
+			}
 			$this->option = $new_option;
 			do_action('lwp_update_option', $this->option);
 		}
@@ -859,10 +842,10 @@ EOS;
 	 * @param array $tabs
 	 * @return array
 	 */
-	public function upload_tab($tabs)
-	{
-		if($this->initialized)
-			$tabs["ebook"] = $this->_('Literally WordPress');
+	public function upload_tab($tabs){
+		if($this->initialized){
+			$tabs["ebook"] = $this->_('Downloadble Contents');
+		}
 		return $tabs;
 	}
 	
@@ -1786,6 +1769,102 @@ EOS;
 		}else{
 			return $content;
 		}
+	}
+	
+	/**
+	 * Output transaction CSV 
+	 * @global wpdb $wpdb
+	 */
+	public function ouput_csv(){
+		if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_transaction_csv_output')){
+			status_header(403);
+			die();
+		}
+		//If current user can get CSV
+		$cap = current_user_can('edit_others_posts');
+		if(!apply_filters('lwp_transaction_csv', $cap)){
+			status_header(403);
+			die();
+		}
+		//Now let's start output csv
+		global $wpdb;
+		$sql = <<<EOS
+			SELECT DISTINCT
+				t.*, p.post_title, u.user_login, u.display_name
+			FROM {$this->transaction} AS t
+			INNER JOIN {$wpdb->posts} AS p
+			ON t.book_id = p.ID
+			LEFT JOIN {$wpdb->users} AS u
+			ON t.user_id = u.ID
+EOS;
+		$wheres = array();
+		//Detect where
+		if(isset($_REQUEST['status']) && $_REQUEST['status'] != 'all'){
+			$wheres[] = $wpdb->prepare("t.status = %s", $_REQUEST['status']);
+		}
+		if(isset($_REQUEST['post_type']) && $_REQUEST['post_type'] != 'all'){
+			$wheres[] = $wpdb->prepare("p.post_type = %s", $_REQUEST['post_type']);
+		}
+		if(isset($_REQUEST['from']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['from'])){
+			$wheres[] = $wpdb->prepare("t.registered >= %s", $_REQUEST['from'].' 00:00:00');
+		}
+		if(isset($_REQUEST['to']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['to'])){
+			$wheres[] = $wpdb->prepare("t.registered <= %s", $_REQUEST['to'].' 23:59:59');
+		}
+		if(!empty($wheres)){
+			$sql .= ' WHERE '.implode(' AND ', $wheres);
+		}
+		//Order by
+		$sql .= ' ORDER BY t.registered ASC';
+		$results = $wpdb->get_results($sql);
+		//Nothing found, tell so
+		if(empty($results)){
+			status_header(404);
+			$this->e('No ticket match your qriteria.: '.$wpdb->last_query);
+			die();
+		}
+		//Start output csv
+		header('Content-Type: application/x-csv');
+		header("Content-Disposition: attachment; filename=".rawurlencode(get_bloginfo('name').date('YmdHis')).".csv");
+		global $is_IE;
+		if($is_IE){
+			header("Cache-Control: public");
+			header("Pragma:");
+		}
+		$out = fopen('php://output', 'w');
+		$first_row = apply_filters('lwp_transaction_csv_header', array(
+			$this->_('Item Name'),
+			$this->_('Quantity'),
+			$this->_('Price'),
+			$this->_('Payment Method'),
+			$this->_('Invoice Num'),
+			$this->_('Transaction ID'),
+			$this->_('User Name'),
+			$this->_('Registered'),
+			$this->_('Updated'),
+			$this->_('Transaction Status')
+		));
+		mb_convert_variables('sjis-win', 'utf-8', $first_row);
+		fputcsv($out, $first_row);
+		set_time_limit(0);
+		foreach($results as $result){
+			$row = apply_filters('lwp_transaction_csv_row', array(
+				$result->post_title,
+				$result->num,
+				$result->price,
+				$this->_($result->method),
+				(string)$result->transaction_key,
+				(string)$result->transaction_id,
+				($result->display_name ? $result->display_name.'('.$result->user_login.')' : $this->_('Deleted User')),
+				$result->registered,
+				$result->updated,
+				$this->_($result->status)
+			),$result);
+			mb_convert_variables('sjis-win', 'utf-8', $row);
+			fputcsv($out, $row);
+		}
+		fclose($out);
+		die();
 	}
 	
 	//--------------------------------------------

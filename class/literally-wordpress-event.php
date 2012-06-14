@@ -660,7 +660,7 @@ EOS;
 			FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			INNER JOIN {$wpdb->users} AS u
+			LEFT JOIN {$wpdb->users} AS u
 			ON t.user_id = u.ID
 EOS;
 		//Detect ticket to retrieve
@@ -706,11 +706,12 @@ EOS;
 		));
 		mb_convert_variables('sjis-win', 'utf-8', $first_row);
 		fputcsv($out, $first_row);
+		set_time_limit(0);
 		foreach($results as $result){
 			$row = apply_filters('lwp_output_csv_row', array(
 				$this->generate_token($event->ID, $result->user_id), //Token
-				$result->display_name,
-				$result->user_email,
+				($result->display_name ? $result->display_name : $this->_('Deleted User')),
+				($result->user_email ? $result->user_email : '-'),
 				$result->post_title,
 				$result->price,
 				$result->num,

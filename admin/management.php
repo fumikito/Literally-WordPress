@@ -1,12 +1,24 @@
-<?php /* @var $this Literally_WordPress */ ?>
-<h2><?php $this->e('Customer Management'); ?></h2>
+<?php /* @var $this Literally_WordPress */  ?>
+<?php
+$is_detail = isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"]) && ($transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_REQUEST["transaction_id"])));
+?>
+<h2 class="nav-tab-wrapper">
+	<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>" class="nav-tab<?php if(!$is_detail) echo ' nav-tab-active';?>">
+		<?php $this->e('Transaction Management'); ?>
+	</a>
+	<?php if($is_detail): ?>
+	<a href="<?php echo admin_url('admin.php?page=lwp-management&transactin_id='.intval($_REQUEST['transaction_id'])); ?>" class="nav-tab<?php if($is_detail) echo ' nav-tab-active';?>">
+		<?php $this->e('Transaction Detail'); ?>
+	</a>
+	<?php endif; ?>
+</h2>
+
+
 <?php
 /*---------------------------------
  * 個別表示
  */
-if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
-	$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_REQUEST["transaction_id"]));
-	if($transaction):
+if($is_detail):
 		$book = wp_get_single_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 ?>
@@ -142,15 +154,28 @@ if(isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"])):
 <p>
 	<a class="button" href="<?php echo admin_url('admin.php?page=lwp-management'); ?>">&laquo;<?php $this->e('Return to transaction list');?></a>
 </p>
- 
- 	<?php endif; ?>
+
+
 <?php
 /*---------------------------------
  *  一覧表示
  */
 else:
 ?>
-	
+<iframe src="" name="lwp-csv-output" height="0" width="100%"></iframe>
+<form id="lwp-csv-output-form" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" target="lwp-csv-output">
+	<input type="hidden" name="action" value="lwp_transaction_csv_output" />
+	<?php wp_nonce_field('lwp_transaction_csv_output');?>
+	<input type="hidden" name="status" value="" />
+	<input type="hidden" name="post_type" value="" />
+	<input type="hidden" name="from" value="" />
+	<input type="hidden" name="to" value="" />
+	<p class="description">
+		<?php $this->e('You can get transaction list in status below.'); ?>
+		<input type="submit" class="button-primary" value="<?php $this->e('Get CSV'); ?>" /><br />
+	</p>
+</form>
+
 <form method="get" action="<?php echo admin_url('admin.php'); ?>">
 	<input type="hidden" name="page" value="lwp-management" />
 <?php

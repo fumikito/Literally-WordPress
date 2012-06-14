@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-14 01:32+0900\n"
-"PO-Revision-Date: 2012-06-14 01:39+0900\n"
+"PO-Revision-Date: 2012-06-14 15:44+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -597,7 +597,7 @@ msgstr "報酬設定"
 #: ../admin/setting.php:7
 #: ../admin/setting.php:480
 msgid "Event Participation"
-msgstr "イベント参加者"
+msgstr "イベント参加"
 
 #: ../admin/setting.php:14
 msgid "PayPal Settings"

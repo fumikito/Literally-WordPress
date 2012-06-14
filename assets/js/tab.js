@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
 	$('#lwp-setting-form').submit(function(e){
 		//Get currently opend tab
 		var id = $('.nav-tab-wrapper .nav-tab-active').attr('href');
-		if(id.match(/^#tab-[2-4]$/)){
+		if(id.match(/^#tab-[0-9]$/)){
 			$(this).attr('action', $(this).attr('action') + id);
 		}
 	});
