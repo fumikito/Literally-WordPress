@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-15 19:49+0900\n"
-"PO-Revision-Date: 2012-06-15 20:06+0900\n"
+"PO-Revision-Date: 2012-06-15 20:09+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -386,7 +386,7 @@ msgstr "CSSを変更する"
 #: ../admin/form-check.php:52
 #, php-format
 msgid "You can change default CSS to your own. In default, LWP loads original CSS(%1$s) and all other css which your theme or other plugins load. Some conflicts might occur, or you may feel like it to suit to you own theme. To do so, just make css file named <strong>lwp-form.css</strong> and put it in your theme directory(%2$s)."
-msgstr "CSSをデフォルトのものからオリジナルなものに変更できます。デフォルト設定では、LWPはオリジナルのCSS(%1$s)とあなたのテーマや他のプラグインのCSSなどを読み込みます。CSS同士が衝突したり、あなたのテーマにあったものに変えたいという場合があるかもしれません。そのためには<strong>lwp-form.css</strong>という名前でCSSファイルを作成し、あなたのテーマディレクトリ（%2$S）に保存してください。"
+msgstr "CSSをデフォルトのものからオリジナルなものに変更できます。デフォルト設定では、LWPはオリジナルのCSS(%1$s)とあなたのテーマや他のプラグインのCSSなどを読み込みます。CSS同士が衝突したり、あなたのテーマにあったものに変えたいという場合があるかもしれません。そのためには<strong>lwp-form.css</strong>という名前でCSSファイルを作成し、あなたのテーマディレクトリ（%2$s）に保存してください。"
 
 #: ../admin/form-check.php:57
 msgid "Change Logo"
