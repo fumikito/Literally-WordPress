@@ -1,7 +1,7 @@
 <?php /* @var $this LWP_Form */?>
 
 <p class="message notice">
-	<?php printf($this->_('You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please select ticket below. You can cancel in this condition till %3$s'), $event_type->labels->name, get_the_title($event), $limit); ?>
+	<?php printf($this->_('You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please select ticket below. You can cancel in this condition till %3$s'), $event_type, get_the_title($event), $limit); ?>
 </p>
 
 <form method="post" action="<?php echo lwp_endpoint('ticket-cancel-complete'); ?>">
@@ -22,7 +22,7 @@
 			<tr>
 				<th class="lwp-columne-check" scope="row"><input type="radio" name="ticket_id" id="ticket-<?php echo $ticket->ID; ?>" value="<?php echo $ticket->ID; ?>" /></th>
 				<td class="lwp-column-title">
-					<label for="ticket-<?php echo $ticket->ID;; ?>"><?php echo apply_filters('the_title', $ticket->post_title).' * '.$ticket->num; ?></label>
+					<label for="ticket-<?php echo $ticket->ID; ?>"><?php echo apply_filters('the_title', $ticket->post_title).' * '.$ticket->num; ?></label>
 				</td>
 				<td class="lwp-column-bought">
 					<?php echo mysql2date(get_option('date_format'), $ticket->updated); ?>

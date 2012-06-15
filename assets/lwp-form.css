@@ -24,7 +24,8 @@ h1{
 	font:24px Georgia,"Times New Roman",Times,serif;
 	margin:5px 0 0 -4px;
 	padding:0;
-	padding-bottom:7px;
+	padding-bottom:10px;
+	margin-bottom: 10px;
 }
 
 h2{
@@ -65,8 +66,13 @@ abbr{
 	padding:0;
 	
 }
-
-.submit input,.button,.button-secondary{
+p.submit{
+	float: right;
+}
+p.cancel{
+	float: left;
+}
+.submit input,.button,.button-secondary, .submit a{
 	font-family:sans-serif;
 	text-decoration:none;
 	font-size:14px!important;
@@ -84,27 +90,47 @@ abbr{
 	-khtml-box-sizing:content-box;
 	box-sizing:content-box;
 }
-
-.button:hover,.button-secondary:hover,.submit input:hover{
+a.button, a.button-primary{
+	display: inline-block;
+}
+.button:hover,.button-secondary:hover,.submit input:hover, .submit a{
 	color:#000;
 	border-color:#666;
 }
-
-.button,.submit input,.button-secondary{
-	background:#f2f2f2 url(./white-grad.png) repeat-x scroll left top;
+.button,.submit input,.button-secondary, .submit a{
+	background:#f2f2f2 url('./white-grad.png') repeat-x scroll left top;
 }
 
-.button:active,.submit input:active,.button-secondary:active{
-	background:#eee url(./white-grad-active.png) repeat-x scroll left top;
+.button:active,.submit input:active,.button-secondary:active,.submit a{
+	background:#eee url('./white-grad-active.png') repeat-x scroll left top;
+}
+.submit input.button-primary,
+.submit a.button-primary{
+	border-color: #298cba;
+	font-weight: bold;
+	color: #fff;
+	background: #21759B url('./button-grad.png') repeat-x scroll left top;
+	text-shadow: rgba(0,0,0,0.3) 0 -1px 0;
+}
+.submit  input.button-primary:hover,
+.submit a.button-primary:hover{
+	border-color: #13455b;
+	color: #eaf2fa;
+}
+.submit input.button-primary:active,
+.submit a.button-primary:active{
+	background: #21759b url('./button-grad-active.png') repeat-x scroll left top;
+	color: #eaf2fa;
 }
 
-textarea{
+.form-table textarea,
+.form-table input[type=text]{
 	border:1px solid #bbb;
 	-moz-border-radius:3px;
 	-khtml-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px;
-	
+	width: 90%;
 }
 
 .form-table{
@@ -195,8 +221,19 @@ textarea{
 
 
 #lwp-invoice .main{
-	
 }
+#lwp-invoice .main:after {  
+  content: ".";   
+  display: block;   
+  height: 0;   
+  clear: both;   
+  visibility: hidden;  
+}  
+#lwp-invoice .main { display: inline-table; }  
+/* Hides from IE-mac \*/  
+* html #lwp-invoice .main { height: 1%; }  
+#lwp-invoice .main { display: block; }  
+/* End hide from IE-mac */ 
 
 #lwp-invoice.lwp-success .main{
 }

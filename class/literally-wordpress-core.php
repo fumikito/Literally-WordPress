@@ -536,6 +536,8 @@ EOS;
 		if($this->event->is_enabled()){
 			add_submenu_page("lwp-setting", $this->_('Event Management'), $this->_('Event Management'), 'edit_posts', "lwp-event", array($this, 'load'));
 		}
+		//Theme option
+		add_theme_page($this->_("LWP Form Check"), $this->_('LWP Form Check'), 'edit_theme_options','lwp-form-check', array($this, 'load'));
 		//Add metaboxes
 		foreach($this->option['payable_post_types'] as $post){
 			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');

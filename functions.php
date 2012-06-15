@@ -871,14 +871,16 @@ function lwp_is_success()
 /**
  * Return URL to LWP's endpoint considering SSL
  * @param string $action Defautl 'buy'
+ * @param boolean $sandbox
  * @return string 
  */
-function lwp_endpoint($action = 'buy'){
+function lwp_endpoint($action = 'buy', $is_sanbdox = false){
 	$url = home_url();
 	if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
 		$url = str_replace('http:', 'https:', $url);
 	}
-	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?lwp=".(string)$action, (string)$action);
+	$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
+	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
 }
 
 /**

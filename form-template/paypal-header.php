@@ -8,7 +8,7 @@
 <body <?php body_class('lwp'); ?>>
 	<div id="lwp-invoice" class="lwp-<?php echo $slug;?>">
 		<div class="header">
-			<h1><?php bloginfo('name'); ?></h1>
+			<h1><?php echo apply_filters('lwp_form_title', get_bloginfo('name')); ?></h1>
 		</div>
 		<!-- // .header -->
 		

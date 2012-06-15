@@ -1,6 +1,14 @@
 jQuery(document).ready(function($){
+	//Check if it is sandbox
+	var sandbox = window.location.href.match(/sandbox=true/);
+	//Kill every action 
+	if(sandbox){
+		$('form,a').submit(function(e){
+			e.preventDefault();
+		});
+	}
 	//Auto Redirect
-	if($("#lwp-auto-redirect").length > 0){
+	if(!sandbox && $("#lwp-auto-redirect").length > 0){
 		href = $("#lwp-auto-redirect").attr('href');
 		left = 5;
 		window.myInterval = function(){

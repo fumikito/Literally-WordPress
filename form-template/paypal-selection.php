@@ -65,6 +65,6 @@
 		<input type="submit" class="button-primary" value="<?php $this->e('Next &raquo;'); ?>" />
 	</p>
 </form>
-<p>
+<p class="cancel">
 	<a class="button" href="#" onclick="window.history.back(); return false;"><?php $this->e("Cancel"); ?></a>
 </p>

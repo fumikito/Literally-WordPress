@@ -12,6 +12,7 @@ class LWP_Form extends Literally_WordPress_Common{
 	 */
 	private $_LWP = array();
 	
+	
 	/**
 	 * Manage form action to lwp endpoint
 	 * 
@@ -22,7 +23,11 @@ class LWP_Form extends Literally_WordPress_Common{
 		if($this->get_current_action() && is_front_page()){
 			$action = 'handle_'.$this->make_hungalian($this->get_current_action());
 			if(method_exists($this, $action)){
-				$this->{$action}();
+				$sandbox = (isset($_REQUEST['sandbox']) && $_REQUEST['sandbox']);
+				if($sandbox && !current_user_can('edit_theme_options')){
+					$this->kill('Sorry, but you have no permission.', 403);
+				}
+				$this->{$action}($sandbox);
 			}else{
 				$this->kill($this->_('Sorry, but You might make unexpected action.'), 400);
 			}
@@ -47,12 +52,12 @@ class LWP_Form extends Literally_WordPress_Common{
 		//Filter unexpected action
 		if($is_subscription && !is_user_logged_in()){
 			auth_redirect($_SERVER["REQUEST_URI"]);
-		}elseif($is_subscription && $lwp->subscription->is_subscriber()){
+		}elseif($is_subscription && $lwp->subscription->is_subscriber() && !$is_sandbox){
 			$this->kill($this->_('You are already subscriber. You don\'t have to buy subscription.'), 409);
 		}elseif(!$lwp->subscription->has_plans()){
 			$this->kill($this->_('Sorry, but there is no subscription plan.'), 404);
 		}
-		//If not redirected, action is proper.
+		//All green.
 		//Let's show subsctiption lists.
 		$parent_url = home_url();
 		foreach($this->subscription->post_types as $post_type){
@@ -101,8 +106,8 @@ class LWP_Form extends Literally_WordPress_Common{
 					'post_id' => $book->ID,
 					'price' => lwp_price($book->ID),
 					'item' => $book->post_title,
-					'current' => 4,
-					'total' => 2
+					'current' => 2,
+					'total' => 4
 				));
 			}else{
 				//Post not found
@@ -239,7 +244,7 @@ EOS;
 						break;
 					case 'paypal':
 					case 'cc':
-						$billing = ($method == 'cc') ? true : false;
+						$billing = ($method == 'cc');
 						if(!$lwp->start_transaction(get_current_user_id(), $book_id, $billing)){
 							//Failed to create transaction
 							$message = $this->_("Failed to make transaction.");
@@ -363,6 +368,13 @@ EOS;
 		global $lwp, $wpdb;
 		//First of all, user must be login
 		$this->kill_anonymous_user();
+		if($is_sandbox){
+			$this->show_form('success', array(
+				'link' => get_bloginfo('url'),
+				'total' => 4,
+				'current' => 4
+			));
+		}
 		//Change transaction status
 		if(isset($_REQUEST['lwp-id'])){
 			$post_type = $wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id']));
@@ -377,7 +389,7 @@ EOS;
 			$url = get_bloginfo('url');
 		}
 		$this->show_form("success", array(
-			'link' => $url,
+			'link' => ($this->is_publicly_ssl() ? $url : $this->strip_ssl($url) ),
 			'total' => ($post_type == $lwp->subscription->post_type) ? 4 : 3,
 			'current' => ($post_type == $lwp->subscription->post_type) ? 4 : 3
 		));
@@ -394,6 +406,14 @@ EOS;
 		global $wpdb, $lwp;
 		//First of all, user must be logged in.
 		$this->kill_anonymous_user();
+		if($is_sandbox){
+			$this->show_form("cancel", array(
+				"post_id" => $this->get_random_post()->ID,
+				'link' => get_bloginfo('url'),
+				'total' => 3,
+				'current' => 3
+			));
+		}
 		//Get token from request
 		$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : null;
 		if(!$token){
@@ -455,6 +475,18 @@ EOS;
 		global $lwp, $wpdb;
 		//First of all, user must be logged in.
 		$this->kill_anonymous_user();
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			$this->show_form('cancel-ticket', array(
+				'tickets' => array($this->get_random_ticket()),
+				'event' => $event->ID,
+				'event_type' => get_post_type_object($event->post_type)->labels->name,
+				'limit' => date(get_option('date_format')),
+				'ratio' => '80%',
+				'total' => 2,
+				'current' => 1
+			));
+		}
 		//Get Event ID and get ticket list
 		$event_id = isset($_REQUEST['lwp-event']) ? intval($_REQUEST['lwp-event']) : false;
 		//If event dosen't exist, stop processing.
@@ -484,7 +516,7 @@ EOS;
 		$this->show_form('cancel-ticket', array(
 			'tickets' => $tickets,
 			'event' => $event_id,
-			'event_type' => get_post_type_object($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $event_id))),
+			'event_type' => get_post_type_object($wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $event_id)))->labels->name,
 			'limit' => $cancel_limit_time,
 			'ratio' => $ratio,
 			'total' => 2,
@@ -501,6 +533,15 @@ EOS;
 		global $wpdb, $lwp;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			$this->show_form('cancel-ticket-success', array(
+				'link' => get_permalink($event->ID),
+				'event' => get_the_title($event->ID),
+				'ticket' => $this->_('Deleted Ticket'),
+				'transfer' => true
+			));
+		}
 		//Check nonce
 		if(!isset($_REQUEST['_wpnonce'], $_REQUEST['ticket_id']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_cancel')){
 			$this->kill($this->_('Sorry, but You might make unexpected action.').' '.$this->_('Cannot pass security check.'), 400);
@@ -572,6 +613,21 @@ EOS;
 		if(!is_user_logged_in()){
 			auth_redirect();
 		}
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
+			$this->show_form('event-tickets', array(
+				'title' => $event->post_title,
+				'limit' => date('Y-m-d'),
+				'link' => get_permalink($event->ID),
+				'post_type' => get_post_type_object($event->post_type)->labels->name,
+				'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
+				'tickets' => array($this->get_random_ticket()),
+				'check_url' => $check_url,
+				'qr_src' => $lwp->event->get_qrcode($check_url, 200),
+				'footer_note' => $this->_('A footer note which can be set on each post will be displayed here.')
+			));
+		}
 		//Chcek if event id is set
 		if(
 			!isset($_GET['lwp-event'])
@@ -621,6 +677,18 @@ EOS;
 		//First of all, user must be logged in
 		if(!is_user_logged_in()){
 			auth_redirect();
+		}
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			$this->show_form('event-tickets-consume', array(
+				'updated' => true,
+				'action' => lwp_ticket_check_url($user->ID, $event),
+				'tickets' => array($this->get_random_ticket()),
+				'user' => get_userdata(get_current_user_id()),
+				'link' => get_permalink($event->ID),
+				'title' => apply_filters('the_title', $event->post_title),
+				'post_type' => get_post_type_object($event->post_type)->labels->name
+			));
 		}
 		//Get event object
 		$event = isset($_GET['lwp-event']) ? wp_get_single_post($_GET['lwp-event']) : false;
@@ -686,9 +754,20 @@ EOS;
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
-		$event_id = isset($_GET['event_id']) ? $_GET['event_id'] : '';
-		$event = wp_get_single_post($event_id);
-		if(!$event){
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			$this->show_form('event-user', array(
+				'error' => false,
+				'event_id' => $event->ID,
+				'title' => apply_filters('the_title', $event->post_title),
+				'post_type' => get_post_type_object($event->post_type)->labels->name,
+				'link' => get_permalink($event->ID),
+				'action' => lwp_endpoint('ticket-owner').'&event_id='.$event->ID,
+			));
+		}
+		$event_id = isset($_GET['event_id']) ? $_GET['event_id'] : 0;
+		$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $event_id));
+		if(!$event || false === array_search($event->post_type, $lwp->event->post_types)){
 			$this->kill($this->_('Sorry, but event is not found.'), 404);
 		}
 		//Check user capability
@@ -719,30 +798,20 @@ EOS;
 	
 	/**
 	 * Contact to participants
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
 	private function handle_ticket_contact($is_sandbox = false){
-		global $lwp;
+		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
-		//Get event ID
-		if(!isset($_GET['event_id']) || !($event = wp_get_single_post($_GET['event_id']))){
-			$this->kill($this->_('Sorry, but no event is specified.'), 404);
-		}
-		//Check user capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
-			$this->kill($this->_('You do not have capability to contact participants.'), 403);
-		}
 		//Create mail options
 		$current_user = get_userdata(get_current_user_id());
 		$options = array(
 			'admin' => sprintf($this->_('Admin email <%s>'), get_option('admin_email')),
 			'you' => sprintf($this->_('Your email <%s>'), $current_user->user_email)
 		);
-		if(current_user_can('edit_others_posts')){
-			$post_author = get_userdata($event->post_author);
-			$options['author'] = sprintf($this->_('Post author email <%s>'), $post_author->user_email);
-		}
 		//Pass variables to JS
 		$this->_LWP = array(
 			'labelConfirm' => $this->_('Are you sure to send this mail?'),
@@ -752,6 +821,36 @@ EOS;
 			'labelInvalidBody' => $this->_('Mail body is empty'),
 			'labelSent' => $this->_('Send')
 		);
+		//Do sandbox
+		if($is_sandbox){
+			$event = $this->get_random_event();
+			if(!$event){
+				$this->kill($this->_('Sorry, but event is not found.'), 404);
+			}
+			$this->show_form('event-contact', array(
+				'participants' => 10,
+				'post_type' => get_post_type_object($event->post_type)->labels->name,
+				'event_id' => $event->ID,
+				'title' => apply_filters('the_title', $event->post_title),
+				'signature' => wpautop($lwp->event->get_signature()),
+				'options' => $options,
+				'loader' => '<img class="indicator" alt="Loading..." style="display:none;" width="16" height="16" src="'.$this->url.'assets/indicator-postbox.gif" />',
+				'link' => admin_url('post.php?post='.$event->ID.'&action=edit')
+			));
+		}
+		//Get event ID
+		if(!isset($_GET['event_id']) || !($event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_GET['event_id'])))){
+			$this->kill($this->_('Sorry, but no event is specified.'), 404);
+		}
+		//Check user capability
+		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			$this->kill($this->_('You do not have capability to contact participants.'), 403);
+		}
+		//Add Post owner
+		if(current_user_can('edit_others_posts')){
+			$post_author = get_userdata($event->post_author);
+			$options['author'] = sprintf($this->_('Post author email <%s>'), $post_author->user_email);
+		}
 		//Show form
 		$this->show_form('event-contact', array(
 			'participants' => lwp_participants_number($event),
@@ -799,46 +898,7 @@ EOS;
 	 * @return void
 	 */
 	private function show_form($slug, $args = array()){
-		global $lwp;
-		switch($slug){
-			case 'selection':
-				$meta_title = $this->_('Select Payment');
-				break;
-			case 'transfer':
-				$meta_title = $this->_('Transfer Accepted');
-				break;
-			case 'return':
-				$meta_title = $this->_('Payment Confirmation');
-				break;
-			case 'success':
-				$meta_title = $this->_('Transaction Completed');
-				break;
-			case 'cancel':
-				$meta_title = $this->_('Transaciton Canceled');
-				break;
-			case 'cancel-ticket':
-				$meta_title = $this->_('Ticket Cancel');
-				break;
-			case 'cancel-ticket-success':
-				$meta_title = $this->_('Ticket Canceled');
-				break;
-			case 'event-tickets':
-				$meta_title = $this->_('Ticket List');
-				break;
-			case 'event-tickets-consume':
-				$meta_title = $this->_('Ticket Status');
-				break;
-			case 'event-user':
-				$meta_title = $this->_('Find User');
-				break;
-			case 'event-contact':
-				$meta_title = $this->_('Contact to participants');
-				break;
-			default:
-				$meta_title = '';
-				break;
-		}
-		$args['meta_title'] = $meta_title.' : '.get_bloginfo('name');
+		$args['meta_title'] = $this->get_form_title($slug).' : '.get_bloginfo('name');
 		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);
 		$slug = basename($slug);
@@ -887,7 +947,57 @@ EOS;
     do_action('lwp_form_enqueue_scripts');
 	}
 	
+	
+	/**
+	 * Returns is public page is SSL
+	 * @return boolean 
+	 */
+	private function is_publicly_ssl(){
+		return ((false !== strpos(get_option('home_url'), 'https')) || (false !== strpos(get_option('site_url'), 'https')));
+	}
   
+	/**
+	 * Make url to http protocol
+	 * @param string $url
+	 * @return string 
+	 */
+	private function strip_ssl($url){
+		return str_replace('https://', 'http://', $url);
+	}
+	
+	/**
+	 * Get post object as event
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @return object 
+	 */
+	private function get_random_event(){
+		global $wpdb, $lwp;
+		$post_types = implode(',', array_map(create_function('$row', 'return "\'".$row."\'"; '), $lwp->event->post_types));
+		$event = $wpdb->get_row("SELECT * FROM {$wpdb->posts} WHERE post_type IN ({$post_types}) ORDER BY RAND()");
+		if(!$event){
+			$this->kill($this->_('Sorry, but event is not found.'), 404);
+		}
+		return $event;
+	}
+	
+	/**
+	 * Create pseudo ticket
+	 * @global wpdb $wpdb
+	 * @return \stdClass 
+	 */
+	private function get_random_ticket(){
+		global $wpdb;
+		$ticket = new stdClass();
+		$ticket->post_title = $this->_('Dammy Ticket');
+		$ticket->updated = date('Y-m-d H:i:s');
+		$ticket->price = 1000;
+		$ticket->ID = 100;
+		$ticket->num = 1;
+		$ticket->consumed = 0;
+		return $ticket;
+	}
+	
 	/**
 	 * Returns random post if exists for sand box
 	 * @global wpdb $wpdb
@@ -896,12 +1006,19 @@ EOS;
 	 */
 	private function get_random_post(){
 		global $wpdb, $lwp;
-		$post_types = implode(',', array_map(create_function('$a', 'return "\'".$a."\'";'), $lwp->option['payable_post_types']));
+		$post_types = $lwp->option['payable_post_types'];
+		if($lwp->event->is_enabled()){
+			$post_types[] = $lwp->event->post_type;
+		}
+		if($lwp->subscription->is_enabled()){
+			$post_types[] = $lwp->subscription->post_type;
+		}
+		$post_types = implode(',', array_map(create_function('$a', 'return "\'".$a."\'";'), $post_types));
 		$sql = <<<EOS
 			SELECT p.* FROM {$wpdb->posts} AS p
 			INNER JOIN {$wpdb->postmeta} AS pm
 			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
-			WHERE p.post_status IN ('draft', publish', 'future') AND p.post_type IN ({$post_types}) AND CAST(pm.meta_valu AS signed) > 0
+			WHERE p.post_status IN ('draft', 'publish', 'future') AND p.post_type IN ({$post_types}) AND CAST(pm.meta_value AS signed) > 0
 			ORDER BY RAND()
 EOS;
 		return $wpdb->get_row($sql);
@@ -914,5 +1031,164 @@ EOS;
 	 */
 	private function make_hungalian($method){
 		return str_replace("-", "_", strtolower(trim($method)));
+	}
+	
+	/**
+	 * Returns handle name
+	 */
+	public function endpoints(){
+		$methods = array();
+		foreach(get_class_methods($this) as $method){
+			if(0 === strpos($method, 'handle_')){
+				$methods[] = str_replace('_', '-', str_replace('handle_', '', $method));
+			}
+		}
+		return $methods;
+	}
+	
+	/**
+	 * Returns title of form template
+	 * @param string $template_slug
+	 * @return string 
+	 */
+	public function get_form_title($template_slug = ''){
+		switch($template_slug){
+			case 'selection':
+				$meta_title = $this->_('Select Payment');
+				break;
+			case 'transfer':
+				$meta_title = $this->_('Transfer Accepted');
+				break;
+			case 'return':
+				$meta_title = $this->_('Payment Confirmation');
+				break;
+			case 'success':
+				$meta_title = $this->_('Transaction Completed');
+				break;
+			case 'cancel':
+				$meta_title = $this->_('Transaciton Canceled');
+				break;
+			case 'cancel-ticket':
+				$meta_title = $this->_('Ticket Cancel');
+				break;
+			case 'cancel-ticket-success':
+				$meta_title = $this->_('Ticket Canceled');
+				break;
+			case 'event-tickets':
+				$meta_title = $this->_('Ticket List');
+				break;
+			case 'event-tickets-consume':
+				$meta_title = $this->_('Ticket Status');
+				break;
+			case 'event-user':
+				$meta_title = $this->_('Find User');
+				break;
+			case 'event-contact':
+				$meta_title = $this->_('Contact to participants');
+				break;
+			case 'subscription':
+				$meta_title = $this->_('Subscrition Plans');
+				break;
+			default:
+				$meta_title = '';
+				break;
+		}
+		return $meta_title;
+	}
+	
+	/**
+	 * Returns default template name for action
+	 * @param string $action
+	 * @return string 
+	 */
+	public function get_default_form_slug($action = ''){
+		switch($action){
+			case 'subscription':
+			case 'success':
+			case 'cancel':
+				return $action;
+				break;
+			case 'pricelist':
+				return 'subscription';
+				break;
+			case 'buy':
+				return 'selection';
+				break;
+			case 'confirm':
+				return 'return';
+				break;
+			case 'ticket-cancel':
+				return 'cancel-ticket';
+				break;
+			case 'ticket-cancel-complete':
+				return 'cancel-ticket-success';
+				break;
+			case 'ticket-list':
+				return 'event-tickets';
+				break;
+			case 'ticket-consume':
+				return 'event-tickets-consume';
+				break;
+			case 'ticket-owner':
+				return 'event-user';
+				break;
+			case 'ticket-contact':
+				return 'event-contact';
+				break;
+			default:
+				return '';
+				break;
+		}
+	}
+	
+	
+	/**
+	 * Returns form description
+	 * @param string $action
+	 * @return string 
+	 */
+	public function get_form_description($action = ''){
+		switch($action){
+			case 'pricelist':
+				return $this->_('Displays subscription plans.');
+				break;
+			case 'subscription':
+				return $this->_('Displays subscription plans.').' '.$this->_('User can select it and go to payment selection page.');
+				break;
+			case 'success':
+				return $this->_('Display thank you message when transaction finished.').' '.$this->_('User will be soon redirected to original event page in 5 seconds.');
+				break;
+			case 'cancel':
+				return $this->_('Display message when user cancels transaction.');
+				break;
+			case 'buy':
+				return $this->_('Displays payment methods. You can skip this form if paypal is the only method available.').
+					'<small>（<a href="'.admin_url('admin.php?page=lwp-setting').'">'.$this->_("More &gt;").')</a></small>';
+				break;
+			case 'confirm':
+				return $this->_('Displays form to confirm transaction when user retruns from paypal web site.');
+				break;
+			case 'ticket-cancel':
+				return $this->_('Show list of tickets which user have bought.').' '.$this->_('User can select ticket to cancel.').' '.$this->_('If user has no tickets, wp_die will be executed.');
+				break;
+			case 'ticket-cancel-complete':
+				return $this->_('Displays message to tell user cancel is completed.').' '.$this->_('User will be soon redirected to original event page in 5 seconds.');
+				break;
+			case 'ticket-list':
+				return $this->_('Show list of tickets which user have bought.').' '.$this->_('If user has no tickets, wp_die will be executed.');
+				break;
+			case 'ticket-consume':
+				return $this->_('Displays list of tikcets owned by specified user. You can consume ticket with pulldown menu.');
+				break;
+			case 'ticket-owner':
+				return $this->_('Search tikcet owner from code which have been generared by this plugin. This code is related to particular event.');
+				break;
+			case 'ticket-contact':
+				return $this->_('Show mail form to send emails to event participants.');
+				break;
+			default:
+				return '';
+				break;
+		}
 	}
 }
