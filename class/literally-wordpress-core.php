@@ -375,8 +375,6 @@ class Literally_WordPress{
 	 * @return void
 	 */
 	public function register_assets(){
-		wp_register_script("jquery-ui-slider", $this->url."/assets/datepicker/jquery-ui-slider.js", array("jquery-ui-core", "jquery-ui-widget", "jquery-ui-mouse"), "1.8.12", !is_admin());
-		wp_register_script("jquery-ui-datepicker", $this->url."/assets/datepicker/jquery-ui-datepicker.js",array("jquery-ui-core") ,"1.8.12", !is_admin());
 		wp_register_script("jquery-ui-timepicker", $this->url."/assets/datepicker/jquery-ui-timepicker.js",array("jquery-ui-datepicker", 'jquery-ui-slider') ,"0.9.7", !is_admin());
 		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
 		wp_register_script('google-jsapi', 'https://www.google.com/jsapi', array(), null, !is_admin());
@@ -618,7 +616,7 @@ EOS;
 		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
 			//Load Datepicker
 			wp_enqueue_style('jquery-ui-datepicker');
-			wp_enqueue_script('lwp-reward-summary', $this->url.'assets/js/reward-summary.js', array('google-jsapi', 'jquery-form', 'jquery-ui-datepicke', 'jquery-ui-tabs'), $this->version);
+			wp_enqueue_script('lwp-reward-summary', $this->url.'assets/js/reward-summary.js', array('google-jsapi', 'jquery-form', 'jquery-ui-datepicker', 'jquery-ui-tabs'), $this->version);
 			wp_localize_script('lwp-reward-summary', 'LWP', array_merge(
 				LWP_Datepicker_Helper::get_config_array(),
 				array(
