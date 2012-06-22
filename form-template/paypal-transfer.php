@@ -7,7 +7,7 @@
 <?php else: ?>
 	<p class="message success"><?php $this->e("We send you a reminder mail to your registered addres."); ?></p>
 <?php endif; ?>
-<?php echo $lwp->notifier->get_thankyou($transaction); ?>
+<?php echo $thankyou; ?>
 <p>
 	<a class="button" href="<?php echo $link; ?>"><?php $this->e("Return"); ?></a>
 </p>

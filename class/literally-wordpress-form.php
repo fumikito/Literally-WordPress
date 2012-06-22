@@ -176,7 +176,7 @@ class LWP_Form extends Literally_WordPress_Common{
 			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
 			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
 			//Start Transaction
-      //If payment selection required or nonce isn't corret, show form.
+			//If payment selection required or nonce isn't corret, show form.
 			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
 				$this->show_form('selection', array(
@@ -188,7 +188,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				));
 			}else{
 				//User selected payment method and start transaction
-        $method = isset($_GET['lwp-method']) ? $_GET['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
+				$method = isset($_GET['lwp-method']) ? $_GET['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
 				switch($method){
 					case 'transfer':
 						if($lwp->option['transfer']){
@@ -232,9 +232,9 @@ EOS;
 							//Show Form
 							$this->show_form('transfer', array(
 								'post_id' => $book_id,
-								'transaction' => $transaction,
 								'notification' => $notification_status,
 								'link' => $url,
+								'thankyou' => $lwp->notifier->get_thankyou($transaction),
 								'total' => $total,
 								'current' => $current + 1
 							));
