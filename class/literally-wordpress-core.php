@@ -1670,8 +1670,7 @@ EOS;
 	 * @param int $user_id
 	 * @return void
 	 */
-	public function print_file($file_id, $user_id)
-	{
+	public function print_file($file_id, $user_id){
 		$error = false;
 		$file = $this->get_files(null, $file_id);
 		//ファイルの取得を確認
@@ -1696,7 +1695,6 @@ EOS;
 		if(!$error){
 			$mime = $this->detect_mime($file->file);
 			$size = filesize($path);
-			$kb = 1024; //1kb
 			//If IE and under SSL, echo cache control.
 			// @see http://exe.tyo.ro/2010/01/nocachesslie.html
 			global $is_IE;
@@ -1708,10 +1706,15 @@ EOS;
 			header("Content-Disposition: attachment; filename=\"{$file->file}\"");
 			header("Content-Length: {$size}");
 			flush();
+			//Get file size to output by it's max
+			$kb = 1024; //1kb
+			$per_size = min(max($size / 100, 100 * $kb), $kb * 10000);
+			//Read File
 			$handle = fopen($path, "r");
+			set_time_limit(0);
 			while(!feof($handle)){
 				//指定したバイト数だけ出力
-				echo fread($handle, 100 * $kb);
+				echo fread($handle, $per_size);
 				//出力
 				flush();
 				//1秒休む
