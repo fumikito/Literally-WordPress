@@ -691,7 +691,7 @@ function lwp_transafer_link($post = null){
  */
 function lwp_is_subscribal(){
 	global $lwp;
-	return $lwp->subscription->enabled;
+	return $lwp->subscription->is_enabled();
 }
 
 /**

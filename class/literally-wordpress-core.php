@@ -1387,20 +1387,31 @@ EOS;
 	/**
 	 *  ユーザープロフィール編集画面にプレゼント用のフォームを追加する
 	 * 
+	 * @global wpdb $wpdb
 	 * @return void
 	 */
-	public function give_user_form()
-	{
+	public function give_user_form(){
 		global $wpdb;
 		$user_id = $_GET["user_id"];
+		$post_types = implode(',', array_map(create_function('$a', 'return "\'".$a."\'";'), $this->option['payable_post_types']));
+		if(empty($post_types)){
+			return array();
+		}
 		$sql = <<<EOS
-			SELECT ID, post_title FROM {$wpdb->posts}
-			WHERE post_type = 'ebook' AND post_status = 'publish'
-			AND ID NOT IN (
-				SELECT book_id FROM {$this->transaction} WHERE user_id = %d
-			)
+			SELECT
+				p.ID, p.post_title, p.post_type, CAST(pm.meta_value AS SIGNED) as price
+			FROM {$wpdb->posts} AS p
+			INNER JOIN {$wpdb->postmeta} AS pm
+			ON pm.post_id = p.ID
+			WHERE p.post_type IN ({$post_types})
+			  AND pm.meta_key = 'lwp_price'
+			  AND p.post_status = 'publish'
+			  AND CAST(pm.meta_value AS SIGNED) > 0
+			  AND p.ID NOT IN (
+					SELECT book_id FROM {$this->transaction} WHERE user_id = %d AND status != %s
+				  )
 EOS;
-		$ebooks = $wpdb->get_results($wpdb->prepare($sql, $user_id));
+		$ebooks = $wpdb->get_results($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS));
 		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."give-user.php";
 	}
 	
@@ -1415,7 +1426,6 @@ EOS;
 		if(isset($_REQUEST["ebook_id"]) && is_numeric($_REQUEST["ebook_id"])){
 			global $wpdb;
 			$data = get_userdata($user_id);
-			
 			$wpdb->insert(
 				$this->transaction,
 				array(
@@ -1705,17 +1715,22 @@ EOS;
 			header("Content-Type: {$mime}");
 			header("Content-Disposition: attachment; filename=\"{$file->file}\"");
 			header("Content-Length: {$size}");
-			flush();
+			ob_end_flush();
+			ob_start('mb_output_handler');
 			//Get file size to output by it's max
 			$kb = 1024; //1kb
-			$per_size = min(max($size / 100, 100 * $kb), $kb * 10000);
+			//minimum = 100kb or 1/100 of file size, maximum 2MB
+			$per_size = min(max($size / 100, 100 * $kb), $kb * 2048); 
 			//Read File
-			$handle = fopen($path, "r");
 			set_time_limit(0);
+			$handle = fopen($path, "r");
 			while(!feof($handle)){
 				//指定したバイト数だけ出力
-				echo fread($handle, $per_size);
+				$bytes = fread($handle, $per_size);
+				echo $bytes;
+				unset($bytes);
 				//出力
+				ob_flush();
 				flush();
 				//1秒休む
 				sleep(1);
