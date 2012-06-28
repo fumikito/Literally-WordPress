@@ -458,11 +458,89 @@ EOS;
 	/**
 	 * Output file
 	 * @global Literally_WordPress $lwp
+	 * @global boolean $is_IE
 	 * @param type $is_sandbox 
 	 */
 	private function handle_file($is_sandbox = false){
-		global $lwp;
-		$lwp->print_file($_REQUEST["lwp_file"], get_current_user_id());
+		global $lwp, $is_IE;
+		//Check if file exists
+		if(
+			!isset($_REQUEST["lwp_file"])
+				||
+			!($file =  $lwp->get_files(null, $_REQUEST["lwp_file"]))
+				||
+			!(
+				($path = $lwp->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file)
+					&&
+				(file_exists($path))
+			)
+		){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		//Check user permission
+		if(
+			($file->free == 0 && !$lwp->is_owner($file->book_id, get_current_user_id())) //File is production and not file owner
+				||
+			($file->free == 1 && !is_user_logged_in()) //File requires loogged in user but not logged in
+				||
+			$file->public != 1 //File is not public
+		){
+			$this->kill($this->_('You have no permission to access this file.'), 403);
+		}
+		//Filter path info. You can override it.
+		$path = apply_filters('lwp_file_path', $path, $file, get_current_user_id());
+		if(!file_exists($path)){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		/*
+		 * Here you are, all green.
+		 * Let's start print file.
+		 */
+		//Get file information.
+		$mime = $lwp->detect_mime($file->file);
+		$size = filesize($path);
+		//Create header
+		$headers = array();
+		//If IE and under SSL, echo cache control.
+		// @see http://exe.tyo.ro/2010/01/nocachesslie.html
+		if($is_IE){
+			$headers['Cache-Control'] = 'public';
+			$headers["Pragma"] = '';
+		}
+		$headers = apply_filters('lwp_file_header', array_merge($headers, array(
+			'Content-Type' => $mime,
+			'Content-Disposition' => "attachment; filename=\"{$file->file}\"",
+			'Content-Length' => $size
+		)), $file, $path);
+		//Calculate download rate. Especially for memroy limit.
+		//1kb
+		$kb = 1024;
+		//minimum = 100kb or 1/100 of file size, maximum 2MB
+		$per_size = apply_filters('lwp_download_size_per_second', min(max($size / 100, 100 * $kb), $kb * 2048), $file, $path);
+		//Do normal operation if flg is true
+		if(apply_filters('lwp_od_download', true, $file, $headers)){
+			//Output header
+			foreach($headers as $key => $value){
+				header("{$key}: {$value}");
+			}
+			ob_end_flush();
+			ob_start('mb_output_handler');
+			//Read File
+			set_time_limit(0);
+			$handle = fopen($path, "r");
+			while(!feof($handle)){
+				//Output specified size.
+				echo fread($handle, $per_size);
+				//Flush buffer and sleep.
+				ob_flush();
+				flush();
+				sleep(1);
+			}
+			//Done!
+			fclose($handle);
+		}
+		//Finish script
+		exit;
 	}
 	
 	/**
