@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-15 19:49+0900\n"
-"PO-Revision-Date: 2012-06-15 20:09+0900\n"
+"PO-Revision-Date: 2012-07-02 18:16+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -2387,7 +2387,7 @@ msgstr "開始"
 
 #: ../class/literally-wordpress-statics.php:350
 msgid "REFUND"
-msgstr "返金"
+msgstr "返金済み"
 
 #: ../class/literally-wordpress-statics.php:351
 msgid "REFUND_REQUESTING"

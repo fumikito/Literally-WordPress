@@ -43,7 +43,7 @@ class LWP_List_History extends WP_List_Table {
 			'method' => $lwp->_('Method'),
 			'expires' => $lwp->_('Expires'),
 			'registered' => $lwp->_("Registered"),
-			'action' => '&nbsp;'
+			'status' => $lwp->_('Status')
 		);
 		if(is_admin()){
 			$column['updated'] = $lwp->_("Last Updated");
@@ -82,7 +82,7 @@ EOS;
 		//WHERE
 		$where = array(
 			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('t.status = %s', LWP_Payment_Status::SUCCESS)
+			$wpdb->prepare('t.status IN (%s, %s, %s)', LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING)
 		);
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
@@ -123,6 +123,7 @@ EOS;
 	 */
 	function column_default($item, $column_name){
 		global $lwp, $wpdb;
+		$tag = '';
 		switch($column_name){
 			case 'item_name':
 				if($item->post_type == $lwp->subscription->post_type){
@@ -141,16 +142,16 @@ EOS;
 				}else{
 					$post_type = get_post_type_object($item->post_type)->labels->name;
 				}
-				return '<a href="'.$url.'">'.$title.'</a>&nbsp;-&nbsp;<strong>'.$post_type.'</strong>';
+				$tag = '<a href="'.$url.'">'.$title.'</a>&nbsp;-&nbsp;<strong>'.$post_type.'</strong>';
 				break;
 			case 'quantity':
-				return number_format_i18n($item->num);
+				$tag = number_format_i18n($item->num);
 				break;
 			case 'price':
-				return number_format($item->price)." ({$lwp->option['currency_code']})";
+				$tag = number_format($item->price)." ({$lwp->option['currency_code']})";
 				break;
 			case 'method':
-				return $lwp->_($item->method);
+				$tag = $lwp->_($item->method);
 				break;
 			case 'expires':
 				if($item->expires == '0000-00-00 00:00:00'){
@@ -162,28 +163,27 @@ EOS;
 					}else{
 						$string = sprintf($lwp->_('%d days left'), $remain);
 					}
-					return $string.'<br /><small>'.mysql2date(get_option('date_fomrat'), $item->expires).'</small>';
+					$tag = $string.'<br /><small>'.mysql2date(get_option('date_fomrat'), $item->expires).'</small>';
 				}
 				break;
 			case 'registered':
-				return mysql2date(get_option('date_format'), $item->registered, false);
+				$tag = mysql2date(get_option('date_format'), $item->registered, false);
 				break;
 			case 'updated':
-				return mysql2date(get_option('date_format'), $item->updated, false);
+				$tag = mysql2date(get_option('date_format'), $item->updated, false);
 				break;
-			case 'action':
+			case 'status':
+				$tag = $lwp->_($item->status);
 				if($item->post_type == $lwp->event->post_type){
-					if(lwp_is_cancelable($item->post_parent)){
-						return '<a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a>';
+					if(lwp_is_cancelable($item->post_parent) && $item->status == LWP_Payment_Status::SUCCESS){
+						$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
 					}else{
-						return $lwp->_('Uncancelable');
+						$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';
 					}
 				}
 				break;
-			default:
-				do_action('lwp_history_row', $item, $column_name);
-				break;
 		}
+		return apply_filters('lwp_history_column_value', $tag, $column_name, $item);
 	}
 	
 	/**
