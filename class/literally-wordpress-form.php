@@ -693,6 +693,13 @@ EOS;
 		if(!is_user_logged_in()){
 			auth_redirect();
 		}
+		$headers = apply_filters('lwp_ticket_list_headers', array(
+			'name' => $this->_('Ticket Name'),
+			'date' => $this->_('Bought'),
+			'price' => $this->_('Price'),
+			'quantity' => $this->_('Quantity'),
+			'consumed' => $this->_('Consumed')
+		));
 		if($is_sandbox){
 			$event = $this->get_random_event();
 			$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
@@ -700,6 +707,7 @@ EOS;
 				'title' => $event->post_title,
 				'limit' => date('Y-m-d'),
 				'link' => get_permalink($event->ID),
+				'headers' => $headers,
 				'post_type' => get_post_type_object($event->post_type)->labels->name,
 				'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 				'tickets' => array($this->get_random_ticket()),
@@ -712,7 +720,7 @@ EOS;
 		if(
 			!isset($_GET['lwp-event'])
 				||
-			!($event = wp_get_single_post($_GET['lwp-event']))
+			!($event = wp_get_single_post($_GET['lwp-event']) )
 				||
 			(false === array_search($event->post_type, $lwp->event->post_types))
 		){
@@ -721,7 +729,7 @@ EOS;
 		$event_type = get_post_type_object($event->post_type);
 		//Get tickets
 		$sql = <<<EOS
-			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
+			SELECT t.*, p.post_title, p.post_parent FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
 			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
@@ -737,6 +745,7 @@ EOS;
 			'title' => $event->post_title,
 			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
 			'link' => get_permalink($event->ID),
+			'headers' => $headers,
 			'post_type' => $event_type->labels->name,
 			'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 			'tickets' => $tickets,

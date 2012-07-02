@@ -7,21 +7,33 @@
 <table class="form-table lwp-ticket-table" id="lwp-ticket-table-list">
 	<thead>
 		<tr>
-			<th scope="col"><?php $this->e('Ticket Name'); ?></th>
-			<th scope="col"><?php $this->e('Bought');?></th>
-			<th scope="col"><?php $this->e('Price'); ?></th>
-			<th scope="col"><?php $this->e('Quantity'); ?></th>
-			<th scope="col"><?php $this->e('Rest'); ?></th>
+			<?php foreach($headers as $header): ?>
+				<th scope="col"><?php echo esc_html($header); ?></th>
+			<?php endforeach; ?>
 		</tr>
 	</thead>
 	<tbody>
 		<?php foreach($tickets as $ticket): ?>
 			<tr>
-				<th scope="row"><?php echo apply_filters('the_title', $ticket->post_title);?></th>
-				<td><?php echo mysql2date(get_option('date_format'), $ticket->updated);?></td>
-				<td><?php echo number_format_i18n($ticket->price).' '.lwp_currency_code();?></td>
-				<td><?php echo number_format_i18n($ticket->num); ?></td>
-				<td><?php echo ($ticket->num <= $ticket->consumed) ? $this->_('Used') : number_format_i18n($tikcet->num - $ticket->consumed); ?></td>
+				<?php foreach($headers as $column => $header){
+					switch($column){
+						case 'name':
+							echo '<th scope="row">'.get_the_title($ticket->post_parent).'&nbsp;'.apply_filters('the_title', $ticket->post_title).'</th>';
+							break;
+						case 'date':
+							echo '<td>'.mysql2date(get_option('date_format'), $ticket->updated).'</td>';
+							break;
+						case 'price':
+							echo '<td>'.number_format_i18n($ticket->price).' '.lwp_currency_code().'</td>';
+							break;
+						case 'quantity':
+							echo '<td>'.number_format_i18n($ticket->num).'</td>';
+							break;
+						case 'consumed':
+							echo '<td>'.(($ticket->num <= $ticket->consumed) ? $this->_('Used') : number_format_i18n($ticket->consumed)).'</td>';
+							break;
+					}
+				} ?>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
