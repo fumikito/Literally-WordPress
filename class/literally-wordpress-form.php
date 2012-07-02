@@ -1018,10 +1018,11 @@ EOS;
 		wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
 		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
 		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form"), $lwp->version, true);
-		if(!empty($this->_LWP)){
-			wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
-		}
-    //Do action hook for other plugins
+		//Add Common lables
+		$this->_LWP['labelProcessing'] = $this->_('Processing&hellip;');
+		
+		wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
+		//Do action hook for other plugins
     do_action('lwp_form_enqueue_scripts');
 	}
 	
@@ -1065,7 +1066,6 @@ EOS;
 	 * @return \stdClass 
 	 */
 	private function get_random_ticket(){
-		global $wpdb;
 		$ticket = new stdClass();
 		$ticket->post_title = $this->_('Dammy Ticket');
 		$ticket->updated = date('Y-m-d H:i:s');
