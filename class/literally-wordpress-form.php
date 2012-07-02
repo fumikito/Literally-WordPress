@@ -575,7 +575,8 @@ EOS;
 		$limit = $lwp->event->get_current_cancel_condition($event_id);
 		$cancel_limit_time = date_i18n(get_option('date_format'), lwp_selling_limit('U', $event_id) - (60 * 60 * 24 * $limit['days']));
 		if(!$limit){
-			$this->kill(sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), 410);
+			$message = apply_filters('lwp_event_invalid_cancel_request', sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), $event_id, get_current_user_id());
+			$this->kill($message, 410);
 		}
 		//Get cancelable ticket
 		$tickets = $lwp->event->get_cancelable_tickets(get_current_user_id(), $event_id);
@@ -640,7 +641,8 @@ EOS;
 		}
 		//Check if paypal refund is available
 		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
-			$this->kill(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), 410);
+			$message = apply_filters('lwp_event_paypal_outdated_refund', sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), $transaction, get_current_user_id());
+			$this->kill($message, 410);
 		}
 		//Now, let's start refund action
 		$refund_price = lwp_ticket_refund_price($transaction);
