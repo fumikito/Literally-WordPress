@@ -37,17 +37,18 @@ class LWP_List_History extends WP_List_Table {
 	function get_columns() {
 		global $lwp;
 		$column = array(
-			'item_type' => $lwp->_('Item Type'),
 			'item_name' => $lwp->_("Item Name"),
+			'quantity' => $lwp->_('Quantity'),
 			'price' => $lwp->_("Purchased Price"),
 			'method' => $lwp->_('Method'),
 			'expires' => $lwp->_('Expires'),
 			'registered' => $lwp->_("Registered"),
+			'action' => '&nbsp;'
 		);
 		if(is_admin()){
 			$column['updated'] = $lwp->_("Last Updated");
 		}
-		return $column;
+		return apply_filters('lwp_history_table_header', $column);
 	}
 	
 	/**
@@ -71,7 +72,7 @@ class LWP_List_History extends WP_List_Table {
 		
 		$sql = <<<EOS
 			SELECT SQL_CALC_FOUND_ROWS 
-				t.*, p.post_title, p.post_type, pm.meta_value AS price
+				t.*, p.post_title, p.post_type,p.post_parent, pm.meta_value AS price
 			FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
@@ -123,22 +124,27 @@ EOS;
 	function column_default($item, $column_name){
 		global $lwp, $wpdb;
 		switch($column_name){
-			case 'item_type':
-				if($item->post_type == $lwp->subscription->post_type){
-					return $lwp->_('Subscription');
-				}else{
-					return get_post_type_object($item->post_type)->labels->name;
-				}
-				break;
 			case 'item_name':
 				if($item->post_type == $lwp->subscription->post_type){
 					$url = $lwp->subscription->get_subscription_archive();
+					$title = $item->post_title;
 				}elseif($item->post_type == $lwp->event->post_type){
-					$url = lwp_ticket_url($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $item->book_id)));
+					$parent_id = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $item->book_id));
+					$url = lwp_ticket_url($parent_id);
+					$title = get_the_title($parent_id).'&nbsp;'.$item->post_title;
 				}else{
 					$url = get_permalink($item->book_id);
+					$title = $item->post_title;
 				}
-				return '<a href="'.$url.'">'.$item->post_title.'</a>';
+				if($item->post_type == $lwp->subscription->post_type){
+					$post_type = $lwp->_('Subscription');
+				}else{
+					$post_type = get_post_type_object($item->post_type)->labels->name;
+				}
+				return '<a href="'.$url.'">'.$title.'</a>&nbsp;-&nbsp;<strong>'.$post_type.'</strong>';
+				break;
+			case 'quantity':
+				return number_format_i18n($item->num);
 				break;
 			case 'price':
 				return number_format($item->price)." ({$lwp->option['currency_code']})";
@@ -151,7 +157,6 @@ EOS;
 					return $lwp->_('No Limit');
 				}else{
 					$remain = ceil((strtotime($item->expires) - time()) / 60 / 60 / 24);
-					$string;
 					if($remain < 0){
 						$string = $lwp->_('Expired');
 					}else{
@@ -165,6 +170,18 @@ EOS;
 				break;
 			case 'updated':
 				return mysql2date(get_option('date_format'), $item->updated, false);
+				break;
+			case 'action':
+				if($item->post_type == $lwp->event->post_type){
+					if(lwp_is_cancelable($item->post_parent)){
+						return '<a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a>';
+					}else{
+						return $lwp->_('Uncancelable');
+					}
+				}
+				break;
+			default:
+				do_action('lwp_history_row', $item, $column_name);
 				break;
 		}
 	}
@@ -220,22 +237,31 @@ EOS;
 		if($which == 'top'):
 		?>
 		<div class="alignleft acitions">
+			<?php
+				$post_types = array('all' => $lwp->_('All Post Types'));
+				$post_type_labels = $lwp->option['payable_post_types'];
+				if($lwp->subscription->is_enabled()){
+					$post_type_labels[] = $lwp->subscription->post_type;
+				}
+				if($lwp->event->is_enabled()){
+					$post_type_labels[] = $lwp->event->post_type;
+				}
+				if(count($post_type_labels) > 1):
+			?>
 			<select name="post_types">
 				<?php
-				$post_types = array('all' => $lwp->_('All Post Types'));
-				foreach($lwp->option['payable_post_types'] as $p){
-					$object = get_post_types(array('name' => $p), 'objects');
-					foreach($object as $post_type){
-						$post_types[$p] = $post_type->labels->name;
+					foreach($post_type_labels as $p){
+						$object = get_post_types(array('name' => $p), 'objects');
+						foreach($object as $post_type){
+							$post_types[$p] = $post_type->labels->name;
+						}
 					}
-				}
-				foreach($post_types as $post_type => $label): ?>
-				<option value="<?php echo $post_type; if($post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php echo $label; ?></option>
+					foreach($post_types as $post_type => $label):
+				?>
+					<option value="<?php echo $post_type; if($post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php echo $label; ?></option>
 				<?php endforeach; ?>
-				<?php if($lwp->subscription->is_enabled()): ?>
-				<option value="<?php echo $lwp->subscription->post_type; if($lwp->subscription->post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php $lwp->e('Subscription'); ?></option>
-				<?php endif; ?>
 			</select>
+			<?php endif; ?>
 			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
