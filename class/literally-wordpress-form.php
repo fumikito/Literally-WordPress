@@ -639,13 +639,14 @@ EOS;
 		if(!$transaction || empty($current_condition)){
 			$this->kill($this->_('Sorry, but the tikcet id you specified is not cancelable.'), 400);
 		}
+		//Get refund price
+		$refund_price = lwp_ticket_refund_price($transaction);
 		//Check if paypal refund is available
 		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
-			$message = apply_filters('lwp_event_paypal_outdated_refund', sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), $transaction, get_current_user_id());
+			$message = apply_filters('lwp_event_paypal_outdated_refund', sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), $transaction, $refund_price);
 			$this->kill($message, 410);
 		}
 		//Now, let's start refund action
-		$refund_price = lwp_ticket_refund_price($transaction);
 		$status = false;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;
