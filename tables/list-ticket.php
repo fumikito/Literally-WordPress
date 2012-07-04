@@ -96,7 +96,6 @@ EOS;
 		$sql .= " ORDER BY {$order_by} {$order}";
 		$sql .= " LIMIT {$offset}, {$per_page}";
 		$this->items = $wpdb->get_results($sql);
-		var_dump($wpdb->last_query);
 		$this->set_pagination_args(array(
 			'total_items' => (int) $wpdb->get_var("SELECT FOUND_ROWS()"),
 			'per_page' => $per_page
