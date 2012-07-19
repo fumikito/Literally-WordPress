@@ -206,6 +206,22 @@ class LWP_Reward extends Literally_WordPress_Common{
 	}
 	
 	/**
+	 * Hook on admin bar
+	 * @param WP_Admin_Bar $admin_bar 
+	 */
+	public function admin_bar($admin_bar){
+		if($this->promotable || ($this->rewardable && current_user_can('edit_posts'))){
+			$admin_bar->add_menu(array(
+				'parent' => 'my-account',
+				'id' => 'lwp-reward',
+				'title' => $this->_('Your Reward Record'),
+				'href' => admin_url('users.php?page=lwp-personal-reward')
+			));
+		}
+	}
+
+	
+	/**
 	 * Output form in metabox
 	 * @param object $post
 	 * @param array $metabox 

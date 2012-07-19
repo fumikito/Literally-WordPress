@@ -1013,16 +1013,19 @@ EOS;
 	public function enqueue_form_scripts(){
 		global $lwp;
 		//Load CSS, JS
-		$css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_template_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
-		$print_css = (file_exists(get_template_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_template_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
+		//Screen CSS
+		$css = (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_stylesheet_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
 		wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
+		//Print CSS
+		$print_css = (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_stylesheet_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
 		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
+		//JS for form helper
 		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form"), $lwp->version, true);
 		if(!empty($this->_LWP)){
 			wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
 		}
-    //Do action hook for other plugins
-    do_action('lwp_form_enqueue_scripts');
+		//Do action hook for other plugins
+		do_action('lwp_form_enqueue_scripts');
 	}
 	
 	

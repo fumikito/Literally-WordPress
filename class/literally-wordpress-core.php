@@ -271,6 +271,8 @@ class Literally_WordPress{
 		add_shortcode('buynow', array($this, 'shortcode_buynow'));
 		//CSV Download Ajax
 		add_action('wp_ajax_lwp_transaction_csv_output', array($this, 'ouput_csv'));
+		//Hook on adminbar
+		add_action('admin_bar_menu', array($this, 'admin_bar'));
 		if(is_admin()){ //Hooks only for admin panels.
 			//Add hook to update option
 			if($this->is_admin("setting")){
@@ -705,7 +707,19 @@ EOS;
 		return $tag;
 	}
 
-
+	/**
+	 * Customize admin bar
+	 * @param WP_Admin_Bar $wp_admin_bar 
+	 */
+	public function admin_bar($wp_admin_bar){
+		//Get purchase page url and title
+		$wp_admin_bar->add_menu(array(
+			'parent' => 'my-account',
+			'id' => 'lwp-history',
+			'title' => ($this->option['mypage'] ? get_the_title($this->option['mypage']) : $this->_('Purchase history')),
+			'href' => lwp_history_url()
+		));
+	}
 	
 	//--------------------------------------------
 	//

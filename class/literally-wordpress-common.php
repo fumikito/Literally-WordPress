@@ -33,6 +33,7 @@ class Literally_WordPress_Common {
 		$this->url = plugin_dir_url(dirname(__FILE__));
 		$this->set_option($option);
 		$this->on_construct();
+		add_action('init', array($this, '_init_hook'));
 		add_action('lwp_update_option', array($this, 'set_option'));
 	}
 	
@@ -49,6 +50,22 @@ class Literally_WordPress_Common {
 	 */
 	protected function on_construct(){}
 
+	/**
+	 * Hook on init action
+	 * @internal 
+	 */
+	public function _init_hook(){
+		add_action('admin_bar_menu', array($this, 'admin_bar'));
+	}
+	
+	/**
+	 * Do admin bar
+	 * @param WP_Admin_Bar $admin_bar 
+	 */
+	public function admin_bar($admin_bar){
+		
+	}
+	
 	/**
 	 * Alias for gettext
 	 * @global Literally_WordPress $lwp

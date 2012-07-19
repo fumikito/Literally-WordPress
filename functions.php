@@ -229,13 +229,12 @@ function lwp_original_price($post = null)
  * @param object $post (optional)
  * @return array
  */
-function lwp_get_files($accessibility = "all", $post = null)
-{
+function lwp_get_files($accessibility = "all", $post = null){
 	if(!$post)
 		global $post;
 	global $lwp, $wpdb;
 	$sql = "SELECT * FROM {$lwp->files} WHERE book_id = %d AND public = 1 ";
-	switch($status){
+	switch($accessibility){
 		case "owner":
 			$sql .= "AND free = 0";
 			break;
@@ -246,6 +245,25 @@ function lwp_get_files($accessibility = "all", $post = null)
 			$sql .= "AND free = 2";
 	}
 	return $wpdb->get_results($wpdb->prepare($sql, $post->ID));
+}
+
+/**
+ * Returns if this post has downloadable contents
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return boolean 
+ */
+function lwp_has_files($post = null){
+	global $wpdb, $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$sql = "SELECT COUNT(ID) FROM {$lwp->files} WHERE book_id = %d AND public = 1 ";
+	return (boolean)$wpdb->get_var($wpdb->prepare($sql, $post->ID));
 }
 
 /**
@@ -903,7 +921,7 @@ function lwp_is_transaction_error()
 function lwp_history_url(){
 	global $lwp;
 	if($lwp->option['mypage']){
-		return get_permalink($lwp->option['mypage']);
+		return get_page_link($lwp->option['mypage']);
 	}else{
 		return admin_url('profile.php?page=lwp-history');
 	}
@@ -1209,6 +1227,47 @@ function lwp_event_starts($format = null, $post = null, $_end = false){
  */
 function lwp_event_ends($format = null, $post = null){
 	return lwp_event_starts($format, $post, true);
+}
+
+/**
+ * Returns true if event is outdated.
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return boolean 
+ */
+function lwp_is_outdated_event($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$end = get_post_meta($post->ID, $lwp->event->meta_end, true);
+	return $end && time() > strtotime($end);
+}
+
+/**
+ * Returns true if event is 1 day
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object $post
+ * @return boolean 
+ */
+function lwp_is_oneday_event($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$start = get_post_meta($post->ID, $lwp->event->meta_start, true);
+	$end = get_post_meta($post->ID, $lwp->event->meta_end, true);
+	if($start && $end){
+		return (mysql2date('Y-m-d', $start) == mysql2date('Y-m-d', $end));
+	}else{
+		return false;
+	}
 }
 
 /**

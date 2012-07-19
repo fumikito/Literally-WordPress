@@ -143,6 +143,7 @@ class LWP_Event extends Literally_WordPress_Common {
 		));
 	}
 	
+	
 	/**
 	 * Register metaboxes 
 	 */
