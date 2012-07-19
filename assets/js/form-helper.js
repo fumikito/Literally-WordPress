@@ -3,10 +3,17 @@ jQuery(document).ready(function($){
 	var sandbox = window.location.href.match(/sandbox=true/);
 	//Kill every action 
 	if(sandbox){
-		$('form,a').submit(function(e){
+		$('form').submit(function(e){
+			e.preventDefault();
+		});
+		$('#lwp-invoice a').click(function(e){
 			e.preventDefault();
 		});
 	}
+	//Prepend user to double submit
+	$('form').submit(function(e){
+		$(this).find('input[type=submit]').val(LWP.labelProcessing).attr('disabled', true).addClass('disabled');
+	});
 	//Auto Redirect
 	if(!sandbox && $("#lwp-auto-redirect").length > 0){
 		href = $("#lwp-auto-redirect").attr('href');

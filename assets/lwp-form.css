@@ -122,7 +122,12 @@ a.button, a.button-primary{
 	background: #21759b url('./button-grad-active.png') repeat-x scroll left top;
 	color: #eaf2fa;
 }
-
+.submit input.button-primary:disabled,
+.submit input.button-primary[disabled],
+.submit a.button-primary.disabled{
+	color: #9FD0D5 !important;
+	background: #298CBA !important;
+}
 .form-table textarea,
 .form-table input[type=text]{
 	border:1px solid #bbb;

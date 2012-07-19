@@ -575,7 +575,8 @@ EOS;
 		$limit = $lwp->event->get_current_cancel_condition($event_id);
 		$cancel_limit_time = date_i18n(get_option('date_format'), lwp_selling_limit('U', $event_id) - (60 * 60 * 24 * $limit['days']));
 		if(!$limit){
-			$this->kill(sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), 410);
+			$message = apply_filters('lwp_event_invalid_cancel_request', sprintf($this->_('Sorry, but cancel limit %s is outdated and you cannot cancel.'), $cancel_limit_time), $event_id, get_current_user_id());
+			$this->kill($message, 410);
 		}
 		//Get cancelable ticket
 		$tickets = $lwp->event->get_cancelable_tickets(get_current_user_id(), $event_id);
@@ -638,12 +639,14 @@ EOS;
 		if(!$transaction || empty($current_condition)){
 			$this->kill($this->_('Sorry, but the tikcet id you specified is not cancelable.'), 400);
 		}
+		//Get refund price
+		$refund_price = lwp_ticket_refund_price($transaction);
 		//Check if paypal refund is available
 		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
-			$this->kill(sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), 410);
+			$message = apply_filters('lwp_event_paypal_outdated_refund', sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), $transaction, $refund_price);
+			$this->kill($message, 410);
 		}
 		//Now, let's start refund action
-		$refund_price = lwp_ticket_refund_price($transaction);
 		$status = false;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;
@@ -691,6 +694,13 @@ EOS;
 		if(!is_user_logged_in()){
 			auth_redirect();
 		}
+		$headers = apply_filters('lwp_ticket_list_headers', array(
+			'name' => $this->_('Ticket Name'),
+			'date' => $this->_('Bought'),
+			'price' => $this->_('Price'),
+			'quantity' => $this->_('Quantity'),
+			'consumed' => $this->_('Consumed')
+		));
 		if($is_sandbox){
 			$event = $this->get_random_event();
 			$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
@@ -698,6 +708,7 @@ EOS;
 				'title' => $event->post_title,
 				'limit' => date('Y-m-d'),
 				'link' => get_permalink($event->ID),
+				'headers' => $headers,
 				'post_type' => get_post_type_object($event->post_type)->labels->name,
 				'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 				'tickets' => array($this->get_random_ticket()),
@@ -710,7 +721,7 @@ EOS;
 		if(
 			!isset($_GET['lwp-event'])
 				||
-			!($event = wp_get_single_post($_GET['lwp-event']))
+			!($event = wp_get_single_post($_GET['lwp-event']) )
 				||
 			(false === array_search($event->post_type, $lwp->event->post_types))
 		){
@@ -719,7 +730,7 @@ EOS;
 		$event_type = get_post_type_object($event->post_type);
 		//Get tickets
 		$sql = <<<EOS
-			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
+			SELECT t.*, p.post_title, p.post_parent FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
 			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
@@ -735,6 +746,7 @@ EOS;
 			'title' => $event->post_title,
 			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
 			'link' => get_permalink($event->ID),
+			'headers' => $headers,
 			'post_type' => $event_type->labels->name,
 			'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),
 			'tickets' => $tickets,
@@ -1021,9 +1033,9 @@ EOS;
 		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
 		//JS for form helper
 		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form"), $lwp->version, true);
-		if(!empty($this->_LWP)){
-			wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
-		}
+		//Add Common lables
+		$this->_LWP['labelProcessing'] = $this->_('Processing&hellip;');
+		wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
 		//Do action hook for other plugins
 		do_action('lwp_form_enqueue_scripts');
 	}
@@ -1068,7 +1080,6 @@ EOS;
 	 * @return \stdClass 
 	 */
 	private function get_random_ticket(){
-		global $wpdb;
 		$ticket = new stdClass();
 		$ticket->post_title = $this->_('Dammy Ticket');
 		$ticket->updated = date('Y-m-d H:i:s');

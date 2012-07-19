@@ -203,13 +203,13 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'user':
-				return $item->display_name ? '<a href="'.admin_url('user_edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
+				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
 				break;
 			case 'item_name':
 				return '<a href="'.admin_url('post.php?post='.intval($item->book_id)."&action=edit").'">'.$item->post_title.'</a>';
 				break;
 			case 'price':
-				return number_format($item->price)." ({$lwp->option['currency_code']})";
+				return number_format_i18n($item->price)." ({$lwp->option['currency_code']})";
 				break;
 			case 'method':
 				return $lwp->_($item->method);

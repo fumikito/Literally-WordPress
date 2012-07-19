@@ -81,6 +81,9 @@ EOS;
 		if(isset($_GET['ticket']) && $_GET['ticket'] != 'all'){
 			$where[] = $wpdb->prepare("(t.book_id = %d)", $_GET['ticket']);
 		}
+		if(isset($_GET['status']) && $_GET['status'] != 'all'){
+			$where[] = $wpdb->prepare("(t.status = %s)", $_GET['status']);
+		}
 		$sql .= ' WHERE '.implode(' AND ', $where);
 		//ORDER
 		$order_by = 't.updated';
@@ -197,7 +200,7 @@ EOS;
 					$status[$s] = $lwp->_($s);
 				}
 				foreach($status as $key => $val): ?>
-					<option value="<?php echo $key; if($key == $this->get_status()) echo '" selected="selected'?>"><?php echo $val; ?></option>
+					<option value="<?php echo $key; if($key == $this->get_status()) echo '" selected="selected';?>"><?php echo $val; ?></option>
 				<?php endforeach; ?>
 			</select>
 			<select name="ticket">
@@ -207,7 +210,7 @@ EOS;
 						$option[$post->ID] = $post->post_title;
 					}
 					foreach($option as $id => $title){
-						echo '<option value='.$id.'"'.($this->get_ticket() == $id ? ' selected="selected"' : '').">".$title.'</option>';
+						echo '<option value="'.$id.'"'.($this->get_ticket() == $id ? ' selected="selected"' : '').">".$title.'</option>';
 					}
 				?>
 			</select>
