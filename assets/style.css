@@ -206,3 +206,9 @@ input.short{
 .lwp-wrap .summary-table .error{
 	color: #F00;
 }
+.lwp-event-table-list{
+	margin: 3px 0;
+}
+.lwp-event-table-list li{
+	margin-bottom: 3px;
+}

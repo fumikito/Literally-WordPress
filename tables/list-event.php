@@ -30,12 +30,13 @@ class LWP_List_Event extends WP_List_Table {
 	function get_columns() {
 		global $lwp;
 		$column = array(
-			'event_type' => $lwp->_('Event Type'),
+			'event_type' => $lwp->_('Type'),
 			'event_name' => $lwp->_("Event Name"),
-			'published' => $lwp->_('Published'),
+			'published' => $lwp->_('Date'),
 			'selling_limit' => $lwp->_("Selling Limit"),
 			'participants' => $lwp->_('Participants'),
-			'actions' => $lwp->_('Actions')
+			'tickets' => $lwp->_('Tickets'),
+			'actions' => $lwp->_('')
 		);
 		return $column;
 	}
@@ -60,11 +61,15 @@ class LWP_List_Event extends WP_List_Table {
 		$offset = ($page - 1) * $per_page;
 		
 		$sql = <<<EOS
-			SELECT SQL_CALC_FOUND_ROWS
-				*
+			SELECT DISTINCT SQL_CALC_FOUND_ROWS
+				p.*, pm.meta_value AS limit_date, pm2.meta_value AS start_date
 			FROM {$wpdb->posts} AS p
-			INNER JOIN {$wpdb->postmeta} AS pm
+			LEFT JOIN {$wpdb->postmeta} AS pm
 			ON p.ID = pm.post_id AND pm.meta_key = '{$lwp->event->meta_selling_limit}'
+			LEFT JOIN {$wpdb->postmeta} AS pm2
+			ON p.ID = pm2.post_id AND pm2.meta_key = '{$lwp->event->meta_start}'
+			INNER JOIN {$wpdb->posts} AS c
+			ON c.post_parent = p.ID AND c.post_type = '{$lwp->event->post_type}'
 EOS;
 		//WHERE
 		$where = array();
@@ -78,7 +83,7 @@ EOS;
 		}
 		$sql .= ' WHERE '.implode(' AND ', $where);
 		//ORDER
-		$order_by = 'p.post_date';
+		$order_by = 'CAST(pm2.meta_value AS DATE)';
 		if(isset($_GET['orderby'])){
 			switch($_GET['orderby']){
 				case 'selling_limit':
@@ -113,10 +118,10 @@ EOS;
 				return '<a href="'.admin_url('post.php?post='.$item->ID.'&amp;action=edit').'">'.$item->post_title.'</a>';
 				break;
 			case 'published':
-				return mysql2date(get_option('date_format'), $item->post_date);
+				return ($item->start_date ? mysql2date(get_option('date_format'), $item->start_date) : '-');
 				break;
 			case 'selling_limit':
-				return mysql2date(get_option('date_format'), $item->meta_value);
+				return $item->limit_date ? mysql2date(get_option('date_format'), $item->limit_date) : '-';
 				break;
 			case 'participants':
 				$ticket_ids = $lwp->event->get_chicket_ids($item->ID);
@@ -130,8 +135,31 @@ EOS;
 EOS;
 				return $wpdb->get_var($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS));
 				break;
+			case 'tickets':
+				$tickets = get_posts("post_parent={$item->ID}&post_type={$lwp->event->post_type}");
+				if(empty($tickets)){
+					return '-';
+				}else{
+					$return = '<ol class="lwp-event-table-list">';
+					foreach($tickets as $ticket){
+						$stock = lwp_get_ticket_stock(true, $ticket);
+						$sold = lwp_get_ticket_sold($ticket);
+						if($stock){
+							$ratio = intval(255 * ($sold / $stock));
+							$style = ' style="color:rgb('.$ratio.', 0, 0);"';
+						}else{
+							$style = '';
+						}
+						$return .= <<<EOS
+							<li{$style}>{$ticket->post_title} ({$sold}/{$stock})</li>
+EOS;
+					}
+					$return .= '</ol>';
+					return $return;
+				}
+				break;
 			case 'actions':
-				return '<a class="button" href="'.admin_url('admin.php?page=lwp-event&amp;event_id='.$item->ID).'">'.$lwp->_('Detail').'</a>';
+				return '<p><a class="button" href="'.admin_url('admin.php?page=lwp-event&amp;event_id='.$item->ID).'">'.$lwp->_('Detail').'</a></p>';
 				break;
 		}
 	}
