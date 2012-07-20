@@ -299,6 +299,22 @@ EOS;
 	}
 	
 	/**
+	 * Returns ticket total sales
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param type $ticket_id
+	 * @return type 
+	 */
+	public function get_ticket_total_sales($ticket_id){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT SUM(t.price) FROM {$lwp->transaction} AS t
+			WHERE t.book_id = %d AND t.status = %s
+EOS;
+		return $wpdb->get_var($wpdb->prepare($sql, $ticket_id, LWP_Payment_Status::SUCCESS));
+	}
+	
+	/**
 	 * Returns cancel condition with specified timestamp
 	 * @param int $post_id
 	 * @param int $timestamp

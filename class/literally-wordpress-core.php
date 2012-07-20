@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.9.1";
+	public $version = "0.9.1.1";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -1719,7 +1719,7 @@ EOS;
 			$table->display();
 			$book_shelf = ob_get_contents();
 			ob_end_clean();
-			return '<form id="book-shelf" method="get">'.$book_shelf.'</form>'.$content;
+			return '<form id="book-shelf" method="get" action="'.get_permalink().'">'.$book_shelf.'</form>'.$content;
 		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
 			$content .= lwp_show_form();
 			//ダウンロード可能なファイルがあったらテーブルを出力

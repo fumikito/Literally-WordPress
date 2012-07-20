@@ -32,7 +32,6 @@ div.ebook{
 	font-family: Baskerville,Times,'Times New Roman',serif !important; 
 }
 
-
 /* Help Page */
 .help-wrap{
 	padding:10px 20px;
@@ -177,3 +176,33 @@ input.short{
 	.postbox p.loading{
 		background: transparent url('./indicator-postbox.gif') center center no-repeat;
 	}
+/* Sumamry */
+.lwp-wrap h3.clear{
+	clear: both;
+	margin-top: 2em;
+}
+.lwp-wrap .summary-table{
+	max-width: 45%;
+	float: left;
+	border-collapse: collapse;
+}
+.lwp-wrap .summary-table.alignright{
+	float: right;
+}
+.lwp-wrap .summary-table th,
+.lwp-wrap .summary-table td{
+	padding:10px;
+	border-bottom: 1px solid #ddd;
+}
+.lwp-wrap .summary-table th{
+	vertical-align: top;
+	text-align: left;
+}
+.lwp-wrap .summary-table tfoot th,
+.lwp-wrap .summary-table tfoot td{
+	background: #FEF8C4;
+}
+
+.lwp-wrap .summary-table .error{
+	color: #F00;
+}

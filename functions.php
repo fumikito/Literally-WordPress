@@ -206,7 +206,7 @@ function lwp_currency_symbol(){
  * @return void
  */
 function lwp_the_price($post = null){
-	echo lwp_currency_symbol().number_format(lwp_price());
+	echo lwp_currency_symbol().number_format(lwp_price($post));
 }
 
 
@@ -1194,6 +1194,24 @@ function lwp_get_ticket_sold($post = null){
 }
 
 /**
+ * Returns tickets consumed total. Use inside ticket loop
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @global ojbect $post
+ * @param mixed $post
+ * @return int 
+ */
+function lwp_get_ticket_consumed($post = null){
+	global $lwp, $wpdb;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	return (int)$wpdb->get_var($wpdb->prepare("SELECT SUM(consumed) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s", $post->ID, LWP_Payment_Status::SUCCESS));
+}
+
+/**
  * Show Event start date
  * @global Literally_WordPress $lwp
  * @global object $post
@@ -1445,6 +1463,8 @@ function lwp_participants_number($post = null){
 EOS;
 	return (int)$wpdb->get_var($wpdb->prepare($sql, $post->ID, LWP_Payment_Status::SUCCESS));
 }
+
+
 
 /**
  * Display list of participants

@@ -108,12 +108,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $tickets = new WP_Query('post_type='.$this->post_type.'&post_parent='.$post->ID); if($tickets->have_posts()): while($tickets->have_posts()): $tickets->the_post(); ?>
-		<tr id="ticket-<?php the_ID(); ?>">
-			<th scope="row"><?php the_title(); ?></th>
-			<td><?php echo mb_substr(strip_tags(get_the_excerpt()), 0, 10, 'utf-8'); ?>&hellip;</td>
-			<td><?php echo number_format(get_post_meta(get_the_ID(), 'lwp_price', true)); ?></td>
-			<td><?php echo number_format(get_post_meta(get_the_ID(), $this->meta_stock, true)); ?></td>
+		<?php $tickets = get_posts('post_type='.$this->post_type.'&post_parent='.$post->ID); if(!empty($tickets)): foreach($tickets as $ticket): ?>
+		<tr id="ticket-<?php echo $ticket->ID; ?>">
+			<th scope="row"><?php echo $ticket->post_title; ?></th>
+			<td><?php echo mb_substr(strip_tags(apply_filters('', $ticket->post_content)), 0, 10, 'utf-8'); ?>&hellip;</td>
+			<td><?php echo number_format(get_post_meta($ticket->ID, 'lwp_price', true)); ?></td>
+			<td><?php echo number_format(get_post_meta($ticket->ID, $this->meta_stock, true)); ?></td>
 			<td>
 				<a href="#" class="button ticket-edit"><?php $this->e('Edit'); ?></a>
 			</td>
@@ -121,7 +121,7 @@
 				<a href="<?php echo admin_url('admin-ajax.php'); ?>" class="button ticket-delete"><?php $this->e('Delete'); ?></a>
 			</td>
 		</tr>
-		<?php endwhile; endif; ?>
+		<?php endforeach; endif; ?>
 	</tbody>
 </table>
 

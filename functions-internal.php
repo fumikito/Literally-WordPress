@@ -80,7 +80,7 @@ function _lwp_show_condition($limit, $days_before, $ratio){
 	}
 	
 	echo '<li>';
-	printf('By %1$s, %2$s', date_i18n(get_option('date_format'), $limit), $returns);
+	printf($lwp->_('By %1$s, %2$s'), date_i18n(get_option('date_format'), $limit), $returns);
 	echo '</li>';
 }
 
