@@ -210,7 +210,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	 * @param WP_Admin_Bar $admin_bar 
 	 */
 	public function admin_bar($admin_bar){
-		if($this->promotable || ($this->rewardable && current_user_can('edit_posts'))){
+		if(is_user_logged_in() && $this->promotable || ($this->rewardable && current_user_can('edit_posts'))){
 			$admin_bar->add_menu(array(
 				'parent' => 'my-account',
 				'id' => 'lwp-reward',

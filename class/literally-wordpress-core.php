@@ -713,12 +713,14 @@ EOS;
 	 */
 	public function admin_bar($wp_admin_bar){
 		//Get purchase page url and title
-		$wp_admin_bar->add_menu(array(
-			'parent' => 'my-account',
-			'id' => 'lwp-history',
-			'title' => ($this->option['mypage'] ? get_the_title($this->option['mypage']) : $this->_('Purchase history')),
-			'href' => lwp_history_url()
-		));
+		if(is_user_logged_in()){
+			$wp_admin_bar->add_menu(array(
+				'parent' => 'my-account',
+				'id' => 'lwp-history',
+				'title' => ($this->option['mypage'] ? get_the_title($this->option['mypage']) : $this->_('Purchase history')),
+				'href' => lwp_history_url()
+			));
+		}
 	}
 	
 	//--------------------------------------------
