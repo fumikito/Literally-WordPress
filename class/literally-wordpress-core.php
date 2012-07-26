@@ -377,8 +377,8 @@ class Literally_WordPress{
 	 * @return void
 	 */
 	public function register_assets(){
-		wp_register_script("jquery-ui-timepicker", $this->url."/assets/datepicker/jquery-ui-timepicker.js",array("jquery-ui-datepicker", 'jquery-ui-slider') ,"0.9.7", !is_admin());
-		wp_register_style("jquery-ui-datepicker", $this->url."/assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
+		wp_register_script("jquery-ui-timepicker", $this->url."assets/datepicker/jquery-ui-timepicker.js",array("jquery-ui-datepicker", 'jquery-ui-slider') ,"0.9.7", !is_admin());
+		wp_register_style("jquery-ui-datepicker", $this->url."assets/datepicker/smoothness/jquery-ui.css", array(), "1.8.9");
 		wp_register_script('google-jsapi', 'https://www.google.com/jsapi', array(), null, !is_admin());
 	}
 	

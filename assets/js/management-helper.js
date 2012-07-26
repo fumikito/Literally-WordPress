@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
 	//Show Datepicker
 	for(prop in LWP){
 		var propToSplit = ['monthNames','dayNames','monthNamesShort','dayNamesMin','dayNamesShort'];
-		if(propToSplit.indexOf(prop) > -1){
+		if($.inArray(prop, propToSplit) > -1){
 			LWP[prop] = LWP[prop].split(',');
 		}
 	}
