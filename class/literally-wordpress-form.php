@@ -141,7 +141,7 @@ class LWP_Form extends Literally_WordPress_Common{
 			}
 			//Check if stock is enough
 			$stock = lwp_get_ticket_stock(false, $book);
-			if(!$stock){
+			if($stock <= 0){
 				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
 			}
 		}
