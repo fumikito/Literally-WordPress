@@ -139,6 +139,11 @@ class LWP_Form extends Literally_WordPress_Common{
 					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
 				}
 			}
+			//Check if stock is enough
+			$stock = lwp_get_ticket_stock(false, $book);
+			if(!$stock){
+				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
+			}
 		}
     //Let's do action hook to delegate transaction to other plugin
     do_action('lwp_before_transaction', $book);

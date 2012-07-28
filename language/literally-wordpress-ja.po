@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-20 18:52+0900\n"
-"PO-Revision-Date: 2012-07-20 18:52+0900\n"
+"POT-Creation-Date: 2012-07-29 02:34+0900\n"
+"PO-Revision-Date: 2012-07-29 02:35+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,11 @@ msgstr "<strong>%1$d</strong> / %2$d ステップ"
 #, php-format
 msgid "Bought price - %s"
 msgstr "購入価格 - %s"
+
+#: ../functions-internal.php:83
+#, php-format
+msgid "By %1$s, %2$s"
+msgstr "%1$sまでは%2$s返金"
 
 #: ../functions.php:478
 msgid "Registered Files"
@@ -1534,175 +1539,175 @@ msgstr "返金は数値（正負）またはパーセント（ex. 50%）でな�
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../class/literally-wordpress-core.php:719
+#: ../class/literally-wordpress-core.php:720
 msgid "Purchase history"
 msgstr "購入履歴"
 
-#: ../class/literally-wordpress-core.php:799
+#: ../class/literally-wordpress-core.php:801
 msgid "Option updated."
 msgstr "設定が更新されました。"
 
-#: ../class/literally-wordpress-core.php:802
+#: ../class/literally-wordpress-core.php:804
 msgid "Failed to updated options."
 msgstr "設定の更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:828
-#: ../class/literally-wordpress-core.php:1232
+#: ../class/literally-wordpress-core.php:830
+#: ../class/literally-wordpress-core.php:1234
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../class/literally-wordpress-core.php:861
+#: ../class/literally-wordpress-core.php:863
 msgid "Downloadble Contents"
 msgstr "ダウンロード用コンテンツ"
 
-#: ../class/literally-wordpress-core.php:1045
+#: ../class/literally-wordpress-core.php:1047
 msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
 msgstr "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超えています。"
 
-#: ../class/literally-wordpress-core.php:1048
+#: ../class/literally-wordpress-core.php:1050
 msgid "Uploaded file size exceeds"
 msgstr "アップロードされたファイルサイズが大きすぎます。"
 
-#: ../class/literally-wordpress-core.php:1051
+#: ../class/literally-wordpress-core.php:1053
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr "ファイルが完全にアップロードされませんでした。インターネット接続を確認してください。"
 
-#: ../class/literally-wordpress-core.php:1054
+#: ../class/literally-wordpress-core.php:1056
 msgid "No file was uploaded."
 msgstr "ファイルがアップロードされませんでした。"
 
-#: ../class/literally-wordpress-core.php:1057
+#: ../class/literally-wordpress-core.php:1059
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
-#: ../class/literally-wordpress-core.php:1060
+#: ../class/literally-wordpress-core.php:1062
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせてください。"
 
-#: ../class/literally-wordpress-core.php:1063
+#: ../class/literally-wordpress-core.php:1065
 msgid "PHP stops uploading."
 msgstr "PHPがアップロードを停止しました。"
 
-#: ../class/literally-wordpress-core.php:1144
+#: ../class/literally-wordpress-core.php:1146
 msgid "Device added."
 msgstr "端末が追加されました。"
 
-#: ../class/literally-wordpress-core.php:1146
+#: ../class/literally-wordpress-core.php:1148
 msgid "Failed to add device."
 msgstr "端末の追加に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1157
+#: ../class/literally-wordpress-core.php:1159
 msgid "Device deleted."
 msgstr "端末が削除されました。"
 
-#: ../class/literally-wordpress-core.php:1173
+#: ../class/literally-wordpress-core.php:1175
 msgid "Device updated."
 msgstr "端末が更新されました。"
 
-#: ../class/literally-wordpress-core.php:1227
+#: ../class/literally-wordpress-core.php:1229
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../class/literally-wordpress-core.php:1237
+#: ../class/literally-wordpress-core.php:1239
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../class/literally-wordpress-core.php:1242
-#: ../class/literally-wordpress-core.php:1288
+#: ../class/literally-wordpress-core.php:1244
+#: ../class/literally-wordpress-core.php:1290
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../class/literally-wordpress-core.php:1247
+#: ../class/literally-wordpress-core.php:1249
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../class/literally-wordpress-core.php:1263
+#: ../class/literally-wordpress-core.php:1265
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../class/literally-wordpress-core.php:1266
+#: ../class/literally-wordpress-core.php:1268
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../class/literally-wordpress-core.php:1275
+#: ../class/literally-wordpress-core.php:1277
 msgid "Specified campaing doesn't exist"
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../class/literally-wordpress-core.php:1280
+#: ../class/literally-wordpress-core.php:1282
 msgid "Price should be numeric."
 msgstr "価格は半角数字でなくてはなりません。"
 
-#: ../class/literally-wordpress-core.php:1283
+#: ../class/literally-wordpress-core.php:1285
 msgid "Campgin price is higher than original price."
 msgstr "キャンペーン価格が定価よりも高くなっています。"
 
-#: ../class/literally-wordpress-core.php:1293
+#: ../class/literally-wordpress-core.php:1295
 msgid "End date is earlier than start date."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../class/literally-wordpress-core.php:1309
+#: ../class/literally-wordpress-core.php:1311
 msgid "Successfully Updated."
 msgstr "更新しました。"
 
-#: ../class/literally-wordpress-core.php:1312
+#: ../class/literally-wordpress-core.php:1314
 msgid "Update Failed."
 msgstr "更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1320
+#: ../class/literally-wordpress-core.php:1322
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../class/literally-wordpress-core.php:1323
+#: ../class/literally-wordpress-core.php:1325
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1459
+#: ../class/literally-wordpress-core.php:1461
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../class/literally-wordpress-core.php:1464
+#: ../class/literally-wordpress-core.php:1466
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../class/literally-wordpress-core.php:1591
+#: ../class/literally-wordpress-core.php:1593
 msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
 msgstr "トランザクションが発生してから60日が経過したため、PayPalでの返金はできません。"
 
-#: ../class/literally-wordpress-core.php:1596
+#: ../class/literally-wordpress-core.php:1598
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../class/literally-wordpress-core.php:1598
+#: ../class/literally-wordpress-core.php:1600
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../class/literally-wordpress-core.php:1630
+#: ../class/literally-wordpress-core.php:1632
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../class/literally-wordpress-core.php:1632
+#: ../class/literally-wordpress-core.php:1634
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1784
+#: ../class/literally-wordpress-core.php:1786
 #: ../class/literally-wordpress-event.php:701
 msgid "No ticket match your qriteria.: "
 msgstr "チケットが見つかりませんでした。"
 
-#: ../class/literally-wordpress-core.php:1800
+#: ../class/literally-wordpress-core.php:1802
 msgid "Payment Method"
 msgstr "支払い方法"
 
-#: ../class/literally-wordpress-core.php:1802
+#: ../class/literally-wordpress-core.php:1804
 msgid "Transaction ID"
 msgstr "決済ID"
 
-#: ../class/literally-wordpress-core.php:1806
+#: ../class/literally-wordpress-core.php:1808
 #: ../class/literally-wordpress-event.php:722
 msgid "Transaction Status"
 msgstr "決済ステータス"
 
-#: ../class/literally-wordpress-core.php:1997
+#: ../class/literally-wordpress-core.php:1999
 msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
 msgstr "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権など、購入したユーザーに対して提供できるものはいくつかあります。"
 
@@ -1801,7 +1806,7 @@ msgid "Code to identify user"
 msgstr "ユーザーを特定するコード"
 
 #: ../class/literally-wordpress-form.php:32
-#: ../class/literally-wordpress-form.php:626
+#: ../class/literally-wordpress-form.php:631
 msgid "Sorry, but You might make unexpected action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
@@ -1814,7 +1819,7 @@ msgid "Sorry, but there is no subscription plan."
 msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
 
 #: ../class/literally-wordpress-form.php:114
-#: ../class/literally-wordpress-form.php:296
+#: ../class/literally-wordpress-form.php:301
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr "おや、商品を見つけられませんでした。支払い可能な投稿があるかチェックしてください。"
 
@@ -1826,286 +1831,290 @@ msgstr "コンテンツが指定されていません。"
 msgid "Selling limit has been past. There is no ticket available."
 msgstr "販売期限が過ぎています。ご利用になれるチケットはありません。"
 
-#: ../class/literally-wordpress-form.php:172
+#: ../class/literally-wordpress-form.php:145
+msgid "Sorry, but this ticket is sold out."
+msgstr "申し訳ありませんが、このチケットは売り切れです。"
+
+#: ../class/literally-wordpress-form.php:177
 msgid "This itme is not on sale."
 msgstr "このアイテムは販売中ではありません。"
 
-#: ../class/literally-wordpress-form.php:242
+#: ../class/literally-wordpress-form.php:247
 msgid "Sorry, but we can't accept this payment method."
 msgstr "もうしわけありません、この支払い方法は受け付けられません。"
 
-#: ../class/literally-wordpress-form.php:250
+#: ../class/literally-wordpress-form.php:255
 msgid "Failed to make transaction."
 msgstr "トランザクションを開始できませんでした。"
 
-#: ../class/literally-wordpress-form.php:254
+#: ../class/literally-wordpress-form.php:259
 msgid "Wrong payment method is specified."
 msgstr "不正な支払い方法が指定されています。"
 
-#: ../class/literally-wordpress-form.php:305
+#: ../class/literally-wordpress-form.php:310
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../class/literally-wordpress-form.php:309
+#: ../class/literally-wordpress-form.php:314
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../class/literally-wordpress-form.php:354
+#: ../class/literally-wordpress-form.php:359
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../class/literally-wordpress-form.php:478
-#: ../class/literally-wordpress-form.php:493
+#: ../class/literally-wordpress-form.php:483
+#: ../class/literally-wordpress-form.php:498
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
-#: ../class/literally-wordpress-form.php:488
+#: ../class/literally-wordpress-form.php:493
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../class/literally-wordpress-form.php:572
+#: ../class/literally-wordpress-form.php:577
 msgid "Sorry, but you specified unexistant event."
 msgstr "申し訳ありません、イベントが見つかりません。"
 
-#: ../class/literally-wordpress-form.php:578
+#: ../class/literally-wordpress-form.php:583
 #, php-format
 msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
 msgstr "申し訳ありません、キャンセル期限 %s が過ぎているため、キャンセルできません。"
 
-#: ../class/literally-wordpress-form.php:584
+#: ../class/literally-wordpress-form.php:589
 msgid "Sorry, but you have no ticket to cancel."
 msgstr "申し訳ありませんが、キャンセルできるチケットがありません。"
 
-#: ../class/literally-wordpress-form.php:590
+#: ../class/literally-wordpress-form.php:595
 #, php-format
 msgid "%s charged."
 msgstr "手数料 %s"
 
-#: ../class/literally-wordpress-form.php:620
+#: ../class/literally-wordpress-form.php:625
 msgid "Deleted Ticket"
 msgstr "削除されたチケット"
 
-#: ../class/literally-wordpress-form.php:626
+#: ../class/literally-wordpress-form.php:631
 msgid "Cannot pass security check."
 msgstr "セキュリティチェックを通過できませんでした。"
 
-#: ../class/literally-wordpress-form.php:640
+#: ../class/literally-wordpress-form.php:645
 msgid "Sorry, but the tikcet id you specified is not cancelable."
 msgstr "申し訳ありません、指定されたチケットはキャンセルできません。"
 
-#: ../class/literally-wordpress-form.php:646
+#: ../class/literally-wordpress-form.php:651
 #, php-format
 msgid "Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today"
 msgstr "申し訳ありません、PayPalの返金は60日間のみ有効です。あなたの決済は %1$s に完了し、本日は %2$s です。"
 
-#: ../class/literally-wordpress-form.php:659
+#: ../class/literally-wordpress-form.php:664
 #, php-format
 msgid "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
 msgstr "もうしわけありません、PayPalに返金を拒否されました。%1$s 管理者にコンタクトをとってください。"
 
-#: ../class/literally-wordpress-form.php:699
+#: ../class/literally-wordpress-form.php:704
 #: ../form-template/paypal-cancel-ticket.php:14
 msgid "Bought"
 msgstr "購入日"
 
-#: ../class/literally-wordpress-form.php:717
+#: ../class/literally-wordpress-form.php:722
 msgid "A footer note which can be set on each post will be displayed here."
 msgstr "投稿ごとに設定できる註がここに表示されます。"
 
-#: ../class/literally-wordpress-form.php:728
-#: ../class/literally-wordpress-form.php:786
-#: ../class/literally-wordpress-form.php:933
+#: ../class/literally-wordpress-form.php:733
+#: ../class/literally-wordpress-form.php:791
+#: ../class/literally-wordpress-form.php:938
 msgid "Sorry, but no event is specified."
 msgstr "申し訳ありませんが、イベントが指定されておりません。"
 
-#: ../class/literally-wordpress-form.php:742
+#: ../class/literally-wordpress-form.php:747
 msgid "Sorry, but you have no tikcet to display."
 msgstr "申し訳ありませんが、表示できるチケットはございません。"
 
-#: ../class/literally-wordpress-form.php:792
+#: ../class/literally-wordpress-form.php:797
 msgid "Sorry, but specified user is not found."
 msgstr "もうしわけありません、ユーザーが見つかりません。"
 
-#: ../class/literally-wordpress-form.php:796
+#: ../class/literally-wordpress-form.php:801
 msgid "Sorry, but you have no capability to consume ticket."
 msgstr "申し訳ありませんが、チケットを消費する権限をお持ちでないようです。"
 
-#: ../class/literally-wordpress-form.php:823
+#: ../class/literally-wordpress-form.php:828
 #, php-format
 msgid "Sorry, but %s has no ticket on this event."
 msgstr "申し訳ありませんが、このイベントにはチケットがありません。"
 
-#: ../class/literally-wordpress-form.php:861
-#: ../class/literally-wordpress-form.php:918
-#: ../class/literally-wordpress-form.php:1072
+#: ../class/literally-wordpress-form.php:866
+#: ../class/literally-wordpress-form.php:923
+#: ../class/literally-wordpress-form.php:1077
 msgid "Sorry, but event is not found."
 msgstr "申し訳ありませんが、イベントが見つかりません。"
 
-#: ../class/literally-wordpress-form.php:865
+#: ../class/literally-wordpress-form.php:870
 msgid "Sorry, but you have no permission."
 msgstr "申し訳ありませんが、権限をお持ちでありません。"
 
-#: ../class/literally-wordpress-form.php:902
+#: ../class/literally-wordpress-form.php:907
 #, php-format
 msgid "Admin email <%s>"
 msgstr "管理者メール <%s>"
 
-#: ../class/literally-wordpress-form.php:903
+#: ../class/literally-wordpress-form.php:908
 #, php-format
 msgid "Your email <%s>"
 msgstr "あなたのメール <%s>"
 
-#: ../class/literally-wordpress-form.php:907
+#: ../class/literally-wordpress-form.php:912
 msgid "Are you sure to send this mail?"
 msgstr "このメールを送信してよろしいですか？"
 
-#: ../class/literally-wordpress-form.php:908
+#: ../class/literally-wordpress-form.php:913
 msgid "Sending&hellip;"
 msgstr "送信中&hellip;"
 
-#: ../class/literally-wordpress-form.php:909
+#: ../class/literally-wordpress-form.php:914
 msgid "Please specify mail from."
 msgstr "メールの差出人を指定してください。"
 
-#: ../class/literally-wordpress-form.php:910
+#: ../class/literally-wordpress-form.php:915
 msgid "Subject is empty."
 msgstr "懸命が空です。"
 
-#: ../class/literally-wordpress-form.php:911
+#: ../class/literally-wordpress-form.php:916
 msgid "Mail body is empty"
 msgstr "メール本文が空です。"
 
-#: ../class/literally-wordpress-form.php:912
+#: ../class/literally-wordpress-form.php:917
 msgid "Send"
 msgstr "送信"
 
-#: ../class/literally-wordpress-form.php:937
+#: ../class/literally-wordpress-form.php:942
 msgid "You do not have capability to contact participants."
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/literally-wordpress-form.php:942
+#: ../class/literally-wordpress-form.php:947
 #, php-format
 msgid "Post author email <%s>"
 msgstr "投稿者のメール <%s>"
 
-#: ../class/literally-wordpress-form.php:963
+#: ../class/literally-wordpress-form.php:968
 msgid "You must be logged in to process transaction."
 msgstr "決済処理を進めるにはログインする必要があります。"
 
-#: ../class/literally-wordpress-form.php:1037
+#: ../class/literally-wordpress-form.php:1042
 msgid "Processing&hellip;"
 msgstr "処理中&hellip;"
 
-#: ../class/literally-wordpress-form.php:1084
+#: ../class/literally-wordpress-form.php:1089
 msgid "Dammy Ticket"
 msgstr "ダミーチケット"
 
-#: ../class/literally-wordpress-form.php:1149
+#: ../class/literally-wordpress-form.php:1154
 msgid "Select Payment"
 msgstr "支払い方法選択"
 
-#: ../class/literally-wordpress-form.php:1152
+#: ../class/literally-wordpress-form.php:1157
 msgid "Transfer Accepted"
 msgstr "送金受付"
 
-#: ../class/literally-wordpress-form.php:1155
+#: ../class/literally-wordpress-form.php:1160
 msgid "Payment Confirmation"
 msgstr "支払い確認"
 
-#: ../class/literally-wordpress-form.php:1158
+#: ../class/literally-wordpress-form.php:1163
 msgid "Transaction Completed"
 msgstr "決済完了"
 
-#: ../class/literally-wordpress-form.php:1161
+#: ../class/literally-wordpress-form.php:1166
 msgid "Transaciton Canceled"
 msgstr "決済キャンセル"
 
-#: ../class/literally-wordpress-form.php:1164
+#: ../class/literally-wordpress-form.php:1169
 msgid "Ticket Cancel"
 msgstr "チケットキャンセル"
 
-#: ../class/literally-wordpress-form.php:1167
+#: ../class/literally-wordpress-form.php:1172
 msgid "Ticket Canceled"
 msgstr "チケットキャンセル"
 
-#: ../class/literally-wordpress-form.php:1170
+#: ../class/literally-wordpress-form.php:1175
 #: ../form-template/edit-detail-event.php:98
 msgid "Ticket List"
 msgstr "チケットリスト"
 
-#: ../class/literally-wordpress-form.php:1173
+#: ../class/literally-wordpress-form.php:1178
 msgid "Ticket Status"
 msgstr "チケットステータス"
 
-#: ../class/literally-wordpress-form.php:1176
+#: ../class/literally-wordpress-form.php:1181
 msgid "Find User"
 msgstr "ユーザー検索"
 
-#: ../class/literally-wordpress-form.php:1179
+#: ../class/literally-wordpress-form.php:1184
 msgid "Contact to participants"
 msgstr "参加者へのコンタクト"
 
-#: ../class/literally-wordpress-form.php:1182
+#: ../class/literally-wordpress-form.php:1187
 msgid "Subscrition Plans"
 msgstr "定期購読プラン"
 
-#: ../class/literally-wordpress-form.php:1245
-#: ../class/literally-wordpress-form.php:1248
+#: ../class/literally-wordpress-form.php:1250
+#: ../class/literally-wordpress-form.php:1253
 msgid "Displays subscription plans."
 msgstr "定期購読プランを表示します。"
 
-#: ../class/literally-wordpress-form.php:1248
+#: ../class/literally-wordpress-form.php:1253
 msgid "User can select it and go to payment selection page."
 msgstr "ユーザーは選択した上で、支払い方法選択ページへ移動します。"
 
-#: ../class/literally-wordpress-form.php:1251
+#: ../class/literally-wordpress-form.php:1256
 msgid "Display thank you message when transaction finished."
 msgstr "決済が完了したあとにメッセージを表示します。"
 
-#: ../class/literally-wordpress-form.php:1251
-#: ../class/literally-wordpress-form.php:1267
+#: ../class/literally-wordpress-form.php:1256
+#: ../class/literally-wordpress-form.php:1272
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr "ユーザーは5秒後にイベントページへリダイレクトされます。"
 
-#: ../class/literally-wordpress-form.php:1254
+#: ../class/literally-wordpress-form.php:1259
 msgid "Display message when user cancels transaction."
 msgstr "ユーザーが決済をキャンセルしたときにメッセージを表示します。"
 
-#: ../class/literally-wordpress-form.php:1257
+#: ../class/literally-wordpress-form.php:1262
 msgid "Displays payment methods. You can skip this form if paypal is the only method available."
 msgstr "支払い方法を表示します。PayPalだけが支払い方法として有効なときにはこのフォームをスキップできます。"
 
-#: ../class/literally-wordpress-form.php:1261
+#: ../class/literally-wordpress-form.php:1266
 msgid "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr "ユーザーがPayPalから戻ってきたときに決済を受諾するためのページを表示します。"
 
-#: ../class/literally-wordpress-form.php:1264
-#: ../class/literally-wordpress-form.php:1270
+#: ../class/literally-wordpress-form.php:1269
+#: ../class/literally-wordpress-form.php:1275
 msgid "Show list of tickets which user have bought."
 msgstr "ユーザーが購入したチケットのリストを表示します。"
 
-#: ../class/literally-wordpress-form.php:1264
+#: ../class/literally-wordpress-form.php:1269
 msgid "User can select ticket to cancel."
 msgstr "ユーザーはキャンセルするチケットを選択できます。"
 
-#: ../class/literally-wordpress-form.php:1264
-#: ../class/literally-wordpress-form.php:1270
+#: ../class/literally-wordpress-form.php:1269
+#: ../class/literally-wordpress-form.php:1275
 msgid "If user has no tickets, wp_die will be executed."
 msgstr "ユーザーがチケットを購入していない場合はwp_dieが実行されます。"
 
-#: ../class/literally-wordpress-form.php:1267
+#: ../class/literally-wordpress-form.php:1272
 msgid "Displays message to tell user cancel is completed."
 msgstr "キャンセル処理が完了したあとにメッセージを表示します。"
 
-#: ../class/literally-wordpress-form.php:1273
+#: ../class/literally-wordpress-form.php:1278
 msgid "Displays list of tikcets owned by specified user. You can consume ticket with pulldown menu."
 msgstr "特定のユーザーが所有するチケットのリストを表示します。あなたはプルダウンメニューからチケットを使用済みにすることができます。"
 
-#: ../class/literally-wordpress-form.php:1276
+#: ../class/literally-wordpress-form.php:1281
 msgid "Search tikcet owner from code which have been generared by this plugin. This code is related to particular event."
 msgstr "このプラグインが出力するコードからチケットの所有者を探します。このコードはイベント固有です。"
 
-#: ../class/literally-wordpress-form.php:1279
+#: ../class/literally-wordpress-form.php:1284
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
@@ -4354,7 +4363,7 @@ msgstr "%d%%Off"
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
-#: ../tables/list-event.php:203
+#: ../tables/list-event.php:231
 #: ../tables/list-history.php:268
 #: ../tables/list-management.php:300
 #: ../tables/list-reward-history.php:200
@@ -4373,28 +4382,19 @@ msgid "No matching event is found."
 msgstr "該当するイベントは見つかりませんでした。"
 
 #: ../tables/list-event.php:33
-msgid "Event Type"
-msgstr "イベントタイプ"
+#: ../tables/list-promotable-posts.php:130
+msgid "Type"
+msgstr "種別"
 
 #: ../tables/list-event.php:34
 msgid "Event Name"
 msgstr "イベント名"
 
-#: ../tables/list-event.php:35
-#: ../tables/list-promotable-posts.php:135
-msgid "Published"
-msgstr "公開日"
-
 #: ../tables/list-event.php:36
 msgid "Selling Limit"
 msgstr "販売期限"
 
-#: ../tables/list-event.php:38
-#: ../tables/list-ticket.php:40
-msgid "Actions"
-msgstr "アクション"
-
-#: ../tables/list-event.php:134
+#: ../tables/list-event.php:162
 #: ../tables/list-management.php:129
 #: ../tables/list-management.php:241
 #: ../tables/list-reward-history.php:174
@@ -4402,7 +4402,7 @@ msgstr "アクション"
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:189
+#: ../tables/list-event.php:217
 #: ../tables/list-history.php:241
 #: ../tables/list-management.php:277
 #: ../tables/list-promotable-posts.php:189
@@ -4468,9 +4468,9 @@ msgstr "終了日"
 msgid "No matching post is found."
 msgstr "該当する投稿は見つかりませんでした。"
 
-#: ../tables/list-promotable-posts.php:130
-msgid "Type"
-msgstr "種別"
+#: ../tables/list-promotable-posts.php:135
+msgid "Published"
+msgstr "公開日"
 
 #: ../tables/list-reward-history.php:30
 #: ../tables/list-reward-request.php:115
@@ -4501,6 +4501,10 @@ msgstr "支払日"
 #: ../tables/list-ticket.php:22
 msgid "No matching ticket is found."
 msgstr "該当するチケットは見つかりませんでした。"
+
+#: ../tables/list-ticket.php:40
+msgid "Actions"
+msgstr "アクション"
 
 #: ../tables/list-ticket.php:208
 msgid "All Tickets"
@@ -4579,6 +4583,9 @@ msgstr "表示しない"
 #: ../widgets/buynow.php:154
 msgid "Timer will be displayed if post is on sale."
 msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
+
+#~ msgid "Event Type"
+#~ msgstr "イベントタイプ"
 
 #~ msgid "Permission Error"
 #~ msgstr "アクセス権エラー"
