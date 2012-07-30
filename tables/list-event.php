@@ -118,10 +118,33 @@ EOS;
 				return '<a href="'.admin_url('post.php?post='.$item->ID.'&amp;action=edit').'">'.$item->post_title.'</a>';
 				break;
 			case 'published':
-				return ($item->start_date ? mysql2date(get_option('date_format'), $item->start_date) : '-');
+				if($item->start_date){
+					if(strtotime($item->start_date) < time()){
+						$style = ' style="color:darkgray;"';
+						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($item->start_date)));
+					}else{
+						$style = '';
+						$time = sprintf($lwp->_('%s later'), human_time_diff(strtotime($item->start_date)));
+					}
+					return  "<span{$style}>".mysql2date(get_option('date_format'), $item->start_date).'<br /><small>'.$time.'</small></span>';
+				}else{
+					return '-';
+				}
 				break;
 			case 'selling_limit':
-				return $item->limit_date ? mysql2date(get_option('date_format'), $item->limit_date) : '-';
+				if($item->limit_date){
+					$limit = $item->limit_date.' 23:59:59';
+					if(strtotime($limit) < time()){
+						$style = ' style="color:darkgray;"';
+						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($limit)));
+					}else{
+						$style = '';
+						$time = sprintf($lwp->_('%s later'), human_time_diff(strtotime($limit)));
+					}
+					return "<span{$style}>".mysql2date(get_option('date_format'), $limit)."<br /><small>".$time."</small></span>";
+				}else{
+					return '-';
+				}
 				break;
 			case 'participants':
 				$ticket_ids = $lwp->event->get_chicket_ids($item->ID);
@@ -144,15 +167,15 @@ EOS;
 					foreach($tickets as $ticket){
 						$stock = lwp_get_ticket_stock(true, $ticket);
 						$sold = lwp_get_ticket_sold($ticket);
-						if($stock){
+						if($stock > 0){
 							$ratio = intval(255 * ($sold / $stock));
 							$style = ' style="color:rgb('.$ratio.', 0, 0);"';
 						}else{
-							$style = '';
+							$style = ' style="color: darkgray; "';
 						}
-						$return .= <<<EOS
-							<li{$style}>{$ticket->post_title} ({$sold}/{$stock})</li>
-EOS;
+						//Apply filter
+						$list = apply_filters('lwp_event_list_ticket_info', "<li{$style}>{$ticket->post_title} ({$sold}/{$stock})</li>", $sold, $stock, $ticket, $item);
+						$return .= $list;
 					}
 					$return .= '</ol>';
 					return $return;
