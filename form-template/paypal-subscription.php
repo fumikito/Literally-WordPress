@@ -2,16 +2,16 @@
 <?php if(!$transaction): ?>
 	<p class="message notice"><?php printf($this->_("%s's subscription plans are below."), get_bloginfo('name')); ?></p>
 
-	<?php if(lwp_is_subscriber()): $subscription = $this->subscription->get_subscription_owned_by(); ?>
+	<?php if(lwp_is_subscriber()):  ?>
 		<p class="message success">
-			<?php printf($this->_('You have subscription plan \'%s\'.'), $subscription->post_title); ?>
-			<?php if($subscription->expires == '0000-00-00 00:00:00'): ?>
+			<?php printf($this->_('You have subscription plan \'%s\'.'), $owned_subscription->post_title); ?>
+			<?php if($owned_subscription->expires == '0000-00-00 00:00:00'): ?>
 				<?php $this->e('Your subscription is unlimited.'); ?>
 			<?php else: ?>
 				<?php printf(
 							$this->_('You got it at <strong>%s</strong> and it will be expired at <strong>%s</strong>.'),
-							mysql2date(get_option("date_format"), $subscription->updated),
-							mysql2date(get_option("date_format"), $subscription->expires)
+							mysql2date(get_option("date_format"), $owned_subscription->updated),
+							mysql2date(get_option("date_format"), $owned_subscription->expires)
 				); ?>
 			<?php endif; ?>
 		</p>
@@ -36,10 +36,10 @@
 						<?php if(!is_user_logged_in()): ?>
 							<?php echo $counter; ?>
 						<?php else: ?>
-							<?php if($this->subscription->is_subscriber() == get_the_ID()): ?>
-								<img src="<?php echo $this->url; ?>/assets/icon-check-on.png" width="32" heigth="32" alt="ON" />
+							<?php if($lwp->subscription->is_subscriber() == get_the_ID()): ?>
+								<img src="<?php echo $lwp->url; ?>/assets/icon-check-on.png" width="32" heigth="32" alt="ON" />
 							<?php else: ?>
-								<img src="<?php echo $this->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="OFF" />
+								<img src="<?php echo $lwp->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="OFF" />
 							<?php endif; ?>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -50,7 +50,7 @@
 					</label>
 				</td>
 				<td><?php echo get_post_meta(get_the_ID(), '_lwp_expires', true).' '; $this->e('Days');  ?></td>
-				<td><?php echo lwp_the_price()." (".$this->option['currency_code'].")"; ?></td>
+				<td><?php echo lwp_the_price()." (".$lwp->option['currency_code'].")"; ?></td>
 				<td><?php the_content(); ?></td>	
 			</tr>
 			<?php endwhile;wp_reset_query(); ?>

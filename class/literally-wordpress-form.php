@@ -75,6 +75,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				'orderby' => 'meta_value_num',
 				'order' => 'asc'
 			)),
+			'owned_subscription' => $lwp->subscription->is_subscriber() ? $lwp->subscription->get_subscription_owned_by() : array(),
 			'archive' => $lwp->subscription->get_subscription_post_type_page(),
 			'url' => $parent_url,
 			'total' => $is_subscription ? 4 : 0,
@@ -1029,6 +1030,7 @@ EOS;
 	 * @return void
 	 */
 	private function show_form($slug, $args = array()){
+		global $lwp;
 		$args['meta_title'] = $this->get_form_title($slug).' : '.get_bloginfo('name');
 		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);
