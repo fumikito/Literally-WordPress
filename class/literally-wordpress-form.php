@@ -102,10 +102,17 @@ class LWP_Form extends Literally_WordPress_Common{
 			$book = $this->get_random_post();
 			if($book){
 				//Find random post, show form
+				if($book->post_type == $lwp->event->post_type){
+					$item_name = get_the_title($book->post_parent).' '.$book->post_title;
+				}elseif($book->post_type == $lwp->subscription->post_type){
+					$item_name = $this->_('Subscription').' '.$book->post_title;
+				}else{
+					$item_name = $book->post_title;
+				}
 				$this->show_form('selection', array(
 					'post_id' => $book->ID,
 					'price' => lwp_price($book->ID),
-					'item' => $book->post_title,
+					'item' => $item_name,
 					'current' => 2,
 					'total' => 4
 				));
@@ -184,10 +191,17 @@ class LWP_Form extends Literally_WordPress_Common{
 			//If payment selection required or nonce isn't corret, show form.
 			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
+				if($book->post_type == $lwp->event->post_type){
+					$item_name = get_the_title($book->post_parent).' '.$book->post_title;
+				}elseif($book->post_type == $lwp->subscription->post_type){
+					$item_name = $this->_('Subscription').' '.$book->post_title;
+				}else{
+					$item_name = $book->post_title;
+				}
 				$this->show_form('selection', array(
 					'post_id' => $book_id,
 					'price' => lwp_price($book_id),
-					'item' => $book->post_title,
+					'item' => $item_name,
 					'current' => $current,
 					'total' => $total
 				));
@@ -278,6 +292,17 @@ EOS;
 		//If sandbox, just show form
 		if($is_sandbox){
 			$post = $this->get_random_post();
+			switch($post->post_type){
+				case $lwp->event->post_type:
+					$item_name = get_the_title($post->post_parent).' '.$post->post_title;
+					break;
+				case $lwp->subscription->post_type:
+					$item_name = $this->_('Subscription').' '.$post->post_title;
+					break;
+				default:
+					$item_name = $post->post_title;
+					break;
+			}
 			if($post){
 				//Post found, show form
 				$this->show_form("return", array(
@@ -291,7 +316,7 @@ EOS;
 						'FIRSTNAME' => 'User'
 					),
 					"transaction" => null,
-					"post" => $post,
+					"item_name" => $item_name,
 					'link' => get_permalink($post->ID),
 					'total' => 4,
 					'current' => 3
@@ -320,10 +345,21 @@ EOS;
 				}else{
 					$link = get_permalink($post->ID);
 				}
+				switch($post->post_type){
+					case $lwp->event->post_type:
+						$item_name = get_the_title($post->post_parent).' '.$post->post_title;
+						break;
+					case $lwp->subscription->post_type:
+						$item_name = $this->_('Subscription').' '.$post->post_title;
+						break;
+					default:
+						$item_name = $post->post_title;
+						break;
+				}
 				$this->show_form("return", array(
 					"info" => $info,
 					"transaction" => $transaction,
-					"post" => $post,
+					"item_name" => $item_name,
 					'link' => $link,
 					'total' => ($post->post_type == $lwp->subscription->post_type) ? 4 : 3,
 					'current' => ($post->post_type == $lwp->subscription->post_type) ? 3 : 2

@@ -34,7 +34,7 @@
 					<?php $this->e("Item"); ?>
 				</th>
 				<td>
-					<?php echo $post->post_title;?>
+					<?php echo $item_name;?>
 				</td>
 			</tr>
 			<tr>
