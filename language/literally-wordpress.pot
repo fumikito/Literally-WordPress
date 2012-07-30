@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-29 02:34+0900\n"
-"PO-Revision-Date: 2012-07-29 02:34+0900\n"
+"POT-Creation-Date: 2012-07-30 17:10+0900\n"
+"PO-Revision-Date: 2012-07-30 17:10+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
@@ -4311,7 +4311,7 @@ msgstr ""
 
 #: ../tables/list-campaign.php:201
 #: ../tables/list-devices.php:175
-#: ../tables/list-event.php:231
+#: ../tables/list-event.php:254
 #: ../tables/list-history.php:268
 #: ../tables/list-management.php:300
 #: ../tables/list-reward-history.php:200
@@ -4342,7 +4342,19 @@ msgstr ""
 msgid "Selling Limit"
 msgstr ""
 
-#: ../tables/list-event.php:162
+#: ../tables/list-event.php:124
+#: ../tables/list-event.php:139
+#, php-format
+msgid "%s before"
+msgstr ""
+
+#: ../tables/list-event.php:127
+#: ../tables/list-event.php:142
+#, php-format
+msgid "%s later"
+msgstr ""
+
+#: ../tables/list-event.php:185
 #: ../tables/list-management.php:129
 #: ../tables/list-management.php:241
 #: ../tables/list-reward-history.php:174
@@ -4350,7 +4362,7 @@ msgstr ""
 msgid "Detail"
 msgstr ""
 
-#: ../tables/list-event.php:217
+#: ../tables/list-event.php:240
 #: ../tables/list-history.php:241
 #: ../tables/list-management.php:277
 #: ../tables/list-promotable-posts.php:189
