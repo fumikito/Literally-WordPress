@@ -68,10 +68,26 @@ jQuery(document).ready(function($){
 					$('#ticket_post_content').val(result.post_content);
 					$('#ticket_price').val(result.price);
 					$('#ticket_stock').val(result.stock);
-					
 				}else{
 					alert(result.message);
 				}
+			});
+		},
+		addTicket: function(result){
+			tr = $('<tr id="ticket-' + result.post_id + '"></tr>').css('display', 'none');
+			tr.html(
+				'<th scope="row">' + result.post_title + '</th>' + 
+				'<td>' + result.post_content + '</td>' +
+				'<td>' + result.price + '</td>' +
+				'<td>' + result.stock + '</td>' +
+				'<td><a href="#" class="button ticket-edit">' + LWP.editButtonLabel + '</a></td>' + 
+				'<td><a href="' + LWP.endpoint + '" class="button ticket-delete">' + LWP.deleteButtonLabel + '</a></td>'
+			);
+			$('#ticket-list-table tbody').append(tr);
+			tr.fadeIn('normal', function(){
+				$(this).find('.ticket-edit').click(TicketForm.editTicket);
+				$(this).find('.ticket-delete').click(TicketForm.deleteTicket);
+				$(this).effect('highlight');
 			});
 		}
 	};
@@ -131,21 +147,7 @@ jQuery(document).ready(function($){
 					tr.find('td:eq(2)').text(result.stock);
 					tr.effect('highlight');
 				}else{
-					tr = $('<tr id="ticket-' + result.post_id + '"></tr>').css('display', 'none');
-					tr.html(
-						'<th scope="row">' + result.post_title + '</th>' + 
-						'<td>' + result.post_content + '</td>' +
-						'<td>' + result.price + '</td>' +
-						'<td>' + result.stock + '</td>' +
-						'<td><a href="#" class="button ticket-edit">' + LWP.editButtonLabel + '</a></td>' + 
-						'<td><a href="' + LWP.endpoint + '" class="button ticket-delete">' + LWP.deleteButtonLabel + '</a></td>'
-					);
-					$('#ticket-list-table tbody').append(tr);
-					tr.fadeIn('normal', function(){
-						$(this).find('.ticket-edit').click(TicketForm.editTicket);
-						$(this).find('.ticket-delete').click(TicketForm.deleteTicket);
-						$(this).effect('highlight');
-					});
+					TicketForm.addTicket(result);
 				}
 				TicketForm.clear();
 			}else{
@@ -157,4 +159,20 @@ jQuery(document).ready(function($){
 	$('.ticket-delete').click(TicketForm.deleteTicket);
 	//Ticket edit
 	$('.ticket-edit').click(TicketForm.editTicket);
+	//Add preset
+	$('#lwp-event-presets').click(function(e){
+		e.preventDefault();
+		var img = $(this).next('img').css('display', 'inline-block');		
+		$.get($(this).attr('href'), {}, function(result){
+			img.css('display', 'none');
+			if(result.success){
+				for(i = 0, l = result.tickets.length; i < l; i++){
+					TicketForm.addTicket(result.tickets[i]);
+				}
+				img.parents('p').remove();
+			}else{
+				alert(result.message);
+			}
+		});
+	});
 });

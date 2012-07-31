@@ -105,6 +105,7 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('wp_ajax_lwp_get_ticket', array($this, 'get_ticket'));
 			add_action('wp_ajax_lwp_contact_participants', array($this, 'contact_participants'));
 			add_action('wp_ajax_lwp_event_csv_output', array($this, 'output_csv'));
+			add_action('wp_ajax_lwp_ticket_presets', array($this, 'register_presets'));
 			if(!empty($this->_mail_body)){
 				add_action('lwp_update_transaction', array($this, 'send_email'));
 			}
@@ -366,6 +367,106 @@ EOS;
 	
 	public function is_refundable($ticket_id, $date){
 		
+	}
+	
+	/**
+	 * Returns ticket prisets.
+	 * @param string $post_type
+	 * @return array Default: empty array
+	 */
+	public function get_ticket_prisets($post_type){
+		return apply_filters('lwp_ticket_prisets', array(), $post_type);
+	}
+	
+	/**
+	 * Return if specified post has preset ticket
+	 * @global wpdb $wpdb
+	 * @param object $post
+	 * @return boolean
+	 */
+	public function presets_registered($post){
+		global $wpdb;
+		$presets = $this->get_ticket_prisets($post->post_type);
+		$has_presets = false;
+		if(!empty($presets)){
+			foreach($presets as $preset){
+				if($wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = %s AND post_parent = %d", $preset->post_title, $this->post_type, $post->ID))){
+					$has_presets = true;
+					break;
+				}
+			}
+		}
+		return $has_presets;
+	}
+	
+	/**
+	 * Ajax action to regsiter preset
+	 * @global wpdb $wpdb
+	 */
+	public function register_presets(){
+		global $wpdb;
+		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_ticket_presets')){
+			$success = false;
+			$message = '';
+			$tickets = array();
+			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
+			if(!$event || false === array_search($event->post_type, $this->post_types)){
+				$message = $this->_('This post is not event.');
+			}elseif(!user_can_edit_post(get_current_user_id(), $event->ID)){
+				$message = $this->_('You have no permission to edit this post.');
+			}elseif($this->presets_registered($event)){
+				$message = $this->_('Preset tickets are already registered.');
+			}else{
+				$presets = $this->get_ticket_prisets($event->post_type);
+				if(empty($presets) || !is_array($presets)){
+					$message = $this->_('This post type has no presets.');
+				}else{
+					//Start registering
+					$counter = 0;
+					foreach($presets as $preset){
+						$counter++;
+						$stock = 0;
+						$price = 0;
+						$preset = wp_parse_args($preset, array(
+							'post_title' => sprintf($this->_('Ticket %d'), $counter),
+							'post_content' => '-',
+							'post_status' => 'publish',
+							'post_author' => $event->post_author,
+							'post_parent' => $event->ID,
+							'post_type' => $this->post_type
+						));
+						if(isset($preset['price'])){
+							$price = (float)$preset['price'];
+							unset($preset['price']);
+						}
+						if(isset($preset['stock'])){
+							$stock = absint((string)$preset['stock']);
+							unset($preset['stock']);
+						}
+						$ticket = wp_insert_post($preset, true);
+						if(!is_wp_error($ticket)){
+							update_post_meta($ticket, 'lwp_price', $price);
+							update_post_meta($ticket, $this->meta_stock, $stock);
+							$tickets[] = array(
+								'post_id' => $ticket,
+								'post_title' => $preset['post_title'],
+								'post_content' => $preset['post_content'],
+								'price' => $price,
+								'stock' => $stock
+							);
+							$success = true;
+						}
+					}
+				}
+			}
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array(
+				'success' => $success,
+				'message' => $message,
+				'tickets' => $tickets
+			));
+		}
+		exit;
 	}
 	
 	/**

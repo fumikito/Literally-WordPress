@@ -128,6 +128,16 @@
 <h4><?php $this->e('Ticket form'); ?></h4>
 <input type="hidden" name="ticket_id" value="0" />
 <input type="hidden" name="ticket_parent_id" id="ticket_parent_id" value="<?php echo $post->ID; ?>" />
+<?php $presets = $this->get_ticket_prisets($post->post_type); if(!empty($presets) && !$this->presets_registered($post)): ?>
+	<p class="description">
+		<?php $this->e('This post type has presets: '); ?>
+		<?php foreach($presets as $presets): ?>
+			<code><?php echo isset($presets['post_title']) ? $presets['post_title'] : $this->_('No name'); ?></code>, 
+		<?php endforeach; ?>
+		<a class="button" href="<?php echo wp_nonce_url(admin_url('admin-ajax.php?action=lwp_ticket_presets&event_id='.$post->ID), 'lwp_ticket_presets'); ?>" id="lwp-event-presets"><?php $this->e('Add presets');  ?></a>
+		<img style="display:none; vertical-align: middle;" src="<?php echo $this->url ?>assets/indicator-postbox.gif" alt="Loading..." width="16" height="16" />
+	</p>
+<?php endif; ?>
 <table class="form-table" id="lwp-event-edit-form">
 	<tbody>
 		<tr>
