@@ -390,7 +390,7 @@ EOS;
 		$has_presets = false;
 		if(!empty($presets)){
 			foreach($presets as $preset){
-				if($wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = %s AND post_parent = %d", $preset->post_title, $this->post_type, $post->ID))){
+				if($wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = %s AND post_parent = %d", $preset['post_title'], $this->post_type, $post->ID))){
 					$has_presets = true;
 					break;
 				}
