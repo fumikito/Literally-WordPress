@@ -1061,6 +1061,8 @@ function lwp_is_cancelable($post = null){
 	return (boolean)$condition;
 }
 
+
+
 /**
  * Returnd current tickets cancel ratio
  * @global Literally_WordPress $lwp
@@ -1084,6 +1086,24 @@ function lwp_current_cancel_ratio($post = null){
 }
 
 /**
+ * Returns if event has cancel condition
+ * @global Literally_WordPress $lwp
+ * @global object $post
+ * @param object|int $post
+ * @return boolean
+ */
+function lwp_has_cancel_condition($post = null){
+	global $lwp;
+	if(is_null($post)){
+		global $post;
+	}else{
+		$post = get_post($post);
+	}
+	$conditions = get_post_meta($post->ID, $lwp->event->meta_cancel_limits, true);
+	return !empty($conditions);
+}
+
+/**
  * Display list of cancel condition 
  * @global Literally_WordPress $lwp
  * @param array|string $args
@@ -1094,18 +1114,26 @@ function lwp_list_cancel_condition($args = array()){
 		'callback' => '',
 		'post' => get_the_ID(),
 		'before' => '<ol class="lwp-event-cancel-conditions">',
-		'after' => '</ol>'
+		'after' => '</ol>',
+		'order' => 'desc'
 	));
 	$limit = get_post_meta($args['post'], $lwp->event->meta_selling_limit, true);
 	$conditions = get_post_meta($args['post'], $lwp->event->meta_cancel_limits, true);
+	if($args['order'] == 'asc'){
+		rsort($conditions);
+	}
+	$current = $lwp->event->get_current_cancel_condition($args['post']);
 	if(!empty($conditions)){
 		echo $args['before'];
+		$counter = 0;
 		foreach($conditions as $condition){
+			$is_current = (isset($current['days']) && $current['days'] == $condition['days']);
 			if(function_exists($args['callback'])){
-				call_user_func_array($args['callback'], array($limit, $condition['days'], $condition['ratio']));
+				call_user_func_array($args['callback'], array($limit, $condition['days'], $condition['ratio'], count($conditions), $counter, $is_current));
 			}else{
-				_lwp_show_condition($limit, $condition['days'], $condition['ratio']);
+				_lwp_show_condition($limit, $condition['days'], $condition['ratio'], count($conditions), $counter, $is_current);
 			}
+			$counter++;
 		}
 		echo $args['after'];
 	}
