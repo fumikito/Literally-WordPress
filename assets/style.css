@@ -212,3 +212,51 @@ input.short{
 .lwp-event-table-list li{
 	margin-bottom: 3px;
 }
+
+.lwp-author-msg{
+	margin :20px 0;
+	padding: 20px;
+	background: #d0d0d0 url('./bg-texture-gray.jpg') left top repeat;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	text-shadow: 1px 1px 2px #fff;
+}
+.lwp-author-msg h3{
+	margin-top: 0;
+	border-bottom: none;	
+}
+.lwp-author-msg .paypal-donate{
+	width: 300px;
+	padding: 20px;
+	background: #fff;
+	float: right;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	margin: 0 0 20px 20px;
+}
+
+.lwp-author-msg .avatar{
+	float: left;
+	margin:0 20px 20px 0;
+}
+.lwp-author-msg .bio{
+	font-size: 1.2em;
+}
+.lwp-author-msg .notice{
+	height: 16px;
+	line-height:16px;
+	clear:both; 
+	color: #888;
+}
+.lwp-author-msg  dt{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.lwp-author-msg  dd{
+	margin: 5px 0 10px;
+	font-size: 1.1em;
+	padding-left: 5px;
+	border-left: 3px solid #aaa;
+}

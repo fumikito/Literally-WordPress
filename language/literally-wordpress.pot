@@ -2,17 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-31 20:18+0900\n"
-"PO-Revision-Date: 2012-07-31 20:18+0900\n"
+"POT-Creation-Date: 2012-08-12 23:46+0900\n"
+"PO-Revision-Date: 2012-08-12 23:46+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;e\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
@@ -40,8 +39,8 @@ msgstr ""
 msgid "File Name"
 msgstr ""
 
-#: ../functions.php:484
-#: ../admin/upload.php:163
+#: ../functions.php:484 ../admin/upload.php:163
+#: ../form-template/edit-detail-event.php:103
 msgid "Description"
 msgstr ""
 
@@ -49,7 +48,7 @@ msgstr ""
 msgid "Available with"
 msgstr ""
 
-#: ../functions.php:486
+#: ../functions.php:486 ../help/customize.php:106
 msgid "Download"
 msgstr ""
 
@@ -57,8 +56,7 @@ msgstr ""
 msgid "download"
 msgstr ""
 
-#: ../functions.php:495
-#: ../admin/form-check.php:36
+#: ../functions.php:495 ../admin/form-check.php:36 ../help/customize.php:122
 msgid "Unavailable"
 msgstr ""
 
@@ -81,9 +79,8 @@ msgstr ""
 msgid "Devices Available With"
 msgstr ""
 
-#: ../functions.php:530
-#: ../admin/devices.php:15
-#: ../admin/devices.php:72
+#: ../functions.php:530 ../admin/devices.php:15 ../admin/devices.php:72
+#: ../tables/list-devices.php:90
 msgid "Device Name"
 msgstr ""
 
@@ -99,8 +96,7 @@ msgstr ""
 msgid "Unconfirmed"
 msgstr ""
 
-#: ../functions.php:644
-#: ../functions.php:649
+#: ../functions.php:644 ../functions.php:649 ../widgets/buynow.php:111
 msgid "Buy Now"
 msgstr ""
 
@@ -150,13 +146,15 @@ msgstr ""
 msgid "On SALE till %s"
 msgstr ""
 
-#: ../functions.php:1535
+#: ../functions.php:1563
 msgid "Check Token"
 msgstr ""
 
 #: ../literally-wordpress.php:57
 #, php-format
-msgid "Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s."
+msgid ""
+"Literally WordPress is activated but is not available. This plugin needs PHP "
+"version 5<. Your PHP version is %1$s."
 msgstr ""
 
 #: ../literally-wordpress.php:58
@@ -164,15 +162,15 @@ msgid " Furthermore, this plugin needs cURL module."
 msgstr ""
 
 #: ../literally-wordpress.php:59
-msgid " Please contact to your server administrator to change server configuration."
+msgid ""
+" Please contact to your server administrator to change server configuration."
 msgstr ""
 
 #: ../admin/campaign.php:2
 msgid "Campaign"
 msgstr ""
 
-#: ../admin/campaign.php:18
-#: ../admin/campaign.php:100
+#: ../admin/campaign.php:18 ../admin/campaign.php:100
 msgid "Campaign Item"
 msgstr ""
 
@@ -180,8 +178,7 @@ msgstr ""
 msgid "Item cant't be changed later."
 msgstr ""
 
-#: ../admin/campaign.php:29
-#: ../admin/campaign.php:116
+#: ../admin/campaign.php:29 ../admin/campaign.php:116
 msgid "Campaign Price"
 msgstr ""
 
@@ -190,30 +187,24 @@ msgstr ""
 msgid "Original price is %s"
 msgstr ""
 
-#: ../admin/campaign.php:40
-#: ../admin/campaign.php:125
+#: ../admin/campaign.php:40 ../admin/campaign.php:125
 msgid "Start Date"
 msgstr ""
 
-#: ../admin/campaign.php:45
-#: ../admin/campaign.php:56
-#: ../admin/campaign.php:128
+#: ../admin/campaign.php:45 ../admin/campaign.php:56 ../admin/campaign.php:128
 #: ../admin/campaign.php:137
 #, php-format
 msgid "Format must be %s."
 msgstr ""
 
-#: ../admin/campaign.php:51
-#: ../admin/campaign.php:134
+#: ../admin/campaign.php:51 ../admin/campaign.php:134
 msgid "End Date"
 msgstr ""
 
-#: ../admin/campaign.php:61
-#: ../admin/devices.php:32
-#: ../admin/personal-reward.php:107
-#: ../admin/setting.php:531
-#: ../admin/upload.php:183
-#: ../admin/upload.php:205
+#: ../admin/campaign.php:61 ../admin/devices.php:32
+#: ../admin/personal-reward.php:107 ../admin/setting.php:531
+#: ../admin/upload.php:183 ../admin/upload.php:205
+#: ../form-template/paypal-event-tickets-consume.php:41
 msgid "Update"
 msgstr ""
 
@@ -222,7 +213,10 @@ msgid "Return to campaign page"
 msgstr ""
 
 #: ../admin/campaign.php:83
-msgid "You can edit the campain detail by clicking item link.<br />But You can't change the price of temporary active campain.<br /><strong>In that case, you have to stop campaign and recreate another campaing.</strong>"
+msgid ""
+"You can edit the campain detail by clicking item link.<br />But You can't "
+"change the price of temporary active campain.<br /><strong>In that case, you "
+"have to stop campaign and recreate another campaing.</strong>"
 msgstr ""
 
 #: ../admin/campaign.php:95
@@ -245,18 +239,16 @@ msgstr ""
 msgid "Add new campaing"
 msgstr ""
 
-#: ../admin/devices.php:5
-#: ../admin/upload.php:148
-#: ../admin/upload.php:156
+#: ../admin/devices.php:5 ../admin/upload.php:148 ../admin/upload.php:156
 msgid "Devices"
 msgstr ""
 
-#: ../admin/devices.php:21
-#: ../admin/devices.php:81
+#: ../admin/devices.php:21 ../admin/devices.php:81
+#: ../tables/list-devices.php:91
 msgid "Slug"
 msgstr ""
 
-#: ../admin/devices.php:27
+#: ../admin/devices.php:27 ../tables/list-devices.php:92
 msgid "Assigned"
 msgstr ""
 
@@ -265,11 +257,12 @@ msgid "Return to list"
 msgstr ""
 
 #: ../admin/devices.php:55
-msgid "You can delete device, but you still have to delete files on each post-editting page"
+msgid ""
+"You can delete device, but you still have to delete files on each post-"
+"editting page"
 msgstr ""
 
-#: ../admin/devices.php:67
-#: ../admin/devices.php:90
+#: ../admin/devices.php:67 ../admin/devices.php:90
 msgid "Add new device"
 msgstr ""
 
@@ -278,65 +271,148 @@ msgid "Name of device to display."
 msgstr ""
 
 #: ../admin/devices.php:84
-msgid "Slug is alphabetical short name for device. It will help for displaying icon.<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"
+msgid ""
+"Slug is alphabetical short name for device. It will help for displaying icon."
+"<br />ex. &lt;img src=\"DEVICE-SLUG.png\" /&gt;"
 msgstr ""
 
-#: ../admin/donate.php:3
-msgid "Donate"
-msgstr ""
-
-#: ../admin/donate.php:5
-#, php-format
-msgid "This plugin was made by <a href=\"http://takahashifumiki.com\" target=\"_blank\">%1$s</a> of <a href=\"http://hametuha.co.jp\" target=\"_blank\">%2$s</a>. If you like this plugin, please vote <a href=\"http://wordpress.org/extend/plugins/literally-wordpress/\" target=\"_blank\">Here</a> or donate."
-msgstr ""
-
-#: ../admin/donate.php:5
-#: ../admin/donate.php:7
-msgid "Takahashi Fumiki"
-msgstr ""
-
-#: ../admin/donate.php:5
-msgid "Hametuha inc."
-msgstr ""
-
-#: ../admin/donate.php:6
-#, php-format
-msgid "If you have request or find bugs, please contact me at <a href=\"%1$s\" target=\"_blank\">plugin support page</a> or my <a href=\"%2$s\" target=\"_blank\">twitter account</a>."
-msgstr ""
-
-#: ../admin/donate.php:16
+#: ../admin/donate.php:10
 msgid "Donation Ammount"
 msgstr ""
 
-#: ../admin/donate.php:21
+#: ../admin/donate.php:15
 msgid "Drink beer."
 msgstr ""
 
-#: ../admin/donate.php:22
+#: ../admin/donate.php:16
 msgid "Take a lunch."
 msgstr ""
 
-#: ../admin/donate.php:23
+#: ../admin/donate.php:17
 msgid "Go to some nice bar."
 msgstr ""
 
-#: ../admin/donate.php:24
+#: ../admin/donate.php:18
 msgid "Have a good party."
 msgstr ""
 
-#: ../admin/donate.php:25
+#: ../admin/donate.php:19
 msgid "I am your father."
 msgstr ""
 
-#: ../admin/donate.php:31
+#: ../admin/donate.php:25
 msgid "Return to takahashifumiki.com"
 msgstr ""
 
-#: ../admin/donate.php:37
-msgid "\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to intermediate donation."
+#: ../admin/donate.php:31
+msgid ""
+"\"Buy Now\" button used beacause Japanese goverment dosen't allow paypal to "
+"intermediate donation."
 msgstr ""
 
-#: ../admin/event.php:4
+#: ../admin/donate.php:33
+msgid "Other ways to reward me"
+msgstr ""
+
+#: ../admin/donate.php:35
+msgid "Besides donation, you can reward me for this plugin."
+msgstr ""
+
+#: ../admin/donate.php:38
+#, php-format
+msgid "Buy my ebook on <a href=\"%s\">my site</a>."
+msgstr ""
+
+#: ../admin/donate.php:39
+#, php-format
+msgid ""
+"Place an order to my company <a href=\"%1$s\">%2$s</a>. %2$s is Web "
+"development company and very good at WordPress and PHP development."
+msgstr ""
+
+#: ../admin/donate.php:39
+msgid "Hametuha inc."
+msgstr ""
+
+#: ../admin/donate.php:44
+msgid "Donation & Promotion by Plugin author"
+msgstr ""
+
+#: ../admin/donate.php:47
+#, php-format
+msgid ""
+"I am <a href=\"http://takahashifumiki.com\" target=\"_blank\">%1$s</a>, the "
+"author of this plugin and a Japanese novelist."
+msgstr ""
+
+#: ../admin/donate.php:47
+msgid "Takahashi Fumiki"
+msgstr ""
+
+#: ../admin/donate.php:48
+msgid ""
+"I made LWP to sell my ebooks by myself. If you create something similar"
+"(music, video, picture and etc.), this plugin may help your your creative "
+"life."
+msgstr ""
+
+#: ../admin/donate.php:49
+#, php-format
+msgid ""
+"I developed many plugins. You can see the list on <a href=\"%s\">my "
+"WordPress profile page</a>."
+msgstr ""
+
+#: ../admin/donate.php:51
+msgid "How to feedback"
+msgstr ""
+
+#: ../admin/donate.php:53
+msgid ""
+"This plugin is developed individually. If you have some opinion, please "
+"don't hesitate to tell me that. There are meny ways to send feedback."
+msgstr ""
+
+#: ../admin/donate.php:56
+msgid "Rate on WordPress.org"
+msgstr ""
+
+#: ../admin/donate.php:57
+msgid ""
+"You can vote this plugin or create thread <a href=\"http://wordpress.org/"
+"extend/plugins/literally-wordpress/\" target=\"_blank\">HERE</a>."
+msgstr ""
+
+#: ../admin/donate.php:58
+msgid "Collaborate on Github"
+msgstr ""
+
+#: ../admin/donate.php:59
+#, php-format
+msgid ""
+"The source code is hosted on <a href=\"%s\">GitHub</a>. You can review all "
+"of it and make pull request."
+msgstr ""
+
+#: ../admin/donate.php:60
+msgid "Social feedback"
+msgstr ""
+
+#: ../admin/donate.php:61
+#, php-format
+msgid ""
+"Feel free to contact me with <a href=\"%1$s\" target=\"_blank\">Twitter</a>, "
+"<a href=\"%2$s\" target=\"_blank\">Facebook</a> or <a href=\"%3$s\" target="
+"\"_blank\">Google+</a>."
+msgstr ""
+
+#: ../admin/donate.php:69
+msgid ""
+"This message is displayed only for users who have editor capability. I don't "
+"care about your client because it's free :p"
+msgstr ""
+
+#: ../admin/event.php:4 ../class/literally-wordpress-core.php:537
 msgid "Event Management"
 msgstr ""
 
@@ -349,7 +425,7 @@ msgstr ""
 msgid "Event Summary"
 msgstr ""
 
-#: ../admin/event.php:25
+#: ../admin/event.php:25 ../form-template/edit-detail-event.php:6
 msgid "Event Period"
 msgstr ""
 
@@ -362,32 +438,52 @@ msgstr ""
 msgid "From: %1$s To: %2$s%3$s"
 msgstr ""
 
-#: ../admin/event.php:48
+#: ../admin/event.php:48 ../form-template/edit-detail-event.php:47
 msgid "Limit to sell"
 msgstr ""
 
-#: ../admin/event.php:58
+#: ../admin/event.php:58 ../form-template/edit-detail-event.php:55
 msgid "Limit to cancel"
 msgstr ""
 
-#: ../admin/event.php:68
+#: ../admin/event.php:68 ../class/literally-wordpress-event.php:818
+#: ../class/literally-wordpress-form.php:740
+#: ../form-template/edit-detail-event.php:144
+#: ../form-template/paypal-cancel-ticket.php:13
+#: ../form-template/paypal-event-tickets-consume.php:15
+#: ../tables/list-ticket.php:33
 msgid "Ticket Name"
 msgstr ""
 
-#: ../admin/event.php:69
+#: ../admin/event.php:69 ../class/literally-wordpress-core.php:1801
+#: ../class/literally-wordpress-event.php:819
+#: ../class/literally-wordpress-form.php:742
+#: ../class/literally-wordpress-subscription.php:196
+#: ../form-template/edit-detail-event.php:104
+#: ../form-template/edit-detail.php:11
+#: ../form-template/paypal-cancel-ticket.php:15
+#: ../form-template/paypal-event-tickets-consume.php:17
+#: ../form-template/reward-summary.php:124 ../tables/list-campaign.php:104
+#: ../tables/list-promotable-posts.php:132
+#: ../tables/list-reward-history.php:31 ../tables/list-reward-request.php:117
+#: ../tables/list-ticket.php:37 ../tables/list-transfers.php:157
 msgid "Price"
 msgstr ""
 
-#: ../admin/event.php:70
+#: ../admin/event.php:70 ../form-template/edit-detail-event.php:105
 msgid "Stock"
 msgstr ""
 
-#: ../admin/event.php:71
+#: ../admin/event.php:71 ../form-template/reward-summary.php:152
+#: ../tables/list-promotable-posts.php:136
 msgid "Sold"
 msgstr ""
 
-#: ../admin/event.php:72
-#: ../admin/management.php:72
+#: ../admin/event.php:72 ../admin/management.php:75
+#: ../class/literally-wordpress-event.php:821
+#: ../class/literally-wordpress-form.php:744
+#: ../form-template/paypal-event-tickets-consume.php:19
+#: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr ""
 
@@ -412,12 +508,11 @@ msgstr ""
 msgid "You can get participants list of <strong>%1$s</strong> in status below."
 msgstr ""
 
-#: ../admin/event.php:137
-#: ../admin/management.php:175
+#: ../admin/event.php:137 ../admin/management.php:178
 msgid "Get CSV"
 msgstr ""
 
-#: ../admin/form-check.php:4
+#: ../admin/form-check.php:4 ../class/literally-wordpress-core.php:540
 msgid "LWP Form Check"
 msgstr ""
 
@@ -437,13 +532,14 @@ msgstr ""
 msgid "Use Case"
 msgstr ""
 
-#: ../admin/form-check.php:21
-#: ../admin/form-check.php:38
+#: ../admin/form-check.php:21 ../admin/form-check.php:38
 msgid "View"
 msgstr ""
 
 #: ../admin/form-check.php:48
-msgid "This documentation tells you how to customize forms. Choose best way for your skill and knowledge."
+msgid ""
+"This documentation tells you how to customize forms. Choose best way for "
+"your skill and knowledge."
 msgstr ""
 
 #: ../admin/form-check.php:50
@@ -452,7 +548,12 @@ msgstr ""
 
 #: ../admin/form-check.php:52
 #, php-format
-msgid "You can change default CSS to your own. In default, LWP loads original CSS(%1$s) and all other css which your theme or other plugins load. Some conflicts might occur, or you may feel like it to suit to you own theme. To do so, just make css file named <strong>lwp-form.css</strong> and put it in your theme directory(%2$s)."
+msgid ""
+"You can change default CSS to your own. In default, LWP loads original CSS"
+"(%1$s) and all other css which your theme or other plugins load. Some "
+"conflicts might occur, or you may feel like it to suit to you own theme. To "
+"do so, just make css file named <strong>lwp-form.css</strong> and put it in "
+"your theme directory(%2$s)."
 msgstr ""
 
 #: ../admin/form-check.php:57
@@ -461,7 +562,9 @@ msgstr ""
 
 #: ../admin/form-check.php:59
 #, php-format
-msgid "LWP outputs string &quot;%1$s&quot; as form title. If you feel like change it to your original logo image, use filter hook."
+msgid ""
+"LWP outputs string &quot;%1$s&quot; as form title. If you feel like change "
+"it to your original logo image, use filter hook."
 msgstr ""
 
 #: ../admin/form-check.php:62
@@ -476,135 +579,173 @@ msgstr ""
 msgid "Don't forget to change logo in PayPal's landing page."
 msgstr ""
 
-#: ../admin/history.php:2
+#: ../admin/history.php:2 ../class/literally-wordpress-core.php:525
 msgid "Purchase History"
 msgstr ""
 
-#: ../admin/history.php:15
+#: ../admin/history.php:15 ../tables/list-reward-request.php:116
 msgid "Contact"
 msgstr ""
 
 #: ../admin/history.php:17
 #, php-format
-msgid "If purchased items were not displayed, please contact to Site administrator &lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
+msgid ""
+"If purchased items were not displayed, please contact to Site administrator "
+"&lt;<a href=\"mailto:%1$s\">%1$s</a>&gt;. We will reply ASAP."
 msgstr ""
 
 #: ../admin/management.php:7
-msgid "Transaction Management"
+msgid "Transaction Dashboard"
 msgstr ""
 
-#: ../admin/management.php:11
-#: ../admin/management.php:25
+#: ../admin/management.php:10
+msgid "List"
+msgstr ""
+
+#: ../admin/management.php:14
+#, php-format
+msgid "Detail No.%d"
+msgstr ""
+
+#: ../admin/management.php:28
 msgid "Transaction Detail"
 msgstr ""
 
-#: ../admin/management.php:29
+#: ../admin/management.php:32
 msgid "Heading"
 msgstr ""
 
-#: ../admin/management.php:30
+#: ../admin/management.php:33
 msgid "Value"
 msgstr ""
 
-#: ../admin/management.php:31
+#: ../admin/management.php:34 ../tables/list-devices.php:93
 msgid "Action"
 msgstr ""
 
-#: ../admin/management.php:36
+#: ../admin/management.php:39 ../class/literally-wordpress-core.php:1799
+#: ../tables/list-history.php:40 ../tables/list-management.php:121
+#: ../tables/list-transfers.php:156
 msgid "Item Name"
 msgstr ""
 
-#: ../admin/management.php:38
+#: ../admin/management.php:41 ../class/literally-wordpress-core.php:649
+#: ../form-template/edit-detail-event.php:118 ../tables/list-campaign.php:159
+#: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr ""
 
-#: ../admin/management.php:41
+#: ../admin/management.php:44 ../class/literally-wordpress-core.php:1805
+#: ../class/literally-wordpress-event.php:816
+#: ../tables/list-management.php:122 ../tables/list-ticket.php:34
+#: ../tables/list-transfers.php:155
 msgid "User Name"
 msgstr ""
 
-#: ../admin/management.php:44
+#: ../admin/management.php:47
 msgid "Profile"
 msgstr ""
 
-#: ../admin/management.php:46
+#: ../admin/management.php:49 ../class/literally-wordpress-core.php:1821
+#: ../class/literally-wordpress-event.php:831
+#: ../form-template/reward-summary.php:165 ../tables/list-management.php:206
+#: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
 msgid "Deleted User"
 msgstr ""
 
-#: ../admin/management.php:51
+#: ../admin/management.php:54 ../class/literally-wordpress-core.php:1807
+#: ../class/literally-wordpress-event.php:822
+#: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
+#: ../tables/list-ticket.php:35 ../tables/list-transfers.php:160
 msgid "Updated"
 msgstr ""
 
-#: ../admin/management.php:54
+#: ../admin/management.php:57 ../class/literally-wordpress-core.php:1806
+#: ../tables/list-history.php:45 ../tables/list-management.php:127
+#: ../tables/list-reward-history.php:34 ../tables/list-reward-request.php:118
+#: ../tables/list-transfers.php:159
 msgid "Registered"
 msgstr ""
 
-#: ../admin/management.php:59
+#: ../admin/management.php:62 ../tables/list-history.php:42
+#: ../tables/list-management.php:123
 msgid "Purchased Price"
 msgstr ""
 
-#: ../admin/management.php:62
+#: ../admin/management.php:65
 msgid "Original Price"
 msgstr ""
 
-#: ../admin/management.php:67
+#: ../admin/management.php:70 ../class/literally-wordpress-core.php:1800
+#: ../class/literally-wordpress-event.php:820
+#: ../class/literally-wordpress-form.php:743
+#: ../form-template/paypal-event-tickets-consume.php:18
+#: ../tables/list-history.php:41 ../tables/list-ticket.php:38
 msgid "Quantity"
 msgstr ""
 
-#: ../admin/management.php:77
+#: ../admin/management.php:80
 msgid "Purchase Method"
 msgstr ""
 
-#: ../admin/management.php:81
+#: ../admin/management.php:84
 #, php-format
 msgid "Transaction ID: %s"
 msgstr ""
 
-#: ../admin/management.php:87
+#: ../admin/management.php:90 ../class/literally-wordpress-core.php:1803
 msgid "Invoice Num"
 msgstr ""
 
-#: ../admin/management.php:92
-#: ../admin/personal-reward.php:118
+#: ../admin/management.php:95 ../admin/personal-reward.php:118
+#: ../class/literally-wordpress-core.php:626 ../tables/list-history.php:46
+#: ../tables/list-management.php:124 ../tables/list-reward-history.php:36
+#: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
+#: ../tables/list-transfers.php:161
 msgid "Status"
 msgstr ""
 
-#: ../admin/management.php:115
+#: ../admin/management.php:118
 msgid "Update Status"
 msgstr ""
 
-#: ../admin/management.php:118
+#: ../admin/management.php:121
 msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr ""
 
-#: ../admin/management.php:124
+#: ../admin/management.php:127
+#: ../class/literally-wordpress-subscription.php:200
+#: ../tables/list-history.php:44 ../tables/list-management.php:126
 msgid "Expires"
 msgstr ""
 
-#: ../admin/management.php:128
+#: ../admin/management.php:131
 msgid "No Limit."
 msgstr ""
 
-#: ../admin/management.php:130
+#: ../admin/management.php:133 ../class/literally-wordpress-notifier.php:190
+#: ../tables/list-history.php:162 ../tables/list-management.php:224
+#: ../tables/list-transfers.php:230
 msgid "Expired"
 msgstr ""
 
-#: ../admin/management.php:130
+#: ../admin/management.php:133
 msgid "Valid"
 msgstr ""
 
-#: ../admin/management.php:134
+#: ../admin/management.php:137
 msgid "Not valid."
 msgstr ""
 
-#: ../admin/management.php:144
+#: ../admin/management.php:147
 msgid "Update Expiration"
 msgstr ""
 
-#: ../admin/management.php:155
+#: ../admin/management.php:158
 msgid "Return to transaction list"
 msgstr ""
 
-#: ../admin/management.php:174
+#: ../admin/management.php:177
 msgid "You can get transaction list in status below."
 msgstr ""
 
@@ -616,15 +757,12 @@ msgstr ""
 msgid "Get link"
 msgstr ""
 
-#: ../admin/personal-reward.php:12
-#: ../admin/reward.php:7
+#: ../admin/personal-reward.php:12 ../admin/reward.php:7
 msgid "History"
 msgstr ""
 
-#: ../admin/personal-reward.php:15
-#: ../admin/personal-reward.php:150
-#: ../admin/personal-reward.php:156
-#: ../admin/reward.php:10
+#: ../admin/personal-reward.php:15 ../admin/personal-reward.php:150
+#: ../admin/personal-reward.php:156 ../admin/reward.php:10
 msgid "Request"
 msgstr ""
 
@@ -708,23 +846,25 @@ msgstr ""
 msgid "LWP Required Setting"
 msgstr ""
 
-#: ../admin/setting.php:4
-#: ../admin/setting.php:262
+#: ../admin/setting.php:4 ../admin/setting.php:262
 msgid "Transfer Setting"
 msgstr ""
 
-#: ../admin/setting.php:5
-#: ../admin/setting.php:304
+#: ../admin/setting.php:5 ../admin/setting.php:304
+#: ../class/literally-wordpress-form.php:109
+#: ../class/literally-wordpress-form.php:198
+#: ../class/literally-wordpress-form.php:301
+#: ../class/literally-wordpress-form.php:354
+#: ../class/literally-wordpress-subscription.php:81
+#: ../tables/list-history.php:141
 msgid "Subscription"
 msgstr ""
 
-#: ../admin/setting.php:6
-#: ../admin/setting.php:347
+#: ../admin/setting.php:6 ../admin/setting.php:347
 msgid "Reward Setting"
 msgstr ""
 
-#: ../admin/setting.php:7
-#: ../admin/setting.php:480
+#: ../admin/setting.php:7 ../admin/setting.php:480
 msgid "Event Participation"
 msgstr ""
 
@@ -732,7 +872,7 @@ msgstr ""
 msgid "PayPal Settings"
 msgstr ""
 
-#: ../admin/setting.php:19
+#: ../admin/setting.php:19 ../help/account.php:44
 msgid "Use Sandbox"
 msgstr ""
 
@@ -741,22 +881,16 @@ msgid "This is a develop enviorment."
 msgstr ""
 
 #: ../admin/setting.php:27
-msgid "Sandbox means develop enviorment. You can test your settings by checking above."
+msgid ""
+"Sandbox means develop enviorment. You can test your settings by checking "
+"above."
 msgstr ""
 
-#: ../admin/setting.php:27
-#: ../admin/setting.php:62
-#: ../admin/setting.php:73
-#: ../admin/setting.php:84
-#: ../admin/setting.php:95
-#: ../admin/setting.php:112
-#: ../admin/setting.php:141
-#: ../admin/setting.php:168
-#: ../admin/setting.php:194
-#: ../admin/setting.php:211
-#: ../admin/setting.php:230
-#: ../admin/setting.php:253
-#: ../admin/setting.php:275
+#: ../admin/setting.php:27 ../admin/setting.php:62 ../admin/setting.php:73
+#: ../admin/setting.php:84 ../admin/setting.php:95 ../admin/setting.php:112
+#: ../admin/setting.php:141 ../admin/setting.php:168 ../admin/setting.php:194
+#: ../admin/setting.php:211 ../admin/setting.php:230 ../admin/setting.php:253
+#: ../admin/setting.php:275 ../class/literally-wordpress-form.php:1301
 msgid "More &gt;"
 msgstr ""
 
@@ -805,23 +939,25 @@ msgstr ""
 msgid "This Token might be incorrect. See %s and get correct PDT Token."
 msgstr ""
 
-#: ../admin/setting.php:99
-#: ../admin/setting.php:145
-#: ../admin/setting.php:150
+#: ../admin/setting.php:99 ../admin/setting.php:145 ../admin/setting.php:150
 #: ../admin/setting.php:545
 msgid "Help"
 msgstr ""
 
-#: ../admin/setting.php:106
+#: ../admin/setting.php:106 ../help/account.php:61
 msgid "Product slug"
 msgstr ""
 
 #: ../admin/setting.php:111
-msgid "Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account."
+msgid ""
+"Slug for product ID displayed on PayPal Account Panel. It is usefull if you "
+"have multiple business on singular account."
 msgstr ""
 
 #: ../admin/setting.php:113
-msgid "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID follow this slug. <small>ex: example-100</small>"
+msgid ""
+"Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID "
+"follow this slug. <small>ex: example-100</small>"
 msgstr ""
 
 #: ../admin/setting.php:119
@@ -841,17 +977,22 @@ msgid "Directory for File protection"
 msgstr ""
 
 #: ../admin/setting.php:140
-msgid "Directory to save files. This should be writable and innaccessible via HTTP."
+msgid ""
+"Directory to save files. This should be writable and innaccessible via HTTP."
 msgstr ""
 
 #: ../admin/setting.php:145
 #, php-format
-msgid "Directory isn't writable. You can't upload files. See %s and set appropriate permission."
+msgid ""
+"Directory isn't writable. You can't upload files. See %s and set appropriate "
+"permission."
 msgstr ""
 
 #: ../admin/setting.php:150
 #, php-format
-msgid "Directory is accessible via HTTP. See %s and prepend others from direct access."
+msgid ""
+"Directory is accessible via HTTP. See %s and prepend others from direct "
+"access."
 msgstr ""
 
 #: ../admin/setting.php:157
@@ -859,7 +1000,9 @@ msgid "Purchase History Page"
 msgstr ""
 
 #: ../admin/setting.php:167
-msgid "You can specify a public page as Purchase History page. If you leave it blank, Purchase History Page will be displayed on admin panel."
+msgid ""
+"You can specify a public page as Purchase History page. If you leave it "
+"blank, Purchase History Page will be displayed on admin panel."
 msgstr ""
 
 #: ../admin/setting.php:174
@@ -891,7 +1034,9 @@ msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
 msgstr ""
 
 #: ../admin/setting.php:193
-msgid "If you need detailed settings, please leave it blank and make custom post by yourself. 3rd party plugins will help you."
+msgid ""
+"If you need detailed settings, please leave it blank and make custom post by "
+"yourself. 3rd party plugins will help you."
 msgstr ""
 
 #: ../admin/setting.php:200
@@ -899,7 +1044,8 @@ msgid "Payable Post Types"
 msgstr ""
 
 #: ../admin/setting.php:210
-msgid "You can manually make any post type payable. See detail at how to customize."
+msgid ""
+"You can manually make any post type payable. See detail at how to customize."
 msgstr ""
 
 #: ../admin/setting.php:217
@@ -915,7 +1061,10 @@ msgid "Manually display form"
 msgstr ""
 
 #: ../admin/setting.php:229
-msgid "If you choice automatic display, form will be displayed at bottom of the post content. You can manually put the form parts with short codes or template tags."
+msgid ""
+"If you choice automatic display, form will be displayed at bottom of the "
+"post content. You can manually put the form parts with short codes or "
+"template tags."
 msgstr ""
 
 #: ../admin/setting.php:236
@@ -935,29 +1084,34 @@ msgid "Load no Assets"
 msgstr ""
 
 #: ../admin/setting.php:252
-msgid "This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is used for displaying count down timer for campaign."
+msgid ""
+"This plugin load CSS and JS to erabolate &quot;Buy now&quot; button. JS is "
+"used for displaying count down timer for campaign."
 msgstr ""
 
 #: ../admin/setting.php:267
 msgid "Accept Transfer"
 msgstr ""
 
-#: ../admin/setting.php:270
-#: ../admin/setting.php:312
+#: ../admin/setting.php:270 ../admin/setting.php:312
 msgid "Disallow"
 msgstr ""
 
-#: ../admin/setting.php:271
-#: ../admin/setting.php:313
+#: ../admin/setting.php:271 ../admin/setting.php:313
 msgid "Allow"
 msgstr ""
 
 #: ../admin/setting.php:273
-msgid "If you accept transfer, users can pay with bank account or something that is not digital transaction."
+msgid ""
+"If you accept transfer, users can pay with bank account or something that is "
+"not digital transaction."
 msgstr ""
 
 #: ../admin/setting.php:274
-msgid "This helps users, but transactional process has a little bit more complex, because you have to check actual bank account to know whether bank deposit transfer has been made."
+msgid ""
+"This helps users, but transactional process has a little bit more complex, "
+"because you have to check actual bank account to know whether bank deposit "
+"transfer has been made."
 msgstr ""
 
 #: ../admin/setting.php:280
@@ -975,7 +1129,10 @@ msgid "Transaction expires by %s days"
 msgstr ""
 
 #: ../admin/setting.php:295
-msgid "If you don't want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past."
+msgid ""
+"If you don't want to send reminder, set notification frequency to 0. "
+"Transfer transaction will be expired after notification limit days will have "
+"been past."
 msgstr ""
 
 #: ../admin/setting.php:309
@@ -1004,7 +1161,11 @@ msgstr ""
 
 #: ../admin/setting.php:338
 #, php-format
-msgid "If you choose More Tag or Nextpage Tag, non subscriber can see the content before it and the invitation message after it. If you choose all, non subscriber saw only the invitation message. You can customize the invitation message at <a href=\"%s\">Subscription</a>."
+msgid ""
+"If you choose More Tag or Nextpage Tag, non subscriber can see the content "
+"before it and the invitation message after it. If you choose all, non "
+"subscriber saw only the invitation message. You can customize the invitation "
+"message at <a href=\"%s\">Subscription</a>."
 msgstr ""
 
 #: ../admin/setting.php:347
@@ -1019,20 +1180,18 @@ msgstr ""
 msgid "Reward for promoter"
 msgstr ""
 
-#: ../admin/setting.php:356
-#: ../admin/setting.php:384
-#: ../admin/setting.php:467
+#: ../admin/setting.php:356 ../admin/setting.php:384 ../admin/setting.php:467
 msgid "Disable"
 msgstr ""
 
-#: ../admin/setting.php:357
-#: ../admin/setting.php:385
-#: ../admin/setting.php:468
+#: ../admin/setting.php:357 ../admin/setting.php:385 ../admin/setting.php:468
 msgid "Enable"
 msgstr ""
 
 #: ../admin/setting.php:359
-msgid "If you wish to reward for your user who promote your product, enable this. Your users can promote your product and can manage there sales statistic."
+msgid ""
+"If you wish to reward for your user who promote your product, enable this. "
+"Your users can promote your product and can manage there sales statistic."
 msgstr ""
 
 #: ../admin/setting.php:364
@@ -1040,7 +1199,9 @@ msgid "Reward margin for promotion"
 msgstr ""
 
 #: ../admin/setting.php:368
-msgid "Specify back margin in percentage. This is global setting for promotion and you can override on each product individually."
+msgid ""
+"Specify back margin in percentage. This is global setting for promotion and "
+"you can override on each product individually."
 msgstr ""
 
 #: ../admin/setting.php:373
@@ -1048,7 +1209,9 @@ msgid "Maximum promotion margin"
 msgstr ""
 
 #: ../admin/setting.php:377
-msgid "You can override margin per posts and users. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."
+msgid ""
+"You can override margin per posts and users. In some case, margin exceeds "
+"100%. You can set limit to avoid paying unexpected amount of reward."
 msgstr ""
 
 #: ../admin/setting.php:382
@@ -1056,7 +1219,9 @@ msgid "Reward for author"
 msgstr ""
 
 #: ../admin/setting.php:387
-msgid "If you wish to reward for your authors, enable this. Your authors can see how much they sold their contents on sales report dashboard."
+msgid ""
+"If you wish to reward for your authors, enable this. Your authors can see "
+"how much they sold their contents on sales report dashboard."
 msgstr ""
 
 #: ../admin/setting.php:392
@@ -1064,7 +1229,9 @@ msgid "Reward margin for author"
 msgstr ""
 
 #: ../admin/setting.php:396
-msgid "Specify back margin in percentage. This is global setting for author and you can override on each author individually."
+msgid ""
+"Specify back margin in percentage. This is global setting for author and you "
+"can override on each author individually."
 msgstr ""
 
 #: ../admin/setting.php:401
@@ -1072,7 +1239,9 @@ msgid "Maximum author margin"
 msgstr ""
 
 #: ../admin/setting.php:405
-msgid "You can override margin per authors. In some case, margin exceeds 100%. You can set limit to avoid paying unexpected amount of reward."
+msgid ""
+"You can override margin per authors. In some case, margin exceeds 100%. You "
+"can set limit to avoid paying unexpected amount of reward."
 msgstr ""
 
 #: ../admin/setting.php:410
@@ -1080,7 +1249,9 @@ msgid "Reward minimum amount"
 msgstr ""
 
 #: ../admin/setting.php:414
-msgid "Your partners can request payment for reward if reward amount is above this value."
+msgid ""
+"Your partners can request payment for reward if reward amount is above this "
+"value."
 msgstr ""
 
 #: ../admin/setting.php:419
@@ -1098,7 +1269,9 @@ msgstr ""
 
 #: ../admin/setting.php:433
 #, php-format
-msgid "If reward amount exceeds %1$d (%2$s), user can request payment once until %3$s on every month. Reward will be paid at %4$s on %5$s"
+msgid ""
+"If reward amount exceeds %1$d (%2$s), user can request payment once until "
+"%3$s on every month. Reward will be paid at %4$s on %5$s"
 msgstr ""
 
 #: ../admin/setting.php:443
@@ -1114,11 +1287,16 @@ msgid "Contact information for reward"
 msgstr ""
 
 #: ../admin/setting.php:458
-msgid "i.e. To get reward payed, you have to enter bank account. All information for transfer is required."
+msgid ""
+"i.e. To get reward payed, you have to enter bank account. All information "
+"for transfer is required."
 msgstr ""
 
 #: ../admin/setting.php:460
-msgid "If you need some additional information on payment besides WordPress Default(i.e. Bank account required), enter description. If it is not blank, This description will be displayed on payment request page."
+msgid ""
+"If you need some additional information on payment besides WordPress Default"
+"(i.e. Bank account required), enter description. If it is not blank, This "
+"description will be displayed on payment request page."
 msgstr ""
 
 #: ../admin/setting.php:465
@@ -1126,7 +1304,9 @@ msgid "Use Cache Engine"
 msgstr ""
 
 #: ../admin/setting.php:470
-msgid "If you use cache plugin or proxy cache(i.e. Nginx), enable this. LWP output js to help session tracking."
+msgid ""
+"If you use cache plugin or proxy cache(i.e. Nginx), enable this. LWP output "
+"js to help session tracking."
 msgstr ""
 
 #: ../admin/setting.php:485
@@ -1141,12 +1321,14 @@ msgstr ""
 msgid "Event Post Type"
 msgstr ""
 
-#: ../admin/setting.php:507
+#: ../admin/setting.php:507 ../form-template/paypal-event-contact.php:26
 msgid "Mail Body"
 msgstr ""
 
 #: ../admin/setting.php:511
-msgid "This mail will be sent when transaction completed. You can use place holders: "
+msgid ""
+"This mail will be sent when transaction completed. You can use place "
+"holders: "
 msgstr ""
 
 #: ../admin/setting.php:519
@@ -1157,7 +1339,8 @@ msgstr ""
 msgid "This text will be used for every mail to participants"
 msgstr ""
 
-#: ../admin/setting.php:534
+#: ../admin/setting.php:534 ../help/account.php:49 ../help/customize.php:152
+#: ../help/dir.php:41 ../help/transfer.php:33
 msgid "Notes"
 msgstr ""
 
@@ -1167,12 +1350,16 @@ msgstr ""
 
 #: ../admin/setting.php:538
 #, php-format
-msgid "If permalink is enabled, custom post type page will return %s and won't be displayed."
+msgid ""
+"If permalink is enabled, custom post type page will return %s and won't be "
+"displayed."
 msgstr ""
 
 #: ../admin/setting.php:539
 #, php-format
-msgid "Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes rewrite rule and you can get the proper display."
+msgid ""
+"Visit <a href=\"%1$s\">%2$s</a> and push &quot;%3$s&quot;. It flushes "
+"rewrite rule and you can get the proper display."
 msgstr ""
 
 #: ../admin/setting.php:542
@@ -1180,7 +1367,9 @@ msgid "Customize"
 msgstr ""
 
 #: ../admin/setting.php:544
-msgid "If you are a experienced developper, you can customize this plugin with template tags."
+msgid ""
+"If you are a experienced developper, you can customize this plugin with "
+"template tags."
 msgstr ""
 
 #: ../admin/setting.php:545
@@ -1193,7 +1382,8 @@ msgstr ""
 msgid "<a target=\"_blank\" href=\"%s\">Template Tags</a> are also available."
 msgstr ""
 
-#: ../admin/transfer.php:2
+#: ../admin/transfer.php:2 ../class/literally-wordpress-core.php:518
+#: ../help/transfer.php:22
 msgid "Transfer Management"
 msgstr ""
 
@@ -1241,7 +1431,8 @@ msgstr ""
 msgid "Please upload file"
 msgstr ""
 
-#: ../admin/upload.php:114
+#: ../admin/upload.php:114 ../form-template/reward-summary.php:63
+#: ../form-template/reward-summary.php:93
 msgid "Title"
 msgstr ""
 
@@ -1277,8 +1468,7 @@ msgstr ""
 msgid "Possible for registered user"
 msgstr ""
 
-#: ../admin/upload.php:138
-#: ../admin/upload.php:141
+#: ../admin/upload.php:138 ../admin/upload.php:141
 msgid "Possible for everyone"
 msgstr ""
 
@@ -1288,7 +1478,9 @@ msgstr ""
 
 #: ../admin/upload.php:141
 #, php-format
-msgid "If you want provide partial trial, <strong>make a partial file</strong> and specify it as &quot;%s&quot;"
+msgid ""
+"If you want provide partial trial, <strong>make a partial file</strong> and "
+"specify it as &quot;%s&quot;"
 msgstr ""
 
 #: ../admin/upload.php:155
@@ -1308,7 +1500,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: ../admin/upload.php:183
+#: ../admin/upload.php:183 ../form-template/edit-detail-event.php:76
 msgid "Add"
 msgstr ""
 
@@ -1320,7 +1512,10 @@ msgstr ""
 msgid "Registered files"
 msgstr ""
 
-#: ../admin/upload.php:200
+#: ../admin/upload.php:200 ../class/literally-wordpress-core.php:647
+#: ../form-template/edit-detail-event.php:64
+#: ../form-template/edit-detail-event.php:121 ../tables/list-campaign.php:126
+#: ../tables/list-devices.php:109
 msgid "Delete"
 msgstr ""
 
@@ -1348,7 +1543,7 @@ msgstr ""
 msgid "Non Subscriber"
 msgstr ""
 
-#: ../assets/js/tinymce-lang.php:17
+#: ../assets/js/tinymce-lang.php:17 ../help/customize.php:41
 msgid "Add Buy Now"
 msgstr ""
 
@@ -1437,7 +1632,10 @@ msgid "Directory isn't writable."
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:410
-msgid "Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating."
+msgid ""
+"Your contents directory is inside plugins folder. Strongly recommended to "
+"place it outside of plugin folder to prevent it from being deleted on "
+"updating."
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:417
@@ -1462,15 +1660,21 @@ msgstr ""
 
 #: ../class/literally-wordpress-core.php:463
 #, php-format
-msgid "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."
+msgid ""
+"User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
+"register."
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:485
 msgid "Literally WordPress successfully upgrades database."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:513
+#: ../class/literally-wordpress-core.php:513 ../help/transfer.php:16
 msgid "General Setting"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:515
+msgid "Transaction Management"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:521
@@ -1486,6 +1690,11 @@ msgid "Reward Management"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:532
+#: ../form-template/reward-summary.php:64
+#: ../form-template/reward-summary.php:94
+#: ../form-template/reward-summary.php:154
+#: ../tables/list-promotable-posts.php:134
+#: ../tables/list-reward-history.php:32
 msgid "Reward"
 msgstr ""
 
@@ -1502,6 +1711,7 @@ msgid "Reward Amount Summary"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:628
+#: ../form-template/reward-summary.php:49
 msgid "Fixed"
 msgstr ""
 
@@ -1517,7 +1727,7 @@ msgstr ""
 msgid "Daily Report"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:632
+#: ../class/literally-wordpress-core.php:632 ../tables/list-event.php:35
 msgid "Date"
 msgstr ""
 
@@ -1535,7 +1745,7 @@ msgstr ""
 msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:705
+#: ../class/literally-wordpress-core.php:705 ../help/index.php:12
 msgid "Literally WordPress Help"
 msgstr ""
 
@@ -1561,7 +1771,9 @@ msgid "Downloadble Contents"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:1047
-msgid "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"
+msgid ""
+"Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined "
+"in php.ini"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:1050
@@ -1670,7 +1882,9 @@ msgid "Failed to give a present."
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:1593
-msgid "You can't refund via PayPal because 60 days have past since the transaction occurred."
+msgid ""
+"You can't refund via PayPal because 60 days have past since the transaction "
+"occurred."
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:1598
@@ -1708,14 +1922,17 @@ msgid "Transaction Status"
 msgstr ""
 
 #: ../class/literally-wordpress-core.php:1999
-msgid "This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on."
+msgid ""
+"This plugin make your WordPress post payable. Registered users can buy your "
+"post via PayPal. You can provide several ways to reward their buying. Add "
+"rights to download private file, to accesss private post and so on."
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:119
 msgid "Ticket"
 msgstr ""
 
-#: ../class/literally-wordpress-event.php:120
+#: ../class/literally-wordpress-event.php:120 ../tables/list-event.php:38
 msgid "Tickets"
 msgstr ""
 
@@ -1787,6 +2004,7 @@ msgid "Event not found."
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:815
+#: ../form-template/paypal-event-user.php:15
 msgid "Code"
 msgstr ""
 
@@ -1925,16 +2143,20 @@ msgstr ""
 
 #: ../class/literally-wordpress-form.php:688
 #, php-format
-msgid "Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today"
+msgid ""
+"Sorry, but paypal redunding is available only for 60 days. You made "
+"transaction at %1$s and it is %2$s today"
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:701
 #, php-format
-msgid "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
+msgid ""
+"Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:741
 #: ../form-template/paypal-cancel-ticket.php:14
+#: ../form-template/paypal-event-tickets-consume.php:16
 msgid "Bought"
 msgstr ""
 
@@ -2006,6 +2228,7 @@ msgid "Mail body is empty"
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:954
+#: ../form-template/paypal-event-contact.php:42
 msgid "Send"
 msgstr ""
 
@@ -2102,11 +2325,14 @@ msgid "Display message when user cancels transaction."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1300
-msgid "Displays payment methods. You can skip this form if paypal is the only method available."
+msgid ""
+"Displays payment methods. You can skip this form if paypal is the only "
+"method available."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1304
-msgid "Displays form to confirm transaction when user retruns from paypal web site."
+msgid ""
+"Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1307
@@ -2128,18 +2354,22 @@ msgid "Displays message to tell user cancel is completed."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1316
-msgid "Displays list of tikcets owned by specified user. You can consume ticket with pulldown menu."
+msgid ""
+"Displays list of tikcets owned by specified user. You can consume ticket "
+"with pulldown menu."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1319
-msgid "Search tikcet owner from code which have been generared by this plugin. This code is related to particular event."
+msgid ""
+"Search tikcet owner from code which have been generared by this plugin. This "
+"code is related to particular event."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:1322
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
-#: ../class/literally-wordpress-notifier.php:82
+#: ../class/literally-wordpress-notifier.php:82 ../help/transfer.php:27
 msgid "Notification"
 msgstr ""
 
@@ -2259,28 +2489,37 @@ msgid "This text will be used on footer of every mail to your user."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:258
-msgid "This won't be displayed individually, but is used for other notifications."
+msgid ""
+"This won't be displayed individually, but is used for other notifications."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:261
-msgid "This messages is displayed on thank-you page on your site and thank-you mail sent on success of the transaction."
+msgid ""
+"This messages is displayed on thank-you page on your site and thank-you mail "
+"sent on success of the transaction."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:264
-msgid "This messages will be sent via email when you change transfer status to success on admin panel."
+msgid ""
+"This messages will be sent via email when you change transfer status to "
+"success on admin panel."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:268
 #, php-format
-msgid "This message is sent via email every %s days to users who do not transfer the deposit."
+msgid ""
+"This message is sent via email every %s days to users who do not transfer "
+"the deposit."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:270
-msgid "You set reminder frequency to 0, so you don't have to edit this message."
+msgid ""
+"You set reminder frequency to 0, so you don't have to edit this message."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:274
-msgid "This message will be sent when your customer miss the transaction time limit."
+msgid ""
+"This message will be sent when your customer miss the transaction time limit."
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:280
@@ -2309,7 +2548,9 @@ msgid "Caution"
 msgstr ""
 
 #: ../class/literally-wordpress-notifier.php:287
-msgid "Notification mail will be sent as plain text. <strong>DO NOT USE HTML</strong>."
+msgid ""
+"Notification mail will be sent as plain text. <strong>DO NOT USE HTML</"
+"strong>."
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:192
@@ -2329,12 +2570,16 @@ msgid "Promotion"
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:235
+#: ../tables/list-promotable-posts.php:133
+#: ../tables/list-reward-history.php:33
 msgid "Margin"
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:242
 #, php-format
-msgid "You can override this posts margin individually. Defalt is <strong>%d%%</strong>. If set as default, leave it blank."
+msgid ""
+"You can override this posts margin individually. Defalt is <strong>%d%%</"
+"strong>. If set as default, leave it blank."
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:268
@@ -2347,7 +2592,11 @@ msgstr ""
 
 #: ../class/literally-wordpress-reward.php:275
 #, php-format
-msgid "You can set personal coefficient for this user. Current promotional margin default is %1$d, so if you set %2$.1f, this user can get %3$d%%. If you want reward for royal user, this setting helps otherwise leave it blank. Maximum margin can be limited on <a href=\"%4$s\">Setting</a>"
+msgid ""
+"You can set personal coefficient for this user. Current promotional margin "
+"default is %1$d, so if you set %2$.1f, this user can get %3$d%%. If you want "
+"reward for royal user, this setting helps otherwise leave it blank. Maximum "
+"margin can be limited on <a href=\"%4$s\">Setting</a>"
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:281
@@ -2417,6 +2666,10 @@ msgstr "Success"
 
 #: ../class/literally-wordpress-statics.php:348
 #: ../form-template/paypal-cancel-ticket.php:44
+#: ../form-template/paypal-return.php:55
+#: ../form-template/paypal-selection.php:69
+#: ../form-template/paypal-subscription.php:65 ../tables/list-history.php:179
+#: ../tables/list-management.php:267
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2441,6 +2694,7 @@ msgid "SELL"
 msgstr "Sell"
 
 #: ../class/literally-wordpress-statics.php:450
+#: ../form-template/paypal-subscription.php:71
 msgid "Close"
 msgstr ""
 
@@ -2502,7 +2756,10 @@ msgid "Subscription Option"
 msgstr ""
 
 #: ../class/literally-wordpress-subscription.php:167
-msgid "This contents will be displayed when your user access to page for subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. <strong>YOU CAN CHANGE POST'S TITLE.</strong>"
+msgid ""
+"This contents will be displayed when your user access to page for "
+"subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. "
+"<strong>YOU CAN CHANGE POST'S TITLE.</strong>"
 msgstr ""
 
 #: ../class/literally-wordpress-subscription.php:168
@@ -2514,10 +2771,13 @@ msgid "Output link to subscription page. Extra attributes are title and class."
 msgstr ""
 
 #: ../class/literally-wordpress-subscription.php:180
-msgid "Output link to subscription price list. Extra attributes are title, class, popup, width and height."
+msgid ""
+"Output link to subscription price list. Extra attributes are title, class, "
+"popup, width and height."
 msgstr ""
 
 #: ../class/literally-wordpress-subscription.php:200
+#: ../form-template/paypal-subscription.php:52
 msgid "Days"
 msgstr ""
 
@@ -3353,7 +3613,7 @@ msgstr ""
 msgid "Ends at"
 msgstr ""
 
-#: ../form-template/edit-detail-event.php:20
+#: ../form-template/edit-detail-event.php:20 ../tables/list-event.php:37
 msgid "Participants"
 msgstr ""
 
@@ -3388,11 +3648,15 @@ msgid "User can cancel ticket %1$s days before selling limit. Refund is %2$s."
 msgstr ""
 
 #: ../form-template/edit-detail-event.php:79
-msgid "If you specify cancelable date, user can cancel transaction after payment."
+msgid ""
+"If you specify cancelable date, user can cancel transaction after payment."
 msgstr ""
 
 #: ../form-template/edit-detail-event.php:80
-msgid "You can specify percentage(ex. 50%), number(ex. 100). If you specified positive number, that amount will be refunded. Negative number specified, refund amount results paid price minus it."
+msgid ""
+"You can specify percentage(ex. 50%), number(ex. 100). If you specified "
+"positive number, that amount will be refunded. Negative number specified, "
+"refund amount results paid price minus it."
 msgstr ""
 
 #: ../form-template/edit-detail-event.php:81
@@ -3415,6 +3679,8 @@ msgid "Auto format"
 msgstr ""
 
 #: ../form-template/edit-detail-event.php:102
+#: ../form-template/reward-summary.php:151
+#: ../tables/list-promotable-posts.php:131
 msgid "Name"
 msgstr ""
 
@@ -3493,20 +3759,25 @@ msgid "You will be redirected to <strong>%s</strong>"
 msgstr ""
 
 #: ../form-template/paypal-cancel-ticket-success.php:7
+#: ../form-template/paypal-success.php:7
 #, php-format
 msgid "%s seconds left"
 msgstr ""
 
 #: ../form-template/paypal-cancel-ticket-success.php:10
+#: ../form-template/paypal-success.php:10
 msgid "return now"
 msgstr ""
 
 #: ../form-template/paypal-cancel-ticket.php:4
 #, php-format
-msgid "You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please select ticket below. You can cancel in this condition till %3$s"
+msgid ""
+"You are about to cancel %1$s <strong>&quot;%2$s&quot;</strong>. Please "
+"select ticket below. You can cancel in this condition till %3$s"
 msgstr ""
 
 #: ../form-template/paypal-cancel-ticket.php:16
+#: ../tables/list-management.php:269
 msgid "Refund"
 msgstr ""
 
@@ -3515,6 +3786,10 @@ msgid "Condition"
 msgstr ""
 
 #: ../form-template/paypal-cancel-ticket.php:48
+#: ../form-template/paypal-event-contact.php:46
+#: ../form-template/paypal-event-tickets-consume.php:45
+#: ../form-template/paypal-event-tickets.php:53
+#: ../form-template/paypal-event-user.php:25
 #, php-format
 msgid "Return to %s"
 msgstr ""
@@ -3524,12 +3799,19 @@ msgid "Transaction is canceled."
 msgstr ""
 
 #: ../form-template/paypal-cancel.php:5
+#: ../form-template/paypal-subscription.php:73
+#: ../form-template/paypal-subscription.php:75
+#: ../form-template/paypal-subscription.php:77
+#: ../form-template/paypal-transfer.php:12
 msgid "Return"
 msgstr ""
 
 #: ../form-template/paypal-event-contact.php:3
 #, php-format
-msgid "You are about to send email to %1$s participants of %2$s <strong>%3$s</strong>. Please be patient till sending process finishes even if number of participants is huge."
+msgid ""
+"You are about to send email to %1$s participants of %2$s <strong>%3$s</"
+"strong>. Please be patient till sending process finishes even if number of "
+"participants is huge."
 msgstr ""
 
 #: ../form-template/paypal-event-contact.php:12
@@ -3563,12 +3845,16 @@ msgstr ""
 
 #: ../form-template/paypal-event-tickets-consume.php:8
 #, php-format
-msgid "Below is the tickets %1$s&lt;%2$s&gt; bought for %3$s <strong>&quot;%4$s&quot;</strong>."
+msgid ""
+"Below is the tickets %1$s&lt;%2$s&gt; bought for %3$s <strong>&quot;"
+"%4$s&quot;</strong>."
 msgstr ""
 
 #: ../form-template/paypal-event-tickets.php:4
 #, php-format
-msgid "Below is the tickets you bought for %1$s <strong>&quot;%2$s&quot;</strong>. Print or bookmark this page and keep it accessible."
+msgid ""
+"Below is the tickets you bought for %1$s <strong>&quot;%2$s&quot;</strong>. "
+"Print or bookmark this page and keep it accessible."
 msgstr ""
 
 #: ../form-template/paypal-event-tickets.php:33
@@ -3608,7 +3894,7 @@ msgstr ""
 msgid "Your Name"
 msgstr ""
 
-#: ../form-template/paypal-return.php:34
+#: ../form-template/paypal-return.php:34 ../tables/list-campaign.php:101
 msgid "Item"
 msgstr ""
 
@@ -3622,7 +3908,9 @@ msgstr ""
 
 #: ../form-template/paypal-selection.php:4
 #, php-format
-msgid "You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please select payment method below."
+msgid ""
+"You are about to buy <strong>%1$s</strong> in <strong>%2$s</strong>. Please "
+"select payment method below."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:17
@@ -3640,7 +3928,10 @@ msgid "Note:"
 msgstr ""
 
 #: ../form-template/paypal-selection.php:24
-msgid "Clicking 'Next', You will be redirect to PayPal web site. Logging in PayPal, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
+msgid ""
+"Clicking 'Next', You will be redirect to PayPal web site. Logging in PayPal, "
+"you will be redirected to this site again. And then, by confirming payment "
+"on this site, your transaction will be complete."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:33
@@ -3648,24 +3939,32 @@ msgid "Credit Card"
 msgstr ""
 
 #: ../form-template/paypal-selection.php:37
-msgid "You can pay with various credit cards(VISA, Matercard, etc.) via PayPal."
+msgid ""
+"You can pay with various credit cards(VISA, Matercard, etc.) via PayPal."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:40
-msgid "Clicking 'Next', You will be redirect to PayPal web site. Entering CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete."
+msgid ""
+"Clicking 'Next', You will be redirect to PayPal web site. Entering CC "
+"number, you will be redirected to this site again. And then, by confirming "
+"payment on this site, your transaction will be complete."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:48
-#: ../form-template/paypal-selection.php:50
+#: ../form-template/paypal-selection.php:50 ../help/transfer.php:2
 msgid "Transfer"
 msgstr ""
 
 #: ../form-template/paypal-selection.php:54
-msgid "You can pay through specified bank account. The account will be displayed on next page."
+msgid ""
+"You can pay through specified bank account. The account will be displayed on "
+"next page."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:57
-msgid "Transaction will not have been complete, unless you will send deposit to the specified bank account. This means you can't get contents immediately."
+msgid ""
+"Transaction will not have been complete, unless you will send deposit to the "
+"specified bank account. This means you can't get contents immediately."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:65
@@ -3689,7 +3988,9 @@ msgstr ""
 
 #: ../form-template/paypal-subscription.php:12
 #, php-format
-msgid "You got it at <strong>%s</strong> and it will be expired at <strong>%s</strong>."
+msgid ""
+"You got it at <strong>%s</strong> and it will be expired at <strong>%s</"
+"strong>."
 msgstr ""
 
 #: ../form-template/paypal-subscription.php:19
@@ -3773,7 +4074,8 @@ msgstr ""
 
 #: ../help/account.php:5
 #, php-format
-msgid "First of all, PayPal account is required. Get it <a href=\"%s\">here</a>."
+msgid ""
+"First of all, PayPal account is required. Get it <a href=\"%s\">here</a>."
 msgstr ""
 
 #: ../help/account.php:6
@@ -3785,19 +4087,26 @@ msgid "Step1 Get API Account, Password, Signature"
 msgstr ""
 
 #: ../help/account.php:10
-msgid "This plugin uses ExpressCheckout API and it requires your user name and password."
+msgid ""
+"This plugin uses ExpressCheckout API and it requires your user name and "
+"password."
 msgstr ""
 
 #: ../help/account.php:11
-msgid "For security reason, PayPal offers API credentials consisted of username alias, password and API signature. You have to get it."
+msgid ""
+"For security reason, PayPal offers API credentials consisted of username "
+"alias, password and API signature. You have to get it."
 msgstr ""
 
 #: ../help/account.php:15
-msgid "Log in to PayPal, and go to Seller Preference &gt; Tools &gt; API access."
+msgid ""
+"Log in to PayPal, and go to Seller Preference &gt; Tools &gt; API access."
 msgstr ""
 
 #: ../help/account.php:16
-msgid "Selecting option 2 and you can get API signature, API user name and API password."
+msgid ""
+"Selecting option 2 and you can get API signature, API user name and API "
+"password."
 msgstr ""
 
 #: ../help/account.php:17
@@ -3810,7 +4119,9 @@ msgid "Step2 Get PDT Token"
 msgstr ""
 
 #: ../help/account.php:22
-msgid "Once you get API signatures, now you can get PDT token. It is required for this plugin's background process"
+msgid ""
+"Once you get API signatures, now you can get PDT token. It is required for "
+"this plugin's background process"
 msgstr ""
 
 #: ../help/account.php:26
@@ -3822,7 +4133,9 @@ msgid "Check the radio button &quot;Express return&quot; to ON."
 msgstr ""
 
 #: ../help/account.php:28
-msgid "Set return URL to your WordPress root. Generally it will be &quot;http://example.com&quot;."
+msgid ""
+"Set return URL to your WordPress root. Generally it will be &quot;http://"
+"example.com&quot;."
 msgstr ""
 
 #: ../help/account.php:29
@@ -3830,12 +4143,16 @@ msgid "Find section &quot;Payment Data Transfer&quot; and turn it ON."
 msgstr ""
 
 #: ../help/account.php:30
-msgid "Now you can save canges. Teh other settigs are optional, so you can set them as you like."
+msgid ""
+"Now you can save canges. Teh other settigs are optional, so you can set them "
+"as you like."
 msgstr ""
 
 #: ../help/account.php:31
 #, php-format
-msgid "After save settings, you can get Token on &quot;Payment Data Transfer&quot; section. Copy and past it at <a href=\"%s\">LWP Setting</a>."
+msgid ""
+"After save settings, you can get Token on &quot;Payment Data Transfer&quot; "
+"section. Copy and past it at <a href=\"%s\">LWP Setting</a>."
 msgstr ""
 
 #: ../help/account.php:34
@@ -3843,48 +4160,74 @@ msgid "Step3 Check on Sandbox"
 msgstr ""
 
 #: ../help/account.php:36
-msgid "Sandbox is development environment of PayPal. You can test if your settings are right with Sandbox."
+msgid ""
+"Sandbox is development environment of PayPal. You can test if your settings "
+"are right with Sandbox."
 msgstr ""
 
 #: ../help/account.php:37
-msgid "To enable Sandbox, you have to get another account at <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>."
+msgid ""
+"To enable Sandbox, you have to get another account at <a href=\"https://"
+"developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a>."
 msgstr ""
 
 #: ../help/account.php:38
-msgid "This process is little bit complicated, but payment transaction is very critical. It's worth to test with."
+msgid ""
+"This process is little bit complicated, but payment transaction is very "
+"critical. It's worth to test with."
 msgstr ""
 
 #: ../help/account.php:42
-msgid "Go to <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal Sandbox</a> and create account."
+msgid ""
+"Go to <a href=\"https://developer.paypal.com\" target=\"_blank\">PayPal "
+"Sandbox</a> and create account."
 msgstr ""
 
 #: ../help/account.php:43
-msgid "Log in to Sandbox and create 2 accounts. One for business account, another is customer account."
+msgid ""
+"Log in to Sandbox and create 2 accounts. One for business account, another "
+"is customer account."
 msgstr ""
 
 #: ../help/account.php:44
 #, php-format
-msgid "You can get account information of business account same as you get below. API user name, API password, API signature and PDT token. Set them on <a href=\"%1$s\">LWP Setting</a> and turn &quot;%2$s&quot; to ON."
+msgid ""
+"You can get account information of business account same as you get below. "
+"API user name, API password, API signature and PDT token. Set them on <a "
+"href=\"%1$s\">LWP Setting</a> and turn &quot;%2$s&quot; to ON."
 msgstr ""
 
 #: ../help/account.php:45
-msgid "Keeping loggin in Sandbox, try to buy any of your items. After pushing &quot;Buy Now&quot;, you will be redirected to PayPal Sandbox. Then enter the customer account information you've created below."
+msgid ""
+"Keeping loggin in Sandbox, try to buy any of your items. After pushing &quot;"
+"Buy Now&quot;, you will be redirected to PayPal Sandbox. Then enter the "
+"customer account information you've created below."
 msgstr ""
 
 #: ../help/account.php:46
-msgid "If everything is fine, you transaction will be completed. Check if you transaction is same as what you supposed."
+msgid ""
+"If everything is fine, you transaction will be completed. Check if you "
+"transaction is same as what you supposed."
 msgstr ""
 
 #: ../help/account.php:50
-msgid "Every transactional information will be treated same in database. If you want know proper transactional statistics, don't use same settings both Sandbox and Productional environment on single WrodPress."
+msgid ""
+"Every transactional information will be treated same in database. If you "
+"want know proper transactional statistics, don't use same settings both "
+"Sandbox and Productional environment on single WrodPress."
 msgstr ""
 
 #: ../help/account.php:51
-msgid "Generally, you should make WordPress for development(ex. http//d.example.com) and test it with Sandbox."
+msgid ""
+"Generally, you should make WordPress for development(ex. http//d.example."
+"com) and test it with Sandbox."
 msgstr ""
 
 #: ../help/account.php:52
-msgid "If everything is fine, try it on productional WordPress(ex. http://example.ecom). These are typical process for creating transacional Web site. Don't drive highway without enough excercise."
+msgid ""
+"If everything is fine, try it on productional WordPress(ex. http://example."
+"ecom). These are typical process for creating transacional Web site. Don't "
+"drive highway without enough excercise."
 msgstr ""
 
 #: ../help/account.php:54
@@ -3892,23 +4235,35 @@ msgid "About Micropayments"
 msgstr ""
 
 #: ../help/account.php:56
-msgid "<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank\">Micropayments</a> is PayPal's pricing for small amount. If you sell your items by small amount, consider to signup to Micropayments."
+msgid ""
+"<a href=\"https://micropayments.paypal-labs.com/\" target=\"_blank"
+"\">Micropayments</a> is PayPal's pricing for small amount. If you sell your "
+"items by small amount, consider to signup to Micropayments."
 msgstr ""
 
 #: ../help/account.php:57
-msgid "If your item's price average is less than 25$, Micropayments is better solution. If not, Use normal pricing."
+msgid ""
+"If your item's price average is less than 25$, Micropayments is better "
+"solution. If not, Use normal pricing."
 msgstr ""
 
 #: ../help/account.php:58
-msgid "Anyway, who price your items is you and you are the most familiar with your item."
+msgid ""
+"Anyway, who price your items is you and you are the most familiar with your "
+"item."
 msgstr ""
 
 #: ../help/account.php:63
-msgid "Product slug will be displayed on PayPal's purchase history page. If you use PayPal with other commerce, this slug will helpful for distinguishing them from others."
+msgid ""
+"Product slug will be displayed on PayPal's purchase history page. If you use "
+"PayPal with other commerce, this slug will helpful for distinguishing them "
+"from others."
 msgstr ""
 
 #: ../help/account.php:64
-msgid "Your transaction will be displayed like <em>slug-000010</em>. You can easily find, sort, sum LWP transaction."
+msgid ""
+"Your transaction will be displayed like <em>slug-000010</em>. You can easily "
+"find, sort, sum LWP transaction."
 msgstr ""
 
 #: ../help/customize.php:2
@@ -3924,15 +4279,20 @@ msgid "Default Functions"
 msgstr ""
 
 #: ../help/customize.php:8
-msgid "First of all, you'd better to know detail of LWP. Main functions are below."
+msgid ""
+"First of all, you'd better to know detail of LWP. Main functions are below."
 msgstr ""
 
 #: ../help/customize.php:11
-msgid "Display price and &quot;Buy Now&quot; button. This is a gate way to start transaction."
+msgid ""
+"Display price and &quot;Buy Now&quot; button. This is a gate way to start "
+"transaction."
 msgstr ""
 
 #: ../help/customize.php:12
-msgid "Display transaction page. Transaction steps count 3. Confirmation, Complete and Cancel."
+msgid ""
+"Display transaction page. Transaction steps count 3. Confirmation, Complete "
+"and Cancel."
 msgstr ""
 
 #: ../help/customize.php:13
@@ -3944,7 +4304,9 @@ msgid "Show download link and device types."
 msgstr ""
 
 #: ../help/customize.php:17
-msgid "You have no need to customize with normal usage, but customize and suit this plugin to your theme will be helpful for your customer."
+msgid ""
+"You have no need to customize with normal usage, but customize and suit this "
+"plugin to your theme will be helpful for your customer."
 msgstr ""
 
 #: ../help/customize.php:19
@@ -3960,7 +4322,9 @@ msgid "Use your own CSS. CSS knowledge required."
 msgstr ""
 
 #: ../help/customize.php:25
-msgid "Quit auto output and edit theme files. Knowledge about WordPress theme system required."
+msgid ""
+"Quit auto output and edit theme files. Knowledge about WordPress theme "
+"system required."
 msgstr ""
 
 #: ../help/customize.php:27
@@ -3972,12 +4336,17 @@ msgid "LWP automatically loads CSS file by default. It looks like above."
 msgstr ""
 
 #: ../help/customize.php:31
-msgid "WordPress has many themes and you may want make this form suit to you own theme."
+msgid ""
+"WordPress has many themes and you may want make this form suit to you own "
+"theme."
 msgstr ""
 
 #: ../help/customize.php:32
 #, php-format
-msgid "In this case, turn auto load OFF at <a href=\"%s\">LWP Setting</a>. Now &quot;Buy Now&quot; button has no style and you can customize it's appearance."
+msgid ""
+"In this case, turn auto load OFF at <a href=\"%s\">LWP Setting</a>. Now "
+"&quot;Buy Now&quot; button has no style and you can customize it's "
+"appearance."
 msgstr ""
 
 #: ../help/customize.php:34
@@ -3985,26 +4354,36 @@ msgid "2. Create button by yourself"
 msgstr ""
 
 #: ../help/customize.php:36
-msgid "&quot;Buy Now&quot; button will be displayed at bottom of the post content by default."
+msgid ""
+"&quot;Buy Now&quot; button will be displayed at bottom of the post content "
+"by default."
 msgstr ""
 
 #: ../help/customize.php:37
-msgid "But you probably want to change the place of button and LWP provides 3 way to do it"
+msgid ""
+"But you probably want to change the place of button and LWP provides 3 way "
+"to do it"
 msgstr ""
 
 #: ../help/customize.php:40
 #, php-format
-msgid "Sidebar Widgets. If your theme supports sidebar widget system, go to <a href=\"%s\">Theme &gt; Widgets</a> and install LWP sidebar widget."
+msgid ""
+"Sidebar Widgets. If your theme supports sidebar widget system, go to <a href="
+"\"%s\">Theme &gt; Widgets</a> and install LWP sidebar widget."
 msgstr ""
 
 #: ../help/customize.php:41
 #, php-format
-msgid "Use short code. On visual editor, you can find &quot;%s&quot; list box. It inserts shortcode to display &quot;Buy Now&quot; button."
+msgid ""
+"Use short code. On visual editor, you can find &quot;%s&quot; list box. It "
+"inserts shortcode to display &quot;Buy Now&quot; button."
 msgstr ""
 
 #: ../help/customize.php:42
 #, php-format
-msgid "Customize theme. The template tag lwp_buy_now() will display button. See detail at <a href=\"%s\" target=\"_blank\">function reference</a>."
+msgid ""
+"Customize theme. The template tag lwp_buy_now() will display button. See "
+"detail at <a href=\"%s\" target=\"_blank\">function reference</a>."
 msgstr ""
 
 #: ../help/customize.php:44
@@ -4016,7 +4395,12 @@ msgid "Device list"
 msgstr ""
 
 #: ../help/customize.php:46
-msgid "Device list is a simple list of registered devices. It helps informing your user if your products are available or not. Especially, digital contents such as ebook, audio or video needs appropriate devices to play, so you should display the device list. If you want display device list manually, code is below:"
+msgid ""
+"Device list is a simple list of registered devices. It helps informing your "
+"user if your products are available or not. Especially, digital contents "
+"such as ebook, audio or video needs appropriate devices to play, so you "
+"should display the device list. If you want display device list manually, "
+"code is below:"
 msgstr ""
 
 #: ../help/customize.php:49
@@ -4040,7 +4424,11 @@ msgid "Download list"
 msgstr ""
 
 #: ../help/customize.php:65
-msgid "Download list is a simple list of registered files. You may provide multiple files as one product for various reason. Saving bandwidth, Providing trial file, and so on. Download list helps your customer to test what they can archive. To display download list manually, see the code blow:"
+msgid ""
+"Download list is a simple list of registered files. You may provide multiple "
+"files as one product for various reason. Saving bandwidth, Providing trial "
+"file, and so on. Download list helps your customer to test what they can "
+"archive. To display download list manually, see the code blow:"
 msgstr ""
 
 #: ../help/customize.php:69
@@ -4095,8 +4483,7 @@ msgstr ""
 msgid "Customize Form"
 msgstr ""
 
-#: ../help/customize.php:134
-#: ../help/customize.php:138
+#: ../help/customize.php:134 ../help/customize.php:138
 msgid "Coming soon..."
 msgstr ""
 
@@ -4109,23 +4496,34 @@ msgid "Create custom post type by yourself"
 msgstr ""
 
 #: ../help/customize.php:142
-msgid "LWP provides the function to create custom post type because it is supposed that normal user sell perticullar type of contents like eBook or Music file."
+msgid ""
+"LWP provides the function to create custom post type because it is supposed "
+"that normal user sell perticullar type of contents like eBook or Music file."
 msgstr ""
 
 #: ../help/customize.php:143
-msgid "But you may think of selling multiple types of contents(ex. music, movie, eBook and photo). In such case, LWP can recognize multiple custom post types as payable."
+msgid ""
+"But you may think of selling multiple types of contents(ex. music, movie, "
+"eBook and photo). In such case, LWP can recognize multiple custom post types "
+"as payable."
 msgstr ""
 
 #: ../help/customize.php:144
-msgid "Furthermore, you may want make some taxonomies for your items(ex. eBook genre)."
+msgid ""
+"Furthermore, you may want make some taxonomies for your items(ex. eBook "
+"genre)."
 msgstr ""
 
 #: ../help/customize.php:145
-msgid "What LWP do is &quot;making perticular post types payable&quot;. So you can easily add custom post types and make them payable."
+msgid ""
+"What LWP do is &quot;making perticular post types payable&quot;. So you can "
+"easily add custom post types and make them payable."
 msgstr ""
 
 #: ../help/customize.php:146
-msgid "There are lots of plugins which enable you to add custom post types. Belows are list of them."
+msgid ""
+"There are lots of plugins which enable you to add custom post types. Belows "
+"are list of them."
 msgstr ""
 
 #: ../help/customize.php:149
@@ -4133,7 +4531,9 @@ msgid "Custom Post Type UI"
 msgstr ""
 
 #: ../help/customize.php:153
-msgid "They are 3rd party plugin and I don't test them all. Everything is at your own risk. Please try out on them carefully."
+msgid ""
+"They are 3rd party plugin and I don't test them all. Everything is at your "
+"own risk. Please try out on them carefully."
 msgstr ""
 
 #: ../help/dir.php:2
@@ -4145,7 +4545,8 @@ msgid "About file uploading system"
 msgstr ""
 
 #: ../help/dir.php:5
-msgid "WordPress has original file uploading system. Nomal process is like below:"
+msgid ""
+"WordPress has original file uploading system. Nomal process is like below:"
 msgstr ""
 
 #: ../help/dir.php:8
@@ -4153,7 +4554,9 @@ msgid "Files are uploaded to /wp-content/uploads directory."
 msgstr ""
 
 #: ../help/dir.php:9
-msgid "After uploading has succeeded, files are accessile via HTTP. You can layout your image files to post content."
+msgid ""
+"After uploading has succeeded, files are accessile via HTTP. You can layout "
+"your image files to post content."
 msgstr ""
 
 #: ../help/dir.php:11
@@ -4161,19 +4564,27 @@ msgid "Protect you files"
 msgstr ""
 
 #: ../help/dir.php:13
-msgid "This process above is quite proper for blog system. But if you sell your files with this plugin, this system is not enough."
+msgid ""
+"This process above is quite proper for blog system. But if you sell your "
+"files with this plugin, this system is not enough."
 msgstr ""
 
 #: ../help/dir.php:14
-msgid "For example, if you uplaod sample.pdf with Media uploader, it is accessible with <em>http://example.com/wp-content/uploads/sample.pdf</em>."
+msgid ""
+"For example, if you uplaod sample.pdf with Media uploader, it is accessible "
+"with <em>http://example.com/wp-content/uploads/sample.pdf</em>."
 msgstr ""
 
 #: ../help/dir.php:15
-msgid "So, LWP has another way of uploading and save files in different directory. It should be inaccessible with HTTP."
+msgid ""
+"So, LWP has another way of uploading and save files in different directory. "
+"It should be inaccessible with HTTP."
 msgstr ""
 
 #: ../help/dir.php:16
-msgid "Only users who bought your item can access them. LWP has simple authenctication system to judge the user can access file or not."
+msgid ""
+"Only users who bought your item can access them. LWP has simple "
+"authenctication system to judge the user can access file or not."
 msgstr ""
 
 #: ../help/dir.php:18
@@ -4181,11 +4592,15 @@ msgid "Normal setting"
 msgstr ""
 
 #: ../help/dir.php:20
-msgid "Let's assume the case that your WordPress is installed in directory <em>/home/your-name/public_html</em>."
+msgid ""
+"Let's assume the case that your WordPress is installed in directory <em>/"
+"home/your-name/public_html</em>."
 msgstr ""
 
 #: ../help/dir.php:21
-msgid "In this case, the directory accessible via HTTP is only <em>/home/your-name/public_html</em>."
+msgid ""
+"In this case, the directory accessible via HTTP is only <em>/home/your-name/"
+"public_html</em>."
 msgstr ""
 
 #: ../help/dir.php:24
@@ -4210,23 +4625,35 @@ msgid "No inaccessible directory"
 msgstr ""
 
 #: ../help/dir.php:33
-msgid "Situation depends on your hosting service. Some of hosting service don't offer inaccessible directory and your root directory may accessible via HTTP."
+msgid ""
+"Situation depends on your hosting service. Some of hosting service don't "
+"offer inaccessible directory and your root directory may accessible via HTTP."
 msgstr ""
 
 #: ../help/dir.php:34
-msgid "For example, your root directory is <em>/home/your-name/</em> and your domain is <em>http://your-name.example.com</em>."
+msgid ""
+"For example, your root directory is <em>/home/your-name/</em> and your "
+"domain is <em>http://your-name.example.com</em>."
 msgstr ""
 
 #: ../help/dir.php:35
-msgid "This is very typical for hosting sevices which provide free domain. Even if you get your own domain, such hosting service tends to assign your new domain to <em>/home/your-name/new-domain</em>"
+msgid ""
+"This is very typical for hosting sevices which provide free domain. Even if "
+"you get your own domain, such hosting service tends to assign your new "
+"domain to <em>/home/your-name/new-domain</em>"
 msgstr ""
 
 #: ../help/dir.php:36
-msgid "So, how can you protect your files? Calm down, LWP provides protect method for such case."
+msgid ""
+"So, how can you protect your files? Calm down, LWP provides protect method "
+"for such case."
 msgstr ""
 
 #: ../help/dir.php:37
-msgid "By default, LWP set file directory to <em>/wp-content/plugins/literally-wordpress/contents</em>. This direcotry has .htaccess file to protect your files from HTTP access."
+msgid ""
+"By default, LWP set file directory to <em>/wp-content/plugins/literally-"
+"wordpress/contents</em>. This direcotry has .htaccess file to protect your "
+"files from HTTP access."
 msgstr ""
 
 #: ../help/dir.php:38
@@ -4234,7 +4661,9 @@ msgid "So, if you don't have inaccessible directory, set it as default."
 msgstr ""
 
 #: ../help/dir.php:42
-msgid "If your files are accessible via HTTP, an alert message will be displayed on admin panel."
+msgid ""
+"If your files are accessible via HTTP, an alert message will be displayed on "
+"admin panel."
 msgstr ""
 
 #: ../help/transfer.php:3
@@ -4242,23 +4671,31 @@ msgid "Aboutn transfer"
 msgstr ""
 
 #: ../help/transfer.php:5
-msgid "Transfer is typically bank deposit transfer. If you allow this payment method, transaction will have another process following:"
+msgid ""
+"Transfer is typically bank deposit transfer. If you allow this payment "
+"method, transaction will have another process following:"
 msgstr ""
 
 #: ../help/transfer.php:8
-msgid "At first, your user finishies his transaction by choosing transfer payment."
+msgid ""
+"At first, your user finishies his transaction by choosing transfer payment."
 msgstr ""
 
 #: ../help/transfer.php:9
-msgid "User see payment instruction on the thank you page and the notification mail."
+msgid ""
+"User see payment instruction on the thank you page and the notification mail."
 msgstr ""
 
 #: ../help/transfer.php:10
-msgid "User pais the bill by sending deposit to your account. After that, you must change your user's transactional satatus to success."
+msgid ""
+"User pais the bill by sending deposit to your account. After that, you must "
+"change your user's transactional satatus to success."
 msgstr ""
 
 #: ../help/transfer.php:11
-msgid "User gets the notification mail which tells his transaciton has been suceeded. Now he can access to your contents."
+msgid ""
+"User gets the notification mail which tells his transaciton has been "
+"suceeded. Now he can access to your contents."
 msgstr ""
 
 #: ../help/transfer.php:13
@@ -4266,20 +4703,30 @@ msgid "What to be care about"
 msgstr ""
 
 #: ../help/transfer.php:14
-msgid "Deferent from PayPal transaciton, your user's transactional has one more steps to check whether transfer has been done or not. "
+msgid ""
+"Deferent from PayPal transaciton, your user's transactional has one more "
+"steps to check whether transfer has been done or not. "
 msgstr ""
 
 #: ../help/transfer.php:16
 #, php-format
-msgid "Transfer transaction is tend to be ignored or forgotten by your user. Literally WordPress will send some notification mail to your user. One is reminder and another is expiration. You can choose each periode in <a href=\"%1$s\" target=\"_top\">%1$s</a>."
+msgid ""
+"Transfer transaction is tend to be ignored or forgotten by your user. "
+"Literally WordPress will send some notification mail to your user. One is "
+"reminder and another is expiration. You can choose each periode in <a href="
+"\"%1$s\" target=\"_top\">%1$s</a>."
 msgstr ""
 
 #: ../help/transfer.php:17
-msgid "If transfer transaction will need extra payments such as bank remitting charge, you should inform your user about it."
+msgid ""
+"If transfer transaction will need extra payments such as bank remitting "
+"charge, you should inform your user about it."
 msgstr ""
 
 #: ../help/transfer.php:18
-msgid "You should use bank account which has notification service to avoid daily account check."
+msgid ""
+"You should use bank account which has notification service to avoid daily "
+"account check."
 msgstr ""
 
 #: ../help/transfer.php:20
@@ -4288,11 +4735,15 @@ msgstr ""
 
 #: ../help/transfer.php:22
 #, php-format
-msgid "Once you find your user send the bill to your account, go to <a href=\"%1$s\" target=\"_top\">%2$s</a>. You can change your use's status there."
+msgid ""
+"Once you find your user send the bill to your account, go to <a href=\"%1$s"
+"\" target=\"_top\">%2$s</a>. You can change your use's status there."
 msgstr ""
 
 #: ../help/transfer.php:23
-msgid "Your use's status changed, notification mail will be sent. Now your user know transaction was finished."
+msgid ""
+"Your use's status changed, notification mail will be sent. Now your user "
+"know transaction was finished."
 msgstr ""
 
 #: ../help/transfer.php:25
@@ -4301,7 +4752,9 @@ msgstr ""
 
 #: ../help/transfer.php:27
 #, php-format
-msgid "Making transfer allowed, you can access to <a href=\"%1$s\" target=\"_top\">%2$s</a>."
+msgid ""
+"Making transfer allowed, you can access to <a href=\"%1$s\" target=\"_top\">"
+"%2$s</a>."
 msgstr ""
 
 #: ../help/transfer.php:28
@@ -4309,11 +4762,15 @@ msgid "You can edit each notification message as custom post type."
 msgstr ""
 
 #: ../help/transfer.php:29
-msgid "Required messages will be created automatically by this plugin. You don't have to create new notification message."
+msgid ""
+"Required messages will be created automatically by this plugin. You don't "
+"have to create new notification message."
 msgstr ""
 
 #: ../help/transfer.php:30
-msgid "Notifications accept place holder such as bank account, expiration date, item page's url and so on. For detail, see each notification's edit page."
+msgid ""
+"Notifications accept place holder such as bank account, expiration date, "
+"item page's url and so on. For detail, see each notification's edit page."
 msgstr ""
 
 #: ../help/transfer.php:34
@@ -4324,8 +4781,7 @@ msgstr ""
 msgid "No matching Campaign found."
 msgstr ""
 
-#: ../tables/list-campaign.php:102
-#: ../tables/list-management.php:266
+#: ../tables/list-campaign.php:102 ../tables/list-management.php:266
 msgid "Start"
 msgstr ""
 
@@ -4342,14 +4798,10 @@ msgstr ""
 msgid "%d%%Off"
 msgstr ""
 
-#: ../tables/list-campaign.php:201
-#: ../tables/list-devices.php:175
-#: ../tables/list-event.php:254
-#: ../tables/list-history.php:268
-#: ../tables/list-management.php:300
-#: ../tables/list-reward-history.php:200
-#: ../tables/list-ticket.php:220
-#: ../tables/list-transfers.php:328
+#: ../tables/list-campaign.php:201 ../tables/list-devices.php:175
+#: ../tables/list-event.php:254 ../tables/list-history.php:268
+#: ../tables/list-management.php:300 ../tables/list-reward-history.php:200
+#: ../tables/list-ticket.php:220 ../tables/list-transfers.php:328
 #, php-format
 msgid "%d per 1Page"
 msgstr ""
@@ -4362,8 +4814,7 @@ msgstr ""
 msgid "No matching event is found."
 msgstr ""
 
-#: ../tables/list-event.php:33
-#: ../tables/list-promotable-posts.php:130
+#: ../tables/list-event.php:33 ../tables/list-promotable-posts.php:130
 msgid "Type"
 msgstr ""
 
@@ -4375,56 +4826,45 @@ msgstr ""
 msgid "Selling Limit"
 msgstr ""
 
-#: ../tables/list-event.php:124
-#: ../tables/list-event.php:139
+#: ../tables/list-event.php:124 ../tables/list-event.php:139
 #, php-format
 msgid "%s before"
 msgstr ""
 
-#: ../tables/list-event.php:127
-#: ../tables/list-event.php:142
+#: ../tables/list-event.php:127 ../tables/list-event.php:142
 #, php-format
 msgid "%s later"
 msgstr ""
 
-#: ../tables/list-event.php:185
-#: ../tables/list-management.php:129
-#: ../tables/list-management.php:241
-#: ../tables/list-reward-history.php:174
+#: ../tables/list-event.php:185 ../tables/list-management.php:129
+#: ../tables/list-management.php:241 ../tables/list-reward-history.php:174
 #: ../tables/list-ticket.php:136
 msgid "Detail"
 msgstr ""
 
-#: ../tables/list-event.php:240
-#: ../tables/list-history.php:241
-#: ../tables/list-management.php:277
-#: ../tables/list-promotable-posts.php:189
+#: ../tables/list-event.php:240 ../tables/list-history.php:241
+#: ../tables/list-management.php:277 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr ""
 
-#: ../tables/list-history.php:29
-#: ../tables/list-reward-history.php:24
+#: ../tables/list-history.php:29 ../tables/list-reward-history.php:24
 #: ../tables/list-reward-request.php:22
 msgid "No matching history is found."
 msgstr ""
 
-#: ../tables/list-history.php:43
-#: ../tables/list-management.php:125
+#: ../tables/list-history.php:43 ../tables/list-management.php:125
 msgid "Method"
 msgstr ""
 
-#: ../tables/list-history.php:49
-#: ../tables/list-management.php:128
+#: ../tables/list-history.php:49 ../tables/list-management.php:128
 msgid "Last Updated"
 msgstr ""
 
-#: ../tables/list-history.php:158
-#: ../tables/list-management.php:219
+#: ../tables/list-history.php:158 ../tables/list-management.php:219
 msgid "No Limit"
 msgstr ""
 
-#: ../tables/list-history.php:164
-#: ../tables/list-management.php:226
+#: ../tables/list-history.php:164 ../tables/list-management.php:226
 #: ../tables/list-transfers.php:228
 #, php-format
 msgid "%d days left"
@@ -4434,13 +4874,11 @@ msgstr ""
 msgid "Uncancelable"
 msgstr ""
 
-#: ../tables/list-management.php:109
-#: ../tables/list-transfers.php:143
+#: ../tables/list-management.php:109 ../tables/list-transfers.php:143
 msgid "No matching transaction found."
 msgstr ""
 
-#: ../tables/list-management.php:265
-#: ../tables/list-ticket.php:198
+#: ../tables/list-management.php:265 ../tables/list-ticket.php:198
 #: ../tables/list-transfers.php:314
 msgid "All Status"
 msgstr ""
@@ -4465,8 +4903,7 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
-#: ../tables/list-reward-history.php:30
-#: ../tables/list-reward-request.php:115
+#: ../tables/list-reward-history.php:30 ../tables/list-reward-request.php:115
 msgid "User name"
 msgstr ""
 
@@ -4478,8 +4915,7 @@ msgstr ""
 msgid "Transaction"
 msgstr ""
 
-#: ../tables/list-reward-history.php:185
-#: ../tables/list-reward-request.php:188
+#: ../tables/list-reward-history.php:185 ../tables/list-reward-request.php:188
 msgid "All status"
 msgstr ""
 
@@ -4544,21 +4980,27 @@ msgid "Post ID to display"
 msgstr ""
 
 #: ../widgets/buynow.php:126
-msgid "Specify post's ID to display button outside singular page(ex. In category page) or leave it blank."
+msgid ""
+"Specify post's ID to display button outside singular page(ex. In category "
+"page) or leave it blank."
 msgstr ""
 
-#: ../widgets/buynow.php:130
-#: ../widgets/buynow.php:137
+#: ../widgets/buynow.php:130 ../widgets/buynow.php:137
 msgid "Original Image src"
 msgstr ""
 
 #: ../widgets/buynow.php:133
-msgid "Specify your original \"BuyNow\" button src. If you don't have, leave it blank and PayPal button will be displayed. Put word 'link', button will be displayed with normal link tag."
+msgid ""
+"Specify your original \"BuyNow\" button src. If you don't have, leave it "
+"blank and PayPal button will be displayed. Put word 'link', button will be "
+"displayed with normal link tag."
 msgstr ""
 
 #: ../widgets/buynow.php:140
 #, php-format
-msgid "This words will be displayed after Title if on sale. %%end%% will be replaced by the campaign end date."
+msgid ""
+"This words will be displayed after Title if on sale. %%end%% will be "
+"replaced by the campaign end date."
 msgstr ""
 
 #: ../widgets/buynow.php:144
@@ -4576,4 +5018,3 @@ msgstr ""
 #: ../widgets/buynow.php:154
 msgid "Timer will be displayed if post is on sale."
 msgstr ""
-

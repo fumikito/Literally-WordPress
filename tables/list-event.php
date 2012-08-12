@@ -36,7 +36,7 @@ class LWP_List_Event extends WP_List_Table {
 			'selling_limit' => $lwp->_("Selling Limit"),
 			'participants' => $lwp->_('Participants'),
 			'tickets' => $lwp->_('Tickets'),
-			'actions' => $lwp->_('')
+			'actions' => ''
 		);
 		return $column;
 	}

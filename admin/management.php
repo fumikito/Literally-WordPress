@@ -3,12 +3,15 @@
 $is_detail = isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction_id"]) && ($transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_REQUEST["transaction_id"])));
 ?>
 <h2 class="nav-tab-wrapper">
-	<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>" class="nav-tab<?php if(!$is_detail) echo ' nav-tab-active';?>">
-		<?php $this->e('Transaction Management'); ?>
+	<a href="<?php echo admin_url('admin.php?page=lwp-management'); ?>" class="nav-tab<?php if(!$is_detail && !isset($_GET['view'])) echo ' nav-tab-active';?>">
+		<?php $this->e('Transaction Dashboard'); ?>
+	</a>
+	<a href="<?php echo admin_url('admin.php?page=lwp-management&view=list'); ?>" class="nav-tab<?php if(isset($_GET['view']) && $_GET['view'] == 'list') echo ' nav-tab-active';?>">
+		<?php $this->e('List'); ?>
 	</a>
 	<?php if($is_detail): ?>
 	<a href="<?php echo admin_url('admin.php?page=lwp-management&transactin_id='.intval($_REQUEST['transaction_id'])); ?>" class="nav-tab<?php if($is_detail) echo ' nav-tab-active';?>">
-		<?php $this->e('Transaction Detail'); ?>
+		<?php printf($this->_('Detail No.%d'), $_REQUEST['transaction_id']); ?>
 	</a>
 	<?php endif; ?>
 </h2>
@@ -160,7 +163,7 @@ if($is_detail):
 /*---------------------------------
  *  一覧表示
  */
-else:
+elseif(isset($_GET['view']) && $_GET['view'] == 'list'):
 ?>
 <iframe src="" name="lwp-csv-output" height="0" width="100%"></iframe>
 <form id="lwp-csv-output-form" method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" target="lwp-csv-output">
@@ -188,6 +191,15 @@ $list_table->display();
 
 ?>
 </form>
+
+<?php
+/*---------------------------------
+ * ダッシュボード
+ */
+else: ?>
+
+
+
 
 <?php
 /*---------------------------------
