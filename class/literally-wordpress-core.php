@@ -616,7 +616,6 @@ EOS;
 					'pieChartStart' => $this->_('Unfixed'),
 					'pieChartLost' => $this->_('Lost'),
 					'areaChartTitle' => $this->_('Daily Report'),
-					'areaChartSales' => $this->_('Sales'),
 					'areaChartLabel' => $this->_('Date')
 			)));
 			
@@ -630,6 +629,7 @@ EOS;
 					'pieChartLabel' => $this->_('Post type'),
 					'pieChartUnit' => lwp_currency_code(),
 					'areaChartTitle' => $this->_('Daily Report'),
+					'areaChartSales' => $this->_('Sales'),
 					'areaChartLabel' => $this->_('Date')
 			)));
 			if(!isset($_GET['view'])){

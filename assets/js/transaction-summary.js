@@ -33,7 +33,7 @@ google.setOnLoadCallback(function(){
 		dataType: 'json',
 		success: function(data){
 			if(data){
-				var areaSrc = [[LWP.areaChartLabel, LWP.areaChartSsales]];
+				var areaSrc = [[LWP.areaChartLabel, LWP.areaChartSales]];
 				for(i = 0, l = data.length; i < l; i++){
 					areaSrc.push([
 						(data[i].date.match(/-01$/)) ? data[i].date.replace(/[0-9]{4}-/, '') : data[i].date.replace(/[0-9]{4}-[0-9]{2}-/, ''),
