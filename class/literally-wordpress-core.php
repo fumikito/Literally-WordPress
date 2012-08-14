@@ -273,6 +273,8 @@ class Literally_WordPress{
 		add_action('wp_ajax_lwp_transaction_csv_output', array($this, 'ouput_csv'));
 		//Hook on adminbar
 		add_action('admin_bar_menu', array($this, 'admin_bar'));
+		//Ajax action to list transactions
+		add_action('wp_ajax_lwp_transaction_chart', array($this, 'ajax_transaction_chart'));
 		if(is_admin()){ //Hooks only for admin panels.
 			//Add hook to update option
 			if($this->is_admin("setting")){
@@ -606,13 +608,39 @@ EOS;
 				array("jquery-ui-timepicker"),
 				$this->version
 			);
-			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', LWP_Datepicker_Helper::get_config_array());
+			wp_localize_script('lwp-datepicker-load', 'LWPDatePicker', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
+					'pieChartTitle' => $this->_('Reward Amount Summary'),
+					'pieChartLabel' => $this->_('Status'),
+					'pieChartUnit' => lwp_currency_code(),
+					'pieChartFixed' => $this->_('Fixed'),
+					'pieChartStart' => $this->_('Unfixed'),
+					'pieChartLost' => $this->_('Lost'),
+					'areaChartTitle' => $this->_('Daily Report'),
+					'areaChartSales' => $this->_('Sales'),
+					'areaChartLabel' => $this->_('Date')
+			)));
+			
 		}
 		//In management page, do csv output
 		if($this->is_admin('management') && !isset($_REQUEST['transaction_id'])){
 			wp_enqueue_style('jquery-ui-datepicker');
 			wp_enqueue_script('lwp-output-csv-transaction', $this->url.'assets/js/management-helper.js', array('jquery-ui-datepicker'), $this->version);
-			wp_localize_script('lwp-output-csv-transaction', 'LWP', LWP_Datepicker_Helper::get_config_array());
+			wp_localize_script('lwp-output-csv-transaction', 'LWP', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
+					'pieChartTitle' => $this->_('Sales per post type'),
+					'pieChartLabel' => $this->_('Post type'),
+					'pieChartUnit' => lwp_currency_code(),
+					'areaChartTitle' => $this->_('Daily Report'),
+					'areaChartLabel' => $this->_('Date')
+			)));
+			if(!isset($_GET['view'])){
+				wp_enqueue_script(
+					'lwp-transaction', 
+					$this->url.'assets/js/transaction-summary.js',
+					array('google-jsapi', 'jquery-form', 'jquery-ui-tabs'),
+					$this->version
+				);
+			}
+
 		}
 		//Incase Reward dashboard, Load datepicker and tab UI
 		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
@@ -1828,6 +1856,60 @@ EOS;
 		}
 		fclose($out);
 		die();
+	}
+	
+	/**
+	 * 決済情報を取得する
+	 */
+	public function ajax_transaction_chart(){
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_area_chart')){
+			global $wpdb;
+			$from = isset($_REQUEST['from']) ? $_REQUEST['from'] : date('Y-m-d', time() - 60 * 60 * 24 * 30 );
+			$to = isset($_REQUEST['to']) ? $_REQUEST['to'] : date('Y-m-d');
+			$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : 'all';
+			$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : 'all';
+			$sql = <<<EOS
+				SELECT SUM(t.price) AS total, DATE(t.updated) AS date
+				FROM {$this->transaction} AS t
+				LEFT JOIN {$wpdb->posts} AS p
+				ON t.book_id = p.ID
+EOS;
+			$wheres = array(
+				$wpdb->prepare("t.updated >= %s", $from),
+				$wpdb->prepare("t.updated <= %s", $to)
+			);
+			if($status != 'all'){
+				$wheres[] = $wpdb->prepare("t.status = %s", $status);
+			}
+			if($post_type != 'all'){
+				$wheres[] = $wpdb->prepare("p.post_type = %s", $status);
+			}
+			$sql .= ' WHERE '.implode(' AND ', $wheres);
+			$sql .= <<<EOS
+				GROUP BY date
+				ORDER BY date ASC
+EOS;
+			$result = $wpdb->get_results($sql, ARRAY_A);
+			$date_array = array();
+			$cur_date = $from;
+			do{
+				$array = array(
+					'date' => $cur_date,
+					'total' => 0
+				);
+				foreach($result as $r){
+					if($r['date'] == $cur_date){
+						$array = $r;
+						break;
+					}
+				}
+				$date_array[] = $array;
+				$cur_date = date('Y-m-d', strtotime($cur_date) + 60 * 60 * 24);
+			}while(strtotime($cur_date) <= strtotime($to));
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode($date_array);
+			exit;
+		}
 	}
 	
 	//--------------------------------------------
