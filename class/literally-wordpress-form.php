@@ -464,7 +464,7 @@ EOS;
 		//Update transaction
 		if($token){
 			$wpdb->update(
-				$this->transaction,
+				$lwp->transaction,
 				array(
 					"status" => LWP_Payment_Status::CANCEL,
 					"updated" => gmdate("Y-m-d H:i:s")
