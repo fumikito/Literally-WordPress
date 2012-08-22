@@ -181,6 +181,7 @@ elseif(isset($_GET['view']) && $_GET['view'] == 'list'):
 
 <form method="get" action="<?php echo admin_url('admin.php'); ?>">
 	<input type="hidden" name="page" value="lwp-management" />
+	<input type="hidden" name="view" value="list" />
 <?php
 require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-management.php";
 $list_table = new LWP_List_Management();
