@@ -10,7 +10,10 @@
 
 <?php if(!isset($_REQUEST['tab'])): ?>
 
-<p class="description"><?php $this->e('You can check all form here. These forms are disabled.'); ?></p>
+<h3><?php printf($this->_('About %s'), $this->_('Form Check'));  ?></h3>
+<p class="description">
+	<?php printf($this->_('You can check all of forms which your customer will see in his transaction. These forms\' appearance can be customized in various ways(CSS, Hooks, etc). Please see the <a href="%s">documentation</a>.'), admin_url('themes.php?page=lwp-form-check&tab=documentation')); ?>
+</p>
 
 <table class="widefat">
 	<?php for($i = 0; $i < 2; $i++): $thead = $i ? 'tfoot' : 'thead'; ?>

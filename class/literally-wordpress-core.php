@@ -391,7 +391,7 @@ class Literally_WordPress{
 	 * @return void
 	 */
 	public function validate(){
-		//Check directory's existance and if not, try to careate
+		//Check directory's existance and if not, try to create
 		if(!is_dir($this->option['dir']) || !file_exists($this->option['dir'])){
 			if(!@mkdir($this->option['dir'], true)){
 				$this->initialized = false;
@@ -596,7 +596,7 @@ EOS;
 		wp_enqueue_script("thickbox");
 		//On setting page, load tab js
 		if($this->is_admin('setting')){
-			wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', $this->version);
+			//wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', $this->version);
 		}
 		//In case management or campaign, load datepicker.
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){

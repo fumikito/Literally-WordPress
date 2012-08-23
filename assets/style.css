@@ -10,9 +10,12 @@
 }
 
 div.ebook{
-	background:url(./book_32.png) left top no-repeat;
+	background: url('./book_32.png') left top no-repeat;
 }
 
+.icon32-posts-lwp_notification{
+	background-image: url('./mail_32.png');
+}
 .lwp-wrap h3{
 	font-size:22px;
 	margin: 2em 0 1em;
