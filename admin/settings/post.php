@@ -74,3 +74,36 @@
 		</tr>
 	</tbody>
 </table>
+
+<h3>
+	<?php $this->e('iOS non-consumable Product'); ?>
+	<small class="experimental"><?php $this->e('EXPERIMENTAL'); ?></small>
+</h3>
+<p class="description">
+	<?php $this->e('You can manage iOS non-consumable product with WordPress.'); ?>
+</p>
+<table class="form-table">
+	<tbody>
+		<tr>
+			<th><?php $this->e('Enable iOS product');  ?></th>
+			<td>
+				<label><input type="radio" name="ios" value="1" <?php if($this->option['ios']) echo 'checked="checked"'; ?> /><?php $this->e('Enabled'); ?></label><br />
+				<label><input type="radio" name="ios" value="0" <?php if(!$this->option['ios']) echo 'checked="checked"'; ?> /><?php $this->e('Disabled'); ?></label>
+			</td>
+		</tr>
+		<tr>
+			<th><?php $this->e('Post Type public');  ?></th>
+			<td>
+				<label><input type="radio" name="ios_public" value="1" <?php if($this->option['ios_public']) echo 'checked="checked"'; ?> /><?php $this->e('Public'); ?></label><br />
+				<label><input type="radio" name="ios_public" value="0" <?php if(!$this->option['ios_public']) echo 'checked="checked"'; ?> /><?php $this->e('Hidden'); ?></label>
+			</td>
+		</tr>
+		<tr>
+			<th><?php $this->e('Availability');  ?></th>
+			<td>
+				<label><input type="radio" name="ios_available" value="1" <?php if($this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Available from Web site'); ?></label><br />
+				<label><input type="radio" name="ios_available" value="0" <?php if(!$this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Only available with iOS'); ?></label>
+			</td>
+		</tr>
+	</tbody>
+</table>

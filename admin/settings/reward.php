@@ -1,4 +1,7 @@
-<h3><?php printf($this->_('About %s'), $this->_('Reward')); ?><small class="experimental"><?php $this->e('EXPERIMENTAL'); ?></small></h3>
+<h3>
+	<?php printf($this->_('About %s'), $this->_('Reward')); ?>
+	<small class="experimental"><?php $this->e('EXPERIMENTAL'); ?></small>
+</h3>
 <p class="description">
 	<?php $this->e('You can allow your users to promote your product and reward for them.'); ?>
 	<?php $this->e('This is so called affiliate system, but very experimental. Please be careful to your regal responsibility to your partners.'); ?>

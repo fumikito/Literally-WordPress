@@ -196,6 +196,9 @@ class Literally_WordPress{
 				"signature" => "",
 				"token" => "",
 				"skip_payment_selection" => false,
+				'ios' => false,
+				'ios_public' => false,
+				'ios_available' => false,
 				"subscription" => false,
 				"subscription_post_types" => array(),
 				'subscription_format' => 'all',
@@ -789,7 +792,10 @@ EOS;
 					break;
 				case 'post':
 					$option = array(
-						"dir" => $_REQUEST["dir"]
+						"dir" => $_REQUEST["dir"],
+						'ios' => (boolean)$_REQUEST['ios'],
+						'ios_public' => (boolean)$_REQUEST['ios_public'],
+						'ios_available' => (boolean)$_REQUEST['ios_available']
 					);
 					if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
 						$option['custom_post_type'] = array(
