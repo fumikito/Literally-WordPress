@@ -770,61 +770,85 @@ EOS;
 			&& false !== strpos($_REQUEST["_wp_http_referer"], "lwp-setting")
 			&& wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_option")
 		){
-			$new_option = shortcode_atts($this->option, array(
-				"user_name" => $_REQUEST["user_name"],
-				"password" => $_REQUEST["marchand_pass"],
-				'signature' => $_REQUEST['signature'],
-				"token" => $_REQUEST["token"],
-				"skip_payment_selection" => isset($_REQUEST['skip_payment_selection']) && (boolean)$_REQUEST['skip_payment_selection'],
-				"transfer" => (boolean)$_REQUEST['transfer'],
-				"notification_frequency" => (int) $_REQUEST['notification_frequency'],
-				"notification_limit" => (int) $_REQUEST['notification_limit'],
-				"reward_promoter" => (int) $_REQUEST['reward_promoter'],
-				"reward_promotion_margin" => (int) $_REQUEST['reward_promotion_margin'],
-				"reward_promotion_max" => (int) $_REQUEST['reward_promotion_max'],
-				"reward_author" => (int) $_REQUEST['reward_author'],
-				"reward_author_margin" => (int) $_REQUEST['reward_author_margin'],
-				"reward_author_max" => (int) $_REQUEST['reward_author_max'],
-				"reward_minimum" => (int) $_REQUEST['reward_minimum'],
-				"reward_request_limit" => (int) $_REQUEST['reward_request_limit'],
-				"reward_pay_at" => (int) $_REQUEST['reward_pay_at'],
-				"reward_pay_after_month" => (int) $_REQUEST['reward_pay_after_month'],
-				"reward_notice" => (string) $_REQUEST['reward_notice'],
-				"reward_contact" => (string) $_REQUEST['reward_contact'],
-				"use_proxy" => (boolean) $_REQUEST['use_proxy'],
-				'event_post_types' => (array) $_REQUEST['event_post_types'],
-				'event_mail_body' => (string) $_REQUEST['event_mail_body'],
-				'event_signature' => (string) $_REQUEST['event_signature'],
-				"dir" => $_REQUEST["dir"],
-				"slug" => $_REQUEST["product_slug"],
-				"mypage" => $_REQUEST["mypage"],
-				"currency_code" => $_REQUEST["currency_code"],
-				"country_code" => $_REQUEST["country_code"],
-				"show_form" => (boolean)($_REQUEST["show_form"] == 1),
-				"load_assets" => (int)$_REQUEST["load_assets"],
-				"subscription" => (boolean)$_REQUEST['subscription'],
-				"subscription_post_types" => (array)$_REQUEST['subscription_post_types'],
-				'subscription_format' => (string)$_REQUEST['subscription_format'],
-			));
-			//sandbox
-			$new_option['sandbox'] = isset($_REQUEST['sandbox']) ? true : false;
-			if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
-				$new_option['custom_post_type'] = array(
-					"name" => $_REQUEST['custom_post_type_name'],
-					"slug" => $_REQUEST['custom_post_type_slug']
-				);
-				$new_option['custom_post_type']['singular'] = empty($_REQUEST['custom_post_type_singular'])
-															  ? $_REQUEST['custom_post_type_name']
-															  : $_REQUEST['custom_post_type_singular'];
-			}else{
-				$new_option['custom_post_type'] = array();
+			switch((isset($_REQUEST['view']) ? $_REQUEST['view'] : '')){
+				case 'payment':
+					$option = array(
+						'sandbox' => isset($_REQUEST['sandbox']) ? true : false,
+						"user_name" => $_REQUEST["user_name"],
+						"password" => $_REQUEST["marchand_pass"],
+						'signature' => $_REQUEST['signature'],
+						"token" => $_REQUEST["token"],
+						"slug" => $_REQUEST["product_slug"],
+						"skip_payment_selection" => isset($_REQUEST['skip_payment_selection']) && (boolean)$_REQUEST['skip_payment_selection'],
+						"transfer" => (boolean)$_REQUEST['transfer'],
+						"notification_frequency" => (int) $_REQUEST['notification_frequency'],
+						"notification_limit" => (int) $_REQUEST['notification_limit'],
+						"currency_code" => $_REQUEST["currency_code"],
+						"country_code" => $_REQUEST["country_code"],
+					);
+					break;
+				case 'post':
+					$option = array(
+						"dir" => $_REQUEST["dir"]
+					);
+					if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
+						$option['custom_post_type'] = array(
+							"name" => $_REQUEST['custom_post_type_name'],
+							"slug" => $_REQUEST['custom_post_type_slug']
+						);
+						$option['custom_post_type']['singular'] = empty($_REQUEST['custom_post_type_singular'])
+																	  ? $_REQUEST['custom_post_type_name']
+																	  : $_REQUEST['custom_post_type_singular'];
+					}else{
+						$option['custom_post_type'] = array();
+					}
+					$option['payable_post_types'] = array();
+					if(!empty($_REQUEST['payable_post_types'])){
+						foreach($_REQUEST['payable_post_types'] as $post_type){
+							array_push($option['payable_post_types'], $post_type);
+						}
+					}
+					break;
+				case 'subscription':
+					$option = array(
+						"subscription" => (boolean)$_REQUEST['subscription'],
+						"subscription_post_types" => (array)$_REQUEST['subscription_post_types'],
+						'subscription_format' => (string)$_REQUEST['subscription_format']
+					);
+					break;
+				case 'event':
+					$option = array(
+						'event_post_types' => (array) $_REQUEST['event_post_types'],
+						'event_mail_body' => (string) $_REQUEST['event_mail_body'],
+						'event_signature' => (string) $_REQUEST['event_signature']
+					);
+					break;
+				case 'reward':
+					$option = array(
+						"reward_promoter" => (int) $_REQUEST['reward_promoter'],
+						"reward_promotion_margin" => (int) $_REQUEST['reward_promotion_margin'],
+						"reward_promotion_max" => (int) $_REQUEST['reward_promotion_max'],
+						"reward_author" => (int) $_REQUEST['reward_author'],
+						"reward_author_margin" => (int) $_REQUEST['reward_author_margin'],
+						"reward_author_max" => (int) $_REQUEST['reward_author_max'],
+						"reward_minimum" => (int) $_REQUEST['reward_minimum'],
+						"reward_request_limit" => (int) $_REQUEST['reward_request_limit'],
+						"reward_pay_at" => (int) $_REQUEST['reward_pay_at'],
+						"reward_pay_after_month" => (int) $_REQUEST['reward_pay_after_month'],
+						"reward_notice" => (string) $_REQUEST['reward_notice'],
+						"reward_contact" => (string) $_REQUEST['reward_contact']
+					);
+					break;
+				case 'misc':
+					$option = array(
+						"mypage" => (int) $_REQUEST["mypage"],
+						"show_form" => (boolean)($_REQUEST["show_form"] == 1),
+						"load_assets" => (int)$_REQUEST["load_assets"],
+						"use_proxy" => (boolean) $_REQUEST['use_proxy']
+					);
+					break;
 			}
-			$new_option['payable_post_types'] = array();
-			if(!empty($_REQUEST['payable_post_types'])){
-				foreach($_REQUEST['payable_post_types'] as $post_type){
-					array_push($new_option['payable_post_types'], $post_type);
-				}
-			}
+			$new_option = shortcode_atts($this->option, $option);
 			if(update_option("literally_wordpress_option", $new_option)){
 				$this->message[] = $this->_('Option updated.');
 			}else{
@@ -1745,7 +1769,7 @@ EOS;
 			ob_start();
 			$table = new LWP_List_History();
 			$table->prepare_items();
-			do_action("admin_notice");
+			do_action("admin_notices");
 			$table->display();
 			$book_shelf = ob_get_contents();
 			ob_end_clean();

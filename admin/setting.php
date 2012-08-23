@@ -9,7 +9,8 @@
 			'post' => $this->_('Post Sell'),
 			'subscription' => $this->_('Subscription'),
 			'event' => $this->_('Event'),
-			'reward' => $this->_('Reward')
+			'reward' => $this->_('Reward'),
+			'misc' => $this->_('Miscellaneous')
 		) as $key => $val):
 	?>
 	<a class="nav-tab<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] == $key) echo ' nav-tab-active'; ?>" href="<?php echo admin_url('admin.php?page=lwp-setting&view='.$key);?>">
@@ -31,6 +32,7 @@
 			case 'subscription':
 			case 'event':
 			case 'reward':
+			case 'misc':
 				$path = $this->dir."/admin/settings/{$_REQUEST['view']}.php";
 				if(file_exists($path)){
 					include_once $path;

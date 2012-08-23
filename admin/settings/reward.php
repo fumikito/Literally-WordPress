@@ -118,15 +118,5 @@
 				</p>
 			</td>
 		</tr>
-		<tr>
-			<th valign="top"><label><?php $this->e('Use Cache Engine'); ?></label></th>
-			<td>
-				<label><input type="radio" name="use_proxy" value="0" <?php if(!$this->option['use_proxy']) echo 'checked="checked"'; ?> /><?php $this->e('Disable'); ?></label><br />
-				<label><input type="radio" name="use_proxy" value="1" <?php if($this->option['use_proxy']) echo 'checked="checked"'; ?> /><?php $this->e('Enable'); ?></label>
-				<p class="description">
-					<?php $this->e('If you use cache plugin or proxy cache(i.e. Nginx), enable this. LWP output js to help session tracking.'); ?>
-				</p>
-			</td>
-		</tr>
 	</tbody>
 </table>

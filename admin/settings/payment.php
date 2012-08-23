@@ -1,10 +1,7 @@
 <h3><?php printf($this->_('About %s'), $this->_('Payment'));?></h3>
 <p class="description"><?php $this->e('To enable LWP, you have to set up at leaset one payment method.'); ?></p>
 
-
-
 <!-- Paypal -->
-
 
 
 <h3><?php $this->e('PayPal Settings');?></h3>
