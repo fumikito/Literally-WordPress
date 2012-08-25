@@ -19,36 +19,44 @@
 	<?php endforeach; ?>
 </h2>
 
-<form id="lwp-setting-form" method="post" action="<?php echo admin_url('admin.php?page=lwp-setting'); ?>">
-	<?php wp_nonce_field("lwp_update_option"); ?>
-	<?php if(isset($_REQUEST['view'])): ?>
-	<input type="hidden" name="view" value="<?php echo esc_attr($_REQUEST['view']); ?>" />
-	<?php endif; ?>
-	
-	<?php
-		switch(isset($_REQUEST['view']) ? $_REQUEST['view'] : ''){
-			case 'payment':
-			case 'post':
-			case 'subscription':
-			case 'event':
-			case 'reward':
-			case 'misc':
-				$path = $this->dir."/admin/settings/{$_REQUEST['view']}.php";
-				if(file_exists($path)){
-					include_once $path;
-				}else{
-					printf('<div class="error"><p>%s</p></div>', sprintf($this->_('Template file does not exists at %s.'), $path) );
+<div class="lwp-main-container">
+	<div class="lwp-container-inner">	
+		<form id="lwp-setting-form" method="post" action="<?php echo admin_url('admin.php?page=lwp-setting'); ?>">
+			<?php wp_nonce_field("lwp_update_option"); ?>
+			<?php if(isset($_REQUEST['view'])): ?>
+			<input type="hidden" name="view" value="<?php echo esc_attr($_REQUEST['view']); ?>" />
+			<?php endif; ?>
+
+			<?php
+				switch(isset($_REQUEST['view']) ? $_REQUEST['view'] : ''){
+					case 'payment':
+					case 'post':
+					case 'subscription':
+					case 'event':
+					case 'reward':
+					case 'misc':
+						$path = $this->dir."/admin/settings/{$_REQUEST['view']}.php";
+						if(file_exists($path)){
+							include_once $path;
+						}else{
+							printf('<div class="error"><p>%s</p></div>', sprintf($this->_('Template file does not exists at %s.'), $path) );
+						}
+						break;
+					default:
+						include_once $this->dir."/admin/settings/dashboard.php";
+						break;
 				}
-				break;
-			default:
-				include_once $this->dir."admin/settings/dashboard.php";
-				break;
-		}
-	?>
-		
-	<?php if(isset($_REQUEST['view'])): ?>
-	<p class="submit">
-		<input type="submit" class="button-primary" value="<?php $this->e("Update"); ?>" />
-	</p>
-	<?php endif; ?>
-</form>
+			?>
+
+			<?php if(isset($_REQUEST['view'])): ?>
+			<p class="submit">
+				<input type="submit" class="button-primary" value="<?php $this->e("Update"); ?>" />
+			</p>
+			<?php endif; ?>
+		</form>
+	</div><!-- //.lwp-container-inner -->
+</div><!-- //#lwp-status-container -->
+
+<?php include_once dirname(__FILE__).'/settings/sidebar.php';?>
+
+<div class="clear"></div>

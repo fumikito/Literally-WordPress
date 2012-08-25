@@ -96,6 +96,9 @@
 			<td>
 				<label><input type="radio" name="ios_public" value="1" <?php if($this->option['ios_public']) echo 'checked="checked"'; ?> /><?php $this->e('Public'); ?></label><br />
 				<label><input type="radio" name="ios_public" value="0" <?php if(!$this->option['ios_public']) echo 'checked="checked"'; ?> /><?php $this->e('Hidden'); ?></label>
+				<p class="description">
+					<?php $this->e('If you choose public, this post type is publicly displayed.'); ?>
+				</p>
 			</td>
 		</tr>
 		<tr>
@@ -103,6 +106,9 @@
 			<td>
 				<label><input type="radio" name="ios_available" value="1" <?php if($this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Available from Web site'); ?></label><br />
 				<label><input type="radio" name="ios_available" value="0" <?php if(!$this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Only available with iOS'); ?></label>
+				<p class="description">
+					<?php $this->e('If you enable this, iOS post type is can be bought from Web site.'); ?>
+				</p>
 			</td>
 		</tr>
 	</tbody>
