@@ -16,6 +16,10 @@ div.ebook{
 .icon32-posts-lwp_notification{
 	background-image: url('./mail_32.png');
 }
+.icon32-posts-ios-product{
+	background-image: url('./icon-iphone-32.png') !important;
+	background-position: 0 0 !important;
+}
 .lwp-wrap h3{
 	font-size:22px;
 	margin: 2em 0 1em;

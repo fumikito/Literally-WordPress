@@ -127,6 +127,12 @@ class Literally_WordPress{
 	public $message = array();
 	
 	/**
+	 * iOS Utility
+	 * @var LWP_iOS
+	 */
+	public $ios = null;
+	
+	/**
 	 * Form utility
 	 * @var LWP_Form
 	 */
@@ -242,7 +248,8 @@ class Literally_WordPress{
 				array_push($this->option['payable_post_types'], $this->option['custom_post_type']['slug']);
 			}
 		}
-		
+		//Initialize iOS
+		$this->ios = new LWP_iOS($this->option);
 		//Register form action
 		$this->form = new LWP_Form($this->option);
 		//Initialize Notification Utility
@@ -253,7 +260,6 @@ class Literally_WordPress{
 		$this->reward = new LWP_Reward($this->option);
 		//Initialize Event
 		$this->event = new LWP_Event($this->option);
-		
 		//Register hooks
 		$this->register_hooks();
 	}

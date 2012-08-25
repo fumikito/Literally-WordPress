@@ -41,6 +41,7 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-subscription.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-reward.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-event.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-ios.php";
 	
 	/**
 	 * Instance of Literally_WordPress
