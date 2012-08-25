@@ -1,5 +1,5 @@
 <?php
-	/* @var $this Literally_WordPress */
+	/* @var $this LWP_Post */
 	
 	$file = false;
 	$uploading = false;
@@ -114,7 +114,7 @@
 						<label for="title"><?php $this->e('Title'); ?></label>
 					</th>
 					<td class="field">
-						<input id="title" name="title" type="text" value="<?php if($updating || $updated) $this->h($file->name); ?>"/>
+						<input id="title" name="title" type="text" value="<?php if($updating || $updated) echo esc_html($file->name); ?>"/>
 						<p class="help"><?php $this->e('Name of this file. ex. ePub for iBooks(2nd Edition)'); ?></p>
 					</td>
 				</tr>
@@ -163,7 +163,7 @@
 						<label for="desc"><?php $this->e('Description'); ?></label>
 					</th>
 					<td class="field">
-						<textarea id="desc" name="desc"><?php if($updating || $updated) $this->h($file->detail); ?></textarea>
+						<textarea id="desc" name="desc"><?php if($updating || $updated) echo esc_html($file->detail); ?></textarea>
 						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>
@@ -205,7 +205,7 @@
 				<input type="submit" class="button" value="<?php $this->e('Update') ?>" />
 			</form>
 			<div class="filename">
-				<span class="title"><?php $this->h($f->name); ?></span>
+				<span class="title"><?php echo esc_html($f->name); ?></span>
 			</div>
 			<br style="clear:both" />
 		</div>

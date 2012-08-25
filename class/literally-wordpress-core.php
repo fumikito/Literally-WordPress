@@ -89,7 +89,13 @@ class Literally_WordPress{
 	* @var string
 	*/
 	public $dir = "";
-		
+	
+	/**
+	 * post meta key of price
+	 * @var string
+	 */
+	public $price_meta_key = 'lwp_price';
+	
 	/**
 	 * Paypalから返ってきたところかどうか
 	 * 
@@ -125,6 +131,12 @@ class Literally_WordPress{
 	 * @var array
 	 */
 	public $message = array();
+	
+	/**
+	 * Post sell utility
+	 * @var LWP_Post
+	 */
+	public $post = null;
 	
 	/**
 	 * iOS Utility
@@ -237,17 +249,6 @@ class Literally_WordPress{
 				"load_assets" => 2
 			)
 		);
-		// 作成したカスタムポストタイプが
-		// Payableオプションに入っていなかったら追加する
-		// あと、単数形が指定されていなかったら同じにする
-		if(!empty($this->option['custom_post_type'])){
-			if(empty($this->option['custom_post_type']['singular'])){
-				$this->option['custom_post_type']['singular'] = $this->option['custom_post_type']['name'];
-			}
-			if(false === array_search($this->option['custom_post_type']['slug'], $this->option['payable_post_types'])){
-				array_push($this->option['payable_post_types'], $this->option['custom_post_type']['slug']);
-			}
-		}
 		//Initialize iOS
 		$this->ios = new LWP_iOS($this->option);
 		//Register form action
@@ -260,6 +261,8 @@ class Literally_WordPress{
 		$this->reward = new LWP_Reward($this->option);
 		//Initialize Event
 		$this->event = new LWP_Event($this->option);
+		//Initialize sell post
+		$this->post = new LWP_Post($this->option);
 		//Register hooks
 		$this->register_hooks();
 	}
@@ -268,8 +271,6 @@ class Literally_WordPress{
 	 * Register all hooks. 
 	 */
 	private function register_hooks(){
-		//Add Custom Post Type
-		add_action("init", array($this, "custom_post"));
 		//Register Script Library
 		add_action('init', array($this, 'register_assets'));
 		//ウィジェットの登録
@@ -303,28 +304,16 @@ class Literally_WordPress{
 			if($this->is_admin("management")){
 				add_action("admin_init", array($this, "update_transaction"));
 			}
-			//端末更新
-			if($this->is_admin("devices")){
-				add_action("admin_init", array($this, "update_devices"));
-			}
-			//電子書籍のアップデート
-			add_action("edit_post", array($this, "post_update"));
 			//メニューの追加
 			add_action("admin_menu", array($this, "add_menu"), 1);
 			//メッセージの出力
 			add_action("admin_notices", array($this, "admin_notice"));
-			//ファイルアップロード用のタブを追加
-			add_action("media_upload_ebook", array($this, "generate_tab"));
 			//ユーザーに書籍をプレゼントするフォーム
 			add_action("edit_user_profile", array($this, "give_user_form"));
 			//書籍プレゼントが実行されたら
 			if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 				add_action("profile_update", array($this, "give_user"));
 			}
-			//ファイルアップロードのタブ生成アクションを追加するフィルター
-			add_filter("media_upload_tabs", array($this, "upload_tab"));
-			//ファイルアップロード可能な拡張子を追加する
-			add_filter("upload_mimes", array($this, "upload_mimes"));
 			//tinyMCEにボタンを追加する
 			add_filter("mce_external_plugins", array($this, "mce_plugin"));
 			add_filter("mce_external_languages", array($this, "mce_lang"));
@@ -340,46 +329,6 @@ class Literally_WordPress{
 			add_filter('the_content', array($this, "the_content"));
 			//Load public assets
 			add_action('wp_enqueue_scripts', array($this, 'load_public_assets'));
-		}
-	}
-	
-	/**
-	* カスタム投稿タイプを追加する
-	*
-	* @return void
-	*/
-	public function custom_post(){
-		if(!empty($this->option['custom_post_type'])){
-			//投稿タイプを設定
-			$labels = array(
-				'name' => $this->option['custom_post_type']['name'],
-				'singular_name' => $this->option['custom_post_type']['singular'],
-				'add_new' => $this->_('Add New'),
-				'add_new_item' => sprintf($this->_('Add New %s'), $this->option['custom_post_type']['singular']),
-				'edit_item' => sprintf($this->_("Edit %s"), $this->option['custom_post_type']['name']),
-				'new_item' => sprintf($this->_('Add New %s'), $this->option['custom_post_type']['singular']),
-				'view_item' => sprintf($this->_('View %s'), $this->option['custom_post_type']['singular']),
-				'search_items' => sprintf($this->_("Search %s"), $this->option['custom_post_type']['name']),
-				'not_found' =>  sprintf($this->_('No %s was found.'), $this->option['custom_post_type']['singular']),
-				'not_found_in_trash' => sprintf($this->_('No %s was found in trash.'), $this->option['custom_post_type']['singular']), 
-				'parent_item_colon' => ''
-			);
-			$args = array(
-				'labels' => $labels,
-				'public' => true,
-				'publicly_queryable' => true,
-				'show_ui' => true, 
-				'query_var' => true,
-				'rewrite' => true,
-				'capability_type' => 'post',
-				'hierarchical' => true,
-				'menu_position' => 9,
-				'has_archive' => true,
-				'supports' => array('title','editor','author','thumbnail','excerpt', 'comments', 'custom-fields'),
-				'show_in_nav_menus' => true,
-				'menu_icon' => $this->url."/assets/book.png"
-			);
-			register_post_type($this->option['custom_post_type']['slug'], $args);
 		}
 	}
 	
@@ -549,10 +498,6 @@ EOS;
 		}
 		//Theme option
 		add_theme_page($this->_("LWP Form Check"), $this->_('LWP Form Check'), 'edit_theme_options','lwp-form-check', array($this, 'load'));
-		//Add metaboxes
-		foreach($this->option['payable_post_types'] as $post){
-			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
-		}
 	}
 	
 	/**
@@ -603,10 +548,6 @@ EOS;
 		wp_enqueue_style("lwp-admin", $this->url."assets/style.css", array(), $this->version);
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
-		//On setting page, load tab js
-		if($this->is_admin('setting')){
-			//wp_enqueue_script('lwp-setting-tabpanel', $this->url.'assets/js/tab.js', $this->version);
-		}
 		//In case management or campaign, load datepicker.
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
@@ -767,13 +708,12 @@ EOS;
 	//--------------------------------------------
 	
 	/**
-	 * 設定更新時の処理
+	 * Update option on Admin panel
 	 * 
 	 * @since 0.3
 	 * @return void
 	 */
 	public function update_option(){
-		//要素が揃っていたら更新
 		if(
 			isset($_REQUEST["_wpnonce"], $_REQUEST["_wp_http_referer"])
 			&& false !== strpos($_REQUEST["_wp_http_referer"], "lwp-setting")
@@ -871,404 +811,6 @@ EOS;
 			do_action('lwp_update_option', $this->option);
 		}
 	}
-	
-	
-	//--------------------------------------------
-	//
-	// 電子書籍登録ページ
-	//
-	//--------------------------------------------
-	
-	/**
-	 * 投稿更新時の処理
-	 * 
-	 * @return void
-	 */
-	public function post_update(){
-		if(isset($_REQUEST["_lwpnonce"]) && wp_verify_nonce($_REQUEST["_lwpnonce"], "lwp_price")){
-			//Required. so empty, show error message
-			$price = preg_replace("/[^0-9.]/", "", mb_convert_kana($_REQUEST["lwp_price"], "n"));
-			if(preg_match("/^[0-9.]+$/", $price)){
-				update_post_meta($_POST["ID"], "lwp_price", $price);
-			}else{
-				$this->message[] = $this->_("Price must be numeric.");
-				$this->error = true;
-			}
-		} 
-	}
-	
-	/**
-	 * 投稿ページに追加するフォーム
-	 * 
-	 * @param object $post
-	 * @param array $metabox
-	 * @return void
-	 */
-	public function post_metabox_form($post, $metabox){
-		$files = $this->get_files($post->ID);
-		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail.php";
-		do_action('lwp_payable_post_type_metabox', $post, $metabox);
-	}
-	
-	//--------------------------------------------
-	//
-	// 電子書籍ファイルアップロード
-	//
-	//--------------------------------------------
-	
-	/**
-	 * アップローダーにタブ生成アクションを追加する
-	 * 
-	 * @param array $tabs
-	 * @return array
-	 */
-	public function upload_tab($tabs){
-		if($this->initialized){
-			$tabs["ebook"] = $this->_('Downloadble Contents');
-		}
-		return $tabs;
-	}
-	
-	/**
-	 * 追加されたタブを出力する
-	 * 
-	 * @return void
-	 */
-	public function generate_tab()
-	{
-		return wp_iframe(array($this, "media_iframe"));
-	}
-	
-	/**
-	 * アップロード用iframeの中身を返すコールバック
-	 * 
-	 * @return string
-	 */
-	public function media_iframe()
-	{
-		media_upload_header();
-		require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."upload.php";
-	}
-	
-	/**
-	 * 電子書籍に所属するファイルのリストを返す
-	 * 
-	 * @since 0.3
-	 * @param int $book_id (optional)
-	 * @param int $file_id (optional)
-	 * @return array|object
-	 */
-	public function get_files($book_id = null, $file_id = null)
-	{
-		global $wpdb;
-		if($book_id && $file_id){
-			return array();
-		}
-		$query = "SELECT * FROM {$this->files} WHERE";
-		if($file_id){
-			$query .= " ID = %d";
-			return $wpdb->get_row($wpdb->prepare($query, $file_id));
-		}else{
-			$query .= " book_id = %d";
-			return $wpdb->get_results($wpdb->prepare($query, $book_id));
-		}
-	}
-	
-	/**
-	 * ファイルをアップロードする
-	 * 
-	 * @param int $book_id
-	 * @param string $name
-	 * @param string $file
-	 * @param string $path
-	 * @return boolean
-	 */
-	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0){
-		//ディレクトリの存在確認と作成
-		$book_dir = $this->option["dir"].DIRECTORY_SEPARATOR.$book_id;
-		if(!is_dir($book_dir))
-			if(!@mkdir($book_dir))
-				return false;
-		//新しいファイル名の作成
-		$file = sanitize_file_name($file);
-		//ファイルの移動
-		if(!@move_uploaded_file($path, $book_dir.DIRECTORY_SEPARATOR.$file))
-			return false;
-		//データベースに書き込み
-		global $wpdb;
-		$wpdb->insert(
-			$this->files,
-			array(
-				"book_id" => $book_id,
-				"name" => $name,
-				"detail" => $desc,
-				"file" => $file,
-				"public" => $public,
-				"free" => $free,
-				"registered" => gmdate("Y-m-d H:i:s"),
-				"updated" => gmdate("Y-m-d H:i:s")
-			),
-			array("%d", "%s", "%s", "%s", "%d", "%d", "%s", "%s")
-		);
-		//デバイスを登録
-		$inserted_id = $wpdb->insert_id;
-		if($inserted_id && !empty($devices)){
-			foreach($devices as $d){
-				$wpdb->insert(
-					$this->file_relationships,
-					array(
-						"file_id" => $inserted_id,
-						"device_id" => $d
-					),
-					array("%d", "%d")
-				);
-			}
-		}
-		return $wpdb->insert_id;
-	}
-	
-	/**
-	* ファイルテーブルを更新する
-	*
-	* @global wpdb $wpdb
-	* @return boolean
-	*/
-	private function update_file($file_id, $name, $devices, $desc, $public = 1, $free = 0)
-	{
-		global $wpdb;
-		$wpdb->show_errors();
-		$req = $wpdb->update(
-			$this->files,
-			array(
-				"name" => $name,
-				"description" => $desc,
-				"public" => $public,
-				"free" => $free,
-				"updated" => gmdate("Y-m-d H:i:s")
-			),
-			array("ID" => $file_id),
-			array("%s", "%s", "%d", "%d", "%s"),
-			array("%d")
-		);
-		if($req){
-			//このファイルに登録されたデバイスIDをすべて削除
-			$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE file_id = %d", $file_id));
-			if(!empty($devices)){
-				foreach($devices as $d){
-					//新しいデバイスを登録
-					$wpdb->insert(
-						$this->file_relationships,
-						array(
-							"file_id" => $file_id,
-							"device_id" => $d
-						),
-						array("%d","%d")
-					);
-				}
-			}
-			return true;
-		}else
-			return false;
-	}
-	
-	/**
-	* 指定されたファイルを削除する
-	*
-	* @param int $file_id 
-	* @return boolean
-	*/
-	private function delete_file($file_id)
-	{
-		global $wpdb;
-		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->files} WHERE ID = %d", $file_id));
-		if(!$file){
-			return false;
-		}else{
-			//ファイルを削除する
-			if(!unlink($this->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file))
-				return false;
-			else{
-				if($wpdb->query("DELETE FROM {$this->files} WHERE ID = {$file->ID}")){
-					$wpdb->query($wpdb->prepare("DELETE FROM {$this->file_relationships} WHERE file_id = %d", $file_id));
-					return true;
-				}else
-					return false;
-			}
-		}
-	}
-	
-	/**
-	 * アップロードしたファイルにエラーがないか調べる
-	 * 
-	 * @param array $info
-	 * @return boolean
-	 */
-	private function file_has_error($info)
-	{
-		$message = '';
-		switch($info["error"]){
-			 case UPLOAD_ERR_INI_SIZE: 
-                $message = $this->_("Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined in php.ini"); 
-                break; 
-            case UPLOAD_ERR_FORM_SIZE: 
-                $message = $this->_("Uploaded file size exceeds"); 
-                break; 
-            case UPLOAD_ERR_PARTIAL: 
-                $message = $this->_("File has been uploaded incompletely. Check your internet connection."); 
-                break; 
-            case UPLOAD_ERR_NO_FILE: 
-                $message = $this->_("No file was uploaded."); 
-                break; 
-            case UPLOAD_ERR_NO_TMP_DIR: 
-                $message = $this->_("No tmp directory exists. Contact to your server administrator."); 
-                break; 
-            case UPLOAD_ERR_CANT_WRITE: 
-                $message = $this->_("Failed to save the uploaded file. Contact to your server administrator.");; 
-                break; 
-            case UPLOAD_ERR_EXTENSION: 
-                $message = $this->_("PHP stops uploading."); 
-                break;
-			case UPLOAD_ERR_OK:
-				$message = false;
-				break;
-		}
-		return $message;
-	}
-	
-	/**
-	 * ファイル名から拡張子を推測して返す
-	 * 
-	 * @param string $file
-	 * @return string
-	 */
-	public function detect_mime($file)
-	{
-		$mime = false;
-		$ext = pathinfo($file, PATHINFO_EXTENSION);
-		switch($ext){
-			case "epub":
-				$mime = "application/epub+zip";
-				break;
-			case "azw":
-				$mime = "application/octet-stream";
-				break;
-		}
-		if(!$mime){
-			foreach(get_allowed_mime_types() as $e => $m){
-				if(false !== strpos($e, $ext)){
-					$mime = $m;
-					break;
-				}
-			}
-		}
-		return $mime;
-	}
-	
-	/**
-	 * アップロード可能な拡張子を追加する
-	 * 
-	 * @param array $mimes
-	 * @return array
-	 */
-	public function upload_mimes($mimes)
-	{
-		//epub
-		$mimes["epub"] = "application/epub+zip";
-		//AZW
-		$mimes["azw"] = "application/octet-stream";
-		return $mimes;
-	}
-	
-	
-	
-	
-	
-	//--------------------------------------------
-	//
-	// Device
-	//
-	//--------------------------------------------
-
-	/**
-	 * CRUD interface for device
-	 * @global wpdb $wpdb
-	 * @return void
-	 */
-	public function update_devices(){
-		global $wpdb;
-		//Registere form
-		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "lwp_add_device")){
-			$req = $wpdb->insert(
-				$this->devices,
-				array(
-					"name" => $_REQUEST["device_name"],
-					"slug" => $_REQUEST["device_slug"]
-				),
-				array("%s", "%s")
-			);
-			if($req)
-				$this->message[] = $this->_("Device added.");
-			else
-				$this->message[] = $this->_("Failed to add device.");
-		}
-		//Bulk action
-		if(isset($_GET['devices'], $_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST['_wpnonce'], "bulk-devices") && !empty($_GET['devices'])){
-			switch($_GET['action']){
-				case "delete":
-					$ids = implode(',', array_map('intval', $_GET['devices']));
-					$sql = "DELETE FROM {$this->devices} WHERE ID IN ({$ids})";
-					$wpdb->query($sql);
-					$sql = "DELETE FROM {$this->file_relationships} WHERE device_id IN ({$ids})";
-					$wpdb->query($sql);
-					$this->message[] = $this->_("Device deleted.");
-					break;
-			}
-		}
-		//Update
-		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'edit_device')){
-			$wpdb->update(
-				$this->devices,
-				array(
-					'name' => (string)$_POST['device_name'],
-					'slug' => (string)$_POST['device_slug']
-				),
-				array('ID' => $_POST['device_id']),
-				array('%s', '%s'),
-				array('%d')
-			);
-			$this->message[] = $this->_('Device updated.');
-		}
-	}
-	
-	/**
-	 * Return device information
-	 * 
-	 * @since 0.3
-	 * @param object $file (optional) 指定した場合はファイルに紐づけられた端末を返す
-	 * @return array
-	 */
-	public function get_devices($file = null)
-	{
-		global $wpdb;
-		if(is_numeric($file)){
-			$file_id = $file;
-		}elseif(is_object($file)){
-			$file_id = $file->ID;
-		}
-		if(!is_null($file)){
-			$sql = <<<EOS
-				SELECT * FROM {$this->devices} as d
-				LEFT JOIN {$this->file_relationships} as f
-				ON d.ID = f.device_id
-				WHERE f.file_id = %d
-EOS;
-			$sql = $wpdb->prepare($sql, $file_id);
-		}else{
-			$sql = "SELECT * FROM {$this->devices}";
-		}
-		return $wpdb->get_results($sql);
-	}
-	
 	
 	
 	//--------------------------------------------
@@ -2047,8 +1589,7 @@ EOS;
 	 * @param string $page_name ページ名
 	 * @return boolean
 	 */
-	private function is_admin($page_name)
-	{
+	private function is_admin($page_name){
 		switch($page_name){
 			case "campaign":
 			case "setting":
@@ -2069,8 +1610,7 @@ EOS;
 	* @param string $str
 	* @return void|string
 	*/
-	public function h($str, $echo = true)
-	{
+	public function h($str, $echo = true){
 		$str = htmlspecialchars($str, ENT_QUOTES, "utf-8");
 		if($echo)
 			echo $str;
@@ -2084,8 +1624,7 @@ EOS;
 	 * @param string $url
 	 * return string
 	 */
-	public function ssl($url)
-	{
+	public function ssl($url){
 		return str_replace("http:", "https:", $url);
 	}
 	
