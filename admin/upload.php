@@ -18,25 +18,35 @@
 		//更新状態を変更
 		$uploaded = true;
 		//タイトルチェック
-		if(empty($_REQUEST["title"]))
+		if(empty($_REQUEST["title"])){
 			$message[] = $this->_("Title is empty.");
+			$error = true;
+		}
 		//公開状態のチェック
-		if(!is_numeric($_REQUEST["public"]))
+		if(!is_numeric($_REQUEST["public"])){
 			$message[] = $this->_ ('Select public status.');
+			$error = true;
+		}
 		//ファイルのチェック
-		if(empty($_FILES["file"]))
+		if(empty($_FILES["file"])){
 			$message[] = $this->_('No file is specified.');
+			$error = true;
 		//ファイルのエラーチェック
-		elseif($this->file_has_error($_FILES["file"]))
+		}elseif($this->file_has_error($_FILES["file"])){
 			$message[] = $this->file_has_error($_FILES["file"]);
+			$error = true;
+		}
 		//対応端末のチェック
-		if(empty($_POST['devices']))
+		if(empty($_POST['devices'])){
 			$message[] = $this->_ ('No device is specified.');
+			$error = true;
+		}
 		//エラー状態のチェック
 		if(empty($message)){
 			$this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]);
-		}else
+		}else{
 			$error = true;
+		}
 	}
 	//更新用アクション
 	elseif(
@@ -51,10 +61,12 @@
 		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
 	){
 		$updated = true;
-		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]))
+		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"])){
 			$message[] = $this->_ ('File is successfully updated.');
-		else
+		}else{
 			$message[] = $this->_('Failed to update file.');
+			$error = true;
+		}
 	}
 	//削除完了アクション
 	elseif(
@@ -62,10 +74,12 @@
 		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
 	){
 		$deleted = true;
-		if($this->delete_file($_REQUEST["file_id"]))
+		if($this->delete_file($_REQUEST["file_id"])){
 			$message[] = $this->_('File deleted.');
-		else
+		}else{
 			$message[] = $this->_('Failed to delete file.');
+			$error = true;
+		}
 	}else
 		$uploading = true;
 	
@@ -80,7 +94,8 @@
 	}
 	$files = $this->get_files($_GET["post_id"]);
 	$devices = $this->get_devices();
-?><form method="post" class="media-upload-form type-form validate" enctype="multipart/form-data">
+?>
+<form method="post" class="media-upload-form type-form validate" enctype="multipart/form-data" onsubmit="jQuery(this).find('input[type=submit]').val('<?php $this->e('Processing&hellip;'); ?>').attr('disabled', true); ">
 	<?php
 		if($updating || $updated){
 			wp_nonce_field("lwp_updated");
@@ -99,7 +114,7 @@
 		<?php endif; ?>
 		</h4>
 		<?php if(!empty($message)): ?>
-		<div class="error">
+		<div class="<?php echo ($error) ?  'error' : 'updated'; ?>">
 			<p>
 			<?php foreach($message as $m): ?>
 			<?php echo $m; ?><br />
@@ -163,7 +178,7 @@
 						<label for="desc"><?php $this->e('Description'); ?></label>
 					</th>
 					<td class="field">
-						<textarea id="desc" name="desc"><?php if($updating || $updated) echo esc_html($file->detail); ?></textarea>
+						<textarea id="desc" name="desc"><?php if($updating || $updated) echo esc_html($file->description); ?></textarea>
 						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>

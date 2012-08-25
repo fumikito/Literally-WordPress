@@ -22,6 +22,15 @@ class LWP_Post extends Literally_WordPress_Common{
 	private $file_directory = '';
 	
 	/**
+	 * Additional mime types to upload
+	 * @var type 
+	 */
+	private $additional_mimes = array(
+		"epub" => "application/epub+zip",
+		"azw" => "application/octet-stream"
+	);
+	
+	/**
 	 * @see Literally_WordPress_Common
 	 */
 	public function set_option($option) {
@@ -50,9 +59,12 @@ class LWP_Post extends Literally_WordPress_Common{
 	public function on_construct() {
 		if(!empty($this->custom_post_type)){
 			add_action("init", array($this, "register_post_type"));
+		}
+		if($this->is_enabled()){
 			add_action("save_post", array($this, "save_post"));
 			add_action('admin_menu', array($this, 'register_metabox'));
 			add_action("admin_init", array($this, "update_devices"));
+			add_filter('the_content', array($this, 'the_content'));
 			add_filter("media_upload_tabs", array($this, "upload_tab"));
 			add_action("media_upload_ebook", array($this, "generate_tab"));
 			add_filter("upload_mimes", array($this, "upload_mimes"));
@@ -102,19 +114,17 @@ class LWP_Post extends Literally_WordPress_Common{
 	public function register_metabox(){
 		//Add metaboxes
 		foreach($this->post_types as $post){
-			add_meta_box('lwp-detail', $this->_("Literally WordPress Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
+			add_meta_box('lwp-detail', $this->_("LWP Post sell Setting"), array($this, 'post_metabox_form'), $post, 'side', 'core');
 		}
 	}
 	
 	/**
 	 * Add form to post edit screen
-	 * @global Literally_WordPress $lwp
 	 * @param object $post
 	 * @param array $metabox
 	 * @return void
 	 */
 	public function post_metabox_form($post, $metabox){
-		$files = $this->get_files($post->ID);
 		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail.php";
 		do_action('lwp_payable_post_type_metabox', $post, $metabox);
 	}
@@ -138,6 +148,25 @@ class LWP_Post extends Literally_WordPress_Common{
 		} 
 	}
 
+	/**
+	 * Output automatic file tables
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param string $content
+	 * @return string
+	 */
+	public function the_content($content){
+		global $wpdb, $lwp;
+		if(in_the_loop() && false !== array_search(get_post_type(), $this->post_types) && $lwp->needs_auto_layout()){
+			$content .= lwp_show_form();
+			//if file exists, display file list table.
+			if($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$lwp->files} WHERE book_id = %d", get_the_ID()))){
+				$content .= lwp_get_device_table().lwp_get_file_list();
+			}
+		}
+		return $content;
+	}
+	
 	/**
 	 * Return device information
 	 * 
@@ -440,22 +469,17 @@ EOS;
 		}
 		return $message;
 	}
+	
 	/**
 	 * Detect mime types from uploaded file
 	 * @param string $file
-	 * @return string
+	 * @return string|false
 	 */
-	public function detect_mime($file)
-	{
+	public function detect_mime($file){
 		$mime = false;
 		$ext = pathinfo($file, PATHINFO_EXTENSION);
-		switch($ext){
-			case "epub":
-				$mime = "application/epub+zip";
-				break;
-			case "azw":
-				$mime = "application/octet-stream";
-				break;
+		if(array_key_exists($ext, $this->additional_mimes)){
+			$mime = $this->additional_mimes[$ext];
 		}
 		if(!$mime){
 			foreach(get_allowed_mime_types() as $e => $m){
@@ -474,8 +498,9 @@ EOS;
 	 * @return array
 	 */
 	public function upload_mimes($mimes){
-		$mimes["epub"] = "application/epub+zip";
-		$mimes["azw"] = "application/octet-stream";
+		foreach($this->additional_mimes as $ext => $mime){
+			$mimes[$ext] = $mime;
+		}
 		return apply_filters('lwp_upload_mimes', $mimes);
 	}
 	

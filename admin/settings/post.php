@@ -12,7 +12,7 @@
 				<label for="dir"><?php $this->e('Directory for File protection'); ?></label>
 			</th>
 			<td>
-				<input id="dir" name="dir" class="regular-text" type="text" value="<?php $this->h($this->option["dir"]); ?>" />
+				<input id="dir" name="dir" class="regular-text" type="text" value="<?php echo esc_attr($this->option["dir"]); ?>" />
 				<p class="description">
 					<?php $this->e('Directory to save files. This should be writable and innaccessible via HTTP.'); ?>
 					<small>（<?php echo $this->help("dir", $this->_("More &gt;"))?>）</small>

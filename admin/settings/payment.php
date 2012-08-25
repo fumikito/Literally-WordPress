@@ -50,7 +50,7 @@
 				<label for="user_name"><?php $this->e("PayPal API User Name");?></label>
 			</th>
 			<td>
-				<input id="user_name" name="user_name" class="regular-text" type="text" value="<?php $this->h($this->option["user_name"]); ?>" />
+				<input id="user_name" name="user_name" class="regular-text" type="text" value="<?php echo esc_attr($this->option["user_name"]); ?>" />
 				<p class="description">
 					<?php $this->e("PayPal API User Name issued by PayPal."); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 				</p>
@@ -61,7 +61,7 @@
 				<label for="marchand_pass"><?php $this->e("PayPal Password");?></label>
 			</th>
 			<td>
-				<input id="marchand_pass" name="marchand_pass" class="regular-text" type="password" value="<?php $this->h($this->option["password"]); ?>" />
+				<input id="marchand_pass" name="marchand_pass" class="regular-text" type="password" value="<?php echo esc_attr($this->option["password"]); ?>" />
 				<p class="description">
 					<?php $this->e("API password issued by PayPal"); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 				</p>
@@ -72,7 +72,7 @@
 				<label for="signature"><?php $this->e("PayPal Signature");?></label>
 			</th>
 			<td>
-				<input id="signature" name="signature" class="regular-text" type="text" value="<?php $this->h($this->option["signature"]); ?>" />
+				<input id="signature" name="signature" class="regular-text" type="text" value="<?php echo esc_attr($this->option["signature"]); ?>" />
 				<p class="description">
 					<?php $this->e("API signature issued by PayPal"); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 				</p>
@@ -83,7 +83,7 @@
 				<label for="token"><?php $this->e('PayPal PDT Token'); ?></label>
 			</th>
 			<td>
-				<input id="token" name="token" class="regular-text" type="text" value="<?php $this->h($this->option["token"]); ?>" />
+				<input id="token" name="token" class="regular-text" type="text" value="<?php echo esc_attr($this->option["token"]); ?>" />
 				<p class="description">
 					<?php $this->e("Token issued by PayPal. Required for transaction.")?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
 				</p>
@@ -99,7 +99,7 @@
 				<label for="product_slug"><?php $this->e('Product slug'); ?></label>
 			</th>
 			<td>
-				<input id="product_slug" name="product_slug" type="text" value="<?php $this->h($this->option['slug']); ?>" />
+				<input id="product_slug" name="product_slug" type="text" value="<?php echo esc_attr($this->option['slug']); ?>" />
 				<p class="description">
 					<?php $this->e('Slug for product ID displayed on PayPal Account Panel. It is usefull if you have multiple business on singular account.'); ?>
 					<small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />

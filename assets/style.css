@@ -267,7 +267,30 @@ input.short{
 	padding-left: 5px;
 	border-left: 3px solid #aaa;
 }
-
+/* Table for metabox */
+.lwp-metabox-table{
+	width: 100%;
+}
+.lwp-metabox-table th{
+	white-space: nowrap;
+	text-align: left;
+}
+.lwp-metabox-table input{
+	width: 8em;
+}
+.postbox p.uploader{
+	text-align: center;
+}
+.postbox p.error{
+	border: 1px solid #C00;
+	background: #FFEBE8;
+	color: #333;
+	padding: 5px 7px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+/* Form table */
 .lwp-form-table{
 	width: 100%;
 	border-collapse: collapse;

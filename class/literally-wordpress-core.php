@@ -325,7 +325,7 @@ class Literally_WordPress{
 			add_action("template_redirect", array($this->form, "manage_actions"));
 			//Redirect to auth page if user is not logged in
 			add_action("template_redirect", array($this, "protect_user_page"));
-			//the_contentにフックをかける
+			//Output purchase history
 			add_filter('the_content', array($this, "the_content"));
 			//Load public assets
 			add_action('wp_enqueue_scripts', array($this, 'load_public_assets'));
@@ -674,8 +674,7 @@ EOS;
 	 * @param string $title
 	 * return string
 	 */
-	public function help($name, $title)
-	{
+	public function help($name, $title){
 		$url = $this->url."help/?name={$name}";
 		if(is_ssl()){
 			$url = $this->ssl($url);
@@ -940,22 +939,14 @@ EOS;
 	 * @param string $time (optional) 指定しなければ今日の日付
 	 * @return booelan
 	 */
-	public function is_on_sale($post = null, $time = null)
-	{
+	public function is_on_sale($post = null, $time = null){
 		global $wpdb;
-		if(!$post){
-			global $post;
-			$post_id = $post->ID;
-		}elseif(is_object($post)){
-			$post_id = (int)$post->ID;
-		}else{
-			$post_id = $post;
-		}
+		$post = get_post($post);
 		if(!$time){
 			$time = date_i18n('Y-m-d H:i:s');
 		}
 		$sql = "SELECT ID FROM {$this->campaign} WHERE book_id = %d AND start <= %s AND end >= %s";
-		$req = $wpdb->get_row($wpdb->prepare($sql, $post_id, $time, $time));
+		$req = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $time, $time));
 		return $req != false;
 	}
 	
@@ -969,8 +960,7 @@ EOS;
 	 * @param boolean $multi
 	 * @return object|array 
 	 */
-	public function get_campaign($post_id, $time = false, $multi = false)
-	{
+	public function get_campaign($post_id, $time = false, $multi = false){
 		global $wpdb;
 		$sql = "SELECT * FROM {$this->campaign} WHERE book_id = %d";
 		if($time)
@@ -1075,30 +1065,19 @@ EOS;
 	}
 	
 	/**
-	 * ユーザーが電子書籍を所有しているかを返す
-	 * 
+	 * Return if user has transaction
 	 * @param object|int $post (optional)
 	 * @param int $user_id (optional)
 	 * @return boolean
 	 */
-	public function is_owner($post = null, $user_id = null)
-	{
-		if(!$post){
-			global $post;
-			$post_id = $post->ID;
-		}elseif(is_object($post)){
-			$post_id = (int) $post->ID;
-		}else{
-			$post_id = $post;
-		}
+	public function is_owner($post = null, $user_id = null){
+		$post = get_post($post);
 		if(!$user_id){
-			global $user_ID;
-			$user_id = (int) $user_ID;
+			$user_id = get_current_user_id();
 		}
 		global $wpdb;
 		$sql = "SELECT ID FROM {$this->transaction} WHERE user_id = %d AND book_id = %d AND status = %s";
-		$req = $wpdb->get_row($wpdb->prepare($sql, $user_id, $post_id, "SUCCESS"));
-		return (boolean) $req != false;
+		return (boolean) $wpdb->get_row($wpdb->prepare($sql, $user_id, $post->ID, LWP_Payment_Status::SUCCESS));
 	}
 	
 	/**
@@ -1304,11 +1283,7 @@ EOS;
 	 * @param string $content
 	 * @return string
 	 */
-	public function the_content($content)
-	{
-		global $post, $wpdb, $user_ID;
-		//本棚用のタグを作成
-		// TODO: タグを自動生成する必要はあるか？
+	public function the_content($content){
 		if($this->option["mypage"] > 0 && is_page($this->option["mypage"])){
 			if(!class_exists('WP_List_Table')){
 				$path = ABSPATH.'wp-admin/includes/class-wp-list-table.php';
@@ -1318,7 +1293,6 @@ EOS;
 					require_once $path;
 				}
 			}
-			
 			require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-history.php";
 			ob_start();
 			$table = new LWP_List_History();
@@ -1327,17 +1301,9 @@ EOS;
 			$table->display();
 			$book_shelf = ob_get_contents();
 			ob_end_clean();
-			return '<form id="book-shelf" method="get" action="'.get_permalink().'">'.$book_shelf.'</form>'.$content;
-		}elseif(false !== array_search(get_post_type(), $this->option['payable_post_types']) && $this->option['show_form']){
-			$content .= lwp_show_form();
-			//ダウンロード可能なファイルがあったらテーブルを出力
-			if($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$this->files} WHERE book_id = %d", $post->ID))){
-				$content .= lwp_get_device_table().lwp_get_file_list();
-			}
-			return $content;
-		}else{
-			return $content;
+			$content = '<form id="book-shelf" method="get" action="'.get_permalink().'">'.$book_shelf.'</form>'.$content;
 		}
+		return $content;
 	}
 	
 	/**
@@ -1577,11 +1543,13 @@ EOS;
 		return $buttons;
 	}
 	
-	//--------------------------------------------
-	//
-	// ユーティリティ
-	//
-	//--------------------------------------------	
+	/**
+	 * Returns if form should be output automatically
+	 * @return boolean
+	 */
+	public function needs_auto_layout(){
+		return (boolean)$this->option['show_form'];
+	}
 	
 	/**
 	 * 管理画面の該当するページか否かを返す
@@ -1603,26 +1571,11 @@ EOS;
 				break;
 		}
 	}
-	
+		
 	/**
-	* 文字列をhtmlspecislcharsにして返す
-	*
-	* @param string $str
-	* @return void|string
-	*/
-	public function h($str, $echo = true){
-		$str = htmlspecialchars($str, ENT_QUOTES, "utf-8");
-		if($echo)
-			echo $str;
-		else
-			return $str;
-	}
-	
-	/**
-	 * URLをSSL化して返す
-	 * 
+	 * Return url to ssl
 	 * @param string $url
-	 * return string
+	 * @return string
 	 */
 	public function ssl($url){
 		return str_replace("http:", "https:", $url);

@@ -110,19 +110,18 @@ function lwp_on_sale($post = null, $time = null)
  * @param boolean $timestamp (optional) タイムスタンプ型で取得する場合はtrue
  * @return string
  */
-function lwp_campaign_end($post = null, $timestamp = false)
-{
+function lwp_campaign_end($post = null, $timestamp = false){
 	global $lwp;
-	if(!$post)
-		global $post;
+	$post = get_post($post);
 	$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
-	if(!$campaign)
+	if(!$campaign){
 		return false;
-	else{
-		if($timestamp)
+	}else{
+		if($timestamp){
 			return strtotime($campaign->end);
-		else
+		}else{
 			return mysql2date(get_option("date_format"), $campaign->end, false);
+		}
 	}
 }
 
@@ -211,14 +210,16 @@ function lwp_the_price($post = null){
 
 
 /**
- * 電子書籍の定価を返す
+ * Returns price
  * 
+ * @global Literally_WordPress $lwp
  * @param object $post (optional)ループ内で引数なしで使用すると、表示中の電子書籍の定価を返します。
  * @return int
  */
-function lwp_original_price($post = null)
-{
-	return (float) _lwp_post_meta("lwp_price", $post);
+function lwp_original_price($post = null){
+	global $lwp;
+	$post = get_post($post);
+	return (float) get_post_meta($post->ID, $lwp->price_meta_key, true);
 }
 
 
