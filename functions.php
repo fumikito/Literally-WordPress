@@ -96,8 +96,7 @@ function lwp_is_sample($file)
  * @param string $time
  * @return booelan
  */
-function lwp_on_sale($post = null, $time = null)
-{
+function lwp_on_sale($post = null, $time = null){
 	global $lwp;
 	return $lwp->is_on_sale($post, $time);
 }
@@ -136,13 +135,8 @@ function lwp_campaign_end($post = null, $timestamp = false){
  * @param object $post (optional)
  * @return int
  */
-function lwp_price($post = null)
-{
-	if(!$post){
-		global $post;
-	}else{
-		$post = get_post($post);
-	}
+function lwp_price($post = null){
+	$post = get_post($post);
 	if(lwp_on_sale($post)){
 		global $lwp;
 		$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));

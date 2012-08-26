@@ -229,9 +229,7 @@ class LWP_Reward extends Literally_WordPress_Common{
 	public function metabox_margin($post, $metabox){
 		wp_nonce_field('lwp_individual_margin', '_lwpmarginnonce', false);
 		?>
-			<p class="description">
-				<?php printf($this->_("You can override this posts margin individually. Defalt is <strong>%d%%</strong>. If set as default, leave it blank."), $this->promotion_margin); ?>
-			</p>
+			<hr class="lwp-divider" />
 			<table class="lwp-metabox-table">
 				<tbody>
 					<th><label for="lwp_post_margin"><?php $this->e("Margin"); ?></label></th>
@@ -240,6 +238,9 @@ class LWP_Reward extends Literally_WordPress_Common{
 					</td>
 				</tbody>
 			</table>
+			<p class="description">
+				<?php printf($this->_("You can override this posts margin individually. Defalt is <strong>%d%%</strong>. If set as default, leave it blank."), $this->promotion_margin); ?>
+			</p>
 		<?php
 	}
 	

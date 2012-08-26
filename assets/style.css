@@ -281,6 +281,11 @@ input.short{
 .postbox p.uploader{
 	text-align: center;
 }
+hr.lwp-divider{
+	border:none;
+	margin: 1em 0;
+	border-top: 1px dotted #dfdfdf;
+}
 .postbox p.error{
 	border: 1px solid #C00;
 	background: #FFEBE8;
