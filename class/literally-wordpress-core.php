@@ -483,6 +483,10 @@ EOS;
 		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
 		//Purchase history
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
+		//iOS Manual if enabled
+		if($this->ios->is_enabled()){
+			add_submenu_page("edit.php?post_type=".$this->ios->post_type, $this->_('API Manual'), $this->_('API Manual'), 'edit_posts', "lwp-ios-api", array($this, 'load'));
+		}
 		//Reward Page if enabled
 		if($this->reward->is_enabled()){
 			//admin
@@ -511,7 +515,7 @@ EOS;
 			global $wpdb;
 			echo '<div class="wrap lwp-wrap">';
 			$class_name = (basename($_SERVER['SCRIPT_FILENAME']) == 'users.php') ? 'icon-users' : 'ebook';
-			echo "<div class=\"icon32 {$class_name}\"><br /></div>";
+			echo "<div class=\"icon32 {$class_name} icon32-{$slug}\"><br /></div>";
 			if(file_exists($this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php")){
 				require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."{$slug}.php";
 			}else{

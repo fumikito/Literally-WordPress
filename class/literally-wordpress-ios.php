@@ -286,10 +286,18 @@ EOS;
 			ORDER BY f.ID ASC
 EOS;
 		$result = $wpdb->get_results($wpdb->prepare($sql, $post_id), ARRAY_A);
+		$device_query = <<<EOS
+			SELECT d.name, d.slug
+			FROM {$lwp->devices} AS d
+			LEFT JOIN {$lwp->file_relationships} AS r
+			ON d.ID = r.device_id
+			WHERE r.file_id = %d
+EOS;
 		for($i = 0, $l = count($result); $i < $l; $i++){
 			$result[$i]['ID'] = intval($result[$i]['ID']);
 			$result[$i]['public'] = intval($result[$i]['public']);
-			$result[$i]['free'] = intval($result[$i]['free']);
+			$result[$i]['free'] = (boolean)$result[$i]['free'];
+			$result[$i]['devices'] = (array)$wpdb->get_results($wpdb->prepare($device_query, $result[$i]['ID']), ARRAY_A);
 		}
 		return $result;
 	}

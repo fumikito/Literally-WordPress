@@ -16,7 +16,8 @@ div.ebook{
 .icon32-posts-lwp_notification{
 	background-image: url('./mail_32.png');
 }
-.icon32-posts-ios-product{
+.icon32-posts-ios-product,
+.icon32-ios-api{
 	background-image: url('./icon-iphone-32.png') !important;
 	background-position: 0 0 !important;
 }
