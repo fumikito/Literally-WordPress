@@ -295,6 +295,19 @@ hr.lwp-divider{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
+/* Uploader */
+.lwp-uploader-tabel th,
+.lwp-uploader-tabel td{
+	padding: 5px;
+}
+.lwp-uploader-tabel th{
+	text-align: left;
+	white-space: nowrap;
+}
+.lwp-uploader-tabel p.help{
+	color: #888;
+	margin: 0.5em 0;
+}
 /* Form table */
 .lwp-form-table{
 	width: 100%;

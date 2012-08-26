@@ -377,7 +377,7 @@ EOS;
 			$lwp->files,
 			array(
 				"name" => $name,
-				"description" => $desc,
+				"detail" => $desc,
 				"public" => $public,
 				"free" => $free,
 				"updated" => gmdate("Y-m-d H:i:s")

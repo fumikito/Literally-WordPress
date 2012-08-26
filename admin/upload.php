@@ -122,7 +122,7 @@
 			</p>
 		</div>
 		<?php endif; ?>
-		<table class="describe">
+		<table class="describe lwp-uploader-tabel">
 			<tbody>
 				<tr>
 					<th scope="row" valign="top" class="label">
@@ -178,7 +178,7 @@
 						<label for="desc"><?php $this->e('Description'); ?></label>
 					</th>
 					<td class="field">
-						<textarea id="desc" name="desc"><?php if($updating || $updated) echo esc_html($file->description); ?></textarea>
+						<textarea id="desc" name="desc"><?php if($updating || $updated) echo esc_html($file->detail); ?></textarea>
 						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>
