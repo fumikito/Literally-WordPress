@@ -300,9 +300,7 @@ EOS;
 		global $wpdb, $lwp;
 		$post_id = intval($args);
 		$sql = <<<EOS
-			SELECT
-				f.ID, f.name, f.detail, f.free, f.public, f.registered, f.updated
-			FROM {$lwp->files} AS f
+			SELECT * FROM {$lwp->files} AS f
 			WHERE f.book_id = %d
 			ORDER BY f.ID ASC
 EOS;
@@ -324,19 +322,174 @@ EOS;
 	}
 	
 	/**
+	 * Get file
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param type $args
+	 */
+	public function ios_get_file($args){
+		global $lwp, $wpdb;
+		$file_id = isset($args[2]) ? intval($args[2]) : 0;
+		$file = $lwp->post->get_files(null, $file_id);
+		//Check file existance
+		if(!$file || !($path = $lwp->post->get_file_path($file))){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		switch($file->free){
+			case 2:
+				break;
+			case 1:
+				$this->xmlrpc_login($args);
+				break;
+			default:
+				$this->xmlrpc_login($args);
+				$receipt = $this->parse_receipt(isset($args[3]) ? $args[3] : '');
+				$sql = <<<EOS
+					SELECT ID FROM {$lwp->transaction}
+					WHERE user_id = %d
+					  AND book_id = %d AND transaction_key = %s
+					  AND status = %s AND method = %s
+EOS;
+				if(!$wpdb->get_var($wpdb->prepare($sql, get_current_user_id(), $receipt->original_transaction_id, LWP_Payment_Status::SUCCESS, LWP_Payment_Methods::APPLE))){
+					$this->kill($this->_('You have no purchase history. If you have one, please try restoration.'), 403);
+				}
+				break;
+		}
+		//File filter
+		$path = apply_filters('lwp_file_path', $path, $file, get_current_user_id());
+		if(!file_exists($path)){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		//All green. Now you can get file
+		$hash = md5_file($path);
+		$size = filesize($path);
+		if($size * .0009765625 * .0009765625 > 128){
+			$this->kill($this->_('File is too large. You cannot get file.'), 500);
+		}
+		ini_set('memory_limit', '128M');
+		return array(
+			'hash' => $hash,
+			'size' => $size,
+			'data' => new IXR_Base64(file_get_contents($path))
+		);
+	}
+	
+	/**
+	 * Register transaction
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param array $args
+	 * @return boolean
+	 */
+	public function ios_register_transaction($args){
+		global $wpdb, $lwp;
+		$this->xmlrpc_login($args);
+		$receipt = $this->parse_receipt($args[2]);
+		$post = $this->get_post_from_product_id($receipt->product_id);
+		if(!$post){
+			wp_die(srpintf($this->_('Product ID:%s does not exists.'), $receipt->product_id), '', array('response' => 404));
+		}
+		$price = isset($args[3]) ? (float)$args[3] : lwp_price($post);
+		$sql = <<<EOS
+			SELECT * FROM {$lwp->transaction}
+			WHERE book_id = %d AND transaction_key = %s AND method = %s AND status = %s AND user_id = %d
+EOS;
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $receipt->original_transaction_id,
+				LWP_Payment_Methods::APPLE, LWP_Payment_Status::SUCCESS, get_current_user_id()));
+		if($transaction){
+			return true;
+		}else{
+			return (boolean)$wpdb->insert($lwp->transaction, array(
+				'user_id' => get_current_user_id(),
+				'book_id' => $post->ID,
+				'price' => $price,
+				'status' => LWP_Payment_Status::SUCCESS,
+				'method' => LWP_Payment_Methods::APPLE,
+				'transaction_key' => $receipt->original_transaction_id,
+				'registered' => date('Y-m-d H:i:s', intval($receipt->original_purchase_date_ms / 1000) ),
+				'updated' => gmdate('Y-m-d H:i:s'),
+				'num' => $receipt->quantity
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d') );
+		}
+	}
+	
+	/**
+	 * Return post object from 
+	 * @global wpdb $wpdb
+	 * @param type $product_id
+	 * @return null
+	 */
+	private function get_post_from_product_id($product_id){
+		global $wpdb;
+		$post_id = $wpdb->get_var($wpdb->prepare("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %s", $this->product_id, $product_id));
+		if($post_id){
+			return get_post($post_id);
+		}else{
+			return null;
+		}
+	}
+	
+	/**
+	 * Get receipt parse
+	 * @param string $base64_receipt Base64 encoded receipt
+	 */
+	private function parse_receipt($base64_receipt){
+		//Try base64 decode
+		$receipt = base64_decode($base64_receipt);
+		if(!$receipt){
+			wp_die($this->_('Invalid Characters. Receipt must be sent as base64 encoded string.'), '', array('response' => 400));
+		}
+		//Check if it is sandbox
+		$endpoint = preg_match('/Sandbox/i', $receipt) ? 'https://sandbox.itunes.apple.com/verifyReceipt' : 'https://buy.itunes.apple.com/verifyReceipt';
+		//Get AppStore Response
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $endpoint);
+		curl_setopt ($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('receipt-data' => $base64_receipt)));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		//Verify response
+		if(!$response){
+			//Timed out
+			wp_die($this->_('Request Timeout.'), '', array('response' => 408));
+		}
+		//Parse request to json
+		$json = json_decode($response);
+		if(!$json){
+			//Feiled to Parse JSON
+			wp_die($this->_('Failed to parse Apple\'s response as JSON. Please check if receipt is valid.'), '', array('response' => 500));
+		}
+		//Here you are, json is valid
+		if($json->status !== 0){
+			//Request is invalid
+			wp_die(sprintf($this->_("Status Code %d: Invalid Receipt"), $json->status), '', array('response' => 403));
+		}
+		return $json->receipt;
+	}
+	
+	/**
 	 * Test login credential
 	 * @global wp_xmlrpc_server $wp_xmlrpc_server
 	 * @param array $args
+	 * @param boolean $die_failur if set true, die when login failed
 	 * @param int $username_index
 	 * @param int $password_index
 	 * @return WP_User|false
 	 */
-	private function xmlrpc_login($args = array(), $username_index = 0, $password_index = 1){
+	private function xmlrpc_login($args = array(), $die_failur = true, $username_index = 0, $password_index = 1){
 		global $wp_xmlrpc_server;
 		$username = isset($args[$username_index]) ? $args[$username_index] : false ;
 		$password = isset($args[$password_index]) ? $args[$password_index] : false ;
 		if($username && $password){
-			return $wp_xmlrpc_server->login($wp_xmlrpc_server->escape($username), $wp_xmlrpc_server->escape($password));
+			$user = $wp_xmlrpc_server->login($wp_xmlrpc_server->escape($username), $wp_xmlrpc_server->escape($password));
+			if(!$user && $die_failur){
+				wp_die($this->_('Failed to login. Wrong username/password.'), '', array('response' => 403));
+			}
+			return $user;
+		}elseif($die_failur){
+			wp_die($this->_('This API requires login credentials.'), '', array('response' => 403));
 		}else{
 			return false;
 		}

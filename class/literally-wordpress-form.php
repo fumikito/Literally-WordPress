@@ -509,13 +509,9 @@ EOS;
 		if(
 			!isset($_REQUEST["lwp_file"])
 				||
-			!($file =  $lwp->get_files(null, $_REQUEST["lwp_file"]))
+			!($file =  $lwp->post->get_files(null, $_REQUEST["lwp_file"]))
 				||
-			!(
-				($path = $lwp->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file)
-					&&
-				(file_exists($path))
-			)
+			!($path = $lwp->post->get_filte_path($file))
 		){
 			$this->kill($this->_('Specified file does not exist.'), 404);
 		}
@@ -539,7 +535,7 @@ EOS;
 		 * Let's start print file.
 		 */
 		//Get file information.
-		$mime = $lwp->detect_mime($file->file);
+		$mime = $lwp->post->detect_mime($file->file);
 		$size = filesize($path);
 		//Create header
 		$headers = array();
@@ -560,7 +556,7 @@ EOS;
 		//minimum = 100kb or 1/100 of file size, maximum 2MB
 		$per_size = apply_filters('lwp_download_size_per_second', min(max($size / 100, 100 * $kb), $kb * 2048), $file, $path);
 		//Do normal operation if flg is true
-		if(apply_filters('lwp_od_download', true, $file, $headers)){
+		if(apply_filters('lwp_ob_download', true, $file, $headers)){
 			//Output header
 			foreach($headers as $key => $value){
 				header("{$key}: {$value}");

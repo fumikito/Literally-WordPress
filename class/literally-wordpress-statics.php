@@ -245,6 +245,11 @@ class LWP_Payment_Methods {
 	const PAYPAL = 'PAYPAL';
 	
 	/**
+	 * Name of payment method for in App purchase
+	 */
+	const APPLE = 'APPLE';
+	
+	/**
 	 * Name of payment method for free campaign.
 	 */
 	const CAMPAIGN = 'CAMPAIGN';
@@ -270,7 +275,8 @@ class LWP_Payment_Methods {
 			self::PAYPAL,
 			self::CAMPAIGN,
 			self::PRESENT,
-			self::TRANSFER
+			self::TRANSFER,
+			self::APPLE
 		);
 		return $methods;
 	}
@@ -286,6 +292,7 @@ class LWP_Payment_Methods {
 		$lwp->_('CAMPAIGN');
 		$lwp->_('present');
 		$lwp->_('TRANSFER');
+		$lwp->_('APPLE');
 	}
 }
 

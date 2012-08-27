@@ -274,6 +274,7 @@ EOS;
 		media_upload_header();
 		require_once $this->dir.DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."upload.php";
 	}
+	
 	/**
 	 * Returns list of files
 	 * @since 0.3
@@ -288,6 +289,7 @@ EOS;
 			return array();
 		}
 		$query = "SELECT * FROM {$lwp->files} WHERE";
+		$files = array();
 		if($file_id){
 			$query .= " ID = %d";
 			return $wpdb->get_row($wpdb->prepare($query, $file_id));
@@ -298,7 +300,7 @@ EOS;
 	}
 	
 	/**
-	 * ファイルをアップロードする
+	 * UPload file
 	 * 
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
@@ -421,7 +423,7 @@ EOS;
 		if(!$file){
 			return false;
 		}else{
-			//ファイルを削除する
+			//delete file
 			if(!unlink($this->file_directory.DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file))
 				return false;
 			else{
@@ -471,13 +473,29 @@ EOS;
 	}
 	
 	/**
+	 * Returns file path if exists
+	 * @param object|int $file file object or file id.
+	 * @return false|string
+	 */
+	public function get_file_path($file){
+		if(is_numeric($file)){
+			$file = $this->get_files(null, $file);
+			if(!$file){
+				return false;
+			}
+		}
+		$path = $this->file_directory.DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
+		return file_exists($path) ? $path : false;
+	}
+	
+	/**
 	 * Detect mime types from uploaded file
-	 * @param string $file
+	 * @param string $path
 	 * @return string|false
 	 */
-	public function detect_mime($file){
+	public function detect_mime($path){
 		$mime = false;
-		$ext = pathinfo($file, PATHINFO_EXTENSION);
+		$ext = pathinfo($path, PATHINFO_EXTENSION);
 		if(array_key_exists($ext, $this->additional_mimes)){
 			$mime = $this->additional_mimes[$ext];
 		}
