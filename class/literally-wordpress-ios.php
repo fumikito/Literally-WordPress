@@ -186,6 +186,19 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 * @return array
 	 */
 	public function xmlrpc_methods($methods){
+		//check SSL if forced
+		if($this->is_ssl_forced() && !is_ssl()){
+			$error = new IXR_Error(403, $this->_('XML-RPC request must be on SSL.'));
+			$xml = '<?xml version="1.0"?>'."\n".$error->getXml();
+			$length = strlen($xml);
+			header('Connection: close');
+			header('Content-Length: '.$length);
+			header('Content-Type: text/xml');
+			header('Date: '.date('r'));
+			echo $xml;
+			exit;
+		}
+		//Register all methods starting with ios_
 		foreach(get_class_methods($this) as $method){
 			//register all class method starting with 'ios_'
 			if(preg_match("/^ios_/", $method)){
@@ -326,6 +339,24 @@ EOS;
 			return $wp_xmlrpc_server->login($wp_xmlrpc_server->escape($username), $wp_xmlrpc_server->escape($password));
 		}else{
 			return false;
+		}
+	}
+	
+	/**
+	 * Return if ssl is forced.
+	 * @return boolean
+	 */
+	private function is_ssl_forced(){
+		switch($this->force_ssl){
+			case 2:
+				return true;
+				break;
+			case 1:
+				return (defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN) || (defined('FORCE_SSL_LOGIN') && FORCE_SSL_LOGIN);
+				break;
+			default:
+				return false;
+				break;
 		}
 	}
 }
