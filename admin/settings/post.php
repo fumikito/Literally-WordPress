@@ -111,5 +111,19 @@
 				</p>
 			</td>
 		</tr>
+		<tr>
+			<th><?php $this->e('Force SSL on XML-RPC'); ?></th>
+			<td>
+				<label><input type="radio" name="ios_force_ssl" value="2" <?php if($this->option['ios_force_ssl'] == 2) echo 'checked="checked"'; ?> /><?php $this->e('Force'); ?></label><br />
+				<label><input type="radio" name="ios_force_ssl" value="1" <?php if($this->option['ios_force_ssl'] == 1) echo 'checked="checked"'; ?> /><?php $this->e('Depends on WordPress setting'); ?></label><br />
+				<label><input type="radio" name="ios_force_ssl" value="0" <?php if(!$this->option['ios_force_ssl']) echo 'checked="checked"'; ?> /><?php $this->e('Do nothing'); ?></label>
+				<p class="description"><?php
+					printf(
+						$this->_('Your current WordPress setting: Admin Panel SSL = <strong>%1$s</strong> , Login SSL = <strong>%2$s</strong> '),
+						(FORCE_SSL_ADMIN ? 'ON': 'OFF'),
+						(FORCE_SSL_LOGIN ? 'ON': 'OFF')); ?>
+				</p>
+			</td>
+		</tr>
 	</tbody>
 </table>

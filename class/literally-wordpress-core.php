@@ -217,6 +217,7 @@ class Literally_WordPress{
 				'ios' => false,
 				'ios_public' => false,
 				'ios_available' => false,
+				'ios_force_ssl' => 0,
 				"subscription" => false,
 				"subscription_post_types" => array(),
 				'subscription_format' => 'all',
@@ -744,7 +745,8 @@ EOS;
 						"dir" => $_REQUEST["dir"],
 						'ios' => (boolean)$_REQUEST['ios'],
 						'ios_public' => (boolean)$_REQUEST['ios_public'],
-						'ios_available' => (boolean)$_REQUEST['ios_available']
+						'ios_available' => (boolean)$_REQUEST['ios_available'],
+						'ios_force_ssl' => (int)$_REQUEST['ios_force_ssl']
 					);
 					if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
 						$option['custom_post_type'] = array(

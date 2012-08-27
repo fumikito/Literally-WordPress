@@ -27,6 +27,12 @@ class LWP_iOS extends Literally_WordPress_Common{
 	private $post_type_public = false;
 	
 	/**
+	 * whether to force ssl
+	 * @var int 
+	 */
+	private $force_ssl = 0;
+	
+	/**
 	 * post meta key name for product id
 	 * @var string 
 	 */
@@ -39,11 +45,13 @@ class LWP_iOS extends Literally_WordPress_Common{
 		$option = shortcode_atts(array(
 			'ios' => false,
 			'ios_public' => false,
-			'ios_available' => false
+			'ios_available' => false,
+			'ios_force_ssl' => 0
 		), $option);
 		$this->enabled = (boolean) $option['ios'];
 		$this->web_available = (boolean) $option['ios_available'];
 		$this->post_type_public = (boolean) $option['ios_public'];
+		$this->force_ssl = (int)$option['ios_force_ssl'];
 		if($this->is_enabled()){
 			add_filter('lwp_payable_post_types', array($this, 'add_post_type'));
 		}
@@ -300,5 +308,24 @@ EOS;
 			$result[$i]['devices'] = (array)$wpdb->get_results($wpdb->prepare($device_query, $result[$i]['ID']), ARRAY_A);
 		}
 		return $result;
+	}
+	
+	/**
+	 * Test login credential
+	 * @global wp_xmlrpc_server $wp_xmlrpc_server
+	 * @param array $args
+	 * @param int $username_index
+	 * @param int $password_index
+	 * @return WP_User|false
+	 */
+	private function xmlrpc_login($args = array(), $username_index = 0, $password_index = 1){
+		global $wp_xmlrpc_server;
+		$username = isset($args[$username_index]) ? $args[$username_index] : false ;
+		$password = isset($args[$password_index]) ? $args[$password_index] : false ;
+		if($username && $password){
+			return $wp_xmlrpc_server->login($wp_xmlrpc_server->escape($username), $wp_xmlrpc_server->escape($password));
+		}else{
+			return false;
+		}
 	}
 }
