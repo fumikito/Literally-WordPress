@@ -39,6 +39,12 @@ class LWP_iOS extends Literally_WordPress_Common{
 	public $product_id = '_lwp_ios_product_id';
 	
 	/**
+	 * Returns all methods name
+	 * @var array
+	 */
+	private $methods = array();
+	
+	/**
 	 * @see Literally_WordPress_Common
 	 */
 	public function set_option($option) {
@@ -206,7 +212,16 @@ class LWP_iOS extends Literally_WordPress_Common{
 				$methods[$xmlrpc_method] = array($this, $method);
 			}
 		}
+		$this->methods = array_keys($methods);
 		return $methods;
+	}
+	
+	/**
+	 * Returns registered methods
+	 * @global wp_xmlrpc_server $wp_xmlrpc_server
+	 */
+	public function ios_methods(){
+		return $this->methods;
 	}
 	
 	/**
@@ -325,7 +340,7 @@ EOS;
 	 * Get file
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
-	 * @param type $args
+	 * @param array $args
 	 */
 	public function ios_get_file($args){
 		global $lwp, $wpdb;
@@ -343,14 +358,11 @@ EOS;
 				break;
 			default:
 				$this->xmlrpc_login($args);
-				$receipt = $this->parse_receipt(isset($args[3]) ? $args[3] : '');
 				$sql = <<<EOS
 					SELECT ID FROM {$lwp->transaction}
-					WHERE user_id = %d
-					  AND book_id = %d AND transaction_key = %s
-					  AND status = %s AND method = %s
+					WHERE user_id = %d AND status = %s AND book_id = %d
 EOS;
-				if(!$wpdb->get_var($wpdb->prepare($sql, get_current_user_id(), $receipt->original_transaction_id, LWP_Payment_Status::SUCCESS, LWP_Payment_Methods::APPLE))){
+				if(!$wpdb->get_var($wpdb->prepare($sql, get_current_user_id(), $file->book_id, LWP_Payment_Status::SUCCESS))){
 					$this->kill($this->_('You have no purchase history. If you have one, please try restoration.'), 403);
 				}
 				break;
@@ -387,7 +399,7 @@ EOS;
 		$receipt = $this->parse_receipt($args[2]);
 		$post = $this->get_post_from_product_id($receipt->product_id);
 		if(!$post){
-			wp_die(srpintf($this->_('Product ID:%s does not exists.'), $receipt->product_id), '', array('response' => 404));
+			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $receipt->product_id), 404);
 		}
 		$price = isset($args[3]) ? (float)$args[3] : lwp_price($post);
 		$sql = <<<EOS
@@ -414,6 +426,46 @@ EOS;
 	}
 	
 	/**
+	 * Returns user inforamtion
+	 * @param array $args username, password
+	 * @return WP_User
+	 */
+	public function ios_get_user_info($args){
+		$user = $this->xmlrpc_login($args);
+		return apply_filters('lwp_ios_user', $user);
+	}
+	
+	/**
+	 * Returns user transaction
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param array $args username, password, page, method
+	 * @return array
+	 */
+	public function ios_get_user_transactions($args){
+		global $wpdb, $lwp;
+		$this->xmlrpc_login($args);
+		$index = isset($args[2]) ? intval($args[2]) : 1;
+		$method = isset($args[3]) ? strval($args[3]) : LWP_Payment_Methods::APPLE;
+		$per_page = get_option('posts_per_page');
+		$offset = max(0, $index - 1) * $per_page;
+		$sql = <<<EOS
+			SELECT SQL_CALC_FOUND_ROWS
+				transaction_key AS transaction_id, book_id AS post_id, price, status, registered, updated, num
+			FROM {$lwp->transaction}
+			WHERE user_id = %d AND method = %s
+			ORDER BY registered DESC
+			LIMIT {$offset}, {$per_page}
+EOS;
+		$transactions = $wpdb->get_results($wpdb->prepare($sql, get_current_user_id(), $method));
+		return array(
+			'transactions' => $transactions,
+			'total' => $wpdb->get_var("SELECT FOUND_ROWS()"),
+			'page' => $index
+		);
+	}
+	
+	/**
 	 * Return post object from 
 	 * @global wpdb $wpdb
 	 * @param type $product_id
@@ -437,7 +489,7 @@ EOS;
 		//Try base64 decode
 		$receipt = base64_decode($base64_receipt);
 		if(!$receipt){
-			wp_die($this->_('Invalid Characters. Receipt must be sent as base64 encoded string.'), '', array('response' => 400));
+			$this->kill($this->_('Invalid Characters. Receipt must be sent as base64 encoded string.'), 400);
 		}
 		//Check if it is sandbox
 		$endpoint = preg_match('/Sandbox/i', $receipt) ? 'https://sandbox.itunes.apple.com/verifyReceipt' : 'https://buy.itunes.apple.com/verifyReceipt';
@@ -453,18 +505,18 @@ EOS;
 		//Verify response
 		if(!$response){
 			//Timed out
-			wp_die($this->_('Request Timeout.'), '', array('response' => 408));
+			$this->kill($this->_('Request Timeout.'), 408);
 		}
 		//Parse request to json
 		$json = json_decode($response);
 		if(!$json){
 			//Feiled to Parse JSON
-			wp_die($this->_('Failed to parse Apple\'s response as JSON. Please check if receipt is valid.'), '', array('response' => 500));
+			$this->kill($this->_('Failed to parse Apple\'s response as JSON. Please check if receipt is valid.'), 500);
 		}
 		//Here you are, json is valid
 		if($json->status !== 0){
 			//Request is invalid
-			wp_die(sprintf($this->_("Status Code %d: Invalid Receipt"), $json->status), '', array('response' => 403));
+			$this->kill(sprintf($this->_("Status Code %d: Invalid Receipt"), $json->status), 403);
 		}
 		return $json->receipt;
 	}
@@ -485,11 +537,11 @@ EOS;
 		if($username && $password){
 			$user = $wp_xmlrpc_server->login($wp_xmlrpc_server->escape($username), $wp_xmlrpc_server->escape($password));
 			if(!$user && $die_failur){
-				wp_die($this->_('Failed to login. Wrong username/password.'), '', array('response' => 403));
+				$this->kill($this->_('Failed to login. Wrong username/password.'), 403);
 			}
 			return $user;
 		}elseif($die_failur){
-			wp_die($this->_('This API requires login credentials.'), '', array('response' => 403));
+			$this->kill($this->_('This API requires login credentials.'), 403);
 		}else{
 			return false;
 		}
