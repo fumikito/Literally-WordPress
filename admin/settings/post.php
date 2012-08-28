@@ -107,7 +107,7 @@
 				<label><input type="radio" name="ios_available" value="1" <?php if($this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Available from Web site'); ?></label><br />
 				<label><input type="radio" name="ios_available" value="0" <?php if(!$this->option['ios_available']) echo 'checked="checked"'; ?> /><?php $this->e('Only available with iOS'); ?></label>
 				<p class="description">
-					<?php $this->e('If you enable this, iOS post type is can be bought from Web site.'); ?>
+					<?php $this->e('If you enable this, iOS post type can be bought from Web site.'); ?>
 				</p>
 			</td>
 		</tr>
@@ -123,6 +123,20 @@
 						(FORCE_SSL_ADMIN ? 'ON': 'OFF'),
 						(FORCE_SSL_LOGIN ? 'ON': 'OFF')); ?>
 				</p>
+			</td>
+		</tr>
+		<tr>
+			<th><?php $this->e('Endpoint'); ?></th>
+			<td><code><?php echo esc_html(home_url('/xmlrpc.php', ($this->ios->is_ssl_forced() ? 'https' : 'http' )) ); ?></code></td>
+		</tr>
+		<tr>
+			<th><?php $this->e('XML-RPC availability'); ?></th>
+			<td>
+				<?php if(get_option('enable_xmlrpc')): ?>
+					<?php $this->e('Enabled'); ?>
+				<?php else: ?>
+					<?php printf($this->_('XML-RPC is disabled. Please enable it <a href="%s">here</a>'), admin_url('options-writing.php')); ?>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>

@@ -59,12 +59,12 @@
 		<?php foreach(array(
 			array(
 				__('Post'),
-				!empty($this->option['payable_post_types']),
+				$this->post->is_enabled(),
 				''
 			),
 			array(
 				$this->_('iOS non-consumable Product'),
-				false,
+				$this->ios->is_enabled(),
 				$this->_('You can also sell iOS product via Web site.')
 			),
 			array(

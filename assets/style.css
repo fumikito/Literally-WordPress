@@ -36,6 +36,20 @@ div.ebook{
 	font-size:18px;
 	color:#666;
 }
+.lwp-api-list h4{
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top:1px dotted #ccc;
+}
+.lwp-api-list h4:first-child{
+	margin-top: 0;
+	padding-top: 0;
+	border-top: none;
+}
+.lwp-wrap h5{
+	font-size: 14px;
+	margin-bottom: 0.5em;
+}
 .lwp-wrap em{
 	font-family: Baskerville,Times,'Times New Roman',serif !important; 
 }

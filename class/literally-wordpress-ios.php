@@ -234,7 +234,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 */
 	public function ios_product_list($args = array()){
 		global $lwp, $wpdb;
-		$args = wp_parse_args($args, array(
+		$args = wp_parse_args((array)$args[0], array(
 			'term_taxonomy_id' => 0,
 			'orderby' => 'pm1.meta_value',
 			'order' => 'ASC',
@@ -330,7 +330,7 @@ EOS;
 		for($i = 0, $l = count($result); $i < $l; $i++){
 			$result[$i]['ID'] = intval($result[$i]['ID']);
 			$result[$i]['public'] = intval($result[$i]['public']);
-			$result[$i]['free'] = (boolean)$result[$i]['free'];
+			$result[$i]['free'] = (int)$result[$i]['free'];
 			$result[$i]['devices'] = (array)$wpdb->get_results($wpdb->prepare($device_query, $result[$i]['ID']), ARRAY_A);
 		}
 		return $result;
@@ -360,7 +360,7 @@ EOS;
 				$this->xmlrpc_login($args);
 				$sql = <<<EOS
 					SELECT ID FROM {$lwp->transaction}
-					WHERE user_id = %d AND status = %s AND book_id = %d
+					WHERE user_id = %d AND book_id = %d AND status = %s
 EOS;
 				if(!$wpdb->get_var($wpdb->prepare($sql, get_current_user_id(), $file->book_id, LWP_Payment_Status::SUCCESS))){
 					$this->kill($this->_('You have no purchase history. If you have one, please try restoration.'), 403);
@@ -382,6 +382,7 @@ EOS;
 		return array(
 			'hash' => $hash,
 			'size' => $size,
+			'mime' => $lwp->post->detect_mime($path),
 			'data' => new IXR_Base64(file_get_contents($path))
 		);
 	}
@@ -458,6 +459,11 @@ EOS;
 			LIMIT {$offset}, {$per_page}
 EOS;
 		$transactions = $wpdb->get_results($wpdb->prepare($sql, get_current_user_id(), $method));
+		for($i = 0, $l = count($transactions); $i < $l; $i++){
+			$transactions[$i]['post_id'] = intval($transactions[$i]['post_id']);
+			$transactions[$i]['price'] = (float)$transactions[$i]['price'];
+			$transactions[$i]['num'] = intval($transactions[$i]['num']);
+		}
 		return array(
 			'transactions' => $transactions,
 			'total' => $wpdb->get_var("SELECT FOUND_ROWS()"),
@@ -551,7 +557,7 @@ EOS;
 	 * Return if ssl is forced.
 	 * @return boolean
 	 */
-	private function is_ssl_forced(){
+	public function is_ssl_forced(){
 		switch($this->force_ssl){
 			case 2:
 				return true;
