@@ -20,16 +20,16 @@
 		</tr>
 	</tfoot>
 	<tbody>
-		<?php foreach (array(
+		<?php $paypal_warning = $this->paypal_warning(); foreach (array(
 			array(
 				'PayPal',
-				!empty($this->option['username']),
-				''
+				!$paypal_warning,
+				sprintf($this->_('Set up your PayPal information <a href="%s">here</a>.'), admin_url('admin.php?page=lwp-setting&view=payment'))
 			),
 			array(
 				$this->_('Transfer'),
 				$this->notifier->is_enabled(),
-				''
+				sprintf($this->_('Transafer is typically bank transfer. You can set up it <a href="%s">here</a>.'),  admin_url('admin.php?page=lwp-setting&view=payment'))
 			)
 		) as $var): ?>
 		<tr<?php if($var[1]) echo ' class="enabled"' ?>>
@@ -60,22 +60,22 @@
 			array(
 				__('Post'),
 				$this->post->is_enabled(),
-				''
+				$this->_('You can sell post content itself or attached downloadble content. Typically you can sell your ebook, music video, how-tos and so on.')
 			),
 			array(
 				$this->_('iOS non-consumable Product'),
 				$this->ios->is_enabled(),
-				$this->_('You can also sell iOS product via Web site.')
+				$this->_('You can manage iOS non-consumable product with WordPress.')
 			),
 			array(
 				$this->_('Subscription'),
 				$this->subscription->is_enabled(),
-				''
+				$this->_('You can provide member only contents by subscription plan. You can choose any price, any period.')
 			),
 			array(
 				$this->_('Event'),
 				$this->event->is_enabled(),
-				''
+				$this->_('Event means real event like lunch party, poetry reading or else.')
 			)
 		)as $var): ?>
 		<tr<?php if($var[1]) echo ' class="enabled"' ?>>
@@ -106,7 +106,7 @@
 			array(
 				$this->_('Reward'),
 				$this->reward->is_enabled(),
-				''
+				$this->_('You can allow your users to promote your product and reward for them.')
 			)
 		) as $var): ?>
 		<tr<?php if($var[1]) echo ' class="enabled"' ?>>

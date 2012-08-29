@@ -709,4 +709,58 @@ EOS;
 	public function is_payable($post_type){
 		return false !== array_search((string)$post_type, $this->post_types);
 	}
+	
+	/**
+	 * Returns file directory security if exists
+	 * @return string
+	 */
+	public function directory_safety_warning(){
+		//Check directory's existance and if not, try to create
+		if(!is_dir($this->file_directory) || !file_exists($this->file_directory)){
+			if(!@mkdir($this->file_directory, true)){
+				return sprintf($this->_('Can\'t make directory. Check parmissin of "%s"'), dirname($this->file_directory));
+			}else{
+				@chmod($this->file_directory, 0700);
+			}
+		}
+		//Check if directory is writable.
+		if(!is_writable($this->file_directory)){
+			return $this->_('Directory isn\'t writable.');
+		}
+		//Check if Directory is outside of plugin
+		if(0 === strpos($this->dir, $this->file_directory)){
+			return $this->_("Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating.");
+		}
+		//If contents folder is in document root tree, check it's accessibility
+		if(false !== strpos($this->file_directory, ABSPATH)){
+			//Create access check file if not exists.
+			$access_check_file = $this->file_directory.DIRECTORY_SEPARATOR."access";
+			if(!file_exists($access_check_file)){
+				@file_put_contents($access_check_file, $this->_('Warning! This file is accessible!'));
+			}
+			//Create .htaccess if not exists
+			$htaccess_path = $this->file_directory.DIRECTORY_SEPARATOR.".htaccess";
+			$htaccess = <<<EOS
+<FilesMatch ".*$">
+        Order allow,deny
+        deny from all
+</FilesMatch>
+
+EOS;
+			if(!file_exists($htaccess_path)){
+				@file_put_contents($htaccess_path, $htaccess);
+			}
+			//Try to access via HTTP
+			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $access_check_file);
+			$ch = curl_init($test_url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_exec($ch);
+			//Check HTTP status code
+			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			if($http_code == 200){
+				return $this->_('Directory is publically accessible via HTTP');
+			}
+		}
+		return null;
+	}
 }

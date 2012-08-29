@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.9.1.3";
+	public $version = "0.9.2.0";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -290,8 +290,6 @@ class Literally_WordPress{
 			}
 			//Check table and create if not exits
 			add_action('admin_init', array($this, 'check_table'));
-			//課金有効かどうかの判断
-			add_action("admin_init", array($this, "validate"));
 			//スタイルシート・JSの追加
 			add_action("admin_enqueue_scripts", array($this, "admin_assets"));
 			//キャンペーン更新
@@ -338,84 +336,22 @@ class Literally_WordPress{
 	
 	
 	/**
-	 * プラグインを有効化しても問題がないかどうかチェックする
-	 * 
+	 * Is PayPal valid
 	 * @return void
 	 */
-	public function validate(){
-		//Check directory's existance and if not, try to create
-		if(!is_dir($this->option['dir']) || !file_exists($this->option['dir'])){
-			if(!@mkdir($this->option['dir'], true)){
-				$this->initialized = false;
-				$this->message[] = sprintf($this->_('Can\'t make directory. Check parmissin of "%s"'), dirname($this->option['dir']));
-				$this->error = true;
-			}else{
-				@chmod($this->option['dir'], 0700);
-			}
-		}
-		//Check if directory is writable.
-		if(!is_writable($this->option["dir"])){
-			$this->initialized = false;
-			$this->message["dir"] = $this->_('Directory isn\'t writable.');
-			$this->error = true;
-		}
-		//Check if Directory is outside of plugin
-		if(0 === strpos($this->dir, $this->option['dir'])){
-			$this->message[] = $this->_("Your contents directory is inside plugins folder. Strongly recommended to place it outside of plugin folder to prevent it from being deleted on updating.");
-		}
-		//If contents folder is in document root tree, check it's accessibility
-		if(false !== strpos($this->option["dir"], ABSPATH)){
-			//Create access check file if not exists.
-			$access_check_file = $this->option["dir"].DIRECTORY_SEPARATOR."access";
-			if(!file_exists($access_check_file)){
-				@file_put_contents($access_check_file, $this->_('Warning! This file is accessible!'));
-			}
-			//Create .htaccess if not exists
-			$htaccess_path = $this->option["dir"].DIRECTORY_SEPARATOR.".htaccess";
-			$htaccess = <<<EOS
-<FilesMatch ".*$">
-        Order allow,deny
-        deny from all
-</FilesMatch>
-
-EOS;
-			if(!file_exists($htaccess_path)){
-				@file_put_contents($htaccess_path, $htaccess);
-			}
-			//Try to access via HTTP
-			$test_url = str_replace(ABSPATH, get_bloginfo("url")."/", $access_check_file);
-			$ch = curl_init($test_url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_exec($ch);
-			//Check HTTP status code
-			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if($http_code == 200){
-				$this->initialized = false;
-				$this->message["access"] = $this->_('Directory is publically accessible via HTTP');
-				$this->error = true;
-			}
-		}
+	public function paypal_warning(){
 		//課金できるかどうかチェック
 		if(empty($this->option["user_name"]) || empty($this->option["token"])){
-			$this->initialized = false;
-			$this->message["paypal"] = $this->_('Marchand ID and PDT Token required for transaction');
-			$this->error = true;
+			return $this->_('Marchand ID and PDT Token required for transaction');
 		}
 		//通貨と国が設定されているかをチェック
 		if(false == array_key_exists($this->option['currency_code'], PayPal_Statics::currency_codes())){
-			$this->initialized = false;
-			$this->message["currency"] = $this->_("Currency code is invalid.");
-			$this->error = true;
+			return $this->_("Currency code is invalid.");
 		}
 		if(false == array_key_exists($this->option['country_code'], PayPal_Statics::country_codes())){
-			$this->initialized = false;
-			$this->message["country"] = $this->_("Country code is invalid.");
-			$this->error = true;
+			return $this->_("Country code is invalid.");
 		}
-		//ユーザーが登録可能かチェック
-		if(!get_option("users_can_register")){
-			$this->message['registration'] = sprintf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php'));
-		}
+		return false;
 	}
 	
 	
@@ -650,6 +586,14 @@ EOS;
 						<li><p><?php echo $m; ?></p></li>
 					<?php endforeach; ?>
 					</ul>
+				</div>
+			<?php
+		}
+		//Check user registration
+		if(!get_option("users_can_register")){
+			?>
+				<div class="updated">
+					<p><?php printf($this->_("User can't register. Go to <a href=\"%s\">setting page</a> and allow user to register."), admin_url('options-general.php')); ?></p>
 				</div>
 			<?php
 		}

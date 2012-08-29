@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 21:56+0900\n"
-"PO-Revision-Date: 2012-08-29 21:56+0900\n"
+"POT-Creation-Date: 2012-08-30 02:30+0900\n"
+"PO-Revision-Date: 2012-08-30 02:30+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -31,137 +31,137 @@ msgstr ""
 msgid "By %1$s, %2$s"
 msgstr ""
 
-#: ../functions.php:473
+#: ../functions.php:472
 msgid "Registered Files"
 msgstr ""
 
-#: ../functions.php:478 ../tables/list-download-logs.php:109
+#: ../functions.php:477 ../tables/list-download-logs.php:111
 msgid "File Name"
 msgstr ""
 
-#: ../functions.php:479 ../admin/upload.php:178
+#: ../functions.php:478 ../admin/upload.php:178
 #: ../form-template/edit-detail-event.php:103
 msgid "Description"
 msgstr ""
 
-#: ../functions.php:480
+#: ../functions.php:479
 msgid "Available with"
 msgstr ""
 
-#: ../functions.php:481 ../help/customize.php:106
+#: ../functions.php:480 ../help/customize.php:106
 msgid "Download"
 msgstr ""
 
-#: ../functions.php:489
+#: ../functions.php:488
 msgid "download"
 msgstr ""
 
-#: ../functions.php:490 ../admin/form-check.php:39 ../help/customize.php:122
+#: ../functions.php:489 ../admin/form-check.php:39 ../help/customize.php:122
 msgid "Unavailable"
 msgstr ""
 
-#: ../functions.php:491
+#: ../functions.php:490
 #, php-format
 msgid "File Size: %s"
 msgstr ""
 
-#: ../functions.php:492
+#: ../functions.php:491
 #, php-format
 msgid "Published: %s"
 msgstr ""
 
-#: ../functions.php:493
+#: ../functions.php:492
 #, php-format
 msgid "Updated: %s"
 msgstr ""
 
-#: ../functions.php:520
+#: ../functions.php:519
 msgid "Devices Available With"
 msgstr ""
 
-#: ../functions.php:525 ../admin/devices.php:15 ../admin/devices.php:72
+#: ../functions.php:524 ../admin/devices.php:15 ../admin/devices.php:72
 #: ../tables/list-devices.php:90
 msgid "Device Name"
 msgstr ""
 
-#: ../functions.php:526
+#: ../functions.php:525
 msgid "Avalability"
 msgstr ""
 
-#: ../functions.php:532
+#: ../functions.php:531
 msgid "Available"
 msgstr ""
 
-#: ../functions.php:532
+#: ../functions.php:531
 msgid "Unconfirmed"
 msgstr ""
 
-#: ../functions.php:639 ../functions.php:644 ../widgets/buynow.php:111
+#: ../functions.php:638 ../functions.php:643 ../widgets/buynow.php:111
 msgid "Buy Now"
 msgstr ""
 
-#: ../functions.php:725
+#: ../functions.php:724
 msgid "Subscription list"
 msgstr ""
 
-#: ../functions.php:758
+#: ../functions.php:757
 msgid "Left time: "
 msgstr ""
 
-#: ../functions.php:777
+#: ../functions.php:776
 msgid "day"
 msgstr ""
 
-#: ../functions.php:777
+#: ../functions.php:776
 msgid "days"
 msgstr ""
 
-#: ../functions.php:778
+#: ../functions.php:777
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr ""
 
-#: ../functions.php:780
+#: ../functions.php:779
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr ""
 
-#: ../functions.php:781
+#: ../functions.php:780
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr ""
 
-#: ../functions.php:782
+#: ../functions.php:781
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr ""
 
-#: ../functions.php:801
+#: ../functions.php:800
 #, php-format
 msgid "%d%% Off"
 msgstr ""
 
-#: ../functions.php:826
+#: ../functions.php:825
 #, php-format
 msgid "On SALE till %s"
 msgstr ""
 
-#: ../functions.php:1558
+#: ../functions.php:1557
 msgid "Check Token"
 msgstr ""
 
-#: ../literally-wordpress.php:59
+#: ../literally-wordpress.php:42
 #, php-format
 msgid ""
 "Literally WordPress is activated but is not available. This plugin needs PHP "
 "version 5<. Your PHP version is %1$s."
 msgstr ""
 
-#: ../literally-wordpress.php:60
+#: ../literally-wordpress.php:43
 msgid " Furthermore, this plugin needs cURL module."
 msgstr ""
 
-#: ../literally-wordpress.php:61
+#: ../literally-wordpress.php:44
 msgid ""
 " Please contact to your server administrator to change server configuration."
 msgstr ""
@@ -416,7 +416,7 @@ msgstr ""
 msgid "File Download Logs"
 msgstr ""
 
-#: ../admin/event.php:4 ../class/literally-wordpress-core.php:508
+#: ../admin/event.php:4 ../class/literally-wordpress-core.php:436
 msgid "Event Management"
 msgstr ""
 
@@ -460,7 +460,7 @@ msgid "Ticket Name"
 msgstr ""
 
 #: ../admin/event.php:69 ../admin/management.php:375
-#: ../class/literally-wordpress-core.php:1385
+#: ../class/literally-wordpress-core.php:1315
 #: ../class/literally-wordpress-event.php:819
 #: ../class/literally-wordpress-form.php:681
 #: ../class/literally-wordpress-subscription.php:196
@@ -492,7 +492,7 @@ msgstr ""
 msgid "Consumed"
 msgstr ""
 
-#: ../admin/event.php:73 ../class/literally-wordpress-core.php:593
+#: ../admin/event.php:73 ../class/literally-wordpress-core.php:521
 msgid "Sales"
 msgstr ""
 
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Get CSV"
 msgstr ""
 
-#: ../admin/form-check.php:4 ../class/literally-wordpress-core.php:511
+#: ../admin/form-check.php:4 ../class/literally-wordpress-core.php:439
 msgid "LWP Form Check"
 msgstr ""
 
@@ -601,7 +601,7 @@ msgstr ""
 msgid "Don't forget to change logo in PayPal's landing page."
 msgstr ""
 
-#: ../admin/history.php:2 ../class/literally-wordpress-core.php:492
+#: ../admin/history.php:2 ../class/literally-wordpress-core.php:420
 msgid "Purchase History"
 msgstr ""
 
@@ -836,21 +836,21 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: ../admin/management.php:39 ../class/literally-wordpress-core.php:1383
-#: ../tables/list-download-logs.php:108 ../tables/list-history.php:40
+#: ../admin/management.php:39 ../class/literally-wordpress-core.php:1313
+#: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
 #: ../tables/list-management.php:121 ../tables/list-transfers.php:156
 msgid "Item Name"
 msgstr ""
 
-#: ../admin/management.php:41 ../class/literally-wordpress-core.php:638
+#: ../admin/management.php:41 ../class/literally-wordpress-core.php:566
 #: ../form-template/edit-detail-event.php:118 ../tables/list-campaign.php:159
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr ""
 
-#: ../admin/management.php:44 ../class/literally-wordpress-core.php:1389
+#: ../admin/management.php:44 ../class/literally-wordpress-core.php:1319
 #: ../class/literally-wordpress-event.php:816
-#: ../tables/list-download-logs.php:110 ../tables/list-management.php:122
+#: ../tables/list-download-logs.php:112 ../tables/list-management.php:122
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:155
 msgid "User Name"
 msgstr ""
@@ -860,22 +860,22 @@ msgid "Profile"
 msgstr ""
 
 #: ../admin/management.php:49 ../admin/management.php:386
-#: ../class/literally-wordpress-core.php:1405
+#: ../class/literally-wordpress-core.php:1335
 #: ../class/literally-wordpress-event.php:831
 #: ../form-template/reward-summary.php:165
-#: ../tables/list-download-logs.php:177 ../tables/list-management.php:206
+#: ../tables/list-download-logs.php:179 ../tables/list-management.php:206
 #: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
 msgid "Deleted User"
 msgstr ""
 
-#: ../admin/management.php:54 ../class/literally-wordpress-core.php:1391
+#: ../admin/management.php:54 ../class/literally-wordpress-core.php:1321
 #: ../class/literally-wordpress-event.php:822
 #: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
 #: ../tables/list-ticket.php:35 ../tables/list-transfers.php:160
 msgid "Updated"
 msgstr ""
 
-#: ../admin/management.php:57 ../class/literally-wordpress-core.php:1390
+#: ../admin/management.php:57 ../class/literally-wordpress-core.php:1320
 #: ../tables/list-history.php:45 ../tables/list-management.php:127
 #: ../tables/list-reward-history.php:34 ../tables/list-reward-request.php:118
 #: ../tables/list-transfers.php:159
@@ -891,7 +891,7 @@ msgstr ""
 msgid "Original Price"
 msgstr ""
 
-#: ../admin/management.php:70 ../class/literally-wordpress-core.php:1384
+#: ../admin/management.php:70 ../class/literally-wordpress-core.php:1314
 #: ../class/literally-wordpress-event.php:820
 #: ../class/literally-wordpress-form.php:682
 #: ../form-template/paypal-event-tickets-consume.php:18
@@ -908,7 +908,7 @@ msgstr ""
 msgid "Transaction ID: %s"
 msgstr ""
 
-#: ../admin/management.php:90 ../class/literally-wordpress-core.php:1387
+#: ../admin/management.php:90 ../class/literally-wordpress-core.php:1317
 msgid "Invoice Num"
 msgstr ""
 
@@ -916,8 +916,8 @@ msgstr ""
 #: ../admin/management.php:347 ../admin/personal-reward.php:118
 #: ../admin/settings/dashboard.php:11 ../admin/settings/dashboard.php:49
 #: ../admin/settings/dashboard.php:95
-#: ../class/literally-wordpress-core.php:574
-#: ../class/literally-wordpress-core.php:615 ../tables/list-history.php:46
+#: ../class/literally-wordpress-core.php:502
+#: ../class/literally-wordpress-core.php:543 ../tables/list-history.php:46
 #: ../tables/list-management.php:124 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
 #: ../tables/list-transfers.php:161
@@ -1138,7 +1138,7 @@ msgid "Event"
 msgstr ""
 
 #: ../admin/setting.php:12 ../admin/settings/dashboard.php:107
-#: ../admin/settings/reward.php:2 ../class/literally-wordpress-core.php:503
+#: ../admin/settings/reward.php:2 ../class/literally-wordpress-core.php:431
 #: ../form-template/reward-summary.php:64
 #: ../form-template/reward-summary.php:94
 #: ../form-template/reward-summary.php:154
@@ -1156,7 +1156,7 @@ msgstr ""
 msgid "Template file does not exists at %s."
 msgstr ""
 
-#: ../admin/transfer.php:2 ../class/literally-wordpress-core.php:480
+#: ../admin/transfer.php:2 ../class/literally-wordpress-core.php:408
 #: ../help/transfer.php:22
 msgid "Transfer Management"
 msgstr ""
@@ -1193,7 +1193,7 @@ msgstr ""
 msgid "Failed to delete file."
 msgstr ""
 
-#: ../admin/upload.php:98 ../class/literally-wordpress-form.php:1019
+#: ../admin/upload.php:98 ../class/literally-wordpress-form.php:1017
 msgid "Processing&hellip;"
 msgstr ""
 
@@ -1230,23 +1230,25 @@ msgid "Public status of this file. Private files won't be displayed."
 msgstr ""
 
 #: ../admin/upload.php:148
-msgid "Trial"
+msgid "Access to File"
 msgstr ""
 
-#: ../admin/upload.php:151
-msgid "Impossible"
+#: ../admin/upload.php:151 ../admin/upload.php:156
+#: ../tables/list-download-logs.php:155
+msgid "Anyone"
 msgstr ""
 
 #: ../admin/upload.php:152
-msgid "Possible for registered user"
+msgid "Members only"
 msgstr ""
 
-#: ../admin/upload.php:153 ../admin/upload.php:156
-msgid "Possible for everyone"
+#: ../admin/upload.php:153
+msgid "Parchasers only"
 msgstr ""
 
 #: ../admin/upload.php:155
-msgid "Trial means <strong>user can download whole of the file</strong>."
+msgid ""
+"File access permits user to <strong>download whole of the file</strong>."
 msgstr ""
 
 #: ../admin/upload.php:156
@@ -1285,7 +1287,7 @@ msgstr ""
 msgid "Registered files"
 msgstr ""
 
-#: ../admin/upload.php:215 ../class/literally-wordpress-core.php:636
+#: ../admin/upload.php:215 ../class/literally-wordpress-core.php:564
 #: ../form-template/edit-detail-event.php:64
 #: ../form-template/edit-detail-event.php:121 ../tables/list-campaign.php:126
 #: ../tables/list-devices.php:109
@@ -1318,9 +1320,21 @@ msgstr ""
 msgid "You can set up %1$s <a href=\"%2$s\">Here</a>."
 msgstr ""
 
+#: ../admin/settings/dashboard.php:27
+#, php-format
+msgid "Set up your PayPal information <a href=\"%s\">here</a>."
+msgstr ""
+
 #: ../admin/settings/dashboard.php:30 ../form-template/paypal-selection.php:48
 #: ../form-template/paypal-selection.php:50 ../help/transfer.php:2
 msgid "Transfer"
+msgstr ""
+
+#: ../admin/settings/dashboard.php:32
+#, php-format
+msgid ""
+"Transafer is typically bank transfer. You can set up it <a href=\"%s\">here</"
+"a>."
 msgstr ""
 
 #: ../admin/settings/dashboard.php:37 ../admin/settings/dashboard.php:83
@@ -1341,12 +1355,28 @@ msgstr ""
 msgid "Each sales type should be set up properly."
 msgstr ""
 
+#: ../admin/settings/dashboard.php:63 ../admin/settings/post.php:4
+msgid ""
+"You can sell post content itself or attached downloadble content. Typically "
+"you can sell your ebook, music video, how-tos and so on."
+msgstr ""
+
 #: ../admin/settings/dashboard.php:66 ../admin/settings/post.php:79
 msgid "iOS non-consumable Product"
 msgstr ""
 
-#: ../admin/settings/dashboard.php:68
-msgid "You can also sell iOS product via Web site."
+#: ../admin/settings/dashboard.php:68 ../admin/settings/post.php:83
+msgid "You can manage iOS non-consumable product with WordPress."
+msgstr ""
+
+#: ../admin/settings/dashboard.php:73 ../admin/settings/subscription.php:3
+msgid ""
+"You can provide member only contents by subscription plan. You can choose "
+"any price, any period."
+msgstr ""
+
+#: ../admin/settings/dashboard.php:78 ../admin/settings/event.php:3
+msgid "Event means real event like lunch party, poetry reading or else."
 msgstr ""
 
 #: ../admin/settings/dashboard.php:90
@@ -1357,8 +1387,8 @@ msgstr ""
 msgid "Marketing Type"
 msgstr ""
 
-#: ../admin/settings/event.php:3
-msgid "Event means real event like lunch party, poetry reading or else."
+#: ../admin/settings/dashboard.php:109 ../admin/settings/reward.php:6
+msgid "You can allow your users to promote your product and reward for them."
 msgstr ""
 
 #: ../admin/settings/event.php:4
@@ -1416,7 +1446,7 @@ msgstr ""
 #: ../admin/settings/payment.php:77 ../admin/settings/payment.php:88
 #: ../admin/settings/payment.php:105 ../admin/settings/payment.php:141
 #: ../admin/settings/post.php:18 ../admin/settings/post.php:54
-#: ../admin/settings/post.php:71 ../class/literally-wordpress-form.php:1240
+#: ../admin/settings/post.php:71 ../class/literally-wordpress-form.php:1238
 msgid "More &gt;"
 msgstr ""
 
@@ -1631,12 +1661,6 @@ msgstr ""
 msgid "Post sell"
 msgstr ""
 
-#: ../admin/settings/post.php:4
-msgid ""
-"You can sell post content itself or attached downloadble content. Typically "
-"you can sell your ebook, music video, how-tos and so on."
-msgstr ""
-
 #: ../admin/settings/post.php:12
 msgid "Directory for File protection"
 msgstr ""
@@ -1705,10 +1729,6 @@ msgstr ""
 
 #: ../admin/settings/post.php:80 ../admin/settings/reward.php:3
 msgid "EXPERIMENTAL"
-msgstr ""
-
-#: ../admin/settings/post.php:83
-msgid "You can manage iOS non-consumable product with WordPress."
 msgstr ""
 
 #: ../admin/settings/post.php:88
@@ -1781,10 +1801,6 @@ msgstr ""
 #: ../admin/settings/post.php:138
 #, php-format
 msgid "XML-RPC is disabled. Please enable it <a href=\"%s\">here</a>"
-msgstr ""
-
-#: ../admin/settings/reward.php:6
-msgid "You can allow your users to promote your product and reward for them."
 msgstr ""
 
 #: ../admin/settings/reward.php:7
@@ -1908,14 +1924,14 @@ msgid ""
 "description will be displayed on payment request page."
 msgstr ""
 
-#: ../admin/settings/sidebar.php:3 ../admin/settings/sidebar.php:8
-msgid "Some Ads"
+#: ../admin/settings/sidebar.php:3
+msgid "Try my ebook"
 msgstr ""
 
-#: ../admin/settings/subscription.php:3
+#: ../admin/settings/sidebar.php:8
 msgid ""
-"You can provide member only contents by subscription plan. You can choose "
-"any price, any period."
+"Kitasenju Social club is my eBook. Please buy this ebook only for "
+"<strong>&yen;100</strong> to know how this plugin works!"
 msgstr ""
 
 #: ../admin/settings/subscription.php:10
@@ -1966,23 +1982,23 @@ msgid ""
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:12
-msgid "Capability"
+msgid "Control by Capability"
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:13
-msgid "Owner"
+msgid "Purchaser Only"
 msgstr ""
 
-#: ../assets/js/tinymce-lang.php:14
-msgid "Subscriber"
+#: ../assets/js/tinymce-lang.php:14 ../tables/list-download-logs.php:158
+msgid "Members Only"
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:15
-msgid "Non Owner"
+msgid "Non Purchaser Only"
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:16
-msgid "Non Subscriber"
+msgid "Non Members Only"
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:17 ../help/customize.php:41
@@ -2005,267 +2021,243 @@ msgstr ""
 msgid "PUT_IMAGE_SRC_HERE"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:358
-#, php-format
-msgid "Can't make directory. Check parmissin of \"%s\""
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:367
-msgid "Directory isn't writable."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:372
-msgid ""
-"Your contents directory is inside plugins folder. Strongly recommended to "
-"place it outside of plugin folder to prevent it from being deleted on "
-"updating."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:379
-msgid "Warning! This file is accessible!"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:402
-msgid "Directory is publically accessible via HTTP"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:409
+#: ../class/literally-wordpress-core.php:345
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:415
+#: ../class/literally-wordpress-core.php:349
 msgid "Currency code is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:420
+#: ../class/literally-wordpress-core.php:352
 msgid "Country code is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:425
+#: ../class/literally-wordpress-core.php:375
+msgid "Literally WordPress successfully upgrades database."
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:403 ../help/transfer.php:16
+msgid "General Setting"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:405
+msgid "Transaction Management"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:411
+msgid "Campaign Management"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:414
+msgid "Download logs"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:416
+msgid "Device Setting"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:423
+msgid "API Manual"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:428
+msgid "Reward Management"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:457
+msgid "This page does not exist. Template not found."
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:501
+#: ../class/literally-wordpress-core.php:542
+msgid "Reward Amount Summary"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:504
+#: ../class/literally-wordpress-core.php:545
+#: ../form-template/reward-summary.php:49
+msgid "Fixed"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:505
+#: ../class/literally-wordpress-core.php:546
+msgid "Unfixed"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:506
+#: ../class/literally-wordpress-core.php:547
+msgid "Lost"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:507
+#: ../class/literally-wordpress-core.php:520
+#: ../class/literally-wordpress-core.php:548
+msgid "Daily Report"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:508
+#: ../class/literally-wordpress-core.php:522
+#: ../class/literally-wordpress-core.php:549 ../tables/list-event.php:35
+msgid "Date"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:517
+msgid "Sales per post type"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:518
+msgid "Post type"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:563
+#: ../form-template/edit-detail-event.php:61
+#, php-format
+msgid "Cacnelable till %1$s days before, %2$s"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:565
+msgid "Are you sure to delete this ticket?"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:567
+msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
+msgstr ""
+
+#: ../class/literally-wordpress-core.php:596
 #, php-format
 msgid ""
 "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
 "register."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:447
-msgid "Literally WordPress successfully upgrades database."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:475 ../help/transfer.php:16
-msgid "General Setting"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:477
-msgid "Transaction Management"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:483
-msgid "Campaign Management"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:486
-msgid "Download logs"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:488
-msgid "Device Setting"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:495
-msgid "API Manual"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:500
-msgid "Reward Management"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:529
-msgid "This page does not exist. Template not found."
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:573
-#: ../class/literally-wordpress-core.php:614
-msgid "Reward Amount Summary"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:576
-#: ../class/literally-wordpress-core.php:617
-#: ../form-template/reward-summary.php:49
-msgid "Fixed"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:577
-#: ../class/literally-wordpress-core.php:618
-msgid "Unfixed"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:578
-#: ../class/literally-wordpress-core.php:619
-msgid "Lost"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:579
-#: ../class/literally-wordpress-core.php:592
-#: ../class/literally-wordpress-core.php:620
-msgid "Daily Report"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:580
-#: ../class/literally-wordpress-core.php:594
-#: ../class/literally-wordpress-core.php:621 ../tables/list-event.php:35
-msgid "Date"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:589
-msgid "Sales per post type"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:590
-msgid "Post type"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:635
-#: ../form-template/edit-detail-event.php:61
-#, php-format
-msgid "Cacnelable till %1$s days before, %2$s"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:637
-msgid "Are you sure to delete this ticket?"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:639
-msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
-msgstr ""
-
-#: ../class/literally-wordpress-core.php:693 ../help/index.php:12
+#: ../class/literally-wordpress-core.php:629 ../help/index.php:12
 msgid "Literally WordPress Help"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:708
+#: ../class/literally-wordpress-core.php:644
 msgid "Purchase history"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:816
+#: ../class/literally-wordpress-core.php:752
 msgid "Option updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:819
+#: ../class/literally-wordpress-core.php:755
 msgid "Failed to updated options."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:846
+#: ../class/literally-wordpress-core.php:782
 msgid "Please select item."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:851
-#: ../class/literally-wordpress-post.php:145
+#: ../class/literally-wordpress-core.php:787
+#: ../class/literally-wordpress-post.php:187
 msgid "Price must be numeric."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:856
+#: ../class/literally-wordpress-core.php:792
 msgid "Price is higher than original price."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:861
-#: ../class/literally-wordpress-core.php:907
+#: ../class/literally-wordpress-core.php:797
+#: ../class/literally-wordpress-core.php:843
 msgid "Date format is invalid."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:866
+#: ../class/literally-wordpress-core.php:802
 msgid "End date was past."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:882
+#: ../class/literally-wordpress-core.php:818
 msgid "Campaign added."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:885
+#: ../class/literally-wordpress-core.php:821
 msgid "Failed to add campaign."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:894
+#: ../class/literally-wordpress-core.php:830
 msgid "Specified campaing doesn't exist"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:899
+#: ../class/literally-wordpress-core.php:835
 msgid "Price should be numeric."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:902
+#: ../class/literally-wordpress-core.php:838
 msgid "Campgin price is higher than original price."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:912
+#: ../class/literally-wordpress-core.php:848
 msgid "End date is earlier than start date."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:928
+#: ../class/literally-wordpress-core.php:864
 msgid "Successfully Updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:931
+#: ../class/literally-wordpress-core.php:867
 msgid "Update Failed."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:939
+#: ../class/literally-wordpress-core.php:875
 msgid "Campaign was deleted."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:942
+#: ../class/literally-wordpress-core.php:878
 msgid "Failed to delete campaign."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1069
+#: ../class/literally-wordpress-core.php:1004
 msgid "You've kindly given a present."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1074
+#: ../class/literally-wordpress-core.php:1009
 msgid "Failed to give a present."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1190
+#: ../class/literally-wordpress-core.php:1121
 msgid ""
 "You can't refund via PayPal because 60 days have past since the transaction "
 "occurred."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1195
+#: ../class/literally-wordpress-core.php:1126
 msgid "Refund succeeded."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1197
+#: ../class/literally-wordpress-core.php:1128
 msgid "Sorry, but PayPal denied."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1229
+#: ../class/literally-wordpress-core.php:1160
 msgid "Transaction was updated."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1231
+#: ../class/literally-wordpress-core.php:1162
 msgid "Failed to update transaction."
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1370
+#: ../class/literally-wordpress-core.php:1300
 #: ../class/literally-wordpress-event.php:802
 msgid "No ticket match your qriteria.: "
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1386
+#: ../class/literally-wordpress-core.php:1316
 msgid "Payment Method"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1388
+#: ../class/literally-wordpress-core.php:1318
 msgid "Transaction ID"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1392
+#: ../class/literally-wordpress-core.php:1322
 #: ../class/literally-wordpress-event.php:823
 msgid "Transaction Status"
 msgstr ""
 
-#: ../class/literally-wordpress-core.php:1621
+#: ../class/literally-wordpress-core.php:1464
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -2283,7 +2275,7 @@ msgstr ""
 #: ../class/literally-wordpress-event.php:125
 #: ../class/literally-wordpress-ios.php:87
 #: ../class/literally-wordpress-notifier.php:87
-#: ../class/literally-wordpress-post.php:82
+#: ../class/literally-wordpress-post.php:91
 #: ../class/literally-wordpress-subscription.php:86
 msgid "Add New"
 msgstr ""
@@ -2295,8 +2287,8 @@ msgstr ""
 #: ../class/literally-wordpress-ios.php:126
 #: ../class/literally-wordpress-notifier.php:88
 #: ../class/literally-wordpress-notifier.php:90
-#: ../class/literally-wordpress-post.php:83
-#: ../class/literally-wordpress-post.php:85
+#: ../class/literally-wordpress-post.php:92
+#: ../class/literally-wordpress-post.php:94
 #: ../class/literally-wordpress-subscription.php:87
 #: ../class/literally-wordpress-subscription.php:89
 #, php-format
@@ -2307,7 +2299,7 @@ msgstr ""
 #: ../class/literally-wordpress-ios.php:89
 #: ../class/literally-wordpress-ios.php:124
 #: ../class/literally-wordpress-notifier.php:89
-#: ../class/literally-wordpress-post.php:84
+#: ../class/literally-wordpress-post.php:93
 #: ../class/literally-wordpress-subscription.php:88
 #, php-format
 msgid "Edit %s"
@@ -2316,7 +2308,7 @@ msgstr ""
 #: ../class/literally-wordpress-event.php:129
 #: ../class/literally-wordpress-ios.php:91
 #: ../class/literally-wordpress-notifier.php:91
-#: ../class/literally-wordpress-post.php:86
+#: ../class/literally-wordpress-post.php:95
 #: ../class/literally-wordpress-subscription.php:90
 #, php-format
 msgid "View %s"
@@ -2326,7 +2318,7 @@ msgstr ""
 #: ../class/literally-wordpress-ios.php:92
 #: ../class/literally-wordpress-ios.php:119
 #: ../class/literally-wordpress-notifier.php:92
-#: ../class/literally-wordpress-post.php:87
+#: ../class/literally-wordpress-post.php:96
 #: ../class/literally-wordpress-subscription.php:91
 #, php-format
 msgid "Search %s"
@@ -2335,7 +2327,7 @@ msgstr ""
 #: ../class/literally-wordpress-event.php:131
 #: ../class/literally-wordpress-ios.php:93
 #: ../class/literally-wordpress-notifier.php:93
-#: ../class/literally-wordpress-post.php:88
+#: ../class/literally-wordpress-post.php:97
 #: ../class/literally-wordpress-subscription.php:92
 #, php-format
 msgid "No %s was found."
@@ -2344,7 +2336,7 @@ msgstr ""
 #: ../class/literally-wordpress-event.php:132
 #: ../class/literally-wordpress-ios.php:94
 #: ../class/literally-wordpress-notifier.php:94
-#: ../class/literally-wordpress-post.php:89
+#: ../class/literally-wordpress-post.php:98
 #: ../class/literally-wordpress-subscription.php:93
 #, php-format
 msgid "No %s was found in trash."
@@ -2519,7 +2511,7 @@ msgstr ""
 #: ../class/literally-wordpress-form.php:511
 #: ../class/literally-wordpress-ios.php:349
 #: ../class/literally-wordpress-ios.php:371
-#: ../class/literally-wordpress-post.php:538
+#: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr ""
 
@@ -2605,7 +2597,7 @@ msgstr ""
 
 #: ../class/literally-wordpress-form.php:842
 #: ../class/literally-wordpress-form.php:899
-#: ../class/literally-wordpress-form.php:1054
+#: ../class/literally-wordpress-form.php:1052
 msgid "Sorry, but event is not found."
 msgstr ""
 
@@ -2661,123 +2653,123 @@ msgstr ""
 msgid "You must be logged in to process transaction."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1066
+#: ../class/literally-wordpress-form.php:1064
 msgid "Dammy Ticket"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1131
+#: ../class/literally-wordpress-form.php:1129
 msgid "Select Payment"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1134
+#: ../class/literally-wordpress-form.php:1132
 msgid "Transfer Accepted"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1137
+#: ../class/literally-wordpress-form.php:1135
 msgid "Payment Confirmation"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1140
+#: ../class/literally-wordpress-form.php:1138
 msgid "Transaction Completed"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1143
+#: ../class/literally-wordpress-form.php:1141
 msgid "Transaciton Canceled"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1146
+#: ../class/literally-wordpress-form.php:1144
 msgid "Ticket Cancel"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1149
+#: ../class/literally-wordpress-form.php:1147
 msgid "Ticket Canceled"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1152
+#: ../class/literally-wordpress-form.php:1150
 #: ../form-template/edit-detail-event.php:98
 msgid "Ticket List"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1155
+#: ../class/literally-wordpress-form.php:1153
 msgid "Ticket Status"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1158
+#: ../class/literally-wordpress-form.php:1156
 msgid "Find User"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1161
+#: ../class/literally-wordpress-form.php:1159
 msgid "Contact to participants"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1164
+#: ../class/literally-wordpress-form.php:1162
 msgid "Subscrition Plans"
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1227
-#: ../class/literally-wordpress-form.php:1230
+#: ../class/literally-wordpress-form.php:1225
+#: ../class/literally-wordpress-form.php:1228
 msgid "Displays subscription plans."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1230
+#: ../class/literally-wordpress-form.php:1228
 msgid "User can select it and go to payment selection page."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1233
+#: ../class/literally-wordpress-form.php:1231
 msgid "Display thank you message when transaction finished."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1233
-#: ../class/literally-wordpress-form.php:1249
+#: ../class/literally-wordpress-form.php:1231
+#: ../class/literally-wordpress-form.php:1247
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1236
+#: ../class/literally-wordpress-form.php:1234
 msgid "Display message when user cancels transaction."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1239
+#: ../class/literally-wordpress-form.php:1237
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1243
+#: ../class/literally-wordpress-form.php:1241
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1246
-#: ../class/literally-wordpress-form.php:1252
+#: ../class/literally-wordpress-form.php:1244
+#: ../class/literally-wordpress-form.php:1250
 msgid "Show list of tickets which user have bought."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1246
+#: ../class/literally-wordpress-form.php:1244
 msgid "User can select ticket to cancel."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1246
-#: ../class/literally-wordpress-form.php:1252
+#: ../class/literally-wordpress-form.php:1244
+#: ../class/literally-wordpress-form.php:1250
 msgid "If user has no tickets, wp_die will be executed."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1249
+#: ../class/literally-wordpress-form.php:1247
 msgid "Displays message to tell user cancel is completed."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1255
+#: ../class/literally-wordpress-form.php:1253
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1258
+#: ../class/literally-wordpress-form.php:1256
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
 msgstr ""
 
-#: ../class/literally-wordpress-form.php:1261
+#: ../class/literally-wordpress-form.php:1259
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
@@ -3069,58 +3061,82 @@ msgid ""
 "strong>."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:117
+#: ../class/literally-wordpress-post.php:159
 msgid "LWP Post sell Setting"
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:219
+#: ../class/literally-wordpress-post.php:310
 msgid "Device added."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:221
+#: ../class/literally-wordpress-post.php:312
 msgid "Failed to add device."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:230
+#: ../class/literally-wordpress-post.php:321
 msgid "Device deleted."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:246
+#: ../class/literally-wordpress-post.php:337
 msgid "Device updated."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:258
+#: ../class/literally-wordpress-post.php:349
 msgid "Downloadble Contents"
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:448
+#: ../class/literally-wordpress-post.php:539
 msgid ""
 "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined "
 "in php.ini"
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:451
+#: ../class/literally-wordpress-post.php:542
 msgid "Uploaded file size exceeds"
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:454
+#: ../class/literally-wordpress-post.php:545
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:457
+#: ../class/literally-wordpress-post.php:548
 msgid "No file was uploaded."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:460
+#: ../class/literally-wordpress-post.php:551
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:463
+#: ../class/literally-wordpress-post.php:554
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 
-#: ../class/literally-wordpress-post.php:466
+#: ../class/literally-wordpress-post.php:557
 msgid "PHP stops uploading."
+msgstr ""
+
+#: ../class/literally-wordpress-post.php:721
+#, php-format
+msgid "Can't make directory. Check parmissin of \"%s\""
+msgstr ""
+
+#: ../class/literally-wordpress-post.php:728
+msgid "Directory isn't writable."
+msgstr ""
+
+#: ../class/literally-wordpress-post.php:732
+msgid ""
+"Your contents directory is inside plugins folder. Strongly recommended to "
+"place it outside of plugin folder to prevent it from being deleted on "
+"updating."
+msgstr ""
+
+#: ../class/literally-wordpress-post.php:739
+msgid "Warning! This file is accessible!"
+msgstr ""
+
+#: ../class/literally-wordpress-post.php:761
+msgid "Directory is publically accessible via HTTP"
 msgstr ""
 
 #: ../class/literally-wordpress-reward.php:192
@@ -5363,7 +5379,7 @@ msgid "%d%%Off"
 msgstr ""
 
 #: ../tables/list-campaign.php:201 ../tables/list-devices.php:175
-#: ../tables/list-download-logs.php:257 ../tables/list-event.php:254
+#: ../tables/list-download-logs.php:224 ../tables/list-event.php:254
 #: ../tables/list-history.php:268 ../tables/list-management.php:300
 #: ../tables/list-reward-history.php:200 ../tables/list-ticket.php:220
 #: ../tables/list-transfers.php:328
@@ -5375,58 +5391,45 @@ msgstr ""
 msgid "No matching device found."
 msgstr ""
 
-#: ../tables/list-download-logs.php:97 ../tables/list-management.php:109
+#: ../tables/list-download-logs.php:99 ../tables/list-management.php:109
 #: ../tables/list-transfers.php:143
 msgid "No matching transaction found."
 msgstr ""
 
-#: ../tables/list-download-logs.php:111
+#: ../tables/list-download-logs.php:113
 msgid "Accessiblity"
 msgstr ""
 
-#: ../tables/list-download-logs.php:112
+#: ../tables/list-download-logs.php:114
 msgid "User Agent"
 msgstr ""
 
-#: ../tables/list-download-logs.php:113
+#: ../tables/list-download-logs.php:115
 msgid "IP Address"
 msgstr ""
 
-#: ../tables/list-download-logs.php:114
+#: ../tables/list-download-logs.php:116
 msgid "Downloaded"
 msgstr ""
 
-#: ../tables/list-download-logs.php:148
+#: ../tables/list-download-logs.php:150
 msgid "Deleted File"
 msgstr ""
 
-#: ../tables/list-download-logs.php:153
-msgid "Anyone"
-msgstr ""
-
-#: ../tables/list-download-logs.php:156
-msgid "Members Only"
-msgstr ""
-
-#: ../tables/list-download-logs.php:159
+#: ../tables/list-download-logs.php:161
 msgid "Purchasers Only"
 msgstr ""
 
-#: ../tables/list-download-logs.php:164
+#: ../tables/list-download-logs.php:166
 msgid "detail"
 msgstr ""
 
-#: ../tables/list-download-logs.php:166
+#: ../tables/list-download-logs.php:168
 msgid "No Transaction data"
 msgstr ""
 
-#: ../tables/list-download-logs.php:173
+#: ../tables/list-download-logs.php:175
 msgid "Guest"
-msgstr ""
-
-#: ../tables/list-download-logs.php:243 ../tables/list-management.php:265
-#: ../tables/list-ticket.php:198 ../tables/list-transfers.php:314
-msgid "All Status"
 msgstr ""
 
 #: ../tables/list-event.php:22
@@ -5491,6 +5494,11 @@ msgstr ""
 
 #: ../tables/list-history.php:181
 msgid "Uncancelable"
+msgstr ""
+
+#: ../tables/list-management.php:265 ../tables/list-ticket.php:198
+#: ../tables/list-transfers.php:314
+msgid "All Status"
 msgstr ""
 
 #: ../tables/list-management.php:268

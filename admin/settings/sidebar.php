@@ -1,14 +1,11 @@
 <div class="lwp-sidebar">
 	<dl>
-		<dt><?php $this->e('Some Ads'); ?></dt>
+		<dt><?php $this->e('Try my ebook'); ?></dt>
 		<dd>
-			<a class="banner" href="#"><img src="<?php echo $this->url; ?>/assets/nophoto.gif" alt="no-photo" width="300" height="250" /></a>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-		</dd>
-		<dt><?php $this->e('Some Ads'); ?></dt>
-		<dd>
-			<a class="banner" href="#"><img src="<?php echo $this->url; ?>/assets/nophoto.gif" alt="no-photo" width="300" height="250" /></a>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+			<a class="banner" href="http://takahashifumiki.com/ebook/kitasenju-social-club/">
+				<img src="<?php echo $this->url; ?>/assets/ads/social-club.jpg" alt="no-photo" width="240" height="320" />
+			</a>
+			<?php $this->e('Kitasenju Social club is my eBook. Please buy this ebook only for <strong>&yen;100</strong> to know how this plugin works!'); ?>
 		</dd>
 	</dl>
 </div>
