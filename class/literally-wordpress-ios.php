@@ -58,9 +58,6 @@ class LWP_iOS extends Literally_WordPress_Common{
 		$this->web_available = (boolean) $option['ios_available'];
 		$this->post_type_public = (boolean) $option['ios_public'];
 		$this->force_ssl = (int)$option['ios_force_ssl'];
-		if($this->is_enabled()){
-			add_filter('lwp_payable_post_types', array($this, 'add_post_type'));
-		}
 	}
 	
 	/**
@@ -69,6 +66,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 	public function on_construct() {
 		if($this->is_enabled()){
 			add_action('init', array($this, 'register_post_type'), 20);
+			add_filter('lwp_payable_post_types', array($this, 'add_post_type'));
 			add_action('lwp_payable_post_type_metabox', array($this, 'edit_form'));
 			add_action('save_post', array($this, 'save_post'));
 			add_filter('xmlrpc_methods', array($this, 'xmlrpc_methods'));

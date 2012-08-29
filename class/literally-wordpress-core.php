@@ -481,8 +481,13 @@ EOS;
 		}
 		//Campaign setting
 		add_submenu_page("lwp-setting", $this->_("Campaign Management"), $this->_("Campaign Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
-		//Device setting
-		add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
+		if($this->post->is_enabled()){
+			//Download Log
+			add_submenu_page('lwp-setting', $this->_('Download logs'), $this->_('Download logs'), 'manage_options', 'lwp-download-logs', array($this, 'load'));
+			//Device setting
+			add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
+			
+		}
 		//Purchase history
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
 		//iOS Manual if enabled

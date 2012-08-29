@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.2.0';
+	const VERSION = '0.9.2.2';
 	
 	/**
 	 * Table prefix for this plugin
@@ -160,8 +160,8 @@ EOS;
 				user_agent VARCHAR(255) NOT NULL,
 				ip_address VARCHAR(255) NOT NULL,
 				updated DATETIME NOT NULL,
-				PRIMARY KEY (ID),
-				INDEX file(file_id)
+				PRIMARY KEY  (ID),
+				INDEX  file(file_id)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 		//Create transactios table
@@ -228,7 +228,7 @@ EOS;
 				estimated_reward BIGINT NOT NULL,
 				start_post_id BIGINT NOT NULL,
 				referrer TEXT NOT NULL,
-				PRIMARY KEY (ID),
+				PRIMARY KEY  (ID),
 				INDEX promoter(user_id, reason)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char}
 EOS;
@@ -242,7 +242,7 @@ EOS;
 				status VARCHAR(20) NOT NULL,
 				registered DATETIME NOT NULL,
 				updated DATETIME NOT NULL,
-				PRIMARY KEY (ID),
+				PRIMARY KEY  (ID),
 				INDEX requester(user_id, updated)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char}
 EOS;

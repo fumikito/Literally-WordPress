@@ -234,7 +234,48 @@ input.short{
 .lwp-event-table-list li{
 	margin-bottom: 3px;
 }
-
+span.lwp-transaction-ok{
+	display: block;
+	padding-left: 20px;
+	background: url('./icon-accepted.png') left center no-repeat;
+	color: #319F32;
+	white-space: nowrap;
+}
+span.lwp-transaction-error{
+	white-space: nowrap;
+	display: block;
+	padding-left: 20px;
+	color: #f00;
+	background: url('./icon-cancel.png') left center no-repeat;
+}
+span.lwp-transaction-ok small,
+span.lwp-transaction-error small{
+	display: block;
+}
+table.download-logs td.column-file_name code{
+	display: block;
+}
+table.download-logs td.downloaded{
+	white-space: nowrap;
+}
+table.download-logs td.user_agent{
+	max-width: 20em;
+	/*
+	display: block;
+	height: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+	*/
+}
+/*
+table.download-logs td.user_agent span:hover{
+	text-decoration: underline;
+	color: #999;
+}
+*/
+/* author message */
 .lwp-author-msg{
 	margin :20px 0;
 	padding: 20px;
