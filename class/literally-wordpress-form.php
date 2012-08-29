@@ -966,10 +966,8 @@ EOS;
 	 * @global Literally_WordPress $lwp
 	 * @param string $slug
 	 * @param array $args
-	 * @return void
 	 */
 	private function show_form($slug, $args = array()){
-		global $lwp;
 		$args['meta_title'] = $this->get_form_title($slug).' : '.get_bloginfo('name');
 		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);

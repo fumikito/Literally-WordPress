@@ -19,7 +19,7 @@ class LWP_Post extends Literally_WordPress_Common{
 	 * File directory
 	 * @var string
 	 */
-	private $file_directory = '';
+	public $file_directory = '';
 	
 	/**
 	 * Additional mime types to upload
@@ -61,13 +61,22 @@ class LWP_Post extends Literally_WordPress_Common{
 			add_action("init", array($this, "register_post_type"));
 		}
 		if($this->is_enabled()){
-			add_action("save_post", array($this, "save_post"));
 			add_action('admin_menu', array($this, 'register_metabox'));
 			add_action("admin_init", array($this, "update_devices"));
+			add_action("save_post", array($this, "save_post"));
+			//Tiny MCE
+			add_filter("mce_external_plugins", array($this, "mce_plugin"));
+			add_filter("mce_external_languages", array($this, "mce_lang"));
+			add_filter("mce_buttons_4", array($this, "mce_button"));
+			//Filter
 			add_filter('the_content', array($this, 'the_content'));
+			//Media Uploader
 			add_filter("media_upload_tabs", array($this, "upload_tab"));
 			add_action("media_upload_ebook", array($this, "generate_tab"));
 			add_filter("upload_mimes", array($this, "upload_mimes"));
+			//Short code
+			add_shortcode("lwp", array($this, "shortcode_capability"));
+			add_shortcode('buynow', array($this, 'shortcode_buynow'));
 		}
 	}
 	
@@ -106,6 +115,39 @@ class LWP_Post extends Literally_WordPress_Common{
 			);
 			register_post_type($this->custom_post_type['slug'], $args);
 		}
+	}
+	
+	/**
+	 * TinyMCEにプラグインを登録する
+	 * @param array $plugin_array
+	 * @return array
+	 */
+	public function mce_plugin($plugin_array){
+		$plugin_array['lwpShortCode'] = $this->url."assets/js/tinymce.js";
+		return $plugin_array;
+	}
+	
+	/**
+	 * TinyMCEの言語ファイルを追加する
+	 * @param array $languages
+	 * @return array
+	 */
+	public function mce_lang($languages){
+		$languages["lwpShortCode"] = $this->dir.DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."js".DIRECTORY_SEPARATOR."tinymce-lang.php";
+		return $languages;
+	}
+	
+	/**
+	 * TinyMCEのボタンを追加する
+	 * @param array $buttons
+	 * @return array
+	 */
+	public function mce_button($buttons){
+		if(false !== array_search(get_current_screen()->post_type, $this->post_types) ){
+			array_push($buttons, "lwpListBox", "separator");
+			array_push($buttons, 'lwpBuyNow', "separator");
+		}
+		return $buttons;
 	}
 	
 	/**
@@ -167,6 +209,55 @@ class LWP_Post extends Literally_WordPress_Common{
 		return $content;
 	}
 	
+		
+	/**
+	 * Short codes for capability
+	 * @since 0.8
+	 * @global Literally_WordPress $lwp
+	 * @param array $atts
+	 * @param string $contents
+	 * @return string
+	 */
+	public function shortcode_capability($atts, $contents = null){
+		global $lwp;
+		//属性値を抽出
+		extract(shortcode_atts(array("user" => "owner"), $atts));
+		//省略形を優先する
+		if(isset($atts[0])){
+			$user = $atts[0];
+		}
+		//属性値によって返す値を検討
+		switch($user){
+			case "subscriber": //登録済ユーザーの場合
+				return is_user_logged_in() ? wpautop($contents) : "";
+				break;
+			case "non-owner": //オーナーではない場合
+				return $lwp->is_owner() ? "" : wpautop($contents);
+				break;
+			case "non-subscriber": //登録者ではない場合
+				return is_user_logged_in() ? "" : wpautop($contents);
+				break;
+			default:
+				return $lwp->is_owner() ? wpautop($contents) : "";
+				break;
+		}
+	}
+	
+	/**
+	 * Show Buynow
+	 * @param type $atts
+	 * @return string
+	 */
+	public function shortcode_buynow($atts){
+		if(!isset($atts[0]) || !$atts[0]){
+			return lwp_buy_now(null, false);
+		}elseif($atts[0] == 'link'){
+			return lwp_buy_now(null, null);
+		}else{
+			return lwp_buy_now(null, $atts[0]);
+		}
+	}
+	
 	/**
 	 * Return device information
 	 * 
@@ -184,13 +275,13 @@ class LWP_Post extends Literally_WordPress_Common{
 			$file_id = $file->ID;
 		}
 		if(!is_null($file)){
-			$sql = <<<EOS
+			$prepared = <<<EOS
 				SELECT * FROM {$lwp->devices} as d
 				LEFT JOIN {$lwp->file_relationships} as f
 				ON d.ID = f.device_id
 				WHERE f.file_id = %d
 EOS;
-			$sql = $wpdb->prepare($sql, $file_id);
+			$sql = $wpdb->prepare($prepared, $file_id);
 		}else{
 			$sql = "SELECT * FROM {$lwp->devices}";
 		}

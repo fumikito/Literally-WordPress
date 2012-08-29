@@ -277,10 +277,6 @@ class Literally_WordPress{
 		add_action('init', array($this, 'register_assets'));
 		//ウィジェットの登録
 		add_action('widgets_init', array($this, 'widgets'));
-		//ショートコードの追加
-		add_shortcode("lwp", array($this, "shortcode_capability"));
-		//いますぐ購入ボタンのショートコード
-		add_shortcode('buynow', array($this, 'shortcode_buynow'));
 		//CSV Download Ajax
 		add_action('wp_ajax_lwp_transaction_csv_output', array($this, 'ouput_csv'));
 		//Hook on adminbar
@@ -316,10 +312,6 @@ class Literally_WordPress{
 			if(basename($_SERVER["SCRIPT_FILENAME"]) == "user-edit.php"){
 				add_action("profile_update", array($this, "give_user"));
 			}
-			//tinyMCEにボタンを追加する
-			add_filter("mce_external_plugins", array($this, "mce_plugin"));
-			add_filter("mce_external_languages", array($this, "mce_lang"));
-			add_filter("mce_buttons_2", array($this, "mce_button"));
 			////Add Action links on plugin lists.
 			add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
 		}else{ //Hooks only for public area
@@ -1045,8 +1037,7 @@ EOS;
 	 * @param int $user_id
 	 * @return void
 	 */
-	public function give_user($user_id)
-	{
+	public function give_user($user_id){
 		if(isset($_REQUEST["ebook_id"]) && is_numeric($_REQUEST["ebook_id"])){
 			global $wpdb;
 			$data = get_userdata($user_id);
@@ -1100,8 +1091,7 @@ EOS;
 	 * @param int $num_page 一回のリクエストで表示する数
 	 * @return array 購入履歴からなる配列
 	 */
-	private function get_history($user_ID, $offset = 0, $num_page = 10)
-	{
+	private function get_history($user_ID, $offset = 0, $num_page = 10){
 		return $this->get_transaction(null, $user_ID, null, $offset, $num_page);
 	}
 	
@@ -1112,8 +1102,7 @@ EOS;
 	 * @param int $book_id (optional) 指定しない場合はすべてのブックが対象
 	 * @return int
 	 */
-	private function get_total_bought($user_ID, $book_id = null)
-	{
+	private function get_total_bought($user_ID, $book_id = null){
 		return count($this->get_transaction($book_id, $user_ID, null));
 	}
 	
@@ -1168,12 +1157,10 @@ EOS;
 	}
 	
 	/**
-	 * 取引情報を更新する
-	 * 
+	 * Update transaction
 	 * @return void
 	 */
-	public function update_transaction()
-	{
+	public function update_transaction(){
 		//Check nonce If this is a 
 		if(isset($_REQUEST["_wpnonce"], $_REQUEST['transaction_id']) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_transaction")){
 			//Update Data
@@ -1288,8 +1275,7 @@ EOS;
 	}
 	
 	/**
-	 * the_contentへのフック
-	 * 
+	 * Hook the_content to display purchase history
 	 * @since 0.3
 	 * @global object $post
 	 * @param string $content
@@ -1466,93 +1452,6 @@ EOS;
 			echo json_encode($date_array);
 			exit;
 		}
-	}
-	
-	//--------------------------------------------
-	//
-	// TinyMCE
-	//
-	//--------------------------------------------
-	
-	/**
-	 * ショートコードを追加する
-	 * 
-	 * @since 0.8
-	 * @param array $atts
-	 * @param string $contents
-	 * @return string
-	 */
-	public function shortcode_capability($atts, $contents = null){
-		//属性値を抽出
-		extract(shortcode_atts(array("user" => "owner"), $atts));
-		//省略形を優先する
-		if(isset($atts[0])){
-			$user = $atts[0];
-		}
-		//属性値によって返す値を検討
-		switch($user){
-			case "owner": //オーナーの場合
-				return $this->is_owner() ? wpautop($contents) : "";
-				break;
-			case "subscriber": //登録済ユーザーの場合
-				return is_user_logged_in() ? wpautop($contents) : "";
-				break;
-			case "non-owner": //オーナーではない場合
-				return $this->is_owner() ? "" : wpautop($contents);
-				break;
-			case "non-subscriber": //登録者ではない場合
-				return is_user_logged_in() ? "" : wpautop($contents);
-				break;
-			default:
-				return wpautop($contents);
-		}
-	}
-	
-	/**
-	 * BuyNowボタンを出力する
-	 * 
-	 * @param type $atts
-	 * @return string
-	 */
-	public function shortcode_buynow($atts){
-		if(!isset($atts[0]) || !$atts[0]){
-			return lwp_buy_now(null, false);
-		}elseif($atts[0] == 'link'){
-			return lwp_buy_now(null, null);
-		}else{
-			return lwp_buy_now(null, $atts[0]);
-		}
-	}
-	
-	/**
-	 * TinyMCEにプラグインを登録する
-	 * @param array $plugin_array
-	 * @return array
-	 */
-	public function mce_plugin($plugin_array){
-		$plugin_array['lwpShortCode'] = $this->url."assets/js/tinymce.js";
-		return $plugin_array;
-	}
-	
-	/**
-	 * TinyMCEの言語ファイルを追加する
-	 * @param array $languages
-	 * @return array
-	 */
-	public function mce_lang($languages){
-		$languages["lwpShortCode"] = $this->dir.DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."js".DIRECTORY_SEPARATOR."tinymce-lang.php";
-		return $languages;
-	}
-	
-	/**
-	 * TinyMCEのボタンを追加する
-	 * @param array $buttons
-	 * @return array
-	 */
-	public function mce_button($buttons){
-		array_push($buttons, "lwpListBox", "separator");
-		array_push($buttons, 'lwpBuyNow', "separator");
-		return $buttons;
 	}
 	
 	/**

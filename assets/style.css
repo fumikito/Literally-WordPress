@@ -16,9 +16,22 @@ div.ebook{
 .icon32-posts-lwp_notification{
 	background-image: url('./mail_32.png');
 }
+.icon32-posts-lwp_subscription{
+	background-image: url('./icon-sucscription.png') !important;
+	background-position: left top !important;
+}
 .icon32-posts-ios-product,
 .icon32-ios-api{
 	background-image: url('./icon-iphone-32.png') !important;
+	background-position: 0 0 !important;
+}
+.icon32-download-logs{
+	background-image: url('./icon-download.png') !important;
+	background-position: 0 0 !important;
+}
+.icon32-reward,
+.icon32-personal-reward{
+	background-image: url('./icon-dollar.png') !important;
 	background-position: 0 0 !important;
 }
 .lwp-wrap h3{

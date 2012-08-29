@@ -187,7 +187,6 @@ function lwp_currency_code(){
  * @return string
  */
 function lwp_currency_symbol(){
-	global $lwp;
 	return PayPal_Statics::currency_entity(lwp_currency_code());
 }
 
@@ -305,7 +304,7 @@ function lwp_get_size($file)
 function lwp_get_ext($file)
 {
 	global $lwp;
-	$path = $lwp->option["dir"].DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
+	$path = $lwp->post->file_directory.DIRECTORY_SEPARATOR.$file->book_id.DIRECTORY_SEPARATOR.$file->file;
 	if(file_exists($path))
 		return pathinfo($path, PATHINFO_EXTENSION);
 	else

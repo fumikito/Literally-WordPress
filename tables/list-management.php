@@ -229,10 +229,10 @@ EOS;
 				}
 				break;
 			case 'registered':
-				return mysql2date(get_option('date_format'), $item->registered, false);
+				return mysql2date(get_option('date_format'), get_date_from_gmt($item->registered), false);
 				break;
 			case 'updated':
-				return mysql2date(get_option('date_format'), $item->updated, false);
+				return mysql2date(get_option('date_format'), get_date_from_gmt($item->updated), false);
 				break;
 			case 'status':
 				return $lwp->_($item->status);

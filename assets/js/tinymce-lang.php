@@ -9,11 +9,11 @@ global $lwp;
 
 $strings = 'tinyMCE.addI18n({' . $mce_locale . ':{
 	lwpShortCode:{
-		title:"' . esc_js( $lwp->_('Capability') ) . '",
-		owner:"' . esc_js( $lwp->_('Owner') ) . '",
-		subscriber:"' . esc_js( $lwp->_('Subscriber') ) . '",
-		nonOwner:"' . esc_js( $lwp->_('Non Owner') ) . '",
-		nonSubscriber:"' . esc_js( $lwp->_('Non Subscriber') ) . '",
+		title:"' . esc_js( $lwp->_('Control by Capability') ) . '",
+		owner:"' . esc_js( $lwp->_('Purchaser Only') ) . '",
+		subscriber:"' . esc_js( $lwp->_('Subscriber Only') ) . '",
+		nonOwner:"' . esc_js( $lwp->_('Non Purchaesr Only') ) . '",
+		nonSubscriber:"' . esc_js( $lwp->_('Non Subscriber Only') ) . '",
 		buyNow:"'.esc_js($lwp->_('Add Buy Now')).'",
 		deault: "'.esc_js($lwp->_('Default Button')).'",
 		noimage: "'.esc_js($lwp->_('Inline link tag')).'",
