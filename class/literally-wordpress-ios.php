@@ -412,7 +412,7 @@ EOS;
 		if($transaction){
 			return true;
 		}else{
-			return (boolean)$wpdb->insert($lwp->transaction, array(
+			$result = (boolean)$wpdb->insert($lwp->transaction, array(
 				'user_id' => get_current_user_id(),
 				'book_id' => $post->ID,
 				'price' => $price,
@@ -423,6 +423,12 @@ EOS;
 				'updated' => gmdate('Y-m-d H:i:s'),
 				'num' => $receipt->quantity
 			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d') );
+			if($result){
+				do_action('lwp_ios_transaction_registered', 
+					$wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id)),
+					$receipt);
+			}
+			return (boolean) $result;
 		}
 	}
 	
