@@ -28,41 +28,41 @@ class Literally_WordPress{
 	public $option;
 	
 	/**
-	 * キャンペーンテーブル
-	 * 
+	 * Campaign table name
 	 * @var string
 	 */
 	public $campaign = "";
 	
 	/**
-	* トランザクションテーブル
-	*
-	* @var string
-	*/
+	 * Transaction table name
+	 * @var string
+	 */
 	public $transaction = "";
 	
 	/**
-	* ファイルテーブル
-	*
-	* @var string
-	*/
+	 * File table
+	 * @var string
+	 */
 	public $files = "";
 	
+	/**
+	 * File log table
+	 * @var string
+	 */
+	public $file_logs = '';
 	
 	/**
-	* 端末テーブル
-	*
-	* @var string
-	*/
+	 * Relationships between files and devices
+	 * @var string
+	 */
+	public $file_relationships = "";
+	
+	/**
+	 * Device tables
+	 * @var string
+	 */
 	public $devices = "";
 	
-	
-	/**
-	* ファイルと端末の関係テーブル
-	*
-	* @var string
-	*/
-	public $file_relationships = "";
 	
 	/**
 	 * Table of promotion log
@@ -194,8 +194,9 @@ class Literally_WordPress{
 		$this->campaign = LWP_Tables::campaign();
 		$this->transaction = LWP_Tables::transaction();
 		$this->files = LWP_Tables::files();
-		$this->devices = LWP_Tables::devices();
 		$this->file_relationships = LWP_Tables::file_relationships();
+		$this->file_logs = LWP_Tables::file_logs();
+		$this->devices = LWP_Tables::devices();
 		$this->reward_logs = LWP_Tables::reward_logs();
 		$this->promotion_logs = LWP_Tables::promotion_logs();
 		//Load text domain

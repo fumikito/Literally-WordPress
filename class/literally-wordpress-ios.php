@@ -379,11 +379,16 @@ EOS;
 			$this->kill($this->_('File is too large. You cannot get file.'), 500);
 		}
 		ini_set('memory_limit', '128M');
+		$data = new IXR_Base64(file_get_contents($path));
+		$mime = $lwp->post->detect_mime($path);
+		//Save download log
+		$lwp->post->save_donwload_log($file->ID);
+		//All data is 
 		return array(
 			'hash' => $hash,
 			'size' => $size,
-			'mime' => $lwp->post->detect_mime($path),
-			'data' => new IXR_Base64(file_get_contents($path))
+			'mime' => $mime,
+			'data' => $data
 		);
 	}
 	

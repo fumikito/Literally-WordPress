@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.1.2';
+	const VERSION = '0.9.2.0';
 	
 	/**
 	 * Table prefix for this plugin
@@ -39,6 +39,14 @@ class LWP_Tables{
 	 */
 	public static function files(){
 		return self::get_name('files');
+	}
+	
+	/**
+	 * Returns file log table
+	 * @return string
+	 */
+	public static function file_logs(){
+		return self::get_name('file_logs');
 	}
 	
 	/**
@@ -140,6 +148,20 @@ class LWP_Tables{
 				registered DATETIME NOT NULL,
 				updated DATETIME NOT NULL,
 				PRIMARY KEY  (ID)
+			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
+EOS;
+		//Create file log table
+		$file_logs = self::file_logs();
+		$sql[] = <<<EOS
+			CREATE TABLE {$file_logs} (
+				ID INT NOT NULL AUTO_INCREMENT,
+				file_id BIGINT NOT NULL,
+				user_id BIGINT NOT NULL,
+				user_agent VARCHAR(255) NOT NULL,
+				ip_address VARCHAR(255) NOT NULL,
+				updated DATETIME NOT NULL,
+				PRIMARY KEY (ID),
+				INDEX file(file_id)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
 		//Create transactios table

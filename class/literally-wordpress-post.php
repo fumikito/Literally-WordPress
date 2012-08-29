@@ -523,6 +523,94 @@ EOS;
 	}
 	
 	/**
+	 * Output file 
+	 * @global boolean $is_IE
+	 * @param object $file
+	 */
+	public function print_file($file){
+		global $is_IE;
+		if(is_numeric($file)){
+			$file = $this->get_files(null, $file);
+		}
+		//Filter path info. You can override it.
+		$path = apply_filters('lwp_file_path', $this->get_file_path($file), $file, get_current_user_id());
+		if(!$path || !file_exists($path)){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		/*
+		 * Here you are, all green.
+		 * Let's start print file.
+		 */
+		//Get file information.
+		$mime = $this->detect_mime($file->file);
+		$size = filesize($path);
+		//Create header
+		//If IE and under SSL, echo cache control.
+		// @see http://exe.tyo.ro/2010/01/nocachesslie.html
+		$cache_header = $is_IE ? array(
+			'Cache-Control' => 'public',
+			"Pragma" => ''
+		) : array();
+		$headers = apply_filters('lwp_file_header', array_merge($cache_header, array(
+			'Content-Type' => $mime,
+			'Content-Disposition' => "attachment; filename=\"{$file->file}\"",
+			'Content-Length' => $size
+		)), $file, $path);
+		//Calculate download rate. Especially for memroy limit.
+		//1kb
+		$kb = 1024;
+		//minimum = 100kb or 1/100 of file size, maximum 2MB
+		$per_size = apply_filters('lwp_download_size_per_second', min(max($size / 100, 100 * $kb), $kb * 2048), $file, $path);
+		//Do normal operation if flg is true
+		if(apply_filters('lwp_ob_download', true, $file, $headers)){
+			//Output header
+			foreach($headers as $key => $value){
+				header("{$key}: {$value}");
+			}
+			ob_end_flush();
+			ob_start('mb_output_handler');
+			//Read File
+			set_time_limit(0);
+			$handle = fopen($path, "r");
+			while(!feof($handle)){
+				//Output specified size.
+				echo fread($handle, $per_size);
+				//Flush buffer and sleep.
+				ob_flush();
+				flush();
+				sleep(1);
+			}
+			//Done!
+			fclose($handle);
+			//Save log
+			$this->save_donwload_log($file->ID);
+		}
+		//Finish script
+		exit;
+	}
+	
+	/**
+	 * Save download log
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $file_id
+	 * @param int $user_id
+	 */
+	public function save_donwload_log($file_id, $user_id = null){
+		global $wpdb, $lwp;
+		if(is_null($user_id)){
+			$user_id = get_current_user_id();
+		}
+		$wpdb->insert($lwp->file_logs, array(
+			'file_id' => $file_id,
+			'user_id' => $user_id,
+			'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+			'ip_address' => $_SERVER['REMOTE_ADDR'],
+			'updated' => gmdate('Y-m-d H:i:s')
+		), array('%d', '%d', '%s', '%s', '%s'));
+	}
+	
+	/**
 	 * Return if post type is payable
 	 * @param string $post_type
 	 * @return boolean
