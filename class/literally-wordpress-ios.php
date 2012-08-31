@@ -3,6 +3,18 @@
 class LWP_iOS extends Literally_WordPress_Common{
 	
 	/**
+	 * API Version.
+	 * @var string
+	 */
+	public $api_version = '1.0';
+	
+	/**
+	 * API last updated
+	 * @var string
+	 */
+	public $api_last_updated = '2012-08-31 22:35:15';
+	
+	/**
 	 * Whether user can buy from public site
 	 * @var boolean
 	 */
@@ -223,6 +235,23 @@ class LWP_iOS extends Literally_WordPress_Common{
 	}
 	
 	/**
+	 * Returns iOS XML-RPC Information
+	 * @global Literally_WordPress $lwp
+	 * @param array $args
+	 * @return array
+	 */
+	public function ios_get_api_information($args = array()){
+		global $lwp, $wp_version;
+		return array(
+			'api_version' => $this->api_version,
+			'last_updated' => $this->api_last_updated,
+			'force_ssl' => $this->is_ssl_forced(),
+			'lwp_version' => $lwp->version,
+			'wp_version' => $wp_version
+		);
+	}
+	
+	/**
 	 * Returns product's id list
 	 * 
 	 * @global wpdb $wpdb
@@ -415,6 +444,7 @@ EOS;
 		if($transaction){
 			return true;
 		}else{
+			$uuid = isset($args[4]) ? strval($args[4]) : '';
 			$result = (boolean)$wpdb->insert($lwp->transaction, array(
 				'user_id' => get_current_user_id(),
 				'book_id' => $post->ID,
@@ -422,16 +452,35 @@ EOS;
 				'status' => LWP_Payment_Status::SUCCESS,
 				'method' => LWP_Payment_Methods::APPLE,
 				'transaction_key' => $receipt->original_transaction_id,
+				'transaction_id' => $uuid,
 				'registered' => date('Y-m-d H:i:s', intval($receipt->original_purchase_date_ms / 1000) ),
 				'updated' => gmdate('Y-m-d H:i:s'),
 				'num' => $receipt->quantity
-			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d') );
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d') );
 			if($result){
 				do_action('lwp_ios_transaction_registered', 
 					$wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id)),
 					$receipt);
 			}
 			return (boolean) $result;
+		}
+	}
+	
+	/**
+	 * Wraps registerTransaction and getFile.
+	 * @param array $args
+	 * @return array
+	 */
+	public function ios_get_file_with_receipt($args){
+		if($this->ios_register_transaction($args)){
+			//Transaction is OK.
+			$username = $args[0];
+			$password = $args[1];
+			$file_id = isset($args[5]) ? intval($args[5]) : 0; 
+			return $this->ios_get_file(array($username, $password, $file_id));
+		}else{
+			//Something is wrong
+			$this->kill($this->_('Failed to register transaction.'), 403);
 		}
 	}
 	

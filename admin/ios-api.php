@@ -1,6 +1,10 @@
 <?php /* @var $this Literally_WordPress */ ?>
 <h2><?php $this->e('XML-RPC API Manual'); ?></h2>
 
+<p class="description">
+<?php printf($this->_('API Version: %1$s<br />Last Updated: %2$s'), $this->ios->api_version, mysql2date(get_option('date_format').' '.get_option('time_format'), $this->ios->api_last_updated)); ?>
+</p>
+
 <h3><?php $this->e('How to use'); ?></h3>
 <p><?php printf($this->_('Once you enabled iOS Product, expanded <a href="%s">XML-RPC API</a> for products is available. Your iOS application can contact with this WordPres site and download In App Purchase products.'), 'http://codex.wordpress.org/XML-RPC_Support');  ?></p>
 <p class="description"><?php printf($this->_('<strong>Note:</strong> I recommend you to use %s.'), '<a href="https://github.com/eczarny/xmlrpc">eczarny\'s Cocoa XML-RPC Framework</a>'); ?></p>
@@ -8,6 +12,18 @@
 <h3><?php $this->e('Methods') ?></h3>
 
 <div class="lwp-api-list">
+
+<h4>lwp.ios.getApiInformation</h4>
+<p><?php $this->e('You can know API version information.') ?></p>
+<h5><?php $this->e('Returns'); ?></h5>
+<pre>
+<strong>(struct)</strong>
+	<strong>(string)</strong> api_version <?php $this->e('Version of XML-RPC API'); ?> 
+	<strong>(string)</strong> last_updated <?php $this->e('API\'s last updated date in DATETIME format.'); ?> 
+	<strong>(string)</strong> lwp_version <?php $this->e('Version of LWP'); ?> 
+	<strong>(string)</strong> wp_version <?php $this->e('WordPress version'); ?> 
+	<strong>(boolean)</strong> force_ssl <?php $this->e('Is SSL forced.'); ?>
+</pre>
 
 <h4>lwp.ios.methods</h4>
 <p><?php $this->e('You can get list of registered methods.') ?></p>
@@ -116,10 +132,32 @@
 <strong>(string)</strong> password
 <strong>(string)</strong> receipt <?php $this->e('Base64 encoded string of receipt you get from AppStore.'); ?> 
 <strong>(double)</strong> price <?php $this->e('If not set, price set at Edit screen will be used. Setting actual price on AppStore is strongly recommended.'); ?> 
+<strong>(string)</strong> uuid <?php $this->e('Typically UUID. Any string can be saved.'); ?> 
 </pre>
 <h5><?php $this->e('Returns'); ?></h5>
 <pre>
 <strong>(boolean)</strong> <?php $this->e('True on success, False on failur.'); ?>
+</pre>
+
+
+<h4>lwp.ios.getFileWithReceipt</h4>
+<p><?php $this->e('You can get file and register transaction in one action.') ?></p>
+<h5><?php $this->e('Parameters'); ?></h5>
+<pre>
+<strong>(string)</strong> username
+<strong>(string)</strong> password
+<strong>(string)</strong> receipt <?php $this->e('Base64 encoded string of receipt you get from AppStore.'); ?> 
+<strong>(double)</strong> price <?php $this->e('If not set, price set at Edit screen will be used. Setting actual price on AppStore is strongly recommended.'); ?> 
+<strong>(string)</strong> uuid <?php $this->e('Typically UUID. Any string can be saved.'); ?> 
+<strong>(int)</strong> file_id
+</pre>
+<h5><?php $this->e('Returns'); ?></h5>
+<pre>
+<strong>(struct)</strong>
+	<strong>(string)</strong> hash <?php $this->e('md5 hash of file'); ?> 
+	<strong>(int)</strong> size <?php $this->e('File size'); ?> 
+	<strong>(string)</strong> mime <?php $this->e('Mime type of file'); ?> 
+	<strong>(base64)</strong> data <?php $this->e('Binary data of file.'); ?> 
 </pre>
 
 
