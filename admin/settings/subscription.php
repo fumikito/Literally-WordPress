@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h3><?php printf($this->_('About %s'), $this->_("Subscription")); ?></h3>
 <p class="description">
 	<?php $this->e('You can provide member only contents by subscription plan. You can choose any price, any period.'); ?>
@@ -22,7 +23,7 @@
 					$wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_type = %s", $this->subscription->post_type))
 							);
 				?>
-				<?php printf($this->_('You can set it up <a href="%s">here</a>.'), admin_url('edit.php?post_type=lwp-subscription'));  ?>
+				<?php printf($this->_('You can set it up <a href="%s">here</a>.'), admin_url('edit.php?post_type='.$this->subscription->post_type));  ?>
 			</td>
 		</tr>
 		<tr>
@@ -47,7 +48,7 @@
 				<label><input type="radio" name="subscription_format" value="nextpage" <?php if($this->option['subscription_format'] == 'nextpage') echo 'checked="checked"'; ?> /><?php $this->e("Nextpage Tag"); ?></label><br />
 				<label><input type="radio" name="subscription_format" value="all" <?php if($this->option['subscription_format'] == 'all') echo 'checked="checked"'; ?> /><?php $this->e("All"); ?></label>
 				<p class="description">
-					<?php printf($this->_("If you choose More Tag or Nextpage Tag, non subscriber can see the content before it and the invitation message after it. If you choose all, non subscriber saw only the invitation message. You can customize the invitation message at <a href=\"%s\">Subscription</a>."), admin_url('admin.php')); ?>
+					<?php printf($this->_("If you choose More Tag or Nextpage Tag, non subscriber can see the content before it and the invitation message after it. If you choose all, non subscriber saw only the invitation message. You can customize the invitation message at <a href=\"%s\">Subscription</a>."), admin_url('edit.php?post_type='.$this->subscription->post_type)); ?>
 				</p>
 			</td>
 		</tr>

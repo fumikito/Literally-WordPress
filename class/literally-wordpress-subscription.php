@@ -116,24 +116,22 @@ class LWP_Subscription extends Literally_WordPress_Common{
 	/**
 	 * Create message page for subscription
 	 * @global wpdb $wpdb
-	 * @global Literally_WordPress $lwp
-	 * @global int $user_ID 
 	 */
 	public function admin_init(){
 		if(isset($_GET['page']) && false !== strpos($_GET['page'], 'lwp')){
-			global $wpdb, $lwp, $user_ID;
+			global $wpdb;
 			if(!$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, $this->invitation_slug))){					
 				wp_insert_post(array(
 					'post_title' => $this->_('Invitation for subscription'),
 					'post_name' => $this->invitation_slug,
-					'post_author' => $user_ID,
+					'post_author' => get_current_user_id(),
 					'post_type' => $this->post_type,
 					'post_status' => 'publish',
 					'post_content' => $this->_("This contents is for subscribers only.")
 				));
 			}
 		}
-		if($this->enabled){
+		if($this->is_enabled()){
 			add_action('add_meta_boxes', array($this, 'register_subscription_metabox'));
 		}
 	}
