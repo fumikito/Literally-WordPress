@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-30 02:30+0900\n"
-"PO-Revision-Date: 2012-08-30 02:31+0900\n"
+"POT-Creation-Date: 2012-08-31 22:56+0900\n"
+"PO-Revision-Date: 2012-08-31 22:58+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -497,7 +497,7 @@ msgstr "チケット名"
 #: ../class/literally-wordpress-core.php:1315
 #: ../class/literally-wordpress-event.php:819
 #: ../class/literally-wordpress-form.php:681
-#: ../class/literally-wordpress-subscription.php:196
+#: ../class/literally-wordpress-subscription.php:194
 #: ../form-template/edit-detail-event.php:104
 #: ../form-template/edit-detail.php:24
 #: ../form-template/paypal-cancel-ticket.php:15
@@ -564,7 +564,7 @@ msgstr "ドキュメンテーション"
 #: ../admin/form-check.php:13 ../admin/settings/event.php:1
 #: ../admin/settings/misc.php:1 ../admin/settings/payment.php:1
 #: ../admin/settings/post.php:2 ../admin/settings/reward.php:2
-#: ../admin/settings/subscription.php:1
+#: ../admin/settings/subscription.php:2
 #, php-format
 msgid "About %s"
 msgstr "%sについて"
@@ -669,11 +669,16 @@ msgstr ""
 msgid "XML-RPC API Manual"
 msgstr "XML-RPC APIマニュアル"
 
-#: ../admin/ios-api.php:4
+#: ../admin/ios-api.php:5
+#, php-format
+msgid "API Version: %1$s<br />Last Updated: %2$s"
+msgstr "API バージョン: %1$s<br />最終更新日: %2$s"
+
+#: ../admin/ios-api.php:8
 msgid "How to use"
 msgstr "使用法"
 
-#: ../admin/ios-api.php:5
+#: ../admin/ios-api.php:9
 #, php-format
 msgid ""
 "Once you enabled iOS Product, expanded <a href=\"%s\">XML-RPC API</a> for "
@@ -684,40 +689,65 @@ msgstr ""
 "が使えるようになります。あなたのiOSアプリケーションはWordPressサイトとコンタ"
 "クトをとったり、アプリ内購入プロダクトをダウンロードできるようになります。"
 
-#: ../admin/ios-api.php:6
+#: ../admin/ios-api.php:10
 #, php-format
 msgid "<strong>Note:</strong> I recommend you to use %s."
 msgstr "<strong>注意：</strong> %sのご利用をおすすめします。"
 
-#: ../admin/ios-api.php:8
+#: ../admin/ios-api.php:12
 msgid "Methods"
 msgstr "メソッド"
 
-#: ../admin/ios-api.php:13
-msgid "You can get list of registered methods."
-msgstr "登録されたメソッドの一覧を取得できます。"
+#: ../admin/ios-api.php:17
+msgid "You can know API version information."
+msgstr "APIバージョン情報がわかります。"
 
-#: ../admin/ios-api.php:14 ../admin/ios-api.php:27 ../admin/ios-api.php:38
-#: ../admin/ios-api.php:54 ../admin/ios-api.php:73 ../admin/ios-api.php:98
-#: ../admin/ios-api.php:120 ../admin/ios-api.php:136
+#: ../admin/ios-api.php:18 ../admin/ios-api.php:30 ../admin/ios-api.php:43
+#: ../admin/ios-api.php:54 ../admin/ios-api.php:70 ../admin/ios-api.php:89
+#: ../admin/ios-api.php:114 ../admin/ios-api.php:137 ../admin/ios-api.php:154
+#: ../admin/ios-api.php:174
 msgid "Returns"
 msgstr "戻り値"
 
-#: ../admin/ios-api.php:16
+#: ../admin/ios-api.php:21
+msgid "Version of XML-RPC API"
+msgstr "XML-RPC APIのバージョン"
+
+#: ../admin/ios-api.php:22
+msgid "API's last updated date in DATETIME format."
+msgstr "APIの最終更新日をDATETIME型で返します。"
+
+#: ../admin/ios-api.php:23
+msgid "Version of LWP"
+msgstr "LWPのバージョン"
+
+#: ../admin/ios-api.php:24
+msgid "WordPress version"
+msgstr "WordPressのバージョン"
+
+#: ../admin/ios-api.php:25
+msgid "Is SSL forced."
+msgstr "SSLが必須か否か"
+
+#: ../admin/ios-api.php:29
+msgid "You can get list of registered methods."
+msgstr "登録されたメソッドの一覧を取得できます。"
+
+#: ../admin/ios-api.php:32
 msgid "Array consists of method names."
 msgstr "メソッド名からなる配列"
 
-#: ../admin/ios-api.php:21
+#: ../admin/ios-api.php:37
 msgid "You can get userdata with credentials."
 msgstr "認証情報からユーザーデータを取得します。"
 
-#: ../admin/ios-api.php:22 ../admin/ios-api.php:34 ../admin/ios-api.php:46
-#: ../admin/ios-api.php:69 ../admin/ios-api.php:92 ../admin/ios-api.php:113
-#: ../admin/ios-api.php:129
+#: ../admin/ios-api.php:38 ../admin/ios-api.php:50 ../admin/ios-api.php:62
+#: ../admin/ios-api.php:85 ../admin/ios-api.php:108 ../admin/ios-api.php:129
+#: ../admin/ios-api.php:145 ../admin/ios-api.php:167
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: ../admin/ios-api.php:29
+#: ../admin/ios-api.php:45
 #, php-format
 msgid ""
 "You can get same data as <code>get_userdata</code>. See detail at <a href="
@@ -726,7 +756,7 @@ msgstr ""
 "<code>get_userdata</code>と同じデータを取得できます。詳しくは<a href=\"%s"
 "\">codex</a>を見てください。"
 
-#: ../admin/ios-api.php:33
+#: ../admin/ios-api.php:49
 msgid ""
 "You can get product group. Product group is a custom taxonomy and it helps "
 "you to manage multiple iOS application in one WordPress site."
@@ -734,7 +764,7 @@ msgstr ""
 "プロダクトグループを取得できます。プロダクトグループとはカスタムタクソノミー"
 "で、1つのWordPressサイトで複数のiOSアプリケーションを管理するのに役立ちます。"
 
-#: ../admin/ios-api.php:36
+#: ../admin/ios-api.php:52
 #, php-format
 msgid ""
 "Parameter is directly pass to <code>get_terms</code>. See detail at <a href="
@@ -743,31 +773,31 @@ msgstr ""
 "パラメータは<code>get_terms</code>に直接渡されます。詳しくは<a href=\"%s"
 "\">codex</a>を見てください。"
 
-#: ../admin/ios-api.php:40
+#: ../admin/ios-api.php:56
 msgid "Array consists\t of term object."
 msgstr "タームオブジェクトからなる配列"
 
-#: ../admin/ios-api.php:45
+#: ../admin/ios-api.php:61
 msgid "You can get product list "
 msgstr "プロダクトリストを取得します。"
 
-#: ../admin/ios-api.php:49
+#: ../admin/ios-api.php:65
 msgid "term_taxonomy_id of term object. Default 0."
 msgstr "タームオブジェクトのterm_taxonomy_id。デフォルトは0。"
 
-#: ../admin/ios-api.php:50
+#: ../admin/ios-api.php:66
 msgid "date, title, ID, product_id. Default product_id"
 msgstr "date, title, ID, product_idのいずれか。デフォルトはproduct_id。"
 
-#: ../admin/ios-api.php:51
+#: ../admin/ios-api.php:67
 msgid "DESC or ASC. Default ASC"
 msgstr "DESC または ASC。デフォルトは ASC。"
 
-#: ../admin/ios-api.php:52
+#: ../admin/ios-api.php:68
 msgid "Post status. Default publish"
 msgstr "投稿ステータス。デフォルトはpublish。"
 
-#: ../admin/ios-api.php:64
+#: ../admin/ios-api.php:80
 msgid ""
 "<em>This value is registered at Post edit screen. To get precise price, use "
 "StoreKit request.</em>"
@@ -775,68 +805,68 @@ msgstr ""
 "<em>この値は投稿編集画面で登録されたものです。正しい価格を得るにはStoreKitリ"
 "クエストを発行してください。</em>"
 
-#: ../admin/ios-api.php:68
+#: ../admin/ios-api.php:84
 msgid "File list of specified post."
 msgstr "指定された投稿のファイルリスト。"
 
-#: ../admin/ios-api.php:71
+#: ../admin/ios-api.php:87
 msgid "ID of post."
 msgstr "投稿ID"
 
-#: ../admin/ios-api.php:77
+#: ../admin/ios-api.php:93
 msgid "File ID."
 msgstr "ファイルID"
 
-#: ../admin/ios-api.php:78
+#: ../admin/ios-api.php:94
 msgid "File desciptive name."
 msgstr "ファイルにつけられた名前"
 
-#: ../admin/ios-api.php:79
+#: ../admin/ios-api.php:95
 msgid "File's description."
 msgstr "ファイル詳細"
 
-#: ../admin/ios-api.php:80
+#: ../admin/ios-api.php:96
 msgid "0 is private, 1 is public."
 msgstr "0は非公開、1は公開"
 
-#: ../admin/ios-api.php:81
+#: ../admin/ios-api.php:97
 msgid ""
 "0 is not free, 1 means free for the registered users, 2 is free for everyone."
 msgstr "0は有料、1は登録ユーザーのみ無料、2は誰にでも無料"
 
-#: ../admin/ios-api.php:82
+#: ../admin/ios-api.php:98
 #, php-format
 msgid "Devices you registered <a href=\"%s\">here</a>."
 msgstr "<a href=\"%s\">ここ</a>で登録された端末。"
 
-#: ../admin/ios-api.php:91
+#: ../admin/ios-api.php:107
 msgid "Get File from transaction information."
 msgstr "決済情報からファイルを取得します。"
 
-#: ../admin/ios-api.php:101
+#: ../admin/ios-api.php:117 ../admin/ios-api.php:157
 msgid "md5 hash of file"
 msgstr "md5ファイルハッシュ"
 
-#: ../admin/ios-api.php:102
+#: ../admin/ios-api.php:118 ../admin/ios-api.php:158
 msgid "File size"
 msgstr "ファイルサイズ"
 
-#: ../admin/ios-api.php:103
+#: ../admin/ios-api.php:119 ../admin/ios-api.php:159
 msgid "Mime type of file"
 msgstr "ファイルのmime型"
 
-#: ../admin/ios-api.php:104
+#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
 msgid "Binary data of file."
 msgstr "ファイルのバイナリデータ"
 
-#: ../admin/ios-api.php:111
+#: ../admin/ios-api.php:127
 msgid ""
 "Register transaction with AppStore receipt. This aciton is very important."
 msgstr ""
 "AppStoreのレシートからトランザクションを登録します。このアクションはとても重"
 "要です。"
 
-#: ../admin/ios-api.php:112
+#: ../admin/ios-api.php:128
 msgid ""
 "<strong>Note:</strong> event in case of restoration, call this method. It "
 "parse receipt and try to find existing transaction."
@@ -844,11 +874,11 @@ msgstr ""
 "<strong>注意：</strong> リストアする場合もこのメソッドを呼び出してください。"
 "レシートを解析し、既存の決済情報を探します。"
 
-#: ../admin/ios-api.php:117
+#: ../admin/ios-api.php:133 ../admin/ios-api.php:149
 msgid "Base64 encoded string of receipt you get from AppStore."
 msgstr "AppStoreから受け取ったレシートをBase64エンコードした文字列"
 
-#: ../admin/ios-api.php:118
+#: ../admin/ios-api.php:134 ../admin/ios-api.php:150
 msgid ""
 "If not set, price set at Edit screen will be used. Setting actual price on "
 "AppStore is strongly recommended."
@@ -856,19 +886,27 @@ msgstr ""
 "設定されない場合は編集画面で入力された値が使われます。AppStoreでの実際の価格"
 "をセットすることを強くお勧めします。"
 
-#: ../admin/ios-api.php:122
+#: ../admin/ios-api.php:135 ../admin/ios-api.php:151
+msgid "Typically UUID. Any string can be saved."
+msgstr "よくあるものとしてはUUIDです。どんな文字列でも保存できます。"
+
+#: ../admin/ios-api.php:139
 msgid "True on success, False on failur."
 msgstr "成功するとTrue、失敗するとFalse"
 
-#: ../admin/ios-api.php:128
+#: ../admin/ios-api.php:144
+msgid "You can get file and register transaction in one action."
+msgstr "ファイルの取得と決済の登録を一度に行います。"
+
+#: ../admin/ios-api.php:166
 msgid "Get list or user's transaction information."
 msgstr "ユーザーの決済情報リスト"
 
-#: ../admin/ios-api.php:133
+#: ../admin/ios-api.php:171
 msgid "Default 1."
 msgstr "デフォルトは1。"
 
-#: ../admin/ios-api.php:134
+#: ../admin/ios-api.php:172
 #, php-format
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
@@ -1000,7 +1038,7 @@ msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
 #: ../admin/management.php:127
-#: ../class/literally-wordpress-subscription.php:200
+#: ../class/literally-wordpress-subscription.php:198
 #: ../tables/list-history.php:44 ../tables/list-management.php:126
 msgid "Expires"
 msgstr "期限"
@@ -1189,7 +1227,7 @@ msgid "Post Sell"
 msgstr "投稿の販売"
 
 #: ../admin/setting.php:10 ../admin/settings/dashboard.php:71
-#: ../admin/settings/subscription.php:1
+#: ../admin/settings/subscription.php:2
 #: ../class/literally-wordpress-form.php:109
 #: ../class/literally-wordpress-form.php:198
 #: ../class/literally-wordpress-form.php:301
@@ -1443,7 +1481,7 @@ msgstr "iOS非消耗プロダクト"
 msgid "You can manage iOS non-consumable product with WordPress."
 msgstr "iOS非消耗プロダクトをWordPressで管理できます。"
 
-#: ../admin/settings/dashboard.php:73 ../admin/settings/subscription.php:3
+#: ../admin/settings/dashboard.php:73 ../admin/settings/subscription.php:4
 msgid ""
 "You can provide member only contents by subscription plan. You can choose "
 "any price, any period."
@@ -1473,7 +1511,7 @@ msgid "LWP provide you digital ticket management system."
 msgstr "LWPはデジタルチケット販売システムを提供しています。"
 
 #: ../admin/settings/event.php:6 ../admin/settings/post.php:7
-#: ../admin/settings/reward.php:10 ../admin/settings/subscription.php:5
+#: ../admin/settings/reward.php:10 ../admin/settings/subscription.php:6
 msgid "Setting"
 msgstr "設定"
 
@@ -1712,11 +1750,11 @@ msgstr "送金設定"
 msgid "Accept Transfer"
 msgstr "送金の受付"
 
-#: ../admin/settings/payment.php:136 ../admin/settings/subscription.php:13
+#: ../admin/settings/payment.php:136 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr "許可しない"
 
-#: ../admin/settings/payment.php:137 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:137 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr "許可する"
 
@@ -2080,45 +2118,45 @@ msgstr ""
 "『北千住ソシアルクラブ』は私の電子書籍です。これを<strong>&yen;100</strong>で"
 "購入して、このプラグインがどのように動作するのか試してみてください！"
 
-#: ../admin/settings/subscription.php:10
+#: ../admin/settings/subscription.php:11
 msgid "Accept Subscription"
 msgstr "定期購読の許可"
 
-#: ../admin/settings/subscription.php:18
+#: ../admin/settings/subscription.php:19
 msgid "Registered Plans"
 msgstr "登録されたプラン"
 
-#: ../admin/settings/subscription.php:21
+#: ../admin/settings/subscription.php:22
 #, php-format
 msgid "You have %d subscription plans."
 msgstr "%d個の定期購読プランが登録されています。"
 
-#: ../admin/settings/subscription.php:25
+#: ../admin/settings/subscription.php:26
 #, php-format
 msgid "You can set it up <a href=\"%s\">here</a>."
 msgstr "<a href=\"%s\">ここ</a>で設定できます。"
 
-#: ../admin/settings/subscription.php:30
+#: ../admin/settings/subscription.php:31
 msgid "Subscription Post Type"
 msgstr "定期購読用投稿タイプ"
 
-#: ../admin/settings/subscription.php:43
+#: ../admin/settings/subscription.php:44
 msgid "Subscription Format"
 msgstr "定期購読の形式"
 
-#: ../admin/settings/subscription.php:46
+#: ../admin/settings/subscription.php:47
 msgid "More tag"
 msgstr "moreタグ"
 
-#: ../admin/settings/subscription.php:47
+#: ../admin/settings/subscription.php:48
 msgid "Nextpage Tag"
 msgstr "nextpageタグ"
 
-#: ../admin/settings/subscription.php:48
+#: ../admin/settings/subscription.php:49
 msgid "All"
 msgstr "コンテンツ全体"
 
-#: ../admin/settings/subscription.php:50
+#: ../admin/settings/subscription.php:51
 #, php-format
 msgid ""
 "If you choose More Tag or Nextpage Tag, non subscriber can see the content "
@@ -2430,7 +2468,7 @@ msgid "Tickets"
 msgstr "チケット"
 
 #: ../class/literally-wordpress-event.php:125
-#: ../class/literally-wordpress-ios.php:87
+#: ../class/literally-wordpress-ios.php:99
 #: ../class/literally-wordpress-notifier.php:87
 #: ../class/literally-wordpress-post.php:91
 #: ../class/literally-wordpress-subscription.php:86
@@ -2439,9 +2477,9 @@ msgstr "新規追加"
 
 #: ../class/literally-wordpress-event.php:126
 #: ../class/literally-wordpress-event.php:128
-#: ../class/literally-wordpress-ios.php:88
-#: ../class/literally-wordpress-ios.php:90
-#: ../class/literally-wordpress-ios.php:126
+#: ../class/literally-wordpress-ios.php:100
+#: ../class/literally-wordpress-ios.php:102
+#: ../class/literally-wordpress-ios.php:138
 #: ../class/literally-wordpress-notifier.php:88
 #: ../class/literally-wordpress-notifier.php:90
 #: ../class/literally-wordpress-post.php:92
@@ -2453,8 +2491,8 @@ msgid "Add New %s"
 msgstr "新規%s追加"
 
 #: ../class/literally-wordpress-event.php:127
-#: ../class/literally-wordpress-ios.php:89
-#: ../class/literally-wordpress-ios.php:124
+#: ../class/literally-wordpress-ios.php:101
+#: ../class/literally-wordpress-ios.php:136
 #: ../class/literally-wordpress-notifier.php:89
 #: ../class/literally-wordpress-post.php:93
 #: ../class/literally-wordpress-subscription.php:88
@@ -2463,7 +2501,7 @@ msgid "Edit %s"
 msgstr "%sを編集"
 
 #: ../class/literally-wordpress-event.php:129
-#: ../class/literally-wordpress-ios.php:91
+#: ../class/literally-wordpress-ios.php:103
 #: ../class/literally-wordpress-notifier.php:91
 #: ../class/literally-wordpress-post.php:95
 #: ../class/literally-wordpress-subscription.php:90
@@ -2472,8 +2510,8 @@ msgid "View %s"
 msgstr "%sを見る"
 
 #: ../class/literally-wordpress-event.php:130
-#: ../class/literally-wordpress-ios.php:92
-#: ../class/literally-wordpress-ios.php:119
+#: ../class/literally-wordpress-ios.php:104
+#: ../class/literally-wordpress-ios.php:131
 #: ../class/literally-wordpress-notifier.php:92
 #: ../class/literally-wordpress-post.php:96
 #: ../class/literally-wordpress-subscription.php:91
@@ -2482,7 +2520,7 @@ msgid "Search %s"
 msgstr "%sを検索"
 
 #: ../class/literally-wordpress-event.php:131
-#: ../class/literally-wordpress-ios.php:93
+#: ../class/literally-wordpress-ios.php:105
 #: ../class/literally-wordpress-notifier.php:93
 #: ../class/literally-wordpress-post.php:97
 #: ../class/literally-wordpress-subscription.php:92
@@ -2491,7 +2529,7 @@ msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
 #: ../class/literally-wordpress-event.php:132
-#: ../class/literally-wordpress-ios.php:94
+#: ../class/literally-wordpress-ios.php:106
 #: ../class/literally-wordpress-notifier.php:94
 #: ../class/literally-wordpress-post.php:98
 #: ../class/literally-wordpress-subscription.php:93
@@ -2670,8 +2708,8 @@ msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
 #: ../class/literally-wordpress-form.php:511
-#: ../class/literally-wordpress-ios.php:349
-#: ../class/literally-wordpress-ios.php:371
+#: ../class/literally-wordpress-ios.php:378
+#: ../class/literally-wordpress-ios.php:400
 #: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
@@ -2946,62 +2984,62 @@ msgstr ""
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
-#: ../class/literally-wordpress-ios.php:81
+#: ../class/literally-wordpress-ios.php:93
 msgid "iOS Product"
 msgstr "iOSプロダクト"
 
-#: ../class/literally-wordpress-ios.php:82
+#: ../class/literally-wordpress-ios.php:94
 msgid "iOS Products"
 msgstr "iOSプロダクト"
 
-#: ../class/literally-wordpress-ios.php:113
+#: ../class/literally-wordpress-ios.php:125
 msgid "Product Group"
 msgstr "プロダクトグループ"
 
-#: ../class/literally-wordpress-ios.php:114
+#: ../class/literally-wordpress-ios.php:126
 msgid "Product Groups"
 msgstr "プロダクトグループ"
 
-#: ../class/literally-wordpress-ios.php:120
+#: ../class/literally-wordpress-ios.php:132
 #, php-format
 msgid "Popular %s"
 msgstr "人気の%s"
 
-#: ../class/literally-wordpress-ios.php:121
+#: ../class/literally-wordpress-ios.php:133
 #, php-format
 msgid "All %s"
 msgstr "すべての%s"
 
-#: ../class/literally-wordpress-ios.php:125
+#: ../class/literally-wordpress-ios.php:137
 #, php-format
 msgid "Update %s"
 msgstr "%sを更新"
 
-#: ../class/literally-wordpress-ios.php:127
+#: ../class/literally-wordpress-ios.php:139
 #, php-format
 msgid "New %s Name"
 msgstr "新しい%s名"
 
-#: ../class/literally-wordpress-ios.php:128
+#: ../class/literally-wordpress-ios.php:140
 #, php-format
 msgid "Separate %s with commas"
 msgstr "%sをカンマで区切ってください"
 
-#: ../class/literally-wordpress-ios.php:129
+#: ../class/literally-wordpress-ios.php:141
 #, php-format
 msgid "Add or remove %s"
 msgstr "%sを追加または削除"
 
-#: ../class/literally-wordpress-ios.php:130
+#: ../class/literally-wordpress-ios.php:142
 #, php-format
 msgid "Choose from the most used %s"
 msgstr "もっとも使われている%sから選ぶ"
 
-#: ../class/literally-wordpress-ios.php:159
+#: ../class/literally-wordpress-ios.php:171
 msgid "iOS Procut ID"
 msgstr "iOSプロダクトID"
 
-#: ../class/literally-wordpress-ios.php:167
+#: ../class/literally-wordpress-ios.php:179
 #, php-format
 msgid ""
 "Please enter existing Product ID managed at <a href=\"%s\">iTunes Connect</a>"
@@ -3009,50 +3047,54 @@ msgstr ""
 "<a href=\"%s\">iTunes Connect</a>で実際に登録されているプロダクトIDを入力して"
 "ください。"
 
-#: ../class/literally-wordpress-ios.php:195
+#: ../class/literally-wordpress-ios.php:207
 msgid "XML-RPC request must be on SSL."
 msgstr "XML-RPCはSSL通信で行う必要があります。"
 
-#: ../class/literally-wordpress-ios.php:364
+#: ../class/literally-wordpress-ios.php:393
 msgid "You have no purchase history. If you have one, please try restoration."
 msgstr "購入履歴がありません。もし購入済みならばリストアしてください。"
 
-#: ../class/literally-wordpress-ios.php:377
+#: ../class/literally-wordpress-ios.php:406
 msgid "File is too large. You cannot get file."
 msgstr "ファイルが大き過ぎます。取得できません。"
 
-#: ../class/literally-wordpress-ios.php:406
+#: ../class/literally-wordpress-ios.php:435
 #, php-format
 msgid "Product ID:%s does not exists."
 msgstr "プロダクトID:%sは存在しません。"
 
-#: ../class/literally-wordpress-ios.php:507
+#: ../class/literally-wordpress-ios.php:483
+msgid "Failed to register transaction."
+msgstr "決済情報の登録に失敗しました。"
+
+#: ../class/literally-wordpress-ios.php:556
 msgid "Invalid Characters. Receipt must be sent as base64 encoded string."
 msgstr ""
 "無効な文字列です。レシートはBase64エンコードされた文字列で送信されなくてはな"
 "りません。"
 
-#: ../class/literally-wordpress-ios.php:523
+#: ../class/literally-wordpress-ios.php:572
 msgid "Request Timeout."
 msgstr "リクエストがタイムアウトしました。"
 
-#: ../class/literally-wordpress-ios.php:529
+#: ../class/literally-wordpress-ios.php:578
 msgid ""
 "Failed to parse Apple's response as JSON. Please check if receipt is valid."
 msgstr ""
 "Appleからの応答をJSONに変換できませんでした。レシートの形式が有効か確かめて下"
 "さい。"
 
-#: ../class/literally-wordpress-ios.php:534
+#: ../class/literally-wordpress-ios.php:583
 #, php-format
 msgid "Status Code %d: Invalid Receipt"
 msgstr "スタータスコード %d: 無効なレシート"
 
-#: ../class/literally-wordpress-ios.php:555
+#: ../class/literally-wordpress-ios.php:604
 msgid "Failed to login. Wrong username/password."
 msgstr "ログインできませんでした。ユーザー名かパスワードが間違っています。"
 
-#: ../class/literally-wordpress-ios.php:559
+#: ../class/literally-wordpress-ios.php:608
 msgid "This API requires login credentials."
 msgstr "このAPIはログイン情報が必要です。"
 
@@ -3581,23 +3623,23 @@ msgstr "終了日が開始日よりも過去になっています。"
 msgid "Subscriptions"
 msgstr "定期購読"
 
-#: ../class/literally-wordpress-subscription.php:127
+#: ../class/literally-wordpress-subscription.php:125
 msgid "Invitation for subscription"
 msgstr "定期購読のお願い"
 
-#: ../class/literally-wordpress-subscription.php:132
+#: ../class/literally-wordpress-subscription.php:130
 msgid "This contents is for subscribers only."
 msgstr "このコンテンツは定期購読者専用です。"
 
-#: ../class/literally-wordpress-subscription.php:145
+#: ../class/literally-wordpress-subscription.php:143
 msgid "Subscription Setting"
 msgstr "定期購読設定"
 
-#: ../class/literally-wordpress-subscription.php:153
+#: ../class/literally-wordpress-subscription.php:151
 msgid "Subscription Option"
 msgstr "定期購読設定"
 
-#: ../class/literally-wordpress-subscription.php:167
+#: ../class/literally-wordpress-subscription.php:165
 msgid ""
 "This contents will be displayed when your user access to page for "
 "subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. "
@@ -3605,17 +3647,17 @@ msgid ""
 msgstr ""
 "このコンテンツはユーザーが定期購読者専用ページへ訪れたとき表示されます。"
 
-#: ../class/literally-wordpress-subscription.php:168
+#: ../class/literally-wordpress-subscription.php:166
 msgid "Allowed Shortcodes"
 msgstr "利用できるショートコード"
 
-#: ../class/literally-wordpress-subscription.php:172
+#: ../class/literally-wordpress-subscription.php:170
 msgid "Output link to subscription page. Extra attributes are title and class."
 msgstr ""
 "定期購読申し込みページへのリンクを出力します。利用できる属性はtitleとclassで"
 "す。"
 
-#: ../class/literally-wordpress-subscription.php:180
+#: ../class/literally-wordpress-subscription.php:178
 msgid ""
 "Output link to subscription price list. Extra attributes are title, class, "
 "popup, width and height."
@@ -3623,16 +3665,16 @@ msgstr ""
 "定期購読価格表へのリンクを出力します。利用できる属性はtitle, class, popup, "
 "width, heightです。"
 
-#: ../class/literally-wordpress-subscription.php:200
+#: ../class/literally-wordpress-subscription.php:198
 #: ../form-template/paypal-subscription.php:52
 msgid "Days"
 msgstr "日"
 
-#: ../class/literally-wordpress-subscription.php:222
+#: ../class/literally-wordpress-subscription.php:220
 msgid "Anyone can read this post"
 msgstr "誰でもこの投稿を読むことができます"
 
-#: ../class/literally-wordpress-subscription.php:355
+#: ../class/literally-wordpress-subscription.php:353
 msgid "Subscribe"
 msgstr "定期購読"
 

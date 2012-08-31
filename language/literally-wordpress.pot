@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-30 02:30+0900\n"
-"PO-Revision-Date: 2012-08-30 02:30+0900\n"
+"POT-Creation-Date: 2012-08-31 22:56+0900\n"
+"PO-Revision-Date: 2012-08-31 22:56+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -463,7 +463,7 @@ msgstr ""
 #: ../class/literally-wordpress-core.php:1315
 #: ../class/literally-wordpress-event.php:819
 #: ../class/literally-wordpress-form.php:681
-#: ../class/literally-wordpress-subscription.php:196
+#: ../class/literally-wordpress-subscription.php:194
 #: ../form-template/edit-detail-event.php:104
 #: ../form-template/edit-detail.php:24
 #: ../form-template/paypal-cancel-ticket.php:15
@@ -529,7 +529,7 @@ msgstr ""
 #: ../admin/form-check.php:13 ../admin/settings/event.php:1
 #: ../admin/settings/misc.php:1 ../admin/settings/payment.php:1
 #: ../admin/settings/post.php:2 ../admin/settings/reward.php:2
-#: ../admin/settings/subscription.php:1
+#: ../admin/settings/subscription.php:2
 #, php-format
 msgid "About %s"
 msgstr ""
@@ -620,11 +620,16 @@ msgstr ""
 msgid "XML-RPC API Manual"
 msgstr ""
 
-#: ../admin/ios-api.php:4
+#: ../admin/ios-api.php:5
+#, php-format
+msgid "API Version: %1$s<br />Last Updated: %2$s"
+msgstr ""
+
+#: ../admin/ios-api.php:8
 msgid "How to use"
 msgstr ""
 
-#: ../admin/ios-api.php:5
+#: ../admin/ios-api.php:9
 #, php-format
 msgid ""
 "Once you enabled iOS Product, expanded <a href=\"%s\">XML-RPC API</a> for "
@@ -632,177 +637,210 @@ msgid ""
 "site and download In App Purchase products."
 msgstr ""
 
-#: ../admin/ios-api.php:6
+#: ../admin/ios-api.php:10
 #, php-format
 msgid "<strong>Note:</strong> I recommend you to use %s."
 msgstr ""
 
-#: ../admin/ios-api.php:8
+#: ../admin/ios-api.php:12
 msgid "Methods"
 msgstr ""
 
-#: ../admin/ios-api.php:13
-msgid "You can get list of registered methods."
+#: ../admin/ios-api.php:17
+msgid "You can know API version information."
 msgstr ""
 
-#: ../admin/ios-api.php:14 ../admin/ios-api.php:27 ../admin/ios-api.php:38
-#: ../admin/ios-api.php:54 ../admin/ios-api.php:73 ../admin/ios-api.php:98
-#: ../admin/ios-api.php:120 ../admin/ios-api.php:136
+#: ../admin/ios-api.php:18 ../admin/ios-api.php:30 ../admin/ios-api.php:43
+#: ../admin/ios-api.php:54 ../admin/ios-api.php:70 ../admin/ios-api.php:89
+#: ../admin/ios-api.php:114 ../admin/ios-api.php:137 ../admin/ios-api.php:154
+#: ../admin/ios-api.php:174
 msgid "Returns"
 msgstr ""
 
-#: ../admin/ios-api.php:16
-msgid "Array consists of method names."
-msgstr ""
-
 #: ../admin/ios-api.php:21
-msgid "You can get userdata with credentials."
+msgid "Version of XML-RPC API"
 msgstr ""
 
-#: ../admin/ios-api.php:22 ../admin/ios-api.php:34 ../admin/ios-api.php:46
-#: ../admin/ios-api.php:69 ../admin/ios-api.php:92 ../admin/ios-api.php:113
-#: ../admin/ios-api.php:129
-msgid "Parameters"
+#: ../admin/ios-api.php:22
+msgid "API's last updated date in DATETIME format."
+msgstr ""
+
+#: ../admin/ios-api.php:23
+msgid "Version of LWP"
+msgstr ""
+
+#: ../admin/ios-api.php:24
+msgid "WordPress version"
+msgstr ""
+
+#: ../admin/ios-api.php:25
+msgid "Is SSL forced."
 msgstr ""
 
 #: ../admin/ios-api.php:29
+msgid "You can get list of registered methods."
+msgstr ""
+
+#: ../admin/ios-api.php:32
+msgid "Array consists of method names."
+msgstr ""
+
+#: ../admin/ios-api.php:37
+msgid "You can get userdata with credentials."
+msgstr ""
+
+#: ../admin/ios-api.php:38 ../admin/ios-api.php:50 ../admin/ios-api.php:62
+#: ../admin/ios-api.php:85 ../admin/ios-api.php:108 ../admin/ios-api.php:129
+#: ../admin/ios-api.php:145 ../admin/ios-api.php:167
+msgid "Parameters"
+msgstr ""
+
+#: ../admin/ios-api.php:45
 #, php-format
 msgid ""
 "You can get same data as <code>get_userdata</code>. See detail at <a href="
 "\"%s\">codex</a>."
 msgstr ""
 
-#: ../admin/ios-api.php:33
+#: ../admin/ios-api.php:49
 msgid ""
 "You can get product group. Product group is a custom taxonomy and it helps "
 "you to manage multiple iOS application in one WordPress site."
 msgstr ""
 
-#: ../admin/ios-api.php:36
+#: ../admin/ios-api.php:52
 #, php-format
 msgid ""
 "Parameter is directly pass to <code>get_terms</code>. See detail at <a href="
 "\"%s\">codex</a>."
 msgstr ""
 
-#: ../admin/ios-api.php:40
+#: ../admin/ios-api.php:56
 msgid "Array consists\t of term object."
 msgstr ""
 
-#: ../admin/ios-api.php:45
+#: ../admin/ios-api.php:61
 msgid "You can get product list "
 msgstr ""
 
-#: ../admin/ios-api.php:49
+#: ../admin/ios-api.php:65
 msgid "term_taxonomy_id of term object. Default 0."
 msgstr ""
 
-#: ../admin/ios-api.php:50
+#: ../admin/ios-api.php:66
 msgid "date, title, ID, product_id. Default product_id"
 msgstr ""
 
-#: ../admin/ios-api.php:51
+#: ../admin/ios-api.php:67
 msgid "DESC or ASC. Default ASC"
 msgstr ""
 
-#: ../admin/ios-api.php:52
+#: ../admin/ios-api.php:68
 msgid "Post status. Default publish"
 msgstr ""
 
-#: ../admin/ios-api.php:64
+#: ../admin/ios-api.php:80
 msgid ""
 "<em>This value is registered at Post edit screen. To get precise price, use "
 "StoreKit request.</em>"
 msgstr ""
 
-#: ../admin/ios-api.php:68
+#: ../admin/ios-api.php:84
 msgid "File list of specified post."
 msgstr ""
 
-#: ../admin/ios-api.php:71
+#: ../admin/ios-api.php:87
 msgid "ID of post."
 msgstr ""
 
-#: ../admin/ios-api.php:77
+#: ../admin/ios-api.php:93
 msgid "File ID."
 msgstr ""
 
-#: ../admin/ios-api.php:78
+#: ../admin/ios-api.php:94
 msgid "File desciptive name."
 msgstr ""
 
-#: ../admin/ios-api.php:79
+#: ../admin/ios-api.php:95
 msgid "File's description."
 msgstr ""
 
-#: ../admin/ios-api.php:80
+#: ../admin/ios-api.php:96
 msgid "0 is private, 1 is public."
 msgstr ""
 
-#: ../admin/ios-api.php:81
+#: ../admin/ios-api.php:97
 msgid ""
 "0 is not free, 1 means free for the registered users, 2 is free for everyone."
 msgstr ""
 
-#: ../admin/ios-api.php:82
+#: ../admin/ios-api.php:98
 #, php-format
 msgid "Devices you registered <a href=\"%s\">here</a>."
 msgstr ""
 
-#: ../admin/ios-api.php:91
+#: ../admin/ios-api.php:107
 msgid "Get File from transaction information."
 msgstr ""
 
-#: ../admin/ios-api.php:101
+#: ../admin/ios-api.php:117 ../admin/ios-api.php:157
 msgid "md5 hash of file"
 msgstr ""
 
-#: ../admin/ios-api.php:102
+#: ../admin/ios-api.php:118 ../admin/ios-api.php:158
 msgid "File size"
 msgstr ""
 
-#: ../admin/ios-api.php:103
+#: ../admin/ios-api.php:119 ../admin/ios-api.php:159
 msgid "Mime type of file"
 msgstr ""
 
-#: ../admin/ios-api.php:104
+#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
 msgid "Binary data of file."
 msgstr ""
 
-#: ../admin/ios-api.php:111
+#: ../admin/ios-api.php:127
 msgid ""
 "Register transaction with AppStore receipt. This aciton is very important."
 msgstr ""
 
-#: ../admin/ios-api.php:112
+#: ../admin/ios-api.php:128
 msgid ""
 "<strong>Note:</strong> event in case of restoration, call this method. It "
 "parse receipt and try to find existing transaction."
 msgstr ""
 
-#: ../admin/ios-api.php:117
+#: ../admin/ios-api.php:133 ../admin/ios-api.php:149
 msgid "Base64 encoded string of receipt you get from AppStore."
 msgstr ""
 
-#: ../admin/ios-api.php:118
+#: ../admin/ios-api.php:134 ../admin/ios-api.php:150
 msgid ""
 "If not set, price set at Edit screen will be used. Setting actual price on "
 "AppStore is strongly recommended."
 msgstr ""
 
-#: ../admin/ios-api.php:122
+#: ../admin/ios-api.php:135 ../admin/ios-api.php:151
+msgid "Typically UUID. Any string can be saved."
+msgstr ""
+
+#: ../admin/ios-api.php:139
 msgid "True on success, False on failur."
 msgstr ""
 
-#: ../admin/ios-api.php:128
+#: ../admin/ios-api.php:144
+msgid "You can get file and register transaction in one action."
+msgstr ""
+
+#: ../admin/ios-api.php:166
 msgid "Get list or user's transaction information."
 msgstr ""
 
-#: ../admin/ios-api.php:133
+#: ../admin/ios-api.php:171
 msgid "Default 1."
 msgstr ""
 
-#: ../admin/ios-api.php:134
+#: ../admin/ios-api.php:172
 #, php-format
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
@@ -933,7 +971,7 @@ msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr ""
 
 #: ../admin/management.php:127
-#: ../class/literally-wordpress-subscription.php:200
+#: ../class/literally-wordpress-subscription.php:198
 #: ../tables/list-history.php:44 ../tables/list-management.php:126
 msgid "Expires"
 msgstr ""
@@ -1122,7 +1160,7 @@ msgid "Post Sell"
 msgstr ""
 
 #: ../admin/setting.php:10 ../admin/settings/dashboard.php:71
-#: ../admin/settings/subscription.php:1
+#: ../admin/settings/subscription.php:2
 #: ../class/literally-wordpress-form.php:109
 #: ../class/literally-wordpress-form.php:198
 #: ../class/literally-wordpress-form.php:301
@@ -1369,7 +1407,7 @@ msgstr ""
 msgid "You can manage iOS non-consumable product with WordPress."
 msgstr ""
 
-#: ../admin/settings/dashboard.php:73 ../admin/settings/subscription.php:3
+#: ../admin/settings/dashboard.php:73 ../admin/settings/subscription.php:4
 msgid ""
 "You can provide member only contents by subscription plan. You can choose "
 "any price, any period."
@@ -1396,7 +1434,7 @@ msgid "LWP provide you digital ticket management system."
 msgstr ""
 
 #: ../admin/settings/event.php:6 ../admin/settings/post.php:7
-#: ../admin/settings/reward.php:10 ../admin/settings/subscription.php:5
+#: ../admin/settings/reward.php:10 ../admin/settings/subscription.php:6
 msgid "Setting"
 msgstr ""
 
@@ -1615,11 +1653,11 @@ msgstr ""
 msgid "Accept Transfer"
 msgstr ""
 
-#: ../admin/settings/payment.php:136 ../admin/settings/subscription.php:13
+#: ../admin/settings/payment.php:136 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr ""
 
-#: ../admin/settings/payment.php:137 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:137 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr ""
 
@@ -1934,45 +1972,45 @@ msgid ""
 "<strong>&yen;100</strong> to know how this plugin works!"
 msgstr ""
 
-#: ../admin/settings/subscription.php:10
+#: ../admin/settings/subscription.php:11
 msgid "Accept Subscription"
 msgstr ""
 
-#: ../admin/settings/subscription.php:18
+#: ../admin/settings/subscription.php:19
 msgid "Registered Plans"
 msgstr ""
 
-#: ../admin/settings/subscription.php:21
+#: ../admin/settings/subscription.php:22
 #, php-format
 msgid "You have %d subscription plans."
 msgstr ""
 
-#: ../admin/settings/subscription.php:25
+#: ../admin/settings/subscription.php:26
 #, php-format
 msgid "You can set it up <a href=\"%s\">here</a>."
 msgstr ""
 
-#: ../admin/settings/subscription.php:30
+#: ../admin/settings/subscription.php:31
 msgid "Subscription Post Type"
 msgstr ""
 
-#: ../admin/settings/subscription.php:43
+#: ../admin/settings/subscription.php:44
 msgid "Subscription Format"
 msgstr ""
 
-#: ../admin/settings/subscription.php:46
+#: ../admin/settings/subscription.php:47
 msgid "More tag"
 msgstr ""
 
-#: ../admin/settings/subscription.php:47
+#: ../admin/settings/subscription.php:48
 msgid "Nextpage Tag"
 msgstr ""
 
-#: ../admin/settings/subscription.php:48
+#: ../admin/settings/subscription.php:49
 msgid "All"
 msgstr ""
 
-#: ../admin/settings/subscription.php:50
+#: ../admin/settings/subscription.php:51
 #, php-format
 msgid ""
 "If you choose More Tag or Nextpage Tag, non subscriber can see the content "
@@ -2273,7 +2311,7 @@ msgid "Tickets"
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:125
-#: ../class/literally-wordpress-ios.php:87
+#: ../class/literally-wordpress-ios.php:99
 #: ../class/literally-wordpress-notifier.php:87
 #: ../class/literally-wordpress-post.php:91
 #: ../class/literally-wordpress-subscription.php:86
@@ -2282,9 +2320,9 @@ msgstr ""
 
 #: ../class/literally-wordpress-event.php:126
 #: ../class/literally-wordpress-event.php:128
-#: ../class/literally-wordpress-ios.php:88
-#: ../class/literally-wordpress-ios.php:90
-#: ../class/literally-wordpress-ios.php:126
+#: ../class/literally-wordpress-ios.php:100
+#: ../class/literally-wordpress-ios.php:102
+#: ../class/literally-wordpress-ios.php:138
 #: ../class/literally-wordpress-notifier.php:88
 #: ../class/literally-wordpress-notifier.php:90
 #: ../class/literally-wordpress-post.php:92
@@ -2296,8 +2334,8 @@ msgid "Add New %s"
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:127
-#: ../class/literally-wordpress-ios.php:89
-#: ../class/literally-wordpress-ios.php:124
+#: ../class/literally-wordpress-ios.php:101
+#: ../class/literally-wordpress-ios.php:136
 #: ../class/literally-wordpress-notifier.php:89
 #: ../class/literally-wordpress-post.php:93
 #: ../class/literally-wordpress-subscription.php:88
@@ -2306,7 +2344,7 @@ msgid "Edit %s"
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:129
-#: ../class/literally-wordpress-ios.php:91
+#: ../class/literally-wordpress-ios.php:103
 #: ../class/literally-wordpress-notifier.php:91
 #: ../class/literally-wordpress-post.php:95
 #: ../class/literally-wordpress-subscription.php:90
@@ -2315,8 +2353,8 @@ msgid "View %s"
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:130
-#: ../class/literally-wordpress-ios.php:92
-#: ../class/literally-wordpress-ios.php:119
+#: ../class/literally-wordpress-ios.php:104
+#: ../class/literally-wordpress-ios.php:131
 #: ../class/literally-wordpress-notifier.php:92
 #: ../class/literally-wordpress-post.php:96
 #: ../class/literally-wordpress-subscription.php:91
@@ -2325,7 +2363,7 @@ msgid "Search %s"
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:131
-#: ../class/literally-wordpress-ios.php:93
+#: ../class/literally-wordpress-ios.php:105
 #: ../class/literally-wordpress-notifier.php:93
 #: ../class/literally-wordpress-post.php:97
 #: ../class/literally-wordpress-subscription.php:92
@@ -2334,7 +2372,7 @@ msgid "No %s was found."
 msgstr ""
 
 #: ../class/literally-wordpress-event.php:132
-#: ../class/literally-wordpress-ios.php:94
+#: ../class/literally-wordpress-ios.php:106
 #: ../class/literally-wordpress-notifier.php:94
 #: ../class/literally-wordpress-post.php:98
 #: ../class/literally-wordpress-subscription.php:93
@@ -2509,8 +2547,8 @@ msgid "Transaction Failed to finish."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:511
-#: ../class/literally-wordpress-ios.php:349
-#: ../class/literally-wordpress-ios.php:371
+#: ../class/literally-wordpress-ios.php:378
+#: ../class/literally-wordpress-ios.php:400
 #: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr ""
@@ -2773,107 +2811,111 @@ msgstr ""
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:81
+#: ../class/literally-wordpress-ios.php:93
 msgid "iOS Product"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:82
+#: ../class/literally-wordpress-ios.php:94
 msgid "iOS Products"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:113
+#: ../class/literally-wordpress-ios.php:125
 msgid "Product Group"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:114
+#: ../class/literally-wordpress-ios.php:126
 msgid "Product Groups"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:120
+#: ../class/literally-wordpress-ios.php:132
 #, php-format
 msgid "Popular %s"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:121
+#: ../class/literally-wordpress-ios.php:133
 #, php-format
 msgid "All %s"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:125
+#: ../class/literally-wordpress-ios.php:137
 #, php-format
 msgid "Update %s"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:127
+#: ../class/literally-wordpress-ios.php:139
 #, php-format
 msgid "New %s Name"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:128
+#: ../class/literally-wordpress-ios.php:140
 #, php-format
 msgid "Separate %s with commas"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:129
+#: ../class/literally-wordpress-ios.php:141
 #, php-format
 msgid "Add or remove %s"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:130
+#: ../class/literally-wordpress-ios.php:142
 #, php-format
 msgid "Choose from the most used %s"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:159
+#: ../class/literally-wordpress-ios.php:171
 msgid "iOS Procut ID"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:167
+#: ../class/literally-wordpress-ios.php:179
 #, php-format
 msgid ""
 "Please enter existing Product ID managed at <a href=\"%s\">iTunes Connect</a>"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:195
+#: ../class/literally-wordpress-ios.php:207
 msgid "XML-RPC request must be on SSL."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:364
+#: ../class/literally-wordpress-ios.php:393
 msgid "You have no purchase history. If you have one, please try restoration."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:377
+#: ../class/literally-wordpress-ios.php:406
 msgid "File is too large. You cannot get file."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:406
+#: ../class/literally-wordpress-ios.php:435
 #, php-format
 msgid "Product ID:%s does not exists."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:507
+#: ../class/literally-wordpress-ios.php:483
+msgid "Failed to register transaction."
+msgstr ""
+
+#: ../class/literally-wordpress-ios.php:556
 msgid "Invalid Characters. Receipt must be sent as base64 encoded string."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:523
+#: ../class/literally-wordpress-ios.php:572
 msgid "Request Timeout."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:529
+#: ../class/literally-wordpress-ios.php:578
 msgid ""
 "Failed to parse Apple's response as JSON. Please check if receipt is valid."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:534
+#: ../class/literally-wordpress-ios.php:583
 #, php-format
 msgid "Status Code %d: Invalid Receipt"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:555
+#: ../class/literally-wordpress-ios.php:604
 msgid "Failed to login. Wrong username/password."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:559
+#: ../class/literally-wordpress-ios.php:608
 msgid "This API requires login credentials."
 msgstr ""
 
@@ -3325,53 +3367,53 @@ msgstr ""
 msgid "Subscriptions"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:127
+#: ../class/literally-wordpress-subscription.php:125
 msgid "Invitation for subscription"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:132
+#: ../class/literally-wordpress-subscription.php:130
 msgid "This contents is for subscribers only."
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:145
+#: ../class/literally-wordpress-subscription.php:143
 msgid "Subscription Setting"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:153
+#: ../class/literally-wordpress-subscription.php:151
 msgid "Subscription Option"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:167
+#: ../class/literally-wordpress-subscription.php:165
 msgid ""
 "This contents will be displayed when your user access to page for "
 "subscribers only. It will be wrapped with <em>div.lwp-invitation</em>. "
 "<strong>YOU CAN CHANGE POST'S TITLE.</strong>"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:168
+#: ../class/literally-wordpress-subscription.php:166
 msgid "Allowed Shortcodes"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:172
+#: ../class/literally-wordpress-subscription.php:170
 msgid "Output link to subscription page. Extra attributes are title and class."
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:180
+#: ../class/literally-wordpress-subscription.php:178
 msgid ""
 "Output link to subscription price list. Extra attributes are title, class, "
 "popup, width and height."
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:200
+#: ../class/literally-wordpress-subscription.php:198
 #: ../form-template/paypal-subscription.php:52
 msgid "Days"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:222
+#: ../class/literally-wordpress-subscription.php:220
 msgid "Anyone can read this post"
 msgstr ""
 
-#: ../class/literally-wordpress-subscription.php:355
+#: ../class/literally-wordpress-subscription.php:353
 msgid "Subscribe"
 msgstr ""
 

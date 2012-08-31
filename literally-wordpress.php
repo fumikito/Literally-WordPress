@@ -4,7 +4,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/literally-wordpress/
  * Description: This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.
  * Author: Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
- * Version: 0.9.2.0
+ * Version: 0.9.2.1
  * Author URI: http://takahashifumiki.com
  * Text Domain: literally-wordpress
  * Domain Path: /language/
