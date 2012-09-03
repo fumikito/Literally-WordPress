@@ -61,23 +61,26 @@
 <p><?php $this->e('You can get product list ') ?></p>
 <h5><?php $this->e('Parameters'); ?></h5>
 <pre>
-<strong>(struct)</strong>
+<strong>(struct)</strong> args
 	<strong>(int)</strong> term_taxonomy_id <?php $this->e('term_taxonomy_id of term object. Default 0.'); ?> 
 	<strong>(string)</strong> orderby <?php $this->e('date, title, ID, product_id. Default product_id'); ?> 
 	<strong>(string)</strong> order <?php $this->e('DESC or ASC. Default ASC'); ?> 
 	<strong>(string)</strong> status <?php $this->e('Post status. Default publish'); ?> 
+<strong>(boolean)</strong> with_files <?php $this->e('If set to true, File\'s information will be set as array. Default true.'); ?>
 </pre>
 <h5><?php $this->e('Returns'); ?></h5>
 <pre>
 <strong>(array)</strong>
-	<strong>(struct)</strong>
+	<strong>(struct)</strong> product
 		<strong>(int)</strong> post_id
 		<strong>(string)</strong> post_content
 		<strong>(string)</strong> post_excerpt
 		<strong>(string)</strong> post_date
 		<strong>(string)</strong> post_modified
 		<strong>(string)</strong> product_id
-		<strong>(double)</strong> price <?php $this->e('<em>This value is registered at Post edit screen. To get precise price, use StoreKit request.</em>'); ?>
+		<strong>(double)</strong> price <?php $this->e('<em>This value is registered at Post edit screen. To get precise price, use StoreKit request.</em>'); ?> 
+		<strong>(array)</strong> files <?php $this->e('List of files which are attached to this post.'); ?> 
+			<strong>(struct)</strong> <?php $this->e('See <code>lwp.ios.fileList</code>.'); ?> 
 </pre>
 
 <h4>lwp.ios.fileList</h4>

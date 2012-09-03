@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-31 22:56+0900\n"
-"PO-Revision-Date: 2012-08-31 22:56+0900\n"
+"POT-Creation-Date: 2012-09-03 21:39+0900\n"
+"PO-Revision-Date: 2012-09-03 21:39+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -651,9 +651,9 @@ msgid "You can know API version information."
 msgstr ""
 
 #: ../admin/ios-api.php:18 ../admin/ios-api.php:30 ../admin/ios-api.php:43
-#: ../admin/ios-api.php:54 ../admin/ios-api.php:70 ../admin/ios-api.php:89
-#: ../admin/ios-api.php:114 ../admin/ios-api.php:137 ../admin/ios-api.php:154
-#: ../admin/ios-api.php:174
+#: ../admin/ios-api.php:54 ../admin/ios-api.php:71 ../admin/ios-api.php:92
+#: ../admin/ios-api.php:117 ../admin/ios-api.php:140 ../admin/ios-api.php:157
+#: ../admin/ios-api.php:177
 msgid "Returns"
 msgstr ""
 
@@ -690,8 +690,8 @@ msgid "You can get userdata with credentials."
 msgstr ""
 
 #: ../admin/ios-api.php:38 ../admin/ios-api.php:50 ../admin/ios-api.php:62
-#: ../admin/ios-api.php:85 ../admin/ios-api.php:108 ../admin/ios-api.php:129
-#: ../admin/ios-api.php:145 ../admin/ios-api.php:167
+#: ../admin/ios-api.php:88 ../admin/ios-api.php:111 ../admin/ios-api.php:132
+#: ../admin/ios-api.php:148 ../admin/ios-api.php:170
 msgid "Parameters"
 msgstr ""
 
@@ -739,108 +739,120 @@ msgstr ""
 msgid "Post status. Default publish"
 msgstr ""
 
-#: ../admin/ios-api.php:80
+#: ../admin/ios-api.php:69
+msgid "If set to true, File's information will be set as array. Default true."
+msgstr ""
+
+#: ../admin/ios-api.php:81
 msgid ""
 "<em>This value is registered at Post edit screen. To get precise price, use "
 "StoreKit request.</em>"
 msgstr ""
 
-#: ../admin/ios-api.php:84
-msgid "File list of specified post."
+#: ../admin/ios-api.php:82
+msgid "List of files which are attached to this post."
+msgstr ""
+
+#: ../admin/ios-api.php:83
+msgid "See <code>lwp.ios.fileList</code>."
 msgstr ""
 
 #: ../admin/ios-api.php:87
+msgid "File list of specified post."
+msgstr ""
+
+#: ../admin/ios-api.php:90
 msgid "ID of post."
 msgstr ""
 
-#: ../admin/ios-api.php:93
+#: ../admin/ios-api.php:96
 msgid "File ID."
 msgstr ""
 
-#: ../admin/ios-api.php:94
+#: ../admin/ios-api.php:97
 msgid "File desciptive name."
 msgstr ""
 
-#: ../admin/ios-api.php:95
+#: ../admin/ios-api.php:98
 msgid "File's description."
 msgstr ""
 
-#: ../admin/ios-api.php:96
+#: ../admin/ios-api.php:99
 msgid "0 is private, 1 is public."
 msgstr ""
 
-#: ../admin/ios-api.php:97
+#: ../admin/ios-api.php:100
 msgid ""
 "0 is not free, 1 means free for the registered users, 2 is free for everyone."
 msgstr ""
 
-#: ../admin/ios-api.php:98
+#: ../admin/ios-api.php:101
 #, php-format
 msgid "Devices you registered <a href=\"%s\">here</a>."
 msgstr ""
 
-#: ../admin/ios-api.php:107
+#: ../admin/ios-api.php:110
 msgid "Get File from transaction information."
 msgstr ""
 
-#: ../admin/ios-api.php:117 ../admin/ios-api.php:157
+#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
 msgid "md5 hash of file"
 msgstr ""
 
-#: ../admin/ios-api.php:118 ../admin/ios-api.php:158
+#: ../admin/ios-api.php:121 ../admin/ios-api.php:161
 msgid "File size"
 msgstr ""
 
-#: ../admin/ios-api.php:119 ../admin/ios-api.php:159
+#: ../admin/ios-api.php:122 ../admin/ios-api.php:162
 msgid "Mime type of file"
 msgstr ""
 
-#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
+#: ../admin/ios-api.php:123 ../admin/ios-api.php:163
 msgid "Binary data of file."
 msgstr ""
 
-#: ../admin/ios-api.php:127
+#: ../admin/ios-api.php:130
 msgid ""
 "Register transaction with AppStore receipt. This aciton is very important."
 msgstr ""
 
-#: ../admin/ios-api.php:128
+#: ../admin/ios-api.php:131
 msgid ""
 "<strong>Note:</strong> event in case of restoration, call this method. It "
 "parse receipt and try to find existing transaction."
 msgstr ""
 
-#: ../admin/ios-api.php:133 ../admin/ios-api.php:149
+#: ../admin/ios-api.php:136 ../admin/ios-api.php:152
 msgid "Base64 encoded string of receipt you get from AppStore."
 msgstr ""
 
-#: ../admin/ios-api.php:134 ../admin/ios-api.php:150
+#: ../admin/ios-api.php:137 ../admin/ios-api.php:153
 msgid ""
 "If not set, price set at Edit screen will be used. Setting actual price on "
 "AppStore is strongly recommended."
 msgstr ""
 
-#: ../admin/ios-api.php:135 ../admin/ios-api.php:151
+#: ../admin/ios-api.php:138 ../admin/ios-api.php:154
 msgid "Typically UUID. Any string can be saved."
 msgstr ""
 
-#: ../admin/ios-api.php:139
+#: ../admin/ios-api.php:142
 msgid "True on success, False on failur."
 msgstr ""
 
-#: ../admin/ios-api.php:144
+#: ../admin/ios-api.php:147
 msgid "You can get file and register transaction in one action."
 msgstr ""
 
-#: ../admin/ios-api.php:166
+#: ../admin/ios-api.php:169
 msgid "Get list or user's transaction information."
 msgstr ""
 
-#: ../admin/ios-api.php:171
+#: ../admin/ios-api.php:174
 msgid "Default 1."
 msgstr ""
 
-#: ../admin/ios-api.php:172
+#: ../admin/ios-api.php:175
 #, php-format
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
@@ -2547,8 +2559,8 @@ msgid "Transaction Failed to finish."
 msgstr ""
 
 #: ../class/literally-wordpress-form.php:511
-#: ../class/literally-wordpress-ios.php:378
-#: ../class/literally-wordpress-ios.php:400
+#: ../class/literally-wordpress-ios.php:384
+#: ../class/literally-wordpress-ios.php:406
 #: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr ""
@@ -2876,46 +2888,46 @@ msgstr ""
 msgid "XML-RPC request must be on SSL."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:393
+#: ../class/literally-wordpress-ios.php:399
 msgid "You have no purchase history. If you have one, please try restoration."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:406
+#: ../class/literally-wordpress-ios.php:412
 msgid "File is too large. You cannot get file."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:435
+#: ../class/literally-wordpress-ios.php:441
 #, php-format
 msgid "Product ID:%s does not exists."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:483
+#: ../class/literally-wordpress-ios.php:489
 msgid "Failed to register transaction."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:556
+#: ../class/literally-wordpress-ios.php:562
 msgid "Invalid Characters. Receipt must be sent as base64 encoded string."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:572
+#: ../class/literally-wordpress-ios.php:578
 msgid "Request Timeout."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:578
+#: ../class/literally-wordpress-ios.php:584
 msgid ""
 "Failed to parse Apple's response as JSON. Please check if receipt is valid."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:583
+#: ../class/literally-wordpress-ios.php:589
 #, php-format
 msgid "Status Code %d: Invalid Receipt"
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:604
+#: ../class/literally-wordpress-ios.php:610
 msgid "Failed to login. Wrong username/password."
 msgstr ""
 
-#: ../class/literally-wordpress-ios.php:608
+#: ../class/literally-wordpress-ios.php:614
 msgid "This API requires login credentials."
 msgstr ""
 

@@ -6,13 +6,13 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 * API Version.
 	 * @var string
 	 */
-	public $api_version = '1.0';
+	public $api_version = '1.1';
 	
 	/**
 	 * API last updated
 	 * @var string
 	 */
-	public $api_last_updated = '2012-08-31 22:35:15';
+	public $api_last_updated = '2012-09-03 21:05:10';
 	
 	/**
 	 * Whether user can buy from public site
@@ -183,7 +183,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 	}
 	
 	/**
-	 * 投稿保存時に実行される
+	 * Executed on saving post
 	 * @param int $post_id
 	 */
 	public function save_post($post_id){
@@ -261,12 +261,15 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 */
 	public function ios_product_list($args = array()){
 		global $lwp, $wpdb;
+		//Arguments for query posts
 		$args = wp_parse_args((array)$args[0], array(
 			'term_taxonomy_id' => 0,
 			'orderby' => 'pm1.meta_value',
 			'order' => 'ASC',
 			'status' => 'publish'
 		));
+		//whether if file list needed
+		$with_file_list = (boolean)(!isset($args[1]) || $args[1]);
 		//WHERE clause
 		$wheres = array(
 			$wpdb->prepare('p.post_type = %s', $this->post_type),
@@ -310,6 +313,9 @@ EOS;
 		for($i = 0, $l = count($result); $i < $l; $i++){
 			$result[$i]['post_id'] = intval($result[$i]['post_id']);
 			$result[$i]['price'] = (float)$result[$i]['price'];
+			if($with_file_list){
+				$result[$i]['files'] = $this->ios_file_list($result[$i]['post_id']);
+			}
 		}
 		return $result;
 		//For debug

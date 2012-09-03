@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-31 22:56+0900\n"
-"PO-Revision-Date: 2012-08-31 22:58+0900\n"
+"POT-Creation-Date: 2012-09-03 21:39+0900\n"
+"PO-Revision-Date: 2012-09-03 21:40+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -703,9 +703,9 @@ msgid "You can know API version information."
 msgstr "APIバージョン情報がわかります。"
 
 #: ../admin/ios-api.php:18 ../admin/ios-api.php:30 ../admin/ios-api.php:43
-#: ../admin/ios-api.php:54 ../admin/ios-api.php:70 ../admin/ios-api.php:89
-#: ../admin/ios-api.php:114 ../admin/ios-api.php:137 ../admin/ios-api.php:154
-#: ../admin/ios-api.php:174
+#: ../admin/ios-api.php:54 ../admin/ios-api.php:71 ../admin/ios-api.php:92
+#: ../admin/ios-api.php:117 ../admin/ios-api.php:140 ../admin/ios-api.php:157
+#: ../admin/ios-api.php:177
 msgid "Returns"
 msgstr "戻り値"
 
@@ -742,8 +742,8 @@ msgid "You can get userdata with credentials."
 msgstr "認証情報からユーザーデータを取得します。"
 
 #: ../admin/ios-api.php:38 ../admin/ios-api.php:50 ../admin/ios-api.php:62
-#: ../admin/ios-api.php:85 ../admin/ios-api.php:108 ../admin/ios-api.php:129
-#: ../admin/ios-api.php:145 ../admin/ios-api.php:167
+#: ../admin/ios-api.php:88 ../admin/ios-api.php:111 ../admin/ios-api.php:132
+#: ../admin/ios-api.php:148 ../admin/ios-api.php:170
 msgid "Parameters"
 msgstr "パラメータ"
 
@@ -797,7 +797,11 @@ msgstr "DESC または ASC。デフォルトは ASC。"
 msgid "Post status. Default publish"
 msgstr "投稿ステータス。デフォルトはpublish。"
 
-#: ../admin/ios-api.php:80
+#: ../admin/ios-api.php:69
+msgid "If set to true, File's information will be set as array. Default true."
+msgstr "trueにするとファイル情報が配列としてセットされます。初期値はtrue。"
+
+#: ../admin/ios-api.php:81
 msgid ""
 "<em>This value is registered at Post edit screen. To get precise price, use "
 "StoreKit request.</em>"
@@ -805,68 +809,76 @@ msgstr ""
 "<em>この値は投稿編集画面で登録されたものです。正しい価格を得るにはStoreKitリ"
 "クエストを発行してください。</em>"
 
-#: ../admin/ios-api.php:84
+#: ../admin/ios-api.php:82
+msgid "List of files which are attached to this post."
+msgstr "この投稿に紐づけられたファイルのリスト"
+
+#: ../admin/ios-api.php:83
+msgid "See <code>lwp.ios.fileList</code>."
+msgstr "<code>lwp.ios.fileList</code>を参照のこと。"
+
+#: ../admin/ios-api.php:87
 msgid "File list of specified post."
 msgstr "指定された投稿のファイルリスト。"
 
-#: ../admin/ios-api.php:87
+#: ../admin/ios-api.php:90
 msgid "ID of post."
 msgstr "投稿ID"
 
-#: ../admin/ios-api.php:93
+#: ../admin/ios-api.php:96
 msgid "File ID."
 msgstr "ファイルID"
 
-#: ../admin/ios-api.php:94
+#: ../admin/ios-api.php:97
 msgid "File desciptive name."
 msgstr "ファイルにつけられた名前"
 
-#: ../admin/ios-api.php:95
+#: ../admin/ios-api.php:98
 msgid "File's description."
 msgstr "ファイル詳細"
 
-#: ../admin/ios-api.php:96
+#: ../admin/ios-api.php:99
 msgid "0 is private, 1 is public."
 msgstr "0は非公開、1は公開"
 
-#: ../admin/ios-api.php:97
+#: ../admin/ios-api.php:100
 msgid ""
 "0 is not free, 1 means free for the registered users, 2 is free for everyone."
 msgstr "0は有料、1は登録ユーザーのみ無料、2は誰にでも無料"
 
-#: ../admin/ios-api.php:98
+#: ../admin/ios-api.php:101
 #, php-format
 msgid "Devices you registered <a href=\"%s\">here</a>."
 msgstr "<a href=\"%s\">ここ</a>で登録された端末。"
 
-#: ../admin/ios-api.php:107
+#: ../admin/ios-api.php:110
 msgid "Get File from transaction information."
 msgstr "決済情報からファイルを取得します。"
 
-#: ../admin/ios-api.php:117 ../admin/ios-api.php:157
+#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
 msgid "md5 hash of file"
 msgstr "md5ファイルハッシュ"
 
-#: ../admin/ios-api.php:118 ../admin/ios-api.php:158
+#: ../admin/ios-api.php:121 ../admin/ios-api.php:161
 msgid "File size"
 msgstr "ファイルサイズ"
 
-#: ../admin/ios-api.php:119 ../admin/ios-api.php:159
+#: ../admin/ios-api.php:122 ../admin/ios-api.php:162
 msgid "Mime type of file"
 msgstr "ファイルのmime型"
 
-#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
+#: ../admin/ios-api.php:123 ../admin/ios-api.php:163
 msgid "Binary data of file."
 msgstr "ファイルのバイナリデータ"
 
-#: ../admin/ios-api.php:127
+#: ../admin/ios-api.php:130
 msgid ""
 "Register transaction with AppStore receipt. This aciton is very important."
 msgstr ""
 "AppStoreのレシートからトランザクションを登録します。このアクションはとても重"
 "要です。"
 
-#: ../admin/ios-api.php:128
+#: ../admin/ios-api.php:131
 msgid ""
 "<strong>Note:</strong> event in case of restoration, call this method. It "
 "parse receipt and try to find existing transaction."
@@ -874,11 +886,11 @@ msgstr ""
 "<strong>注意：</strong> リストアする場合もこのメソッドを呼び出してください。"
 "レシートを解析し、既存の決済情報を探します。"
 
-#: ../admin/ios-api.php:133 ../admin/ios-api.php:149
+#: ../admin/ios-api.php:136 ../admin/ios-api.php:152
 msgid "Base64 encoded string of receipt you get from AppStore."
 msgstr "AppStoreから受け取ったレシートをBase64エンコードした文字列"
 
-#: ../admin/ios-api.php:134 ../admin/ios-api.php:150
+#: ../admin/ios-api.php:137 ../admin/ios-api.php:153
 msgid ""
 "If not set, price set at Edit screen will be used. Setting actual price on "
 "AppStore is strongly recommended."
@@ -886,27 +898,27 @@ msgstr ""
 "設定されない場合は編集画面で入力された値が使われます。AppStoreでの実際の価格"
 "をセットすることを強くお勧めします。"
 
-#: ../admin/ios-api.php:135 ../admin/ios-api.php:151
+#: ../admin/ios-api.php:138 ../admin/ios-api.php:154
 msgid "Typically UUID. Any string can be saved."
 msgstr "よくあるものとしてはUUIDです。どんな文字列でも保存できます。"
 
-#: ../admin/ios-api.php:139
+#: ../admin/ios-api.php:142
 msgid "True on success, False on failur."
 msgstr "成功するとTrue、失敗するとFalse"
 
-#: ../admin/ios-api.php:144
+#: ../admin/ios-api.php:147
 msgid "You can get file and register transaction in one action."
 msgstr "ファイルの取得と決済の登録を一度に行います。"
 
-#: ../admin/ios-api.php:166
+#: ../admin/ios-api.php:169
 msgid "Get list or user's transaction information."
 msgstr "ユーザーの決済情報リスト"
 
-#: ../admin/ios-api.php:171
+#: ../admin/ios-api.php:174
 msgid "Default 1."
 msgstr "デフォルトは1。"
 
-#: ../admin/ios-api.php:172
+#: ../admin/ios-api.php:175
 #, php-format
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
@@ -2708,8 +2720,8 @@ msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
 #: ../class/literally-wordpress-form.php:511
-#: ../class/literally-wordpress-ios.php:378
-#: ../class/literally-wordpress-ios.php:400
+#: ../class/literally-wordpress-ios.php:384
+#: ../class/literally-wordpress-ios.php:406
 #: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
@@ -3051,50 +3063,50 @@ msgstr ""
 msgid "XML-RPC request must be on SSL."
 msgstr "XML-RPCはSSL通信で行う必要があります。"
 
-#: ../class/literally-wordpress-ios.php:393
+#: ../class/literally-wordpress-ios.php:399
 msgid "You have no purchase history. If you have one, please try restoration."
 msgstr "購入履歴がありません。もし購入済みならばリストアしてください。"
 
-#: ../class/literally-wordpress-ios.php:406
+#: ../class/literally-wordpress-ios.php:412
 msgid "File is too large. You cannot get file."
 msgstr "ファイルが大き過ぎます。取得できません。"
 
-#: ../class/literally-wordpress-ios.php:435
+#: ../class/literally-wordpress-ios.php:441
 #, php-format
 msgid "Product ID:%s does not exists."
 msgstr "プロダクトID:%sは存在しません。"
 
-#: ../class/literally-wordpress-ios.php:483
+#: ../class/literally-wordpress-ios.php:489
 msgid "Failed to register transaction."
 msgstr "決済情報の登録に失敗しました。"
 
-#: ../class/literally-wordpress-ios.php:556
+#: ../class/literally-wordpress-ios.php:562
 msgid "Invalid Characters. Receipt must be sent as base64 encoded string."
 msgstr ""
 "無効な文字列です。レシートはBase64エンコードされた文字列で送信されなくてはな"
 "りません。"
 
-#: ../class/literally-wordpress-ios.php:572
+#: ../class/literally-wordpress-ios.php:578
 msgid "Request Timeout."
 msgstr "リクエストがタイムアウトしました。"
 
-#: ../class/literally-wordpress-ios.php:578
+#: ../class/literally-wordpress-ios.php:584
 msgid ""
 "Failed to parse Apple's response as JSON. Please check if receipt is valid."
 msgstr ""
 "Appleからの応答をJSONに変換できませんでした。レシートの形式が有効か確かめて下"
 "さい。"
 
-#: ../class/literally-wordpress-ios.php:583
+#: ../class/literally-wordpress-ios.php:589
 #, php-format
 msgid "Status Code %d: Invalid Receipt"
 msgstr "スタータスコード %d: 無効なレシート"
 
-#: ../class/literally-wordpress-ios.php:604
+#: ../class/literally-wordpress-ios.php:610
 msgid "Failed to login. Wrong username/password."
 msgstr "ログインできませんでした。ユーザー名かパスワードが間違っています。"
 
-#: ../class/literally-wordpress-ios.php:608
+#: ../class/literally-wordpress-ios.php:614
 msgid "This API requires login credentials."
 msgstr "このAPIはログイン情報が必要です。"
 
