@@ -148,9 +148,9 @@
 						<label><?php $this->e('Access to File'); ?></label>
 					</th>
 					<td class="field">
-						<label><input name="free" type="radio" value="0"<?php if(!($updating || $updated) || $file->free == 0) echo ' checked="checked"'; ?> /><?php $this->e('Anyone'); ?></label>
+						<label><input name="free" type="radio" value="0"<?php if(!($updating || $updated) || $file->free == 0) echo ' checked="checked"'; ?> /><?php $this->e('Parchasers only'); ?></label>
 						<label><input name="free" type="radio" value="1"<?php if(($updating || $updated) && $file->free == 1) echo ' checked="checked"'; ?> /><?php $this->e('Members only'); ?></label>
-						<label><input name="free" type="radio" value="2"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> /><?php $this->e('Parchasers only'); ?></label>
+						<label><input name="free" type="radio" value="2"<?php if(($updating || $updated) && $file->free == 2) echo ' checked="checked"'; ?> /><?php $this->e('Anyone'); ?></label>
 						<p class="help">
 							<?php $this->e('File access permits user to <strong>download whole of the file</strong>.'); ?><br />
 							<?php printf($this->_('If you want provide partial trial, <strong>make a partial file</strong> and specify it as &quot;%s&quot;'), $this->_('Anyone')); ?>
