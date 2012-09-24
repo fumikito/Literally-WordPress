@@ -915,7 +915,11 @@ function lwp_is_transaction_error()
 function lwp_history_url(){
 	global $lwp;
 	if($lwp->option['mypage']){
-		return get_page_link($lwp->option['mypage']);
+		$url = get_page_link($lwp->option['mypage']);
+		if(FORCE_SSL_ADMIN || FORCE_SSL_LOGIN){
+			$url = $lwp->ssl($url);
+		}
+		return $url;
 	}else{
 		return admin_url('profile.php?page=lwp-history');
 	}

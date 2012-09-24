@@ -174,7 +174,7 @@ EOS;
 				if($item->user_id == 0){
 					return $lwp->_('Guest');
 				}elseif($item->registered_user_id){
-					return '<a href="'.admin_url('user_edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>';
+					return '<a href="'.admin_url('user-edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>';
 				}else{
 					return $lwp->_('Deleted User');
 				}
