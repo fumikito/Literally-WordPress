@@ -30,9 +30,8 @@ class LWP_List_Event extends WP_List_Table {
 	function get_columns() {
 		global $lwp;
 		$column = array(
-			'event_type' => $lwp->_('Type'),
 			'event_name' => $lwp->_("Event Name"),
-			'published' => $lwp->_('Date'),
+			'published' => $lwp->_('Published'),
 			'selling_limit' => $lwp->_("Selling Limit"),
 			'participants' => $lwp->_('Participants'),
 			'tickets' => $lwp->_('Tickets'),
@@ -81,6 +80,9 @@ EOS;
 		if(isset($_GET['s']) && !empty($_GET["s"])){
 			$where[] = $wpdb->prepare("((p.post_title LIKE %s) OR (p.post_content LIKE %s) OR (p.post_excerpt LIKE %s))", '%'.$_GET["s"].'%', '%'.$_GET["s"].'%', '%'.$_GET["s"].'%');
 		}
+		if(isset($_REQUEST['post_status']) && $_REQUEST['post_status'] != 'all'){
+			$where[] = $wpdb->prepare("(p.post_status = %s)", $_REQUEST['post_status']);
+		}
 		$sql .= ' WHERE '.implode(' AND ', $where);
 		//ORDER
 		$order_by = 'CAST(pm2.meta_value AS DATE)';
@@ -110,12 +112,26 @@ EOS;
 	function column_default($item, $column_name){
 		global $lwp, $wpdb;
 		switch($column_name){
-			case 'event_type':
-				$post_type_obj = get_post_type_object($item->post_type);
-				return $post_type_obj->labels->name;
-				break;
 			case 'event_name':
-				return '<a href="'.admin_url('post.php?post='.$item->ID.'&amp;action=edit').'">'.$item->post_title.'</a>';
+				switch($item->post_status){
+					case 'future':
+						$status = '<strong style="color: green;">- '.__(ucfirst($item->post_status)).'</strong>';
+						break;
+					case 'draft':
+						$status = '<strong style="color: #999999;">- '.__(ucfirst($item->post_status)).'</strong>';
+						break;
+					case 'pending':
+						$status = '<strong style="color: #e66f00;">- '.__(ucfirst($item->post_status)).'</strong>';
+						break;
+					case 'publish':
+						$status = '';
+						break;
+					default:
+						$status = '<strong>- '.__(ucfirst($item->post_status)).'</strong>';
+						break;
+				}
+				return sprintf('<span class="description">%4$s: </span><a href="%1$s">%2$s</a>%3$s', admin_url('post.php?post='.$item->ID.'&amp;action=edit'),
+											 $item->post_title, $status, get_post_type_object($item->post_type)->labels->name);
 				break;
 			case 'published':
 				if($item->start_date){
@@ -197,8 +213,7 @@ EOS;
 			'selling_limit' => array('selling_limit', false)
 		);
 	}
-	
-	
+		
 	/**
 	 * Get current page
 	 * @return int
@@ -248,6 +263,12 @@ EOS;
 					<option value="<?php echo $post_type; if($post_type == $this->get_post_type()) echo '" selected="selected'?>"><?php echo $label; ?></option>
 				<?php endforeach; ?>
 			</select>
+			<select name="post_status">
+				<option value="all"<?php if(!isset($_REQUEST['post_status']) || $_REQUEST['post_status'] == 'all') echo ' selected="selected"';?>><?php $lwp->e('All Status'); ?></option>
+				<?php foreach(array('publish', 'future', 'pending', 'draft', 'private') as $status):  ?>
+					<option value="<?php echo $status; ?>"<?php if(isset($_REQUEST['post_status']) && $status == $_REQUEST['post_status']) echo ' selected="selected"'; ?>><?php _e(ucfirst($status)); ?></option>
+				<?php endforeach; ?>
+			</select>
 			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
@@ -263,6 +284,6 @@ EOS;
 	}
 	
 	function get_table_classes() {
-		return array_merge(parent::get_table_classes(), array('lwp-table'));
+		return array( 'widefat', 'lwp-table', $this->_args['plural'] );
 	}
 }
