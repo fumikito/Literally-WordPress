@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-03 21:39+0900\n"
-"PO-Revision-Date: 2012-09-03 21:40+0900\n"
+"POT-Creation-Date: 2012-09-24 22:13+0900\n"
+"PO-Revision-Date: 2012-09-24 22:15+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -14,6 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,289,-1\n"
+"X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
@@ -147,7 +148,7 @@ msgstr "%d%% Off"
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
 
-#: ../functions.php:1557
+#: ../functions.php:1561
 msgid "Check Token"
 msgstr "トークンをチェックする"
 
@@ -493,7 +494,7 @@ msgstr "キャンセル期限"
 msgid "Ticket Name"
 msgstr "チケット名"
 
-#: ../admin/event.php:69 ../admin/management.php:375
+#: ../admin/event.php:69 ../admin/management.php:392
 #: ../class/literally-wordpress-core.php:1315
 #: ../class/literally-wordpress-event.php:819
 #: ../class/literally-wordpress-form.php:681
@@ -505,7 +506,7 @@ msgstr "チケット名"
 #: ../form-template/reward-summary.php:124 ../tables/list-campaign.php:104
 #: ../tables/list-promotable-posts.php:132
 #: ../tables/list-reward-history.php:31 ../tables/list-reward-request.php:117
-#: ../tables/list-ticket.php:37 ../tables/list-transfers.php:157
+#: ../tables/list-ticket.php:35 ../tables/list-transfers.php:157
 msgid "Price"
 msgstr "価格"
 
@@ -518,7 +519,7 @@ msgstr "在庫"
 msgid "Sold"
 msgstr "販売数"
 
-#: ../admin/event.php:72 ../admin/management.php:75
+#: ../admin/event.php:72 ../admin/management.php:92
 #: ../class/literally-wordpress-event.php:821
 #: ../class/literally-wordpress-form.php:683
 #: ../form-template/paypal-event-tickets-consume.php:19
@@ -534,8 +535,8 @@ msgstr "売上"
 msgid "No ticket found."
 msgstr "該当するチケットは見つかりませんでした。"
 
-#: ../admin/event.php:114 ../admin/management.php:313
-#: ../admin/management.php:349
+#: ../admin/event.php:114 ../admin/management.php:330
+#: ../admin/management.php:366
 msgid "Total"
 msgstr "合計 "
 
@@ -549,7 +550,7 @@ msgid "You can get participants list of <strong>%1$s</strong> in status below."
 msgstr ""
 "以下のステータスにある<strong>%1$s</strong>の参加者リストを取得できます。"
 
-#: ../admin/event.php:137 ../admin/management.php:178
+#: ../admin/event.php:137 ../admin/management.php:195
 msgid "Get CSV"
 msgstr "CSV取得"
 
@@ -955,60 +956,76 @@ msgstr "アクション"
 
 #: ../admin/management.php:39 ../class/literally-wordpress-core.php:1313
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
-#: ../tables/list-management.php:121 ../tables/list-transfers.php:156
+#: ../tables/list-management.php:129 ../tables/list-transfers.php:156
 msgid "Item Name"
 msgstr "アイテム名"
 
-#: ../admin/management.php:41 ../class/literally-wordpress-core.php:566
+#: ../admin/management.php:48 ../admin/setting.php:10
+#: ../admin/settings/dashboard.php:71 ../admin/settings/subscription.php:2
+#: ../class/literally-wordpress-form.php:109
+#: ../class/literally-wordpress-form.php:198
+#: ../class/literally-wordpress-form.php:301
+#: ../class/literally-wordpress-form.php:354
+#: ../class/literally-wordpress-subscription.php:81
+#: ../tables/list-history.php:141 ../tables/list-management.php:233
+msgid "Subscription"
+msgstr "定期購読"
+
+#: ../admin/management.php:55 ../class/literally-wordpress-core.php:566
 #: ../form-template/edit-detail-event.php:118 ../tables/list-campaign.php:159
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr "編集"
 
-#: ../admin/management.php:44 ../class/literally-wordpress-core.php:1319
+#: ../admin/management.php:58 ../class/literally-wordpress-core.php:1319
 #: ../class/literally-wordpress-event.php:816
-#: ../tables/list-download-logs.php:112 ../tables/list-management.php:122
+#: ../tables/list-download-logs.php:112 ../tables/list-management.php:130
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:155
 msgid "User Name"
 msgstr "ユーザー名"
 
-#: ../admin/management.php:47
+#: ../admin/management.php:62
 msgid "Profile"
 msgstr "プロフィール"
 
-#: ../admin/management.php:49 ../admin/management.php:386
+#: ../admin/management.php:63
+msgid "See all transactions"
+msgstr "すべての決済を見る"
+
+#: ../admin/management.php:66 ../admin/management.php:403
 #: ../class/literally-wordpress-core.php:1335
 #: ../class/literally-wordpress-event.php:831
 #: ../form-template/reward-summary.php:165
-#: ../tables/list-download-logs.php:179 ../tables/list-management.php:206
+#: ../tables/list-download-logs.php:179 ../tables/list-management.php:222
 #: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
+#: ../tables/list-ticket.php:135
 msgid "Deleted User"
 msgstr "削除されたユーザー"
 
-#: ../admin/management.php:54 ../class/literally-wordpress-core.php:1321
+#: ../admin/management.php:71 ../class/literally-wordpress-core.php:1321
 #: ../class/literally-wordpress-event.php:822
 #: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
-#: ../tables/list-ticket.php:35 ../tables/list-transfers.php:160
+#: ../tables/list-ticket.php:37 ../tables/list-transfers.php:160
 msgid "Updated"
 msgstr "更新日"
 
-#: ../admin/management.php:57 ../class/literally-wordpress-core.php:1320
-#: ../tables/list-history.php:45 ../tables/list-management.php:127
+#: ../admin/management.php:74 ../class/literally-wordpress-core.php:1320
+#: ../tables/list-history.php:45 ../tables/list-management.php:134
 #: ../tables/list-reward-history.php:34 ../tables/list-reward-request.php:118
 #: ../tables/list-transfers.php:159
 msgid "Registered"
 msgstr "登録日"
 
-#: ../admin/management.php:62 ../tables/list-history.php:42
-#: ../tables/list-management.php:123
+#: ../admin/management.php:79 ../tables/list-history.php:42
+#: ../tables/list-management.php:131
 msgid "Purchased Price"
 msgstr "購入価格"
 
-#: ../admin/management.php:65
+#: ../admin/management.php:82
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:70 ../class/literally-wordpress-core.php:1314
+#: ../admin/management.php:87 ../class/literally-wordpress-core.php:1314
 #: ../class/literally-wordpress-event.php:820
 #: ../class/literally-wordpress-form.php:682
 #: ../form-template/paypal-event-tickets-consume.php:18
@@ -1016,89 +1033,88 @@ msgstr "定価"
 msgid "Quantity"
 msgstr "数量"
 
-#: ../admin/management.php:80
+#: ../admin/management.php:97
 msgid "Purchase Method"
 msgstr "購入方法"
 
-#: ../admin/management.php:84
+#: ../admin/management.php:101
 #, php-format
 msgid "Transaction ID: %s"
 msgstr "トランザクションID: %s"
 
-#: ../admin/management.php:90 ../class/literally-wordpress-core.php:1317
+#: ../admin/management.php:107 ../class/literally-wordpress-core.php:1317
 msgid "Invoice Num"
 msgstr "領収番号"
 
-#: ../admin/management.php:95 ../admin/management.php:300
-#: ../admin/management.php:347 ../admin/personal-reward.php:118
+#: ../admin/management.php:112 ../admin/management.php:317
+#: ../admin/management.php:364 ../admin/personal-reward.php:118
 #: ../admin/settings/dashboard.php:11 ../admin/settings/dashboard.php:49
 #: ../admin/settings/dashboard.php:95
 #: ../class/literally-wordpress-core.php:502
 #: ../class/literally-wordpress-core.php:543 ../tables/list-history.php:46
-#: ../tables/list-management.php:124 ../tables/list-reward-history.php:36
+#: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
 #: ../tables/list-transfers.php:161
 msgid "Status"
 msgstr "ステータス"
 
-#: ../admin/management.php:118
+#: ../admin/management.php:135
 msgid "Update Status"
 msgstr "ステータスを更新"
 
-#: ../admin/management.php:121
+#: ../admin/management.php:138
 msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
-#: ../admin/management.php:127
+#: ../admin/management.php:144
 #: ../class/literally-wordpress-subscription.php:198
-#: ../tables/list-history.php:44 ../tables/list-management.php:126
+#: ../tables/list-history.php:44
 msgid "Expires"
 msgstr "期限"
 
-#: ../admin/management.php:131
+#: ../admin/management.php:148
 msgid "No Limit."
 msgstr "無期限"
 
-#: ../admin/management.php:133 ../class/literally-wordpress-notifier.php:190
-#: ../tables/list-history.php:162 ../tables/list-management.php:224
-#: ../tables/list-transfers.php:230
+#: ../admin/management.php:150 ../class/literally-wordpress-notifier.php:190
+#: ../tables/list-history.php:162 ../tables/list-transfers.php:230
 msgid "Expired"
 msgstr "期限切れ"
 
-#: ../admin/management.php:133
+#: ../admin/management.php:150
 msgid "Valid"
 msgstr "有効"
 
-#: ../admin/management.php:137
+#: ../admin/management.php:154
 msgid "Not valid."
 msgstr "無効"
 
-#: ../admin/management.php:147
+#: ../admin/management.php:164
 msgid "Update Expiration"
 msgstr "期限を更新"
 
-#: ../admin/management.php:158
+#: ../admin/management.php:175
 msgid "Return to transaction list"
 msgstr "決済情報一覧に戻る"
 
-#: ../admin/management.php:177
+#: ../admin/management.php:194
 msgid "You can get transaction list in status below."
 msgstr "下のステータスの決済リストを取得できます。"
 
-#: ../admin/management.php:279 ../form-template/reward-summary.php:33
+#: ../admin/management.php:296 ../form-template/reward-summary.php:33
 msgid "Refresh"
 msgstr "更新"
 
-#: ../admin/management.php:285 ../form-template/reward-summary.php:39
+#: ../admin/management.php:302 ../form-template/reward-summary.php:39
 msgid "Amount: "
 msgstr "総額"
 
-#: ../admin/management.php:289
+#: ../admin/management.php:306
 msgid "Undefined"
 msgstr "不明"
 
-#: ../admin/management.php:292 ../admin/management.php:305
-#: ../admin/management.php:341 ../admin/management.php:367
+#: ../admin/management.php:309 ../admin/management.php:322
+#: ../admin/management.php:358 ../admin/management.php:384
 #: ../form-template/reward-summary.php:57
 #: ../form-template/reward-summary.php:87
 #: ../form-template/reward-summary.php:117
@@ -1106,28 +1122,28 @@ msgstr "不明"
 msgid "No Data"
 msgstr "データがありません。"
 
-#: ../admin/management.php:299
+#: ../admin/management.php:316
 msgid "Top Sales"
 msgstr "トップセールス"
 
-#: ../admin/management.php:301
+#: ../admin/management.php:318
 msgid "Royal user"
 msgstr "お得意様"
 
-#: ../admin/management.php:311 ../admin/upload.php:129
+#: ../admin/management.php:328 ../admin/upload.php:129
 #: ../form-template/reward-summary.php:63
 #: ../form-template/reward-summary.php:93
 msgid "Title"
 msgstr "タイトル"
 
-#: ../admin/management.php:312 ../admin/management.php:348
-#: ../admin/management.php:374 ../form-template/reward-summary.php:65
+#: ../admin/management.php:329 ../admin/management.php:365
+#: ../admin/management.php:391 ../form-template/reward-summary.php:65
 #: ../form-template/reward-summary.php:95
 #: ../form-template/reward-summary.php:125
 msgid "Count"
 msgstr "件数"
 
-#: ../admin/management.php:373 ../form-template/edit-detail-event.php:102
+#: ../admin/management.php:390 ../form-template/edit-detail-event.php:102
 #: ../form-template/reward-summary.php:151
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
@@ -1238,17 +1254,6 @@ msgstr "支払い"
 msgid "Post Sell"
 msgstr "投稿の販売"
 
-#: ../admin/setting.php:10 ../admin/settings/dashboard.php:71
-#: ../admin/settings/subscription.php:2
-#: ../class/literally-wordpress-form.php:109
-#: ../class/literally-wordpress-form.php:198
-#: ../class/literally-wordpress-form.php:301
-#: ../class/literally-wordpress-form.php:354
-#: ../class/literally-wordpress-subscription.php:81
-#: ../tables/list-history.php:141
-msgid "Subscription"
-msgstr "定期購読"
-
 #: ../admin/setting.php:11 ../admin/settings/dashboard.php:76
 #: ../admin/settings/event.php:1
 msgid "Event"
@@ -1350,18 +1355,18 @@ msgstr "このファイルの公開状態です。非公開のファイルは表
 msgid "Access to File"
 msgstr "ファイルへのアクセス"
 
-#: ../admin/upload.php:151 ../admin/upload.php:156
-#: ../tables/list-download-logs.php:155
-msgid "Anyone"
-msgstr "誰でも"
+#: ../admin/upload.php:151
+msgid "Parchasers only"
+msgstr "購入者のみ"
 
 #: ../admin/upload.php:152
 msgid "Members only"
 msgstr "会員のみ"
 
-#: ../admin/upload.php:153
-msgid "Parchasers only"
-msgstr "購入者のみ"
+#: ../admin/upload.php:153 ../admin/upload.php:156
+#: ../tables/list-download-logs.php:155
+msgid "Anyone"
+msgstr "誰でも"
 
 #: ../admin/upload.php:155
 msgid ""
@@ -2298,7 +2303,7 @@ msgstr "日別リポート"
 
 #: ../class/literally-wordpress-core.php:508
 #: ../class/literally-wordpress-core.php:522
-#: ../class/literally-wordpress-core.php:549 ../tables/list-event.php:35
+#: ../class/literally-wordpress-core.php:549
 msgid "Date"
 msgstr "日付"
 
@@ -2475,7 +2480,7 @@ msgstr ""
 msgid "Ticket"
 msgstr "チケット"
 
-#: ../class/literally-wordpress-event.php:120 ../tables/list-event.php:38
+#: ../class/literally-wordpress-event.php:120 ../tables/list-event.php:37
 msgid "Tickets"
 msgstr "チケット"
 
@@ -3565,7 +3570,6 @@ msgstr "完了"
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:69
 #: ../form-template/paypal-subscription.php:65 ../tables/list-history.php:179
-#: ../tables/list-management.php:267
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -4514,7 +4518,7 @@ msgstr "開始日"
 msgid "Ends at"
 msgstr "終了日"
 
-#: ../form-template/edit-detail-event.php:20 ../tables/list-event.php:37
+#: ../form-template/edit-detail-event.php:20 ../tables/list-event.php:36
 msgid "Participants"
 msgstr "参加者"
 
@@ -4702,7 +4706,6 @@ msgstr ""
 "トを選択してください。%3$sまで以下の条件でキャンセルできます。"
 
 #: ../form-template/paypal-cancel-ticket.php:16
-#: ../tables/list-management.php:269
 msgid "Refund"
 msgstr "返金"
 
@@ -5871,7 +5874,7 @@ msgstr "新規通知を追加することはできますが、意味がありま
 msgid "No matching Campaign found."
 msgstr "該当するキャンペーンは見つかりませんでした。"
 
-#: ../tables/list-campaign.php:102 ../tables/list-management.php:266
+#: ../tables/list-campaign.php:102
 msgid "Start"
 msgstr "開始"
 
@@ -5889,9 +5892,9 @@ msgid "%d%%Off"
 msgstr "%d%%Off"
 
 #: ../tables/list-campaign.php:201 ../tables/list-devices.php:175
-#: ../tables/list-download-logs.php:224 ../tables/list-event.php:254
-#: ../tables/list-history.php:268 ../tables/list-management.php:300
-#: ../tables/list-reward-history.php:200 ../tables/list-ticket.php:220
+#: ../tables/list-download-logs.php:224 ../tables/list-event.php:275
+#: ../tables/list-history.php:268 ../tables/list-management.php:340
+#: ../tables/list-reward-history.php:200 ../tables/list-ticket.php:253
 #: ../tables/list-transfers.php:328
 #, php-format
 msgid "%d per 1Page"
@@ -5901,7 +5904,7 @@ msgstr "%d / 1ページ"
 msgid "No matching device found."
 msgstr "該当する端末は見つかりませんでした。"
 
-#: ../tables/list-download-logs.php:99 ../tables/list-management.php:109
+#: ../tables/list-download-logs.php:99 ../tables/list-management.php:117
 #: ../tables/list-transfers.php:143
 msgid "No matching transaction found."
 msgstr "該当する決済情報は見つかりませんでした。"
@@ -5946,58 +5949,61 @@ msgstr "ゲスト"
 msgid "No matching event is found."
 msgstr "該当するイベントは見つかりませんでした。"
 
-#: ../tables/list-event.php:33 ../tables/list-promotable-posts.php:130
-msgid "Type"
-msgstr "種別"
-
-#: ../tables/list-event.php:34
+#: ../tables/list-event.php:33
 msgid "Event Name"
 msgstr "イベント名"
 
-#: ../tables/list-event.php:36
+#: ../tables/list-event.php:34 ../tables/list-promotable-posts.php:135
+msgid "Published"
+msgstr "公開日"
+
+#: ../tables/list-event.php:35
 msgid "Selling Limit"
 msgstr "販売期限"
 
-#: ../tables/list-event.php:124 ../tables/list-event.php:139
+#: ../tables/list-event.php:140 ../tables/list-event.php:155
 #, php-format
 msgid "%s before"
 msgstr "%s前"
 
-#: ../tables/list-event.php:127 ../tables/list-event.php:142
+#: ../tables/list-event.php:143 ../tables/list-event.php:158
 #, php-format
 msgid "%s later"
 msgstr "%s後"
 
-#: ../tables/list-event.php:185 ../tables/list-management.php:129
-#: ../tables/list-management.php:241 ../tables/list-reward-history.php:174
-#: ../tables/list-ticket.php:136
+#: ../tables/list-event.php:201 ../tables/list-management.php:136
+#: ../tables/list-management.php:271 ../tables/list-reward-history.php:174
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:240 ../tables/list-history.php:241
-#: ../tables/list-management.php:277 ../tables/list-promotable-posts.php:189
+#: ../tables/list-event.php:255 ../tables/list-history.php:241
+#: ../tables/list-management.php:317 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
+
+#: ../tables/list-event.php:267 ../tables/list-management.php:304
+#: ../tables/list-ticket.php:231 ../tables/list-transfers.php:314
+msgid "All Status"
+msgstr "すべてのステータス"
 
 #: ../tables/list-history.php:29 ../tables/list-reward-history.php:24
 #: ../tables/list-reward-request.php:22
 msgid "No matching history is found."
 msgstr "該当する購入履歴は見つかりませんでした。"
 
-#: ../tables/list-history.php:43 ../tables/list-management.php:125
+#: ../tables/list-history.php:43 ../tables/list-management.php:133
 msgid "Method"
 msgstr "支払い方法"
 
-#: ../tables/list-history.php:49 ../tables/list-management.php:128
+#: ../tables/list-history.php:49 ../tables/list-management.php:135
 msgid "Last Updated"
 msgstr "最終更新"
 
-#: ../tables/list-history.php:158 ../tables/list-management.php:219
+#: ../tables/list-history.php:158
 msgid "No Limit"
 msgstr "期限なし"
 
-#: ../tables/list-history.php:164 ../tables/list-management.php:226
-#: ../tables/list-transfers.php:228
+#: ../tables/list-history.php:164 ../tables/list-transfers.php:228
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
@@ -6006,20 +6012,25 @@ msgstr "残%d日"
 msgid "Uncancelable"
 msgstr "キャンセル不可"
 
-#: ../tables/list-management.php:265 ../tables/list-ticket.php:198
-#: ../tables/list-transfers.php:314
-msgid "All Status"
-msgstr "すべてのステータス"
+#: ../tables/list-management.php:219 ../tables/list-ticket.php:133
+msgid "Transactions"
+msgstr "決済一覧"
 
-#: ../tables/list-management.php:268
-msgid "Success"
-msgstr "完了"
+#: ../tables/list-management.php:296
+#, php-format
+msgid "Now displaying transactions of <strong>%1$s</strong> (User ID: %2$d)"
+msgstr ""
+"<strong>%1$s</strong>さん（ユーザーID: %2$d）の決済情報を表示しています"
 
-#: ../tables/list-management.php:295
+#: ../tables/list-management.php:297
+msgid "See all users' transactions"
+msgstr "すべてのユーザーの決済を見る"
+
+#: ../tables/list-management.php:335
 msgid "Date From"
 msgstr "開始日"
 
-#: ../tables/list-management.php:296
+#: ../tables/list-management.php:336
 msgid "Date To"
 msgstr "終了日"
 
@@ -6027,9 +6038,9 @@ msgstr "終了日"
 msgid "No matching post is found."
 msgstr "該当する投稿は見つかりませんでした。"
 
-#: ../tables/list-promotable-posts.php:135
-msgid "Published"
-msgstr "公開日"
+#: ../tables/list-promotable-posts.php:130
+msgid "Type"
+msgstr "種別"
 
 #: ../tables/list-reward-history.php:30 ../tables/list-reward-request.php:115
 msgid "User name"
@@ -6039,7 +6050,7 @@ msgstr "ユーザー名"
 msgid "Reason"
 msgstr "理由"
 
-#: ../tables/list-reward-history.php:38
+#: ../tables/list-reward-history.php:38 ../tables/list-ticket.php:169
 msgid "Transaction"
 msgstr "決済詳細"
 
@@ -6063,7 +6074,7 @@ msgstr "該当するチケットは見つかりませんでした。"
 msgid "Actions"
 msgstr "アクション"
 
-#: ../tables/list-ticket.php:208
+#: ../tables/list-ticket.php:241
 msgid "All Tickets"
 msgstr "すべてのチケット"
 
@@ -6153,6 +6164,9 @@ msgstr "表示しない"
 #: ../widgets/buynow.php:154
 msgid "Timer will be displayed if post is on sale."
 msgstr "タイマーはアイテムがセール中の時だけ表示されます。"
+
+#~ msgid "Success"
+#~ msgstr "完了"
 
 #~ msgid "Some Ads"
 #~ msgstr "広告"

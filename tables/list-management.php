@@ -74,7 +74,7 @@ EOS;
 				)
 EOS;
 		}
-		if(isset($_REQUEST['user_id'])){
+		if(isset($_REQUEST['user_id']) && $_REQUEST['user_id'] > 0){
 			$wheres[] = $wpdb->prepare("(u.ID = %d)", $_REQUEST['user_id']);
 		}
 		if(!empty($wheres)){
@@ -209,10 +209,15 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'user':
-								if($item->display_name){
-					return sprintf('<a href="%2$s">%1$s</a> <code><a href="%3$s">%4$s</a></code>',
-									$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id),
-									admin_url('admin.php?page=lwp-management&view=list&user_id='.$item->user_id), $lwp->_('Transactions'));
+				if($item->display_name){
+					if(isset($_REQUEST['user_id']) && $_REQUEST['user_id'] > 0){
+						return sprintf('<a href="%2$s">%1$s</a>',
+										$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id));
+					}else{
+						return sprintf('<a href="%2$s">%1$s</a> <code><a href="%3$s">%4$s</a></code>',
+										$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id),
+										admin_url('admin.php?page=lwp-management&view=list&user_id='.$item->user_id), $lwp->_('Transactions'));
+					}
 				}else{
 					return $lwp->_('Deleted User');
 				}
@@ -286,6 +291,13 @@ EOS;
 		if($which != 'top') return;
 		?>
 		<div class="alignleft acitions">
+			<?php if(isset($_REQUEST['user_id']) && $_REQUEST['user_id'] > 0): ?>
+			<p class="user-id-indicator">
+				<?php printf($lwp->_('Now displaying transactions of <strong>%1$s</strong> (User ID: %2$d)'), get_userdata($_REQUEST['user_id'])->display_name, $_REQUEST['user_id']); ?>
+				<a class="button" href="#" onclick="(function($,button){form = $(button).parents('form'); $(button).parents('.user-id-indicator').remove(); form.submit();})(jQuery, this); return false;"><?php $lwp->e('See all users\' transactions'); ?></a>
+				<input type="hidden" name="user_id" value="<?php echo intval($_REQUEST['user_id']); ?>" />
+			</p>
+			<?php endif; ?>
 			<select name="status<?php echo $nombre; ?>">
 				<?php
 				$status = array(
