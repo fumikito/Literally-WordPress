@@ -32,9 +32,9 @@ class LWP_List_Ticket extends WP_List_Table {
 		$column = array(
 			'ticket_name' => $lwp->_("Ticket Name"),
 			'user' => $lwp->_('User Name'),
-			'updated' => $lwp->_('Updated'),
-			'status' => $lwp->_("Status"),
 			'price' => $lwp->_('Price'),
+			'status' => $lwp->_("Status"),
+			'updated' => $lwp->_('Updated'),
 			'number' => $lwp->_('Quantity'),
 			'consumed' => $lwp->_('Consumed'),
 			'actions' => $lwp->_('Actions')
@@ -76,7 +76,19 @@ EOS;
 			$wpdb->prepare('p.post_parent = %d', $_GET['event_id'])
 		);
 		if(isset($_GET['s']) && !empty($_GET["s"])){
-			$where[] = $wpdb->prepare("((p.post_title LIKE %s) OR (p.post_content LIKE %s) OR (p.post_excerpt LIKE %s))", '%'.$_GET["s"].'%', '%'.$_GET["s"].'%', '%'.$_GET["s"].'%');
+			$like_string = preg_replace("/^'(.+)'$/", '$1', $wpdb->prepare("%s", $_GET['s']));
+			$where[] = <<<EOS
+				((p.post_title LIKE '%{$like_string}%')
+					OR
+				 (t.transaction_key LIKE '%{$like_string}%')
+					OR
+				 (u.user_login LIKE '%{$like_string}%')
+					OR
+				 (u.display_name LIKE '%{$like_string}%')
+					OR
+				 (u.user_email LIKE '%{$like_string}%')
+				)
+EOS;
 		}
 		if(isset($_GET['ticket']) && $_GET['ticket'] != 'all'){
 			$where[] = $wpdb->prepare("(t.book_id = %d)", $_GET['ticket']);
@@ -115,13 +127,34 @@ EOS;
 				return $item->post_title;
 				break;
 			case 'user':
-				return '<a href="'.admin_url('user-edit.php?user_id='.$item->user_id).'">'.$item->display_name.'</a>';
+				if($item->display_name){
+					return sprintf('<a href="%2$s">%1$s</a> <code><a href="%3$s">%4$s</a></code>',
+									$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id),
+									admin_url('admin.php?page=lwp-management&view=list&user_id='.$item->user_id), $lwp->_('Transactions'));
+				}else{
+					return $lwp->_('Deleted User');
+				}
 				break;
 			case 'updated':
-				return mysql2date(get_option('date_format'), $item->updated);
+				return mysql2date(get_option('date_format').' H:i', get_date_from_gmt($item->updated));
 				break;
 			case 'status':
-				return $lwp->_($item->status);
+				switch($item->status){
+					case LWP_Payment_Status::SUCCESS:
+						$placeholder = '<strong style="color:green">%s</strong>';
+						break;
+					case LWP_Payment_Status::CANCEL:
+					case LWP_Payment_Status::REFUND:
+						$placeholder = '<strong style="color:#999999">%s</strong>';
+						break;
+					case LWP_Payment_Status::REFUND_REQUESTING:
+						$placeholder = '<strong style="color:#f00">%s</strong>';
+						break;
+					default:
+						$placeholder = '%s';
+						break;
+				}
+				return sprintf($placeholder, $lwp->_($item->status));
 				break;
 			case 'number':
 				return number_format_i18n($item->num);
@@ -133,7 +166,7 @@ EOS;
 				return number_format_i18n($item->num * $item->price).' '.  lwp_currency_code();
 				break;
 			case 'actions':
-				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Detail').'</a>';
+				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Transaction').'</a>';
 				break;
 		}
 	}
@@ -229,6 +262,6 @@ EOS;
 	}
 	
 	function get_table_classes() {
-		return array_merge(parent::get_table_classes(), array('lwp-table'));
+		return array( 'widefat', 'lwp-table', $this->_args['plural'] );
 	}
 }

@@ -58,7 +58,10 @@ if($is_detail):
 			<th scope="row" valign="top"><?php $this->e('User Name'); ?></th>
 			<?php if($user): ?>
 				<td><?php echo $user->display_name;  ?></td>
-				<td><a class="button" href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>"><?php $this->e('Profile'); ?></a></td>
+				<td>
+					<a class="button" href="<?php echo admin_url("user-edit.php?user_id={$user->ID}");?>"><?php $this->e('Profile'); ?></a>
+					<a class="button" href="<?php echo admin_url("admin.php?page=lwp-management&view=list&user_id={$user->ID}");?>"><?php $this->e('See all transactions'); ?></a>
+				</td>
 			<?php else: ?>
 				<td><?php $this->e('Deleted User'); ?></td>
 				<td>---</td>

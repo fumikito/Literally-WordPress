@@ -64,8 +64,6 @@ EOS;
 			$wheres[] = <<<EOS
 				((p.post_title LIKE '%{$like_string}%')
 					OR
-				 (u.display_name LIKE '%{$like_string}%')
-					OR
 				 (t.transaction_key LIKE '%{$like_string}%')
 					OR
 				 (u.user_login LIKE '%{$like_string}%')
@@ -75,6 +73,9 @@ EOS;
 				 (u.user_email LIKE '%{$like_string}%')
 				)
 EOS;
+		}
+		if(isset($_REQUEST['user_id'])){
+			$wheres[] = $wpdb->prepare("(u.ID = %d)", $_REQUEST['user_id']);
 		}
 		if(!empty($wheres)){
 			$sql .= ' WHERE '.implode(' AND ', $wheres);
@@ -208,7 +209,13 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'user':
-				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
+								if($item->display_name){
+					return sprintf('<a href="%2$s">%1$s</a> <code><a href="%3$s">%4$s</a></code>',
+									$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id),
+									admin_url('admin.php?page=lwp-management&view=list&user_id='.$item->user_id), $lwp->_('Transactions'));
+				}else{
+					return $lwp->_('Deleted User');
+				}
 				break;
 			case 'item_name':
 				$prefix = '';
