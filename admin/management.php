@@ -37,8 +37,22 @@ if($is_detail):
 	<tbody>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Item Name'); ?></th>
-			<td><?php echo $book->post_title; ?></td>
-			<td><a class="button" href="<?php echo admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}"); ?>"><?php $this->e('Edit'); ?></a></td>
+			<td><?php
+				switch($book->post_type){
+					case $this->event->post_type:
+						echo get_the_title($book->post_parent).' - ';
+						$post_type = get_post_type($book->post_parent);
+						$edit_url = admin_url("post.php?action=edit&post_type={$post_type}&post={$book->post_parent}");
+						break;
+					case $this->subscription->post_type:
+						echo $this->_('Subscription').' - ';
+					default:
+						$edit_url = admin_url("post.php?action=edit&post_type={$book->post_type}&post={$book->ID}");
+						break;
+				}
+				echo $book->post_title;
+				?></td>
+			<td><a class="button" href="<?php echo $edit_url; ?>"><?php $this->e('Edit'); ?></a></td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('User Name'); ?></th>
@@ -53,8 +67,8 @@ if($is_detail):
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Updated'); ?></th>
 			<td>
-				<?php echo mysql2date(get_option('date_format'), $transaction->updated); ?>
-				<small>（<?php $this->e('Registered'); ?>: <?php echo mysql2date(get_option('date_format'), $transaction->registered); ?>）</small>
+				<?php echo mysql2date(get_option('date_format').' H:i:s', get_date_from_gmt($transaction->updated)); ?><br />
+				<small>（<?php $this->e('Registered'); ?>: <?php echo mysql2date(get_option('date_format').' H:i:s', get_date_from_gmt($transaction->registered)); ?>）</small>
 			</td>
 			<td>---</td>
 		</tr>

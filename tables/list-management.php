@@ -36,7 +36,7 @@ class LWP_List_Management extends WP_List_Table{
 		//Create Basic SQL
 		$sql = <<<EOS
 			SELECT SQL_CALC_FOUND_ROWS
-				t.*, u.display_name, u.user_email, p.post_title
+				t.*, u.display_name, u.user_email, p.post_title, p.post_type, p.post_parent
 			FROM {$lwp->transaction} AS t
 			LEFT JOIN {$wpdb->users} AS u
 			ON t.user_id = u.ID
@@ -66,7 +66,14 @@ EOS;
 					OR
 				 (u.display_name LIKE '%{$like_string}%')
 					OR
-				 (t.transaction_key LIKE '%{$like_string}%'))
+				 (t.transaction_key LIKE '%{$like_string}%')
+					OR
+				 (u.user_login LIKE '%{$like_string}%')
+					OR
+				 (u.display_name LIKE '%{$like_string}%')
+					OR
+				 (u.user_email LIKE '%{$like_string}%')
+				)
 EOS;
 		}
 		if(!empty($wheres)){
@@ -123,7 +130,6 @@ EOS;
 			'price' => $lwp->_("Purchased Price"),
 			'status' => $lwp->_("Status"),
 			'method' => $lwp->_('Method'),
-			'expires' => $lwp->_('Expires'),
 			'registered' => $lwp->_("Registered"),
 			'updated' => $lwp->_("Last Updated"),
 			'detail' => $lwp->_('Detail')
@@ -139,8 +145,7 @@ EOS;
 		return array(
 			'registered' => array('registered', false),
 			'updated' => array('updated', false),
-			'price' => array('price', false),
-			'expires' => array('expires', false)
+			'price' => array('price', false)
 		);
 	}
 	
@@ -206,7 +211,19 @@ EOS;
 				return $item->display_name ? '<a href="'.admin_url('user-edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>' : $lwp->_('Deleted User');
 				break;
 			case 'item_name':
-				return '<a href="'.admin_url('post.php?post='.intval($item->book_id)."&action=edit").'">'.$item->post_title.'</a>';
+				$prefix = '';
+				switch($item->post_type){
+					case $lwp->event->post_type:
+						$prefix = get_the_title($item->post_parent).' - ';
+						$url = admin_url('post.php?post='.intval($item->post_parent)."&action=edit");
+						break;
+					case $lwp->subscription->post_type:
+						$prefix = $lwp->_('Subscription').' - ';
+					default:
+						$url = admin_url('post.php?post='.intval($item->book_id)."&action=edit");
+						break;
+				}
+				return sprintf('<a href="%1$s">%2$s</a>', $url, $prefix.$item->post_title, $prefix);
 				break;
 			case 'price':
 				return number_format_i18n($item->price)." ({$lwp->option['currency_code']})";
@@ -214,28 +231,29 @@ EOS;
 			case 'method':
 				return $lwp->_($item->method);
 				break;
-			case 'expires':
-				if($item->expires == '0000-00-00 00:00:00'){
-					return $lwp->_('No Limit');
-				}else{
-					$remain = ceil((strtotime($item->expires) - time()) / 60 / 60 / 24);
-					$string;
-					if($remain < 0){
-						$string = $lwp->_('Expired');
-					}else{
-						$string = sprintf($lwp->_('%d days left'), $remain);
-					}
-					return $string.'<br /><small>'.mysql2date(get_option('date_fomrat'), $item->expires).'</small>';
-				}
-				break;
 			case 'registered':
-				return mysql2date(get_option('date_format'), get_date_from_gmt($item->registered), false);
+				return mysql2date(get_option('date_format').get_option('time_format') , get_date_from_gmt($item->registered), false);
 				break;
 			case 'updated':
-				return mysql2date(get_option('date_format'), get_date_from_gmt($item->updated), false);
+				return mysql2date(get_option('date_format').get_option('time_format'), get_date_from_gmt($item->updated), false);
 				break;
 			case 'status':
-				return $lwp->_($item->status);
+				switch($item->status){
+					case LWP_Payment_Status::SUCCESS:
+						$placeholder = '<strong style="color: green;">%s</strong>';
+						break;
+					case LWP_Payment_Status::CANCEL:
+					case LWP_Payment_Status::REFUND:
+						$placeholder = '<strong style="color: #999999;">%s</strong>';
+						break;
+					case LWP_Payment_Status::REFUND_REQUESTING:
+						$placeholder = '<strong style="color: #f00;">%s</strong>';
+						break;
+					default:
+						$placeholder  = '%s';
+						break;
+				}
+				return sprintf($placeholder, $lwp->_($item->status));
 				break;
 			case 'detail';
 				return '<p><a class="button" href="'.admin_url("admin.php?page=lwp-management&transaction_id={$item->ID}").'">'.$lwp->_("Detail").'</a></p>';
@@ -243,7 +261,9 @@ EOS;
 		}
 	}
 	
-	
+	function get_table_classes() {
+		return array( 'widefat', 'lwp-table', $this->_args['plural'] );
+	}
 	
 	/**
 	 * Returns check box
@@ -263,10 +283,11 @@ EOS;
 				<?php
 				$status = array(
 					'all' => $lwp->_('All Status'),
-				 LWP_Payment_Status::START => $lwp->_('Start'),
-				 LWP_Payment_Status::CANCEL => $lwp->_('Cancel'),
-				 LWP_Payment_Status::SUCCESS => $lwp->_('Success'),
-				 LWP_Payment_Status::REFUND => $lwp->_('Refund')
+					LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
+					LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
+					LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
+					LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND),
+					LWP_Payment_Status::REFUND_REQUESTING => $lwp->_(LWP_Payment_Status::REFUND_REQUESTING)
 				);
 				foreach($status as $s => $val): ?>
 				<option value="<?php echo $s; if($s == $this->get_filter()) echo '" selected="selected'?>"><?php echo $val; ?></option>
