@@ -791,9 +791,16 @@ EOS;
 		if(isset($_REQUEST['status']) && $_REQUEST['status'] != 'all'){
 			$wheres[] = $wpdb->prepare("t.status = %s", $_REQUEST['status']);
 		}
+		//Limit by date
+		foreach(array('from' => '>=', 'to' => '<=') as $key => $operand){
+			if(isset($_REQUEST[$key]) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST[$key])){
+				$time = ($key == 'from') ? '00:00:00' : '23:59:59';
+				$wheres[] = $wpdb->prepare("t.updated {$operand} %s", $_REQUEST[$key].' '.$time);
+			}
+		}
 		$sql .= ' WHERE '.implode(' AND ', $wheres);
 		//Order by
-		$sql .= ' ORDER BY u.ID ASC, t.updated DESC';
+		$sql .= ' ORDER BY CAST(t.updated AS DATE) DESC, u.ID ASC';
 		//Let's get results
 		$results = $wpdb->get_results($sql);
 		//Check result
@@ -812,6 +819,7 @@ EOS;
 		}
 		$out = fopen('php://output', 'w');
 		$first_row = apply_filters('lwp_output_csv_header', array(
+			$this->_('Updated'),
 			$this->_('Code'),
 			$this->_('User Name'),
 			$this->_('Email'),
@@ -819,7 +827,6 @@ EOS;
 			$this->_('Price'),
 			$this->_('Quantity'),
 			$this->_('Consumed'),
-			$this->_('Updated'),
 			$this->_('Transaction Status')
 		));
 		mb_convert_variables('sjis-win', 'utf-8', $first_row);
@@ -827,6 +834,7 @@ EOS;
 		set_time_limit(0);
 		foreach($results as $result){
 			$row = apply_filters('lwp_output_csv_row', array(
+				$result->updated,
 				$this->generate_token($event->ID, $result->user_id), //Token
 				($result->display_name ? $result->display_name : $this->_('Deleted User')),
 				($result->user_email ? $result->user_email : '-'),
@@ -834,7 +842,6 @@ EOS;
 				$result->price,
 				$result->num,
 				$result->consumed,
-				$result->updated,
 				$this->_($result->status)
 			), $result);
 			mb_convert_variables('sjis-win', 'utf-8', $row);

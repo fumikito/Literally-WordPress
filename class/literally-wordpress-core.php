@@ -552,7 +552,9 @@ class Literally_WordPress{
 		}
 		//Load event management helper
 		if(isset($_GET['page']) && $_GET['page'] == 'lwp-event'){
-			wp_enqueue_script('lwp-event', $this->url.'assets/js/event-manager.js', array('jquery'), $this->version);
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script('lwp-event', $this->url.'assets/js/event-manager.js', array('jquery', 'jquery-ui-datepicker'), $this->version);
+			wp_localize_script('lwp-event', 'LWP', LWP_Datepicker_Helper::get_config_array());
 		}
 		//Add event helper on post edit page
 		if(false !== array_search(basename($_SERVER['SCRIPT_FILENAME']), array('post.php', 'post-new.php') )){
@@ -1419,6 +1421,7 @@ EOS;
 			case "management":
 			case "devices":
 			case "transfer":
+			case "event":
 				return (isset($_GET["page"]) && $_GET["page"] == "lwp-{$page_name}");
 				break;
 			case "history":

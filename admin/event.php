@@ -132,6 +132,8 @@ if(isset($_GET['event_id'])): $event = wp_get_single_post($_GET['event_id']);
 	<input type="hidden" name="event_id" value="<?php echo esc_attr($_GET['event_id']); ?>" />
 	<input type="hidden" name="status" value="" />
 	<input type="hidden" name="ticket" value="" />
+	<input type="hidden" name="from" value="" />
+	<input type="hidden" name="to" value="" />
 	<p class="description">
 		<?php printf( $this->_('You can get participants list of <strong>%1$s</strong> in status below.'), $event->post_title); ?>
 		<input type="submit" class="button-primary" value="<?php $this->e('Get CSV'); ?>" /><br />

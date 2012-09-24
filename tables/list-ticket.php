@@ -90,6 +90,12 @@ EOS;
 				)
 EOS;
 		}
+		if(isset($_REQUEST['from']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['from'])){
+			$where[] = $wpdb->prepare("(t.updated >= %s)", $_REQUEST['from'].' 00:00:00');
+		}
+		if(isset($_REQUEST['to']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_REQUEST['to'])){
+			$where[] = $wpdb->prepare("(t.updated <= %s)", $_REQUEST['to'].' 23:59:59');
+		}
 		if(isset($_GET['ticket']) && $_GET['ticket'] != 'all'){
 			$where[] = $wpdb->prepare("(t.book_id = %d)", $_GET['ticket']);
 		}
@@ -247,6 +253,9 @@ EOS;
 					}
 				?>
 			</select>
+			<input style="width: 6em;" placeholder="<?php $lwp->e('Date From'); ?>" type="text" name="from" class="date-picker" value="<?php if(isset($_REQUEST['from'])) echo esc_attr($_REQUEST['from']); ?>" />
+			<input style="width: 6em;" placeholder="<?php $lwp->e('Date To'); ?>" type="text" name="to" class="date-picker" value="<?php if(isset($_REQUEST['to'])) echo esc_attr($_REQUEST['to']); ?>" />
+
 			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
