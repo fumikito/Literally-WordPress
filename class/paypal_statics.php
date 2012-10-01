@@ -56,28 +56,22 @@ class PayPal_Statics {
 	
 	/**
 	 * Create item request
-	 * @global Literally_WordPress $lwp
 	 * @param array $items each item has to be array(name, amt, quantity, url, physical)
 	 * @return boolean
 	 */
 	private static function make_item_request($items = array()){
-		global $lwp;
 		$array = array();
 		$counter = 0;
 		foreach($items as $item){
 			if(!isset($item['name'], $item['quantity'], $item['amt'])){
 				continue;
 			}
-			if(isset($item['physical']) && $item['physical']){
-				//TODO: Physical item
-			}else{
-				$array['L_PAYMENTREQUEST_0_ITEMCATEGORY'.$counter] = 'Digital';
-				$array['L_PAYMENTREQUEST_0_QTY'.$counter] = intval($item['quantity']);
-				$array['L_PAYMENTREQUEST_0_AMT'.$counter] = $item['amt'];
-				$array['L_PAYMENTREQUEST_0_NAME'.$counter] = rawurlencode($item['name']);
-				if(isset($item['url'])){
-					$array['L_PAYMENTREQUEST_0_ITEMURL'.$counter] = rawurlencode($item['url']);
-				}
+			$array['L_PAYMENTREQUEST_0_ITEMCATEGORY'.$counter] = (isset($item['physical']) && $item['physical']) ? 'Physical' : 'Digital';
+			$array['L_PAYMENTREQUEST_0_QTY'.$counter] = intval($item['quantity']);
+			$array['L_PAYMENTREQUEST_0_AMT'.$counter] = $item['amt'];
+			$array['L_PAYMENTREQUEST_0_NAME'.$counter] = rawurlencode($item['name']);
+			if(isset($item['url'])){
+				$array['L_PAYMENTREQUEST_0_ITEMURL'.$counter] = rawurlencode($item['url']);
 			}
 			$counter++;
 		}

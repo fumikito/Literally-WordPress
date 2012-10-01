@@ -268,12 +268,21 @@ EOS;
 						$price = lwp_price($book_id);
 						//Get token
 						$invnum = sprintf("{$lwp->option['slug']}-%08d-%05d-%d", $book_id, get_current_user_id(), time());
+						//Check is physical
+						switch($book->post_type){
+							case $lwp->event->post_type:
+								$physical = true;
+								break;
+							default:
+								$physical = false;
+								break;
+						}
 						$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'),
 								($method == 'cc'), array(array(
 									'name' => $item_name,
 									'amt' => $price,
 									'quantity' => 1,
-									'physical' => false,
+									'physical' => $physical,
 									'url' => get_permalink($book_id)
 								)));
 						if($token){
