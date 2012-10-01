@@ -153,8 +153,8 @@ class LWP_Form extends Literally_WordPress_Common{
 				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
 			}
 		}
-    //Let's do action hook to delegate transaction to other plugin
-    do_action('lwp_before_transaction', $book);
+		//Let's do action hook to delegate transaction to other plugin
+		do_action('lwp_before_transaction', $book);
 		//All green, start transaction
 		if(lwp_price($book_id) == 0){
 			//Content is free
@@ -189,16 +189,16 @@ class LWP_Form extends Literally_WordPress_Common{
 			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
 			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
 			//Start Transaction
+			if($book->post_type == $lwp->event->post_type){
+				$item_name = get_the_title($book->post_parent).' '.$book->post_title;
+			}elseif($book->post_type == $lwp->subscription->post_type){
+				$item_name = $this->_('Subscription').' '.$book->post_title;
+			}else{
+				$item_name = $book->post_title;
+			}
 			//If payment selection required or nonce isn't corret, show form.
 			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
-				if($book->post_type == $lwp->event->post_type){
-					$item_name = get_the_title($book->post_parent).' '.$book->post_title;
-				}elseif($book->post_type == $lwp->subscription->post_type){
-					$item_name = $this->_('Subscription').' '.$book->post_title;
-				}else{
-					$item_name = $book->post_title;
-				}
 				$this->show_form('selection', array(
 					'post_id' => $book_id,
 					'price' => lwp_price($book_id),
@@ -264,9 +264,42 @@ EOS;
 						break;
 					case 'paypal':
 					case 'cc':
-						$billing = ($method == 'cc');
-						if(!$lwp->start_transaction(get_current_user_id(), $book_id, $billing)){
-							//Failed to create transaction
+						//Create transaction
+						$price = lwp_price($book_id);
+						//Get token
+						$invnum = sprintf("{$lwp->option['slug']}-%08d-%05d-%d", $book_id, get_current_user_id(), time());
+						$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'),
+								($method == 'cc'), array(array(
+									'name' => $item_name,
+									'amt' => $price,
+									'quantity' => 1,
+									'physical' => false,
+									'url' => get_permalink($book_id)
+								)));
+						if($token){
+							//Get token, save transaction
+							$wpdb->insert(
+								$lwp->transaction,
+								array(
+									"user_id" => get_current_user_id(),
+									"book_id" => $book_id,
+									"price" => $price,
+									"status" => LWP_Payment_Status::START,
+									"method" => LWP_Payment_Methods::PAYPAL,
+									"transaction_key" => $invnum,
+									"transaction_id" => $token,
+									"registered" => gmdate('Y-m-d H:i:s'),
+									"updated" => gmdate('Y-m-d H:i:s')
+								),
+								array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
+							);
+							//Execute hook
+							do_action('lwp_create_transaction', $wpdb->insert_id);
+							//Redirect to Paypal
+							PayPal_Statics::redirect($token);
+							exit;
+						}else{
+							//No response from PayPal
 							$message = $this->_("Failed to make transaction.");
 						}
 						break;

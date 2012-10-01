@@ -31,20 +31,19 @@ class PayPal_Statics {
 	 * @param boolean $billing
 	 * @return string 
 	 */
-	public function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url, $billing = true) 
-	{
+	public static function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url, $billing = true, $items = array()){
 		global $lwp;
-		$return_url = rawurlencode($return_url);
-		$cancel_url = rawurlencode($cancel_url);
-		$landing_page = $billing ? 'Billing' : 'Login';
-		//SetExpressCheckout APIに投げる値を作成
-		$nvpstr = "&SOLUTIONTYPE=Sole&AMT={$paymentAmount}&PAYMENTACTION=".self::PAYMENT_ACTION.
-			"&RETURNURL={$return_url}&CANCELURL={$cancel_url}".
-			"&CURRENCYCODE={$lwp->option['currency_code']}&LOCALECODE={$lwp->option['country_code']}".
-			"&NOSHIPPING=1&LANDINGPAGE={$landing_page}&ALLOWNOTE=1&INVNUM={$invoice_number}";
-		//リクエストを取得
-		$resArray = self::hash_call("SetExpressCheckout", $nvpstr);
-		//レスポンスをチェック
+		//Make string for SetExpressCheckout APIに投げる値を作成
+		$nvpstrs = array_merge(array_merge(self::simple_transaction_nvpstrs($return_url, $cancel_url, $billing), array(
+			'PAYMENTREQUEST_0_AMT' => $paymentAmount,
+			'PAYMENTREQUEST_0_ITEMAMT' => $paymentAmount,
+			'PAYMENTREQUEST_0_INVNUM' => $invoice_number,
+			'PAYMENTREQUEST_0_PAYMENTACTION' => self::PAYMENT_ACTION,
+			'PAYMENTREQUEST_0_CURRENCYCODE' => $lwp->option['currency_code'],
+		)), self::make_item_request($items));
+		//Make request
+		$resArray = self::hash_call("SetExpressCheckout", self::create_nvp($nvpstrs));
+		//Check response
 		$ack = strtoupper($resArray["ACK"]);
 		if($ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING"){
 			return urldecode($resArray["TOKEN"]);
@@ -53,6 +52,73 @@ class PayPal_Statics {
 			self::log(var_export($nvpstr, true));
 			return false;
 		}
+	}
+	
+	/**
+	 * Create item request
+	 * @global Literally_WordPress $lwp
+	 * @param array $items each item has to be array(name, amt, quantity, url, physical)
+	 * @return boolean
+	 */
+	private static function make_item_request($items = array()){
+		global $lwp;
+		$array = array();
+		$counter = 0;
+		foreach($items as $item){
+			if(!isset($item['name'], $item['quantity'], $item['amt'])){
+				continue;
+			}
+			if(isset($item['physical']) && $item['physical']){
+				//TODO: Physical item
+			}else{
+				$array['L_PAYMENTREQUEST_0_ITEMCATEGORY'.$counter] = 'Digital';
+				$array['L_PAYMENTREQUEST_0_QTY'.$counter] = intval($item['quantity']);
+				$array['L_PAYMENTREQUEST_0_AMT'.$counter] = $item['amt'];
+				$array['L_PAYMENTREQUEST_0_NAME'.$counter] = rawurlencode($item['name']);
+				if(isset($item['url'])){
+					$array['L_PAYMENTREQUEST_0_ITEMURL'.$counter] = rawurlencode($item['url']);
+				}
+			}
+			$counter++;
+		}
+		return $array;
+	}
+	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param string $return_url
+	 * @param string $cancel_url
+	 * @param boolean $billing Default true
+	 * @param boolean $force_paypal Default false
+	 * @param int $no_shippping Default 1(not displayed), 0(displayed), 2(detect from paypal account)
+	 * @param boolean $allownote Default true
+	 * @return array
+	 */
+	private static function simple_transaction_nvpstrs($return_url, $cancel_url, $billing = true, $force_paypal = false, $no_shippping = 1, $allownote = true){
+		global $lwp;
+		return array(
+			'SOLUTIONTYPE' => $force_paypal ? 'Mark' : 'Sole',
+			'RETURNURL' => rawurlencode($return_url),
+			'CANCELURL' => rawurlencode($cancel_url),
+			'LOCALECODE' => $lwp->option['country_code'],
+			'NOSHIPPING' => intval($no_shippping),
+			'LANDINGPAGE' => ($billing ? 'Billing' : 'Login'),
+			'ALLOWNOTE' => intval($allownote)
+		);
+	}
+	
+	/**
+	 * Create NVP string from array
+	 * @param array $pairs
+	 * @return string
+	 */
+	private static function create_nvp($pairs = array()){
+		$nvpstr = '';
+		foreach($pairs as $key => $value){
+			$nvpstr .= "&{$key}={$value}";
+		}
+		return $nvpstr;
 	}
 	
 	/**

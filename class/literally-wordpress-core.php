@@ -1175,50 +1175,7 @@ EOS;
 	
 
 	
-	/**
-	 * トランザクションを開始する
-	 * 
-	 * @since 0.8
-	 * @global wpdb $wpdb
-	 * @param int $user_id
-	 * @param int $post_id
-	 * @param boolean $billing
-	 * @return boolean 失敗した時だけfalseを返す
-	 */
-	public function start_transaction($user_id, $post_id, $billing){
-		global $wpdb;
-		//トランザクションを作る
-		$price = lwp_price($post_id);
-		//トークンを取得
-		$invnum = sprintf("{$this->option['slug']}-%08d-%05d-%d", $post_id, $user_id, time());
-		$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'), $billing);
-		if($token){
-			//トークンが帰ってきたら、データベースに保存
-			$wpdb->insert(
-				$this->transaction,
-				array(
-					"user_id" => $user_id,
-					"book_id" => $post_id,
-					"price" => $price,
-					"status" => "START",
-					"method" => "PAYPAL",
-					"transaction_key" => $invnum,
-					"transaction_id" => $token,
-					"registered" => gmdate('Y-m-d H:i:s'),
-					"updated" => gmdate('Y-m-d H:i:s')
-				),
-				array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
-			);
-			//Execute hook
-			do_action('lwp_create_transaction', $wpdb->insert_id);
-			//Redirect to Paypal
-			PayPal_Statics::redirect($token);
-			exit;
-		}else{
-			//No response from Paypal
-			return false;
-		}
-	}
+	
 	
 	/**
 	 * Hook the_content to display purchase history
