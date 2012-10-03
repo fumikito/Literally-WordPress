@@ -294,9 +294,9 @@ EOS;
 			SELECT SUM(t.price) FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			WHERE p.post_parent = %d
+			WHERE p.post_parent = %d AND t.status = %s
 EOS;
-		return $wpdb->get_var($wpdb->prepare($sql, $event_id));
+		return $wpdb->get_var($wpdb->prepare($sql, $event_id, LWP_Payment_Status::SUCCESS));
 	}
 	
 	/**
@@ -329,21 +329,42 @@ EOS;
 		$selling_limits = get_post_meta($post_id, $this->meta_selling_limit, true);
 		$cancel_limits = get_post_meta($post_id, $this->meta_cancel_limits, true);
 		if($cancel_limits && $selling_limits && is_array($cancel_limits)){
-			$selling_limits = strtotime($selling_limits);
-			for($i = count($cancel_limits) - 1; $i >= 0; $i--){
-				//Check if current time doesn't exceed limit
-				if($selling_limits - $cancel_limits[$i]['days'] * 60 * 60 * 24 < $timestamp){
-					continue;
-				}else{
-					$limit = $cancel_limits[$i];
-					break;
+			usort($cancel_limits, array($this, '_sort_condition'));
+			$selling_limits = strtotime($selling_limits.' 23:59:59');
+			$left_days = ($selling_limits - $timestamp) / 60 / 60 / 24;
+			for($i = 0, $l = count($cancel_limits); $i < $l; $i++){
+				if($i == 0){
+					//First
+					if($cancel_limits[$i]['days'] <= $left_days){
+						$limit = $cancel_limits[$i];
+						break;
+					}
+				}elseif(isset($cancel_limits[$i - 1])){
+					if($cancel_limits[$i - 1]['days'] > $left_days && $cancel_limits[$i]['days'] <= $left_days){
+						$limit = $cancel_limits[$i];
+						break;
+					}
 				}
 			}
 		}
 		return $limit;
 	}
 	
-	
+	/**
+	 * Sort cancel limits
+	 * @param array $var1
+	 * @param array $var2
+	 * @return int
+	 */
+	public function _sort_condition($var1, $var2){
+		if($var1['days'] < $var2['days']){
+			return 1;
+		}elseif($var1['days'] > $var2['days']){
+			return -1;
+		}else{
+			return 0;
+		}
+	}
 	
 	/**
 	 * Returns ticket id from event's ID

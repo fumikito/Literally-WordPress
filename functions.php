@@ -1115,10 +1115,13 @@ function lwp_list_cancel_condition($args = array()){
 		'after' => '</ol>',
 		'order' => 'desc'
 	));
-	$limit = get_post_meta($args['post'], $lwp->event->meta_selling_limit, true);
+	$limit = get_post_meta($args['post'], $lwp->event->meta_selling_limit, true).' 23:59:59';
 	$conditions = get_post_meta($args['post'], $lwp->event->meta_cancel_limits, true);
-	if($args['order'] == 'asc'){
-		rsort($conditions);
+	if(is_array($conditions)){
+		usort($conditions, array($lwp->event, '_sort_condition'));
+		if($args['order'] == 'asc'){
+			rsort($conditions);
+		}
 	}
 	$current = $lwp->event->get_current_cancel_condition($args['post']);
 	if(!empty($conditions)){
