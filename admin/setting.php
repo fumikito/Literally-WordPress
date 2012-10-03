@@ -5,8 +5,8 @@
 	</a>
 	<?php
 		foreach(array(
-			'payment' => $this->_('Payment'),
-			'post' => $this->_('Post Sell'),
+			'payment' => $this->_('Payment Options'),
+			'post' => $this->_('Digital Contents'),
 			'subscription' => $this->_('Subscription'),
 			'event' => $this->_('Event'),
 			'reward' => $this->_('Reward'),
