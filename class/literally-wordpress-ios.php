@@ -63,6 +63,12 @@ class LWP_iOS extends Literally_WordPress_Common{
 	public $product_id = '_lwp_ios_product_id';
 	
 	/**
+	 * Post meta key name for android product_id
+	 * @var string
+	 */
+	public $android_product_id = '_lwp_android_product_id';
+	
+	/**
 	 * Returns all methods name
 	 * @var array
 	 */
@@ -177,23 +183,39 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 */
 	public function edit_form($post){
 		if($post->post_type == $this->post_type){
-			wp_nonce_field('lwp_ios_product_id', '_lwpnonce_ios_id');
-			?>
-			<hr class="lwp-divider" />
-			<table class="lwp-metabox-table">
-				<tbody>
-					<tr>
-						<th colspan="2"><label for="ios-product-id"><?php $this->e('iOS Procut ID'); ?></label></th>
-					</tr>
-					<tr>
-						<td colspan="2"><input style="width:100%;" placeholder="com.takahashifumiki.someApp.someProduct" type="text" id="ios-product-id" name="ios-product-id" value="<?php echo esc_attr(get_post_meta($post->ID, $this->product_id, true)); ?>" /></td>
-					</tr>
-				</tbody>
-			</table>
-			<p class="description">
-				<?php printf($this->_('Please enter existing Product ID managed at <a href="%s">iTunes Connect</a>'), 'https://itunesconnect.apple.com'); ?>
-			</p>
-			<?php
+			if($this->is_ios_available()): ?>
+				<?php wp_nonce_field('lwp_ios_product_id', '_lwpnonce_ios_id'); ?>
+				<hr class="lwp-divider" />
+				<table class="lwp-metabox-table">
+					<tbody>
+						<tr>
+							<th colspan="2"><label for="ios-product-id"><?php $this->e('iOS Procut ID'); ?></label></th>
+						</tr>
+						<tr>
+							<td colspan="2"><input style="width:100%;" placeholder="com.takahashifumiki.someApp.someProduct" type="text" id="ios-product-id" name="ios-product-id" value="<?php echo esc_attr(get_post_meta($post->ID, $this->product_id, true)); ?>" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="description">
+					<?php printf($this->_('Please enter existing Product ID managed at <a href="%s">iTunes Connect</a>'), 'https://itunesconnect.apple.com'); ?>
+				</p>
+			<?php endif; if($this->is_android_available()): ?>
+				<?php wp_nonce_field('lwp_android_product_id', '_lwpnonce_android_id'); ?>
+				<hr class="lwp-divider" />
+				<table class="lwp-metabox-table">
+					<tbody>
+						<tr>
+							<th colspan="2"><label for="android-product-id"><?php $this->e('Android Procut ID'); ?></label></th>
+						</tr>
+						<tr>
+							<td colspan="2"><input style="width:100%;" placeholder="com.takahashifumiki.someApp.someProduct" type="text" id="android-product-id" name="android-product-id" value="<?php echo esc_attr(get_post_meta($post->ID, $this->android_product_id, true)); ?>" /></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="description">
+					<?php printf($this->_('Please enter existing Product ID managed at <a href="%s">Google Play Developer Console</a>'), 'https://play.google.com/apps/publish'); ?>
+				</p>
+			<?php endif; 
 		}
 	}
 	
@@ -207,6 +229,13 @@ class LWP_iOS extends Literally_WordPress_Common{
 				update_post_meta($post_id, $this->product_id, (string)$_REQUEST['ios-product-id']);
 			}else{
 				delete_post_meta($post_id, $this->product_id);
+			}
+		}
+		if(isset($_REQUEST['_lwpnonce_android_id']) && wp_verify_nonce($_REQUEST['_lwpnonce_android_id'], 'lwp_android_product_id')){
+			if(isset($_REQUEST['android-product-id']) && !empty($_REQUEST['android-product-id'])){
+				update_post_meta($post_id, $this->android_product_id, (string)$_REQUEST['android-product-id']);
+			}else{
+				delete_post_meta($post_id, $this->android_product_id);
 			}
 		}
 	}
