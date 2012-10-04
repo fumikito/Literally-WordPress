@@ -49,15 +49,49 @@ div.ebook{
 	font-size:18px;
 	color:#666;
 }
+.lwp-api-list{
+	clear: both;
+}
 .lwp-api-list h4{
 	margin-top: 1em;
 	padding-top: 1em;
 	border-top:1px dotted #ccc;
+	font-size: 24px;
+	line-height: 32px;
+	height: 32px;
 }
-.lwp-api-list h4:first-child{
-	margin-top: 0;
-	padding-top: 0;
-	border-top: none;
+.lwp-api-list h4 span{
+	margin-right: 1em;
+	padding-left: 40px;
+	background: url('./icon-ios.png') left center no-repeat;
+}
+.lwp-api-list h4 .android{
+	background-image: url('./icon-android.png');
+}
+h4.apple .android,
+h4.android .apple{
+	display: none;
+}
+.lwp-api-list .api-index{
+	width: 310px;
+	float: right;
+	margin:20px 0 0 1em;
+	border: 1px solid #ccc;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding: 20px;
+	background-color: #f9f9f9;
+}
+.lwp-api-list .api-index h5{
+	margin: 0 0 1em;
+}
+.lwp-api-list .api-index ul{
+	margin-bottom: 1em;
+}
+.lwp-api-list .api-index ul:first-child{
+	padding-bottom: 1em;
+	border-bottom: 1px dotted #ccc;
 }
 .lwp-wrap h5{
 	font-size: 14px;
@@ -387,12 +421,19 @@ hr.lwp-divider{
 	border-left: 1px solid #dfdfdf;
 	border-right: 1px solid #dfdfdf;
 }
+.lwp-ios-status-table{
+	width: 350px;
+	float: right;
+	margin-left: 1em;
+	table-layout: auto;
+}
 .lwp-form-table th,
 .lwp-form-table td{
 	padding: 10px;
 	border-top: 1px solid #dfdfdf;
 	border-bottom: 1px solid #dfdfdf;
 	text-shadow: 1px 1px 2px #fff;
+	background-color: #fff;
 }
 .lwp-form-table th{
 	font-weight: normal;

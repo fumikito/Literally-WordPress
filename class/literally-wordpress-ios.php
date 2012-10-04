@@ -6,13 +6,13 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 * API Version.
 	 * @var string
 	 */
-	public $api_version = '1.1';
+	public $api_version = '2.0';
 	
 	/**
 	 * API last updated
 	 * @var string
 	 */
-	public $api_last_updated = '2012-09-03 21:05:10';
+	public $api_last_updated = '2012-10-04 16:35:20';
 	
 	/**
 	 * Is iOS is enabled
@@ -105,8 +105,8 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 */
 	public function register_post_type(){
 		//Post type
-		$singular = $this->_('iOS Product');
-		$plural = $this->_('iOS Products');
+		$singular = $this->_('Smartphone Product');
+		$plural = $this->_('Smartphone Products');
 		$args = apply_filters('lwp_ios_post_type_args', array(
 			'labels' => array(
 				'name' => $plural,

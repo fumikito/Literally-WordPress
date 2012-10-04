@@ -570,6 +570,10 @@ class Literally_WordPress{
 				'wrongRatio' => $this->_('Refund must be number(negative or positive) or percentage(ex. 50%)')
 			)));
 		}
+		//Add js to API Manual
+		if(isset($_GET['page']) && $_GET['page'] == 'lwp-ios-api'){
+			wp_enqueue_script('lwp-ios-api-helper', $this->url.'assets/js/api-helper.js', array('jquery'), $this->version);
+		}
 	}
 	
 	
