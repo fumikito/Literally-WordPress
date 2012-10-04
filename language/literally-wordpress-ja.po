@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-03 18:00+0900\n"
-"PO-Revision-Date: 2012-10-03 18:00+0900\n"
+"POT-Creation-Date: 2012-10-04 17:46+0900\n"
+"PO-Revision-Date: 2012-10-04 17:47+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -149,7 +149,7 @@ msgstr "%d%% Off"
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
 
-#: ../functions.php:1561
+#: ../functions.php:1564
 msgid "Check Token"
 msgstr "トークンをチェックする"
 
@@ -452,7 +452,7 @@ msgstr ""
 msgid "File Download Logs"
 msgstr "ファイルダウンロードログ"
 
-#: ../admin/event.php:4 ../class/literally-wordpress-core.php:436
+#: ../admin/event.php:4 ../class/literally-wordpress-core.php:437
 msgid "Event Management"
 msgstr "イベント管理"
 
@@ -486,7 +486,7 @@ msgstr "販売期限"
 msgid "Limit to cancel"
 msgstr "キャンセル期限"
 
-#: ../admin/event.php:68 ../class/literally-wordpress-event.php:826
+#: ../admin/event.php:68 ../class/literally-wordpress-event.php:847
 #: ../class/literally-wordpress-form.php:721
 #: ../form-template/edit-detail-event.php:144
 #: ../form-template/paypal-cancel-ticket.php:13
@@ -496,8 +496,8 @@ msgid "Ticket Name"
 msgstr "チケット名"
 
 #: ../admin/event.php:69 ../admin/management.php:392
-#: ../class/literally-wordpress-core.php:1274
-#: ../class/literally-wordpress-event.php:827
+#: ../class/literally-wordpress-core.php:1280
+#: ../class/literally-wordpress-event.php:848
 #: ../class/literally-wordpress-form.php:723
 #: ../class/literally-wordpress-subscription.php:194
 #: ../form-template/edit-detail-event.php:104
@@ -521,14 +521,14 @@ msgid "Sold"
 msgstr "販売数"
 
 #: ../admin/event.php:72 ../admin/management.php:92
-#: ../class/literally-wordpress-event.php:829
+#: ../class/literally-wordpress-event.php:850
 #: ../class/literally-wordpress-form.php:725
 #: ../form-template/paypal-event-tickets-consume.php:19
 #: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr "使用分"
 
-#: ../admin/event.php:73 ../class/literally-wordpress-core.php:521
+#: ../admin/event.php:73 ../class/literally-wordpress-core.php:522
 msgid "Sales"
 msgstr "売上"
 
@@ -555,7 +555,7 @@ msgstr ""
 msgid "Get CSV"
 msgstr "CSV取得"
 
-#: ../admin/form-check.php:4 ../class/literally-wordpress-core.php:439
+#: ../admin/form-check.php:4 ../class/literally-wordpress-core.php:440
 msgid "LWP Form Check"
 msgstr "LWP フォーム確認"
 
@@ -650,7 +650,7 @@ msgstr "タイトルをテーマディレクトリ内のロゴ画像に変える
 msgid "Don't forget to change logo in PayPal's landing page."
 msgstr "PayPalの支払いページのロゴを変えることを忘れないでください。"
 
-#: ../admin/history.php:2 ../class/literally-wordpress-core.php:420
+#: ../admin/history.php:2 ../class/literally-wordpress-core.php:421
 msgid "Purchase History"
 msgstr "購入履歴"
 
@@ -676,11 +676,52 @@ msgstr "XML-RPC APIマニュアル"
 msgid "API Version: %1$s<br />Last Updated: %2$s"
 msgstr "API バージョン: %1$s<br />最終更新日: %2$s"
 
-#: ../admin/ios-api.php:8
+#: ../admin/ios-api.php:11
+msgid "Option Name"
+msgstr "項目名"
+
+#: ../admin/ios-api.php:12 ../admin/management.php:112
+#: ../admin/management.php:317 ../admin/management.php:364
+#: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
+#: ../admin/settings/dashboard.php:50 ../admin/settings/dashboard.php:101
+#: ../admin/settings/dashboard.php:133
+#: ../class/literally-wordpress-core.php:503
+#: ../class/literally-wordpress-core.php:544 ../tables/list-history.php:46
+#: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
+#: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
+#: ../tables/list-transfers.php:161
+msgid "Status"
+msgstr "ステータス"
+
+#: ../admin/ios-api.php:17
+#, php-format
+msgid "Setup these at <a href=\"%s\">here</a>."
+msgstr "<a href=\"%s\">ここ</a>で設定できます。"
+
+#: ../admin/ios-api.php:23 ../admin/settings/dashboard.php:67
+msgid "iOS In App Purchase"
+msgstr "iOSアプリ内購入"
+
+#: ../admin/ios-api.php:27 ../admin/settings/dashboard.php:72
+msgid "Android In-App Billing"
+msgstr "Androidアプリ内課金"
+
+#: ../admin/ios-api.php:35
+msgid "Force SSL"
+msgstr "SSL強制"
+
+#: ../admin/ios-api.php:41 ../admin/settings/dashboard.php:38
+#: ../admin/settings/dashboard.php:89 ../admin/settings/dashboard.php:120
+#: ../admin/settings/post.php:94 ../admin/settings/post.php:101
+#: ../admin/settings/post.php:147
+msgid "Enabled"
+msgstr "有効"
+
+#: ../admin/ios-api.php:47
 msgid "How to use"
 msgstr "使用法"
 
-#: ../admin/ios-api.php:9
+#: ../admin/ios-api.php:48
 #, php-format
 msgid ""
 "Once you enabled iOS Product, expanded <a href=\"%s\">XML-RPC API</a> for "
@@ -691,65 +732,83 @@ msgstr ""
 "が使えるようになります。あなたのiOSアプリケーションはWordPressサイトとコンタ"
 "クトをとったり、アプリ内購入プロダクトをダウンロードできるようになります。"
 
-#: ../admin/ios-api.php:10
+#: ../admin/ios-api.php:49
 #, php-format
-msgid "<strong>Note:</strong> I recommend you to use %s."
-msgstr "<strong>注意：</strong> %sのご利用をおすすめします。"
+msgid "Endpoint is <code>%s</code>."
+msgstr "エンドポイントは<code>%s</code>です。"
 
-#: ../admin/ios-api.php:12
+#: ../admin/ios-api.php:51
+#, php-format
+msgid ""
+"<strong>Note:</strong> I recommend you to use libraries: %1$s for Objective-C"
+"(iOS) and %2$s for Java(Android)."
+msgstr ""
+"<strong>注意：</strong> 次のライブラリのご利用をおすすめします。Objective-C"
+"(iOS)用%1$s、Java(Android)用%2$s"
+
+#: ../admin/ios-api.php:56
 msgid "Methods"
 msgstr "メソッド"
 
-#: ../admin/ios-api.php:17
+#: ../admin/ios-api.php:60
+msgid "iOS Only"
+msgstr "iOSのみ"
+
+#: ../admin/ios-api.php:61
+msgid "Android Only"
+msgstr "Androidのみ"
+
+#: ../admin/ios-api.php:78
 msgid "You can know API version information."
 msgstr "APIバージョン情報がわかります。"
 
-#: ../admin/ios-api.php:18 ../admin/ios-api.php:30 ../admin/ios-api.php:43
-#: ../admin/ios-api.php:54 ../admin/ios-api.php:71 ../admin/ios-api.php:92
-#: ../admin/ios-api.php:117 ../admin/ios-api.php:140 ../admin/ios-api.php:157
-#: ../admin/ios-api.php:177
+#: ../admin/ios-api.php:79 ../admin/ios-api.php:98 ../admin/ios-api.php:116
+#: ../admin/ios-api.php:133 ../admin/ios-api.php:156 ../admin/ios-api.php:183
+#: ../admin/ios-api.php:213 ../admin/ios-api.php:239 ../admin/ios-api.php:260
+#: ../admin/ios-api.php:281 ../admin/ios-api.php:308 ../admin/ios-api.php:333
 msgid "Returns"
 msgstr "戻り値"
 
-#: ../admin/ios-api.php:21
+#: ../admin/ios-api.php:82
 msgid "Version of XML-RPC API"
 msgstr "XML-RPC APIのバージョン"
 
-#: ../admin/ios-api.php:22
+#: ../admin/ios-api.php:83
 msgid "API's last updated date in DATETIME format."
 msgstr "APIの最終更新日をDATETIME型で返します。"
 
-#: ../admin/ios-api.php:23
+#: ../admin/ios-api.php:84
 msgid "Version of LWP"
 msgstr "LWPのバージョン"
 
-#: ../admin/ios-api.php:24
+#: ../admin/ios-api.php:85
 msgid "WordPress version"
 msgstr "WordPressのバージョン"
 
-#: ../admin/ios-api.php:25
+#: ../admin/ios-api.php:86
 msgid "Is SSL forced."
 msgstr "SSLが必須か否か"
 
-#: ../admin/ios-api.php:29
+#: ../admin/ios-api.php:97
 msgid "You can get list of registered methods."
 msgstr "登録されたメソッドの一覧を取得できます。"
 
-#: ../admin/ios-api.php:32
+#: ../admin/ios-api.php:100
 msgid "Array consists of method names."
 msgstr "メソッド名からなる配列"
 
-#: ../admin/ios-api.php:37
+#: ../admin/ios-api.php:110
 msgid "You can get userdata with credentials."
 msgstr "認証情報からユーザーデータを取得します。"
 
-#: ../admin/ios-api.php:38 ../admin/ios-api.php:50 ../admin/ios-api.php:62
-#: ../admin/ios-api.php:88 ../admin/ios-api.php:111 ../admin/ios-api.php:132
-#: ../admin/ios-api.php:148 ../admin/ios-api.php:170
+#: ../admin/ios-api.php:111 ../admin/ios-api.php:129 ../admin/ios-api.php:147
+#: ../admin/ios-api.php:179 ../admin/ios-api.php:207 ../admin/ios-api.php:231
+#: ../admin/ios-api.php:251 ../admin/ios-api.php:272 ../admin/ios-api.php:298
+#: ../admin/ios-api.php:326
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: ../admin/ios-api.php:45
+#: ../admin/ios-api.php:118
 #, php-format
 msgid ""
 "You can get same data as <code>get_userdata</code>. See detail at <a href="
@@ -758,7 +817,7 @@ msgstr ""
 "<code>get_userdata</code>と同じデータを取得できます。詳しくは<a href=\"%s"
 "\">codex</a>を見てください。"
 
-#: ../admin/ios-api.php:49
+#: ../admin/ios-api.php:128
 msgid ""
 "You can get product group. Product group is a custom taxonomy and it helps "
 "you to manage multiple iOS application in one WordPress site."
@@ -766,7 +825,7 @@ msgstr ""
 "プロダクトグループを取得できます。プロダクトグループとはカスタムタクソノミー"
 "で、1つのWordPressサイトで複数のiOSアプリケーションを管理するのに役立ちます。"
 
-#: ../admin/ios-api.php:52
+#: ../admin/ios-api.php:131
 #, php-format
 msgid ""
 "Parameter is directly pass to <code>get_terms</code>. See detail at <a href="
@@ -775,35 +834,35 @@ msgstr ""
 "パラメータは<code>get_terms</code>に直接渡されます。詳しくは<a href=\"%s"
 "\">codex</a>を見てください。"
 
-#: ../admin/ios-api.php:56
+#: ../admin/ios-api.php:135
 msgid "Array consists\t of term object."
 msgstr "タームオブジェクトからなる配列"
 
-#: ../admin/ios-api.php:61
+#: ../admin/ios-api.php:146
 msgid "You can get product list "
 msgstr "プロダクトリストを取得します。"
 
-#: ../admin/ios-api.php:65
+#: ../admin/ios-api.php:150
 msgid "term_taxonomy_id of term object. Default 0."
 msgstr "タームオブジェクトのterm_taxonomy_id。デフォルトは0。"
 
-#: ../admin/ios-api.php:66
+#: ../admin/ios-api.php:151
 msgid "date, title, ID, product_id. Default product_id"
 msgstr "date, title, ID, product_idのいずれか。デフォルトはproduct_id。"
 
-#: ../admin/ios-api.php:67
+#: ../admin/ios-api.php:152
 msgid "DESC or ASC. Default ASC"
 msgstr "DESC または ASC。デフォルトは ASC。"
 
-#: ../admin/ios-api.php:68
+#: ../admin/ios-api.php:153
 msgid "Post status. Default publish"
 msgstr "投稿ステータス。デフォルトはpublish。"
 
-#: ../admin/ios-api.php:69
+#: ../admin/ios-api.php:154
 msgid "If set to true, File's information will be set as array. Default true."
 msgstr "trueにするとファイル情報が配列としてセットされます。初期値はtrue。"
 
-#: ../admin/ios-api.php:81
+#: ../admin/ios-api.php:166
 msgid ""
 "<em>This value is registered at Post edit screen. To get precise price, use "
 "StoreKit request.</em>"
@@ -811,76 +870,76 @@ msgstr ""
 "<em>この値は投稿編集画面で登録されたものです。正しい価格を得るにはStoreKitリ"
 "クエストを発行してください。</em>"
 
-#: ../admin/ios-api.php:82
+#: ../admin/ios-api.php:167
 msgid "List of files which are attached to this post."
 msgstr "この投稿に紐づけられたファイルのリスト"
 
-#: ../admin/ios-api.php:83
+#: ../admin/ios-api.php:168
 msgid "See <code>lwp.ios.fileList</code>."
 msgstr "<code>lwp.ios.fileList</code>を参照のこと。"
 
-#: ../admin/ios-api.php:87
+#: ../admin/ios-api.php:178
 msgid "File list of specified post."
 msgstr "指定された投稿のファイルリスト。"
 
-#: ../admin/ios-api.php:90
+#: ../admin/ios-api.php:181
 msgid "ID of post."
 msgstr "投稿ID"
 
-#: ../admin/ios-api.php:96
+#: ../admin/ios-api.php:187
 msgid "File ID."
 msgstr "ファイルID"
 
-#: ../admin/ios-api.php:97
+#: ../admin/ios-api.php:188
 msgid "File desciptive name."
 msgstr "ファイルにつけられた名前"
 
-#: ../admin/ios-api.php:98
+#: ../admin/ios-api.php:189
 msgid "File's description."
 msgstr "ファイル詳細"
 
-#: ../admin/ios-api.php:99
+#: ../admin/ios-api.php:190
 msgid "0 is private, 1 is public."
 msgstr "0は非公開、1は公開"
 
-#: ../admin/ios-api.php:100
+#: ../admin/ios-api.php:191
 msgid ""
 "0 is not free, 1 means free for the registered users, 2 is free for everyone."
 msgstr "0は有料、1は登録ユーザーのみ無料、2は誰にでも無料"
 
-#: ../admin/ios-api.php:101
+#: ../admin/ios-api.php:192
 #, php-format
 msgid "Devices you registered <a href=\"%s\">here</a>."
 msgstr "<a href=\"%s\">ここ</a>で登録された端末。"
 
-#: ../admin/ios-api.php:110
+#: ../admin/ios-api.php:206
 msgid "Get File from transaction information."
 msgstr "決済情報からファイルを取得します。"
 
-#: ../admin/ios-api.php:120 ../admin/ios-api.php:160
+#: ../admin/ios-api.php:216 ../admin/ios-api.php:284 ../admin/ios-api.php:311
 msgid "md5 hash of file"
 msgstr "md5ファイルハッシュ"
 
-#: ../admin/ios-api.php:121 ../admin/ios-api.php:161
+#: ../admin/ios-api.php:217 ../admin/ios-api.php:285 ../admin/ios-api.php:312
 msgid "File size"
 msgstr "ファイルサイズ"
 
-#: ../admin/ios-api.php:122 ../admin/ios-api.php:162
+#: ../admin/ios-api.php:218 ../admin/ios-api.php:286 ../admin/ios-api.php:313
 msgid "Mime type of file"
 msgstr "ファイルのmime型"
 
-#: ../admin/ios-api.php:123 ../admin/ios-api.php:163
+#: ../admin/ios-api.php:219 ../admin/ios-api.php:287 ../admin/ios-api.php:314
 msgid "Binary data of file."
 msgstr "ファイルのバイナリデータ"
 
-#: ../admin/ios-api.php:130
+#: ../admin/ios-api.php:229
 msgid ""
 "Register transaction with AppStore receipt. This aciton is very important."
 msgstr ""
 "AppStoreのレシートからトランザクションを登録します。このアクションはとても重"
 "要です。"
 
-#: ../admin/ios-api.php:131
+#: ../admin/ios-api.php:230 ../admin/ios-api.php:250
 msgid ""
 "<strong>Note:</strong> event in case of restoration, call this method. It "
 "parse receipt and try to find existing transaction."
@@ -888,11 +947,12 @@ msgstr ""
 "<strong>注意：</strong> リストアする場合もこのメソッドを呼び出してください。"
 "レシートを解析し、既存の決済情報を探します。"
 
-#: ../admin/ios-api.php:136 ../admin/ios-api.php:152
+#: ../admin/ios-api.php:235 ../admin/ios-api.php:276
 msgid "Base64 encoded string of receipt you get from AppStore."
 msgstr "AppStoreから受け取ったレシートをBase64エンコードした文字列"
 
-#: ../admin/ios-api.php:137 ../admin/ios-api.php:153
+#: ../admin/ios-api.php:236 ../admin/ios-api.php:257 ../admin/ios-api.php:277
+#: ../admin/ios-api.php:304
 msgid ""
 "If not set, price set at Edit screen will be used. Setting actual price on "
 "AppStore is strongly recommended."
@@ -900,27 +960,44 @@ msgstr ""
 "設定されない場合は編集画面で入力された値が使われます。AppStoreでの実際の価格"
 "をセットすることを強くお勧めします。"
 
-#: ../admin/ios-api.php:138 ../admin/ios-api.php:154
+#: ../admin/ios-api.php:237 ../admin/ios-api.php:258 ../admin/ios-api.php:278
+#: ../admin/ios-api.php:305
 msgid "Typically UUID. Any string can be saved."
 msgstr "よくあるものとしてはUUIDです。どんな文字列でも保存できます。"
 
-#: ../admin/ios-api.php:142
+#: ../admin/ios-api.php:241 ../admin/ios-api.php:262
 msgid "True on success, False on failur."
 msgstr "成功するとTrue、失敗するとFalse"
 
-#: ../admin/ios-api.php:147
+#: ../admin/ios-api.php:249
+msgid ""
+"Register transaction with Android signed data. This aciton is very important."
+msgstr ""
+"AppStoreのレシート情報からトランザクションを登録します。このアクションはとて"
+"も重要です。"
+
+#: ../admin/ios-api.php:255 ../admin/ios-api.php:302
+msgid "JSON string of receipt you get from Android Market."
+msgstr "Androidマーケットから受け取ったJSON形式のレシート"
+
+#: ../admin/ios-api.php:256 ../admin/ios-api.php:303
+msgid "Base64 encoded string to verify JSON which you get from Android Market."
+msgstr ""
+"Androidマーケットから受け取ったJSONを検証するためのBase64エンコード文字列"
+
+#: ../admin/ios-api.php:271 ../admin/ios-api.php:297
 msgid "You can get file and register transaction in one action."
 msgstr "ファイルの取得と決済の登録を一度に行います。"
 
-#: ../admin/ios-api.php:169
+#: ../admin/ios-api.php:325
 msgid "Get list or user's transaction information."
 msgstr "ユーザーの決済情報リスト"
 
-#: ../admin/ios-api.php:174
+#: ../admin/ios-api.php:330
 msgid "Default 1."
 msgstr "デフォルトは1。"
 
-#: ../admin/ios-api.php:175
+#: ../admin/ios-api.php:331
 #, php-format
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
@@ -955,7 +1032,7 @@ msgstr "値"
 msgid "Action"
 msgstr "アクション"
 
-#: ../admin/management.php:39 ../class/literally-wordpress-core.php:1272
+#: ../admin/management.php:39 ../class/literally-wordpress-core.php:1278
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
 #: ../tables/list-management.php:129 ../tables/list-transfers.php:156
 msgid "Item Name"
@@ -972,14 +1049,14 @@ msgstr "アイテム名"
 msgid "Subscription"
 msgstr "定期購読"
 
-#: ../admin/management.php:55 ../class/literally-wordpress-core.php:568
+#: ../admin/management.php:55 ../class/literally-wordpress-core.php:569
 #: ../form-template/edit-detail-event.php:118 ../tables/list-campaign.php:159
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr "編集"
 
-#: ../admin/management.php:58 ../class/literally-wordpress-core.php:1278
-#: ../class/literally-wordpress-event.php:824
+#: ../admin/management.php:58 ../class/literally-wordpress-core.php:1284
+#: ../class/literally-wordpress-event.php:845
 #: ../tables/list-download-logs.php:112 ../tables/list-management.php:130
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:155
 msgid "User Name"
@@ -994,8 +1071,8 @@ msgid "See all transactions"
 msgstr "すべての決済を見る"
 
 #: ../admin/management.php:66 ../admin/management.php:403
-#: ../class/literally-wordpress-core.php:1294
-#: ../class/literally-wordpress-event.php:839
+#: ../class/literally-wordpress-core.php:1300
+#: ../class/literally-wordpress-event.php:860
 #: ../form-template/reward-summary.php:165
 #: ../tables/list-download-logs.php:179 ../tables/list-management.php:222
 #: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
@@ -1003,14 +1080,14 @@ msgstr "すべての決済を見る"
 msgid "Deleted User"
 msgstr "削除されたユーザー"
 
-#: ../admin/management.php:71 ../class/literally-wordpress-core.php:1280
-#: ../class/literally-wordpress-event.php:822
+#: ../admin/management.php:71 ../class/literally-wordpress-core.php:1286
+#: ../class/literally-wordpress-event.php:843
 #: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
 #: ../tables/list-ticket.php:37 ../tables/list-transfers.php:160
 msgid "Updated"
 msgstr "更新日"
 
-#: ../admin/management.php:74 ../class/literally-wordpress-core.php:1279
+#: ../admin/management.php:74 ../class/literally-wordpress-core.php:1285
 #: ../tables/list-history.php:45 ../tables/list-management.php:134
 #: ../tables/list-reward-history.php:34 ../tables/list-reward-request.php:118
 #: ../tables/list-transfers.php:159
@@ -1026,8 +1103,8 @@ msgstr "購入価格"
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:87 ../class/literally-wordpress-core.php:1273
-#: ../class/literally-wordpress-event.php:828
+#: ../admin/management.php:87 ../class/literally-wordpress-core.php:1279
+#: ../class/literally-wordpress-event.php:849
 #: ../class/literally-wordpress-form.php:724
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
@@ -1043,21 +1120,9 @@ msgstr "購入方法"
 msgid "Transaction ID: %s"
 msgstr "トランザクションID: %s"
 
-#: ../admin/management.php:107 ../class/literally-wordpress-core.php:1276
+#: ../admin/management.php:107 ../class/literally-wordpress-core.php:1282
 msgid "Invoice Num"
 msgstr "領収番号"
-
-#: ../admin/management.php:112 ../admin/management.php:317
-#: ../admin/management.php:364 ../admin/personal-reward.php:118
-#: ../admin/settings/dashboard.php:12 ../admin/settings/dashboard.php:50
-#: ../admin/settings/dashboard.php:101 ../admin/settings/dashboard.php:133
-#: ../class/literally-wordpress-core.php:502
-#: ../class/literally-wordpress-core.php:543 ../tables/list-history.php:46
-#: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
-#: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
-#: ../tables/list-transfers.php:161
-msgid "Status"
-msgstr "ステータス"
 
 #: ../admin/management.php:135
 msgid "Update Status"
@@ -1262,7 +1327,7 @@ msgid "Event"
 msgstr "イベント"
 
 #: ../admin/setting.php:12 ../admin/settings/dashboard.php:113
-#: ../admin/settings/reward.php:2 ../class/literally-wordpress-core.php:431
+#: ../admin/settings/reward.php:2 ../class/literally-wordpress-core.php:432
 #: ../form-template/reward-summary.php:64
 #: ../form-template/reward-summary.php:94
 #: ../form-template/reward-summary.php:154
@@ -1280,7 +1345,7 @@ msgstr "その他"
 msgid "Template file does not exists at %s."
 msgstr "テンプレートファイルが%sにありません。"
 
-#: ../admin/transfer.php:2 ../class/literally-wordpress-core.php:408
+#: ../admin/transfer.php:2 ../class/literally-wordpress-core.php:409
 #: ../help/transfer.php:22
 msgid "Transfer Management"
 msgstr "送金管理"
@@ -1415,7 +1480,7 @@ msgstr "ファイルを追加する"
 msgid "Registered files"
 msgstr "登録されたファイル"
 
-#: ../admin/upload.php:215 ../class/literally-wordpress-core.php:566
+#: ../admin/upload.php:215 ../class/literally-wordpress-core.php:567
 #: ../form-template/edit-detail-event.php:64
 #: ../form-template/edit-detail-event.php:121 ../tables/list-campaign.php:126
 #: ../tables/list-devices.php:109
@@ -1466,12 +1531,6 @@ msgid ""
 msgstr ""
 "送金は銀行振込などのことです。<a href=\"%s\">こちら</a>で設定してください。"
 
-#: ../admin/settings/dashboard.php:38 ../admin/settings/dashboard.php:89
-#: ../admin/settings/dashboard.php:120 ../admin/settings/post.php:94
-#: ../admin/settings/post.php:101 ../admin/settings/post.php:147
-msgid "Enabled"
-msgstr "有効"
-
 #: ../admin/settings/dashboard.php:45
 msgid "What you sell"
 msgstr "販売するもの"
@@ -1492,10 +1551,6 @@ msgstr ""
 "投稿本文や添付ファイルを販売できます。よくある例としては、電子書籍の販売、"
 "ミュージックビデオ、ハウツー情報などです。"
 
-#: ../admin/settings/dashboard.php:67
-msgid "iOS In App Purchase"
-msgstr "iOSアプリ内購入"
-
 #: ../admin/settings/dashboard.php:69
 msgid ""
 "You can use this WordPress site as content delivery server for iOS "
@@ -1503,10 +1558,6 @@ msgid ""
 msgstr ""
 "このWordPressサイトをiOS <strong>アプリ内購入</strong>のためのコンテンツ配信"
 "サーバとして使用できます。"
-
-#: ../admin/settings/dashboard.php:72
-msgid "Android In-App Billing"
-msgstr "Androidアプリ内課金"
 
 #: ../admin/settings/dashboard.php:74
 msgid ""
@@ -2337,110 +2388,110 @@ msgstr "オリジナル画像"
 msgid "PUT_IMAGE_SRC_HERE"
 msgstr "ここに画像を入れてください"
 
-#: ../class/literally-wordpress-core.php:345
+#: ../class/literally-wordpress-core.php:346
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../class/literally-wordpress-core.php:349
+#: ../class/literally-wordpress-core.php:350
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../class/literally-wordpress-core.php:352
+#: ../class/literally-wordpress-core.php:353
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../class/literally-wordpress-core.php:375
+#: ../class/literally-wordpress-core.php:376
 msgid "Literally WordPress successfully upgrades database."
 msgstr "Literally WordPressはデータベースの更新に成功しました。"
 
-#: ../class/literally-wordpress-core.php:403 ../help/transfer.php:16
+#: ../class/literally-wordpress-core.php:404 ../help/transfer.php:16
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../class/literally-wordpress-core.php:405
+#: ../class/literally-wordpress-core.php:406
 msgid "Transaction Management"
 msgstr "決済管理"
 
-#: ../class/literally-wordpress-core.php:411
+#: ../class/literally-wordpress-core.php:412
 msgid "Campaign Management"
 msgstr "キャンペーン管理"
 
-#: ../class/literally-wordpress-core.php:414
+#: ../class/literally-wordpress-core.php:415
 msgid "Download logs"
 msgstr "ダウンロードログ"
 
-#: ../class/literally-wordpress-core.php:416
+#: ../class/literally-wordpress-core.php:417
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../class/literally-wordpress-core.php:423
+#: ../class/literally-wordpress-core.php:424
 msgid "API Manual"
 msgstr "APIマニュアル"
 
-#: ../class/literally-wordpress-core.php:428
+#: ../class/literally-wordpress-core.php:429
 msgid "Reward Management"
 msgstr "報酬管理"
 
-#: ../class/literally-wordpress-core.php:457
+#: ../class/literally-wordpress-core.php:458
 msgid "This page does not exist. Template not found."
 msgstr "ページが見つかりません。テンプレートが存在しません。"
 
-#: ../class/literally-wordpress-core.php:501
-#: ../class/literally-wordpress-core.php:542
+#: ../class/literally-wordpress-core.php:502
+#: ../class/literally-wordpress-core.php:543
 msgid "Reward Amount Summary"
 msgstr "報酬総額サマリー"
 
-#: ../class/literally-wordpress-core.php:504
-#: ../class/literally-wordpress-core.php:545
+#: ../class/literally-wordpress-core.php:505
+#: ../class/literally-wordpress-core.php:546
 #: ../form-template/reward-summary.php:49
 msgid "Fixed"
 msgstr "確定"
 
-#: ../class/literally-wordpress-core.php:505
-#: ../class/literally-wordpress-core.php:546
+#: ../class/literally-wordpress-core.php:506
+#: ../class/literally-wordpress-core.php:547
 msgid "Unfixed"
 msgstr "未確定"
 
-#: ../class/literally-wordpress-core.php:506
-#: ../class/literally-wordpress-core.php:547
+#: ../class/literally-wordpress-core.php:507
+#: ../class/literally-wordpress-core.php:548
 msgid "Lost"
 msgstr "失効"
 
-#: ../class/literally-wordpress-core.php:507
-#: ../class/literally-wordpress-core.php:520
-#: ../class/literally-wordpress-core.php:548
+#: ../class/literally-wordpress-core.php:508
+#: ../class/literally-wordpress-core.php:521
+#: ../class/literally-wordpress-core.php:549
 msgid "Daily Report"
 msgstr "日別リポート"
 
-#: ../class/literally-wordpress-core.php:508
-#: ../class/literally-wordpress-core.php:522
-#: ../class/literally-wordpress-core.php:549
+#: ../class/literally-wordpress-core.php:509
+#: ../class/literally-wordpress-core.php:523
+#: ../class/literally-wordpress-core.php:550
 msgid "Date"
 msgstr "日付"
 
-#: ../class/literally-wordpress-core.php:517
+#: ../class/literally-wordpress-core.php:518
 msgid "Sales per post type"
 msgstr "投稿タイプ別売上"
 
-#: ../class/literally-wordpress-core.php:518
+#: ../class/literally-wordpress-core.php:519
 msgid "Post type"
 msgstr "投稿タイプ"
 
-#: ../class/literally-wordpress-core.php:565
+#: ../class/literally-wordpress-core.php:566
 #: ../form-template/edit-detail-event.php:61
 #, php-format
 msgid "Cacnelable till %1$s days before, %2$s"
 msgstr "%1$s日前までキャンセル可 %2$s返金"
 
-#: ../class/literally-wordpress-core.php:567
+#: ../class/literally-wordpress-core.php:568
 msgid "Are you sure to delete this ticket?"
 msgstr "このチケットを削除してよろしいですか？"
 
-#: ../class/literally-wordpress-core.php:569
+#: ../class/literally-wordpress-core.php:570
 msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
 msgstr "返金は数値（正負）またはパーセント（ex. 50%）でなければなりません。"
 
-#: ../class/literally-wordpress-core.php:598
+#: ../class/literally-wordpress-core.php:603
 #, php-format
 msgid ""
 "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
@@ -2449,93 +2500,93 @@ msgstr ""
 "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登"
 "録を許可してください。"
 
-#: ../class/literally-wordpress-core.php:631 ../help/index.php:12
+#: ../class/literally-wordpress-core.php:636 ../help/index.php:12
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../class/literally-wordpress-core.php:646
+#: ../class/literally-wordpress-core.php:651
 msgid "Purchase history"
 msgstr "購入履歴"
 
-#: ../class/literally-wordpress-core.php:754
+#: ../class/literally-wordpress-core.php:760
 msgid "Option updated."
 msgstr "設定が更新されました。"
 
-#: ../class/literally-wordpress-core.php:757
+#: ../class/literally-wordpress-core.php:763
 msgid "Failed to updated options."
 msgstr "設定の更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:784
+#: ../class/literally-wordpress-core.php:790
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../class/literally-wordpress-core.php:789
+#: ../class/literally-wordpress-core.php:795
 #: ../class/literally-wordpress-post.php:187
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../class/literally-wordpress-core.php:794
+#: ../class/literally-wordpress-core.php:800
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../class/literally-wordpress-core.php:799
-#: ../class/literally-wordpress-core.php:845
+#: ../class/literally-wordpress-core.php:805
+#: ../class/literally-wordpress-core.php:851
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../class/literally-wordpress-core.php:804
+#: ../class/literally-wordpress-core.php:810
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../class/literally-wordpress-core.php:820
+#: ../class/literally-wordpress-core.php:826
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../class/literally-wordpress-core.php:823
+#: ../class/literally-wordpress-core.php:829
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../class/literally-wordpress-core.php:832
+#: ../class/literally-wordpress-core.php:838
 msgid "Specified campaing doesn't exist"
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../class/literally-wordpress-core.php:837
+#: ../class/literally-wordpress-core.php:843
 msgid "Price should be numeric."
 msgstr "価格は半角数字でなくてはなりません。"
 
-#: ../class/literally-wordpress-core.php:840
+#: ../class/literally-wordpress-core.php:846
 msgid "Campgin price is higher than original price."
 msgstr "キャンペーン価格が定価よりも高くなっています。"
 
-#: ../class/literally-wordpress-core.php:850
+#: ../class/literally-wordpress-core.php:856
 msgid "End date is earlier than start date."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../class/literally-wordpress-core.php:866
+#: ../class/literally-wordpress-core.php:872
 msgid "Successfully Updated."
 msgstr "更新しました。"
 
-#: ../class/literally-wordpress-core.php:869
+#: ../class/literally-wordpress-core.php:875
 msgid "Update Failed."
 msgstr "更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:877
+#: ../class/literally-wordpress-core.php:883
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../class/literally-wordpress-core.php:880
+#: ../class/literally-wordpress-core.php:886
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1006
+#: ../class/literally-wordpress-core.php:1012
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../class/literally-wordpress-core.php:1011
+#: ../class/literally-wordpress-core.php:1017
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../class/literally-wordpress-core.php:1123
+#: ../class/literally-wordpress-core.php:1129
 msgid ""
 "You can't refund via PayPal because 60 days have past since the transaction "
 "occurred."
@@ -2543,41 +2594,41 @@ msgstr ""
 "トランザクションが発生してから60日が経過したため、PayPalでの返金はできませ"
 "ん。"
 
-#: ../class/literally-wordpress-core.php:1128
+#: ../class/literally-wordpress-core.php:1134
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../class/literally-wordpress-core.php:1130
+#: ../class/literally-wordpress-core.php:1136
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../class/literally-wordpress-core.php:1162
+#: ../class/literally-wordpress-core.php:1168
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../class/literally-wordpress-core.php:1164
+#: ../class/literally-wordpress-core.php:1170
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../class/literally-wordpress-core.php:1259
-#: ../class/literally-wordpress-event.php:809
+#: ../class/literally-wordpress-core.php:1265
+#: ../class/literally-wordpress-event.php:830
 msgid "No ticket match your qriteria.: "
 msgstr "チケットが見つかりませんでした。"
 
-#: ../class/literally-wordpress-core.php:1275
+#: ../class/literally-wordpress-core.php:1281
 msgid "Payment Method"
 msgstr "支払い方法"
 
-#: ../class/literally-wordpress-core.php:1277
+#: ../class/literally-wordpress-core.php:1283
 msgid "Transaction ID"
 msgstr "決済ID"
 
-#: ../class/literally-wordpress-core.php:1281
-#: ../class/literally-wordpress-event.php:830
+#: ../class/literally-wordpress-core.php:1287
+#: ../class/literally-wordpress-event.php:851
 msgid "Transaction Status"
 msgstr "決済ステータス"
 
-#: ../class/literally-wordpress-core.php:1424
+#: ../class/literally-wordpress-core.php:1430
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -2596,7 +2647,7 @@ msgid "Tickets"
 msgstr "チケット"
 
 #: ../class/literally-wordpress-event.php:125
-#: ../class/literally-wordpress-ios.php:99
+#: ../class/literally-wordpress-ios.php:114
 #: ../class/literally-wordpress-notifier.php:87
 #: ../class/literally-wordpress-post.php:91
 #: ../class/literally-wordpress-subscription.php:86
@@ -2605,9 +2656,9 @@ msgstr "新規追加"
 
 #: ../class/literally-wordpress-event.php:126
 #: ../class/literally-wordpress-event.php:128
-#: ../class/literally-wordpress-ios.php:100
-#: ../class/literally-wordpress-ios.php:102
-#: ../class/literally-wordpress-ios.php:138
+#: ../class/literally-wordpress-ios.php:115
+#: ../class/literally-wordpress-ios.php:117
+#: ../class/literally-wordpress-ios.php:153
 #: ../class/literally-wordpress-notifier.php:88
 #: ../class/literally-wordpress-notifier.php:90
 #: ../class/literally-wordpress-post.php:92
@@ -2619,8 +2670,8 @@ msgid "Add New %s"
 msgstr "新規%s追加"
 
 #: ../class/literally-wordpress-event.php:127
-#: ../class/literally-wordpress-ios.php:101
-#: ../class/literally-wordpress-ios.php:136
+#: ../class/literally-wordpress-ios.php:116
+#: ../class/literally-wordpress-ios.php:151
 #: ../class/literally-wordpress-notifier.php:89
 #: ../class/literally-wordpress-post.php:93
 #: ../class/literally-wordpress-subscription.php:88
@@ -2629,7 +2680,7 @@ msgid "Edit %s"
 msgstr "%sを編集"
 
 #: ../class/literally-wordpress-event.php:129
-#: ../class/literally-wordpress-ios.php:103
+#: ../class/literally-wordpress-ios.php:118
 #: ../class/literally-wordpress-notifier.php:91
 #: ../class/literally-wordpress-post.php:95
 #: ../class/literally-wordpress-subscription.php:90
@@ -2638,8 +2689,8 @@ msgid "View %s"
 msgstr "%sを見る"
 
 #: ../class/literally-wordpress-event.php:130
-#: ../class/literally-wordpress-ios.php:104
-#: ../class/literally-wordpress-ios.php:131
+#: ../class/literally-wordpress-ios.php:119
+#: ../class/literally-wordpress-ios.php:146
 #: ../class/literally-wordpress-notifier.php:92
 #: ../class/literally-wordpress-post.php:96
 #: ../class/literally-wordpress-subscription.php:91
@@ -2648,7 +2699,7 @@ msgid "Search %s"
 msgstr "%sを検索"
 
 #: ../class/literally-wordpress-event.php:131
-#: ../class/literally-wordpress-ios.php:105
+#: ../class/literally-wordpress-ios.php:120
 #: ../class/literally-wordpress-notifier.php:93
 #: ../class/literally-wordpress-post.php:97
 #: ../class/literally-wordpress-subscription.php:92
@@ -2657,7 +2708,7 @@ msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
 #: ../class/literally-wordpress-event.php:132
-#: ../class/literally-wordpress-ios.php:106
+#: ../class/literally-wordpress-ios.php:121
 #: ../class/literally-wordpress-notifier.php:94
 #: ../class/literally-wordpress-post.php:98
 #: ../class/literally-wordpress-subscription.php:93
@@ -2669,109 +2720,109 @@ msgstr "ゴミ箱に%sは見つかりませんでした"
 msgid "Event Setting"
 msgstr "イベント設定"
 
-#: ../class/literally-wordpress-event.php:414
+#: ../class/literally-wordpress-event.php:435
 msgid "This post is not event."
 msgstr "この投稿はイベントではありません。"
 
-#: ../class/literally-wordpress-event.php:416
+#: ../class/literally-wordpress-event.php:437
 msgid "You have no permission to edit this post."
 msgstr "この投稿を編集する権限はありません。"
 
-#: ../class/literally-wordpress-event.php:418
+#: ../class/literally-wordpress-event.php:439
 msgid "Preset tickets are already registered."
 msgstr "チケットプリセットはすでに登録済みです。"
 
-#: ../class/literally-wordpress-event.php:422
+#: ../class/literally-wordpress-event.php:443
 msgid "This post type has no presets."
 msgstr "この投稿タイプにはプリセットがありません。"
 
-#: ../class/literally-wordpress-event.php:431
+#: ../class/literally-wordpress-event.php:452
 #, php-format
 msgid "Ticket %d"
 msgstr "チケット%d"
 
-#: ../class/literally-wordpress-event.php:516
+#: ../class/literally-wordpress-event.php:537
 msgid "Failed to edit ticket"
 msgstr "チケットの更新に失敗しました。"
 
-#: ../class/literally-wordpress-event.php:541
-#: ../class/literally-wordpress-event.php:566
+#: ../class/literally-wordpress-event.php:562
+#: ../class/literally-wordpress-event.php:587
 msgid "You have no permission to edit this ticket."
 msgstr "このチケットを編集する権限がありません。"
 
-#: ../class/literally-wordpress-event.php:606
+#: ../class/literally-wordpress-event.php:627
 msgid "Mail Subject is empty."
 msgstr "メール件名が空です。"
 
-#: ../class/literally-wordpress-event.php:609
+#: ../class/literally-wordpress-event.php:630
 msgid "Mail body is empty."
 msgstr "メール本文が空です。"
 
-#: ../class/literally-wordpress-event.php:624
+#: ../class/literally-wordpress-event.php:645
 msgid "Participants not found."
 msgstr "参加者は見つかりませんでした。"
 
-#: ../class/literally-wordpress-event.php:645
+#: ../class/literally-wordpress-event.php:666
 #, php-format
 msgid "Finish sending: %1$d success, %2$d failed"
 msgstr "送信完了: %1$d 成功, %2$d 失敗"
 
-#: ../class/literally-wordpress-event.php:649
+#: ../class/literally-wordpress-event.php:670
 msgid "You can send email only from Admin email or yours."
 msgstr "管理者かあなた地震のメールアドレスからのみ送信できます。"
 
-#: ../class/literally-wordpress-event.php:652
+#: ../class/literally-wordpress-event.php:673
 msgid "Cannot send email. You do not have permission or event not found."
 msgstr ""
 "メールを送信できませんでした。権限をお持ちでないか、イベントが存在しないため"
 "です。"
 
-#: ../class/literally-wordpress-event.php:655
+#: ../class/literally-wordpress-event.php:676
 msgid "You have no capability to contact participants"
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/literally-wordpress-event.php:771
+#: ../class/literally-wordpress-event.php:792
 msgid "Event not found."
 msgstr "イベントが見つかりません。"
 
-#: ../class/literally-wordpress-event.php:823
+#: ../class/literally-wordpress-event.php:844
 #: ../form-template/paypal-event-user.php:15
 msgid "Code"
 msgstr "コード"
 
-#: ../class/literally-wordpress-event.php:825
+#: ../class/literally-wordpress-event.php:846
 msgid "Email"
 msgstr "eメール"
 
-#: ../class/literally-wordpress-event.php:874
+#: ../class/literally-wordpress-event.php:895
 msgid "Thank you for participating"
 msgstr "ご参加ありがとうございます"
 
-#: ../class/literally-wordpress-event.php:940
+#: ../class/literally-wordpress-event.php:961
 msgid "Display name of user"
 msgstr "ユーザー名を表示"
 
-#: ../class/literally-wordpress-event.php:941
+#: ../class/literally-wordpress-event.php:962
 msgid "User email"
 msgstr "ユーザーメール"
 
-#: ../class/literally-wordpress-event.php:942
+#: ../class/literally-wordpress-event.php:963
 msgid "Event name"
 msgstr "イベント名"
 
-#: ../class/literally-wordpress-event.php:943
+#: ../class/literally-wordpress-event.php:964
 msgid "Event's permalink"
 msgstr "イベントのパーマリンク"
 
-#: ../class/literally-wordpress-event.php:944
+#: ../class/literally-wordpress-event.php:965
 msgid "Ticket name"
 msgstr "チケット名"
 
-#: ../class/literally-wordpress-event.php:945
+#: ../class/literally-wordpress-event.php:966
 msgid "Ticket list page url"
 msgstr "チケットリストページのURL"
 
-#: ../class/literally-wordpress-event.php:946
+#: ../class/literally-wordpress-event.php:967
 msgid "Code to identify user"
 msgstr "ユーザーを特定するコード"
 
@@ -2836,8 +2887,8 @@ msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
 #: ../class/literally-wordpress-form.php:553
-#: ../class/literally-wordpress-ios.php:384
-#: ../class/literally-wordpress-ios.php:406
+#: ../class/literally-wordpress-ios.php:399
+#: ../class/literally-wordpress-ios.php:421
 #: ../class/literally-wordpress-post.php:629
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
@@ -3112,62 +3163,62 @@ msgstr ""
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
-#: ../class/literally-wordpress-ios.php:93
-msgid "iOS Product"
-msgstr "iOSプロダクト"
+#: ../class/literally-wordpress-ios.php:108
+msgid "Smartphone Product"
+msgstr "スマートフォンプロダクト"
 
-#: ../class/literally-wordpress-ios.php:94
-msgid "iOS Products"
-msgstr "iOSプロダクト"
+#: ../class/literally-wordpress-ios.php:109
+msgid "Smartphone Products"
+msgstr "スマートフォンプロダクト"
 
-#: ../class/literally-wordpress-ios.php:125
+#: ../class/literally-wordpress-ios.php:140
 msgid "Product Group"
 msgstr "プロダクトグループ"
 
-#: ../class/literally-wordpress-ios.php:126
+#: ../class/literally-wordpress-ios.php:141
 msgid "Product Groups"
 msgstr "プロダクトグループ"
 
-#: ../class/literally-wordpress-ios.php:132
+#: ../class/literally-wordpress-ios.php:147
 #, php-format
 msgid "Popular %s"
 msgstr "人気の%s"
 
-#: ../class/literally-wordpress-ios.php:133
+#: ../class/literally-wordpress-ios.php:148
 #, php-format
 msgid "All %s"
 msgstr "すべての%s"
 
-#: ../class/literally-wordpress-ios.php:137
+#: ../class/literally-wordpress-ios.php:152
 #, php-format
 msgid "Update %s"
 msgstr "%sを更新"
 
-#: ../class/literally-wordpress-ios.php:139
+#: ../class/literally-wordpress-ios.php:154
 #, php-format
 msgid "New %s Name"
 msgstr "新しい%s名"
 
-#: ../class/literally-wordpress-ios.php:140
+#: ../class/literally-wordpress-ios.php:155
 #, php-format
 msgid "Separate %s with commas"
 msgstr "%sをカンマで区切ってください"
 
-#: ../class/literally-wordpress-ios.php:141
+#: ../class/literally-wordpress-ios.php:156
 #, php-format
 msgid "Add or remove %s"
 msgstr "%sを追加または削除"
 
-#: ../class/literally-wordpress-ios.php:142
+#: ../class/literally-wordpress-ios.php:157
 #, php-format
 msgid "Choose from the most used %s"
 msgstr "もっとも使われている%sから選ぶ"
 
-#: ../class/literally-wordpress-ios.php:171
+#: ../class/literally-wordpress-ios.php:186
 msgid "iOS Procut ID"
 msgstr "iOSプロダクトID"
 
-#: ../class/literally-wordpress-ios.php:179
+#: ../class/literally-wordpress-ios.php:194
 #, php-format
 msgid ""
 "Please enter existing Product ID managed at <a href=\"%s\">iTunes Connect</a>"
@@ -3175,54 +3226,54 @@ msgstr ""
 "<a href=\"%s\">iTunes Connect</a>で実際に登録されているプロダクトIDを入力して"
 "ください。"
 
-#: ../class/literally-wordpress-ios.php:207
+#: ../class/literally-wordpress-ios.php:222
 msgid "XML-RPC request must be on SSL."
 msgstr "XML-RPCはSSL通信で行う必要があります。"
 
-#: ../class/literally-wordpress-ios.php:399
+#: ../class/literally-wordpress-ios.php:414
 msgid "You have no purchase history. If you have one, please try restoration."
 msgstr "購入履歴がありません。もし購入済みならばリストアしてください。"
 
-#: ../class/literally-wordpress-ios.php:412
+#: ../class/literally-wordpress-ios.php:427
 msgid "File is too large. You cannot get file."
 msgstr "ファイルが大き過ぎます。取得できません。"
 
-#: ../class/literally-wordpress-ios.php:441
+#: ../class/literally-wordpress-ios.php:456
 #, php-format
 msgid "Product ID:%s does not exists."
 msgstr "プロダクトID:%sは存在しません。"
 
-#: ../class/literally-wordpress-ios.php:489
+#: ../class/literally-wordpress-ios.php:504
 msgid "Failed to register transaction."
 msgstr "決済情報の登録に失敗しました。"
 
-#: ../class/literally-wordpress-ios.php:562
+#: ../class/literally-wordpress-ios.php:577
 msgid "Invalid Characters. Receipt must be sent as base64 encoded string."
 msgstr ""
 "無効な文字列です。レシートはBase64エンコードされた文字列で送信されなくてはな"
 "りません。"
 
-#: ../class/literally-wordpress-ios.php:578
+#: ../class/literally-wordpress-ios.php:593
 msgid "Request Timeout."
 msgstr "リクエストがタイムアウトしました。"
 
-#: ../class/literally-wordpress-ios.php:584
+#: ../class/literally-wordpress-ios.php:599
 msgid ""
 "Failed to parse Apple's response as JSON. Please check if receipt is valid."
 msgstr ""
 "Appleからの応答をJSONに変換できませんでした。レシートの形式が有効か確かめて下"
 "さい。"
 
-#: ../class/literally-wordpress-ios.php:589
+#: ../class/literally-wordpress-ios.php:604
 #, php-format
 msgid "Status Code %d: Invalid Receipt"
 msgstr "スタータスコード %d: 無効なレシート"
 
-#: ../class/literally-wordpress-ios.php:610
+#: ../class/literally-wordpress-ios.php:625
 msgid "Failed to login. Wrong username/password."
 msgstr "ログインできませんでした。ユーザー名かパスワードが間違っています。"
 
-#: ../class/literally-wordpress-ios.php:614
+#: ../class/literally-wordpress-ios.php:629
 msgid "This API requires login credentials."
 msgstr "このAPIはログイン情報が必要です。"
 

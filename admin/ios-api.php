@@ -57,8 +57,8 @@
 
 <ul class="subsubsub" id="xml-api-switcher">
 	<li><a href="#all" class="current"><?php _e('All'); ?></a></li>
-	<li><a href="#apple"><?php _e('iOS Only'); ?></a></li>
-	<li><a href="#android"><?php _e('Android Only'); ?></a></li>
+	<li><a href="#apple"><?php $this->e('iOS Only'); ?></a></li>
+	<li><a href="#android"><?php $this->e('Android Only'); ?></a></li>
 </ul>
 
 <div class="lwp-api-list">
