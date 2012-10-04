@@ -242,6 +242,27 @@
 		</pre>
 	</div><!-- //.api-section -->
 
+	<div class="api-section">
+		<h4>
+			<span class="android">lwp.android.registerTransaction</span>
+		</h4>
+		<p><?php $this->e('Register transaction with Android signed data. This aciton is very important.') ?></p>
+		<p class="description"><?php $this->e('<strong>Note:</strong> event in case of restoration, call this method. It parse receipt and try to find existing transaction.'); ?></p>
+		<h5><?php $this->e('Parameters'); ?></h5>
+		<pre>
+		<strong>(string)</strong> username
+		<strong>(string)</strong> password
+		<strong>(string)</strong> signed_data <?php $this->e('JSON string of receipt you get from Android Market.'); ?> 
+		<strong>(string)</strong> signature <?php $this->e('Base64 encoded string to verify JSON which you get from Android Market.'); ?> 
+		<strong>(double)</strong> price <?php $this->e('If not set, price set at Edit screen will be used. Setting actual price on AppStore is strongly recommended.'); ?> 
+		<strong>(string)</strong> uuid <?php $this->e('Typically UUID. Any string can be saved.'); ?> 
+		</pre>
+		<h5><?php $this->e('Returns'); ?></h5>
+		<pre>
+		<strong>(boolean)</strong> <?php $this->e('True on success, False on failur.'); ?>
+		</pre>
+	</div><!-- //.api-section -->
+	
 
 	<div class="api-section">
 		<h4>
@@ -267,7 +288,35 @@
 		</pre>
 	</div><!-- //.api-section -->
 
+	
+	
+	<div class="api-section">
+		<h4>
+			<span class="android">lwp.android.getFileWithReceipt</span>
+		</h4>
+		<p><?php $this->e('You can get file and register transaction in one action.') ?></p>
+		<h5><?php $this->e('Parameters'); ?></h5>
+		<pre>
+		<strong>(string)</strong> username
+		<strong>(string)</strong> password
+		<strong>(string)</strong> signed_data <?php $this->e('JSON string of receipt you get from Android Market.'); ?> 
+		<strong>(string)</strong> signature <?php $this->e('Base64 encoded string to verify JSON which you get from Android Market.'); ?> 
+		<strong>(double)</strong> price <?php $this->e('If not set, price set at Edit screen will be used. Setting actual price on AppStore is strongly recommended.'); ?> 
+		<strong>(string)</strong> uuid <?php $this->e('Typically UUID. Any string can be saved.'); ?> 
+		<strong>(int)</strong> file_id
+		</pre>
+		<h5><?php $this->e('Returns'); ?></h5>
+		<pre>
+		<strong>(struct)</strong>
+			<strong>(string)</strong> hash <?php $this->e('md5 hash of file'); ?> 
+			<strong>(int)</strong> size <?php $this->e('File size'); ?> 
+			<strong>(string)</strong> mime <?php $this->e('Mime type of file'); ?> 
+			<strong>(base64)</strong> data <?php $this->e('Binary data of file.'); ?> 
+		</pre>
+	</div><!-- //.api-section -->
 
+	
+	
 	<div class="api-section">
 		<h4>
 			<span class="apple">lwp.ios.getUserTransactions</span>
