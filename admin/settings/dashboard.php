@@ -65,12 +65,12 @@
 			),
 			array(
 				$this->_('iOS In App Purchase'),
-				$this->ios->is_enabled(),
+				$this->ios->is_ios_available(),
 				$this->_('You can use this WordPress site as content delivery server for iOS <strong>In App Purchase</strong>.')
 			),
 			array(
 				$this->_('Android In-App Billing'),
-				$this->ios->is_enabled(),
+				$this->ios->is_android_available(),
 				$this->_('You can use this WordPress site as content delivery server for Android <strong>In-App Billing</strong>.')
 			),
 			array(

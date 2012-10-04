@@ -216,6 +216,7 @@ class Literally_WordPress{
 				"token" => "",
 				"skip_payment_selection" => false,
 				'ios' => false,
+				'android' => false,
 				'ios_public' => false,
 				'ios_available' => false,
 				'ios_force_ssl' => 0,
@@ -688,6 +689,7 @@ class Literally_WordPress{
 					$option = array(
 						"dir" => $_REQUEST["dir"],
 						'ios' => (boolean)$_REQUEST['ios'],
+						'android' => (boolean)$_REQUEST['android'],
 						'ios_public' => (boolean)$_REQUEST['ios_public'],
 						'ios_available' => (boolean)$_REQUEST['ios_available'],
 						'ios_force_ssl' => (int)$_REQUEST['ios_force_ssl']

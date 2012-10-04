@@ -98,8 +98,8 @@
 		<tr>
 			<th><?php $this->e('Enable android In-app Billing');  ?></th>
 			<td>
-				<label><input type="radio" name="android" value="1" <?php if($this->option['ios']) echo 'checked="checked"'; ?> /><?php $this->e('Enabled'); ?></label><br />
-				<label><input type="radio" name="android" value="0" <?php if(!$this->option['ios']) echo 'checked="checked"'; ?> /><?php $this->e('Disabled'); ?></label>
+				<label><input type="radio" name="android" value="1" <?php if($this->option['android']) echo 'checked="checked"'; ?> /><?php $this->e('Enabled'); ?></label><br />
+				<label><input type="radio" name="android" value="0" <?php if(!$this->option['android']) echo 'checked="checked"'; ?> /><?php $this->e('Disabled'); ?></label>
 			</td>
 		</tr>
 		<tr>

@@ -15,6 +15,18 @@ class LWP_iOS extends Literally_WordPress_Common{
 	public $api_last_updated = '2012-09-03 21:05:10';
 	
 	/**
+	 * Is iOS is enabled
+	 * @var boolean
+	 */
+	private $ios_enabled = false;
+	
+	/**
+	 * Is Android enabled
+	 * @var boolean
+	 */
+	private $android_enabled = false;
+	
+	/**
 	 * Whether user can buy from public site
 	 * @var boolean
 	 */
@@ -62,11 +74,14 @@ class LWP_iOS extends Literally_WordPress_Common{
 	public function set_option($option) {
 		$option = shortcode_atts(array(
 			'ios' => false,
+			'android' => false,
 			'ios_public' => false,
 			'ios_available' => false,
 			'ios_force_ssl' => 0
 		), $option);
-		$this->enabled = (boolean) $option['ios'];
+		$this->enabled = (boolean)( $option['ios'] || $option['android']);
+		$this->ios_enabled = (boolean)$option['ios'];
+		$this->android_enabled = (boolean)$option['android'];
 		$this->web_available = (boolean) $option['ios_available'];
 		$this->post_type_public = (boolean) $option['ios_public'];
 		$this->force_ssl = (int)$option['ios_force_ssl'];
@@ -633,5 +648,21 @@ EOS;
 				return false;
 				break;
 		}
+	}
+	
+	/**
+	 * Return if iOS is enabled
+	 * @return boolean
+	 */
+	public function is_ios_available(){
+		return $this->ios_enabled;
+	}
+	
+	/**
+	 * Return if android is enabled
+	 * @return boolean
+	 */
+	public function is_android_available(){
+		return $this->android_enabled;
 	}
 }
