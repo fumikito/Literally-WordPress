@@ -269,10 +269,22 @@ class LWP_iOS extends Literally_WordPress_Common{
 		//Register all methods starting with ios_
 		foreach(get_class_methods($this) as $method){
 			//register all class method starting with 'ios_'
-			if(preg_match("/^ios_/", $method)){
+			if(preg_match("/^ios_/", $method) && $this->is_ios_available()){
 				$xmlrpc_method = 'lwp.ios.'.preg_replace('/_(\w)/e', 'ucfirst(\\1)', preg_replace("/^ios_/", "", $method));
 				$methods[$xmlrpc_method] = array($this, $method);
+			}elseif(preg_match("/^android_/", $method) && $this->is_android_available()){
+				$xmlrpc_method = 'lwp.android.'.preg_replace('/_(\w)/e', 'ucfirst(\\1)', preg_replace("/^android_/", "", $method));
+				$methods[$xmlrpc_method] = array($this, $method);
+			}elseif(preg_match("/^common_/", $method) && $this->is_enabled()){
+				$method_name = preg_replace('/_(\w)/e', 'ucfirst(\\1)', preg_replace("/^common_/", "", $method));
+				if($this->is_android_available()){
+					$methods['lwp.android.'.$method_name] = array($this, $method);
+				}
+				if($this->is_ios_available()){
+					$methods['lwp.ios.'.$method_name] = array($this, $method);
+				}
 			}
+				
 		}
 		$this->methods = array_keys($methods);
 		return $methods;
@@ -282,7 +294,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 * Returns registered methods
 	 * @global wp_xmlrpc_server $wp_xmlrpc_server
 	 */
-	public function ios_methods(){
+	public function common_methods(){
 		return $this->methods;
 	}
 	
@@ -292,7 +304,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 	 * @param array $args
 	 * @return array
 	 */
-	public function ios_get_api_information($args = array()){
+	public function common_get_api_information($args = array()){
 		global $lwp, $wp_version;
 		return array(
 			'api_version' => $this->api_version,
@@ -385,7 +397,7 @@ EOS;
 	 * @param array $args same arguments as get_terms
 	 * @return array
 	 */
-	public function ios_product_group($args){
+	public function common_product_group($args){
 		return get_terms($this->taxonomy, (is_array($args) ? $args : '' ));
 	}
 	
@@ -396,7 +408,7 @@ EOS;
 	 * @param array $args
 	 * @return array
 	 */
-	public function ios_file_list($args = 0){
+	public function common_file_list($args = 0){
 		global $wpdb, $lwp;
 		$post_id = intval($args);
 		$sql = <<<EOS
@@ -427,7 +439,7 @@ EOS;
 	 * @global wpdb $wpdb
 	 * @param array $args
 	 */
-	public function ios_get_file($args){
+	public function common_get_file($args){
 		global $lwp, $wpdb;
 		$file_id = isset($args[2]) ? intval($args[2]) : 0;
 		$file = $lwp->post->get_files(null, $file_id);
