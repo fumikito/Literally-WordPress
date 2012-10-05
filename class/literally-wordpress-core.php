@@ -220,6 +220,7 @@ class Literally_WordPress{
 				'ios_public' => false,
 				'ios_available' => false,
 				'ios_force_ssl' => 0,
+				'android_pub_key' => '',
 				"subscription" => false,
 				"subscription_post_types" => array(),
 				'subscription_format' => 'all',
@@ -696,7 +697,8 @@ class Literally_WordPress{
 						'android' => (boolean)$_REQUEST['android'],
 						'ios_public' => (boolean)$_REQUEST['ios_public'],
 						'ios_available' => (boolean)$_REQUEST['ios_available'],
-						'ios_force_ssl' => (int)$_REQUEST['ios_force_ssl']
+						'ios_force_ssl' => (int)$_REQUEST['ios_force_ssl'],
+						'android_pub_key' => (string)$_REQUEST['android_public_key']
 					);
 					if(!empty($_REQUEST['custom_post_type_name']) && !empty($_REQUEST['custom_post_type_slug'])){
 						$option['custom_post_type'] = array(

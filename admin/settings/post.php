@@ -99,7 +99,21 @@
 			<th><?php $this->e('Enable android In-app Billing');  ?></th>
 			<td>
 				<label><input type="radio" name="android" value="1" <?php if($this->option['android']) echo 'checked="checked"'; ?> /><?php $this->e('Enabled'); ?></label><br />
-				<label><input type="radio" name="android" value="0" <?php if(!$this->option['android']) echo 'checked="checked"'; ?> /><?php $this->e('Disabled'); ?></label>
+				<label><input type="radio" name="android" value="0" <?php if(!$this->option['android']) echo 'checked="checked"'; ?> /><?php $this->e('Disabled'); ?></label><br />
+				<label for="android_public_key"><?php $this->e('Android Public Key'); ?></label>
+				<textarea name="android_public_key" id="android_public_key" style="width:90%" rows="6"><?php echo esc_html($this->option['android_pub_key']); ?></textarea>
+				<p class="description">
+					<?php printf($this->_('To verify receipt sent from Android application, WordPress needs Public key. You can get it at <a href="%s">Google Play Developer Console</a>. '), 'https://play.google.com/apps/publish/Home'); ?><br />
+					<?php $this->e('<strong>Note: </strong>PHP\'s OpenSSL can\'t treat Google Play\'s RSA public key as-is. It should be converted like below and paste the result above.'); ?><br />
+				</p>
+				<pre class="bash">
+<span># 0. <?php $this->e('Copy and paste public key and save it as pubkey.txt.'); ?> </span>
+<span># 1. <?php $this->e('Decode public key with Base64 and save it.'); ?> </span>
+base64 -D -i pubkey.txt -o pubkey.der
+<span># 2. <?php $this->e('Convert DER pubkey to PEM format.'); ?> </span>
+openssl rsa -inform DER -outform PEM -pubin -in pubkey.der -out pubkey.pem
+<span># 3. <?php $this->e('Encode public key and save it.'); ?> </span>
+base64 -i pubkey.pem -o pubkey_to_paste.txt </pre>
 			</td>
 		</tr>
 		<tr>

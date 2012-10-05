@@ -162,6 +162,17 @@ input.short{
 	background:#f0f0f0;
 	border-bottom:1px solid #eee;
 }
+pre.bash{
+	font-family: monospace;
+	padding: 0.5em;
+	border-top: 1px dotted #ddd;
+	border-bottom: 1px dotted #ddd;
+	background-color: #f9f9f9;
+}
+pre.bash span{
+	color: #999;
+}
+
 
 /* Summary Table */
 #lwp-dashboard-amount{

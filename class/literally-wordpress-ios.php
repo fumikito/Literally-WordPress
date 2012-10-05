@@ -27,6 +27,12 @@ class LWP_iOS extends Literally_WordPress_Common{
 	private $android_enabled = false;
 	
 	/**
+	 * Public key to verify android receipt
+	 * @var string 
+	 */
+	private $android_pub_key = '';
+	
+	/**
 	 * Whether user can buy from public site
 	 * @var boolean
 	 */
@@ -83,7 +89,8 @@ class LWP_iOS extends Literally_WordPress_Common{
 			'android' => false,
 			'ios_public' => false,
 			'ios_available' => false,
-			'ios_force_ssl' => 0
+			'ios_force_ssl' => 0,
+			'android_pub_key' => ''
 		), $option);
 		$this->enabled = (boolean)( $option['ios'] || $option['android']);
 		$this->ios_enabled = (boolean)$option['ios'];
@@ -91,6 +98,7 @@ class LWP_iOS extends Literally_WordPress_Common{
 		$this->web_available = (boolean) $option['ios_available'];
 		$this->post_type_public = (boolean) $option['ios_public'];
 		$this->force_ssl = (int)$option['ios_force_ssl'];
+		$this->android_pub_key = (string)$option['android_pub_key'];
 	}
 	
 	/**
