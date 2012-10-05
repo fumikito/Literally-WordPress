@@ -272,6 +272,11 @@ class LWP_Payment_Methods {
 	const APPLE = 'APPLE';
 	
 	/**
+	 * Name of payment method for in Android
+	 */
+	const ANDROID = 'ANDROID';
+	
+	/**
 	 * Name of payment method for free campaign.
 	 */
 	const CAMPAIGN = 'CAMPAIGN';
@@ -298,7 +303,8 @@ class LWP_Payment_Methods {
 			self::CAMPAIGN,
 			self::PRESENT,
 			self::TRANSFER,
-			self::APPLE
+			self::APPLE,
+			self::ANDROID
 		);
 		return $methods;
 	}
@@ -315,6 +321,7 @@ class LWP_Payment_Methods {
 		$lwp->_('present');
 		$lwp->_('TRANSFER');
 		$lwp->_('APPLE');
+		$lwp->_('ANDROID');
 	}
 }
 

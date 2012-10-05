@@ -292,7 +292,6 @@ class LWP_iOS extends Literally_WordPress_Common{
 	
 	/**
 	 * Returns registered methods
-	 * @global wp_xmlrpc_server $wp_xmlrpc_server
 	 */
 	public function common_methods(){
 		return $this->methods;
@@ -330,7 +329,8 @@ class LWP_iOS extends Literally_WordPress_Common{
 			'term_taxonomy_id' => 0,
 			'orderby' => 'pm1.meta_value',
 			'order' => 'ASC',
-			'status' => 'publish'
+			'status' => 'publish',
+			'key' => $this->product_id
 		));
 		//whether if file list needed
 		$with_file_list = (boolean)(!isset($args[1]) || $args[1]);
@@ -373,12 +373,12 @@ class LWP_iOS extends Literally_WordPress_Common{
 			{$wheres}
 			ORDER BY {$orderby} {$order}
 EOS;
-		$result = $wpdb->get_results($wpdb->prepare($sql, $this->product_id, $lwp->price_meta_key), ARRAY_A);
+		$result = $wpdb->get_results($wpdb->prepare($sql, $args['key'], $lwp->price_meta_key), ARRAY_A);
 		for($i = 0, $l = count($result); $i < $l; $i++){
 			$result[$i]['post_id'] = intval($result[$i]['post_id']);
 			$result[$i]['price'] = (float)$result[$i]['price'];
 			if($with_file_list){
-				$result[$i]['files'] = $this->ios_file_list($result[$i]['post_id']);
+				$result[$i]['files'] = $this->common_file_list($result[$i]['post_id']);
 			}
 		}
 		return $result;
@@ -389,6 +389,23 @@ EOS;
 			'query' => preg_replace("/(\n|\t)/", " ", $wpdb->last_query)
 		);
 		/**/
+	}
+	
+	/**
+	 * Returns product's id list
+	 * @param array $args
+	 * @return array
+	 */
+	public function android_product_list($args = array()){
+		if(!isset($args[0])){
+			$args[0] = array('key' => $this->android_product_id);
+		}elseif(!is_array($args[0])){
+			$args[0] = (array)$args[0];
+			$args[0]['key'] = $this->android_product_id;
+		}else{
+			$args[0]['key'] = $this->android_product_id;
+		}
+		return $this->ios_product_list($args);
 	}
 	
 	/**
@@ -536,6 +553,67 @@ EOS;
 		}
 	}
 	
+	
+	/**
+	 * Register transaction with Receipt
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param array $args
+	 * @return boolean
+	 */
+	public function android_register_transaction($args){
+		global $wpdb, $lwp;
+		$this->xmlrpc_login($args);
+		if(!isset($args[2], $args[3]) || !$this->verify_json($args[2], $args[3])){
+			$this->kill($this->_('JSON data is not set.'),  403);
+		}
+		$json = json_decode($args[2]);
+		$sql = <<<EOS
+			SELECT p.* FROM {$wpdb->posts} AS p
+			INNER JOIN {$wpdb->postmeta} AS pm
+			ON p.ID = pm.post_id = pm.meta_key = %s
+			WHERE meta_value = %s
+EOS;
+		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $json->orders->productId));
+		if(!$post){
+			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $json->orders->productId), 404);
+		}
+		//If purchase State is not 0.
+		if($json->orders->purchaseState != 0){
+			return false;
+		}
+		$price = isset($args[4]) ? (float)$args[4] : lwp_price($post);
+		$sql = <<<EOS
+			SELECT * FROM {$lwp->transaction}
+			WHERE book_id = %d AND transaction_key = %s AND method = %s AND status = %s AND user_id = %d
+EOS;
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $json->orders->orderId,
+				LWP_Payment_Methods::ANDROID, LWP_Payment_Status::SUCCESS, get_current_user_id()));
+		if($transaction){
+			return true;
+		}else{
+			$uuid = isset($args[5]) ? strval($args[5]) : '';
+			$result = (boolean)$wpdb->insert($lwp->transaction, array(
+				'user_id' => get_current_user_id(),
+				'book_id' => $post->ID,
+				'price' => $price,
+				'status' => LWP_Payment_Status::SUCCESS,
+				'method' => LWP_Payment_Methods::ANDROID,
+				'transaction_key' => $json->orders->orderId,
+				'transaction_id' => $uuid,
+				'registered' => date('Y-m-d H:i:s', intval($json->orders->purchaseTime / 1000) ),
+				'updated' => gmdate('Y-m-d H:i:s'),
+				'num' => 1
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d') );
+			if($result){
+				do_action('lwp_ios_transaction_registered', 
+					$wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id)),
+					$json);
+			}
+			return (boolean) $result;
+		}
+	}
+	
 	/**
 	 * Wraps registerTransaction and getFile.
 	 * @param array $args
@@ -547,7 +625,25 @@ EOS;
 			$username = $args[0];
 			$password = $args[1];
 			$file_id = isset($args[5]) ? intval($args[5]) : 0; 
-			return $this->ios_get_file(array($username, $password, $file_id));
+			return $this->common_get_file(array($username, $password, $file_id));
+		}else{
+			//Something is wrong
+			$this->kill($this->_('Failed to register transaction.'), 403);
+		}
+	}
+	
+	/**
+	 * Wraps registerTransaction and getFile
+	 * @param array $args
+	 * @return array
+	 */
+	public function android_get_file_with_receipt($args){
+		if($this->android_register_transaction($args)){
+			//Transaction is OK.
+			$username = $args[0];
+			$password = $args[1];
+			$file_id = isset($args[6]) ? intval($args[6]) : 0; 
+			return $this->common_get_file(array($username, $password, $file_id));
 		}else{
 			//Something is wrong
 			$this->kill($this->_('Failed to register transaction.'), 403);
@@ -559,13 +655,13 @@ EOS;
 	 * @param array $args username, password
 	 * @return WP_User
 	 */
-	public function ios_get_user_info($args){
+	public function common_get_user_info($args){
 		$user = $this->xmlrpc_login($args);
-		return apply_filters('lwp_ios_user', $user);
+		return apply_filters('lwp_xmlrpc_user', $user);
 	}
 	
 	/**
-	 * Returns user transaction
+	 * Returns user transaction for iOS
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param array $args username, password, page, method
@@ -597,6 +693,18 @@ EOS;
 			'total' => $wpdb->get_var("SELECT FOUND_ROWS()"),
 			'page' => $index
 		);
+	}
+	
+	/**
+	 * Return user transaction for Android
+	 * @param array $args
+	 * @return array
+	 */
+	public function android_get_user_transactions($args){
+		if(!isset($args[3])){
+			$args[3] = LWP_Payment_Methods::ANDROID;
+		}
+		return $this->ios_get_user_transactions($args);
 	}
 	
 	/**
@@ -653,6 +761,21 @@ EOS;
 			$this->kill(sprintf($this->_("Status Code %d: Invalid Receipt"), $json->status), 403);
 		}
 		return $json->receipt;
+	}
+	
+	/**
+	 * Verify JOSN data 
+	 * @param string $json
+	 * @param string $signature
+	 * @return boolean
+	 */
+	private function verify_json($json, $signature){
+		if(!function_exists('openssl_get_publickey') || empty($this->android_pub_key)){
+			return false;
+		}
+		$signature = base64_decode($signature);
+		$pubkeyid = openssl_get_publickey(base64_decode($this->android_pub_key));
+		return openssl_verify($json, $signature, $pubkeyid);
 	}
 	
 	/**
