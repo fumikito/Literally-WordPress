@@ -13,22 +13,24 @@
 //Check requirements.
 if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 		
-	//Load class files.
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-core.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'literally-wordpress-statics.php';
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."paypal_statics.php";
+	//Main class
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress.php";
 	
-	//Baseclass
+	//Static class
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics'.DIRECTORY_SEPARATOR.'lwp.php';
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics'.DIRECTORY_SEPARATOR."paypal.php";
+	
+	//Base class
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."base".DIRECTORY_SEPARATOR."literally-wordpress-common.php";
 	
 	//Subclass
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-post.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-form.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-notifier.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-subscription.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-reward.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-event.php";
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress-ios.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."post.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."form.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."notifier.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."subscription.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."reward.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."event.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."ios.php";
 	
 	/**
 	 * Instance of Literally_WordPress
