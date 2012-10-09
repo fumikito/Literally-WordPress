@@ -568,15 +568,16 @@ EOS;
 			$this->kill($this->_('JSON data is not set.'),  403);
 		}
 		$json = json_decode($args[2]);
+		$order = $json->orders[0];
 		$sql = <<<EOS
 			SELECT p.* FROM {$wpdb->posts} AS p
 			INNER JOIN {$wpdb->postmeta} AS pm
 			ON p.ID = pm.post_id = pm.meta_key = %s
 			WHERE meta_value = %s
 EOS;
-		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $json->orders->productId));
+		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $order->productId));
 		if(!$post){
-			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $json->orders->productId), 404);
+			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $order->productId), 404);
 		}
 		//If purchase State is not 0.
 		if($json->orders->purchaseState != 0){
@@ -587,7 +588,7 @@ EOS;
 			SELECT * FROM {$lwp->transaction}
 			WHERE book_id = %d AND transaction_key = %s AND method = %s AND status = %s AND user_id = %d
 EOS;
-		$transaction = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $json->orders->orderId,
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $order->orderId,
 				LWP_Payment_Methods::ANDROID, LWP_Payment_Status::SUCCESS, get_current_user_id()));
 		if($transaction){
 			return true;
@@ -599,9 +600,10 @@ EOS;
 				'price' => $price,
 				'status' => LWP_Payment_Status::SUCCESS,
 				'method' => LWP_Payment_Methods::ANDROID,
-				'transaction_key' => $json->orders->orderId,
+				'transaction_key' => $order->orderId,
 				'transaction_id' => $uuid,
-				'registered' => date('Y-m-d H:i:s', intval($json->orders->purchaseTime / 1000) ),
+				'payer_mail' => $order->notificationId,
+				'registered' => date('Y-m-d H:i:s', intval($order->purchaseTime / 1000) ),
 				'updated' => gmdate('Y-m-d H:i:s'),
 				'num' => 1
 			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d') );
@@ -787,7 +789,7 @@ EOS;
 	 * @param int $password_index
 	 * @return WP_User|false
 	 */
-	private function xmlrpc_login($args = array(), $die_failur = true, $username_index = 0, $password_index = 1){
+	public function xmlrpc_login($args = array(), $die_failur = true, $username_index = 0, $password_index = 1){
 		global $wp_xmlrpc_server;
 		$username = isset($args[$username_index]) ? $args[$username_index] : false ;
 		$password = isset($args[$password_index]) ? $args[$password_index] : false ;
