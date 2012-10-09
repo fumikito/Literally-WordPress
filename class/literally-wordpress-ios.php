@@ -519,7 +519,7 @@ EOS;
 		$receipt = $this->parse_receipt($args[2]);
 		$post = $this->get_post_from_product_id($receipt->product_id);
 		if(!$post){
-			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $receipt->product_id), 404);
+			$this->kill(sprintf($this->_('Product ID:%s does not exists.'), $receipt->product_id), 404);
 		}
 		$price = isset($args[3]) ? (float)$args[3] : lwp_price($post);
 		$sql = <<<EOS
@@ -577,7 +577,7 @@ EOS;
 EOS;
 		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $order->productId));
 		if(!$post){
-			$this->kill(srpintf($this->_('Product ID:%s does not exists.'), $order->productId), 404);
+			$this->kill(sprintf($this->_('Product ID:%s does not exists.'), $order->productId), 404);
 		}
 		//If purchase State is not 0.
 		if($json->orders->purchaseState != 0){
