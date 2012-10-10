@@ -234,7 +234,6 @@ class LWP_Campaign extends Literally_WordPress_Common {
 			);
 			//Creat SQL
 			$query = preg_replace("/^'(.*)'$/", "'%$1%'", $wpdb->prepare("%s", $query));
-			$where = array();
 			if(!current_user_can('edit_others_posts')){
 				$where[] = $wpdb->prepare("(p.post_author = %d)", get_current_user_id());
 			}
@@ -243,18 +242,20 @@ class LWP_Campaign extends Literally_WordPress_Common {
 			}
 			//
 			if($lwp->subscription->is_enabled()){
-				$where[] = $wpdb->prepare("(p.post_type = %s AND p.post_title LIKE {$query})", $lwp->subscription->post_type);
+				$where[] = "(p.post_type = '{$lwp->subscription->post_type}' AND p.post_title LIKE {$query})";
 			}
 			if($lwp->event->is_enabled()){
 				$where[] = "( p.post_type = '{$lwp->event->post_type}' AND (p2.post_title LIKE {$query} OR p.post_title LIKE {$query}))";
 			}
-			$where_clause = 'WHERE '.implode(' OR ', $where);
+			$where_clause = 'WHERE CAST(pm.meta_value AS UNSIGNED) > 0 AND ('.implode(' OR ', $where).")";
 			$sql = <<<EOS
 				SELECT SQL_CALC_FOUND_ROWS DISTINCT
 					p.ID, p.post_title, p2.post_title AS parent_title, p.post_type
 				FROM {$wpdb->posts} AS p
 				LEFT JOIN {$wpdb->posts} AS p2
 				ON p.post_parent = p2.ID
+				LEFT JOIN {$wpdb->postmeta} AS pm
+				ON p.ID = pm.post_id AND pm.meta_key = '{$lwp->price_meta_key}'
 				{$where_clause}
 				LIMIT 10
 EOS;
@@ -302,6 +303,7 @@ EOS;
 			$wheres[] = $wpdb->prepare("c.start <= %s", $time);
 			$wheres[] = $wpdb->prepare("c.end >= %s", $time);
 		}
+		$sql .= " WHERE ".implode(' AND ', $wheres);
 		$sql .= " ORDER BY c.`end` DESC";
 		$campaigns = $wpdb->get_results($wpdb->prepare($sql, $this->key_name));
 		$prices = array();
