@@ -7,32 +7,101 @@
  */
 if(isset($_REQUEST["campaign"]) && $campaign = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->campaign} WHERE ID = %d", $_REQUEST["campaign"]))):
 $post = wp_get_single_post($campaign->book_id);
+if($campaign->type == LWP_Campaign_Type::SINGULAR){
+	$post_ids = array($campaign->book_id);
+}elseif($campaign->type == LWP_Campaign_Type::SET){
+	$post_ids = $this->campaign_manager->get_campaign_posts($campaign->ID);
+}
 ?>
 <form method="post">
-	<?php wp_nonce_field("lwp_update_campaign"); ?>
+	<?php wp_nonce_field("lwp_add_campaign"); ?>
 	<input type="hidden" name="campaign" value="<?php echo $campaign->ID; ?>" />
-	<input type="hidden" name="book_id" value="<?php echo $campaign->book_id; ?>" />
 	<table class="form-table">
 		<tr class="form-field">
 			<th valign="top">
-				<label for="book_id"><?php $this->e("Campaign Item"); ?></label>
+				<label for="post-picker"><?php $this->e("Campaign Item"); ?></label>
 			</th>
 			<td>
-				<strong><?php echo $post->post_title;?></strong>
+				<input type="hidden" name="book_id" id="book_id" value="<?php echo implode(',', $post_ids); ?>" />
+				<div id="post-container" class="tagchecklist button-container">
+					<?php foreach($post_ids as $post_id):  ?>
+					<span><a id="menu_item<?php echo $post_id; ?>">X</a>
+						<?php switch(get_post_type($post_id)){
+							case $this->subscription->post_type:
+								echo $this->_('Subscription')." ".get_the_title($post_id);
+								break;
+							case $this->event->post_type:
+								echo get_the_title($this->event->get_event_from_ticket_id($post_id))." ".get_the_title($post_id);
+								break;
+							default: 
+								echo get_the_title($post_id); 
+								break;
+						}
+						printf('(%s)', number_format_i18n(lwp_original_price($post_id)));
+						?>
+					</span>
+					<?php endforeach; ?>
+				</div>
+				<input type="text" id="post-picker" value="" placeholder="<?php $this->e('Input here and search items'); ?>" />
+				<ul id="campaign-post-list" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
+				</ul>
 				<p class="description">
-					<?php $this->e("Item cant't be changed later."); ?>
+					<?php $this->e("If you change campaign item after publishing, transaction statistic data may be somehow confused."); ?>
 				</p>
 			</td>
 		</tr>
-		<tr class="form-field">
+		<tr class="form-field lwp-form-field">
 			<th valign="top">
 				<label for="price"><?php $this->e('Campaign Price'); ?></label>
 			</th>
 			<td>
 				<input type="text" name="price" id="price" value="<?php echo $campaign->price; ?>" />
+				<select name="calcuration" id="calcuration">
+					<?php foreach(LWP_Campaign_Calculation::get_all() as $type): ?>
+					<option value="<?php echo $type; ?>"<?php if($type == $campaign->calculation) echo ' selected="selected"'; ?>>
+						<?php switch($type){
+							case LWP_Campaign_Calculation::SPECIAL_PRICE:
+								printf($this->_('%s as sale price'), lwp_currency_code());
+								break;
+							case LWP_Campaign_Calculation::DISCOUNT:
+								printf($this->_('%s as discount'), lwp_currency_code());
+								break;
+							case LWP_Campaign_Calculation::PERCENT:
+								printf($this->_('%s of original price'), '%');
+								break;
+						} ?>
+					</option>
+					<?php endforeach; ?>
+				</select>
+			</td>
+		</tr>
+		<tr class="form-field">
+			<th valign="top">
+				<label for="coupon"><?php $this->e("Coupon"); ?></label>
+			</th>
+			<td>
+				<input type="text" id="coupon" name="coupon" placeholder="ex.WFEJ-O8S8-19JI-LLSE" value="<?php echo esc_attr($campaign->coupon); ?>" />
 				<p class="description">
-					<?php printf($this->_('Original price is %s'), number_format(lwp_original_price($post->ID)));?>
+					<?php $this->e('If you enter coupon code, the sale price will be adopted only for user with coupon.'); ?>
 				</p>
+			</td>
+		</tr>
+		<tr class="form-field">
+			<th valign="top">
+				<label for="payment_method"><?php $this->e("Payment method"); ?></label>
+			</th>
+			<td>
+				<select id="payment_method" name="payment_method">
+					<option value="<?php if(false === array_search($campaign->method, LWP_Payment_Methods::get_all_methods())) echo ' selected="selected"'; ?>><?php $this->e('Any'); ?></option>
+					<?php
+						$methods = array(LWP_Payment_Methods::PAYPAL);
+						if($this->notifier->is_enabled()){
+							$methods[] = LWP_Payment_Methods::TRANSFER;
+						}
+						foreach($methods as $method): ?>
+						<option value="<?php echo esc_attr($method);?>"<?php if($method == $campaign->method) echo ' selected="selected"'; ?>><?php $this->e($method); ?></option>
+					<?php endforeach; ?>
+				</select>
 			</td>
 		</tr>
 		<tr class="form-field">
@@ -80,7 +149,7 @@ else: ?>
 			<div class="description">
 				<p>
 					<strong>Note:</strong><br />
-					<?php $this->e('You can edit the campain detail by clicking item link.<br />But You can\'t change the price of temporary active campain.<br /><strong>In that case, you have to stop campaign and recreate another campaing.</strong>'); ?>
+					<?php $this->e('You can edit the campain detail by clicking item link.<br />But <strong>please be careful to change the itmes or price of temporary active campain</strong>.'); ?>
 				</p>
 			</div>
 			<!-- .description ends -->
@@ -96,7 +165,7 @@ else: ?>
 				<form method="post">
 					<?php wp_nonce_field("lwp_add_campaign"); ?>
 					<div class="form-field lwp-form-field">
-						<label for="book_id"><?php $this->e("Campaign Item");?></label>
+						<label for="post-picker"><?php $this->e("Campaign Item");?></label>
 						<input type="hidden" name="book_id" id="book_id" value="" />
 						<div id="post-container" class="tagchecklist button-container">
 						</div>
@@ -123,7 +192,7 @@ else: ?>
 										printf($this->_('%s as discount'), lwp_currency_code());
 										break;
 									case LWP_Campaign_Calculation::PERCENT:
-										$this->e('% of original price');
+										printf($this->_('%s of original price'), '%');
 										break;
 								} ?>
 							</option>
@@ -150,7 +219,11 @@ else: ?>
 						<select id="payment_method" name="payment_method">
 							<option value="" selected="selected"><?php $this->e('Any'); ?></option>
 							<?php
-								foreach(array(LWP_Payment_Methods::PAYPAL, LWP_Payment_Methods::TRANSFER) as $method): ?>
+								$methods = array(LWP_Payment_Methods::PAYPAL);
+								if($this->notifier->is_enabled()){
+									$methods[] = LWP_Payment_Methods::TRANSFER;
+								}
+								foreach($methods as $method): ?>
 								<option value="<?php echo esc_attr($method); ?>"><?php $this->e($method); ?></option>
 							<?php endforeach; ?>
 						</select>

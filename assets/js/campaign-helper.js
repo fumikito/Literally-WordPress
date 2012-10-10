@@ -77,7 +77,7 @@ jQuery(document).ready(function($){
 			if(result.total > 0){
 				container.empty();
 				$.each(result.items, function(index, elt){
-					addListItem(elt.ID, elt.post_title);
+					addListItem(elt.ID, elt.post_title + '(' + elt.price + ')');
 				});
 				setTimeout(function(){
 					container.css('display', 'none');
@@ -101,4 +101,20 @@ jQuery(document).ready(function($){
             timer = setTimeout(getList, 1500);
         }
     });
+	
+	area.find('a').click(function(e){
+		e.preventDefault();
+		var id = $(this).attr('id').replace(/[^0-9]/g, '');
+		$(this).parents('span').remove();
+		removeId(id);
+		area.effect('highlight');
+	});
+	
+	
+	//Bulk action
+	$('#doaction, #doaction2').click(function(e){
+		if(!confirm(LWP.confirm)){
+			e.preventDefault();
+		}
+	});
 });

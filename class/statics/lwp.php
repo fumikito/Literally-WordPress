@@ -441,7 +441,7 @@ class LWP_Campaign_Type{
 	/**
 	 * Set of speccified items
 	 */
-	const SET = 'SET';
+	const SET = 'ITEM_SET';
 	
 	/**
 	 * Particular item
@@ -461,7 +461,7 @@ class LWP_Campaign_Type{
 	
 	private function _(){
 		global $lwp;
-		$lwp->_('SET');
+		$lwp->_('ITEM_SET');
 		$lwp->_('SINGULAR');
 		$lwp->_('post_type');
 		$lwp->_('Taxonomy');
