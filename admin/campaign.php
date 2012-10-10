@@ -75,6 +75,7 @@ if($campaign->type == LWP_Campaign_Type::SINGULAR){
 				</select>
 			</td>
 		</tr>
+		<?php /*
 		<tr class="form-field">
 			<th valign="top">
 				<label for="coupon"><?php $this->e("Coupon"); ?></label>
@@ -104,6 +105,7 @@ if($campaign->type == LWP_Campaign_Type::SINGULAR){
 				</select>
 			</td>
 		</tr>
+		 */ ?>
 		<tr class="form-field">
 			<th valign="top">
 				<label for="start_date"><?php $this->e('Start Date'); ?></label>
@@ -204,6 +206,7 @@ else: ?>
 					</div>
 					<!-- .form-field ends -->
 					
+					<?php /*
 					
 					<div class="form-field lwp-form-field">
 						<label for="coupon"><?php $this->e("Coupon"); ?></label>
@@ -232,6 +235,7 @@ else: ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
+					*/ ?>
 					
 					<div class="form-field lwp-form-field">
 						<label for="start"><?php $this->e('Start Date');?></label>

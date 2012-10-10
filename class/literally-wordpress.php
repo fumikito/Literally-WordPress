@@ -776,33 +776,6 @@ class Literally_WordPress{
 	}
 	
 	
-	//--------------------------------------------
-	//
-	// Campaign
-	//
-	//--------------------------------------------
-
-	
-	/**
-	 * 指定された投稿が指定された日付にキャンペーンを行っているかを返す
-	 * 
-	 * @param object|int $post
-	 * @param string $time (optional) 指定しなければ今日の日付
-	 * @return booelan
-	 */
-	public function is_on_sale($post = null, $time = null){
-		global $wpdb;
-		$post = get_post($post);
-		if(!$time){
-			$time = date_i18n('Y-m-d H:i:s');
-		}
-		$sql = "SELECT ID FROM {$this->campaign} WHERE book_id = %d AND start <= %s AND end >= %s";
-		$req = $wpdb->get_row($wpdb->prepare($sql, $post->ID, $time, $time));
-		return $req != false;
-	}
-	
-	
-	
 	
 	//--------------------------------------------
 	//

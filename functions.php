@@ -98,7 +98,7 @@ function lwp_is_sample($file)
  */
 function lwp_on_sale($post = null, $time = null){
 	global $lwp;
-	return $lwp->is_on_sale($post, $time);
+	return $lwp->campaign_manager->is_on_sale($post, $time);
 }
 
 

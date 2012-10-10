@@ -126,13 +126,17 @@ class LWP_Campaign extends Literally_WordPress_Common {
 					}
 				}
 				//check couopn
-				$coupon = (isset($_REQUEST['coupon']) && !empty($_REQUEST['coupon'])) ? (string)$_REQUEST['coupon'] : '';
+				
+				$coupon = '';//(isset($_REQUEST['coupon']) && !empty($_REQUEST['coupon'])) ? (string)$_REQUEST['coupon'] : '';
 				//Method
+				$method = '';
+				/*
 				if(false !== array_search($_REQUEST['payment_method'], LWP_Payment_Methods::get_all_methods())){
 					$method = (string)$_REQUEST['payment_method'];
 				}else{
 					$method = '';
 				}
+				*/
 				//Date format
 				if(!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["start"]) || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["end"])){
 					//Date format is invalie
@@ -321,5 +325,32 @@ EOS;
 			$ids[] = intval($result->post_id);
 		}
 		return $ids;
+	}
+	
+	/**
+	 * Returns if specified post has campaign
+	 * 
+	 * @param object|int $post
+	 * @param string $time (optional) DATETIME string
+	 * @return booelan
+	 */
+	public function is_on_sale($post = null, $time = null){
+		global $wpdb;
+		$post = get_post($post);
+		if(!$time){
+			$time = date_i18n('Y-m-d H:i:s');
+		}
+		$sql = <<<EOS
+			SELECT c.ID FROM {$this->campaign} AS c
+			LEFT JOIN {$wpdb->postmeta} AS pm
+			ON pm.meta_key = %s AND c.ID = CAST(pm.meta_value AS UNSIGNED)
+			WHERE (c.book_id = %d OR pm.post_id = %d)
+			  AND c.start <= %s AND c.end >= %s
+EOS;
+		return (boolean) $wpdb->get_var($wpdb->prepare($sql, $post->ID, $post->ID, $time, $time));
+	}
+	
+	public function get_sale_price(){
+		
 	}
 }
