@@ -528,6 +528,33 @@ hr.lwp-divider{
 	font-size: 1.1em;
 }
 
+.lwp-form-field input[type=checkbox],
+.lwp-form-field input[type=radio]{
+	width: auto;
+}
+.lwp-form-field input#price{
+	width: 40%;
+}
+.button-container{
+	margin: 0.5em 5% 0.5em 0;
+	border:1px solid #ddd;
+	padding: 1em;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+#campaign-post-list{
+	background-image: url('./indicator-postbox.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+	min-height: 16px;
+	min-width: 32px;
+	display: none;
+}
+#campaign-post-list .ui-menu-item{
+	background-color: #fff;
+}
 @media only screen and (max-width : 799px){
 	.lwp-main-container{
 		margin-right: 0;

@@ -95,44 +95,83 @@ else: ?>
 				<h3><?php $this->e('Add new campaign'); ?></h3>
 				<form method="post">
 					<?php wp_nonce_field("lwp_add_campaign"); ?>
-										
-					<div class="form-field">
+					<div class="form-field lwp-form-field">
 						<label for="book_id"><?php $this->e("Campaign Item");?></label>
-						<select id="book_id" name="book_id">
-							<option disabled="disabled" selected="selected"><?php $this->e("Select from here.");?></option>
-							<?php foreach(get_posts(array("post_type" => $this->option['payable_post_types'], 'posts_per_page' => -1, 'post_status' => array('publish', 'future', 'draft'))) as $p): ?>
-							<?php if(lwp_original_price($p) > 0): ?>
-							<option value="<?php echo $p->ID; ?>"><?php echo $p->post_title; ?></option>
-							<?php endif; ?>
+						<input type="hidden" name="book_id" id="book_id" value="" />
+						<div id="post-container" class="tagchecklist button-container">
+						</div>
+						<input type="text" id="post-picker" value="" placeholder="<?php $this->e('Input here and search items'); ?>" />
+						<ul id="campaign-post-list" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all">
+						</ul>
+						<p>
+							<?php $this->e("Item for which campaign will be adopted. Please search with text input. You can choose multiple items.");?>
+						</p>
+					</div>
+					<!-- .form-field ends -->
+					
+					<div class="form-field lwp-form-field">
+						<label for="price"><?php $this->e("Campaign Price"); ?></label>
+						<input type="text" id="price" name="price" placeholder="ex. 100" />
+						<select name="calcuration" id="calcuration">
+							<?php foreach(LWP_Campaign_Calculation::get_all() as $type): ?>
+							<option value="<?php echo $type; ?>"<?php if($type == LWP_Campaign_Calculation::SPECIAL_PRICE) echo ' selected="selected"'; ?>>
+								<?php switch($type){
+									case LWP_Campaign_Calculation::SPECIAL_PRICE:
+										printf($this->_('%s as sale price'), lwp_currency_code());
+										break;
+									case LWP_Campaign_Calculation::DISCOUNT:
+										printf($this->_('%s as discount'), lwp_currency_code());
+										break;
+									case LWP_Campaign_Calculation::PERCENT:
+										$this->e('% of original price');
+										break;
+								} ?>
+							</option>
 							<?php endforeach; ?>
 						</select>
 						<p>
-							<?php $this->e("Item for which campaign will be adopted.");?>
+							<?php $this->e('Price for campaign which will be applied to all items.'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
-					<div class="form-field">
-						<label for="price"><?php $this->e("Campaign Price"); ?></label>
-						<input type="text" id="price" name="price" />
+					
+					<div class="form-field lwp-form-field">
+						<label for="coupon"><?php $this->e("Coupon"); ?></label>
+						<input type="text" id="coupon" name="coupon" placeholder="ex.WFEJ-O8S8-19JI-LLSE" />
 						<p>
-							<?php $this->e('Price for campaign.'); ?>
+							<?php $this->e('If you enter coupon code, the sale price will be adopted only for user with coupon.'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
-					<div class="form-field">
+					<div class="form-field lwp-form-field">
+						<label for="payment_method"><?php $this->e("Payment method"); ?></label>
+						<select id="payment_method" name="payment_method">
+							<option value="" selected="selected"><?php $this->e('Any'); ?></option>
+							<?php
+								foreach(array(LWP_Payment_Methods::PAYPAL, LWP_Payment_Methods::TRANSFER) as $method): ?>
+								<option value="<?php echo esc_attr($method); ?>"><?php $this->e($method); ?></option>
+							<?php endforeach; ?>
+						</select>
+						<p>
+							<?php $this->e('Campaign is adopted only with this payment method.'); ?>
+						</p>
+					</div>
+					<!-- .form-field ends -->
+					
+					<div class="form-field lwp-form-field">
 						<label for="start"><?php $this->e('Start Date');?></label>
-						<input type="text" id="start_date" name="start" class="date-picker" />
+						<input type="text" id="start_date" name="start" class="date-picker" placeholder="ex. <?php echo date('Y-m-d H:i:s'); ?>" />
 						<p>
 							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>
 					</div>
 					<!-- .form-field ends -->
 					
-					<div class="form-field">
+					<div class="form-field lwp-form-field">
 						<label for="end"><?php $this->e('End Date');?></label>
-						<input type="text" id="end_date" name="end" class="date-picker" />
+						<input type="text" id="end_date" name="end" class="date-picker" placeholder="ex. <?php echo date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 7); ?>"  />
 						<p>
 							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>

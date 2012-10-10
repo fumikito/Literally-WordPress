@@ -35,6 +35,7 @@ class Literally_WordPress_Common {
 		$this->on_construct();
 		add_action('init', array($this, '_init_hook'));
 		add_action('lwp_update_option', array($this, 'set_option'));
+		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 	}
 	
 	/**
@@ -43,6 +44,13 @@ class Literally_WordPress_Common {
 	 */
 	public function set_option($option = array()){
 		$this->option = $option;
+	}
+	
+	/**
+	 * Enqueue_script on admin panel
+	 */
+	public function admin_enqueue_scripts(){
+		
 	}
 	
 	/**

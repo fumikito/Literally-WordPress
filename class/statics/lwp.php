@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.2.6';
+	const VERSION = '0.9.2.8';
 	
 	/**
 	 * Table prefix for this plugin
@@ -200,6 +200,8 @@ EOS;
 				method VARCHAR(45) NOT NULL,
 				type VARCHAR(45) NOT NULL DEFAULT '{$type}',
 				calculation VARCHAR(45) NOT NULL DEFAULT '{$calculation}',
+				coupon VARCHAR (255) NOT NULL,
+				key_name VARCHAR(45) NOT NULL,
 				PRIMARY KEY  (ID)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
@@ -447,15 +449,15 @@ class LWP_Campaign_Type{
 	const SINGULAR = 'SINGULAR';
 	
 	/**
-	 * Specified post type
+	 * Returns all types
+	 * @return array
 	 */
-	const POST_TYPE = 'post_type';
-	
-	/**
-	 * Specified taxonomy
-	 */
-	const TAXONOMY = 'Taxonomy';
-	
+	public static function get_all(){
+		return array(
+			self::SINGULAR,
+			self::SET
+		);
+	}
 	
 	private function _(){
 		global $lwp;
@@ -466,7 +468,9 @@ class LWP_Campaign_Type{
 	}
 }
 
-
+/**
+ * Static class for campaign calcuration
+ */
 class LWP_Campaign_Calculation{
 	
 	/**
@@ -483,6 +487,18 @@ class LWP_Campaign_Calculation{
 	 * Discount specified price
 	 */
 	const DISCOUNT = 'DISCOUNT';
+	
+	/**
+	 * Returns all methods
+	 * @return string
+	 */
+	public static function get_all(){
+		return array(
+			self::SPECIAL_PRICE,
+			self::DISCOUNT,
+			self::PERCENT
+		);
+	}
 	
 	/**
 	 * 

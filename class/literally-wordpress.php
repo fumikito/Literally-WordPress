@@ -498,7 +498,7 @@ class Literally_WordPress{
 			wp_enqueue_style('jquery-ui-datepicker');
 			wp_enqueue_script(
 				"lwp-datepicker-load",
-				$this->url."assets/js/campaign.js",
+				$this->url."assets/js/datepicker.js",
 				array("jquery-ui-timepicker"),
 				$this->version
 			);
@@ -512,7 +512,6 @@ class Literally_WordPress{
 					'areaChartTitle' => $this->_('Daily Report'),
 					'areaChartLabel' => $this->_('Date')
 			)));
-			
 		}
 		//In management page, do csv output
 		if($this->is_admin('management') && !isset($_REQUEST['transaction_id'])){
@@ -764,8 +763,12 @@ class Literally_WordPress{
 			if(update_option("literally_wordpress_option", $new_option)){
 				$this->message[] = $this->_('Option updated.');
 			}else{
-				$this->error = true;
-				$this->message[] = $this->_('Failed to updated options.');
+				if($new_option == $this->option){
+					$this->message[] = $this->_('Option values are same, so nothing has changed.');
+				}else{
+					$this->error = true;
+					$this->message[] = $this->_('Failed to updated options.');
+				}
 			}
 			$this->option = $new_option;
 			do_action('lwp_update_option', $this->option);
