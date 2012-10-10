@@ -72,7 +72,7 @@ class LWP_List_History extends WP_List_Table {
 		
 		$sql = <<<EOS
 			SELECT SQL_CALC_FOUND_ROWS 
-				t.*, p.post_title, p.post_type,p.post_parent, pm.meta_value AS price
+				t.*, p.post_title, p.post_type,p.post_parent
 			FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
