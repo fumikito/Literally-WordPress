@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.2.2';
+	const VERSION = '0.9.2.6';
 	
 	/**
 	 * Table prefix for this plugin
@@ -166,6 +166,7 @@ EOS;
 EOS;
 		//Create transactios table
 		$transactions = self::transaction();
+		$method = LWP_Payment_Methods::PAYPAL;
 		$sql[] = <<<EOS
 			CREATE TABLE {$transactions} (
 				ID BIGINT NOT NULL AUTO_INCREMENT,
@@ -175,7 +176,7 @@ EOS;
 				num INT NOT NULL DEFAULT 1,
 				consumed INT NOT NULL DEFAULT 0,
 				status VARCHAR(45) NOT NULL,
-				method VARCHAR(100) NOT NULL DEFAULT 'PAYPAL',
+				method VARCHAR(100) NOT NULL DEFAULT '{$method}',
 				transaction_key VARCHAR (255) NOT NULL,
 				transaction_id VARCHAR (255) NOT NULL,
 				payer_mail VARCHAR (255) NOT NULL,
@@ -187,6 +188,8 @@ EOS;
 EOS;
 		//Create campaign table
 		$campaign = self::campaign();
+		$type = LWP_Campaign_Type::SINGULAR;
+		$calculation = LWP_Campaign_Calculation::SPECIAL_PRICE;
 		$sql[] = <<<EOS
 			CREATE TABLE {$campaign} (
 				ID INT NOT NULL AUTO_INCREMENT,
@@ -194,6 +197,9 @@ EOS;
 				price BIGINT NOT NULL,
 				start DATETIME NOT NULL,
 				end DATETIME NOT NULL,
+				method VARCHAR(45) NOT NULL,
+				type VARCHAR(45) NOT NULL DEFAULT '{$type}',
+				calculation VARCHAR(45) NOT NULL DEFAULT '{$calculation}',
 				PRIMARY KEY  (ID)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;
@@ -423,6 +429,72 @@ class LWP_Promotion_TYPE{
 		$lwp->_('PROMOTION');
 		$lwp->_('SELL');
 	}
+}
+
+/**
+ * Static class for Campaign type string
+ */
+class LWP_Campaign_Type{
+	
+	/**
+	 * Set of speccified items
+	 */
+	const SET = 'SET';
+	
+	/**
+	 * Particular item
+	 */
+	const SINGULAR = 'SINGULAR';
+	
+	/**
+	 * Specified post type
+	 */
+	const POST_TYPE = 'post_type';
+	
+	/**
+	 * Specified taxonomy
+	 */
+	const TAXONOMY = 'Taxonomy';
+	
+	
+	private function _(){
+		global $lwp;
+		$lwp->_('SET');
+		$lwp->_('SINGULAR');
+		$lwp->_('post_type');
+		$lwp->_('Taxonomy');
+	}
+}
+
+
+class LWP_Campaign_Calculation{
+	
+	/**
+	 * Special price
+	 */
+	const SPECIAL_PRICE = 'SPECIAL_PRICE';
+	
+	/**
+	 * use as percent
+	 */
+	const PERCENT = 'PERCENT';
+	
+	/**
+	 * Discount specified price
+	 */
+	const DISCOUNT = 'DISCOUNT';
+	
+	/**
+	 * 
+	 * @global type $lwp
+	 */
+	private function _(){
+		global $lwp;
+		$lwp->_('SPECIAL_PRICE');
+		$lwp->_('PERCENT');
+		$lwp->_('DISCOUNT');
+	}
+	
 }
 
 /**

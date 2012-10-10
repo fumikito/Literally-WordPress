@@ -174,6 +174,12 @@ class Literally_WordPress{
 	 */
 	public $event = null;
 	
+	/**
+	 * Campaign manager
+	 * @var LWP_Campaign
+	 */
+	public $campaign_manager = null;
+	
 	//--------------------------------------------
 	//
 	// 初期化処理
@@ -267,6 +273,8 @@ class Literally_WordPress{
 		$this->event = new LWP_Event($this->option);
 		//Initialize sell post
 		$this->post = new LWP_Post($this->option);
+		//Initialize campaing manager
+		$this->campaign_manager = new LWP_Campaign($this->option);
 		//Register hooks
 		$this->register_hooks();
 	}
@@ -294,10 +302,6 @@ class Literally_WordPress{
 			add_action('admin_init', array($this, 'check_table'));
 			//スタイルシート・JSの追加
 			add_action("admin_enqueue_scripts", array($this, "admin_assets"));
-			//キャンペーン更新
-			if($this->is_admin("campaign")){
-				add_action("admin_init", array($this, "update_campaign"));
-			}
 			//トランザクション更新
 			if($this->is_admin("management")){
 				add_action("admin_init", array($this, "update_transaction"));
@@ -416,7 +420,6 @@ class Literally_WordPress{
 			add_submenu_page('lwp-setting', $this->_('Download logs'), $this->_('Download logs'), 'manage_options', 'lwp-download-logs', array($this, 'load'));
 			//Device setting
 			add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
-			
 		}
 		//Purchase history
 		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
@@ -778,119 +781,6 @@ class Literally_WordPress{
 
 	
 	/**
-	 * CRUD interface for Campaign
-	 * @global wpdb $wpdb 
-	 * @return void
-	 */
-	public function update_campaign(){
-		global $wpdb;
-		//キャンペーンの追加
-		if(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_add_campaign")){
-			//投稿の確認
-			if(!is_numeric($_REQUEST["book_id"])){
-				$this->error = true;
-				$this->message[] = $this->_("Please select item.");
-			}
-			//価格の確認
-			if(!is_numeric(mb_convert_kana($_REQUEST["price"], "n"))){
-				$this->error = true;
-				$this->message[] = $this->_("Price must be numeric.");
-			}
-			//価格の確認
-			elseif($_REQUEST["price"] > get_post_meta($_REQUEST["book_id"], "lwp_price", true)){
-				$this->error = true;
-				$this->message[] = $this->_("Price is higher than original price.");
-			}
-			//形式の確認
-			if(!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["start"]) || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["end"])){
-				$this->error = true;
-				$this->message[] = $this->_("Date format is invalid.");
-			}
-			//開始日と終了日の確認
-			elseif(strtotime($_REQUEST["end"]) < time() || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
-				$this->error = true;
-				$this->message[] = $this->_("End date was past.");
-			}
-			//エラーがなければ登録
-			if(!$this->error){
-				global $wpdb;
-				$wpdb->insert(
-					$this->campaign,
-					array(
-						"book_id" => $_REQUEST["book_id"],
-						"price" => mb_convert_kana($_REQUEST["price"], "n"),
-						"start" => $_REQUEST["start"],
-						"end" => $_REQUEST["end"]
-					),
-					array("%d", "%f", "%s", "%s")
-				);
-				if($wpdb->insert_id)
-					$this->message[] = $this->_("Campaign added.");
-				else{
-					$this->error = true;
-					$this->message[] = $this->_("Failed to add campaign.");
-				}
-			}
-		}
-		//キャンペーンの更新
-		elseif(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_campaign")){
-			//キャンペーンIDの存在を確認
-			if(!$wpdb->get_row($wpdb->prepare("SELECT ID FROM {$this->campaign} WHERE ID = %d", $_REQUEST["campaign"]))){
-				$this->error = true;
-				$this->message[] = $this->_("Specified campaing doesn't exist");
-			}
-			//価格の確認
-			if(!is_numeric(mb_convert_kana($_REQUEST["price"], "n"))){
-				$this->error = true;
-				$this->message[] = $this->_("Price should be numeric.");
-			}elseif($_REQUEST["price"] > get_post_meta($_REQUEST["book_id"], "lwp_price", true)){
-				$this->error = true;
-				$this->message[] = $this->_("Campgin price is higher than original price.");
-			}
-			//形式の確認
-			if(!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["start"]) || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST["end"])){
-				$this->error = true;
-				$this->message[] = $this->_("Date format is invalid.");
-			}
-			//開始日と終了日の確認
-			elseif(strtotime($_REQUEST["end"]) < time() || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
-				$this->error = true;
-				$this->message[] = $this->_("End date is earlier than start date.");
-			}
-			//エラーがなければ更新
-			if(!$this->error){
-				$req = $wpdb->update(
-					$this->campaign,
-					array(
-						"price" => mb_convert_kana($_REQUEST["price"], "n"),
-						"start" => $_REQUEST["start"],
-						"end" => $_REQUEST["end"]
-					),
-					array("ID" => $_REQUEST["campaign"]),
-					array("%d", "%s", "%s"),
-					array("%d")
-				);
-				if($req)
-					$this->message[] = $this->_("Successfully Updated.");
-				else{
-					$this->error = true;
-					$this->message[] = $this->_('Update Failed.');
-				}
-			}
-		}
-		//キャンペーンの削除
-		elseif(isset($_REQUEST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "bulk-campaigns") && is_array($_REQUEST["campaigns"])){
-			$sql = "DELETE FROM {$this->campaign} WHERE ID IN (".implode(",", $_REQUEST["campaigns"]).")";
-			if($wpdb->query($sql))
-				$this->message[] = $this->_("Campaign was deleted.");
-			else{
-				$this->error = true;
-				$this->message[] = $this->_("Failed to delete campaign.");
-			}
-		}
-	}
-	
-	/**
 	 * 指定された投稿が指定された日付にキャンペーンを行っているかを返す
 	 * 
 	 * @param object|int $post
@@ -908,31 +798,6 @@ class Literally_WordPress{
 		return $req != false;
 	}
 	
-	/**
-	 * キャンペーンを取得する
-	 * 
-	 * $timeを指定しない場合はすべてのキャンペーンを返す
-	 * 
-	 * @param int $post_id
-	 * @param string $time
-	 * @param boolean $multi
-	 * @return object|array 
-	 */
-	public function get_campaign($post_id, $time = false, $multi = false){
-		global $wpdb;
-		$sql = "SELECT * FROM {$this->campaign} WHERE book_id = %d";
-		if($time)
-			$sql .= " AND start <= %s AND end >= %s";
-		$sql .= " ORDER BY `end` DESC";
-		if($time)
-			$sql = $wpdb->prepare($sql, $post_id, $time, $time);
-		else
-			$sql = $wpdb->prepare($sql, $post_id);
-		if($multi)
-			return $wpdb->get_results($sql);
-		else
-			return $wpdb->get_row($sql);
-	}
 	
 	
 	

@@ -112,7 +112,7 @@ function lwp_on_sale($post = null, $time = null){
 function lwp_campaign_end($post = null, $timestamp = false){
 	global $lwp;
 	$post = get_post($post);
-	$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
+	$campaign = $lwp->campaign_manager->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
 	if(!$campaign){
 		return false;
 	}else{
@@ -139,7 +139,7 @@ function lwp_price($post = null){
 	$post = get_post($post);
 	if(lwp_on_sale($post)){
 		global $lwp;
-		$campaign = $lwp->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
+		$campaign = $lwp->campaign_manager->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
 		return $campaign->price;
 	}else{
 		return lwp_original_price($post);

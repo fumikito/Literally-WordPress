@@ -572,10 +572,10 @@ EOS;
 		$sql = <<<EOS
 			SELECT p.* FROM {$wpdb->posts} AS p
 			INNER JOIN {$wpdb->postmeta} AS pm
-			ON p.ID = pm.post_id = pm.meta_key = %s
-			WHERE meta_value = %s
+			ON p.ID = pm.post_id AND pm.meta_key = %s
+			WHERE meta_value = %s AND p.post_type = %s
 EOS;
-		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $order->productId));
+		$post = $wpdb->get_row($wpdb->prepare($sql, $this->android_product_id, $order->productId, $this->post_type));
 		if(!$post){
 			$this->kill(sprintf($this->_('Product ID:%s does not exists.'), $order->productId), 404);
 		}

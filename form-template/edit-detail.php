@@ -27,7 +27,7 @@
 		<tr>
 			<th><?php $this->e('Campaign'); ?></th>
 			<td>
-				<?php if(lwp_on_sale($post)): $campaign = $lwp->get_campaign($post->ID); ?>
+				<?php if(lwp_on_sale($post)): $campaign = $lwp->campaign_manager->get_campaign($post->ID); ?>
 					<?php printf($this->_('Till <a href="%1$s">%2$s</a>'), admin_url('admin.php?page=lwp-campaign&campaign='.$campaign->ID), lwp_campaign_end($post, false));?>
 				<?php else: ?>
 					<a href="<?php echo admin_url('admin.php?page=lwp-campaign'); ?>"><?php $this->e('Not on Sale'); ?></a>
