@@ -139,8 +139,7 @@ function lwp_price($post = null){
 	$post = get_post($post);
 	if(lwp_on_sale($post)){
 		global $lwp;
-		$campaign = $lwp->campaign_manager->get_campaign($post->ID, date_i18n('Y-m-d H:i:s'));
-		return $campaign->price;
+		return $lwp->campaign_manager->get_sale_price($post->ID);
 	}else{
 		return lwp_original_price($post);
 	}

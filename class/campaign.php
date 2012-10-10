@@ -35,31 +35,6 @@ class LWP_Campaign extends Literally_WordPress_Common {
 			));
 		}
 	}
-	
-	/**
-	 * Get campaign data of specified post
-	 * 
-	 * @param int $post_id
-	 * @param string $time 
-	 * @param boolean $multi
-	 * @return object|array 
-	 */
-	public function get_campaign($post_id, $time = false, $multi = false){
-		global $wpdb, $lwp;
-		$sql = "SELECT * FROM {$lwp->campaign} WHERE book_id = %d";
-		if($time)
-			$sql .= " AND start <= %s AND end >= %s";
-		$sql .= " ORDER BY `end` DESC";
-		if($time)
-			$sql = $wpdb->prepare($sql, $post_id, $time, $time);
-		else
-			$sql = $wpdb->prepare($sql, $post_id);
-		if($multi)
-			return $wpdb->get_results($sql);
-		else
-			return $wpdb->get_row($sql);
-	}
-	
 	/**
 	 * CRUD interface for Campaign
 	 * @global wpdb $wpdb 
@@ -97,7 +72,7 @@ class LWP_Campaign extends Literally_WordPress_Common {
 					$lwp->message[] = $this->_("Please select item.");
 				}
 				//Check calculation
-				$calc = false === array_search($_REQUEST['calcuration'], LWP_Campaign_Calculation::get_all())
+				$calc = (false === array_search($_REQUEST['calcuration'], LWP_Campaign_Calculation::get_all()))
 						? LWP_Campaign_Calculation::SPECIAL_PRICE
 						: (string) $_REQUEST['calcuration'];
 				//Cehck price
@@ -204,9 +179,6 @@ class LWP_Campaign extends Literally_WordPress_Common {
 							}
 							header('Location: '.admin_url('admin.php?page=lwp-campaign&message=2&campaign='.$_REQUEST['campaign']));
 							exit();
-						}else{
-							$lwp->error = true;
-							$lwp->message[] = $this->_('Update Failed.').':'.$wpdb->last_query;
 						}
 					}
 				}
@@ -305,6 +277,55 @@ EOS;
 		}
 	}
 	
+	
+	
+	/**
+	 * Get campaign data of specified post
+	 * 
+	 * @param int $post_id
+	 * @param string $time DATETIME string
+	 * @param boolean $multi
+	 * @return object|array 
+	 */
+	public function get_campaign($post_id, $time = false, $multi = false){
+		global $wpdb, $lwp;
+		$sql = <<<EOS
+			SELECT *
+			FROM {$lwp->campaign} AS c
+			LEFT JOIN {$wpdb->postmeta} AS pm
+			ON pm.meta_key = %s AND c.ID = CAST(pm.meta_value AS UNSIGNED)
+EOS;
+		$wheres = array(
+			$wpdb->prepare("(c.book_id = %d OR pm.post_id = %d)", $post_id, $post_id)
+		);
+		if($time){
+			$wheres[] = $wpdb->prepare("c.start <= %s", $time);
+			$wheres[] = $wpdb->prepare("c.end >= %s", $time);
+		}
+		$sql .= " ORDER BY c.`end` DESC";
+		$campaigns = $wpdb->get_results($wpdb->prepare($sql, $this->key_name));
+		$prices = array();
+		$original_price = lwp_original_price($post_id);
+		foreach($campaigns as $c){
+			$prices[$c->ID] = $this->calculate($original_price, $c->price, $c->calculation);
+		}
+		arsort($prices);
+		$new_order = array();
+		foreach($prices as $index => $price){
+			foreach($campaigns as $c){
+				if($c->ID == $index){
+					if(!$multi){
+						return $c;
+					}else{
+						$new_order[] = $c;
+					}
+				}
+			}
+		}
+		return $new_order;
+	}
+	
+	
 	/**
 	 * Get post ids relation with campaign
 	 * @global wpdb $wpdb
@@ -330,27 +351,79 @@ EOS;
 	/**
 	 * Returns if specified post has campaign
 	 * 
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
 	 * @param object|int $post
 	 * @param string $time (optional) DATETIME string
 	 * @return booelan
 	 */
 	public function is_on_sale($post = null, $time = null){
-		global $wpdb;
+		global $wpdb, $lwp;
 		$post = get_post($post);
 		if(!$time){
 			$time = date_i18n('Y-m-d H:i:s');
 		}
 		$sql = <<<EOS
-			SELECT c.ID FROM {$this->campaign} AS c
+			SELECT DISTINCT c.ID FROM {$lwp->campaign} AS c
 			LEFT JOIN {$wpdb->postmeta} AS pm
 			ON pm.meta_key = %s AND c.ID = CAST(pm.meta_value AS UNSIGNED)
 			WHERE (c.book_id = %d OR pm.post_id = %d)
 			  AND c.start <= %s AND c.end >= %s
 EOS;
-		return (boolean) $wpdb->get_var($wpdb->prepare($sql, $post->ID, $post->ID, $time, $time));
+		$query = $wpdb->prepare($sql, $this->key_name, $post->ID, $post->ID, $time, $time);
+		$result = $wpdb->get_var($query);
+		return (boolean)$result;
 	}
 	
-	public function get_sale_price(){
-		
+	/**
+	 * Get campaign adopted price
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $post_id
+	 * @param string $time DATETIME string
+	 * @return int
+	 */
+	public function get_sale_price($post_id, $time = false){
+		global $wpdb, $lwp;
+		if(!$time){
+			$time = date('Y-m-d H:i:s');
+		}
+		$sql = <<<EOS
+			SELECT DISTINCT c.* FROM {$lwp->campaign} AS c
+			LEFT JOIN {$wpdb->postmeta} AS pm
+			ON pm.meta_key = %s AND c.ID = CAST(pm.meta_value AS UNSIGNED)
+			WHERE (c.book_id = %d OR pm.post_id = %d)
+			  AND c.start <= %s AND c.end >= %s
+EOS;
+		$campaigns = $wpdb->get_results($wpdb->prepare($sql, $this->key_name, $post_id, $post_id, $time, $time));
+		$price = lwp_original_price($post_id);
+		$sale_prices = array();
+		foreach($campaigns as $c){
+			$sale_prices[] = $this->calculate($price, $c->price, $c->calculation);
+		}
+		sort($sale_prices);
+		return $sale_prices[0];
+	}
+	
+	/**
+	 * Calculate sale price
+	 * @param float $price
+	 * @param int $campaing_price
+	 * @param string $type
+	 * @return float
+	 */
+	private function calculate($price, $campaing_price, $type){
+		switch($type){
+			case LWP_Campaign_Calculation::DISCOUNT:
+				$sale_price = $price - $campaing_price;
+				break;
+			case LWP_Campaign_Calculation::PERCENT:
+				$sale_price = round($price / 100 * $campaing_price);
+				break;
+			case LWP_Campaign_Calculation::SPECIAL_PRICE:
+				$sale_price = $campaing_price;
+				break;
+		}
+		return (float)max(0, min($price, $sale_price));
 	}
 }
