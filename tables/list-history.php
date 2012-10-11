@@ -82,7 +82,7 @@ EOS;
 		//WHERE
 		$where = array(
 			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('t.status IN (%s, %s, %s)', LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING)
+			$wpdb->prepare('t.status IN (%s, %s, %s, %s)', LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::WAITING_CANCELLATION)
 		);
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
@@ -177,7 +177,7 @@ EOS;
 				if($item->post_type == $lwp->event->post_type){
 					if(lwp_is_cancelable($item->post_parent) && $item->status == LWP_Payment_Status::SUCCESS){
 						$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
-					}else{
+					}elseif($item->status != LWP_Payment_Status::WAITING_CANCELLATION){
 						$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';
 					}
 				}

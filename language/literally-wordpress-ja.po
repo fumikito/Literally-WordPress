@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 17:29+0900\n"
-"PO-Revision-Date: 2012-10-11 17:38+0900\n"
+"POT-Creation-Date: 2012-10-12 02:36+0900\n"
+"PO-Revision-Date: 2012-10-12 02:37+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -149,7 +149,7 @@ msgstr "%d%% Off"
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
 
-#: ../functions.php:1599
+#: ../functions.php:1617
 msgid "Check Token"
 msgstr "トークンをチェックする"
 
@@ -183,7 +183,7 @@ msgstr "キャンペーンアイテム"
 #: ../admin/settings/dashboard.php:77 ../admin/settings/subscription.php:2
 #: ../class/campaign.php:265 ../class/form.php:112 ../class/form.php:201
 #: ../class/form.php:359 ../class/form.php:412 ../class/subscription.php:81
-#: ../tables/list-campaign.php:168 ../tables/list-history.php:141
+#: ../tables/list-campaign.php:164 ../tables/list-history.php:141
 #: ../tables/list-management.php:233
 msgid "Subscription"
 msgstr "定期購読"
@@ -1058,7 +1058,7 @@ msgid "Item Name"
 msgstr "アイテム名"
 
 #: ../admin/management.php:55 ../class/literally-wordpress.php:574
-#: ../form-template/edit-detail-event.php:129 ../tables/list-campaign.php:189
+#: ../form-template/edit-detail-event.php:129 ../tables/list-campaign.php:185
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr "編集"
@@ -1488,7 +1488,7 @@ msgstr "登録されたファイル"
 
 #: ../admin/upload.php:215 ../class/literally-wordpress.php:572
 #: ../form-template/edit-detail-event.php:75
-#: ../form-template/edit-detail-event.php:132 ../tables/list-campaign.php:124
+#: ../form-template/edit-detail-event.php:132 ../tables/list-campaign.php:120
 #: ../tables/list-devices.php:109
 msgid "Delete"
 msgstr "削除"
@@ -2891,7 +2891,7 @@ msgstr "メールの差出人を指定してください。"
 
 #: ../class/form.php:1010
 msgid "Subject is empty."
-msgstr "懸命が空です。"
+msgstr "件名が空です。"
 
 #: ../class/form.php:1013 ../form-template/paypal-event-contact.php:74
 msgid "Send"
@@ -4806,7 +4806,7 @@ msgstr "開始日"
 msgid "Ends at"
 msgstr "終了日"
 
-#: ../form-template/edit-detail-event.php:20 ../tables/list-event.php:36
+#: ../form-template/edit-detail-event.php:20
 msgid "Participants"
 msgstr "参加者"
 
@@ -5158,7 +5158,7 @@ msgstr "取引 No."
 msgid "Your Name"
 msgstr "お名前"
 
-#: ../form-template/paypal-return.php:34 ../tables/list-campaign.php:101
+#: ../form-template/paypal-return.php:34 ../tables/list-campaign.php:97
 msgid "Item"
 msgstr "アイテム"
 
@@ -6199,39 +6199,35 @@ msgstr ""
 msgid "Adding new notification is possible but meaningless."
 msgstr "新規通知を追加することはできますが、意味がありません。"
 
-#: ../tables/list-campaign.php:88
+#: ../tables/list-campaign.php:84
 msgid "No matching Campaign found."
 msgstr "該当するキャンペーンは見つかりませんでした。"
 
-#: ../tables/list-campaign.php:102
+#: ../tables/list-campaign.php:98
 msgid "Start"
 msgstr "開始"
 
-#: ../tables/list-campaign.php:103
+#: ../tables/list-campaign.php:99
 msgid "End"
 msgstr "終了"
 
-#: ../tables/list-campaign.php:104
+#: ../tables/list-campaign.php:100
 msgid "Sale Price"
 msgstr "セール価格"
 
-#: ../tables/list-campaign.php:105
-msgid "Coupon"
-msgstr "クーポン"
-
-#: ../tables/list-campaign.php:183
+#: ../tables/list-campaign.php:179
 #, php-format
 msgid "%d items<small>(%s)</small>"
 msgstr "%d アイテム<small>(%s)</small>"
 
-#: ../tables/list-campaign.php:203
+#: ../tables/list-campaign.php:199
 #, php-format
 msgid "%s discount"
 msgstr "%s値引き"
 
-#: ../tables/list-campaign.php:245 ../tables/list-devices.php:175
-#: ../tables/list-download-logs.php:224 ../tables/list-event.php:275
-#: ../tables/list-history.php:268 ../tables/list-management.php:340
+#: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
+#: ../tables/list-download-logs.php:224 ../tables/list-event.php:276
+#: ../tables/list-history.php:268 ../tables/list-management.php:336
 #: ../tables/list-reward-history.php:200 ../tables/list-ticket.php:262
 #: ../tables/list-transfers.php:328
 #, php-format
@@ -6295,6 +6291,10 @@ msgstr "公開日"
 msgid "Selling Limit"
 msgstr "販売期限"
 
+#: ../tables/list-event.php:36
+msgid "Event Starts"
+msgstr "イベント開始日"
+
 #: ../tables/list-event.php:140 ../tables/list-event.php:155
 #, php-format
 msgid "%s before"
@@ -6305,17 +6305,17 @@ msgstr "%s前"
 msgid "%s later"
 msgstr "%s後"
 
-#: ../tables/list-event.php:201 ../tables/list-management.php:136
+#: ../tables/list-event.php:202 ../tables/list-management.php:136
 #: ../tables/list-management.php:271 ../tables/list-reward-history.php:174
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:255 ../tables/list-history.php:241
-#: ../tables/list-management.php:317 ../tables/list-promotable-posts.php:189
+#: ../tables/list-event.php:256 ../tables/list-history.php:241
+#: ../tables/list-management.php:313 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
 
-#: ../tables/list-event.php:267 ../tables/list-management.php:304
+#: ../tables/list-event.php:268 ../tables/list-management.php:303
 #: ../tables/list-ticket.php:237 ../tables/list-transfers.php:314
 msgid "All Status"
 msgstr "すべてのステータス"
@@ -6360,11 +6360,11 @@ msgstr ""
 msgid "See all users' transactions"
 msgstr "すべてのユーザーの決済を見る"
 
-#: ../tables/list-management.php:335 ../tables/list-ticket.php:256
+#: ../tables/list-management.php:331 ../tables/list-ticket.php:256
 msgid "Date From"
 msgstr "開始日"
 
-#: ../tables/list-management.php:336 ../tables/list-ticket.php:257
+#: ../tables/list-management.php:332 ../tables/list-ticket.php:257
 msgid "Date To"
 msgstr "終了日"
 
@@ -6501,6 +6501,9 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid "Coupon"
+#~ msgstr "クーポン"
 
 #~ msgid ""
 #~ "If you enter coupon code, the sale price will be adopted only for user "

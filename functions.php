@@ -1026,6 +1026,7 @@ function lwp_has_cancel_list($post = null){
 	return $lwp->event->has_cancel_list($post->ID);
 }
 
+
 /**
  * Return url of cancel list
  * @global Literally_WordPress $lwp
@@ -1053,6 +1054,23 @@ function lwp_is_user_waiting($post = null, $user_id = false){
 		$user_id = get_current_user_id();
 	}
 	return $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d AND status = %s", $post->ID, $user_id, LWP_Payment_Status::WAITING_CANCELLATION));
+}
+
+/**
+ * Returns user count
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return int
+ */
+function lwp_waiting_user_count($post = null){
+	global $wpdb, $lwp;
+	$post = get_post($post);
+	$sql = <<<EOS
+		SELECT COUNT(DISTINCT user_id) FROM {$lwp->transaction}
+		WHERE book_id = %d AND status = %s
+EOS;
+	return (int)$wpdb->get_var($wpdb->prepare($sql, $post->ID, LWP_Payment_Status::WAITING_CANCELLATION));
 }
 
 /**

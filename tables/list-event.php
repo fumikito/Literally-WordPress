@@ -33,7 +33,7 @@ class LWP_List_Event extends WP_List_Table {
 			'event_name' => $lwp->_("Event Name"),
 			'published' => $lwp->_('Published'),
 			'selling_limit' => $lwp->_("Selling Limit"),
-			'participants' => $lwp->_('Participants'),
+			'participants' => $lwp->_('Event Starts'),
 			'tickets' => $lwp->_('Tickets'),
 			'actions' => ''
 		);
@@ -189,8 +189,9 @@ EOS;
 						}else{
 							$style = ' style="color: darkgray; "';
 						}
+						$waiting = lwp_waiting_user_count($ticket);
 						//Apply filter
-						$list = apply_filters('lwp_event_list_ticket_info', "<li{$style}>{$ticket->post_title} ({$sold}/{$stock})</li>", $sold, $stock, $ticket, $item);
+						$list = apply_filters('lwp_event_list_ticket_info', "<li{$style}>{$ticket->post_title} ({$sold}/{$stock} + {$waiting})</li>", $sold, $stock, $ticket, $item, $waiting);
 						$return .= $list;
 					}
 					$return .= '</ol>';
