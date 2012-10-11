@@ -52,22 +52,18 @@ EOS;
 		if(!empty($wheres)){
 			$sql .= ' WHERE '.implode(' AND ', $wheres);
 		}
-		$order_by = 'c.start';
+		$order_by = 'c.end';
 		if(isset($_GET['orderby'])){
 			switch ($_GET['orderby']) {
 				case 'start':
 				case 'end':
-				case 'price':
 					$order_by = "c.".$_GET['orderby'];
-					break;
-				case 'discount':
-					$order_by = "((pm.meta_value - c.price) / pm.meta_value)";
 					break;
 			}
 		}
 		$order = (isset($_GET['order']) && $_GET['order'] == 'asc') ? 'ASC' : 'DESC';
 		$sql .= <<<EOS
-			ORDER BY {$order_by} {$order}
+			ORDER BY {$order_by} {$order}, c.ID DESC
 			LIMIT {$offset}, {$per_page}
 EOS;
 		$this->items = $wpdb->get_results($sql);
@@ -102,7 +98,7 @@ EOS;
 			'start' => $lwp->_("Start"),
 			'end' => $lwp->_('End'),
 			'price' => $lwp->_('Sale Price'),
-			'coupon' => $lwp->_('Coupon')
+//			'coupon' => $lwp->_('Coupon')
 		);
 	}
 	
