@@ -1,3 +1,4 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h3><?php printf($this->_('About %s'), $this->_('Event')); ?></h3>
 <p class="description">
 	<?php $this->e('Event means real event like lunch party, poetry reading or else.'); ?><br />
@@ -36,6 +37,23 @@
 			<td>
 				<textarea rows="5" style="width:90%;" name="event_signature" id="event_signature"><?php echo esc_html($this->event->get_signature()); ?></textarea>
 				<p class="description"><?php $this->e('This text will be used for every mail to participants'); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="event_awaiting"><?php $this->e('Waiting list'); ?></label></th>
+			<td>
+				<label>
+					<input type="checkbox" name="event_awaiting" id="event_awaiting"<?php if($this->event->cancel_list) echo ' checked="checked"'; ?> />
+					<?php $this->e('User can wait for cancellation.'); ?>
+				</label>
+				<p class="description"><?php $this->e('This setting is global and can be overridden individually.'); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="event_awaiting_message"><?php $this->e('Waiting message'); ?></label></th>
+			<td>
+				<textarea rows="5" style="width:90%;" name="event_awaiting_message" id="event_awaiting_message"><?php echo esc_html($this->event->awaiting_message); ?></textarea>
+				<p class="description"><?php $this->e('This text will be displayed when user decide to wait for cancellation.'); ?></p>
 			</td>
 		</tr>
 	</tbody>

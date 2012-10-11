@@ -37,6 +37,15 @@
 			<?php echo number_format($this->get_event_transaction_total($post->ID)).' '.lwp_currency_code();?>
 		</td>
 	</tr>
+	<tr>
+		<th valign="top"><?php $this->e('Waiting list'); ?></th>
+		<td>
+			<label>
+				<input type="checkbox" name="event_awaiting" value="1"<?php if($this->has_cancel_list($post->ID)) echo ' checked="checked"'; ?> />
+				<?php $this->e('User can wait for cancellation of this event.'); ?>
+			</label>
+		</td>
+	</tr>
 </table>
 
 <h4><?php $this->e('Ticket Sale Setting');?></h4>

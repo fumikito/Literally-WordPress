@@ -909,6 +909,60 @@ EOS;
 		));
 	}
 	
+	private function handle_ticket_awaiting($is_sandbox = false){
+		global $wpdb, $lwp;
+		//First of all, user must be logged in
+		if(!is_user_logged_in()){
+			auth_redirect();
+		}
+		//Get random ticket
+		if($is_sandbox){
+			$ticket = $this->get_random_ticket();
+			$this->show_form('event-tickets-awaiting', array(
+				'ticket' => $this->_('Event Name').' '.$ticket->post_title,
+				'link' => admin_url('themes.php?page=lwp-form-check'),
+				'message' => $lwp->event->awaiting_message
+			));
+		}
+		//Get ticket
+		$sql = "SELECT * FROM {$wpdb->posts} WHERE ID = %d AND post_type = %s AND post_status = 'publish'";
+		if(!isset($_REQUEST['ticket_id']) || !($ticket = $wpdb->get_row($wpdb->prepare($sql, $_REQUEST['ticket_id'], $lwp->event->post_type)))){
+			$this->kill($this->_('Specified ticket doesn\'t exist.'), 404, true);
+		}
+		$ticket_name = get_the_title($ticket->post_parent).' '.$ticket->post_title;
+		//Check if ticket can be sold
+		if(lwp_get_ticket_stock(false, $ticket) > 0){
+			$this->kill(sprintf($this->_('%s has stock to sell.'), $ticket_name), 403, true);
+		}
+		//Check if ticket can be waited for canellation.
+		if(!$lwp->event->has_cancel_list($ticket->ID)){
+			$this->kill(sprintf($this->_('Sorry, but %s dosen\'t have waiting list.'), $ticket_name), 403, true);
+		}
+		//If user has already waiting
+		if(lwp_is_user_waiting($ticket)){
+			$this->kill(sprintf($this->_('You are already on waiting list of %s.'), $ticket_name), 403, true);
+		}
+		//Enqueue user to cancel list
+		$insert = $wpdb->insert($lwp->transaction, array(
+				"user_id" => get_current_user_id(),
+				"book_id" => $ticket->ID,
+				"price" => lwp_price($ticket),
+				"status" => LWP_Payment_Status::WAITING_CANCELLATION,
+				"transaction_key" => $lwp->event->generate_waiting_list_hash(get_current_user_id(), $ticket->ID),
+				"registered" => gmdate('Y-m-d H:i:s'),
+				"updated" => gmdate('Y-m-d H:i:s')
+			),array("%d", "%d", "%f", "%s", "%s", "%s", "%s"));
+		if(!$insert){
+			$this->kill($this->_('Sorry, but failed to save data. Please retry later.'), 500, true);
+		}
+		//All green
+		$this->show_form('event-tickets-awaiting', array(
+			'ticket' => $ticket_name,
+			'link' => get_permalink($ticket->post_parent),
+			'message' => $lwp->event->awaiting_message
+		));
+	}
+	
 	/**
 	 * Contact to participants
 	 * @global Literally_WordPress $lwp
@@ -1194,6 +1248,9 @@ EOS;
 			case 'event-tickets-consume':
 				$meta_title = $this->_('Ticket Status');
 				break;
+			case 'event-tickets-awaiting':
+				$meta_title = $this->_('Waiting for ticket cancellation');
+				break;
 			case 'event-user':
 				$meta_title = $this->_('Find User');
 				break;
@@ -1249,6 +1306,9 @@ EOS;
 			case 'ticket-contact':
 				return 'event-contact';
 				break;
+			case 'ticket-awaiting':
+				return 'event-tickets-awaiting';
+				break;
 			default:
 				return '';
 				break;
@@ -1299,6 +1359,9 @@ EOS;
 				break;
 			case 'ticket-contact':
 				return $this->_('Show mail form to send emails to event participants.');
+				break;
+			case 'ticket-awaiting':
+				return $this->_('Displayed when user choose to wait for cancellation.');
 				break;
 			default:
 				return '';

@@ -249,6 +249,8 @@ class Literally_WordPress{
 				'event_post_types' => array(),
 				'event_mail_body' => '',
 				'event_signature' => get_bloginfo('name')."\n".get_bloginfo('url')."\n".get_option('admin_email'),
+				'event_awaiting' => true,
+				'event_awaiting_message' => $this->_('Thank you for your patience. Please wait for our contact.'),
 				"slug" => str_replace(".", "", $_SERVER["HTTP_HOST"]),
 				"currency_code" => '',
 				"country_code" => '',
@@ -731,7 +733,9 @@ class Literally_WordPress{
 					$option = array(
 						'event_post_types' => (array) $_REQUEST['event_post_types'],
 						'event_mail_body' => (string) $_REQUEST['event_mail_body'],
-						'event_signature' => (string) $_REQUEST['event_signature']
+						'event_signature' => (string) $_REQUEST['event_signature'],
+						'event_awaiting' => (boolean) $_REQUEST['event_awaiting'],
+						'event_awaiting_message' => (string) $_REQUEST['event_awaiting_message']
 					);
 					break;
 				case 'reward':

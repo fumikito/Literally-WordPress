@@ -19,6 +19,12 @@ class LWP_Event extends Literally_WordPress_Common {
 	public $post_type = 'lwp-ticket';
 	
 	/**
+	 * Whether if user can wait for cancellation
+	 * @var boolean
+	 */
+	public $cancel_list = false;
+	
+	/**
 	 * Key name of post meta for event start
 	 * @var string 
 	 */
@@ -55,6 +61,18 @@ class LWP_Event extends Literally_WordPress_Common {
 	public $meta_footer_note = '_lwp_event_footer_note';
 	
 	/**
+	 * Key name of event's cancel list
+	 * @var string
+	 */
+	public $meta_cancel_list = '_lwp_has_cancel_list';
+	
+	/**
+	 * Message to be displayed on cancel list
+	 * @var string
+	 */
+	public $awaiting_message = '';
+	
+	/**
 	 * Footer signature display on mail
 	 * @var string
 	 */
@@ -82,12 +100,16 @@ class LWP_Event extends Literally_WordPress_Common {
 		$option = shortcode_atts(array(
 			'event_post_types' => array(),
 			'event_mail_body' => '',
-			'event_signature' => ''
+			'event_signature' => '',
+			'event_awaiting' => true,
+			'event_awaiting_message' => ''
 		), $option);
 		$this->post_types = $option['event_post_types'];
 		$this->_signature = (string)$option['event_signature'];
 		$this->_mail_body = (string)$option['event_mail_body'];
 		$this->enabled = !empty($option['event_post_types']);
+		$this->cancel_list = (boolean)$option['event_awaiting'];
+		$this->awaiting_message = $option['event_awaiting_message'];
 	}
 	
 	/**
@@ -212,6 +234,12 @@ class LWP_Event extends Literally_WordPress_Common {
 				));
 			}else{
 				delete_post_meta($post_id, $this->meta_footer_note);
+			}
+			//Save cancel list
+			if(isset($_REQUEST['event_awaiting']) && $_REQUEST['event_awaiting']){
+				update_post_meta($post_id, $this->meta_cancel_list, true);
+			}else{
+				update_post_meta($post_id, $this->meta_cancel_list, false);
 			}
 		}
 	}
@@ -968,5 +996,33 @@ EOS;
 			);
 		}
 		return $this->_place_holders;
+	}
+	
+	/**
+	 * Returns if event has cancel list
+	 * @global wpdb $wpdb
+	 * @param int $post_id
+	 * @return boolean
+	 */
+	public function has_cancel_list($post_id){
+		global $wpdb;
+		if($wpdb->get_var($wpdb->prepare("SELECT post_id FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s", $post_id, $this->meta_cancel_list))){
+			return (boolean)get_post_meta($post_id, $this->meta_cancel_list, TRUE);
+		}else{
+			return $this->cancel_list;
+		}
+	}
+	
+	public function is_user_waiting($ticket_id){
+		
+	}
+	
+	/**
+	 * Generate hash value for ticket cancellation
+	 * @param int $user_id
+	 * @param int $ticket_id
+	 */
+	public function generate_waiting_list_hash($user_id, $ticket_id){
+		return md5(uniqid($user_id.'-'.$ticket_id));
 	}
 }

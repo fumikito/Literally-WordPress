@@ -368,6 +368,11 @@ class LWP_Payment_Status {
 	const REFUND_REQUESTING = 'REFUND_REQUESTING';
 	
 	/**
+	 * Transaction is on 
+	 */
+	const WAITING_CANCELLATION = 'WAITING_CANCELLATION';
+	
+	/**
 	 * Returns all Status
 	 * @return array
 	 */
@@ -377,7 +382,8 @@ class LWP_Payment_Status {
 			self::CANCEL,
 			self::SUCCESS,
 			self::REFUND,
-			self::REFUND_REQUESTING
+			self::REFUND_REQUESTING,
+			self::WAITING_CANCELLATION
 		);
 	}
 	
@@ -393,6 +399,7 @@ class LWP_Payment_Status {
 		$lwp->_('START');
 		$lwp->_('REFUND');
 		$lwp->_('REFUND_REQUESTING');
+		$lwp->_('WAITING_CANCELLATION');
 	}
 }
 

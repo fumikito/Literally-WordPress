@@ -1015,6 +1015,47 @@ function lwp_has_ticket($post = null){
 }
 
 /**
+ * Returns if user can wait for cancellation
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return boolean
+ */
+function lwp_has_cancel_list($post = null){
+	global $lwp;
+	$post = get_post($post);
+	return $lwp->event->has_cancel_list($post->ID);
+}
+
+/**
+ * Return url of cancel list
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @return string
+ */
+function lwp_cancel_list_url($post = null){
+	global $lwp;
+	$post = get_post($post);
+	return lwp_endpoint('ticket-awaiting').'&ticket_id='.$post->ID;
+}
+
+/**
+ * Returns if user is on waiting list
+ * @global wpdb $wpdb
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @param int $user_id
+ * @return boolean
+ */
+function lwp_is_user_waiting($post = null, $user_id = false){
+	global $wpdb, $lwp;
+	$post = get_post($post);
+	if(!$user_id){
+		$user_id = get_current_user_id();
+	}
+	return (boolean)$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d AND status = %s", $post->ID, $user_id, LWP_Payment_Status::WAITING_CANCELLATION));
+}
+
+/**
  * Returns selling limit string
  * @global Literally_WordPress $lwp
  * @global object $post
