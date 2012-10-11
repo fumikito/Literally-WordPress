@@ -1044,7 +1044,7 @@ function lwp_cancel_list_url($post = null){
  * @global Literally_WordPress $lwp
  * @param object $post
  * @param int $user_id
- * @return boolean
+ * @return int|false Transaction ID
  */
 function lwp_is_user_waiting($post = null, $user_id = false){
 	global $wpdb, $lwp;
@@ -1052,7 +1052,7 @@ function lwp_is_user_waiting($post = null, $user_id = false){
 	if(!$user_id){
 		$user_id = get_current_user_id();
 	}
-	return (boolean)$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d AND status = %s", $post->ID, $user_id, LWP_Payment_Status::WAITING_CANCELLATION));
+	return $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE book_id = %d AND user_id = %d AND status = %s", $post->ID, $user_id, LWP_Payment_Status::WAITING_CANCELLATION));
 }
 
 /**

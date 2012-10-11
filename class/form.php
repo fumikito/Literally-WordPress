@@ -160,23 +160,26 @@ class LWP_Form extends Literally_WordPress_Common{
 			//Content is free
 			if(lwp_original_price($book_id) > 0){
 				//Original price is not free, temporally free.
-				$wpdb->insert(
-					$lwp->transaction,
-					array(
-						"user_id" => get_current_user_id(),
-						"book_id" => $book_id,
-						"price" => 0,
-						"status" => LWP_Payment_Status::SUCCESS,
-						"method" => LWP_Payment_Methods::CAMPAIGN,
-						"registered" => gmdate('Y-m-d H:i:s'),
-						"updated" => gmdate('Y-m-d H:i:s'),
-						'expires' => lwp_expires_date($book_id)
-					),
-					array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
+				$data = array(
+					"user_id" => get_current_user_id(),
+					"book_id" => $book_id,
+					"price" => 0,
+					"status" => LWP_Payment_Status::SUCCESS,
+					"method" => LWP_Payment_Methods::CAMPAIGN,
+					"registered" => gmdate('Y-m-d H:i:s'),
+					"updated" => gmdate('Y-m-d H:i:s'),
+					'expires' => lwp_expires_date($book_id)
 				);
-				//Execute hook.
-				do_action('lwp_create_transaction', $wpdb->insert_id);
-				do_action('lwp_update_transaction', $wpdb->insert_id);
+				$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s");
+				if(($tran_id = lwp_is_user_waiting($book_id, get_current_user_id()))){
+					unset($data['registered']);
+					array_pop($where);
+					$wpdb->update($lwp->transaction, $data, array('ID' => $tran_id), $where, array('%d'));
+					do_action('lwp_update_transaction', $tran_id);
+				}else{
+					$wpdb->insert( $lwp->transaction, $data, $where );
+					do_action('lwp_create_transaction', $wpdb->insert_id);
+				}
 				//Redirect to success page
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
 				exit;
@@ -220,22 +223,27 @@ EOS;
 							$transaction = $wpdb->get_row($wpdb->prepare($sql, get_current_user_id(), $book_id, LWP_Payment_Status::START, $lwp->option['notification_limit']));
 							if(!$transaction){
 								//Register transaction with transfer
-								$wpdb->insert(
-									$lwp->transaction,
-									array(
-										"user_id" => get_current_user_id(),
-										"book_id" => $book_id,
-										"price" => lwp_price($book_id),
-										"transaction_key" => sprintf("%08d", get_current_user_id()),
-										"status" => LWP_Payment_Status::START,
-										"method" => LWP_Payment_Methods::TRANSFER,
-										"registered" => gmdate('Y-m-d H:i:s'),
-										"updated" => gmdate('Y-m-d H:i:s')
-									),
-									array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s")
+								$data = array(
+									"user_id" => get_current_user_id(),
+									"book_id" => $book_id,
+									"price" => lwp_price($book_id),
+									"transaction_key" => sprintf("%08d", get_current_user_id()),
+									"status" => LWP_Payment_Status::START,
+									"method" => LWP_Payment_Methods::TRANSFER,
+									"registered" => gmdate('Y-m-d H:i:s'),
+									"updated" => gmdate('Y-m-d H:i:s')
 								);
-								//Execute hook
-								do_action('lwp_create_transaction', $wpdb->insert_id);
+								$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s");
+								if((($tran_id = lwp_is_user_waiting($book_id, get_current_user_id())))){
+									unset($data['registered']);
+									array_pop($where);
+									$wpdb->update($lwp->transaction, $data, array('ID' => $tran_id), $where, array('%d'));
+									do_action('lwp_update_transaction', $tran_id);
+								}else{
+									$wpdb->insert( $lwp->transaction, $data, $where);
+									//Execute hook
+									do_action('lwp_create_transaction', $wpdb->insert_id);
+								}
 								//Send Notification
 								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id));
 								$notification_status = $lwp->notifier->notify($transaction, 'thanks');
@@ -287,23 +295,28 @@ EOS;
 								)));
 						if($token){
 							//Get token, save transaction
-							$wpdb->insert(
-								$lwp->transaction,
-								array(
-									"user_id" => get_current_user_id(),
-									"book_id" => $book_id,
-									"price" => $price,
-									"status" => LWP_Payment_Status::START,
-									"method" => LWP_Payment_Methods::PAYPAL,
-									"transaction_key" => $invnum,
-									"transaction_id" => $token,
-									"registered" => gmdate('Y-m-d H:i:s'),
-									"updated" => gmdate('Y-m-d H:i:s')
-								),
-								array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s")
+							$data = array(
+								"user_id" => get_current_user_id(),
+								"book_id" => $book_id,
+								"price" => $price,
+								"status" => LWP_Payment_Status::START,
+								"method" => LWP_Payment_Methods::PAYPAL,
+								"transaction_key" => $invnum,
+								"transaction_id" => $token,
+								"registered" => gmdate('Y-m-d H:i:s'),
+								"updated" => gmdate('Y-m-d H:i:s')
 							);
-							//Execute hook
-							do_action('lwp_create_transaction', $wpdb->insert_id);
+							$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s");
+							if(($tran_id = lwp_is_user_waiting($book_id, get_current_user_id()))){
+								unset($data['registered']);
+								array_pop($where);
+								$wpdb->update($lwp->transaction, $data, array('ID' => $tran_id), $where, array('%d'));
+								do_action('lwp_update_transaction', $tran_id);
+							}else{
+								$wpdb->insert( $lwp->transaction, $data, $where);
+								//Execute hook
+								do_action('lwp_create_transaction', $wpdb->insert_id);
+							}
 							//Redirect to Paypal
 							PayPal_Statics::redirect($token);
 							exit;
@@ -909,6 +922,12 @@ EOS;
 		));
 	}
 	
+	/**
+	 * Handle cancel waiting 
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param boolean $is_sandbox
+	 */
 	private function handle_ticket_awaiting($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be logged in
@@ -946,7 +965,7 @@ EOS;
 		$insert = $wpdb->insert($lwp->transaction, array(
 				"user_id" => get_current_user_id(),
 				"book_id" => $ticket->ID,
-				"price" => lwp_price($ticket),
+				"price" => 0,
 				"status" => LWP_Payment_Status::WAITING_CANCELLATION,
 				"transaction_key" => $lwp->event->generate_waiting_list_hash(get_current_user_id(), $ticket->ID),
 				"registered" => gmdate('Y-m-d H:i:s'),
@@ -955,6 +974,7 @@ EOS;
 		if(!$insert){
 			$this->kill($this->_('Sorry, but failed to save data. Please retry later.'), 500, true);
 		}
+		do_action('lwp_create_transaction', $wpdb->insert_id);
 		//All green
 		$this->show_form('event-tickets-awaiting', array(
 			'ticket' => $ticket_name,
