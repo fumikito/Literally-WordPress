@@ -94,7 +94,9 @@ jQuery(document).ready(function($){
 							$.post(submitData.endpoint, submitData, ajaxResponseHandler);
 						}
 					}else{
-						alert(result.message.join("\n"));
+						if(result.message){
+							alert(result.message.join("\n"));
+						}
 						$(this).find('input[type=submit]').removeClass('disabled').attr('disabled', false).val(LWP.labelSent);
 					}
 				}
