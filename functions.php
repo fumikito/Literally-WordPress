@@ -1513,24 +1513,19 @@ function lwp_is_participating($post = null){
 /**
  * Returns participants number of event
  * @global Literally_WordPress $lwp
- * @global object $post
  * @param object $post
  * @return int 
  */
-function lwp_participants_number($post = null){
+function lwp_participants_number($post = null, $waiting = false){
 	global $lwp, $wpdb;
-	if(is_null($post)){
-		global $post;
-	}else{
-		$post = get_post($post);
-	}
+	$post = get_post($post);
 	$sql = <<<EOS
 		SELECT COUNT(DISTINCT t.user_id) FROM {$lwp->transaction} AS t
 		INNER JOIN {$wpdb->posts} AS p
 		ON t.book_id = p.ID
 		WHERE p.post_parent = %d AND t.status = %s
 EOS;
-	return (int)$wpdb->get_var($wpdb->prepare($sql, $post->ID, LWP_Payment_Status::SUCCESS));
+	return (int)$wpdb->get_var($wpdb->prepare($sql, $post->ID, ($waiting ? LWP_Payment_Status::WAITING_CANCELLATION : LWP_Payment_Status::SUCCESS)));
 }
 
 

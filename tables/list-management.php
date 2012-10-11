@@ -300,14 +300,10 @@ EOS;
 			<?php endif; ?>
 			<select name="status<?php echo $nombre; ?>">
 				<?php
-				$status = array(
-					'all' => $lwp->_('All Status'),
-					LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
-					LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
-					LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
-					LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND),
-					LWP_Payment_Status::REFUND_REQUESTING => $lwp->_(LWP_Payment_Status::REFUND_REQUESTING)
-				);
+				$status = array('all' => $lwp->_('All Status'));
+				foreach(LWP_Payment_Status::get_all_status() as $s){
+					$status[$s] = $lwp->_($s);
+				}
 				foreach($status as $s => $val): ?>
 				<option value="<?php echo $s; if($s == $this->get_filter()) echo '" selected="selected'?>"><?php echo $val; ?></option>
 				<?php endforeach; ?>

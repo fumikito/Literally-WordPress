@@ -630,12 +630,15 @@ EOS;
 		header('Content-Type: application/json; charset=utf-8');
 		$json = array(
 			'success' => false,
-			'message' => array()
+			'message' => array(),
+			'current' => 0,
+			'total' => 0
 		);
 		//Check nonce
-		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id'], $_REQUEST['from'], $_REQUEST['subject'], $_REQUEST['body']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_contact_participants_'.get_current_user_id())){
+		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id'], $_REQUEST['from'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['to'], $_REQUEST['current'], $_REQUEST['total']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_contact_participants_'.get_current_user_id())){
 			//Get Event and check nonce
-			if(($event = wp_get_single_post($_REQUEST['event_id'])) && false !== array_search($event->post_type, $this->post_types) && user_can_edit_post(get_current_user_id(), $event->ID)){
+			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
+			if($event && false !== array_search($event->post_type, $this->post_types) && user_can_edit_post(get_current_user_id(), $event->ID)){
 				//Check from and permisson
 				if(false !== array_search($_REQUEST['from'], array('admin', 'you', 'author')) && (current_user_can('edit_others_posts') || $_REQUEST['from'] != 'author')){
 					switch($_REQUEST['from']){
@@ -657,42 +660,82 @@ EOS;
 					if(empty($_REQUEST['body'])){
 						$json['message'][] = $this->_('Mail body is empty.');
 					}
+					//By recipients, change where clause
+					$ticket_id = preg_replace("/[^0-9]/", "", $_REQUEST['to']);
+					$where = array(
+						$wpdb->prepare("p.post_parent = %d", $event->ID),
+						$wpdb->prepare("p.post_type = %s", $lwp->event->post_type)
+					);
+					if($_REQUEST['to'] == 'event_success'){
+						$where[] = $wpdb->prepare("t.status = %s", LWP_Payment_Status::SUCCESS);
+					}elseif($_REQUEST['to'] == 'event_waiting'){
+						$where[] = $wpdb->prepare("t.status = %s", LWP_Payment_Status::WAITING_CANCELLATION);
+					}elseif(preg_match("/^ticket_participants_/", $_REQUEST['to'])){
+						$where[] = $wpdb->prepare("t.status = %s", LWP_Payment_Status::SUCCESS);
+						$where[] = $wpdb->prepare("t.book_id = %d", $ticket_id);
+					}elseif(preg_match("/^ticket_waiting_/", $_REQUEST['to'])){
+						$where[] = $wpdb->prepare("t.status = %s", LWP_Payment_Status::WAITING_CANCELLATION);						
+						$where[] = $wpdb->prepare("t.book_id = %d", $ticket_id);
+					}else{
+						$json['message'][] = $this->_('Recipients not set.');
+					}
 					if(empty($json['message'])){
 						//Now start sending email.
-						//Fisrt, get all participants email.
-						$sql = <<<EOS
-							SELECT DISTINCT u.ID, u.user_email, u.display_name FROM {$wpdb->users} AS u
-							INNER JOIN {$lwp->transaction} AS t
-							ON u.ID = t.user_id
-							INNER JOIN {$wpdb->posts} AS p
-							ON t.book_id = p.ID
-							WHERE p.post_parent = %d AND p.post_type = %s AND t.status = %s
+						$current = intval($_REQUEST['current']);
+						$total = intval($_REQUEST['total']);
+						if($current == 0 && $total == 0){
+							$sql = <<<EOS
+								SELECT COUNT(DISTINCT u.ID)
+								FROM {$wpdb->users} AS u
+								INNER JOIN {$lwp->transaction} AS t
+								ON u.ID = t.user_id
+								INNER JOIN {$wpdb->posts} AS p
+								ON t.book_id = p.ID
 EOS;
-						$users = $wpdb->get_results($wpdb->prepare($sql, $event->ID, $this->post_type, LWP_Payment_Status::SUCCESS));
-						if(empty($users)){
-							$json['message'][] = $this->_('Participants not found.');
+							$total = (int)$wpdb->get_var($sql.' WHERE '.implode(" AND ", $where));
+							if($total > 0){
+								$json['success'] = true;
+							}else{
+								$json['message'] = $this->_('No recipients match your criteria.');
+							}
 						}else{
-							//Let's send.
-							$to = array();
-							$sent = 0;
-							$failed = 0;
-							set_time_limit(0);
-							$body = (string)$_REQUEST['body'];
-							$body = str_replace('%ticket_url%', lwp_ticket_url($event), $body)."\r\n".$this->get_signature();
-							$headers = "From: {$from}\r\n";
-							foreach($users as $user){
-								$replaced_body = str_replace('%code%', $this->generate_token($event->ID, $user->ID), $body);
-								$replaced_body = str_replace('%user_email%', $user->user_email, $replaced_body);
-								$replaced_body = str_replace('%display_name%', $user->display_name, $replaced_body);
-								if(wp_mail($user->user_email, (string)$_REQUEST['subject'], $replaced_body, $headers)){
-									$sent++;
-								}else{
-									$failed++;
+							//Fisrt, get all participants email.
+							$sql = <<<EOS
+								SELECT SQL_CALC_FOUND_ROWS 
+									DISTINCT u.ID, u.user_email, u.display_name
+								FROM {$wpdb->users} AS u
+								INNER JOIN {$lwp->transaction} AS t
+								ON u.ID = t.user_id
+								INNER JOIN {$wpdb->posts} AS p
+								ON t.book_id = p.ID
+EOS;
+							$offset = $current;
+							$limit = apply_filters('lwp_contact_mail_amount', 20);
+							$limit_clause = sprintf(' LIMIT %d, %d', $offset, $limit);
+							$users = $wpdb->get_results($sql.' WHERE '.implode(' AND ', $where).$limit_clause);
+							if(empty($users)){
+								$json['message'][] = $this->_('Participants not found.');
+							}else{
+								//Let's send.
+								set_time_limit(0);
+								$body = (string)$_REQUEST['body'];
+								$body = str_replace('%ticket_url%', lwp_ticket_url($event), $body)."\r\n".$this->get_signature();
+								$headers = "From: {$from}\r\n";
+								foreach($users as $user){
+									$replaced_body = str_replace('%code%', $this->generate_token($event->ID, $user->ID), $body);
+									$replaced_body = str_replace('%user_email%', $user->user_email, $replaced_body);
+									$replaced_body = str_replace('%display_name%', $user->display_name, $replaced_body);
+									wp_mail($user->user_email, (string)$_REQUEST['subject'], $replaced_body, $headers);
+									$current++;
+								}
+								$json['success'] = true;
+								if($current >= $total){
+									$json['message'][] = sprintf($this->_('Finish sending to %1$d users.'), $current);
 								}
 							}
-							$json['success'] = true;
-							$json['message'][] = sprintf($this->_('Finish sending: %1$d success, %2$d failed'), $sent, $failed);
 						}
+						$json['current'] = $current;
+						$json['total'] = $total;
 					}
 				}else{
 					$json['message'][] = $this->_('You can send email only from Admin email or yours.');
@@ -910,9 +953,9 @@ EOS;
 			SELECT t.*, p.post_parent, p.post_title FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			WHERE t.ID = %d AND p.post_type = %s
+			WHERE t.ID = %d AND p.post_type = %s AND t.status = %s
 EOS;
-		$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id, $this->post_type));
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id, $this->post_type, LWP_Payment_Status::SUCCESS));
 		if(!$transaction){
 			return;
 		}
@@ -1011,10 +1054,6 @@ EOS;
 		}else{
 			return $this->cancel_list;
 		}
-	}
-	
-	public function is_user_waiting($ticket_id){
-		
 	}
 	
 	/**

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 01:13+0900\n"
-"PO-Revision-Date: 2012-10-11 01:13+0900\n"
+"POT-Creation-Date: 2012-10-11 17:29+0900\n"
+"PO-Revision-Date: 2012-10-11 17:38+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,289,-1\n"
-"X-Generator: Poedit 1.5.3\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
@@ -33,123 +33,123 @@ msgstr "購入価格 - %s"
 msgid "By %1$s, %2$s"
 msgstr "%1$sまでは%2$s返金"
 
-#: ../functions.php:472
+#: ../functions.php:471
 msgid "Registered Files"
 msgstr "登録されたファイル"
 
-#: ../functions.php:477 ../tables/list-download-logs.php:111
+#: ../functions.php:476 ../tables/list-download-logs.php:111
 msgid "File Name"
 msgstr "ファイル名"
 
-#: ../functions.php:478 ../admin/upload.php:178
+#: ../functions.php:477 ../admin/upload.php:178
 #: ../admin/settings/dashboard.php:134
-#: ../form-template/edit-detail-event.php:103
+#: ../form-template/edit-detail-event.php:114
 msgid "Description"
 msgstr "説明"
 
-#: ../functions.php:479
+#: ../functions.php:478
 msgid "Available with"
 msgstr "対応端末"
 
-#: ../functions.php:480 ../help/customize.php:106
+#: ../functions.php:479 ../help/customize.php:106
 msgid "Download"
 msgstr "ダウンロード"
 
-#: ../functions.php:488
+#: ../functions.php:487
 msgid "download"
 msgstr "ダウンロード"
 
-#: ../functions.php:489 ../admin/form-check.php:39 ../help/customize.php:122
+#: ../functions.php:488 ../admin/form-check.php:39 ../help/customize.php:122
 msgid "Unavailable"
 msgstr "利用不可能"
 
-#: ../functions.php:490
+#: ../functions.php:489
 #, php-format
 msgid "File Size: %s"
 msgstr "ファイルサイズ: %s"
 
-#: ../functions.php:491
+#: ../functions.php:490
 #, php-format
 msgid "Published: %s"
 msgstr "公開日: %s"
 
-#: ../functions.php:492
+#: ../functions.php:491
 #, php-format
 msgid "Updated: %s"
 msgstr "更新日: %s"
 
-#: ../functions.php:519
+#: ../functions.php:518
 msgid "Devices Available With"
 msgstr "対応端末"
 
-#: ../functions.php:524 ../admin/devices.php:15 ../admin/devices.php:72
+#: ../functions.php:523 ../admin/devices.php:15 ../admin/devices.php:72
 #: ../tables/list-devices.php:90
 msgid "Device Name"
 msgstr "端末名"
 
-#: ../functions.php:525
+#: ../functions.php:524
 msgid "Avalability"
 msgstr "対応状況"
 
-#: ../functions.php:531
+#: ../functions.php:530
 msgid "Available"
 msgstr "確認済"
 
-#: ../functions.php:531
+#: ../functions.php:530
 msgid "Unconfirmed"
 msgstr "未確認"
 
-#: ../functions.php:638 ../functions.php:643 ../widgets/buynow.php:111
+#: ../functions.php:637 ../functions.php:642 ../widgets/buynow.php:111
 msgid "Buy Now"
 msgstr "いますぐ購入"
 
-#: ../functions.php:724
+#: ../functions.php:723
 msgid "Subscription list"
 msgstr "定期購読リスト"
 
-#: ../functions.php:757
+#: ../functions.php:756
 msgid "Left time: "
 msgstr "残り時間: "
 
-#: ../functions.php:776
+#: ../functions.php:775
 msgid "day"
 msgstr "日"
 
-#: ../functions.php:776
+#: ../functions.php:775
 msgid "days"
 msgstr "日"
 
-#: ../functions.php:777
+#: ../functions.php:776
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr "<span class=\"day\">%1$d</span>%2$s"
 
-#: ../functions.php:779
+#: ../functions.php:778
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr "<span class=\"hour\">%02d</span>時間 "
 
-#: ../functions.php:780
+#: ../functions.php:779
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr "<span class=\"minutes\">%02d</span>分 "
 
-#: ../functions.php:781
+#: ../functions.php:780
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr "<span class=\"seconds\">%02d</span>秒"
 
-#: ../functions.php:800
+#: ../functions.php:799
 #, php-format
 msgid "%d%% Off"
 msgstr "%d%% Off"
 
-#: ../functions.php:825
+#: ../functions.php:824
 #, php-format
 msgid "On SALE till %s"
 msgstr "%sまでセール中"
 
-#: ../functions.php:1564
+#: ../functions.php:1599
 msgid "Check Token"
 msgstr "トークンをチェックする"
 
@@ -175,20 +175,20 @@ msgstr "サーバ管理者に連絡を取り、設定を変えてもらってく
 msgid "Campaign"
 msgstr "キャンペーン"
 
-#: ../admin/campaign.php:22 ../admin/campaign.php:168
+#: ../admin/campaign.php:22 ../admin/campaign.php:170
 msgid "Campaign Item"
 msgstr "キャンペーンアイテム"
 
 #: ../admin/campaign.php:31 ../admin/management.php:48 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:77 ../admin/settings/subscription.php:2
-#: ../class/campaign.php:288 ../class/form.php:109 ../class/form.php:195
-#: ../class/form.php:343 ../class/form.php:396 ../class/subscription.php:81
+#: ../class/campaign.php:265 ../class/form.php:112 ../class/form.php:201
+#: ../class/form.php:359 ../class/form.php:412 ../class/subscription.php:81
 #: ../tables/list-campaign.php:168 ../tables/list-history.php:141
 #: ../tables/list-management.php:233
 msgid "Subscription"
 msgstr "定期購読"
 
-#: ../admin/campaign.php:45 ../admin/campaign.php:172
+#: ../admin/campaign.php:45 ../admin/campaign.php:174
 msgid "Input here and search items"
 msgstr "入力してアイテムを検索"
 
@@ -200,73 +200,51 @@ msgstr ""
 "公開後にキャンペーンが適用されるアイテムを変更すると、決済の統計データがわか"
 "りにくくなります。"
 
-#: ../admin/campaign.php:55 ../admin/campaign.php:182
+#: ../admin/campaign.php:55 ../admin/campaign.php:184
 msgid "Campaign Price"
 msgstr "キャンペーン価格"
 
-#: ../admin/campaign.php:64 ../admin/campaign.php:189
+#: ../admin/campaign.php:64 ../admin/campaign.php:191
 #, php-format
 msgid "%s as sale price"
 msgstr "%s セール価格"
 
-#: ../admin/campaign.php:67 ../admin/campaign.php:192
+#: ../admin/campaign.php:67 ../admin/campaign.php:194
 #, php-format
 msgid "%s as discount"
 msgstr "%s値引き"
 
-#: ../admin/campaign.php:70 ../admin/campaign.php:195
+#: ../admin/campaign.php:70 ../admin/campaign.php:197
 #, php-format
 msgid "%s of original price"
 msgstr "%sで販売"
 
-#: ../admin/campaign.php:80 ../admin/campaign.php:209
-#: ../tables/list-campaign.php:105
-msgid "Coupon"
-msgstr "クーポン"
-
-#: ../admin/campaign.php:85 ../admin/campaign.php:212
-msgid ""
-"If you enter coupon code, the sale price will be adopted only for user with "
-"coupon."
-msgstr ""
-"クーポンコードを入力すると、セール価格はクーポンを持っているユーザーにのみ適"
-"用されます。"
-
-#: ../admin/campaign.php:91 ../admin/campaign.php:218
-#: ../admin/settings/dashboard.php:11
-msgid "Payment method"
-msgstr "支払い方法"
-
-#: ../admin/campaign.php:95 ../admin/campaign.php:220
-msgid "Any"
-msgstr "何でも"
-
-#: ../admin/campaign.php:109 ../admin/campaign.php:237
+#: ../admin/campaign.php:111 ../admin/campaign.php:241
 msgid "Start Date"
 msgstr "開始日"
 
-#: ../admin/campaign.php:114 ../admin/campaign.php:125
-#: ../admin/campaign.php:240 ../admin/campaign.php:249
+#: ../admin/campaign.php:116 ../admin/campaign.php:127
+#: ../admin/campaign.php:244 ../admin/campaign.php:253
 #, php-format
 msgid "Format must be %s."
 msgstr "フォーマットは%sです。"
 
-#: ../admin/campaign.php:120 ../admin/campaign.php:246
+#: ../admin/campaign.php:122 ../admin/campaign.php:250
 msgid "End Date"
 msgstr "終了日"
 
-#: ../admin/campaign.php:130 ../admin/devices.php:32
+#: ../admin/campaign.php:132 ../admin/devices.php:32
 #: ../admin/personal-reward.php:107 ../admin/setting.php:53
 #: ../admin/upload.php:198 ../admin/upload.php:220
 #: ../form-template/paypal-event-tickets-consume.php:41
 msgid "Update"
 msgstr "更新"
 
-#: ../admin/campaign.php:132
+#: ../admin/campaign.php:134
 msgid "Return to campaign page"
 msgstr "キャンペーン一覧に戻る"
 
-#: ../admin/campaign.php:152
+#: ../admin/campaign.php:154
 msgid ""
 "You can edit the campain detail by clicking item link.<br />But "
 "<strong>please be careful to change the itmes or price of temporary active "
@@ -276,11 +254,11 @@ msgstr ""
 "す。<br />ただし、<strong>現在有効になっているキャンペーンのアイテムや価格を"
 "変更するときは注意してください。</strong>。"
 
-#: ../admin/campaign.php:164
+#: ../admin/campaign.php:166
 msgid "Add new campaign"
 msgstr "新しいキャンペーンを追加する"
 
-#: ../admin/campaign.php:176
+#: ../admin/campaign.php:178
 msgid ""
 "Item for which campaign will be adopted. Please search with text input. You "
 "can choose multiple items."
@@ -288,15 +266,11 @@ msgstr ""
 "キャンペーンが適用されるアイテム。テキストインプットから検索してください。複"
 "数のアイテムを選択できます。"
 
-#: ../admin/campaign.php:202
+#: ../admin/campaign.php:204
 msgid "Price for campaign which will be applied to all items."
 msgstr "すべてのアイテムに適用されるキャンペーン価格です。"
 
-#: ../admin/campaign.php:231
-msgid "Campaign is adopted only with this payment method."
-msgstr "キャンペーンはこの支払い方法に対してのみ適用されます。"
-
-#: ../admin/campaign.php:255
+#: ../admin/campaign.php:259
 msgid "Add new campaing"
 msgstr "新しいキャンペーンを追加"
 
@@ -504,7 +478,7 @@ msgstr ""
 msgid "File Download Logs"
 msgstr "ファイルダウンロードログ"
 
-#: ../admin/event.php:4 ../class/literally-wordpress.php:441
+#: ../admin/event.php:4 ../class/literally-wordpress.php:443
 msgid "Event Management"
 msgstr "イベント管理"
 
@@ -530,25 +504,25 @@ msgstr "終了"
 msgid "From: %1$s To: %2$s%3$s"
 msgstr "%1$s〜%2$s%3$s"
 
-#: ../admin/event.php:48 ../form-template/edit-detail-event.php:47
+#: ../admin/event.php:48 ../form-template/edit-detail-event.php:58
 msgid "Limit to sell"
 msgstr "販売期限"
 
-#: ../admin/event.php:58 ../form-template/edit-detail-event.php:55
+#: ../admin/event.php:58 ../form-template/edit-detail-event.php:66
 msgid "Limit to cancel"
 msgstr "キャンセル期限"
 
-#: ../admin/event.php:68 ../class/event.php:847 ../class/form.php:721
-#: ../form-template/edit-detail-event.php:144
+#: ../admin/event.php:68 ../class/event.php:918 ../class/form.php:737
+#: ../form-template/edit-detail-event.php:155
 #: ../form-template/paypal-cancel-ticket.php:13
 #: ../form-template/paypal-event-tickets-consume.php:15
 #: ../tables/list-ticket.php:33
 msgid "Ticket Name"
 msgstr "チケット名"
 
-#: ../admin/event.php:69 ../admin/management.php:392 ../class/event.php:848
-#: ../class/form.php:723 ../class/literally-wordpress.php:1150
-#: ../class/subscription.php:194 ../form-template/edit-detail-event.php:104
+#: ../admin/event.php:69 ../admin/management.php:392 ../class/event.php:919
+#: ../class/form.php:739 ../class/literally-wordpress.php:1127
+#: ../class/subscription.php:194 ../form-template/edit-detail-event.php:115
 #: ../form-template/edit-detail.php:24
 #: ../form-template/paypal-cancel-ticket.php:15
 #: ../form-template/paypal-event-tickets-consume.php:17
@@ -559,7 +533,7 @@ msgstr "チケット名"
 msgid "Price"
 msgstr "価格"
 
-#: ../admin/event.php:70 ../form-template/edit-detail-event.php:105
+#: ../admin/event.php:70 ../form-template/edit-detail-event.php:116
 msgid "Stock"
 msgstr "在庫"
 
@@ -568,13 +542,13 @@ msgstr "在庫"
 msgid "Sold"
 msgstr "販売数"
 
-#: ../admin/event.php:72 ../admin/management.php:92 ../class/event.php:850
-#: ../class/form.php:725 ../form-template/paypal-event-tickets-consume.php:19
+#: ../admin/event.php:72 ../admin/management.php:92 ../class/event.php:921
+#: ../class/form.php:741 ../form-template/paypal-event-tickets-consume.php:19
 #: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr "使用分"
 
-#: ../admin/event.php:73 ../class/literally-wordpress.php:525
+#: ../admin/event.php:73 ../class/literally-wordpress.php:527
 msgid "Sales"
 msgstr "売上"
 
@@ -601,7 +575,7 @@ msgstr ""
 msgid "Get CSV"
 msgstr "CSV取得"
 
-#: ../admin/form-check.php:4 ../class/literally-wordpress.php:444
+#: ../admin/form-check.php:4 ../class/literally-wordpress.php:446
 msgid "LWP Form Check"
 msgstr "LWP フォーム確認"
 
@@ -609,7 +583,7 @@ msgstr "LWP フォーム確認"
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: ../admin/form-check.php:13 ../admin/settings/event.php:1
+#: ../admin/form-check.php:13 ../admin/settings/event.php:2
 #: ../admin/settings/misc.php:1 ../admin/settings/payment.php:1
 #: ../admin/settings/post.php:3 ../admin/settings/reward.php:2
 #: ../admin/settings/subscription.php:2
@@ -696,7 +670,7 @@ msgstr "タイトルをテーマディレクトリ内のロゴ画像に変える
 msgid "Don't forget to change logo in PayPal's landing page."
 msgstr "PayPalの支払いページのロゴを変えることを忘れないでください。"
 
-#: ../admin/history.php:2 ../class/literally-wordpress.php:425
+#: ../admin/history.php:2 ../class/literally-wordpress.php:427
 msgid "Purchase History"
 msgstr "購入履歴"
 
@@ -730,8 +704,8 @@ msgstr "項目名"
 #: ../admin/management.php:317 ../admin/management.php:364
 #: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:50 ../admin/settings/dashboard.php:101
-#: ../admin/settings/dashboard.php:133 ../class/literally-wordpress.php:507
-#: ../class/literally-wordpress.php:547 ../tables/list-history.php:46
+#: ../admin/settings/dashboard.php:133 ../class/literally-wordpress.php:509
+#: ../class/literally-wordpress.php:549 ../tables/list-history.php:46
 #: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
 #: ../tables/list-transfers.php:161
@@ -1077,20 +1051,20 @@ msgstr "値"
 msgid "Action"
 msgstr "アクション"
 
-#: ../admin/management.php:39 ../class/literally-wordpress.php:1148
+#: ../admin/management.php:39 ../class/literally-wordpress.php:1125
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
 #: ../tables/list-management.php:129 ../tables/list-transfers.php:156
 msgid "Item Name"
 msgstr "アイテム名"
 
-#: ../admin/management.php:55 ../class/literally-wordpress.php:572
-#: ../form-template/edit-detail-event.php:118 ../tables/list-campaign.php:189
+#: ../admin/management.php:55 ../class/literally-wordpress.php:574
+#: ../form-template/edit-detail-event.php:129 ../tables/list-campaign.php:189
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr "編集"
 
-#: ../admin/management.php:58 ../class/event.php:845
-#: ../class/literally-wordpress.php:1154 ../tables/list-download-logs.php:112
+#: ../admin/management.php:58 ../class/event.php:916
+#: ../class/literally-wordpress.php:1131 ../tables/list-download-logs.php:112
 #: ../tables/list-management.php:130 ../tables/list-ticket.php:34
 #: ../tables/list-transfers.php:155
 msgid "User Name"
@@ -1105,7 +1079,7 @@ msgid "See all transactions"
 msgstr "すべての決済を見る"
 
 #: ../admin/management.php:66 ../admin/management.php:403
-#: ../class/event.php:860 ../class/literally-wordpress.php:1170
+#: ../class/event.php:931 ../class/literally-wordpress.php:1147
 #: ../form-template/reward-summary.php:165
 #: ../tables/list-download-logs.php:179 ../tables/list-management.php:222
 #: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
@@ -1113,14 +1087,14 @@ msgstr "すべての決済を見る"
 msgid "Deleted User"
 msgstr "削除されたユーザー"
 
-#: ../admin/management.php:71 ../class/event.php:843
-#: ../class/literally-wordpress.php:1156 ../tables/list-reward-history.php:35
+#: ../admin/management.php:71 ../class/event.php:914
+#: ../class/literally-wordpress.php:1133 ../tables/list-reward-history.php:35
 #: ../tables/list-reward-request.php:119 ../tables/list-ticket.php:37
 #: ../tables/list-transfers.php:160
 msgid "Updated"
 msgstr "更新日"
 
-#: ../admin/management.php:74 ../class/literally-wordpress.php:1155
+#: ../admin/management.php:74 ../class/literally-wordpress.php:1132
 #: ../tables/list-history.php:45 ../tables/list-management.php:134
 #: ../tables/list-reward-history.php:34 ../tables/list-reward-request.php:118
 #: ../tables/list-transfers.php:159
@@ -1136,8 +1110,8 @@ msgstr "購入価格"
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:87 ../class/event.php:849 ../class/form.php:724
-#: ../class/literally-wordpress.php:1149
+#: ../admin/management.php:87 ../class/event.php:920 ../class/form.php:740
+#: ../class/literally-wordpress.php:1126
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
 msgid "Quantity"
@@ -1152,7 +1126,7 @@ msgstr "購入方法"
 msgid "Transaction ID: %s"
 msgstr "トランザクションID: %s"
 
-#: ../admin/management.php:107 ../class/literally-wordpress.php:1152
+#: ../admin/management.php:107 ../class/literally-wordpress.php:1129
 msgid "Invoice Num"
 msgstr "領収番号"
 
@@ -1240,7 +1214,7 @@ msgstr "タイトル"
 msgid "Count"
 msgstr "件数"
 
-#: ../admin/management.php:390 ../form-template/edit-detail-event.php:102
+#: ../admin/management.php:390 ../form-template/edit-detail-event.php:113
 #: ../form-template/reward-summary.php:151
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
@@ -1353,12 +1327,12 @@ msgid "Digital Contents"
 msgstr "デジタルコンテンツ"
 
 #: ../admin/setting.php:11 ../admin/settings/dashboard.php:82
-#: ../admin/settings/event.php:1
+#: ../admin/settings/event.php:2
 msgid "Event"
 msgstr "イベント"
 
 #: ../admin/setting.php:12 ../admin/settings/dashboard.php:113
-#: ../admin/settings/reward.php:2 ../class/literally-wordpress.php:436
+#: ../admin/settings/reward.php:2 ../class/literally-wordpress.php:438
 #: ../form-template/reward-summary.php:64
 #: ../form-template/reward-summary.php:94
 #: ../form-template/reward-summary.php:154
@@ -1376,7 +1350,7 @@ msgstr "その他"
 msgid "Template file does not exists at %s."
 msgstr "テンプレートファイルが%sにありません。"
 
-#: ../admin/transfer.php:2 ../class/literally-wordpress.php:414
+#: ../admin/transfer.php:2 ../class/literally-wordpress.php:416
 #: ../help/transfer.php:22
 msgid "Transfer Management"
 msgstr "送金管理"
@@ -1413,7 +1387,8 @@ msgstr "ファイルが削除されました。"
 msgid "Failed to delete file."
 msgstr "ファイルの削除に失敗しました。"
 
-#: ../admin/upload.php:98 ../class/form.php:1059
+#: ../admin/upload.php:98 ../class/form.php:1172
+#: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr "処理中&hellip;"
 
@@ -1499,7 +1474,7 @@ msgstr "必要ならば入力してください。"
 msgid "File"
 msgstr "ファイル"
 
-#: ../admin/upload.php:198 ../form-template/edit-detail-event.php:76
+#: ../admin/upload.php:198 ../form-template/edit-detail-event.php:87
 msgid "Add"
 msgstr "新規追加"
 
@@ -1511,9 +1486,9 @@ msgstr "ファイルを追加する"
 msgid "Registered files"
 msgstr "登録されたファイル"
 
-#: ../admin/upload.php:215 ../class/literally-wordpress.php:570
-#: ../form-template/edit-detail-event.php:64
-#: ../form-template/edit-detail-event.php:121 ../tables/list-campaign.php:124
+#: ../admin/upload.php:215 ../class/literally-wordpress.php:572
+#: ../form-template/edit-detail-event.php:75
+#: ../form-template/edit-detail-event.php:132 ../tables/list-campaign.php:124
 #: ../tables/list-devices.php:109
 msgid "Delete"
 msgstr "削除"
@@ -1529,6 +1504,10 @@ msgstr "現在の設定"
 #: ../admin/settings/dashboard.php:6 ../admin/settings/dashboard.php:19
 msgid "Payment Setting"
 msgstr "支払い設定"
+
+#: ../admin/settings/dashboard.php:11
+msgid "Payment method"
+msgstr "支払い方法"
 
 #: ../admin/settings/dashboard.php:13 ../admin/settings/dashboard.php:51
 #: ../admin/settings/dashboard.php:102
@@ -1602,7 +1581,7 @@ msgstr ""
 "定期購読プランによって会員専用コンテンツを提供できます。価格や期限は自由に選"
 "べます。"
 
-#: ../admin/settings/dashboard.php:84 ../admin/settings/event.php:3
+#: ../admin/settings/dashboard.php:84 ../admin/settings/event.php:4
 msgid "Event means real event like lunch party, poetry reading or else."
 msgstr ""
 "イベントとはランチパーティーや詩の朗読会などのリアルなイベントのことです。"
@@ -1669,37 +1648,57 @@ msgstr "インストールされていません"
 msgid "See detail on WordPress.org"
 msgstr "WordPress.orgで詳細を見る"
 
-#: ../admin/settings/event.php:4
+#: ../admin/settings/event.php:5
 msgid "LWP provide you digital ticket management system."
 msgstr "LWPはデジタルチケット販売システムを提供しています。"
 
-#: ../admin/settings/event.php:6 ../admin/settings/post.php:8
+#: ../admin/settings/event.php:7 ../admin/settings/post.php:8
 #: ../admin/settings/reward.php:10 ../admin/settings/subscription.php:6
 msgid "Setting"
 msgstr "設定"
 
-#: ../admin/settings/event.php:11
+#: ../admin/settings/event.php:12
 msgid "Event Post Type"
 msgstr "イベント投稿タイプ"
 
-#: ../admin/settings/event.php:23 ../form-template/paypal-event-contact.php:26
+#: ../admin/settings/event.php:24 ../form-template/paypal-event-contact.php:45
 msgid "Mail Body"
 msgstr "メール本文"
 
-#: ../admin/settings/event.php:27
+#: ../admin/settings/event.php:28
 msgid ""
 "This mail will be sent when transaction completed. You can use place "
 "holders: "
 msgstr ""
 "決済が完了されるとこのメールが送信されます。プレイスホルダーが利用できます。"
 
-#: ../admin/settings/event.php:35
+#: ../admin/settings/event.php:36
 msgid "Mail Signature"
 msgstr "メール署名"
 
-#: ../admin/settings/event.php:38
+#: ../admin/settings/event.php:39
 msgid "This text will be used for every mail to participants"
 msgstr "参加者に送信されるメールに使われます。"
+
+#: ../admin/settings/event.php:43 ../form-template/edit-detail-event.php:43
+msgid "Waiting list"
+msgstr "キャンセル待ちリスト"
+
+#: ../admin/settings/event.php:47
+msgid "User can wait for cancellation."
+msgstr "ユーザーはキャンセル待ちができます。"
+
+#: ../admin/settings/event.php:49
+msgid "This setting is global and can be overridden individually."
+msgstr "この設定は全体設定であり、個別に上書きできます。"
+
+#: ../admin/settings/event.php:53
+msgid "Waiting message"
+msgstr "キャンセル待ちメッセージ"
+
+#: ../admin/settings/event.php:56
+msgid "This text will be displayed when user decide to wait for cancellation."
+msgstr "このテキストはユーザーがキャンセル待ちを申し込んだときに表示されます。"
 
 #: ../admin/settings/misc.php:2
 msgid "These settigs are all optional."
@@ -1727,7 +1726,7 @@ msgstr ""
 #: ../admin/settings/payment.php:77 ../admin/settings/payment.php:88
 #: ../admin/settings/payment.php:105 ../admin/settings/payment.php:141
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1280
+#: ../admin/settings/post.php:72 ../class/form.php:1399
 msgid "More &gt;"
 msgstr "もっと &gt;"
 
@@ -2456,77 +2455,73 @@ msgstr "ここに画像を入れてください"
 msgid "Are you sure to delete these campaings?"
 msgstr "このキャンペーンを削除してよろしいですか？"
 
-#: ../class/campaign.php:78
+#: ../class/campaign.php:53
 msgid "ID is wrong."
 msgstr "IDが間違っています。"
 
-#: ../class/campaign.php:84 ../class/campaign.php:92
+#: ../class/campaign.php:59 ../class/campaign.php:67
 #, php-format
 msgid "You don't have capability to edit %s"
 msgstr "%sを編集する権限がありません。"
 
-#: ../class/campaign.php:97
+#: ../class/campaign.php:72
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../class/campaign.php:108 ../class/post.php:187
+#: ../class/campaign.php:83 ../class/post.php:187
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
-#: ../class/campaign.php:116
+#: ../class/campaign.php:91
 msgid "Price is higher than original price."
 msgstr "価格が定価よりも高くなっています。"
 
-#: ../class/campaign.php:140
+#: ../class/campaign.php:119
 msgid "Date format is invalid."
 msgstr "日付の形式が不正です。"
 
-#: ../class/campaign.php:144
+#: ../class/campaign.php:123
 msgid "End date was past."
 msgstr "終了日が開始日よりも過去になっています。"
 
-#: ../class/campaign.php:149
+#: ../class/campaign.php:128
 msgid "Specified campaign does not exists."
 msgstr "指定されたキャンペーンは存在しません。"
 
-#: ../class/campaign.php:183
+#: ../class/campaign.php:162
 msgid "Failed to add campaign."
 msgstr "キャンペーンの追加に失敗しました"
 
-#: ../class/campaign.php:205
-msgid "Update Failed."
-msgstr "更新に失敗しました。"
-
-#: ../class/campaign.php:218
+#: ../class/campaign.php:194
 msgid "Failed to delete campaign."
 msgstr "キャンペーンの削除に失敗しました。"
 
-#: ../class/campaign.php:231
+#: ../class/campaign.php:207
 msgid "Campaign added."
 msgstr "キャンペーンが追加されました。"
 
-#: ../class/campaign.php:234
+#: ../class/campaign.php:210
 msgid "Campaign was successfully updated."
 msgstr "キャンペーンは更新されました。"
 
-#: ../class/campaign.php:237
+#: ../class/campaign.php:213
 msgid "Campaign was deleted."
 msgstr "キャンペーンは削除されました。"
 
-#: ../class/event.php:119
+#: ../class/event.php:141
 msgid "Ticket"
 msgstr "チケット"
 
-#: ../class/event.php:120 ../tables/list-event.php:37
+#: ../class/event.php:142 ../tables/list-event.php:37
 msgid "Tickets"
 msgstr "チケット"
 
-#: ../class/event.php:125 ../class/ios.php:128 ../class/notifier.php:87
+#: ../class/event.php:147 ../class/ios.php:128 ../class/notifier.php:87
 #: ../class/post.php:91 ../class/subscription.php:86
 msgid "Add New"
 msgstr "新規追加"
 
-#: ../class/event.php:126 ../class/event.php:128 ../class/ios.php:129
+#: ../class/event.php:148 ../class/event.php:150 ../class/ios.php:129
 #: ../class/ios.php:131 ../class/ios.php:167 ../class/notifier.php:88
 #: ../class/notifier.php:90 ../class/post.php:92 ../class/post.php:94
 #: ../class/subscription.php:87 ../class/subscription.php:89
@@ -2534,251 +2529,263 @@ msgstr "新規追加"
 msgid "Add New %s"
 msgstr "新規%s追加"
 
-#: ../class/event.php:127 ../class/ios.php:130 ../class/ios.php:165
+#: ../class/event.php:149 ../class/ios.php:130 ../class/ios.php:165
 #: ../class/notifier.php:89 ../class/post.php:93 ../class/subscription.php:88
 #, php-format
 msgid "Edit %s"
 msgstr "%sを編集"
 
-#: ../class/event.php:129 ../class/ios.php:132 ../class/notifier.php:91
+#: ../class/event.php:151 ../class/ios.php:132 ../class/notifier.php:91
 #: ../class/post.php:95 ../class/subscription.php:90
 #, php-format
 msgid "View %s"
 msgstr "%sを見る"
 
-#: ../class/event.php:130 ../class/ios.php:133 ../class/ios.php:160
+#: ../class/event.php:152 ../class/ios.php:133 ../class/ios.php:160
 #: ../class/notifier.php:92 ../class/post.php:96 ../class/subscription.php:91
 #, php-format
 msgid "Search %s"
 msgstr "%sを検索"
 
-#: ../class/event.php:131 ../class/ios.php:134 ../class/notifier.php:93
+#: ../class/event.php:153 ../class/ios.php:134 ../class/notifier.php:93
 #: ../class/post.php:97 ../class/subscription.php:92
 #, php-format
 msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
-#: ../class/event.php:132 ../class/ios.php:135 ../class/notifier.php:94
+#: ../class/event.php:154 ../class/ios.php:135 ../class/notifier.php:94
 #: ../class/post.php:98 ../class/subscription.php:93
 #, php-format
 msgid "No %s was found in trash."
 msgstr "ゴミ箱に%sは見つかりませんでした"
 
-#: ../class/event.php:153
+#: ../class/event.php:175
 msgid "Event Setting"
 msgstr "イベント設定"
 
-#: ../class/event.php:435
+#: ../class/event.php:463
 msgid "This post is not event."
 msgstr "この投稿はイベントではありません。"
 
-#: ../class/event.php:437
+#: ../class/event.php:465
 msgid "You have no permission to edit this post."
 msgstr "この投稿を編集する権限はありません。"
 
-#: ../class/event.php:439
+#: ../class/event.php:467
 msgid "Preset tickets are already registered."
 msgstr "チケットプリセットはすでに登録済みです。"
 
-#: ../class/event.php:443
+#: ../class/event.php:471
 msgid "This post type has no presets."
 msgstr "この投稿タイプにはプリセットがありません。"
 
-#: ../class/event.php:452
+#: ../class/event.php:480
 #, php-format
 msgid "Ticket %d"
 msgstr "チケット%d"
 
-#: ../class/event.php:537
+#: ../class/event.php:565
 msgid "Failed to edit ticket"
 msgstr "チケットの更新に失敗しました。"
 
-#: ../class/event.php:562 ../class/event.php:587
+#: ../class/event.php:590 ../class/event.php:615
 msgid "You have no permission to edit this ticket."
 msgstr "このチケットを編集する権限がありません。"
 
-#: ../class/event.php:627
+#: ../class/event.php:658
 msgid "Mail Subject is empty."
 msgstr "メール件名が空です。"
 
-#: ../class/event.php:630
+#: ../class/event.php:661 ../class/form.php:1011
 msgid "Mail body is empty."
 msgstr "メール本文が空です。"
 
-#: ../class/event.php:645
+#: ../class/event.php:680 ../class/form.php:1012
+msgid "Recipients not set."
+msgstr "送信先がセットされていません。"
+
+#: ../class/event.php:699
+msgid "No recipients match your criteria."
+msgstr "送信先がヒットしませんでした。"
+
+#: ../class/event.php:717
 msgid "Participants not found."
 msgstr "参加者は見つかりませんでした。"
 
-#: ../class/event.php:666
+#: ../class/event.php:733
 #, php-format
-msgid "Finish sending: %1$d success, %2$d failed"
-msgstr "送信完了: %1$d 成功, %2$d 失敗"
+msgid "Finish sending to %1$d users."
+msgstr "%1$d名のユーザーに送信しました。"
 
-#: ../class/event.php:670
+#: ../class/event.php:741
 msgid "You can send email only from Admin email or yours."
 msgstr "管理者かあなた地震のメールアドレスからのみ送信できます。"
 
-#: ../class/event.php:673
+#: ../class/event.php:744
 msgid "Cannot send email. You do not have permission or event not found."
 msgstr ""
 "メールを送信できませんでした。権限をお持ちでないか、イベントが存在しないため"
 "です。"
 
-#: ../class/event.php:676
+#: ../class/event.php:747
 msgid "You have no capability to contact participants"
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/event.php:792
+#: ../class/event.php:863
 msgid "Event not found."
 msgstr "イベントが見つかりません。"
 
-#: ../class/event.php:830 ../class/literally-wordpress.php:1135
+#: ../class/event.php:901 ../class/literally-wordpress.php:1112
 msgid "No ticket match your qriteria.: "
 msgstr "チケットが見つかりませんでした。"
 
-#: ../class/event.php:844 ../form-template/paypal-event-user.php:15
+#: ../class/event.php:915 ../form-template/paypal-event-user.php:15
 msgid "Code"
 msgstr "コード"
 
-#: ../class/event.php:846
+#: ../class/event.php:917
 msgid "Email"
 msgstr "eメール"
 
-#: ../class/event.php:851 ../class/literally-wordpress.php:1157
+#: ../class/event.php:922 ../class/literally-wordpress.php:1134
 msgid "Transaction Status"
 msgstr "決済ステータス"
 
-#: ../class/event.php:895
+#: ../class/event.php:966
 msgid "Thank you for participating"
 msgstr "ご参加ありがとうございます"
 
-#: ../class/event.php:961
+#: ../class/event.php:1032
 msgid "Display name of user"
 msgstr "ユーザー名を表示"
 
-#: ../class/event.php:962
+#: ../class/event.php:1033
 msgid "User email"
 msgstr "ユーザーメール"
 
-#: ../class/event.php:963
+#: ../class/event.php:1034
 msgid "Event name"
 msgstr "イベント名"
 
-#: ../class/event.php:964
+#: ../class/event.php:1035
 msgid "Event's permalink"
 msgstr "イベントのパーマリンク"
 
-#: ../class/event.php:965
+#: ../class/event.php:1036
 msgid "Ticket name"
 msgstr "チケット名"
 
-#: ../class/event.php:966
+#: ../class/event.php:1037
 msgid "Ticket list page url"
 msgstr "チケットリストページのURL"
 
-#: ../class/event.php:967
+#: ../class/event.php:1038
 msgid "Code to identify user"
 msgstr "ユーザーを特定するコード"
 
-#: ../class/form.php:32 ../class/form.php:649
+#: ../class/form.php:31
+msgid "You cannot access here."
+msgstr "この場所へのアクセスは禁止されています。"
+
+#: ../class/form.php:35 ../class/form.php:665
 msgid "Sorry, but You might make unexpected action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
-#: ../class/form.php:56
+#: ../class/form.php:59
 msgid "You are already subscriber. You don't have to buy subscription."
 msgstr "あなたはすでに定期購読者になっています。購入する必要はありません。"
 
-#: ../class/form.php:58
+#: ../class/form.php:61
 msgid "Sorry, but there is no subscription plan."
 msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
 
-#: ../class/form.php:122 ../class/form.php:369
+#: ../class/form.php:125 ../class/form.php:385
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr ""
 "おや、商品を見つけられませんでした。支払い可能な投稿があるかチェックしてくだ"
 "さい。"
 
-#: ../class/form.php:137
+#: ../class/form.php:140
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../class/form.php:147
+#: ../class/form.php:150
 msgid "Selling limit has been past. There is no ticket available."
 msgstr "販売期限が過ぎています。ご利用になれるチケットはありません。"
 
-#: ../class/form.php:153
+#: ../class/form.php:156
 msgid "Sorry, but this ticket is sold out."
 msgstr "申し訳ありませんが、このチケットは売り切れです。"
 
-#: ../class/form.php:185
+#: ../class/form.php:191
 msgid "This itme is not on sale."
 msgstr "このアイテムは販売中ではありません。"
 
-#: ../class/form.php:262
+#: ../class/form.php:273
 msgid "Sorry, but we can't accept this payment method."
 msgstr "もうしわけありません、この支払い方法は受け付けられません。"
 
-#: ../class/form.php:312
+#: ../class/form.php:328
 msgid "Failed to make transaction."
 msgstr "トランザクションを開始できませんでした。"
 
-#: ../class/form.php:316
+#: ../class/form.php:332
 msgid "Wrong payment method is specified."
 msgstr "不正な支払い方法が指定されています。"
 
-#: ../class/form.php:378
+#: ../class/form.php:394
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../class/form.php:382
+#: ../class/form.php:398
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../class/form.php:438
+#: ../class/form.php:454
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../class/form.php:553 ../class/ios.php:465 ../class/ios.php:487
+#: ../class/form.php:569 ../class/ios.php:465 ../class/ios.php:487
 #: ../class/post.php:629
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
-#: ../class/form.php:563
+#: ../class/form.php:579
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../class/form.php:595
+#: ../class/form.php:611
 msgid "Sorry, but you specified unexistant event."
 msgstr "申し訳ありません、イベントが見つかりません。"
 
-#: ../class/form.php:601
+#: ../class/form.php:617
 #, php-format
 msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
 msgstr ""
 "申し訳ありません、キャンセル期限 %s が過ぎているため、キャンセルできません。"
 
-#: ../class/form.php:607
+#: ../class/form.php:623
 msgid "Sorry, but you have no ticket to cancel."
 msgstr "申し訳ありませんが、キャンセルできるチケットがありません。"
 
-#: ../class/form.php:613
+#: ../class/form.php:629
 #, php-format
 msgid "%s charged."
 msgstr "手数料 %s"
 
-#: ../class/form.php:643
+#: ../class/form.php:659
 msgid "Deleted Ticket"
 msgstr "削除されたチケット"
 
-#: ../class/form.php:649
+#: ../class/form.php:665
 msgid "Cannot pass security check."
 msgstr "セキュリティチェックを通過できませんでした。"
 
-#: ../class/form.php:663
+#: ../class/form.php:679
 msgid "Sorry, but the tikcet id you specified is not cancelable."
 msgstr "申し訳ありません、指定されたチケットはキャンセルできません。"
 
-#: ../class/form.php:669
+#: ../class/form.php:685
 #, php-format
 msgid ""
 "Sorry, but paypal redunding is available only for 60 days. You made "
@@ -2787,7 +2794,7 @@ msgstr ""
 "申し訳ありません、PayPalの返金は60日間のみ有効です。あなたの決済は %1$s に完"
 "了し、本日は %2$s です。"
 
-#: ../class/form.php:682
+#: ../class/form.php:698
 #, php-format
 msgid ""
 "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
@@ -2795,164 +2802,215 @@ msgstr ""
 "もうしわけありません、PayPalに返金を拒否されました。%1$s 管理者にコンタクトを"
 "とってください。"
 
-#: ../class/form.php:722 ../form-template/paypal-cancel-ticket.php:14
+#: ../class/form.php:738 ../form-template/paypal-cancel-ticket.php:14
 #: ../form-template/paypal-event-tickets-consume.php:16
 msgid "Bought"
 msgstr "購入日"
 
-#: ../class/form.php:740
+#: ../class/form.php:756
 msgid "A footer note which can be set on each post will be displayed here."
 msgstr "投稿ごとに設定できる註がここに表示されます。"
 
-#: ../class/form.php:751 ../class/form.php:809 ../class/form.php:956
+#: ../class/form.php:767 ../class/form.php:825 ../class/form.php:1034
 msgid "Sorry, but no event is specified."
 msgstr "申し訳ありませんが、イベントが指定されておりません。"
 
-#: ../class/form.php:765
+#: ../class/form.php:781
 msgid "Sorry, but you have no tikcet to display."
 msgstr "申し訳ありませんが、表示できるチケットはございません。"
 
-#: ../class/form.php:815
+#: ../class/form.php:831
 msgid "Sorry, but specified user is not found."
 msgstr "もうしわけありません、ユーザーが見つかりません。"
 
-#: ../class/form.php:819
+#: ../class/form.php:835
 msgid "Sorry, but you have no capability to consume ticket."
 msgstr "申し訳ありませんが、チケットを消費する権限をお持ちでないようです。"
 
-#: ../class/form.php:846
+#: ../class/form.php:862
 #, php-format
 msgid "Sorry, but %s has no ticket on this event."
 msgstr "申し訳ありませんが、%sさんはこのイベントのチケットを持っていません。"
 
-#: ../class/form.php:884 ../class/form.php:941 ../class/form.php:1094
+#: ../class/form.php:900 ../class/form.php:1019 ../class/form.php:1207
 msgid "Sorry, but event is not found."
 msgstr "申し訳ありませんが、イベントが見つかりません。"
 
-#: ../class/form.php:888
+#: ../class/form.php:904
 msgid "Sorry, but you have no permission."
 msgstr "申し訳ありませんが、権限をお持ちでありません。"
 
-#: ../class/form.php:925
+#: ../class/form.php:944 ../tables/list-event.php:33
+msgid "Event Name"
+msgstr "イベント名"
+
+#: ../class/form.php:952
+msgid "Specified ticket doesn't exist."
+msgstr "指定されたチケットは存在しません。"
+
+#: ../class/form.php:957
+#, php-format
+msgid "%s has stock to sell."
+msgstr "%sは販売可能なチケットが残っています。"
+
+#: ../class/form.php:961
+#, php-format
+msgid "Sorry, but %s dosen't have waiting list."
+msgstr "申し訳ありませんが、%sはキャンセル待ちを受け付けていません。"
+
+#: ../class/form.php:965
+#, php-format
+msgid "You are already on waiting list of %s."
+msgstr "すでに%sのキャンセル待ちリストに追加されています。"
+
+#: ../class/form.php:978
+msgid "Sorry, but failed to save data. Please retry later."
+msgstr "申し訳ございません、データを保存できませんでした。後で試してください。"
+
+#: ../class/form.php:1002
 #, php-format
 msgid "Admin email <%s>"
 msgstr "管理者メール <%s>"
 
-#: ../class/form.php:926
+#: ../class/form.php:1003
 #, php-format
 msgid "Your email <%s>"
 msgstr "あなたのメール <%s>"
 
-#: ../class/form.php:930
-msgid "Are you sure to send this mail?"
-msgstr "このメールを送信してよろしいですか？"
+#: ../class/form.php:1007
+msgid "Are you sure to send this mail? You can't cancel this action."
+msgstr "このメールを送信してよろしいですか？ このアクションは取り消せません。"
 
-#: ../class/form.php:931
+#: ../class/form.php:1008
 msgid "Sending&hellip;"
 msgstr "送信中&hellip;"
 
-#: ../class/form.php:932
+#: ../class/form.php:1009
 msgid "Please specify mail from."
 msgstr "メールの差出人を指定してください。"
 
-#: ../class/form.php:933
+#: ../class/form.php:1010
 msgid "Subject is empty."
 msgstr "懸命が空です。"
 
-#: ../class/form.php:934
-msgid "Mail body is empty"
-msgstr "メール本文が空です。"
-
-#: ../class/form.php:935 ../form-template/paypal-event-contact.php:42
+#: ../class/form.php:1013 ../form-template/paypal-event-contact.php:74
 msgid "Send"
 msgstr "送信"
 
-#: ../class/form.php:960
+#: ../class/form.php:1038
 msgid "You do not have capability to contact participants."
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/form.php:965
+#: ../class/form.php:1043
 #, php-format
 msgid "Post author email <%s>"
 msgstr "投稿者のメール <%s>"
 
-#: ../class/form.php:986
+#: ../class/form.php:1051
+msgid "There is no one to contact."
+msgstr "コンタクトをとれるユーザーがいません。"
+
+#: ../class/form.php:1054
+#, php-format
+msgid "All Participants(%s people)"
+msgstr "すべての参加者（%s 人）"
+
+#: ../class/form.php:1057
+#, php-format
+msgid "All waitings(%s people)"
+msgstr "すべてのキャンセル待ち（%s人）"
+
+#: ../class/form.php:1070
+#, php-format
+msgid "Participants(%s people)"
+msgstr "参加者（%s 人）"
+
+#: ../class/form.php:1074
+#, php-format
+msgid "Waitings(%s people)"
+msgstr "キャンセル待ち（%s人）"
+
+#: ../class/form.php:1099
 msgid "You must be logged in to process transaction."
 msgstr "決済処理を進めるにはログインする必要があります。"
 
-#: ../class/form.php:1106
+#: ../class/form.php:1219
 msgid "Dammy Ticket"
 msgstr "ダミーチケット"
 
-#: ../class/form.php:1171
+#: ../class/form.php:1284
 msgid "Select Payment"
 msgstr "支払い方法選択"
 
-#: ../class/form.php:1174
+#: ../class/form.php:1287
 msgid "Transfer Accepted"
 msgstr "送金受付"
 
-#: ../class/form.php:1177
+#: ../class/form.php:1290
 msgid "Payment Confirmation"
 msgstr "支払い確認"
 
-#: ../class/form.php:1180
+#: ../class/form.php:1293
 msgid "Transaction Completed"
 msgstr "決済完了"
 
-#: ../class/form.php:1183
+#: ../class/form.php:1296
 msgid "Transaciton Canceled"
 msgstr "決済キャンセル"
 
-#: ../class/form.php:1186
+#: ../class/form.php:1299
 msgid "Ticket Cancel"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1189
+#: ../class/form.php:1302
 msgid "Ticket Canceled"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1192 ../form-template/edit-detail-event.php:98
+#: ../class/form.php:1305 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr "チケットリスト"
 
-#: ../class/form.php:1195
+#: ../class/form.php:1308
 msgid "Ticket Status"
 msgstr "チケットステータス"
 
-#: ../class/form.php:1198
+#: ../class/form.php:1311
+msgid "Waiting for ticket cancellation"
+msgstr "チケットのキャンセル待ち"
+
+#: ../class/form.php:1314
 msgid "Find User"
 msgstr "ユーザー検索"
 
-#: ../class/form.php:1201
+#: ../class/form.php:1317
 msgid "Contact to participants"
 msgstr "参加者へのコンタクト"
 
-#: ../class/form.php:1204
+#: ../class/form.php:1320
 msgid "Subscrition Plans"
 msgstr "定期購読プラン"
 
-#: ../class/form.php:1267 ../class/form.php:1270
+#: ../class/form.php:1386 ../class/form.php:1389
 msgid "Displays subscription plans."
 msgstr "定期購読プランを表示します。"
 
-#: ../class/form.php:1270
+#: ../class/form.php:1389
 msgid "User can select it and go to payment selection page."
 msgstr "ユーザーは選択した上で、支払い方法選択ページへ移動します。"
 
-#: ../class/form.php:1273
+#: ../class/form.php:1392
 msgid "Display thank you message when transaction finished."
 msgstr "決済が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1273 ../class/form.php:1289
+#: ../class/form.php:1392 ../class/form.php:1408
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr "ユーザーは5秒後にイベントページへリダイレクトされます。"
 
-#: ../class/form.php:1276
+#: ../class/form.php:1395
 msgid "Display message when user cancels transaction."
 msgstr "ユーザーが決済をキャンセルしたときにメッセージを表示します。"
 
-#: ../class/form.php:1279
+#: ../class/form.php:1398
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
@@ -2960,29 +3018,29 @@ msgstr ""
 "支払い方法を表示します。PayPalだけが支払い方法として有効なときにはこのフォー"
 "ムをスキップできます。"
 
-#: ../class/form.php:1283
+#: ../class/form.php:1402
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 "ユーザーがPayPalから戻ってきたときに決済を受諾するためのページを表示します。"
 
-#: ../class/form.php:1286 ../class/form.php:1292
+#: ../class/form.php:1405 ../class/form.php:1411
 msgid "Show list of tickets which user have bought."
 msgstr "ユーザーが購入したチケットのリストを表示します。"
 
-#: ../class/form.php:1286
+#: ../class/form.php:1405
 msgid "User can select ticket to cancel."
 msgstr "ユーザーはキャンセルするチケットを選択できます。"
 
-#: ../class/form.php:1286 ../class/form.php:1292
+#: ../class/form.php:1405 ../class/form.php:1411
 msgid "If user has no tickets, wp_die will be executed."
 msgstr "ユーザーがチケットを購入していない場合はwp_dieが実行されます。"
 
-#: ../class/form.php:1289
+#: ../class/form.php:1408
 msgid "Displays message to tell user cancel is completed."
 msgstr "キャンセル処理が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1295
+#: ../class/form.php:1414
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
@@ -2990,7 +3048,7 @@ msgstr ""
 "特定のユーザーが所有するチケットのリストを表示します。あなたはプルダウンメ"
 "ニューからチケットを使用済みにすることができます。"
 
-#: ../class/form.php:1298
+#: ../class/form.php:1417
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
@@ -2998,9 +3056,13 @@ msgstr ""
 "このプラグインが出力するコードからチケットの所有者を探します。このコードはイ"
 "ベント固有です。"
 
-#: ../class/form.php:1301
+#: ../class/form.php:1420
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
+
+#: ../class/form.php:1423
+msgid "Displayed when user choose to wait for cancellation."
+msgstr "ユーザーがキャンセル待ちを申し込んだときに表示されます。"
 
 #: ../class/ios.php:122
 msgid "Smartphone Product"
@@ -3133,104 +3195,108 @@ msgstr "ログインできませんでした。ユーザー名かパスワード
 msgid "This API requires login credentials."
 msgstr "このAPIはログイン情報が必要です。"
 
-#: ../class/literally-wordpress.php:351
+#: ../class/literally-wordpress.php:253
+msgid "Thank you for your patience. Please wait for our contact."
+msgstr "お手数をおかけいたしますが、こちらからのご連絡をお待ちください。"
+
+#: ../class/literally-wordpress.php:353
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../class/literally-wordpress.php:355
+#: ../class/literally-wordpress.php:357
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../class/literally-wordpress.php:358
+#: ../class/literally-wordpress.php:360
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../class/literally-wordpress.php:381
+#: ../class/literally-wordpress.php:383
 msgid "Literally WordPress successfully upgrades database."
 msgstr "Literally WordPressはデータベースの更新に成功しました。"
 
-#: ../class/literally-wordpress.php:409 ../help/transfer.php:16
+#: ../class/literally-wordpress.php:411 ../help/transfer.php:16
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../class/literally-wordpress.php:411
+#: ../class/literally-wordpress.php:413
 msgid "Transaction Management"
 msgstr "決済管理"
 
-#: ../class/literally-wordpress.php:417
+#: ../class/literally-wordpress.php:419
 msgid "Campaign Management"
 msgstr "キャンペーン管理"
 
-#: ../class/literally-wordpress.php:420
+#: ../class/literally-wordpress.php:422
 msgid "Download logs"
 msgstr "ダウンロードログ"
 
-#: ../class/literally-wordpress.php:422
+#: ../class/literally-wordpress.php:424
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../class/literally-wordpress.php:428
+#: ../class/literally-wordpress.php:430
 msgid "API Manual"
 msgstr "APIマニュアル"
 
-#: ../class/literally-wordpress.php:433
+#: ../class/literally-wordpress.php:435
 msgid "Reward Management"
 msgstr "報酬管理"
 
-#: ../class/literally-wordpress.php:462
+#: ../class/literally-wordpress.php:464
 msgid "This page does not exist. Template not found."
 msgstr "ページが見つかりません。テンプレートが存在しません。"
 
-#: ../class/literally-wordpress.php:506 ../class/literally-wordpress.php:546
+#: ../class/literally-wordpress.php:508 ../class/literally-wordpress.php:548
 msgid "Reward Amount Summary"
 msgstr "報酬総額サマリー"
 
-#: ../class/literally-wordpress.php:509 ../class/literally-wordpress.php:549
+#: ../class/literally-wordpress.php:511 ../class/literally-wordpress.php:551
 #: ../form-template/reward-summary.php:49
 msgid "Fixed"
 msgstr "確定"
 
-#: ../class/literally-wordpress.php:510 ../class/literally-wordpress.php:550
+#: ../class/literally-wordpress.php:512 ../class/literally-wordpress.php:552
 msgid "Unfixed"
 msgstr "未確定"
 
-#: ../class/literally-wordpress.php:511 ../class/literally-wordpress.php:551
+#: ../class/literally-wordpress.php:513 ../class/literally-wordpress.php:553
 msgid "Lost"
 msgstr "失効"
 
-#: ../class/literally-wordpress.php:512 ../class/literally-wordpress.php:524
-#: ../class/literally-wordpress.php:552
+#: ../class/literally-wordpress.php:514 ../class/literally-wordpress.php:526
+#: ../class/literally-wordpress.php:554
 msgid "Daily Report"
 msgstr "日別リポート"
 
-#: ../class/literally-wordpress.php:513 ../class/literally-wordpress.php:526
-#: ../class/literally-wordpress.php:553
+#: ../class/literally-wordpress.php:515 ../class/literally-wordpress.php:528
+#: ../class/literally-wordpress.php:555
 msgid "Date"
 msgstr "日付"
 
-#: ../class/literally-wordpress.php:521
+#: ../class/literally-wordpress.php:523
 msgid "Sales per post type"
 msgstr "投稿タイプ別売上"
 
-#: ../class/literally-wordpress.php:522
+#: ../class/literally-wordpress.php:524
 msgid "Post type"
 msgstr "投稿タイプ"
 
-#: ../class/literally-wordpress.php:569
-#: ../form-template/edit-detail-event.php:61
+#: ../class/literally-wordpress.php:571
+#: ../form-template/edit-detail-event.php:72
 #, php-format
 msgid "Cacnelable till %1$s days before, %2$s"
 msgstr "%1$s日前までキャンセル可 %2$s返金"
 
-#: ../class/literally-wordpress.php:571
+#: ../class/literally-wordpress.php:573
 msgid "Are you sure to delete this ticket?"
 msgstr "このチケットを削除してよろしいですか？"
 
-#: ../class/literally-wordpress.php:573
+#: ../class/literally-wordpress.php:575
 msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
 msgstr "返金は数値（正負）またはパーセント（ex. 50%）でなければなりません。"
 
-#: ../class/literally-wordpress.php:606
+#: ../class/literally-wordpress.php:608
 #, php-format
 msgid ""
 "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
@@ -3239,35 +3305,35 @@ msgstr ""
 "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登"
 "録を許可してください。"
 
-#: ../class/literally-wordpress.php:639 ../help/index.php:12
+#: ../class/literally-wordpress.php:641 ../help/index.php:12
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../class/literally-wordpress.php:654
+#: ../class/literally-wordpress.php:656
 msgid "Purchase history"
 msgstr "購入履歴"
 
-#: ../class/literally-wordpress.php:764
+#: ../class/literally-wordpress.php:768
 msgid "Option updated."
 msgstr "設定が更新されました。"
 
-#: ../class/literally-wordpress.php:767
+#: ../class/literally-wordpress.php:771
 msgid "Option values are same, so nothing has changed."
 msgstr "オプション値が同じだったため、変更はありませんでした。"
 
-#: ../class/literally-wordpress.php:770
+#: ../class/literally-wordpress.php:774
 msgid "Failed to updated options."
 msgstr "設定の更新に失敗しました。"
 
-#: ../class/literally-wordpress.php:882
+#: ../class/literally-wordpress.php:859
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../class/literally-wordpress.php:887
+#: ../class/literally-wordpress.php:864
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../class/literally-wordpress.php:999
+#: ../class/literally-wordpress.php:976
 msgid ""
 "You can't refund via PayPal because 60 days have past since the transaction "
 "occurred."
@@ -3275,31 +3341,31 @@ msgstr ""
 "トランザクションが発生してから60日が経過したため、PayPalでの返金はできませ"
 "ん。"
 
-#: ../class/literally-wordpress.php:1004
+#: ../class/literally-wordpress.php:981
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../class/literally-wordpress.php:1006
+#: ../class/literally-wordpress.php:983
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../class/literally-wordpress.php:1038
+#: ../class/literally-wordpress.php:1015
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../class/literally-wordpress.php:1040
+#: ../class/literally-wordpress.php:1017
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../class/literally-wordpress.php:1151
+#: ../class/literally-wordpress.php:1128
 msgid "Payment Method"
 msgstr "支払い方法"
 
-#: ../class/literally-wordpress.php:1153
+#: ../class/literally-wordpress.php:1130
 msgid "Transaction ID"
 msgstr "決済ID"
 
-#: ../class/literally-wordpress.php:1300
+#: ../class/literally-wordpress.php:1277
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -3813,102 +3879,106 @@ msgstr "Apple"
 msgid "ANDROID"
 msgstr "Android"
 
-#: ../class/statics/lwp.php:391
+#: ../class/statics/lwp.php:397
 msgid "SUCCESS"
 msgstr "完了"
 
-#: ../class/statics/lwp.php:392 ../form-template/paypal-cancel-ticket.php:44
+#: ../class/statics/lwp.php:398 ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:69
 #: ../form-template/paypal-subscription.php:65 ../tables/list-history.php:179
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../class/statics/lwp.php:393
+#: ../class/statics/lwp.php:399
 msgid "START"
 msgstr "開始"
 
-#: ../class/statics/lwp.php:394
+#: ../class/statics/lwp.php:400
 msgid "REFUND"
 msgstr "返金済み"
 
-#: ../class/statics/lwp.php:395
+#: ../class/statics/lwp.php:401
 msgid "REFUND_REQUESTING"
 msgstr "返金要求中"
 
-#: ../class/statics/lwp.php:431
+#: ../class/statics/lwp.php:402
+msgid "WAITING_CANCELLATION"
+msgstr "キャンセル待ち"
+
+#: ../class/statics/lwp.php:438
 msgid "PROMOTION"
 msgstr "プロモーション"
 
-#: ../class/statics/lwp.php:432
+#: ../class/statics/lwp.php:439
 msgid "SELL"
 msgstr "販売"
 
-#: ../class/statics/lwp.php:464
+#: ../class/statics/lwp.php:471
 msgid "ITEM_SET"
 msgstr "アイテムセット"
 
-#: ../class/statics/lwp.php:465
+#: ../class/statics/lwp.php:472
 msgid "SINGULAR"
 msgstr "単独商品"
 
-#: ../class/statics/lwp.php:466
+#: ../class/statics/lwp.php:473
 msgid "post_type"
 msgstr "投稿タイプ"
 
-#: ../class/statics/lwp.php:467
+#: ../class/statics/lwp.php:474
 msgid "Taxonomy"
 msgstr "Taxonomy"
 
-#: ../class/statics/lwp.php:509
+#: ../class/statics/lwp.php:516
 msgid "SPECIAL_PRICE"
 msgstr "Special Price"
 
-#: ../class/statics/lwp.php:510
+#: ../class/statics/lwp.php:517
 msgid "PERCENT"
 msgstr "Percent"
 
-#: ../class/statics/lwp.php:511
+#: ../class/statics/lwp.php:518
 msgid "DISCOUNT"
 msgstr "Discount"
 
-#: ../class/statics/lwp.php:574 ../form-template/paypal-subscription.php:71
+#: ../class/statics/lwp.php:581 ../form-template/paypal-subscription.php:71
 msgid "Close"
 msgstr "閉じる"
 
-#: ../class/statics/lwp.php:575
+#: ../class/statics/lwp.php:582
 msgid "Prev"
 msgstr "前へ"
 
-#: ../class/statics/lwp.php:576
+#: ../class/statics/lwp.php:583
 msgid "Next"
 msgstr "次"
 
-#: ../class/statics/lwp.php:582
+#: ../class/statics/lwp.php:589
 msgid "Week"
 msgstr "週"
 
-#: ../class/statics/lwp.php:583 ../class/statics/lwp.php:584
+#: ../class/statics/lwp.php:590 ../class/statics/lwp.php:591
 msgid "Time"
 msgstr "時間"
 
-#: ../class/statics/lwp.php:585
+#: ../class/statics/lwp.php:592
 msgid "Hour"
 msgstr "時間"
 
-#: ../class/statics/lwp.php:586
+#: ../class/statics/lwp.php:593
 msgid "Minute"
 msgstr "分"
 
-#: ../class/statics/lwp.php:587
+#: ../class/statics/lwp.php:594
 msgid "Second"
 msgstr "秒"
 
-#: ../class/statics/lwp.php:588
+#: ../class/statics/lwp.php:595
 msgid "Now"
 msgstr "いま"
 
-#: ../class/statics/lwp.php:592
+#: ../class/statics/lwp.php:599
 msgid "Start date must be earlier than end date."
 msgstr "終了日が開始日よりも過去になっています。"
 
@@ -4745,39 +4815,48 @@ msgstr "参加者"
 msgid "<strong>%s</strong> People"
 msgstr "<strong>%s</strong>人"
 
-#: ../form-template/edit-detail-event.php:27
-msgid "Contact them"
-msgstr "コンタクト"
+#: ../form-template/edit-detail-event.php:26
+#, php-format
+msgid "%d poeple are waiting for cancellation."
+msgstr "%d人がキャンセル待ちです。"
 
-#: ../form-template/edit-detail-event.php:30
+#: ../form-template/edit-detail-event.php:29
 msgid "Show list"
 msgstr "リストを表示"
 
-#: ../form-template/edit-detail-event.php:35
+#: ../form-template/edit-detail-event.php:32
+msgid "Contact them"
+msgstr "コンタクト"
+
+#: ../form-template/edit-detail-event.php:37
 msgid "Ticket Sold"
 msgstr "チケット販売数"
 
-#: ../form-template/edit-detail-event.php:42
+#: ../form-template/edit-detail-event.php:47
+msgid "User can wait for cancellation of this event."
+msgstr "ユーザーはこのイベントでキャンセル待ちをできる。"
+
+#: ../form-template/edit-detail-event.php:53
 msgid "Ticket Sale Setting"
 msgstr "チケット販売設定"
 
-#: ../form-template/edit-detail-event.php:66
+#: ../form-template/edit-detail-event.php:77
 msgid "You do not specify cancel limit, so user cannot cancel."
 msgstr "キャンセル期限が設定されていないため、ユーザーはキャンセルできません。"
 
-#: ../form-template/edit-detail-event.php:71
+#: ../form-template/edit-detail-event.php:82
 #, php-format
 msgid "User can cancel ticket %1$s days before selling limit. Refund is %2$s."
 msgstr ""
 "ユーザーはチケットを販売期限の %1$s 日前にキャンセルできます。 返金は %2$sで"
 "す。"
 
-#: ../form-template/edit-detail-event.php:79
+#: ../form-template/edit-detail-event.php:90
 msgid ""
 "If you specify cancelable date, user can cancel transaction after payment."
 msgstr "キャンセル期限を設定すると、ユーザーは決済完了後もキャンセルできます。"
 
-#: ../form-template/edit-detail-event.php:80
+#: ../form-template/edit-detail-event.php:91
 msgid ""
 "You can specify percentage(ex. 50%), number(ex. 100). If you specified "
 "positive number, that amount will be refunded. Negative number specified, "
@@ -4787,66 +4866,66 @@ msgstr ""
 "合はその額が返金されます。負の数を指定した場合は、購入金額からその数値を引い"
 "た額が返金されます。"
 
-#: ../form-template/edit-detail-event.php:81
+#: ../form-template/edit-detail-event.php:92
 msgid "<strong>Example: </strong>"
 msgstr "<strong>例: </strong>"
 
-#: ../form-template/edit-detail-event.php:82
-#: ../form-template/edit-detail-event.php:83
-#: ../form-template/edit-detail-event.php:84
+#: ../form-template/edit-detail-event.php:93
+#: ../form-template/edit-detail-event.php:94
+#: ../form-template/edit-detail-event.php:95
 #, php-format
 msgid "Price %1$s and Refund %2$s -&gt; %3$s back."
 msgstr "金額 %1$s 返金 %2$s -&gt; %3$s が返金されます"
 
-#: ../form-template/edit-detail-event.php:89
+#: ../form-template/edit-detail-event.php:100
 msgid "Ticket Footer Note"
 msgstr "チケットの註"
 
-#: ../form-template/edit-detail-event.php:92
+#: ../form-template/edit-detail-event.php:103
 msgid "Auto format"
 msgstr "自動フォーマット"
 
-#: ../form-template/edit-detail-event.php:128
+#: ../form-template/edit-detail-event.php:139
 msgid "Ticket form"
 msgstr "チケットフォーム"
 
-#: ../form-template/edit-detail-event.php:133
+#: ../form-template/edit-detail-event.php:144
 msgid "This post type has presets: "
 msgstr "この投稿タイプにはプリセットがあります: "
 
-#: ../form-template/edit-detail-event.php:135
+#: ../form-template/edit-detail-event.php:146
 msgid "No name"
 msgstr "名称なし"
 
-#: ../form-template/edit-detail-event.php:137
+#: ../form-template/edit-detail-event.php:148
 msgid "Add presets"
 msgstr "プリセットを追加"
 
-#: ../form-template/edit-detail-event.php:148
+#: ../form-template/edit-detail-event.php:159
 msgid "Added as new ticket."
 msgstr "新規チケットとして追加します。"
 
-#: ../form-template/edit-detail-event.php:149
+#: ../form-template/edit-detail-event.php:160
 msgid "Editting existing ticket."
 msgstr "既存のチケットを更新しています。"
 
-#: ../form-template/edit-detail-event.php:154
+#: ../form-template/edit-detail-event.php:165
 msgid "Ticket Description"
 msgstr "チケット詳細"
 
-#: ../form-template/edit-detail-event.php:160
+#: ../form-template/edit-detail-event.php:171
 msgid "Ticket Price"
 msgstr "チケット価格"
 
-#: ../form-template/edit-detail-event.php:166
+#: ../form-template/edit-detail-event.php:177
 msgid "Ticket Stock"
 msgstr "チケット在庫"
 
-#: ../form-template/edit-detail-event.php:174
+#: ../form-template/edit-detail-event.php:185
 msgid "Clear form"
 msgstr "フォームをクリア"
 
-#: ../form-template/edit-detail-event.php:175
+#: ../form-template/edit-detail-event.php:186
 msgid "Edit ticket"
 msgstr "チケットを更新"
 
@@ -4904,12 +4983,14 @@ msgid "You will be redirected to <strong>%s</strong>"
 msgstr "<strong>%s</strong>にリダイレクトされます。"
 
 #: ../form-template/paypal-cancel-ticket-success.php:7
+#: ../form-template/paypal-event-tickets-awaiting.php:7
 #: ../form-template/paypal-success.php:7
 #, php-format
 msgid "%s seconds left"
 msgstr "のこり%s秒"
 
 #: ../form-template/paypal-cancel-ticket-success.php:10
+#: ../form-template/paypal-event-tickets-awaiting.php:10
 #: ../form-template/paypal-success.php:10
 msgid "return now"
 msgstr "すぐに戻る"
@@ -4932,7 +5013,7 @@ msgid "Condition"
 msgstr "条件"
 
 #: ../form-template/paypal-cancel-ticket.php:48
-#: ../form-template/paypal-event-contact.php:46
+#: ../form-template/paypal-event-contact.php:78
 #: ../form-template/paypal-event-tickets-consume.php:45
 #: ../form-template/paypal-event-tickets.php:53
 #: ../form-template/paypal-event-user.php:25
@@ -4955,37 +5036,67 @@ msgstr "戻る"
 #: ../form-template/paypal-event-contact.php:3
 #, php-format
 msgid ""
-"You are about to send email to %1$s participants of %2$s <strong>%3$s</"
-"strong>. Please be patient till sending process finishes even if number of "
+"You are about to send email to participants of %1$s <strong>%2$s</strong>. "
+"Please be patient till sending process finishes even if number of "
 "participants is huge."
 msgstr ""
-"%2$s <strong>%3$s</strong>%2$s の参加者%1$s人にメールを送ろうとしています。参"
-"加人数が多い場合は送信処理が終わるまで時間がかかりますのでご容赦ください。"
+"%1$s <strong>%2$s</strong> の参加者にメールを送ろうとしています。参加人数が多"
+"い場合は送信処理が終わるまで時間がかかりますのでご容赦ください。"
 
 #: ../form-template/paypal-event-contact.php:12
 msgid "From"
 msgstr "差出人"
 
 #: ../form-template/paypal-event-contact.php:22
+msgid "Recipients"
+msgstr "送信先"
+
+#: ../form-template/paypal-event-contact.php:25
+msgid "Please select recepients"
+msgstr "送信先を選択して下さい。"
+
+#: ../form-template/paypal-event-contact.php:41
 msgid "Subject"
 msgstr "メール件名"
 
-#: ../form-template/paypal-event-contact.php:23
+#: ../form-template/paypal-event-contact.php:42
 msgid "ex. What you need for our event."
 msgstr "ex. イベントに必要なもの"
 
-#: ../form-template/paypal-event-contact.php:28
-msgid "Dear %user_display%"
-msgstr "%user_display%様"
+#: ../form-template/paypal-event-contact.php:47
+msgid "Dear %display_name%,"
+msgstr "%display_name%様"
 
-#: ../form-template/paypal-event-contact.php:29
+#: ../form-template/paypal-event-contact.php:49
 #, php-format
-msgid "You can user %1$s and %2$s as placeholder."
-msgstr "%1$sと%2$sをプレースホルダーとして使用できます。"
+msgid "You can use %1$s, %2$s, %3$s, %4$s as placeholder."
+msgstr "%1$s, %2$s, %3$s, %4$s をプレースホルダーとして利用できます。"
 
-#: ../form-template/paypal-event-contact.php:33
+#: ../form-template/paypal-event-contact.php:54
 msgid "Signature"
 msgstr "署名"
+
+#: ../form-template/paypal-event-contact.php:60
+msgid "Sending Status"
+msgstr "送信ステータス"
+
+#: ../form-template/paypal-event-contact.php:66
+msgid "Do not close browser."
+msgstr "ブラウザを閉じないでください。"
+
+#: ../form-template/paypal-event-contact.php:67
+msgid "Waiting&hellip;"
+msgstr "待機中&hellip;"
+
+#: ../form-template/paypal-event-tickets-awaiting.php:2
+#, php-format
+msgid "You are now on waiting list for <strong>%s</strong>."
+msgstr "<strong>%s</strong>のキャンセル待ちリストに登録されました。"
+
+#: ../form-template/paypal-event-tickets-awaiting.php:3
+#, php-format
+msgid "You will be redirected to %s."
+msgstr "<strong>%s</strong>にリダイレクトされます。"
 
 #: ../form-template/paypal-event-tickets-consume.php:4
 msgid "Successfully updated."
@@ -6104,6 +6215,10 @@ msgstr "終了"
 msgid "Sale Price"
 msgstr "セール価格"
 
+#: ../tables/list-campaign.php:105
+msgid "Coupon"
+msgstr "クーポン"
+
 #: ../tables/list-campaign.php:183
 #, php-format
 msgid "%d items<small>(%s)</small>"
@@ -6171,10 +6286,6 @@ msgstr "ゲスト"
 #: ../tables/list-event.php:22
 msgid "No matching event is found."
 msgstr "該当するイベントは見つかりませんでした。"
-
-#: ../tables/list-event.php:33
-msgid "Event Name"
-msgstr "イベント名"
 
 #: ../tables/list-event.php:34 ../tables/list-promotable-posts.php:135
 msgid "Published"
@@ -6390,6 +6501,25 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid ""
+#~ "If you enter coupon code, the sale price will be adopted only for user "
+#~ "with coupon."
+#~ msgstr ""
+#~ "クーポンコードを入力すると、セール価格はクーポンを持っているユーザーにのみ"
+#~ "適用されます。"
+
+#~ msgid "Any"
+#~ msgstr "何でも"
+
+#~ msgid "Campaign is adopted only with this payment method."
+#~ msgstr "キャンペーンはこの支払い方法に対してのみ適用されます。"
+
+#~ msgid "Update Failed."
+#~ msgstr "更新に失敗しました。"
+
+#~ msgid "Mail body is empty"
+#~ msgstr "メール本文が空です。"
 
 #~ msgid "%d%%"
 #~ msgstr "%d%%"

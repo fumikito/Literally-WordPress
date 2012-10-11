@@ -22,12 +22,14 @@
 			<?php
 				$participants = lwp_participants_number($post);
 				printf($this->_('<strong>%s</strong> People'), number_format($participants));
+				echo ' / ';
+				printf($this->_('%d poeple are waiting for cancellation.'), lwp_participants_number($post, true));
 			?>
-			<?php if($participants): ?>
-				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact').'&amp;'.'event_id='.$post->ID; ?>"><?php $this->e('Contact them'); ?></a>
-			<?php endif; ?>
 			<?php if(current_user_can('edit_others_posts')): ?>
 				<a class="button" href="<?php echo admin_url('admin.php').'?page=lwp-event&amp;event_id='.$post->ID; ?>"><?php $this->e('Show list'); ?></a>
+			<?php endif; ?>
+			<?php if($participants): ?>
+				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact').'&amp;'.'event_id='.$post->ID; ?>"><?php $this->e('Contact them'); ?></a>
 			<?php endif; ?>
 		</td>
 	</tr>

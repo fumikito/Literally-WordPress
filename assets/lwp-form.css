@@ -254,7 +254,8 @@ a.button, a.button-primary{
 	line-height: 15px;
 	margin:10px 0;
 }
-.lwp-indicator-progress-bg{
+.lwp-indicator-progress-bg,
+#lwp-contact-indicator .indicator-bg{
 	display: inline-block;
 	width:100px;
 	height:13px;
@@ -275,7 +276,8 @@ a.button, a.button-primary{
 		color-stop(0.84, rgb(235,235,235))
 	);
 }
-.lwp-indicator-progress{
+.lwp-indicator-progress,
+#lwp-contact-indicator .indicator-bar{
 	display:inline-block;
 	height:13px;
 	width: 0;
@@ -304,4 +306,15 @@ a.button, a.button-primary{
 .lwp-indicator-text strong{
 	vertical-align: top;
 	color:#000;
+}
+/* Sending indicator */
+#lwp-contact-indicator .processing{
+	display: none;
+}
+#lwp-contact-indicator.processing .processing{
+	display: inline;
+}
+
+#lwp-contact-indicator.processing .waiting{
+	display: none;
 }

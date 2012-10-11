@@ -13,4 +13,4 @@
 		<!-- // .header -->
 		
 		<div class="main">
-			<?php _lwp_show_indicator($total, $current);?>
+			<?php if(isset($total, $current)) _lwp_show_indicator($total, $current);?>

@@ -47,24 +47,64 @@ jQuery(document).ready(function($){
 				flg = false;
 				msg.push(LWP.labelInvalidBody);
 			}
+			if(!($(this).find('select[name=to]').val().length > 0)){
+				flg = false;
+				msg.push(LWP.labelInvalidTo);
+			}
 			if(flg){
+				$(this).find('#lwp-contact-indicator').effect('highlight');
 				$(this).find('.indicator').fadeIn();
+				$(this).find('#lwp-contact-indicator').addClass('processing');
 				$(this).find('input[type=submit]').val(LWP.labelSending).attr('disabled', true);
-				$(this).ajaxSubmit({
-					success: function(result){
-						$('#lwp-contact-participants-form').find('.indicator').fadeOut();
-						$('#lwp-contact-participants-form').find('input[type=submit]').val(LWP.labelSent).attr('disabled', false);
-						if(result.success){
-							$('#lwp-contact-participants-form').find('input[name=subject]').val('');
-							$('#lwp-contact-participants-form').find('textarea[name=body]').val('');
+				var submitData = {
+					current: 0,
+					total: 0,
+					_wpnonce: $(this).find('input[name=_wpnonce]').val(),
+					action: $(this).find('input[name=action]').val(),
+					event_id: $(this).find('input[name=event_id]').val(),
+					from: $(this).find('select[name=from]').val(),
+					to: $(this).find('select[name=to]').val(),
+					subject: $(this).find('input[name=subject]').val(),
+					body: $(this).find('textarea[name=body]').val(),
+					endpoint: $(this).attr('action')
+				};
+				function finishLoading(){
+					$('#lwp-contact-indicator').removeClass('processing').find('.indicator').fadeOut();
+					$('#lwp-contact-participants-form').find('input[type=submit]').removeClass('disabled').attr('disabled', false).val(LWP.labelSent);
+				}
+				function setCurrentStatus(current, total){
+					$('#lwp-contact-indicator .done').text(current);
+					$('#lwp-contact-indicator .total').text(total);
+					var division = 0;
+					if(total > 0){
+						division = Math.min(100, Math.round(current / total * 100));
+					}
+					$('#lwp-contact-indicator .indicator-bar').css('width', division + '%');
+					$('#lwp-contact-indicator').effect('highlight');
+				}
+				function ajaxResponseHandler(result){
+					if(result.success){
+						submitData.current = result.current;
+						submitData.total = result.total
+						setCurrentStatus(result.current, result.total);
+						if(result.current >= result.total){
+							alert(result.message.join("\n"));
+							finishLoading();
+						}else{
+							$.post(submitData.endpoint, submitData, ajaxResponseHandler);
 						}
+					}else{
 						alert(result.message.join("\n"));
-					},
-					dataType: 'json'
-				});
+						$(this).find('input[type=submit]').removeClass('disabled').attr('disabled', false).val(LWP.labelSent);
+					}
+				}
+				$.post(submitData.endpoint, submitData, ajaxResponseHandler);
 			}else{
 				alert(msg.join("\n"));
+				finishLoading();
 			}
+		}else{
+			finishLoading();
 		}
 	});
 });

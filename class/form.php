@@ -27,6 +27,9 @@ class LWP_Form extends Literally_WordPress_Common{
 				if($sandbox && !current_user_can('edit_theme_options')){
 					$this->kill('Sorry, but you have no permission.', 403);
 				}
+				if(!apply_filters('lwp_before_display_form', true, $this->get_current_action())){
+					$this->kill($this->_('You cannot access here.'), 403, true);
+				}
 				$this->{$action}($sandbox);
 			}else{
 				$this->kill($this->_('Sorry, but You might make unexpected action.'), 400);
@@ -1001,11 +1004,12 @@ EOS;
 		);
 		//Pass variables to JS
 		$this->_LWP = array(
-			'labelConfirm' => $this->_('Are you sure to send this mail?'),
+			'labelConfirm' => $this->_('Are you sure to send this mail? You can\'t cancel this action.'),
 			'labelSending' => $this->_('Sending&hellip;'),
 			'labelInvalidFrom' => $this->_('Please specify mail from.'),
 			'labelInvalidSubject' => $this->_('Subject is empty.'),
-			'labelInvalidBody' => $this->_('Mail body is empty'),
+			'labelInvalidBody' => $this->_('Mail body is empty.'),
+			'labelInvalidTo' => $this->_('Recipients not set.'),
 			'labelSent' => $this->_('Send')
 		);
 		//Do sandbox
@@ -1038,6 +1042,40 @@ EOS;
 			$post_author = get_userdata($event->post_author);
 			$options['author'] = sprintf($this->_('Post author email <%s>'), $post_author->user_email);
 		}
+		//Apply filters
+		$options = apply_filters('lwp_contact_from', $options);
+		//Recipiets list
+		$participants = lwp_participants_number($event);
+		$waiting = lwp_participants_number($event, true);
+		if($participants + $waiting < 1){
+			$this->kill($this->_('There is no one to contact.'), 404, true);
+		}
+		$recipients = array(
+			'event_success' => sprintf($this->_('All Participants(%s people)'), number_format($participants))
+		);
+		if($waiting > 0){
+			$recipients['event_waiting'] = sprintf($this->_('All waitings(%s people)'), number_format($waiting));
+		}
+		//Get tickets user
+		$sql = <<<EOS
+			SELECT ID, post_title FROM {$wpdb->posts} WHERE post_parent = %d AND post_type = %s
+EOS;
+		$participant_sql = "SELECT count(DISTINCT user_id) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s";
+		foreach($wpdb->get_results($wpdb->prepare($sql, $event->ID, $lwp->event->post_type)) as $ticket){
+			$users_count = $wpdb->get_var($wpdb->prepare($participant_sql, $ticket->ID, LWP_Payment_Status::SUCCESS));
+			if($users_count < 1){
+				continue;
+			}
+			$users = array(
+				'ticket_participants_'.$ticket->ID => sprintf($this->_('Participants(%s people)'), number_format($users_count))
+			);
+			$ticket_waiting = $wpdb->get_var($wpdb->prepare($participant_sql, $ticket->ID, LWP_Payment_Status::WAITING_CANCELLATION));
+			if($ticket_waiting > 0){
+				$users['ticket_waiting_'.$ticket->ID] = sprintf($this->_('Waitings(%s people)'), number_format($ticket_waiting));
+			}
+			$recipients[$ticket->post_title] = $users;
+		}
+		$recipients = apply_filters('lwp_contact_recipients', $recipients);
 		//Show form
 		$this->show_form('event-contact', array(
 			'participants' => lwp_participants_number($event),
@@ -1046,8 +1084,9 @@ EOS;
 			'title' => apply_filters('the_title', $event->post_title),
 			'signature' => wpautop($lwp->event->get_signature()),
 			'options' => $options,
+			'recipients' => $recipients,
 			'loader' => '<img class="indicator" alt="Loading..." style="display:none;" width="16" height="16" src="'.$this->url.'assets/indicator-postbox.gif" />',
-			'link' => admin_url('post.php?post='.$event->ID.'&action=edit')
+			'link' => get_permalink($event->ID)
 		));
 	}
 	
@@ -1128,7 +1167,7 @@ EOS;
 		$print_css = (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_stylesheet_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
 		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
 		//JS for form helper
-		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form"), $lwp->version, true);
+		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form", 'jquery-effects-highlight'), $lwp->version, true);
 		//Add Common lables
 		$this->_LWP['labelProcessing'] = $this->_('Processing&hellip;');
 		wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
