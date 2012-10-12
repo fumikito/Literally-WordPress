@@ -180,6 +180,12 @@ class Literally_WordPress{
 	 */
 	public $campaign_manager = null;
 	
+	/**
+	 * Softbank Payment Gateway
+	 * @var LWP_SB_Payment
+	 */
+	public $softbank = null;
+	
 	//--------------------------------------------
 	//
 	// 初期化処理
@@ -221,6 +227,14 @@ class Literally_WordPress{
 				"signature" => "",
 				"token" => "",
 				"skip_payment_selection" => false,
+				'sb_creditcard' => false,
+				'sb_webcvs' => false,
+				'sb_payeasy' => false,
+				'sb_sandbox' => true,
+				'sb_marchant_id' => '',
+				'sb_service_id' => '',
+				'sb_hash_key' => '',
+				'sb_prefix' => '',
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -261,6 +275,8 @@ class Literally_WordPress{
 				"load_assets" => 2
 			)
 		);
+		//Initialize Softbank
+		$this->softbank = new LWP_SB_Payment($this->option);
 		//Initialize iOS
 		$this->ios = new LWP_iOS($this->option);
 		//Register form action
@@ -692,6 +708,14 @@ class Literally_WordPress{
 						"notification_limit" => (int) $_REQUEST['notification_limit'],
 						"currency_code" => $_REQUEST["currency_code"],
 						"country_code" => $_REQUEST["country_code"],
+						'sb_creditcard' => (isset($_REQUEST['sb_creditcard']) && $_REQUEST['sb_creditcard']),
+						'sb_webcvs' => (isset($_REQUEST['sb_webcvs']) && $_REQUEST['sb_webcvs']),
+						'sb_payeasy' => (isset($_REQUEST['sb_payeasy']) && $_REQUEST['sb_payeasy']),
+						'sb_sandbox' => (isset($_REQUEST['sb_sandbox']) && $_REQUEST['sb_sandbox']),
+						'sb_marchant_id' => (string)$_REQUEST['sb_marchant_id'],
+						'sb_service_id' => (string)$_REQUEST['sb_service_id'],
+						'sb_hash_key' => (string)$_REQUEST['sb_hash_key'],
+						'sb_prefix' => substr(preg_replace("/[^0-9a-zA-Z]/", "", (string)$_REQUEST['sb_prefix']), 0, 8)
 					);
 					break;
 				case 'post':

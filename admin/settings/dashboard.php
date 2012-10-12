@@ -28,10 +28,15 @@
 				sprintf($this->_('Set up your PayPal information <a href="%s">here</a>.'), admin_url('admin.php?page=lwp-setting&view=payment'))
 			),
 			array(
+				$this->_('Softbank Payment'),
+				$this->softbank->is_enabled(),
+				$this->_('Japanese domestic payment service. Credit card, Web CVS and PayEasy are supported.')
+			),
+			array(
 				$this->_('Transfer'),
 				$this->notifier->is_enabled(),
 				sprintf($this->_('Transafer is typically bank transfer. You can set up it <a href="%s">here</a>.'),  admin_url('admin.php?page=lwp-setting&view=payment'))
-			)
+			),
 		) as $var): ?>
 		<tr<?php if($var[1]) echo ' class="enabled"' ?>>
 			<th scope="row"><?php echo esc_html($var[0]); ?></th>

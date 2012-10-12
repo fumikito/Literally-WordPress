@@ -1,8 +1,24 @@
+<?php /* @var $this Literally_WordPress */ ?>
 <h3><?php printf($this->_('About %s'), $this->_('Payment Options'));?></h3>
 <p class="description"><?php $this->e('To enable LWP, you have to set up at leaset one payment method.'); ?></p>
 
 <!-- Paypal -->
 
+<h3><?php $this->e('Common Settings'); ?></h3>
+<table class="form-table">
+	<tbody>
+		<tr>
+			<th valign="top"><?php $this->e('Payment Selection'); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="skip_payment_selection" value="1" <?php if($this->option['skip_payment_selection']) echo 'checked="checked" ';?>/>
+					<?php $this->e('Skip payment selection form if PayPal is only available payment method.'); ?>
+				</label>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
 
 <h3><?php $this->e('PayPal Settings');?></h3>
 <table class="form-table">
@@ -107,17 +123,80 @@
 				</p>
 			</td>
 		</tr>
+	</tbody>
+</table>
+
+
+
+<!-- Softbank -->
+<h3><?php $this->e('Softbank Payment'); ?><small class="experimental"><?php $this->e('ONLY FOR JAPAN'); ?></small></h3>
+<table class="form-table">
+	<tbody>
 		<tr>
-			<th valign="top"><?php $this->e('Payment Selection'); ?></th>
+			<th valign="top">
+				<label><?php $this->e('Enable Softbank Payment'); ?></label>
+			</th>
 			<td>
+				<p>
+					<label>
+						<input type="checkbox" name="sb_creditcard" value="1" <?php if($this->softbank->creditcard) echo 'checked="checked"'; ?> />
+						<?php $this->e('Credit Card'); ?> 
+					</label>&nbsp;
+					<label>
+						<input type="checkbox" name="sb_webcvs" value="1" <?php if($this->softbank->webcvs) echo 'checked="checked"'; ?> />
+						<?php $this->e('Web CVS'); ?> 
+					</label>&nbsp;
+					<label>
+						<input type="checkbox" name="sb_payeasy" value="1" <?php if($this->softbank->payeasy) echo 'checked="checked"'; ?> />
+						<?php $this->e('PayEasy'); ?> 
+					</label>
+				</p>
 				<label>
-					<input type="checkbox" name="skip_payment_selection" value="1" <?php if($this->option['skip_payment_selection']) echo 'checked="checked" ';?>/>
-					<?php $this->e('Skip payment selection form if PayPal is only available payment method.'); ?>
+					<input type="checkbox" name="sb_sandbox" id="sb_sandbox" value="1"<?php if($this->option['sb_sandbox']) echo ' checked="checked"';?> />
+					<?php $this->e("This is a develop enviorment and needs pseudo transaction.")?>
 				</label>
+				<p class="description">
+					<?php $this->e('To use Softbank Payment, you have to contract with SOFTBANK Payment Service corp. and get credential infomation. If Credit Card is enabled, PayPal\'s credit card will be override.'); ?>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="sb_marchant_id"><?php $this->e('Marchant ID'); ?></label></th>
+			<td>
+				<input type="text" name="sb_marchant_id" id="sb_marchant_id" class="regular-text" value="<?php echo esc_attr($this->softbank->marchant_id(true)); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="sb_service_id"><?php $this->e('Service ID'); ?></label></th>
+			<td>
+				<input type="text" name="sb_service_id" id="sb_service_id" class="regular-text" value="<?php echo esc_attr($this->softbank->service_id(true)); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="sb_hash_key"><?php $this->e('Hash Key'); ?></label></th>
+			<td>
+				<input type="text" name="sb_hash_key" id="sb_hash_key" class="regular-text" value="<?php echo esc_attr($this->softbank->hash_key(true)); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><label for="sb_prefix"><?php $this->e('Service Prefix'); ?></label></th>
+			<td>
+				<input type="text" name="sb_prefix" id="sb_prefix" class="" value="<?php echo esc_attr($this->softbank->prefix); ?>" />
+				<p class="description">
+					<?php $this->e('Prefix is used to generate transaction ID for Softbank Payment. Must be alphanumeric and less than 9 letters. Once you start your service, please don\'t change.'); ?>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><?php $this->e('Other Information'); ?></th>
+			<td>
+				<?php printf($this->_('This server\'s IP Address: <code>%s</code>'), $_SERVER['SERVER_ADDR']); ?><br />
+				<?php printf($this->_('Endpoint: <code>%s</code>'), lwp_endpoint('sb-payment')); ?>
 			</td>
 		</tr>
 	</tbody>
 </table>
+<!-- Softbank -->
 
 
 

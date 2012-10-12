@@ -16,9 +16,12 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	//Main class
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."literally-wordpress.php";
 	
-	//Static class
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics'.DIRECTORY_SEPARATOR.'lwp.php';
-	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics'.DIRECTORY_SEPARATOR."paypal.php";
+	//Static
+	foreach(scandir(dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics') as $file){
+		if(preg_match("/^[^\.].*\.php/", $file)){
+			require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR.'statics'.DIRECTORY_SEPARATOR.$file;
+		}
+	}
 	
 	//Base class
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."base".DIRECTORY_SEPARATOR."literally-wordpress-common.php";
@@ -32,6 +35,9 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."reward.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."event.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."ios.php";
+	
+	//Payment Class
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."payment".DIRECTORY_SEPARATOR."softbank-payment.php";
 	
 	/**
 	 * Instance of Literally_WordPress
