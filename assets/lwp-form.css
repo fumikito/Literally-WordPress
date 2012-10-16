@@ -184,13 +184,20 @@ a.button, a.button-primary{
 .form-table th p{
 	font-weight:normal;
 }
-.form-table input.middle-text{
+.form-table input.regular-text{
+	width: 18em;
+}.form-table input.middle-text{
 	width: 12em;
 }
 .form-table input.small-text{
 	width: 5em;
 }
-
+p.required{
+	text-align: right;
+}
+.required{
+	color: crimson;
+}
 /* price table */
 .price-table{
 	width: 100%;
@@ -272,7 +279,13 @@ a.button, a.button-primary{
 .small-icon-diners{
 	background-position: right bottom;
 }
-
+.cvs-container{
+	display: block;
+	width: 8em;
+	float: left;
+	margin: 0 1em 1em 0;
+	text-align: center;
+}
 .lwp-cvs-small-icon{
 	display: inline-block;
 	margin-right: 0.5em;
@@ -280,6 +293,9 @@ a.button, a.button-primary{
 	height: 32px;
 	background:#fff url('./icons-cvs.png') left top no-repeat;
 	border:1px solid #ccc;
+}
+.cvs-container .lwp-cvs-small-icon{
+	margin-right: 0;
 }
 .small-icon-seven-eleven{
 	background-position: left top;
@@ -299,7 +315,7 @@ a.button, a.button-primary{
 .small-icon-seicomart{
 	background-position: -64px -32px;
 }
-.small-icon-seven-eleven{
+.small-icon-familymart{
 	width: 64px;
 	background-position: left bottom;
 }

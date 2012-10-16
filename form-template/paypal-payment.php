@@ -28,13 +28,28 @@
 	</tbody>
 </table>
 
-<p class="message notice">
-	<?php $this->e("Please enter payment information"); ?>
-</p>
+<p class="message notice"><?php
+	switch($method){
+		case 'sb-cc':
+			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_CC);
+			break;
+		case 'sb-cvs':
+			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_WEB_CVS);
+			break;
+		case 'sb-payeasy':
+			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_PAYEASY);
+			break;
+	}
+	printf($this->_("Please enter payment information for %s"), $method_name);
+?></p>
 
 <?php if(!empty($error)): ?>
 <p class="message error"><?php echo implode('<br />', array_map('esc_html', $error)); ?></p>
 <?php endif; ?>
+
+<p class="required">
+	<span class="required">*</span> = <?php $this->e('Required'); ?>
+</p>
 
 <form method="post" action="<?php echo $action; ?>">
 	<input type="hidden" name="lwp-id" value="<?php echo esc_attr($post_id); ?>" />
@@ -49,6 +64,7 @@
 				</th>
 				<td>
 					<input type="text" class="middle-text" name="cc_number" id="cc_number" value="<?php if(isset($vars['cc_number'])) echo esc_attr($vars['cc_number']); ?>" placeholder="ex. 0123456789123" />
+					<span class="required">*</span>
 					<p class="description">
 						<?php $this->e('This informatin will <strong>never</strong> be saved on this site. '); ?>
 						<?php $this->e("You can pay with Credit Cards below.");?><br />
@@ -80,12 +96,14 @@
 					<span class="description">
 						<?php $this->e('(Month / Year)'); ?>
 					</span>
+					<span class="required">*</span>
 				</td>
 			</tr>
 			<tr>
 				<th><label for="cc_sec"><?php $this->e('Security Code'); ?></label></th>
 				<td>
 					<input type="text" name="cc_sec" class="small-text" id="cc_sec" value="<?php if(isset($vars['cc_sec'])) echo esc_attr($vars['cc_sec']); ?>" placeholder="ex. 123" />
+					<span class="required">*</span>
 					<p class="description">
 						<?php $this->e('Security code is 3 or 4 digits written near the card number on the credit card.'); ?>
 					</p>
@@ -96,10 +114,99 @@
 				<th><?php $this->e('Dealing Type'); ?></th>
 				<td><?php $this->e('At once'); ?></td>
 			</tr>
-			<?php break; case 'cvs':?>
-			
-			<?php break; case 'payeasy': ?>
-			
+			<?php break; case 'sb-cvs': case 'sb-payeasy': ?>
+			<?php if($method == 'sb-cvs'): ?>
+			<tr>
+				<th><?php $this->e('CVS'); ?></th>
+				<td>
+					<?php foreach($lwp->softbank->get_available_cvs() as $cvs): ?>
+					<label class="cvs-container">
+						<input type="radio" name="sb-cvs-name" value="<?php echo $cvs; ?>" /><br />
+						<i class="lwp-cvs-small-icon small-icon-<?php echo $cvs; ?>"></i><br />
+						<?php echo $lwp->softbank->get_verbose_name($cvs); ?>
+					</label>
+					<?php endforeach; ?>
+					<p style="clear: both;">
+						<span class="required">*</span>
+						<?php $this->e('Payment flow is different with eacn CVS. For more detail, see the instruction on next page.'); ?>
+					</p>
+				</td>
+			</tr>
+			<?php endif; ?>
+			<?php if($method == 'sb-payeasy'): ?>
+			<tr>
+				<th><?php $this->e('PayEasy'); ?></th>
+				<td>
+					<i class="lwp-cc-icon icon-payeasy"></i>
+					<p class="description">
+						<?php $this->e('You can pay from your bank account via PayEasy.'); ?>
+					</p>
+				</td>
+			</tr>
+			<?php endif; ?>
+			<tr>
+				<th><?php $this->e('Payment Limit'); ?></th>
+				<td><?php printf($this->_('Please finish payment by <strong>%s</strong>.'), $limit); ?></td>
+			</tr>
+			<tr>
+				<th><?php $this->e('Name'); ?></th>
+				<td>
+					<label>
+						<input type="text" class="middle-text" name="last_name" value="" placeholder="<?php $this->e('Bond'); ?>" />
+						<?php $this->e('Last Name'); ?>
+					</label>
+					<span class="required">*</span><br />
+					<label>
+						<input type="text" class="middle-text" name="first_name" value="" placeholder="<?php $this->e('James'); ?>" />
+						<?php $this->e('First Name'); ?>
+					</label>
+					<span class="required">*</span>
+				</td>
+			</tr>
+			<tr>
+				<th><?php $this->e('Address'); ?></th>
+				<td>
+					<label>
+						<input type="text" class="small-text" name="zip" value="" placeholder="1000001" />
+						<?php $this->e('Zip Code') ?>
+					</label>
+					<span class="required">*</span>
+					<?php $this->e('Only digits.'); ?>
+					<br />
+					<label>
+						<select name="prefecture">
+							<?php foreach(LWP_Address_JP::get_pref_group() as $region => $prefs): ?>
+							<optgroup label="<?php echo $region.'地方'; ?>">
+								<?php foreach($prefs as $pref): ?>
+								<option><?php echo $pref; ?></option>
+								<?php endforeach;?>
+							</optgroup>
+							<?php endforeach; ?>
+						</select>
+						<?php $this->e('Prefecture'); ?>
+					</label>
+					<span class="required">*</span>
+					<br />
+					<label>
+						<input type="text" name="address1" value="" placeholder="千代田区千代田1番1号" class="regular-text" />
+						<?php $this->e('City, Street'); ?>
+					</label>
+					<span class="required">*</span>
+					<br />
+					<label>
+						<input type="text" name="address2" value="" placeholder="千代田ビル4F" class="middle-text" />
+						<?php $this->e('Building, Room No.'); ?>
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="tel"><?php $this->e('Tel'); ?></label></th>
+				<td>
+					<input type="text" class="middle-text" name="tel" id="tel" value="" placeholder="ex. 0312345678" />
+					<span class="required">*</span>
+					<?php $this->e('Only digits.'); ?>
+				</td>
+			</tr>
 			<?php break; endswitch; ?>
 		</tbody>
 	</table>

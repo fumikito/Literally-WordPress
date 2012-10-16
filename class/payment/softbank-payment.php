@@ -102,6 +102,31 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$this->crypt_key = (string)$option['sb_crypt_key'];
 	}
 	
+	public function get_default_arguments($method = 'cvs', $user_id){
+		$default = apply_filters('lwp_sb_cvs_default', array(
+			'last_name' => false,
+			'first_name' => false,
+			'last_name_kana' => false,
+			'first_name_kana' => false,
+			'first_zip' => false,
+			'second_zip' => false,
+			'add1' => false,
+			'add2' => false,
+			'add3' => false,
+			'tel' => false,
+			'mail' => false
+		), $user_id);
+		switch($method){
+			case 'cvs':
+				break;
+			case 'payeasy':
+				break;
+			default:
+				break;
+		}
+		
+	}
+	
 	/**
 	 * Create transaction.
 	 * @global Literally_WordPress $lwp
@@ -351,7 +376,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		}
 		return $string;
 	}
-		
+	
 	/**
 	 * Returns Marchand ID
 	 * @param boolean $force To get original string, pass TRUE.
