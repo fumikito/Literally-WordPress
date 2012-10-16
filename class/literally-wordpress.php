@@ -227,14 +227,16 @@ class Literally_WordPress{
 				"signature" => "",
 				"token" => "",
 				"skip_payment_selection" => false,
-				'sb_creditcard' => false,
-				'sb_webcvs' => false,
+				'sb_creditcard' => array(),
+				'sb_webcvs' => array(),
 				'sb_payeasy' => false,
 				'sb_sandbox' => true,
 				'sb_marchant_id' => '',
 				'sb_service_id' => '',
 				'sb_hash_key' => '',
 				'sb_prefix' => '',
+				'sb_crypt_key' => '',
+				'sb_iv' => '',
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -514,6 +516,7 @@ class Literally_WordPress{
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
 			wp_enqueue_style('jquery-ui-datepicker');
+			
 			wp_enqueue_script(
 				"lwp-datepicker-load",
 				$this->url."assets/js/datepicker.js",
@@ -708,14 +711,16 @@ class Literally_WordPress{
 						"notification_limit" => (int) $_REQUEST['notification_limit'],
 						"currency_code" => $_REQUEST["currency_code"],
 						"country_code" => $_REQUEST["country_code"],
-						'sb_creditcard' => (isset($_REQUEST['sb_creditcard']) && $_REQUEST['sb_creditcard']),
-						'sb_webcvs' => (isset($_REQUEST['sb_webcvs']) && $_REQUEST['sb_webcvs']),
+						'sb_creditcard' => (isset($_REQUEST['sb_creditcard']) && !empty($_REQUEST['sb_creditcard'])) ? (array)$_REQUEST['sb_creditcard'] : array(),
+						'sb_webcvs' => (isset($_REQUEST['sb_webcvs']) && !empty($_REQUEST['sb_webcvs'])) ? (array)$_REQUEST['sb_webcvs'] : array(),
 						'sb_payeasy' => (isset($_REQUEST['sb_payeasy']) && $_REQUEST['sb_payeasy']),
 						'sb_sandbox' => (isset($_REQUEST['sb_sandbox']) && $_REQUEST['sb_sandbox']),
 						'sb_marchant_id' => (string)$_REQUEST['sb_marchant_id'],
 						'sb_service_id' => (string)$_REQUEST['sb_service_id'],
 						'sb_hash_key' => (string)$_REQUEST['sb_hash_key'],
-						'sb_prefix' => substr(preg_replace("/[^0-9a-zA-Z]/", "", (string)$_REQUEST['sb_prefix']), 0, 8)
+						'sb_prefix' => substr(preg_replace("/[^0-9a-zA-Z]/", "", (string)$_REQUEST['sb_prefix']), 0, 8),
+						'sb_crypt_key' => (string)$_REQUEST['sb_crypt_key'],
+						'sb_iv' => (string)$_REQUEST['sb_iv'],
 					);
 					break;
 				case 'post':

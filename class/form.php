@@ -106,17 +106,14 @@ class LWP_Form extends Literally_WordPress_Common{
 			$book = $this->get_random_post();
 			if($book){
 				//Find random post, show form
-				if($book->post_type == $lwp->event->post_type){
-					$item_name = get_the_title($book->post_parent).' '.$book->post_title;
-				}elseif($book->post_type == $lwp->subscription->post_type){
-					$item_name = $this->_('Subscription').' '.$book->post_title;
-				}else{
-					$item_name = $book->post_title;
-				}
+				$item_name = $this->get_item_name($book);
+				$price = lwp_price($book->ID);
 				$this->show_form('selection', array(
+					'prices' => array($book->ID => $price),
+					'items' => array($book->ID => $item_name),
+					'quantities' => array($book->ID => 1),
+					'total_price' => $price,
 					'post_id' => $book->ID,
-					'price' => lwp_price($book->ID),
-					'item' => $item_name,
 					'current' => 2,
 					'total' => 4
 				));
@@ -128,34 +125,7 @@ class LWP_Form extends Literally_WordPress_Common{
 		//Let's start transaction!
 		//Get book id
 		$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
-		$post_types = $lwp->option['payable_post_types'];
-		if($lwp->event->enabled){
-			$post_types[] = $lwp->event->post_type;
-		}
-		if($lwp->subscription->enabled){
-			$post_types[] = $lwp->subscription->post_type;
-		}
-		if(!($book = wp_get_single_post ($book_id)) || false === array_search($book->post_type, $post_types)){
-			//If specified content doesn't exist, die.
-			$this->kill($this->_("No content is specified."), 404);
-		}
-		//If tickett is specified, check selling limit
-		if($book->post_type == $lwp->event->post_type){
-			$selling_limit = get_post_meta($book->post_parent, $lwp->event->meta_selling_limit, true);
-			if($selling_limit){
-				//Selling limit is found, so check if it's oudated
-				$limit = strtotime($selling_limit) + 60 * 60 * 24 - 1;
-				$current = strtotime(gmdate('Y-m-d H:i:s'));
-				if($limit < $current){
-					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
-				}
-			}
-			//Check if stock is enough
-			$stock = lwp_get_ticket_stock(false, $book);
-			if($stock <= 0){
-				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
-			}
-		}
+		$book = $this->test_post_id($book_id);
 		//Let's do action hook to delegate transaction to other plugin
 		do_action('lwp_before_transaction', $book);
 		//All green, start transaction
@@ -194,21 +164,18 @@ class LWP_Form extends Literally_WordPress_Common{
 			//Current step
 			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
 			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
+			$item_name = $this->get_item_name($book);
 			//Start Transaction
-			if($book->post_type == $lwp->event->post_type){
-				$item_name = get_the_title($book->post_parent).' '.$book->post_title;
-			}elseif($book->post_type == $lwp->subscription->post_type){
-				$item_name = $this->_('Subscription').' '.$book->post_title;
-			}else{
-				$item_name = $book->post_title;
-			}
 			//If payment selection required or nonce isn't corret, show form.
 			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
+				$price = lwp_price($book_id);
 				$this->show_form('selection', array(
+					'prices' => array($book_id => $price),
+					'items' => array($book_id => $item_name),
+					'quantities' => array($book_id => 1),
+					'total_price' => $price,
 					'post_id' => $book_id,
-					'price' => lwp_price($book_id),
-					'item' => $item_name,
 					'current' => $current,
 					'total' => $total
 				));
@@ -328,6 +295,12 @@ EOS;
 							$message = $this->_("Failed to make transaction.");
 						}
 						break;
+					case 'sb-cc':
+					case 'sb-cvs':
+					case 'sb-payeasy':
+						header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
+						exit();
+						break;
 					default:
 						$message = $this->_("Wrong payment method is specified.");
 						break;
@@ -336,6 +309,101 @@ EOS;
 		}
 		//Here you are... Something is wrong. Just show message and die.
 		$this->kill($message);
+	}
+	
+	/**
+	 * Handle payment information
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param boolean $is_sandbox
+	 */
+	private function handle_payment($is_sandbox = false){
+		global $lwp, $wpdb;
+		$this->kill_anonymous_user();
+		if($is_sandbox){
+			//Get random post
+			$book = $this->get_random_post();
+			if($book){
+				//Find random post, show form
+				$item_name = $this->get_item_name($book);
+				$price = lwp_price($book->ID);
+				$this->show_form('payment', array(
+					'prices' => array($book->ID => $price),
+					'items' => array($book->ID => $item_name),
+					'quantities' => array($book->ID => 1),
+					'total_price' => $price,
+					'post_id' => $book->ID,
+					'method' => 'sb-cc',
+					'link' => '#',
+					'action' => '#',
+					'error' => array(),
+					'current' => 3,
+					'total' => 4
+				));
+			}else{
+				$this->kill($this->_('Mmm... Cannot find product. Please check if you have payable post.'), 404);
+			}
+		}
+		//Get Items
+		$book_id = isset($_REQUEST['lwp-id']) ? intval($_REQUEST['lwp-id']) : 0;
+		$book = $this->test_post_id($book_id);
+		$item_name = $this->get_item_name($book);
+		$price = lwp_price($book);
+		//Check methods
+		$allowed_methods = array(
+			'sb-cc' => $lwp->softbank->is_cc_enabled(),
+			'sb-cvs' => $lwp->softbank->is_cvs_enabled(),
+			'sb-payeasy' => $lwp->softbank->payeasy
+		);
+		if(!isset($_REQUEST['lwp-method']) || !array_key_exists($_REQUEST['lwp-method'], $allowed_methods) || !$allowed_methods[$_REQUEST['lwp-method']]){
+			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
+		}
+		//Do transaction
+		$error = array();
+		$vars = array();
+		if(isset($_REQUEST['_wpnonce'])){
+			if(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_sb_cc')){
+				//Softbank Credit card
+				$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
+				$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
+				$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
+				$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
+				if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
+					$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
+				}
+				$this_year = date('Y');
+				if($cc_year < $this_year || ($cc_year == $this_year && $cc_month < date('m'))){
+					$error[] = $this->_('Credit card is expired.');
+				}
+				if(!preg_match("/^[0-9]{3,4}$/", $cc_sec)){
+					$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
+				}
+				//All Green Make request
+				if(empty($error) && $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month)){
+					header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
+					die();
+				}else{
+					$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
+				}
+				if(!empty($error)){
+					$vars = compact('cc_number', 'cc_month', 'cc_year', 'cc_sec');
+				}
+			}
+		}
+		$this->show_form('payment', array(
+			'prices' => array($book->ID => $price),
+			'items' => array($book->ID => $item_name),
+			'quantities' => array($book->ID => 1),
+			'total_price' => $price,
+			'post_id' => $book->ID,
+			'action' => lwp_endpoint('payment'),
+			'method' => $_REQUEST['lwp-method'],
+			'error' => $error,
+			'vars' => $vars,
+			'link' => lwp_endpoint().'&lwp-id='.$book_id,
+			'current' => 3,
+			'total' => 4
+		));
 	}
 	
 	/**
@@ -450,6 +518,7 @@ EOS;
 				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
 				//サンキューページを表示する
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
+				exit;
 			}else{
 				$this->kill($this->_("Transaction Failed to finish."));
 			}
@@ -1145,14 +1214,14 @@ EOS;
 		exit;
 	}
 	
-  /**
-   * Returns if payment slection can be skipped
-   * @global Literally_WordPress $lwp 
-   */
-  private function can_skip_payment_selection(){
-    global $lwp;
-    return $lwp->option['skip_payment_selection'] && !($lwp->option['transfer']);
-  }
+	/**
+	 * Returns if payment slection can be skipped
+	 * @global Literally_WordPress $lwp 
+	 */
+	private function can_skip_payment_selection(){
+	  global $lwp;
+	  return $lwp->option['skip_payment_selection'] && !($lwp->option['transfer']);
+	}
   
 	/**
 	 * Do enqueue scripts 
@@ -1191,6 +1260,75 @@ EOS;
 	 */
 	private function strip_ssl($url){
 		return str_replace('https://', 'http://', $url);
+	}
+	
+	/**
+	 * Returns only numeric string
+	 * @param string $string
+	 * @return string
+	 */
+	private function convert_numeric($string){
+		$string = mb_convert_kana($string, 'n', 'utf-8');
+		return preg_replace("/[^0-9]/", '', $string);
+	}
+	
+	/**
+	 * Check if specified post can be bought
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $id
+	 * @return object
+	 */
+	private function test_post_id($id){
+		global $lwp, $wpdb;
+		$post_types = $lwp->post->post_types;
+		if($lwp->event->is_enabled()){
+			$post_types[] = $lwp->event->post_type;
+		}
+		if($lwp->subscription->is_enabled()){
+			$post_types[] = $lwp->subscription->post_type;
+		}
+		$book = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $id));
+		if(!$book || false === array_search($book->post_type, $post_types)){
+			//If specified content doesn't exist, die.
+			$this->kill($this->_("No content is specified."), 404);
+		}
+		//If ticket is specified, check selling limit
+		if($book->post_type == $lwp->event->post_type){
+			$selling_limit = get_post_meta($book->post_parent, $lwp->event->meta_selling_limit, true);
+			if($selling_limit){
+				//Selling limit is found, so check if it's oudated
+				$limit = strtotime($selling_limit) + (60 * 60 * 24 - 1);
+				$current = strtotime(time('Y-m-d H:i:s'));
+				if($limit < $current){
+					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
+				}
+			}
+			//Check if stock is enough
+			$stock = lwp_get_ticket_stock(false, $book);
+			if($stock <= 0){
+				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
+			}
+		}
+		return $book;
+	}
+	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param string $post
+	 * @return string
+	 */
+	private function get_item_name($post){
+		global $lwp;
+		$book = get_post($post);
+		$item_name = apply_filters('the_title', $book->post_title, $book->ID);
+		if($book->post_type == $lwp->event->post_type){
+			$item_name = get_the_title($book->post_parent).' '.$item_name;
+		}elseif($book->post_type == $lwp->subscription->post_type){
+			$item_name = $this->_('Subscription').' '.$item_name;
+		}
+		return $item_name;
 	}
 	
 	/**
@@ -1283,6 +1421,9 @@ EOS;
 			case 'selection':
 				$meta_title = $this->_('Select Payment');
 				break;
+			case 'payment':
+				$meta_title = $this->_('Payment Information');
+				break;
 			case 'transfer':
 				$meta_title = $this->_('Transfer Accepted');
 				break;
@@ -1336,6 +1477,7 @@ EOS;
 			case 'subscription':
 			case 'success':
 			case 'cancel':
+			case 'payment':
 				return $action;
 				break;
 			case 'pricelist':
@@ -1397,6 +1539,9 @@ EOS;
 			case 'buy':
 				return $this->_('Displays payment methods. You can skip this form if paypal is the only method available.').
 					'<small>（<a href="'.admin_url('admin.php?page=lwp-setting').'">'.$this->_("More &gt;").')</a></small>';
+				break;
+			case 'payment':
+				return $this->_('Display form to fulfill payment information like Web CVS, CreditCard and so on.');
 				break;
 			case 'confirm':
 				return $this->_('Displays form to confirm transaction when user retruns from paypal web site.');

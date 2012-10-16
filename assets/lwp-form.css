@@ -181,18 +181,144 @@ a.button, a.button-primary{
 	padding:2px;
 	
 }
-
 .form-table th p{
 	font-weight:normal;
+}
+.form-table input.middle-text{
+	width: 12em;
+}
+.form-table input.small-text{
+	width: 5em;
+}
+
+/* price table */
+.price-table{
+	width: 100%;
+	table-layout: auto;
+	border-collapse: collapse;
+	margin: 1em 0;
+}
+.price-table th,
+.price-table td{
+	padding: 10px;
+}
+.price-table thead th{
+	border-bottom: 1px solid #ddd;
+}
+.price-table tbody th,
+.price-table tbody td{
+	border-bottom: 1px dotted #f0f0f0;
+}
+.price-table tbody tr:nth-child(odd) th,
+.price-table tbody tr:nth-child(odd) td{
+	background-color: #f9f9f9;
+}
+.price-table tbody tr:last-child th,
+.price-table tbody tr:last-child td{
+	border-bottom: none;
+}
+.price-table .price{
+	white-space: nowrap;
+	text-align: right;	
+}
+.price-table tfoot th{
+	text-align: right;
+}
+.price-table tfoot th,
+.price-table tfoot td{
+	border-top: 3px double #ddd;
+	border-bottom: 3px double #ddd;
+}
+.lwp-cc-icon{
+	display: inline-block;
+	width: 130px;
+	height: 80px;
+	background:url('./icon-payment-method@2x.png') left top no-repeat; 
+}
+.icon-paypal {
+	background-position: 0 bottom;
+}
+.icon-creditcard{
+	background-position: 0 0;
+}
+.icon-transfer{
+	background-position: right bottom;
+}
+.icon-cvs{
+	background-position: -130px 0;
+}
+.icon-payeasy{
+	background-position: -130px bottom;
+}
+.lwp-cc-small-icon{
+	display: inline-block;
+	margin-right: 0.5em;
+	width: 52px;
+	height: 32px;
+	background: url('./icons-creditcards.png') left top no-repeat;
+}
+.small-icon-jcb{
+	background-position: left bottom;
+}
+.small-icon-amex{
+	background-position: -52px bottom;
+}
+.small-icon-visa{
+	background-position: -52px 0;
+}
+.small-icon-master{
+	background-position: -104px 0;
+}
+.small-icon-diners{
+	background-position: right bottom;
+}
+
+.lwp-cvs-small-icon{
+	display: inline-block;
+	margin-right: 0.5em;
+	width: 32px;
+	height: 32px;
+	background:#fff url('./icons-cvs.png') left top no-repeat;
+	border:1px solid #ccc;
+}
+.small-icon-seven-eleven{
+	background-position: left top;
+}
+.small-icon-lawson{
+	background-position: -32px -32px;
+}
+.small-icon-ministop{
+	background-position: 0 -32px;
+}
+.small-icon-circle-k{
+	background-position: -32px 0;
+}
+.small-icon-sunkus{
+	background-position: -64px 0;
+}
+.small-icon-seicomart{
+	background-position: -64px -32px;
+}
+.small-icon-seven-eleven{
+	width: 64px;
+	background-position: left bottom;
 }
 
 .message{
 	border:1px solid #e6db55;
-	padding:.3em .6em;
+	padding:1em;
 	margin:5px 0 15px;
 	background-color:#ffffe0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 1.2;
 }
-
+.error{
+	background-color: #ffebe8;
+	border-color: #c00;
+	font-size: 1.2em;
+}
 
 #lwp-invoice{
 	margin:2em auto;

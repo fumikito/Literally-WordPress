@@ -614,4 +614,17 @@ class PayPal_Statics {
 		$string = "[{$date}]\n".$string."\n\n";
 		file_put_contents($file, $string, FILE_APPEND);
 	}
+	
+	/**
+	 * Returns availbalbe credit cards
+	 * @param string $country_code
+	 * @return array
+	 */
+	public static function get_available_cards($country_code){
+		if($country_code == 'JP'){
+			return array('visa', 'master', 'jcb', 'amex');
+		}else{
+			return array('visa', 'master', 'discover', 'amex');
+		}
+	}
 }

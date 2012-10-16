@@ -134,23 +134,9 @@
 	<tbody>
 		<tr>
 			<th valign="top">
-				<label><?php $this->e('Enable Softbank Payment'); ?></label>
+				<label><?php $this->e('Sandbox'); ?></label>
 			</th>
 			<td>
-				<p>
-					<label>
-						<input type="checkbox" name="sb_creditcard" value="1" <?php if($this->softbank->creditcard) echo 'checked="checked"'; ?> />
-						<?php $this->e('Credit Card'); ?> 
-					</label>&nbsp;
-					<label>
-						<input type="checkbox" name="sb_webcvs" value="1" <?php if($this->softbank->webcvs) echo 'checked="checked"'; ?> />
-						<?php $this->e('Web CVS'); ?> 
-					</label>&nbsp;
-					<label>
-						<input type="checkbox" name="sb_payeasy" value="1" <?php if($this->softbank->payeasy) echo 'checked="checked"'; ?> />
-						<?php $this->e('PayEasy'); ?> 
-					</label>
-				</p>
 				<label>
 					<input type="checkbox" name="sb_sandbox" id="sb_sandbox" value="1"<?php if($this->option['sb_sandbox']) echo ' checked="checked"';?> />
 					<?php $this->e("This is a develop enviorment and needs pseudo transaction.")?>
@@ -158,6 +144,51 @@
 				<p class="description">
 					<?php $this->e('To use Softbank Payment, you have to contract with SOFTBANK Payment Service corp. and get credential infomation. If Credit Card is enabled, PayPal\'s credit card will be override.'); ?>
 				</p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
+				<label><?php $this->e('Credit Card'); ?></label>
+			</th>
+			<td>
+				<?php
+					$available_cards = $this->softbank->get_available_cards();
+					$cc = $this->softbank->get_available_cards(true);
+					foreach($cc as $c):
+				?>
+				<label>
+					<input type="checkbox" name="sb_creditcard[]" value="<?php echo esc_attr($c); ?>"<?php if(false !== array_search($c, $available_cards)) echo ' checked="checked"'; ?> />
+					<?php echo esc_html($this->softbank->get_verbose_name($c)); ?>
+				</label>&nbsp;
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
+				<label><?php $this->e('PayEasy'); ?></label>
+			</th>
+			<td>
+				<?php
+					$available_cvs = $this->softbank->get_available_cvs();
+					$cvs = $this->softbank->get_available_cvs(true);
+					foreach($cvs as $c):
+				?>
+				<label>
+					<input type="checkbox" name="sb_webcvs[]" value="<?php echo esc_attr($c); ?>"<?php if(false !== array_search($c, $available_cvs)) echo ' checked="checked"'; ?> />
+					<?php echo esc_html($this->softbank->get_verbose_name($c)); ?>
+				</label>&nbsp;
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
+				<label><?php $this->e('Web CVS'); ?></label>
+			</th>
+			<td>
+				<label>
+					<input type="checkbox" name="sb_payeasy" value="1" <?php if($this->softbank->payeasy) echo 'checked="checked"'; ?> />
+					<?php $this->e('Enables PayEasy'); ?> 
+				</label>
 			</td>
 		</tr>
 		<tr>
@@ -188,10 +219,32 @@
 			</td>
 		</tr>
 		<tr>
+			<th valign="top"><?php $this->e('Crypt Information'); ?></th>
+			<td>
+				<label>
+					<input class="regular-text" type="text" name="sb_crypt_key" value="<?php echo esc_attr($this->softbank->crypt_key); ?>" />
+					<?php $this->e('Crypt Key'); ?>
+				</label><br />
+				<label>
+					<input class="regular-text" type="text" name="sb_iv" value="<?php echo esc_attr($this->softbank->iv) ?>" />
+					<?php $this->e('IV (Initival Vector)'); ?>
+				</label>
+				<p><?php $this->e('These keys are required for productional environment and will be provided <strong>after contract with SOFTBANK Payment Service corp.</strong>'); ?></p>
+			</td>
+		</tr>
+		<tr>
 			<th valign="top"><?php $this->e('Other Information'); ?></th>
 			<td>
-				<?php printf($this->_('This server\'s IP Address: <code>%s</code>'), $_SERVER['SERVER_ADDR']); ?><br />
-				<?php printf($this->_('Endpoint: <code>%s</code>'), lwp_endpoint('sb-payment')); ?>
+				<?php
+					printf($this->_('This server\'s IP Address: <code>%s</code><br />'), $_SERVER['SERVER_ADDR']);
+					printf($this->_('Endpoint: <code>%s</code><br />'), lwp_endpoint('sb-payment'));
+					printf($this->_('PHP Mcrypt Extentions: <strong>%s</strong>.'), (function_exists('mcrypt_cbc') ? 'OK' : 'NG'));
+					if(!function_exists('mcrypt_cbc')){
+						echo '<strong style="color:red;">';
+						printf($this->e('This server is not ready for productional environment. Please contact to your server admin and ask him to install PHP Mcrypt.'));
+						echo '</strong>';
+					}
+				?>
 			</td>
 		</tr>
 	</tbody>
