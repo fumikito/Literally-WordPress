@@ -174,13 +174,22 @@ a.button, a.button-primary{
 	font-size:11px;
 	
 }
-
 .form-table input{
 	line-height:20px;
 	font-size:15px;
 	padding:2px;
 	
 }
+.name-table{
+	
+}
+.name-table td, .name-table th{
+	margin-bottom: 0;
+	padding: 5px;
+	border-bottom: none;
+	font-size:12px;
+}
+
 .form-table th p{
 	font-weight:normal;
 }
@@ -319,7 +328,9 @@ p.required{
 	width: 64px;
 	background-position: left bottom;
 }
-
+.small-icon-daily-yamazaki{
+	background-position: right bottom;
+}
 .message{
 	border:1px solid #e6db55;
 	padding:1em;

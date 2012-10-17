@@ -121,7 +121,7 @@
 				<td>
 					<?php foreach($lwp->softbank->get_available_cvs() as $cvs): ?>
 					<label class="cvs-container">
-						<input type="radio" name="sb-cvs-name" value="<?php echo $cvs; ?>" /><br />
+						<input type="radio" name="sb-cvs-name" value="<?php echo $cvs; ?>"<?php if(isset($vars['cvs']) && $vars['cvs'] == $cvs) echo ' checked="checked"'; ?> /><br />
 						<i class="lwp-cvs-small-icon small-icon-<?php echo $cvs; ?>"></i><br />
 						<?php echo $lwp->softbank->get_verbose_name($cvs); ?>
 					</label>
@@ -146,39 +146,79 @@
 			<?php endif; ?>
 			<tr>
 				<th><?php $this->e('Payment Limit'); ?></th>
-				<td><?php printf($this->_('Please finish payment by <strong>%s</strong>.'), $limit); ?></td>
+				<td>
+					<?php
+						switch($method){
+							case 'sb-payeasy':
+								$suffix = 'sb_payeasy';
+								break;
+							case 'sb-cvs':
+								$suffix = 'sb_cvs';
+								break;
+						}
+						wp_nonce_field('lwp_payment_'.($suffix));
+					?>
+					<?php printf($this->_('Please finish payment by <strong>%s</strong>.'), $vars['limit']); ?>
+				</td>
 			</tr>
 			<tr>
 				<th><?php $this->e('Name'); ?></th>
 				<td>
-					<label>
-						<input type="text" class="middle-text" name="last_name" value="" placeholder="<?php $this->e('Bond'); ?>" />
-						<?php $this->e('Last Name'); ?>
-					</label>
-					<span class="required">*</span><br />
-					<label>
-						<input type="text" class="middle-text" name="first_name" value="" placeholder="<?php $this->e('James'); ?>" />
-						<?php $this->e('First Name'); ?>
-					</label>
-					<span class="required">*</span>
+					<table class="name-table">
+						<tbody>
+							<tr>
+								<td>
+									<label>
+										<input type="text" class="small-text" name="last_name_kana" value="<?php echo esc_attr($vars['last_name_kana']); ?>" placeholder="ヤマダ" />
+										<?php $this->e('Last Name Kana'); ?>
+									</label>
+									<span class="required">*</span>
+								</td>
+								<td>
+									<label>
+										<input type="text" class="small-text" name="first_name_kana" value="<?php echo esc_attr($vars['first_name_kana']); ?>" placeholder="ハナコ" />
+										<?php $this->e('First Name Kana'); ?>
+									</label>
+									<span class="required">*</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										<input type="text" class="small-text" name="last_name" value="<?php echo esc_attr($vars['last_name']); ?>" placeholder="山田" />
+										<?php $this->e('Last Name'); ?>
+									</label>
+									<span class="required">*</span>
+								</td>
+								<td>
+									<label>
+										<input type="text" class="small-text" name="first_name" value="<?php echo esc_attr($vars['first_name']); ?>" placeholder="花子" />
+										<?php $this->e('First Name'); ?>
+									</label>
+									<span class="required">*</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</td>
 			</tr>
 			<tr>
 				<th><?php $this->e('Address'); ?></th>
 				<td>
 					<label>
-						<input type="text" class="small-text" name="zip" value="" placeholder="1000001" />
+						<input type="text" class="small-text" name="zipcode" value="<?php echo esc_attr($vars['zipcode']); ?>" placeholder="1000001" />
 						<?php $this->e('Zip Code') ?>
 					</label>
 					<span class="required">*</span>
 					<?php $this->e('Only digits.'); ?>
+					<?php if(function_exists('zip_search_button')) zip_search_button(); ?>
 					<br />
 					<label>
 						<select name="prefecture">
 							<?php foreach(LWP_Address_JP::get_pref_group() as $region => $prefs): ?>
 							<optgroup label="<?php echo $region.'地方'; ?>">
 								<?php foreach($prefs as $pref): ?>
-								<option><?php echo $pref; ?></option>
+								<option value="<?php echo $pref; ?>"<?php if($pref == $vars['prefecture']) echo ' selected="selected"'; ?>><?php echo $pref; ?></option>
 								<?php endforeach;?>
 							</optgroup>
 							<?php endforeach; ?>
@@ -188,13 +228,19 @@
 					<span class="required">*</span>
 					<br />
 					<label>
-						<input type="text" name="address1" value="" placeholder="千代田区千代田1番1号" class="regular-text" />
-						<?php $this->e('City, Street'); ?>
+						<input type="text" name="city" value="<?php echo esc_attr($vars['city']); ?>" placeholder="千代田区" class="middle-text" />
+						<?php $this->e('City'); ?>
 					</label>
 					<span class="required">*</span>
 					<br />
 					<label>
-						<input type="text" name="address2" value="" placeholder="千代田ビル4F" class="middle-text" />
+						<input type="text" name="street" value="<?php echo esc_attr($vars['street']); ?>" placeholder="千代田1番1号" class="regular-text" />
+						<?php $this->e('Street'); ?>
+					</label>
+					<span class="required">*</span>
+					<br />
+					<label>
+						<input type="text" name="office" value="<?php echo esc_attr($vars['office']); ?>" placeholder="千代田ビル4F" class="regular-text" />
 						<?php $this->e('Building, Room No.'); ?>
 					</label>
 				</td>
@@ -202,9 +248,18 @@
 			<tr>
 				<th><label for="tel"><?php $this->e('Tel'); ?></label></th>
 				<td>
-					<input type="text" class="middle-text" name="tel" id="tel" value="" placeholder="ex. 0312345678" />
+					<input type="text" class="middle-text" name="tel" id="tel" value="<?php echo esc_attr($vars['tel']); ?>" placeholder="ex. 0312345678" />
 					<span class="required">*</span>
 					<?php $this->e('Only digits.'); ?>
+				</td>
+			</tr>
+			<tr>
+				<th>&nbsp;</th>
+				<td>
+					<label>
+						<input type="checkbox" name="save_info" value="1" checked="checked" />
+						<?php $this->e('Save these information'); ?>
+					</label>
 				</td>
 			</tr>
 			<?php break; endswitch; ?>

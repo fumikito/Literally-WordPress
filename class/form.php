@@ -12,6 +12,11 @@ class LWP_Form extends Literally_WordPress_Common{
 	 */
 	private $_LWP = array();
 	
+	public function avoid_caonnical_redirect(){
+		if(!is_admin() && isset($_GET['lwp'])){
+			remove_action('template_redirect', 'redirect_canonical');
+		}
+	}
 	
 	/**
 	 * Manage form action to lwp endpoint
@@ -21,6 +26,7 @@ class LWP_Form extends Literally_WordPress_Common{
 	public function manage_actions(){
 		//If action is set, call each method
 		if($this->get_current_action() && is_front_page()){
+			//Avoid WP redirect
 			$action = 'handle_'.$this->make_hungalian($this->get_current_action());
 			if(method_exists($this, $action)){
 				$sandbox = (isset($_REQUEST['sandbox']) && $_REQUEST['sandbox']);
@@ -319,7 +325,25 @@ EOS;
 	 */
 	private function handle_payment($is_sandbox = false){
 		global $lwp, $wpdb;
+		//Shut down not logged in user.
 		$this->kill_anonymous_user();
+		//Filter payment method
+		$allowed_methods = array(
+			'sb-cc' => $lwp->softbank->is_cc_enabled(),
+			'sb-cvs' => $lwp->softbank->is_cvs_enabled(),
+			'sb-payeasy' => $lwp->softbank->payeasy
+		);
+		if(isset($_REQUEST['lwp-method'])){
+			$payment_method = $_REQUEST['lwp-method'];
+		}else{
+			$payment_method = $is_sandbox ? 'sb-cc' : '';
+		}
+		if(!array_key_exists($payment_method, $allowed_methods) || !$allowed_methods[$payment_method]){
+			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
+		}
+		//Set default values.
+		$error = array();
+		$vars = $lwp->softbank->get_default_payment_info(get_current_user_id(), $_REQUEST['lwp-method']);
 		if($is_sandbox){
 			//Get random post
 			$book = $this->get_random_post();
@@ -327,14 +351,15 @@ EOS;
 				//Find random post, show form
 				$item_name = $this->get_item_name($book);
 				$price = lwp_price($book->ID);
+				$vars['limit'] = date(get_option('date_format'), time() + 60 * 60 * 24 * 59);
 				$this->show_form('payment', array(
 					'prices' => array($book->ID => $price),
 					'items' => array($book->ID => $item_name),
 					'quantities' => array($book->ID => 1),
 					'total_price' => $price,
 					'post_id' => $book->ID,
-					'method' => isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method'] : 'sb-cc',
-					'limit' => date(get_option('date_format'), time() + 60 * 60 * 24 * 59),
+					'method' => $payment_method,
+					'vars' => $vars,
 					'link' => '#',
 					'action' => '#',
 					'error' => array(),
@@ -347,28 +372,21 @@ EOS;
 		}
 		//Get Items
 		$book_id = isset($_REQUEST['lwp-id']) ? intval($_REQUEST['lwp-id']) : 0;
+		//Test content
 		$book = $this->test_post_id($book_id);
 		$item_name = $this->get_item_name($book);
 		$price = lwp_price($book);
-		//Check methods
-		$allowed_methods = array(
-			'sb-cc' => $lwp->softbank->is_cc_enabled(),
-			'sb-cvs' => $lwp->softbank->is_cvs_enabled(),
-			'sb-payeasy' => $lwp->softbank->payeasy
-		);
-		if(!isset($_REQUEST['lwp-method']) || !array_key_exists($_REQUEST['lwp-method'], $allowed_methods) || !$allowed_methods[$_REQUEST['lwp-method']]){
-			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
-		}
+		$vars['limit'] = date_i18n(get_option('date_format'), $lwp->softbank->get_payment_limit($book, false, $payment_method));
 		//Do transaction
-		$error = array();
-		$vars = array();
 		if(isset($_REQUEST['_wpnonce'])){
+			$sb_cvs = $sb_payeasy = false;
 			if(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_sb_cc')){
 				//Softbank Credit card
 				$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
 				$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
 				$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
 				$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
+				//Validate
 				if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
 					$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
 				}
@@ -380,7 +398,8 @@ EOS;
 					$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
 				}
 				//All Green Make request
-				if(empty($error) && $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month)){
+				if(empty($error) && ($transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month))){
+					do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
 					header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
 					die();
 				}else{
@@ -388,6 +407,70 @@ EOS;
 				}
 				if(!empty($error)){
 					$vars = compact('cc_number', 'cc_month', 'cc_year', 'cc_sec');
+				}
+			}elseif(
+				($sb_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_cvs'))
+					||
+				($sb_payeasy = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_payeasy'))
+			){
+				//Softbank Payeasy or CVS
+				//Let's validate
+				if($sb_cvs){
+					if(!isset($_REQUEST['sb-cvs-name']) || false === array_search($_REQUEST['sb-cvs-name'], $lwp->softbank->get_available_cvs())){
+						$error[] = $this->_('CVS is not specified. please select one.');
+					}
+				}
+				//shold be specified format
+				$zip = $this->convert_numeric($_REQUEST['zipcode']);
+				if(!preg_match("/^[0-9]{7}$/", $zip)){
+					$error[] = $this->_('Zip code is required and must be 7 digits.');
+				}
+				$tel = $this->convert_numeric($_REQUEST['tel']);
+				if(!preg_match("/^[0-9]{9,11}$/", $tel)){
+					$error[] = $this->_('Tel number is required and must be 9 - 11 digits.');
+				}
+				//not empty
+				foreach(array(
+					'last_name' => $this->_('Last Name'),
+					'first_name' => $this->_('First Name'),
+					'prefecture' => $this->_('Prefecture'),
+					'city' => $this->_('City'),
+					'street' => $this->_('Street')
+				) as $name => $value){
+					if(empty($_REQUEST[$name])){
+						$error[] = sprintf('%s is empty.', $value);
+					}
+				}
+				//must be kana
+				$last_name_kana = $this->convert_zenkaka_kana($_REQUEST['last_name_kana']);
+				if(empty($last_name_kana)){
+					$error[] = sprintf('%s must be zenkaku kana.', $this->_('Last Name Kana'));
+				}
+				$first_name_kana = $this->convert_zenkaka_kana($_REQUEST['first_name_kana']);
+				if(empty($first_name_kana)){
+					$error[] = sprintf('%s must be zenkaku kana.', $this->_('First Name Kana'));
+				}
+				//Set entered information
+				foreach(array('last_name', 'first_name', 'prefecture', 'city', 'street', 'office') as $key){
+					$vars[$key] = $_REQUEST[$key];
+				}
+				if($sb_cvs){
+					$vars['cvs'] = $_REQUEST['sb-cvs-name'];
+				}
+				$vars['tel'] = $tel;
+				$vars['zipcode'] = $zip;
+				$vars['last_name_kana'] = $last_name_kana;
+				$vars['first_name_kana'] = $first_name_kana;
+				//Make transaction
+				if(empty($error)){
+					//Try to save userdata
+					if(true){
+						if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
+							$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
+						}
+					}else{
+						
+					}
 				}
 			}
 		}
@@ -398,7 +481,7 @@ EOS;
 			'total_price' => $price,
 			'post_id' => $book->ID,
 			'action' => lwp_endpoint('payment'),
-			'method' => $_REQUEST['lwp-method'],
+			'method' => $payment_method,
 			'error' => $error,
 			'vars' => $vars,
 			'link' => lwp_endpoint().'&lwp-id='.$book_id,
@@ -1274,6 +1357,16 @@ EOS;
 	}
 	
 	/**
+	 * Returns only kana
+	 * @param string $string
+	 * @return string
+	 */
+	private function convert_zenkaka_kana($string){
+		$string = mb_convert_kana($string, 'CKV', 'utf-8');
+		return preg_replace("/[^ァ-ヴー]/u", "", $string);
+	}
+	
+	/**
 	 * Check if specified post can be bought
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
@@ -1297,10 +1390,10 @@ EOS;
 		//If ticket is specified, check selling limit
 		if($book->post_type == $lwp->event->post_type){
 			$selling_limit = get_post_meta($book->post_parent, $lwp->event->meta_selling_limit, true);
-			if($selling_limit){
+			if($selling_limit && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $selling_limit)){
 				//Selling limit is found, so check if it's oudated
-				$limit = strtotime($selling_limit) + (60 * 60 * 24 - 1);
-				$current = strtotime(time('Y-m-d H:i:s'));
+				$limit = strtotime($selling_limit.' 23:59:59');
+				$current = time();
 				if($limit < $current){
 					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
 				}

@@ -340,6 +340,7 @@ class Literally_WordPress{
 			add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
 		}else{ //Hooks only for public area
 			//Highjack frontpage request if lwp is set
+			add_action("template_redirect", array($this->form, 'avoid_caonnical_redirect'), 1);
 			add_action("template_redirect", array($this->form, "manage_actions"));
 			//Redirect to auth page if user is not logged in
 			add_action("template_redirect", array($this, "protect_user_page"));

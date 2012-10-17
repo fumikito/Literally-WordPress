@@ -38,6 +38,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		'sunkus' => false,
 		'ministop' => false,
 		'familymart' => false,
+		'daily-yamazaki' => false,
 		'seicomart' => false
 	);
 	
@@ -102,29 +103,48 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$this->crypt_key = (string)$option['sb_crypt_key'];
 	}
 	
-	public function get_default_arguments($method = 'cvs', $user_id){
-		$default = apply_filters('lwp_sb_cvs_default', array(
-			'last_name' => false,
-			'first_name' => false,
-			'last_name_kana' => false,
-			'first_name_kana' => false,
-			'first_zip' => false,
-			'second_zip' => false,
-			'add1' => false,
-			'add2' => false,
-			'add3' => false,
-			'tel' => false,
-			'mail' => false
-		), $user_id);
-		switch($method){
-			case 'cvs':
-				break;
-			case 'payeasy':
-				break;
-			default:
-				break;
+	/**
+	 * Get default value
+	 * @param string $context
+	 * @param int $user_id
+	 * @return string
+	 */
+	public function get_default_payment_info($user_id, $context = 'sb-cc'){
+		$user_info = array();
+		foreach(array('last_name','first_name','last_name_kana','first_name_kana',
+			'zipcode','prefecture','city','street','office','tel') as $key){
+			$user_info[$key] = get_user_meta($user_id, $key, true);
 		}
-		
+		return apply_filters('lwp_sb_cvs_default', $user_info, $context, $user_id);
+	}
+	
+	/**
+	 * Save payment information on success
+	 * @param int $user_id
+	 * @param array $post_data
+	 * @param string $context
+	 */
+	public function save_payment_info($user_id, $post_data, $context = 'sb-cc'){
+		$func = apply_filters('lwp_save_payment_info_func', array($this, '_save_payment_information'), $context);
+		if(is_callable($func)){
+			call_user_func_array($func, array($user_id, $post_data, $context));
+		}
+	}
+	
+	/**
+	 * Default function to save user payment information.
+	 * @param int $user_id
+	 * @param array $post_data
+	 * @param string $context
+	 */
+	public function _save_payment_information($user_id, $post_data, $context = 'sb-cc'){
+		$keys = array('last_name','first_name','last_name_kana','first_name_kana',
+			'zipcode','prefecture','city','street','office','tel');
+		foreach($keys as $key){
+			if(isset($post_data[$key])){
+				update_user_meta($user_id, $key, $post_data[$key]);
+			}
+		}
 	}
 	
 	/**
@@ -139,7 +159,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @param string $cc_number
 	 * @param string $cc_sec
 	 * @param string $expiration
-	 * @return boolean
+	 * @return int transaction ID
 	 */
 	public function do_credit_authorization($user_id, $item_name, $post_id, $price, $quantity, $cc_number, $cc_sec, $expiration){
 		global $lwp, $wpdb;
@@ -183,7 +203,6 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$hash_key = $this->get_hash_key_from_array($xml_array);
 		$xml_array['sps_hashcode'] = $hash_key;
 		$result = $this->get_request($this->make_xml(self::PAYMENT_REQUEST_CODE, $xml_array));
-		var_dump($result);
 		if(!$result['success']){
 			$this->last_error = $result['message'];
 			return false;
@@ -201,7 +220,6 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			$hash_key = $this->get_hash_key_from_array($commit_array);
 			$commit_array['sps_hashcode'] = $hash_key;
 			$commit_result = $this->get_request($this->make_xml(self::PAYMENT_FIX_CODE, $commit_array));
-			var_dump($commit_result);
 			if($commit_result['success']){
 				$status = LWP_Payment_Status::SUCCESS;
 			}else{
@@ -220,8 +238,47 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 				"registered" => $now,
 				"updated" => $now
 			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ));
-			return $commit_result['success'];
+			return $commit_result['success'] ? $wpdb->insert_id : 0;
 		}
+	}
+	
+	public function do_cvs_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
+		
+	}
+	
+	/**
+	 * Returns payment limit for specified post
+	 * @global Literally_WordPress $lwp
+	 * @param int|object $post
+	 * @param int $time
+	 * @param string $context
+	 * @return int
+	 */
+	public function get_payment_limit($post, $time = false, $context = 'sb-cvs'){
+		global $lwp;
+		if(!$time){
+			$time = current_time('timestamp');
+		}
+		$post = get_post($post);
+		if($post->post_type == $lwp->event->post_type){
+			$selling_limit = get_post_meta($post->post_parent, $lwp->event->meta_selling_limit, TRUE);
+			if($selling_limit && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $selling_limit)){
+				$selling_limit = strtotime($selling_limit.' 23:59:59');
+			}else{
+				$selling_limit = false;
+			}
+		}else{
+			$selling_limit = false;
+		}
+		switch($context){
+			case 'sb-cvs':
+				$time += 60 * 60 * 24 * 59; //TODO: 設定値は変更できる
+				break;
+			case 'sb-payeasy':
+				$time += 60 * 60 * 24 * 59; //TODO: 設定値は変更できる
+				break;
+		}
+		return $selling_limit ? min($time, $selling_limit) : $time;
 	}
 	
 	/**
@@ -461,7 +518,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @param string $slug
 	 * @return string
 	 */
-	public function get_verbose_name($slug){
+	public function get_verbose_name($slug, $code = false){
 		switch($slug){
 			case 'visa':
 				return 'Visa';
@@ -479,25 +536,28 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 				return 'Diner\'s';
 				break;
 			case 'seven-eleven':
-				return 'セブンイレブン';
+				return $code ? '001' : 'セブンイレブン';
 				break;
 			case 'lawson':
-				return 'ローソン';
+				return $code ? '002' : 'ローソン';
 				break;
 			case 'circle-k':
-				return 'サークルK';
+				return $code ? '017' : 'サークルK';
 				break;
 			case 'sunkus':
-				return 'サンクス';
+				return $code ? '017' : 'サンクス';
 				break;
 			case 'ministop':
-				return 'ミニストップ';
+				return $code ? '005' : 'ミニストップ';
 				break;
 			case 'familymart':
-				return 'ファミリーマート';
+				return $code ? '016' : 'ファミリーマート';
+				break;
+			case 'daily-yamazaki':
+				return $code ? '010' : 'デイリーヤマザキ';
 				break;
 			case 'seicomart':
-				return 'セイコーマート';
+				return $code ? '018' : 'セイコーマート';
 				break;
 		}
 	}

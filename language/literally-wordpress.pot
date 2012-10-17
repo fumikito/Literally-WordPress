@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-16 22:43+0900\n"
-"PO-Revision-Date: 2012-10-16 22:43+0900\n"
+"POT-Creation-Date: 2012-10-17 13:19+0900\n"
+"PO-Revision-Date: 2012-10-17 13:19+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -178,8 +178,8 @@ msgstr ""
 
 #: ../admin/campaign.php:31 ../admin/management.php:48 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:82 ../admin/settings/subscription.php:2
-#: ../class/campaign.php:265 ../class/form.php:428 ../class/form.php:481
-#: ../class/form.php:1330 ../class/subscription.php:81
+#: ../class/campaign.php:265 ../class/form.php:437 ../class/form.php:490
+#: ../class/form.php:1339 ../class/subscription.php:81
 #: ../tables/list-campaign.php:164 ../tables/list-history.php:141
 #: ../tables/list-management.php:233
 msgid "Subscription"
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Limit to cancel"
 msgstr ""
 
-#: ../admin/event.php:68 ../class/event.php:918 ../class/form.php:807
+#: ../admin/event.php:68 ../class/event.php:918 ../class/form.php:816
 #: ../form-template/edit-detail-event.php:155
 #: ../form-template/paypal-cancel-ticket.php:13
 #: ../form-template/paypal-event-tickets-consume.php:15
@@ -484,7 +484,7 @@ msgid "Ticket Name"
 msgstr ""
 
 #: ../admin/event.php:69 ../admin/management.php:392 ../class/event.php:919
-#: ../class/form.php:809 ../class/literally-wordpress.php:1156
+#: ../class/form.php:818 ../class/literally-wordpress.php:1156
 #: ../class/subscription.php:194 ../form-template/edit-detail-event.php:115
 #: ../form-template/edit-detail.php:24
 #: ../form-template/paypal-cancel-ticket.php:15
@@ -508,7 +508,7 @@ msgid "Sold"
 msgstr ""
 
 #: ../admin/event.php:72 ../admin/management.php:92 ../class/event.php:921
-#: ../class/form.php:811 ../form-template/paypal-event-tickets-consume.php:19
+#: ../class/form.php:820 ../form-template/paypal-event-tickets-consume.php:19
 #: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr ""
@@ -1038,7 +1038,7 @@ msgstr ""
 msgid "Original Price"
 msgstr ""
 
-#: ../admin/management.php:87 ../class/event.php:920 ../class/form.php:810
+#: ../admin/management.php:87 ../class/event.php:920 ../class/form.php:819
 #: ../class/literally-wordpress.php:1155
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
@@ -1143,7 +1143,7 @@ msgid "Count"
 msgstr ""
 
 #: ../admin/management.php:390 ../form-template/edit-detail-event.php:113
-#: ../form-template/paypal-payment.php:152
+#: ../form-template/paypal-payment.php:165
 #: ../form-template/reward-summary.php:151
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
@@ -1316,7 +1316,7 @@ msgstr ""
 msgid "Failed to delete file."
 msgstr ""
 
-#: ../admin/upload.php:98 ../class/form.php:1242
+#: ../admin/upload.php:98 ../class/form.php:1251
 #: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr ""
@@ -1646,7 +1646,7 @@ msgstr ""
 #: ../admin/settings/payment.php:93 ../admin/settings/payment.php:104
 #: ../admin/settings/payment.php:121 ../admin/settings/payment.php:273
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1542
+#: ../admin/settings/post.php:72 ../class/form.php:1551
 msgid "More &gt;"
 msgstr ""
 
@@ -2539,11 +2539,11 @@ msgstr ""
 msgid "Mail Subject is empty."
 msgstr ""
 
-#: ../class/event.php:661 ../class/form.php:1081
+#: ../class/event.php:661 ../class/form.php:1090
 msgid "Mail body is empty."
 msgstr ""
 
-#: ../class/event.php:680 ../class/form.php:1082
+#: ../class/event.php:680 ../class/form.php:1091
 msgid "Recipients not set."
 msgstr ""
 
@@ -2628,7 +2628,7 @@ msgstr ""
 msgid "You cannot access here."
 msgstr ""
 
-#: ../class/form.php:35 ../class/form.php:735
+#: ../class/form.php:35 ../class/form.php:744
 msgid "Sorry, but You might make unexpected action."
 msgstr ""
 
@@ -2640,7 +2640,7 @@ msgstr ""
 msgid "Sorry, but there is no subscription plan."
 msgstr ""
 
-#: ../class/form.php:122 ../class/form.php:345 ../class/form.php:454
+#: ../class/form.php:122 ../class/form.php:352 ../class/form.php:463
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr ""
 
@@ -2652,7 +2652,7 @@ msgstr ""
 msgid "Sorry, but we can't accept this payment method."
 msgstr ""
 
-#: ../class/form.php:295 ../class/form.php:387
+#: ../class/form.php:295 ../class/form.php:396
 msgid "Failed to make transaction."
 msgstr ""
 
@@ -2660,366 +2660,366 @@ msgstr ""
 msgid "Wrong payment method is specified."
 msgstr ""
 
-#: ../class/form.php:360
+#: ../class/form.php:357
 msgid "Specified payment method doesn't exist."
 msgstr ""
 
-#: ../class/form.php:373
+#: ../class/form.php:381
 msgid "Credit card number should be 14 - 16 digits and is required."
 msgstr ""
 
-#: ../class/form.php:377
+#: ../class/form.php:385
 msgid "Credit card is expired."
 msgstr ""
 
-#: ../class/form.php:380
+#: ../class/form.php:388
 msgid "Security code is wrong. "
 msgstr ""
 
-#: ../class/form.php:380 ../form-template/paypal-payment.php:108
+#: ../class/form.php:388 ../form-template/paypal-payment.php:108
 msgid ""
 "Security code is 3 or 4 digits written near the card number on the credit "
 "card."
 msgstr ""
 
-#: ../class/form.php:463
+#: ../class/form.php:472
 msgid "Failed to connect with PayPal."
 msgstr ""
 
-#: ../class/form.php:467
+#: ../class/form.php:476
 msgid "Failed to get the transactional information."
 msgstr ""
 
-#: ../class/form.php:524
+#: ../class/form.php:533
 msgid "Transaction Failed to finish."
 msgstr ""
 
-#: ../class/form.php:639 ../class/ios.php:465 ../class/ios.php:487
+#: ../class/form.php:648 ../class/ios.php:465 ../class/ios.php:487
 #: ../class/post.php:629
 msgid "Specified file does not exist."
 msgstr ""
 
-#: ../class/form.php:649
+#: ../class/form.php:658
 msgid "You have no permission to access this file."
 msgstr ""
 
-#: ../class/form.php:681
+#: ../class/form.php:690
 msgid "Sorry, but you specified unexistant event."
 msgstr ""
 
-#: ../class/form.php:687
+#: ../class/form.php:696
 #, php-format
 msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
 msgstr ""
 
-#: ../class/form.php:693
+#: ../class/form.php:702
 msgid "Sorry, but you have no ticket to cancel."
 msgstr ""
 
-#: ../class/form.php:699
+#: ../class/form.php:708
 #, php-format
 msgid "%s charged."
 msgstr ""
 
-#: ../class/form.php:729
+#: ../class/form.php:738
 msgid "Deleted Ticket"
 msgstr ""
 
-#: ../class/form.php:735
+#: ../class/form.php:744
 msgid "Cannot pass security check."
 msgstr ""
 
-#: ../class/form.php:749
+#: ../class/form.php:758
 msgid "Sorry, but the tikcet id you specified is not cancelable."
 msgstr ""
 
-#: ../class/form.php:755
+#: ../class/form.php:764
 #, php-format
 msgid ""
 "Sorry, but paypal redunding is available only for 60 days. You made "
 "transaction at %1$s and it is %2$s today"
 msgstr ""
 
-#: ../class/form.php:768
+#: ../class/form.php:777
 #, php-format
 msgid ""
 "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
 msgstr ""
 
-#: ../class/form.php:808 ../form-template/paypal-cancel-ticket.php:14
+#: ../class/form.php:817 ../form-template/paypal-cancel-ticket.php:14
 #: ../form-template/paypal-event-tickets-consume.php:16
 msgid "Bought"
 msgstr ""
 
-#: ../class/form.php:826
+#: ../class/form.php:835
 msgid "A footer note which can be set on each post will be displayed here."
 msgstr ""
 
-#: ../class/form.php:837 ../class/form.php:895 ../class/form.php:1104
+#: ../class/form.php:846 ../class/form.php:904 ../class/form.php:1113
 msgid "Sorry, but no event is specified."
 msgstr ""
 
-#: ../class/form.php:851
+#: ../class/form.php:860
 msgid "Sorry, but you have no tikcet to display."
 msgstr ""
 
-#: ../class/form.php:901
+#: ../class/form.php:910
 msgid "Sorry, but specified user is not found."
 msgstr ""
 
-#: ../class/form.php:905
+#: ../class/form.php:914
 msgid "Sorry, but you have no capability to consume ticket."
 msgstr ""
 
-#: ../class/form.php:932
+#: ../class/form.php:941
 #, php-format
 msgid "Sorry, but %s has no ticket on this event."
 msgstr ""
 
-#: ../class/form.php:970 ../class/form.php:1089 ../class/form.php:1346
+#: ../class/form.php:979 ../class/form.php:1098 ../class/form.php:1355
 msgid "Sorry, but event is not found."
 msgstr ""
 
-#: ../class/form.php:974
+#: ../class/form.php:983
 msgid "Sorry, but you have no permission."
 msgstr ""
 
-#: ../class/form.php:1014 ../tables/list-event.php:33
+#: ../class/form.php:1023 ../tables/list-event.php:33
 msgid "Event Name"
 msgstr ""
 
-#: ../class/form.php:1022
+#: ../class/form.php:1031
 msgid "Specified ticket doesn't exist."
 msgstr ""
 
-#: ../class/form.php:1027
+#: ../class/form.php:1036
 #, php-format
 msgid "%s has stock to sell."
 msgstr ""
 
-#: ../class/form.php:1031
+#: ../class/form.php:1040
 #, php-format
 msgid "Sorry, but %s dosen't have waiting list."
 msgstr ""
 
-#: ../class/form.php:1035
+#: ../class/form.php:1044
 #, php-format
 msgid "You are already on waiting list of %s."
 msgstr ""
 
-#: ../class/form.php:1048
+#: ../class/form.php:1057
 msgid "Sorry, but failed to save data. Please retry later."
 msgstr ""
 
-#: ../class/form.php:1072
+#: ../class/form.php:1081
 #, php-format
 msgid "Admin email <%s>"
 msgstr ""
 
-#: ../class/form.php:1073
+#: ../class/form.php:1082
 #, php-format
 msgid "Your email <%s>"
 msgstr ""
 
-#: ../class/form.php:1077
+#: ../class/form.php:1086
 msgid "Are you sure to send this mail? You can't cancel this action."
 msgstr ""
 
-#: ../class/form.php:1078
+#: ../class/form.php:1087
 msgid "Sending&hellip;"
 msgstr ""
 
-#: ../class/form.php:1079
+#: ../class/form.php:1088
 msgid "Please specify mail from."
 msgstr ""
 
-#: ../class/form.php:1080
+#: ../class/form.php:1089
 msgid "Subject is empty."
 msgstr ""
 
-#: ../class/form.php:1083 ../form-template/paypal-event-contact.php:74
+#: ../class/form.php:1092 ../form-template/paypal-event-contact.php:74
 msgid "Send"
 msgstr ""
 
-#: ../class/form.php:1108
+#: ../class/form.php:1117
 msgid "You do not have capability to contact participants."
 msgstr ""
 
-#: ../class/form.php:1113
+#: ../class/form.php:1122
 #, php-format
 msgid "Post author email <%s>"
 msgstr ""
 
-#: ../class/form.php:1121
+#: ../class/form.php:1130
 msgid "There is no one to contact."
 msgstr ""
 
-#: ../class/form.php:1124
+#: ../class/form.php:1133
 #, php-format
 msgid "All Participants(%s people)"
 msgstr ""
 
-#: ../class/form.php:1127
+#: ../class/form.php:1136
 #, php-format
 msgid "All waitings(%s people)"
 msgstr ""
 
-#: ../class/form.php:1140
+#: ../class/form.php:1149
 #, php-format
 msgid "Participants(%s people)"
 msgstr ""
 
-#: ../class/form.php:1144
+#: ../class/form.php:1153
 #, php-format
 msgid "Waitings(%s people)"
 msgstr ""
 
-#: ../class/form.php:1169
+#: ../class/form.php:1178
 msgid "You must be logged in to process transaction."
 msgstr ""
 
-#: ../class/form.php:1295
+#: ../class/form.php:1304
 msgid "No content is specified."
 msgstr ""
 
-#: ../class/form.php:1305
+#: ../class/form.php:1314
 msgid "Selling limit has been past. There is no ticket available."
 msgstr ""
 
-#: ../class/form.php:1311
+#: ../class/form.php:1320
 msgid "Sorry, but this ticket is sold out."
 msgstr ""
 
-#: ../class/form.php:1358
+#: ../class/form.php:1367
 msgid "Dammy Ticket"
 msgstr ""
 
-#: ../class/form.php:1423
+#: ../class/form.php:1432
 msgid "Select Payment"
 msgstr ""
 
-#: ../class/form.php:1426
+#: ../class/form.php:1435
 msgid "Payment Information"
 msgstr ""
 
-#: ../class/form.php:1429
+#: ../class/form.php:1438
 msgid "Transfer Accepted"
 msgstr ""
 
-#: ../class/form.php:1432
+#: ../class/form.php:1441
 msgid "Payment Confirmation"
 msgstr ""
 
-#: ../class/form.php:1435
+#: ../class/form.php:1444
 msgid "Transaction Completed"
 msgstr ""
 
-#: ../class/form.php:1438
+#: ../class/form.php:1447
 msgid "Transaciton Canceled"
 msgstr ""
 
-#: ../class/form.php:1441
+#: ../class/form.php:1450
 msgid "Ticket Cancel"
 msgstr ""
 
-#: ../class/form.php:1444
+#: ../class/form.php:1453
 msgid "Ticket Canceled"
 msgstr ""
 
-#: ../class/form.php:1447 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1456 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr ""
 
-#: ../class/form.php:1450
+#: ../class/form.php:1459
 msgid "Ticket Status"
 msgstr ""
 
-#: ../class/form.php:1453
+#: ../class/form.php:1462
 msgid "Waiting for ticket cancellation"
 msgstr ""
 
-#: ../class/form.php:1456
+#: ../class/form.php:1465
 msgid "Find User"
 msgstr ""
 
-#: ../class/form.php:1459
+#: ../class/form.php:1468
 msgid "Contact to participants"
 msgstr ""
 
-#: ../class/form.php:1462
+#: ../class/form.php:1471
 msgid "Subscrition Plans"
 msgstr ""
 
-#: ../class/form.php:1529 ../class/form.php:1532
+#: ../class/form.php:1538 ../class/form.php:1541
 msgid "Displays subscription plans."
 msgstr ""
 
-#: ../class/form.php:1532
+#: ../class/form.php:1541
 msgid "User can select it and go to payment selection page."
 msgstr ""
 
-#: ../class/form.php:1535
+#: ../class/form.php:1544
 msgid "Display thank you message when transaction finished."
 msgstr ""
 
-#: ../class/form.php:1535 ../class/form.php:1554
+#: ../class/form.php:1544 ../class/form.php:1563
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr ""
 
-#: ../class/form.php:1538
+#: ../class/form.php:1547
 msgid "Display message when user cancels transaction."
 msgstr ""
 
-#: ../class/form.php:1541
+#: ../class/form.php:1550
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
 msgstr ""
 
-#: ../class/form.php:1545
+#: ../class/form.php:1554
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
 msgstr ""
 
-#: ../class/form.php:1548
+#: ../class/form.php:1557
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 
-#: ../class/form.php:1551 ../class/form.php:1557
+#: ../class/form.php:1560 ../class/form.php:1566
 msgid "Show list of tickets which user have bought."
 msgstr ""
 
-#: ../class/form.php:1551
+#: ../class/form.php:1560
 msgid "User can select ticket to cancel."
 msgstr ""
 
-#: ../class/form.php:1551 ../class/form.php:1557
+#: ../class/form.php:1560 ../class/form.php:1566
 msgid "If user has no tickets, wp_die will be executed."
 msgstr ""
 
-#: ../class/form.php:1554
+#: ../class/form.php:1563
 msgid "Displays message to tell user cancel is completed."
 msgstr ""
 
-#: ../class/form.php:1560
+#: ../class/form.php:1569
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
 msgstr ""
 
-#: ../class/form.php:1563
+#: ../class/form.php:1572
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
 msgstr ""
 
-#: ../class/form.php:1566
+#: ../class/form.php:1575
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
-#: ../class/form.php:1569
+#: ../class/form.php:1578
 msgid "Displayed when user choose to wait for cancellation."
 msgstr ""
 
@@ -3717,13 +3717,13 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:209
+#: ../class/payment/softbank-payment.php:208
 msgid "Cannot commit transaction."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:269
-#: ../class/payment/softbank-payment.php:282
-#: ../class/payment/softbank-payment.php:286
+#: ../class/payment/softbank-payment.php:268
+#: ../class/payment/softbank-payment.php:281
+#: ../class/payment/softbank-payment.php:285
 msgid "Sorry, but connection is failed. Please try again later."
 msgstr ""
 
@@ -4903,7 +4903,7 @@ msgid "Transaction is canceled."
 msgstr ""
 
 #: ../form-template/paypal-cancel.php:5
-#: ../form-template/paypal-payment.php:217
+#: ../form-template/paypal-payment.php:258
 #: ../form-template/paypal-subscription.php:73
 #: ../form-template/paypal-subscription.php:75
 #: ../form-template/paypal-subscription.php:77
@@ -5083,56 +5083,57 @@ msgstr ""
 msgid "Payment Limit"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:149
+#: ../form-template/paypal-payment.php:161
 #, php-format
 msgid "Please finish payment by <strong>%s</strong>."
 msgstr ""
 
-#: ../form-template/paypal-payment.php:155
-msgid "Bond"
+#: ../form-template/paypal-payment.php:173
+msgid "Last Name Kana"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:156
+#: ../form-template/paypal-payment.php:180
+msgid "First Name Kana"
+msgstr ""
+
+#: ../form-template/paypal-payment.php:189
 msgid "Last Name"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:160
-msgid "James"
-msgstr ""
-
-#: ../form-template/paypal-payment.php:161
+#: ../form-template/paypal-payment.php:196
 msgid "First Name"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:167
+#: ../form-template/paypal-payment.php:206
 msgid "Address"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:171
+#: ../form-template/paypal-payment.php:210
 msgid "Zip Code"
 msgstr ""
 
-#: ../form-template/paypal-payment.php:184
-msgid "Prefecture"
-msgstr ""
-
-#: ../form-template/paypal-payment.php:190
-msgid "City, Street"
-msgstr ""
-
-#: ../form-template/paypal-payment.php:196
-msgid "Building, Room No."
-msgstr ""
-
-#: ../form-template/paypal-payment.php:201
-msgid "Tel"
-msgstr ""
-
-#: ../form-template/paypal-payment.php:205
+#: ../form-template/paypal-payment.php:213
+#: ../form-template/paypal-payment.php:246
 msgid "Only digits."
 msgstr ""
 
-#: ../form-template/paypal-payment.php:212
+#: ../form-template/paypal-payment.php:225
+msgid "Prefecture"
+msgstr ""
+
+#: ../form-template/paypal-payment.php:231
+msgid "City, Street"
+msgstr ""
+
+#: ../form-template/paypal-payment.php:237
+msgid "Building, Room No."
+msgstr ""
+
+#: ../form-template/paypal-payment.php:242
+msgid "Tel"
+msgstr ""
+
+#: ../form-template/paypal-payment.php:253
 msgid "Checkout &raquo;"
 msgstr ""
 
