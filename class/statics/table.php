@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.2.8';
+	const VERSION = '0.9.3';
 	
 	/**
 	 * Table prefix for this plugin
@@ -173,16 +173,19 @@ EOS;
 				user_id BIGINT NOT NULL,
 				book_id BIGINT NOT NULL,
 				price BIGINT NOT NULL,
+				refund BIGINT NOT NULL DEFAULT 0,
 				num INT NOT NULL DEFAULT 1,
 				consumed INT NOT NULL DEFAULT 0,
 				status VARCHAR(45) NOT NULL,
 				method VARCHAR(100) NOT NULL DEFAULT '{$method}',
+				campaign_id BIGINT NOT NULL DEFAULT 0,
 				transaction_key VARCHAR (255) NOT NULL,
 				transaction_id VARCHAR (255) NOT NULL,
 				payer_mail VARCHAR (255) NOT NULL,
 				registered DATETIME NOT NULL,
 				updated DATETIME NOT NULL,
-				expires DATETIME NOT NULL, 
+				expires DATETIME NOT NULL,
+				misc TEXT NOT NULL,
 				PRIMARY KEY  (ID)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;

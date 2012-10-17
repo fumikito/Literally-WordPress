@@ -15,6 +15,8 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	
 	const PAYMENT_FIX_CODE = 'ST02-00101-101';
 	
+	const CVS_REQUEST_CODE = 'ST01-00101-701';
+	
 	/**
 	 * creditcard list
 	 * @var array
@@ -165,43 +167,18 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		global $lwp, $wpdb;
 		$now = gmdate('Y-m-d H:i:s');
 		$order_id = $this->generate_order_id();
-		//Make payment request
-		$xml_array = array(
-			'merchant_id' => $this->marchant_id(),
-			'service_id' => $this->service_id(),
-			'cust_code' => $this->generate_user_id($user_id),
-			'order_id' => $order_id,
-			'item_id' => $this->generate_user_id($post_id),
-			'item_name' => $item_name,
-			'tax' => 0,
-			'amount' => $price,
-			'free1' => '',
-			'free2' => '',
-			'free3' => '',
-			'order_rowno' => 1,
-			'sps_cust_info_return_flg' => 1,
-			'dtls' => ''/*array(
-				'dtl' => array(
-					'dtl_rowno' => 1,
-					'dtl_item_id' => $post_id,
-					'dtl_item_name' => $item_name,
-					'dtl_item_count' => $quantity,
-					'dtl_tax' => 0,
-					'dtl_amount' => $price
-				)
-			)*/,
-			'pay_method_info' => array(
+		//Create XML
+		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price);
+		$xml_array['pay_method_info'] = array(
 				'cc_number' => $cc_number,
 				'cc_expiration' => $expiration,
 				'security_code' => $cc_sec,
-				'cust_manage_flg' => 0
-			),
-			'encrypted_flg' => intval(!$this->is_sandbox),
-			'request_date' => mysql2date("YmdHis", get_date_from_gmt($now)),
-			'limit_second' => 60
-		);
-		$hash_key = $this->get_hash_key_from_array($xml_array);
-		$xml_array['sps_hashcode'] = $hash_key;
+				'cust_manage_flg' => 0);
+		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
+		$xml_array['request_date'] = mysql2date("YmdHis", get_date_from_gmt($now));
+		$xml_array['limit_second'] = 60;
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		//Do request
 		$result = $this->get_request($this->make_xml(self::PAYMENT_REQUEST_CODE, $xml_array));
 		if(!$result['success']){
 			$this->last_error = $result['message'];
@@ -242,8 +219,128 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		}
 	}
 	
+	/**
+	 * Do CVS authorization
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param string $item_name
+	 * @param int $post_id
+	 * @param int $price
+	 * @param int $quantity
+	 * @param array $creds
+	 * @return int
+	 */
 	public function do_cvs_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
+		global $lwp, $wpdb;
+		$now = gmdate('Y-m-d H:i:s');
+		$limit = $this->get_payment_limit($post_id, false, 'sb-cvs');
+		$order_id = $this->generate_order_id();
+		//Create common XML
+		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price);
+		//Get zip
+		$zip = array();
+		preg_match("/^([0-9]{3})([0-9]{4})$/", $creds['zipcode'], $zip);
+		//Get Office name
+		$office = isset($creds['office']) && !empty($creds['office']) ? $creds['office'] : '';
+		//Merge XML
+		$xml_array['pay_method_info'] = array(
+			'issue_type' => 0,
+			'last_name' => $creds['last_name'],
+			'first_name' => $creds['first_name'],
+			'last_name_kana' => $creds['last_name_kana'],
+			'first_name_kana' => $creds['first_name_kana'],
+			'first_zip' => $zip[1],
+			'second_zip' => $zip[2],
+			'add1' => $creds['prefecture'],
+			'add2' => mb_convert_kana($creds['city'].$creds['street'], 'AS', 'utf-8'),
+			'add3' => mb_convert_kana($office, 'AS', 'utf-8'),
+			'tel' => $creds['tel'],
+			'mail' => $wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE ID = %d", $user_id)),
+			'seiyakudate' => get_date_from_gmt($now, 'Ymd'),
+			'webcvstype' => $this->get_verbose_name($creds['cvs'], true),
+			'bill_date' => date_i18n('Ymd', $limit),
+		);
+		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
+		$xml_array['request_date'] = get_date_from_gmt($now, 'YmdHis');
+		$xml_array['limit_second'] = 60;
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		//Do transaction 
+		$result = $this->get_request($this->make_xml(self::CVS_REQUEST_CODE, $xml_array));
+		if(!$result['success']){
+			$this->last_error = $result['message'];
+			return 0;
+		}else{
+			$xml = $result['body'];
+			$inserted = $wpdb->insert($lwp->transaction,array(
+				"user_id" => $user_id,
+				"book_id" => $post_id,
+				"price" => $price,
+				"status" => LWP_Payment_Status::START,
+				"method" => LWP_Payment_Methods::SOFTBANK_WEB_CVS,
+				"transaction_key" => $order_id,
+				'transaction_id' => $xml->res_sps_transaction_id,
+				'payer_mail' => $xml->res_tracking_id,
+				"registered" => $now,
+				"updated" => $now,
+				'misc' => serialize(array(
+					'cvs' => $creds['cvs'],
+					'invoice_no' => $this->decrypt($xml->res_pay_method_info->invoice_no),
+					'bill_date' => $this->decrypt($xml->res_pay_method_info->bill_date),
+					'cvs_pay_data1' => $this->decrypt($xml->res_pay_method_info->cvs_pay_data1),
+					'cvs_pay_data2' => $this->decrypt($xml->res_pay_method_info->cvs_pay_data2),
+				))
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s'));
+			if($inserted){
+				return $wpdb->insert_id;
+			}else{
+				$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+				return 0;
+			}
+		}
+	}
+	
+	public function do_payeasy_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
 		
+	}
+	
+	/**
+	 * Returns common xml array
+	 * @param string $order_id
+	 * @param int $user_id
+	 * @param int $post_id
+	 * @param string $item_name
+	 * @param int $price
+	 * @return array
+	 */
+	private function create_common_xml($order_id, $user_id, $post_id, $item_name, $price, $cc = false){
+		$xml_array = array(
+			'merchant_id' => $this->marchant_id(),
+			'service_id' => $this->service_id(),
+			'cust_code' => $this->generate_user_id($user_id),
+			'order_id' => $order_id,
+			'item_id' => $this->generate_user_id($post_id),
+			'item_name' => $item_name,
+			'tax' => 0,
+			'amount' => $price,
+			'free1' => '',
+			'free2' => '',
+			'free3' => '',
+			'order_rowno' => 1);
+		if($cc){
+			$xml_array['sps_cust_info_return_flg'] = 0;
+		}
+		$xml_array['dtls'] = '';/*array(
+				'dtl' => array(
+					'dtl_rowno' => 1,
+					'dtl_item_id' => $post_id,
+					'dtl_item_name' => $item_name,
+					'dtl_item_count' => $quantity,
+					'dtl_tax' => 0,
+					'dtl_amount' => $price
+				)
+			)*/
+		return $xml_array;
 	}
 	
 	/**
@@ -331,12 +428,16 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 				if($xml->res_result == 'OK'){
 					$response['success'] = true;
 					$response['body'] = $xml;
+					$response['message'] = $this->_('Transaction is succeeded.');
 				}else{
 					$code = substr($xml->res_err_code, 3, 2);
-					if(array_key_exists($code, $this->error_msg)){
-						$response['message'] = $this->error_msg[$code];
+					if(defined('WP_DEBUG') && WP_DEBUG){
+						$response['message'] = '['.$xml->res_err_code.'] ';
+					}
+					if(array_key_exists($code, $this->error_msg) && defined('WP_DEBUG') && WP_DEBUG ){
+						$response['message'] .= $this->error_msg[$code];
 					}else{
-						$response['message'] = '$code'.$this->_('Sorry, but connection is failed. Please try again later.');
+						$response['message'] = '['.$xml->res_err_code.'] '.$this->_('Sorry, but connection is failed. Please try again later.');
 					}
 				}
 			}else{
@@ -378,7 +479,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			if(empty($key)){
 				return $value;
 			}else{
-				if(false !== array_search($key, $this->tab_to_be_base64)){
+				if(false !== array_search($key, $this->tag_to_be_base64)){
 					$value = base64_encode(mb_convert_encoding($value, 'sjis-win', 'utf-8'));
 				}
 				return sprintf('<%1$s>%2$s</%1$s>', $key, $value);
@@ -413,7 +514,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 				$this->get_xml_value($k, $v);
 			}
 		}else{
-			$this->key_store[] = mb_convert_encoding($value, 'sjis-win', 'uf-8');
+			$this->key_store[] = mb_convert_encoding($value, 'sjis-win', 'utf-8');
 		}
 	}
 	
@@ -432,6 +533,15 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			$string = base64_encode(mcrypt_cbc(MCRYPT_3DES, $this->crypt_key, $string, MCRYPT_ENCRYPT, $this->iv));
 		}
 		return $string;
+	}
+	
+	/**
+	 * Returns crypted data to decrypt
+	 * @param string $string
+	 * @return string
+	 */
+	private function decrypt($string){
+		return strval($string);
 	}
 	
 	/**
@@ -658,10 +768,47 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	);
 	
 	/**
+	 * Description for Web CVS
+	 * @param string $cvs
+	 * @param boolean $requirements If set to true, returns array of required information
+	 * @return string|array
+	 */
+	private function get_cvs_howtos($cvs, $requirements = false){
+		switch($cvs){
+			case 'seven-eleven':
+				return $requirements ? '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込みお支払いを行います。'
+				                     : array('払込票番号');
+				break;
+			case 'lawson':
+				return $requirements ? '店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。'
+				                     : array('受付番号', '確認番号');
+				break;
+			case 'circle-k':
+			case 'sunkus':
+			case 'ministop':
+			case 'daily-yamazaki':
+				return $requirements ? 'レジのタッチパネルにて決済番号を入力し、お支払いを行います。'
+				                     : array('オンライン決済番号');
+				break;
+			case 'familymart':
+				return $requirements ? '店頭のFamiポート（またはファミネット）端末にて、決済を選択後「企業コード」と「注文番号」を入力してください。その後、端末から出力された「申込券／収納票」をレジに持参してお支払いを行います。'
+				                     : array('企業コード', '注文番号');
+				break;
+			case 'seicomart':
+				return $requirements ? '店頭のクラブステーション端末にて、決済を選択後「受付番号」「確認番号」を入力してください。その後、端末から出力された申込券をレジに持参してお支払いを行います。'
+				                     : array('受付番号', '確認番号');
+				break;
+			default:
+				return $requirements ? '' : array();
+		}
+	}
+	
+	/**
 	 * Tag to be base64 encoded.
 	 * @var array
 	 */
-	private $tab_to_be_base64 = array(
-		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name'
+	private $tag_to_be_base64 = array(
+		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
+		'add1', 'add2', 'add3'
 	);
 }

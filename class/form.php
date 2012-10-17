@@ -418,6 +418,8 @@ EOS;
 				if($sb_cvs){
 					if(!isset($_REQUEST['sb-cvs-name']) || false === array_search($_REQUEST['sb-cvs-name'], $lwp->softbank->get_available_cvs())){
 						$error[] = $this->_('CVS is not specified. please select one.');
+					}else{
+						$vars['cvs'] = $_REQUEST['sb-cvs-name'];
 					}
 				}
 				//shold be specified format
@@ -464,12 +466,20 @@ EOS;
 				//Make transaction
 				if(empty($error)){
 					//Try to save userdata
-					if(true){
+					if($sb_cvs){
+						$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
+					}elseif($sb_payeasy){
+						
+					}
+					if(($transaction_id)){
 						if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
 							$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
 						}
+						//Send mail
+						header('Location: '.lwp_endpoint('payment_info').'&transaction='.$transaction_id);
+						die();
 					}else{
-						
+						$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
 					}
 				}
 			}
@@ -488,6 +498,11 @@ EOS;
 			'current' => 3,
 			'total' => 4
 		));
+	}
+	
+	
+	private function handle_payment_info($is_sandbox = true){
+		
 	}
 	
 	/**
