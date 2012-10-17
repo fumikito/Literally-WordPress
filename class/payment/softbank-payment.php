@@ -773,33 +773,33 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @param boolean $requirements If set to true, returns array of required information
 	 * @return string|array
 	 */
-	private function get_cvs_howtos($cvs, $requirements = false){
+	public function get_cvs_howtos($cvs, $requirements = false){
 		switch($cvs){
 			case 'seven-eleven':
-				return $requirements ? '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込みお支払いを行います。'
+				return !$requirements ? '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込みお支払いを行います。'
 				                     : array('払込票番号');
 				break;
 			case 'lawson':
-				return $requirements ? '店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。'
+				return !$requirements ? '店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。'
 				                     : array('受付番号', '確認番号');
 				break;
 			case 'circle-k':
 			case 'sunkus':
 			case 'ministop':
 			case 'daily-yamazaki':
-				return $requirements ? 'レジのタッチパネルにて決済番号を入力し、お支払いを行います。'
+				return !$requirements ? 'レジのタッチパネルにて決済番号を入力し、お支払いを行います。'
 				                     : array('オンライン決済番号');
 				break;
 			case 'familymart':
-				return $requirements ? '店頭のFamiポート（またはファミネット）端末にて、決済を選択後「企業コード」と「注文番号」を入力してください。その後、端末から出力された「申込券／収納票」をレジに持参してお支払いを行います。'
+				return !$requirements ? '店頭のFamiポート（またはファミネット）端末にて、決済を選択後「企業コード」と「注文番号」を入力してください。その後、端末から出力された「申込券／収納票」をレジに持参してお支払いを行います。'
 				                     : array('企業コード', '注文番号');
 				break;
 			case 'seicomart':
-				return $requirements ? '店頭のクラブステーション端末にて、決済を選択後「受付番号」「確認番号」を入力してください。その後、端末から出力された申込券をレジに持参してお支払いを行います。'
+				return !$requirements ? '店頭のクラブステーション端末にて、決済を選択後「受付番号」「確認番号」を入力してください。その後、端末から出力された申込券をレジに持参してお支払いを行います。'
 				                     : array('受付番号', '確認番号');
 				break;
 			default:
-				return $requirements ? '' : array();
+				return !$requirements ? '' : array();
 		}
 	}
 	

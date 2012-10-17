@@ -476,7 +476,7 @@ EOS;
 							$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
 						}
 						//Send mail
-						header('Location: '.lwp_endpoint('payment_info').'&transaction='.$transaction_id);
+						header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
 						die();
 					}else{
 						$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
@@ -500,9 +500,74 @@ EOS;
 		));
 	}
 	
-	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox
+	 */
 	private function handle_payment_info($is_sandbox = true){
-		
+		global $lwp, $wpdb;
+		$this->kill_anonymous_user();
+		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS)));
+		$sql = <<<EOS
+			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
+EOS;
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, get_current_user_id(), $transaction_id));
+		if(!$transaction){
+			$this->kill($this->_('Specified transaction is not found.'), 404, true);
+		}
+		$book = get_post($transaction->book_id);
+		switch($transaction->status){
+			case LWP_Payment_Status::START:
+			case LWP_Payment_Status::REFUND_REQUESTING:
+				$status_color = 'red';
+				break;
+			case LWP_Payment_Status::SUCCESS:
+				$status_color = 'green';
+				break;
+			default:
+				$status_color = 'dark-grey';
+				break;
+		}
+		switch($transaction->method){
+			case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
+				$data = unserialize($transaction->misc);
+				$cvs = $lwp->softbank->get_verbose_name($data['cvs']);
+				$howto = $lwp->softbank->get_cvs_howtos($data['cvs']);
+				$methods = $lwp->softbank->get_cvs_howtos($data['cvs'], true);
+				$limit_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "$1-$2-$3 23:59:59", $data['bill_date']);
+				if($transaction->status == LWP_Payment_Status::START){
+					$left_days = floor((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
+					$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
+					if($left_days < 1){
+						$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
+					}
+				}else{
+					$request_suffix = '';
+				}
+				$rows = array(
+					array($this->_('Status'), sprintf('<strong style="color:%s;">%s</strong>', $status_color, ($transaction->status == LWP_Payment_Status::START ? $this->_('Waiting for Payment') : $this->_($transaction->status) ) )),
+					array($this->_('Price'), number_format($transaction->price).' '.lwp_currency_code()),
+					array($this->_('Requested Date'), get_date_from_gmt($transaction->registered, get_option('date_format'))),
+					array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix),
+					array($this->_('CVS'), '<i class="lwp-cvs-small-icon small-icon-'.$data['cvs'].'"></i>'.$cvs),
+					array($this->_('How to pay'), $howto)
+				);
+				for($i = 0, $l = count($methods); $i < $l; $i++){
+					$rows[] = array($methods[$i], $data['cvs_pay_data'.($i + 1)]);
+				}
+				break;
+		}
+		$this->show_form('payment-info', array(
+			'item_name' => $this->get_item_name($book),
+			'quantity' => $transaction->num,
+			'method_name' => $this->_($transaction->method),
+			'link' => $link,
+			'rows' => $rows,
+			'back' => lwp_history_url()
+		));
 	}
 	
 	/**
@@ -1533,6 +1598,9 @@ EOS;
 			case 'payment':
 				$meta_title = $this->_('Payment Information');
 				break;
+			case 'payment-info':
+				$meta_title = $this->_('Payment Information Detail');
+				break;
 			case 'transfer':
 				$meta_title = $this->_('Transfer Accepted');
 				break;
@@ -1587,6 +1655,7 @@ EOS;
 			case 'success':
 			case 'cancel':
 			case 'payment':
+			case 'payment-info':
 				return $action;
 				break;
 			case 'pricelist':
@@ -1651,6 +1720,9 @@ EOS;
 				break;
 			case 'payment':
 				return $this->_('Display form to fulfill payment information like Web CVS, CreditCard and so on.');
+				break;
+			case 'payment-info':
+				return $this->_('Display currently quueued transaction. Especially for Web CVS or PayEasy.');
 				break;
 			case 'confirm':
 				return $this->_('Displays form to confirm transaction when user retruns from paypal web site.');
