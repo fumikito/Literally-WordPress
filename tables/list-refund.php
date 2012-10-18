@@ -5,12 +5,12 @@
  * @author Takahshi Fumiki
  * @package literally_wordpress
  */
-class LWP_List_Transfer extends WP_List_Table{
+class LWP_List_Refund extends WP_List_Table{
 	
 	function __construct() {
 		parent::__construct(array(
-			'singular' => 'transfer',
-			'plural' => 'transfers',
+			'singular' => 'refund',
+			'plural' => 'refunds',
 			'ajax' => false
 		));
 	}
@@ -30,51 +30,7 @@ class LWP_List_Transfer extends WP_List_Table{
 			$this->get_sortable_columns()
 		);
 		
-		//If action is specified, do it.
-		if($this->current_action() && isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], "bulk-{$this->_args['plural']}")){
-			if(isset($_GET['transfer']) && is_array($_GET['transfer'])){
-				$transfers = $_GET['transfer'];
-				switch($this->current_action()){
-					case LWP_Payment_Status::SUCCESS:
-					case LWP_Payment_Status::CANCEL:
-					case LWP_Payment_Status::START:
-					case LWP_Payment_Status::REFUND:
-						//Update Status
-						foreach($transfers as $transaction_id){
-							$to_update = array(
-								'updated' => gmdate('Y-m-d H:i:s'),
-								'status' => $this->current_action()
-							);
-							$where = array('%s', '%s');
-							if($this->current_action() == LWP_Payment_Status::SUCCESS){
-								$to_update['expires'] = lwp_expires_date((int)$wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
-								$where[] = '%s';
-							}
-							$wpdb->update(
-								$lwp->transaction,
-								$to_update,
-								array(
-									'ID' => $transaction_id,
-									'method' => LWP_Payment_Methods::TRANSFER
-								),
-								$where,
-								array('%d', "%s")
-							);
-							if($this->current_action() == LWP_Payment_Status::SUCCESS){
-								$lwp->notifier->notify($wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)), 'confirmed');
-								//Do action hook
-								do_action('lwp_update_transaction', $transaction_id);
-							}
-						}
-						$lwp->message[] = $lwp->_('Status updated.');
-						break;
-				}
-			}else{
-				$lwp->error = true;
-				$lwp->message[] = $lwp->_('No transaction is specified.');
-			}
-		}
-		
+		//Do action
 		
 		//Set up paging offset
 		$per_page = $this->get_per_page();
@@ -86,7 +42,8 @@ class LWP_List_Transfer extends WP_List_Table{
 		//Create Basic SQL
 		$sql = <<<EOS
 			SELECT SQL_CALC_FOUND_ROWS
-				t.*, u.display_name, u.user_email, p.post_title
+				t.*, u.display_name, u.user_email,
+				p.post_title, p.post_type, p.post_parent
 			FROM {$lwp->transaction} AS t
 			LEFT JOIN {$wpdb->users} AS u
 			ON t.user_id = u.ID
@@ -95,8 +52,7 @@ class LWP_List_Transfer extends WP_List_Table{
 EOS;
 		//Create Where section
 		$wheres = array(
-			"t.method = '".LWP_Payment_Methods::TRANSFER."'",
-			$wpdb->prepare("t.status = %s", LWP_Payment_Status::START)
+			$wpdb->prepare("t.status = %s", ((isset($_GET['status']) && $_GET['status'] == LWP_Payment_Status::REFUND) ? LWP_Payment_Status::REFUND : LWP_Payment_Status::REFUND_REQUESTING))
 		);
 		if(isset($_GET['s']) && !empty($_GET['s'])){
 			$like_string = preg_replace("/^'(.+)'$/", '$1', $wpdb->prepare("%s", $_GET['s']));
@@ -105,11 +61,15 @@ EOS;
 					OR
 				 (u.display_name LIKE '%{$like_string}%')
 					OR
+				 (u.user_email LIKE '%{$like_string}%')
+					OR
+				 (u.user_login LIKE '%{$like_string}%')
+					OR
 				 (t.transaction_key LIKE '%{$like_string}%'))
 EOS;
 		}
 		$sql .= ' WHERE '.implode(' AND ', $wheres);
-		$order_by = 't.registered';
+		$order_by = 't.updated';
 		if(isset($_GET['orderby'])){
 			switch($_GET['orderby']){
 				case 'updated':
@@ -150,15 +110,13 @@ EOS;
 	function get_columns() {
 		global $lwp;
 		return array(
-			'cb' => '<input type="checkbox" />',
-			'user' => $lwp->_("User Name"),
 			'item_name' => $lwp->_("Item Name"),
-			'price' => $lwp->_("Price"),
-			'notification' => $lwp->_("Notification Code"),
+			'user' => $lwp->_("User Name"),
+			'account' => $lwp->_('Account'),
+			'paid' => $lwp->_("Paid"),
+			'refunds' => $lwp->_("Refunds"),
 			'registered' => $lwp->_("Registered"),
-			'updated' => $lwp->_("Payment Limit"),
-			'left_days' => $lwp->_('Left Days'),
-			'status' => $lwp->_("Status"),
+			'updated' => $lwp->_("Updated"),
 			'action' => $lwp->_('Action')
 		);
 	}
@@ -172,7 +130,7 @@ EOS;
 		return array(
 			'registered' => array('registered', false),
 			'updated' => array('updated', false),
-			'price' => array('price', false)
+			'paid' => array('paid', false)
 		);
 	}
 	
@@ -185,58 +143,71 @@ EOS;
 	function column_default($item, $column_name){
 		global $lwp;
 		switch($column_name){
-			case 'user':
-				return '<a href="'.admin_url('user-edit.php?user_id='.intval($item->user_id)).'">'.$item->display_name.'</a>';
-				break;
 			case 'item_name':
-				return '<a href="'.admin_url('post.php?post='.intval($item->book_id)."&action=edit").'">'.$item->post_title.'</a>';
+				$item_name = $lwp->refund_manager->get_item_name($item->book_id);
+				switch($item->post_type){
+					case $lwp->event->post_type:
+						$url = admin_url('post.php?post='.intval($item->post_parent)."&action=edit");
+						break;
+					default:
+						$url = admin_url('post.php?post='.intval($item->book_id)."&action=edit");
+						break;
+				}
+				return sprintf('<a href="%s">%s</a> <strong> - %s</strong>', $url, $item_name, get_post_type_object($item->post_type)->labels->name);
 				break;
-			case 'price':
-				return number_format($item->price)." ({$lwp->option['currency_code']})";
+			case 'user':
+				if($item->display_name){
+						return sprintf('<a href="%2$s">%1$s</a> <code><a href="%3$s">%4$s</a></code><br /><a href="mailto:%5$s">%5$s</a>',
+										$item->display_name, admin_url('user-edit.php?user_id='.$item->user_id),
+										admin_url('admin.php?page=lwp-management&view=list&user_id='.$item->user_id), $lwp->_('Transactions'),
+										$item->user_email);
+				}else{
+					return $lwp->_('Deleted User');
+				}
 				break;
-			case 'notification':
-				return $item->transaction_key;
+			case 'account':
+				$account = $lwp->refund_manager->get_user_account($item->user_id);
+				return $account ? $account : '---';
+				break;
+			case 'paid':
+				return sprintf('%1$s<br /><strong>%2$s</strong>', number_format($item->price)." ({$lwp->option['currency_code']})", $lwp->_($item->method));
+				break;
+			case 'refunds':
+				$refund = $lwp->refund_manager->detect_refund_price($item);
+				if($lwp->refund_manager->is_suspicious_transaction($item)){
+					
+				}else{
+					$suffix = '';
+				}
+				return number_format_i18n($refund).'('.lwp_currency_code().')'.$suffix;
 				break;
 			case 'registered':
 				return mysql2date(get_option('date_format'), $item->registered, false);
 				break;
 			case 'updated':
 				$date = $lwp->notifier->get_limit_date($item->registered, get_option('date_format'));
-				return $date;
-				break;
-			case 'left_days':
-				$left = $lwp->notifier->get_left_days($item->registered);
-				if($left > 10){
-					$color = 'black';
-					$tag = 'span';
-				}elseif($left > 5){
-					$color = 'balck';
-					$tag = 'strong';
-				}elseif($left >= 2){
-					$color = 'orange';
-					$tag = 'strong';
+				$now = gmdate('Y-m-d H:i:s');
+				if($item->status == LWP_Payment_Status::REFUND){
+					return $date.'<br />'.sprintf($lwp->_('%s before'), human_time_diff(strtotime($item->updated), strtotime($now)));
 				}else{
-					$color = 'crimson';
-					$tag = 'strong';
+					$past = (strtotime($now) - strtotime($item->updated)) / 60 / 60 / 24;
+					if($past > 30){
+						$color = 'crimson';
+						$tag = 'strong';
+					}elseif($past >= 7){
+						$color = 'orange';
+						$tag = 'strong';
+					}else{
+						$color = 'black';
+						$tag = 'span';
+					}
+					return $date.'<br />'.sprintf('<%1$s style="color: %3$s;">%2$s</%1$s>', $tag, sprintf($lwp->_('%d days past'), floor($past)), $color); 
 				}
-				return sprintf('<%1$s style="color: %3$s;">%2$s</%1$s>', $tag, sprintf($lwp->_('%d days left'), $left), $color); 
-				break;
-			case 'status':
-				return $lwp->_($item->status);
 				break;
 			case 'action':
 				return sprintf('<a href="%s" class="button">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Detail'));
 				break;
 		}
-	}
-	
-	/**
-	 * Returns check box
-	 * @param Object $item
-	 * @return string
-	 */
-	function column_cb($item){
-		return sprintf('<input type="checkbox" name="%s[]" value="%d" />', $this->_args['singular'], $item->ID);
 	}
 	
 	/**
@@ -258,28 +229,15 @@ EOS;
 		return $per_page;
 	}
 	
-	/**
-	 * Set Bulk Action
-	 * @global Literally_WordPress $lwp
-	 * @return array
-	 */
-	function get_bulk_actions() {
-		global $lwp;
-		return array(
-			LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
-			LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
-			LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
-			LWP_Payment_Status::REFUND	 => $lwp->_(LWP_Payment_Status::REFUND)
-		);
-	}
-	
 	function get_table_classes() {
 		return array( 'widefat', $this->_args['plural'] );
 	}
 	
 	function extra_tablenav($which) {
 		global $lwp;
-		$nombre = ($which == 'top') ?  '' : "2";
+		if($which != 'top'){
+			return;
+		}
 		?>
 		<div class="alignleft acitions">
 			<select name="per_page<?php echo $nombre; ?>">

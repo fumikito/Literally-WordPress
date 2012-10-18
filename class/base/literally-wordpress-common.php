@@ -116,4 +116,22 @@ class Literally_WordPress_Common {
 			array('back_link' => $backlink, 'response' => $status_code)
 		);
 	}
+	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param string $post
+	 * @return string
+	 */
+	public function get_item_name($post){
+		global $lwp;
+		$book = get_post($post);
+		$item_name = apply_filters('the_title', $book->post_title, $book->ID);
+		if($book->post_type == $lwp->event->post_type){
+			$item_name = get_the_title($book->post_parent).' '.$item_name;
+		}elseif($book->post_type == $lwp->subscription->post_type){
+			$item_name = $this->_('Subscription').' '.$item_name;
+		}
+		return $item_name;
+	}
 }

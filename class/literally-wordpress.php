@@ -174,6 +174,9 @@ class Literally_WordPress{
 	 */
 	public $event = null;
 	
+	
+	public $refund_manager = null;
+	
 	/**
 	 * Campaign manager
 	 * @var LWP_Campaign
@@ -277,8 +280,6 @@ class Literally_WordPress{
 				"load_assets" => 2
 			)
 		);
-		//Initialize Softbank
-		$this->softbank = new LWP_SB_Payment($this->option);
 		//Initialize iOS
 		$this->ios = new LWP_iOS($this->option);
 		//Register form action
@@ -295,6 +296,10 @@ class Literally_WordPress{
 		$this->post = new LWP_Post($this->option);
 		//Initialize campaing manager
 		$this->campaign_manager = new LWP_Campaign($this->option);
+		//Intialize refund manager
+		$this->refund_manager = new LWP_Reufund_Manager($this->option);
+		//Initialize Softbank
+		$this->softbank = new LWP_SB_Payment($this->option);
 		//Register hooks
 		$this->register_hooks();
 	}
@@ -437,6 +442,10 @@ class Literally_WordPress{
 			$suffix = $transfer_count ? sprintf($icon_string, $transfer_count, sprintf($this->_('%d waiting transfers.'), $transfer_count), 'transfer') : '';
 			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management").$suffix, 'edit_posts', "lwp-transfer", array($this, "load"));
 		}
+		//Refund
+		$refund_count = $this->refund_manager->on_queue_count();
+		$suffix = $refund_count ? sprintf($icon_string, $refund_count, sprintf($this->_('%d waiting refunds.'), $refund_count), 'refund') : '';
+		add_submenu_page("lwp-setting", $this->_("Refund History"), $this->_("Refund History").$suffix, 'edit_posts', "lwp-refund", array($this, "load"));
 		//Campaign setting
 		add_submenu_page("lwp-setting", $this->_("Campaign Management"), $this->_("Campaign Management"), 'edit_posts', "lwp-campaign", array($this, "load"));
 		if($this->post->is_enabled()){
