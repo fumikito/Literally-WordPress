@@ -8,6 +8,9 @@
 	</a>
 	<a href="<?php echo admin_url('admin.php?page=lwp-reward&tab=request'); ?>" class="nav-tab<?php if(isset($_GET['tab']) && $_GET['tab'] == 'request') echo ' nav-tab-active';?>">
 		<?php $this->e('Request'); ?>
+		<?php if(($count = $this->reward->on_queue_count())):  ?>
+		<small class="tab-count"><?php echo $count; ?></small>
+		<?php endif; ?>
 	</a>
 </h2>
 

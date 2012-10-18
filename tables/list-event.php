@@ -33,7 +33,7 @@ class LWP_List_Event extends WP_List_Table {
 			'event_name' => $lwp->_("Event Name"),
 			'published' => $lwp->_('Published'),
 			'selling_limit' => $lwp->_("Selling Limit"),
-			'participants' => $lwp->_('Event Starts'),
+			'event_starts' => $lwp->_('Event Starts'),
 			'tickets' => $lwp->_('Tickets'),
 			'actions' => ''
 		);
@@ -162,17 +162,9 @@ EOS;
 					return '-';
 				}
 				break;
-			case 'participants':
-				$ticket_ids = $lwp->event->get_chicket_ids($item->ID);
-				if(empty($ticket_ids)){
-					return 0;
-				}
-				$ticket_ids = join(',', $ticket_ids);
-				$sql = <<<EOS
-					SELECT COUNT(ID) FROM {$lwp->transaction}
-					WHERE book_id IN ({$ticket_ids}) AND status = %s
-EOS;
-				return $wpdb->get_var($wpdb->prepare($sql, LWP_Payment_Status::SUCCESS));
+			case 'event_starts':
+				$starts = lwp_event_starts(get_option('date_format'), $item->ID);
+				return $starts ? $starts : '---' ;
 				break;
 			case 'tickets':
 				$tickets = get_posts("post_parent={$item->ID}&post_type={$lwp->event->post_type}");

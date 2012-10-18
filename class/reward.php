@@ -583,6 +583,17 @@ EOS;
 	}
 	
 	/**
+	 * Returns reward count on queue
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @return int
+	 */
+	public function on_queue_count(){
+		global $lwp, $wpdb;
+		return (int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$lwp->reward_logs} WHERE status = %s", LWP_Payment_Status::START));
+	}
+	
+	/**
 	 * Returns array of placeholders for notice
 	 * @return array
 	 */

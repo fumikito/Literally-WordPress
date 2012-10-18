@@ -1314,11 +1314,7 @@ function lwp_event_starts($format = null, $post = null, $_end = false){
 	}else{
 		$format = (string)$format;
 	}
-	if(is_null($post)){
-		global $post;
-	}else{
-		$post = get_post($post);
-	}
+	$post = get_post($post);
 	$key = $_end ? $lwp->event->meta_end : $lwp->event->meta_start;
 	$meta = get_post_meta($post->ID, $key, true);
 	return $meta ? mysql2date($format, $meta) : false;

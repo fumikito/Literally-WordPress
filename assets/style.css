@@ -12,7 +12,15 @@
 div.ebook{
 	background: url('./book_32.png') left top no-repeat;
 }
-
+small.tab-count{
+	padding: 3px 5px;
+	background: #464646;
+	color: #fff;
+	font-size: 0.6em;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
 .icon32-posts-lwp_notification{
 	background-image: url('./mail_32.png');
 }

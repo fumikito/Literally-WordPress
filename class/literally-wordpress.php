@@ -425,6 +425,7 @@ class Literally_WordPress{
 	 * @return void
 	 */
 	public function add_menu(){
+		$icon_string = '<span class="update-plugins count-%1$d" title="%2$s"><span class="%3$s-count">%1$d</span></span>';
 		//Setting Pagees
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("General Setting"), 'manage_options', "lwp-setting", array($this, "load"));
@@ -433,7 +434,7 @@ class Literally_WordPress{
 		//Transfer Page if enabled
 		if($this->notifier->is_enabled()){
 			$transfer_count = $this->notifier->on_queue_count();
-			$suffix = $transfer_count ? sprintf('<span class="update-plugins count-%1$d" title="%2$s"><span class="transfer-count">%1$d</span></span>', $transfer_count, sprintf($this->_('%d waiting transfers.'), $transfer_count) ) : '';
+			$suffix = $transfer_count ? sprintf($icon_string, $transfer_count, sprintf($this->_('%d waiting transfers.'), $transfer_count), 'transfer') : '';
 			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management").$suffix, 'edit_posts', "lwp-transfer", array($this, "load"));
 		}
 		//Campaign setting
@@ -444,8 +445,6 @@ class Literally_WordPress{
 			//Device setting
 			add_submenu_page("lwp-setting", $this->_("Device Setting"), $this->_("Device Setting"), 'edit_others_posts', "lwp-devices", array($this, "load"));
 		}
-		//Purchase history
-		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
 		//iOS Manual if enabled
 		if($this->ios->is_enabled()){
 			add_submenu_page("edit.php?post_type=".$this->ios->post_type, $this->_('API Manual'), $this->_('API Manual'), 'edit_posts', "lwp-ios-api", array($this, 'load'));
@@ -453,7 +452,9 @@ class Literally_WordPress{
 		//Reward Page if enabled
 		if($this->reward->is_enabled()){
 			//admin
-			add_submenu_page("lwp-setting", $this->_("Reward Management"), $this->_('Reward Management'), 'edit_posts', "lwp-reward", array($this, 'load'));
+			$reward_logs = $this->reward->on_queue_count();
+			$suffix = $reward_logs ? sprintf($icon_string, $reward_logs, sprintf($this->_('%d rewards are waiting queueue.'), $reward_logs), 'reward') : '';
+			add_submenu_page("lwp-setting", $this->_("Reward Management"), $this->_('Reward Management').$suffix, 'edit_posts', "lwp-reward", array($this, 'load'));
 			//Personal
 			if($this->reward->promotable || ($this->reward->rewardable && current_user_can('edit_posts'))){
 				add_users_page($this->_("Reward"), $this->_("Reward"), 'read', "lwp-personal-reward", array($this, 'load'));
@@ -463,6 +464,8 @@ class Literally_WordPress{
 		if($this->event->is_enabled()){
 			add_submenu_page("lwp-setting", $this->_('Event Management'), $this->_('Event Management'), 'edit_posts', "lwp-event", array($this, 'load'));
 		}
+		//Purchase history
+		add_submenu_page("profile.php", $this->_("Purchase History"), $this->_("Purchase History"), 0, "lwp-history", array($this, "load"));
 		//Theme option
 		add_theme_page($this->_("LWP Form Check"), $this->_('LWP Form Check'), 'edit_theme_options','lwp-form-check', array($this, 'load'));
 	}
