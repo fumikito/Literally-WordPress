@@ -157,6 +157,7 @@ EOS;
 			'notification' => $lwp->_("Notification Code"),
 			'registered' => $lwp->_("Registered"),
 			'updated' => $lwp->_("Payment Limit"),
+			'left_days' => $lwp->_('Left Days'),
 			'status' => $lwp->_("Status"),
 			'action' => $lwp->_('Action')
 		);
@@ -201,6 +202,9 @@ EOS;
 				break;
 			case 'updated':
 				$date = $lwp->notifier->get_limit_date($item->registered, get_option('date_format'));
+				return $date;
+				break;
+			case 'left_days':
 				$left = $lwp->notifier->get_left_days($item->registered);
 				if($left > 10){
 					$color = 'black';
@@ -215,7 +219,7 @@ EOS;
 					$color = 'crimson';
 					$tag = 'strong';
 				}
-				return sprintf('%4$s<br /> (<%1$s style="color: %3$s;">%2$s</%1$s>)', $tag, sprintf($lwp->_('%d days left'), $left), $color, $date);
+				return sprintf('<%1$s style="color: %3$s;">%2$s</%1$s>', $tag, sprintf($lwp->_('%d days left'), $left), $color); 
 				break;
 			case 'status':
 				return $lwp->_($item->status);
@@ -294,6 +298,10 @@ EOS;
 			LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
 			LWP_Payment_Status::REFUND	 => $lwp->_(LWP_Payment_Status::REFUND)
 		);
+	}
+	
+	function get_table_classes() {
+		return array( 'widefat', $this->_args['plural'] );
 	}
 	
 	function extra_tablenav($which) {
