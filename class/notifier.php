@@ -238,6 +238,44 @@ You can also get in touch this item again:
 	}
 	
 	/**
+	 * Returns waiting transfer count
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @return int
+	 */
+	public function on_queue_count(){
+		global $lwp, $wpdb;
+		$sql = <<<EOS
+			SELECT COUNT(ID) FROM {$lwp->transaction}
+			WHERE method = %s AND status = %s
+EOS;
+		return (int)$wpdb->get_var($wpdb->prepare($sql, LWP_Payment_Methods::TRANSFER, LWP_Payment_Status::START));
+	}
+	
+	/**
+	 * Returns limit date for specified time
+	 * @param string $gmt_datetime Datetime format
+	 * @param string $format
+	 * @return string
+	 */
+	public function get_limit_date($gmt_datetime, $format = 'Y-m-d H:i:s'){
+		return get_date_from_gmt(date('Y-m-d H:i:s', strtotime($gmt_datetime) + $this->limit * 60 * 60 * 24), $format);
+	}
+	
+	/**
+	 * Returns left days to limit
+	 * @param string $gmt_ordered
+	 * @param int $now timestamp format
+	 * @return int
+	 */
+	public function get_left_days($gmt_ordered, $now = false){
+		if(!$now){
+			$now = strtotime((gmdate('Y-m-d H:i:s')));
+		}
+		return floor( (strtotime($gmt_ordered) - $now + 60 * 60 * 24 * $this->limit ) / 60 / 60 / 24);
+	}
+	
+	/**
 	 * Callback for register Meta box
 	 */
 	public function register_meta_box(){

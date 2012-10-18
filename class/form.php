@@ -217,11 +217,12 @@ EOS;
 									do_action('lwp_update_transaction', $tran_id);
 								}else{
 									$wpdb->insert( $lwp->transaction, $data, $where);
+									$tran_id = $wpdb->insert_id;
 									//Execute hook
 									do_action('lwp_create_transaction', $wpdb->insert_id);
 								}
 								//Send Notification
-								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $wpdb->insert_id));
+								$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $tran_id));
 								$notification_status = $lwp->notifier->notify($transaction, 'thanks');
 							}else{
 								$notification_status = 'sent';

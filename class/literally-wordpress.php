@@ -432,7 +432,9 @@ class Literally_WordPress{
 		add_submenu_page("lwp-setting", $this->_("Transaction Management"), $this->_("Transaction Management"), 'edit_posts', "lwp-management", array($this, "load"));
 		//Transfer Page if enabled
 		if($this->notifier->is_enabled()){
-			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management"), 'edit_posts', "lwp-transfer", array($this, "load"));
+			$transfer_count = $this->notifier->on_queue_count();
+			$suffix = $transfer_count ? sprintf('<span class="update-plugins count-%1$d" title="%2$s"><span class="transfer-count">%1$d</span></span>', $transfer_count, sprintf($this->_('%d waiting transfers.'), $transfer_count) ) : '';
+			add_submenu_page("lwp-setting", $this->_("Transfer Management"), $this->_("Transfer Management").$suffix, 'edit_posts', "lwp-transfer", array($this, "load"));
 		}
 		//Campaign setting
 		add_submenu_page("lwp-setting", $this->_("Campaign Management"), $this->_("Campaign Management"), 'edit_posts', "lwp-campaign", array($this, "load"));

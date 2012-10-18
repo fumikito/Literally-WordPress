@@ -84,13 +84,8 @@ if($is_detail):
 			<td>---</td>
 		</tr>
 		<tr>
-			<th scope="row" valign="top"><?php $this->e('Quantity'); ?></th>
-			<td><?php echo number_format_i18n($transaction->num); ?></td>
-			<td>---</td>
-		</tr>
-		<tr>
-			<th scope="row" valign="top"><?php $this->e('Consumed'); ?></th>
-			<td><?php echo number_format_i18n($transaction->consumed); ?></td>
+			<th scope="row" valign="top"><?php $this->e('Consumed'); ?> / <?php $this->e('Quantity'); ?></th>
+			<td><?php echo number_format_i18n($transaction->consumed); ?> / <?php echo number_format_i18n($transaction->num); ?></td>
 			<td>---</td>
 		</tr>
 		<tr>
@@ -103,11 +98,54 @@ if($is_detail):
 			</td>
 			<td>---</td>
 		</tr>
+		<?php switch($transaction->method): case LWP_Payment_Methods::PAYPAL: ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Invoice Num'); ?></th>
-			<td><?php echo esc_html($transaction->transaction_key); ?></td>
+			<td>
+				<?php echo esc_html($transaction->transaction_key); ?><br />
+				<?php if(false !== array_search($transaction->status, array(LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING))): ?>
+					<?php printf($this->_('Payer Email: %s'), $transaction->payer_mail); ?>
+				<?php endif; ?>
+			</td>
 			<td>---</td>
 		</tr>
+		<?php break; case LWP_Payment_Methods::SOFTBANK_CC: case LWP_Payment_Methods::SOFTBANK_WEB_CVS: case LWP_Payment_Methods::SOFTBANK_PAYEASY: $info = unserialize($transaction->misc); ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('SPS Transaction ID'); ?></th>
+			<td><?php echo esc_html($transaction->transaction_id); ?></td>
+			<td>---</td>
+		</tr>
+		<?php if($transaction->method == LWP_Payment_Methods::SOFTBANK_CC) break; ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('CVS'); ?></th>
+			<td>
+				<?php echo $this->softbank->get_verbose_name($info['cvs']); ?>
+				&nbsp;<small>(<?php echo $this->softbank->get_verbose_name($info['cvs'], true); ?>)</small>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php
+			$ticket_names = $this->softbank->get_cvs_howtos($info['cvs'], true);
+			for($i = 0, $l = count($ticket_names); $i < $l; $i++):
+		?>
+		<tr>
+			<th scope="row" valign="top"><?php echo $ticket_names[$i]; ?></th>
+			<td><?php echo esc_html($info['cvs_pay_data'.($i + 1)]); ?></td>
+			<td>---</td>
+		</tr>
+		<?php endfor; ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Payment Limit'); ?></th>
+			<td><?php echo mysql2date(get_option('date_format'), preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "$1-$2-$3 23:59:59", $info['bill_date'])); ?></td>
+			<td>---</td>
+		</tr>
+		<?php break; case LWP_Payment_Methods::TRANSFER: ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Notification Code'); ?></th>
+			<td><?php echo $transaction->transaction_key; ?></td>
+			<td>---</td>
+		</tr>
+		<?php break; endswitch; ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e("Status"); ?></th>
 			<td>

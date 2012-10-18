@@ -94,11 +94,10 @@ class LWP_List_Transfer extends WP_List_Table{
 			ON t.book_id = p.ID
 EOS;
 		//Create Where section
-		$wheres = array("t.method = '".LWP_Payment_Methods::TRANSFER."'");
-		$filter = $this->get_filter();
-		if($filter != 'all'){
-			$wheres[] = $wpdb->prepare("t.status = %s", $filter);
-		}
+		$wheres = array(
+			"t.method = '".LWP_Payment_Methods::TRANSFER."'",
+			$wpdb->prepare("t.status = %s", LWP_Payment_Status::START)
+		);
 		if(isset($_GET['s']) && !empty($_GET['s'])){
 			$like_string = preg_replace("/^'(.+)'$/", '$1', $wpdb->prepare("%s", $_GET['s']));
 			$wheres[] = <<<EOS
@@ -157,9 +156,9 @@ EOS;
 			'price' => $lwp->_("Price"),
 			'notification' => $lwp->_("Notification Code"),
 			'registered' => $lwp->_("Registered"),
-			'updated' => $lwp->_("Updated"),
+			'updated' => $lwp->_("Payment Limit"),
 			'status' => $lwp->_("Status"),
-			'notice' => $lwp->_('Notice')
+			'action' => $lwp->_('Action')
 		);
 	}
 	
@@ -201,10 +200,28 @@ EOS;
 				return mysql2date(get_option('date_format'), $item->registered, false);
 				break;
 			case 'updated':
-				return mysql2date(get_option('date_format'), $item->updated, false);
+				$date = $lwp->notifier->get_limit_date($item->registered, get_option('date_format'));
+				$left = $lwp->notifier->get_left_days($item->registered);
+				if($left > 10){
+					$color = 'black';
+					$tag = 'span';
+				}elseif($left > 5){
+					$color = 'balck';
+					$tag = 'strong';
+				}elseif($left >= 2){
+					$color = 'orange';
+					$tag = 'strong';
+				}else{
+					$color = 'crimson';
+					$tag = 'strong';
+				}
+				return sprintf('%4$s<br /> (<%1$s style="color: %3$s;">%2$s</%1$s>)', $tag, sprintf($lwp->_('%d days left'), $left), $color, $date);
 				break;
 			case 'status':
 				return $lwp->_($item->status);
+				break;
+			case 'action':
+				return sprintf('<a href="%s" class="button">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Detail'));
 				break;
 			case 'notice';
 				switch($item->status){
@@ -253,30 +270,6 @@ EOS;
 		return isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
 	}
 	
-	/**
-	 * Get current filter
-	 * @return string
-	 */
-	function get_filter(){
-		$filter = 'all';
-		if(isset($_GET['status']) && !$_GET['status'] != 'all'){
-			$target = $_GET['status'];
-		}elseif(isset($_GET['status2']) && !$_GET['status2'] != 'all'){
-			$target = $_GET['status2'];
-		}else{
-			$target = '';
-		}
-		switch($target){
-			case LWP_Payment_Status::CANCEL:
-			case LWP_Payment_Status::REFUND:
-			case LWP_Payment_Status::START:
-			case LWP_Payment_Status::SUCCESS:
-			case LWP_Payment_Status::REFUND_REQUESTING:
-				return $filter = $target;
-				break;
-		}
-		return $filter;
-	}
 	
 	function get_per_page(){
 		$per_page = 20;
@@ -308,20 +301,6 @@ EOS;
 		$nombre = ($which == 'top') ?  '' : "2";
 		?>
 		<div class="alignleft acitions">
-			<select name="status<?php echo $nombre; ?>">
-				<?php
-				$status = array(
-					'all' => $lwp->_('All Status'),
-					LWP_Payment_Status::START => $lwp->_(LWP_Payment_Status::START),
-					LWP_Payment_Status::CANCEL => $lwp->_(LWP_Payment_Status::CANCEL),
-					LWP_Payment_Status::SUCCESS => $lwp->_(LWP_Payment_Status::SUCCESS),
-					LWP_Payment_Status::REFUND => $lwp->_(LWP_Payment_Status::REFUND),
-					LWP_Payment_Status::REFUND_REQUESTING => $lwp->_(LWP_Payment_Status::REFUND_REQUESTING)
-				);
-				foreach($status as $s => $val): ?>
-				<option value="<?php echo $s; if($s == $this->get_filter()) echo '" selected="selected'?>"><?php echo $val; ?></option>
-				<?php endforeach; ?>
-			</select>
 			<select name="per_page<?php echo $nombre; ?>">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
@@ -329,7 +308,6 @@ EOS;
 				</option>
 				<?php endforeach; ?>
 			</select>
-			
 			<?php submit_button(__('Filter'), 'secondary', '', false); ?>
 		</div>
 		<?php
