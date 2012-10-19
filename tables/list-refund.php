@@ -112,7 +112,7 @@ EOS;
 		return array(
 			'item_name' => $lwp->_("Item Name"),
 			'user' => $lwp->_("User Name"),
-			'account' => $lwp->_('Account'),
+			'account' => $lwp->_('Refund Account'),
 			'paid' => $lwp->_("Paid"),
 			'refunds' => $lwp->_("Refunds"),
 			'registered' => $lwp->_("Registered"),
@@ -167,7 +167,13 @@ EOS;
 				break;
 			case 'account':
 				$account = $lwp->refund_manager->get_user_account($item->user_id);
-				return $account ? $account : '---';
+				if($account){
+					return $account;
+				}elseif($item->status == LWP_Payment_Status::REFUND_REQUESTING){
+					return $lwp->_('Not registered').'<br />'.sprintf('<a href="%s" class="refund-account-request">%s</a>', wp_nonce_url(admin_url('admin.php?page=lwp-refund&user_id='.$item->user_id), 'lwp_refund_account_request'), $lwp->_('Request user to register'));
+				}else{
+					return $lwp->_('Not registered');
+				}
 				break;
 			case 'paid':
 				return sprintf('%1$s<br /><strong>%2$s</strong>', number_format($item->price)." ({$lwp->option['currency_code']})", $lwp->_($item->method));
@@ -212,8 +218,11 @@ EOS;
 				}
 				break;
 			case 'action':
-				return sprintf('<a href="%s" class="button">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Detail'));
 				$return = sprintf('<a href="%s" class="button">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Detail'));
+				if($item->status == LWP_Payment_Status::REFUND_REQUESTING){
+					$return .= '&nbsp;'.sprintf('<a href="%s" class="done-refund-price button-primary">%s</a>', wp_nonce_url(admin_url('admin.php?page=lwp-refund&transaction_id='.$item->ID), 'lwp_refund_done'), $lwp->_('Refunded'));
+				}
+				return $return;
 				break;
 		}
 	}
@@ -248,7 +257,7 @@ EOS;
 		}
 		?>
 		<div class="alignleft acitions">
-			<select name="per_page<?php echo $nombre; ?>">
+			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
 					<?php printf($lwp->_('%d per 1Page'), $num); ?>
