@@ -175,7 +175,14 @@ EOS;
 			case 'refunds':
 				$refund = $lwp->refund_manager->detect_refund_price($item);
 				if($lwp->refund_manager->is_suspicious_transaction($item)){
-					
+					$alert = <<<EOS
+						<a href="%s" class="fix-refund-price ui-state-default ui-corner-all ui-dialog-btn">
+							<span class="ui-icon ui-icon-wrench"></span>%s
+						</a><br />
+						<a class="about-refund-link" href="#more">%s</a>
+EOS;
+					$suffix = sprintf($alert, wp_nonce_url(admin_url('admin.php?page=lwp-refund&transaction_id='.$item->ID.((isset($_REQUEST['status']) && $_REQUEST['status'] == LWP_Payment_Status::REFUND) ? '&status='.LWP_Payment_Status::REFUND : '')), 'lwp_refund_price'),
+							$lwp->_('Fix'), $lwp->_('Why need fix?'));
 				}else{
 					$suffix = '';
 				}

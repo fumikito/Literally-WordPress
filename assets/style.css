@@ -221,6 +221,20 @@ pre.bash span{
 #lwp-event-setting{
 	
 }
+.ui-dialog-btn{
+	padding: 3px 1em 3px 20px;
+	text-decoration: none;
+	position: relative;
+	font-size: 10px;
+}
+.ui-dialog-btn .ui-icon{
+	margin: 0 5px 0 0;
+	position: absolute;
+	left: .2em;
+	top: 50%;
+	margin-top: -8px;
+	zoom: 1;
+}
 #cancel-date-list{
 	background: #fff;
 	border: 1px solid #ccc;
