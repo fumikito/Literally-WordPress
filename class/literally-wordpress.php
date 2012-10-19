@@ -174,7 +174,10 @@ class Literally_WordPress{
 	 */
 	public $event = null;
 	
-	
+	/**
+	 * Refund Manager
+	 * @var LWP_Reufund_Manager
+	 */
 	public $refund_manager = null;
 	
 	/**

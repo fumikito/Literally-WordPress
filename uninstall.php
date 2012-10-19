@@ -31,3 +31,4 @@ foreach($notification_ids as $id){
 
 //Delete Option
 delete_option('literally_wordpress_option');
+delete_option('lwp_refund_message');

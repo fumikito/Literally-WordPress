@@ -895,6 +895,14 @@ function lwp_endpoint($action = 'buy', $is_sanbdox = false){
 }
 
 /**
+ * Returns refund account setting page url
+ * @return string
+ */
+function lwp_refund_account_url(){
+	return lwp_endpoint('refund-account');
+}
+
+/**
  * 購入処理にエラーがあったか否かを返す
  * 
  * @deprecated
