@@ -1324,6 +1324,54 @@ EOS;
 		));
 	}
 	
+	private function handle_refund_account($is_sandbox = false){
+		global $lwp;
+		//Auth redirect
+		$this->kill_anonymous_user(false);
+		$account = shortcode_atts(array(
+			'bank_name' => '',
+			'bank_code' => '',
+			'branch_name' => '',
+			'branch_no' => '',
+			'account_type' => 'normal',
+			'account_no' => '',
+			'account_holder' => ''
+		), $lwp->refund_manager->get_user_account(get_current_user_id(), false));
+		$error = array();
+		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_update_refund_account_'.get_current_user_id())){
+			$bank_code = $this->convert_numeric($_REQUEST['bank_code']);
+			$branch_no = $this->convert_numeric($_REQUEST['branch_no']);
+			$account_no = $this->convert_numeric($_REQUEST['account_no']);
+			$account = array(
+				'bank_name' => (string)$_REQUEST['bank_name'],
+				'bank_code' => $bank_code,
+				'branch_name' => (string)$_REQUEST['branch_name'],
+				'branch_no' => $branch_no,
+				'account_type' => (!isset($_REQUEST['account_type']) || $_REQUEST['account_type'] != 'checking') ? 'normal' : 'checking',
+				'account_no' => $account_no,
+				'account_holder' => (string)$_REQUEST['account_holder']
+			);
+			update_user_meta(get_current_user_id(), $lwp->refund_manager->meta_refund_contact, $account);
+		}
+		//Validation
+		//Check not empty
+		foreach(array(
+			'bank_name' => $this->_('Bank Name'),
+			'branch_name' => $this->_('Branch Name'),
+			'account_no' => $this->_('Account No.'),
+			'account_holder' => $this->_('Account Holder')
+		) as $key => $name){
+			if(empty($account[$key])){
+				$error[] = sprintf($this->_('%s is empty.'), $name);
+			}
+		}
+		$this->show_form('refund-account', array(
+			'error' => $error,
+			'account' => $account,
+			'back' => lwp_history_url()
+		));
+	}
+	
 	/**
 	 * Stop processing transaction of not logged in user. 
 	 */
@@ -1584,6 +1632,9 @@ EOS;
 			case 'payment-info':
 				$meta_title = $this->_('Payment Information Detail');
 				break;
+			case 'refund-account':
+				$meta_title = $this->_('Refund Account');
+				break;
 			case 'transfer':
 				$meta_title = $this->_('Transfer Accepted');
 				break;
@@ -1639,6 +1690,7 @@ EOS;
 			case 'cancel':
 			case 'payment':
 			case 'payment-info':
+			case 'refund-account':
 				return $action;
 				break;
 			case 'pricelist':
@@ -1706,6 +1758,9 @@ EOS;
 				break;
 			case 'payment-info':
 				return $this->_('Display currently quueued transaction. Especially for Web CVS or PayEasy.');
+				break;
+			case 'refund-account':
+				return $this->_('Display form of refund account which is required to complete refund process.');
 				break;
 			case 'confirm':
 				return $this->_('Displays form to confirm transaction when user retruns from paypal web site.');

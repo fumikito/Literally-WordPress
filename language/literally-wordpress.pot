@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-19 15:50+0900\n"
-"PO-Revision-Date: 2012-10-19 15:50+0900\n"
+"POT-Creation-Date: 2012-10-19 22:59+0900\n"
+"PO-Revision-Date: 2012-10-19 22:59+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -233,6 +233,7 @@ msgstr ""
 #: ../admin/personal-reward.php:107 ../admin/setting.php:53
 #: ../admin/upload.php:198 ../admin/upload.php:220
 #: ../form-template/paypal-event-tickets-consume.php:41
+#: ../form-template/paypal-refund-account.php:85
 msgid "Update"
 msgstr ""
 
@@ -553,7 +554,7 @@ msgstr ""
 #: ../admin/form-check.php:13 ../admin/settings/event.php:2
 #: ../admin/settings/misc.php:1 ../admin/settings/payment.php:2
 #: ../admin/settings/post.php:3 ../admin/settings/reward.php:2
-#: ../admin/settings/subscription.php:2 ../class/refund-manager.php:138
+#: ../admin/settings/subscription.php:2 ../class/refund-manager.php:137
 #, php-format
 msgid "About %s"
 msgstr ""
@@ -627,6 +628,7 @@ msgstr ""
 
 #: ../admin/history.php:2 ../class/literally-wordpress.php:480
 #: ../form-template/paypal-payment-info.php:33
+#: ../form-template/paypal-refund-account.php:89
 msgid "Purchase History"
 msgstr ""
 
@@ -1382,7 +1384,7 @@ msgstr ""
 msgid "Failed to delete file."
 msgstr ""
 
-#: ../admin/upload.php:98 ../class/form.php:1406
+#: ../admin/upload.php:98 ../class/form.php:1454
 #: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr ""
@@ -1712,7 +1714,7 @@ msgstr ""
 #: ../admin/settings/payment.php:93 ../admin/settings/payment.php:104
 #: ../admin/settings/payment.php:121 ../admin/settings/payment.php:273
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1702
+#: ../admin/settings/post.php:72 ../class/form.php:1754
 msgid "More &gt;"
 msgstr ""
 
@@ -2903,7 +2905,7 @@ msgstr ""
 msgid "Sorry, but %s has no ticket on this event."
 msgstr ""
 
-#: ../class/form.php:1134 ../class/form.php:1253 ../class/form.php:1502
+#: ../class/form.php:1134 ../class/form.php:1253 ../class/form.php:1550
 msgid "Sorry, but event is not found."
 msgstr ""
 
@@ -3001,161 +3003,191 @@ msgstr ""
 msgid "Waitings(%s people)"
 msgstr ""
 
-#: ../class/form.php:1333
+#: ../class/form.php:1359 ../form-template/paypal-refund-account.php:18
+msgid "Bank Name"
+msgstr ""
+
+#: ../class/form.php:1360 ../form-template/paypal-refund-account.php:34
+msgid "Branch Name"
+msgstr ""
+
+#: ../class/form.php:1361 ../form-template/paypal-refund-account.php:66
+msgid "Account No."
+msgstr ""
+
+#: ../class/form.php:1362 ../form-template/paypal-refund-account.php:75
+msgid "Account Holder"
+msgstr ""
+
+#: ../class/form.php:1365
+#, php-format
+msgid "%s is empty."
+msgstr ""
+
+#: ../class/form.php:1381
 msgid "You must be logged in to process transaction."
 msgstr ""
 
-#: ../class/form.php:1469
+#: ../class/form.php:1517
 msgid "No content is specified."
 msgstr ""
 
-#: ../class/form.php:1479
+#: ../class/form.php:1527
 msgid "Selling limit has been past. There is no ticket available."
 msgstr ""
 
-#: ../class/form.php:1485
+#: ../class/form.php:1533
 msgid "Sorry, but this ticket is sold out."
 msgstr ""
 
-#: ../class/form.php:1514
+#: ../class/form.php:1562
 msgid "Dammy Ticket"
 msgstr ""
 
-#: ../class/form.php:1579
+#: ../class/form.php:1627
 msgid "Select Payment"
 msgstr ""
 
-#: ../class/form.php:1582
+#: ../class/form.php:1630
 msgid "Payment Information"
 msgstr ""
 
-#: ../class/form.php:1585
+#: ../class/form.php:1633
 msgid "Payment Information Detail"
 msgstr ""
 
-#: ../class/form.php:1588
+#: ../class/form.php:1636 ../tables/list-refund.php:115
+msgid "Refund Account"
+msgstr ""
+
+#: ../class/form.php:1639
 msgid "Transfer Accepted"
 msgstr ""
 
-#: ../class/form.php:1591
+#: ../class/form.php:1642
 msgid "Payment Confirmation"
 msgstr ""
 
-#: ../class/form.php:1594
+#: ../class/form.php:1645
 msgid "Transaction Completed"
 msgstr ""
 
-#: ../class/form.php:1597
+#: ../class/form.php:1648
 msgid "Transaciton Canceled"
 msgstr ""
 
-#: ../class/form.php:1600
+#: ../class/form.php:1651
 msgid "Ticket Cancel"
 msgstr ""
 
-#: ../class/form.php:1603
+#: ../class/form.php:1654
 msgid "Ticket Canceled"
 msgstr ""
 
-#: ../class/form.php:1606 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1657 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr ""
 
-#: ../class/form.php:1609
+#: ../class/form.php:1660
 msgid "Ticket Status"
 msgstr ""
 
-#: ../class/form.php:1612
+#: ../class/form.php:1663
 msgid "Waiting for ticket cancellation"
 msgstr ""
 
-#: ../class/form.php:1615
+#: ../class/form.php:1666
 msgid "Find User"
 msgstr ""
 
-#: ../class/form.php:1618
+#: ../class/form.php:1669
 msgid "Contact to participants"
 msgstr ""
 
-#: ../class/form.php:1621
+#: ../class/form.php:1672
 msgid "Subscrition Plans"
 msgstr ""
 
-#: ../class/form.php:1689 ../class/form.php:1692
+#: ../class/form.php:1741 ../class/form.php:1744
 msgid "Displays subscription plans."
 msgstr ""
 
-#: ../class/form.php:1692
+#: ../class/form.php:1744
 msgid "User can select it and go to payment selection page."
 msgstr ""
 
-#: ../class/form.php:1695
+#: ../class/form.php:1747
 msgid "Display thank you message when transaction finished."
 msgstr ""
 
-#: ../class/form.php:1695 ../class/form.php:1717
+#: ../class/form.php:1747 ../class/form.php:1772
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr ""
 
-#: ../class/form.php:1698
+#: ../class/form.php:1750
 msgid "Display message when user cancels transaction."
 msgstr ""
 
-#: ../class/form.php:1701
+#: ../class/form.php:1753
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
 msgstr ""
 
-#: ../class/form.php:1705
+#: ../class/form.php:1757
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
 msgstr ""
 
-#: ../class/form.php:1708
+#: ../class/form.php:1760
 msgid ""
 "Display currently quueued transaction. Especially for Web CVS or PayEasy."
 msgstr ""
 
-#: ../class/form.php:1711
+#: ../class/form.php:1763
+msgid ""
+"Display form of refund account which is required to complete refund process."
+msgstr ""
+
+#: ../class/form.php:1766
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 
-#: ../class/form.php:1714 ../class/form.php:1720
+#: ../class/form.php:1769 ../class/form.php:1775
 msgid "Show list of tickets which user have bought."
 msgstr ""
 
-#: ../class/form.php:1714
+#: ../class/form.php:1769
 msgid "User can select ticket to cancel."
 msgstr ""
 
-#: ../class/form.php:1714 ../class/form.php:1720
+#: ../class/form.php:1769 ../class/form.php:1775
 msgid "If user has no tickets, wp_die will be executed."
 msgstr ""
 
-#: ../class/form.php:1717
+#: ../class/form.php:1772
 msgid "Displays message to tell user cancel is completed."
 msgstr ""
 
-#: ../class/form.php:1723
+#: ../class/form.php:1778
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
 msgstr ""
 
-#: ../class/form.php:1726
+#: ../class/form.php:1781
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
 msgstr ""
 
-#: ../class/form.php:1729
+#: ../class/form.php:1784
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
-#: ../class/form.php:1732
+#: ../class/form.php:1787
 msgid "Displayed when user choose to wait for cancellation."
 msgstr ""
 
@@ -3775,60 +3807,91 @@ msgid ""
 "%site_url%"
 msgstr ""
 
-#: ../class/refund-manager.php:138 ../tables/list-refund.php:117
+#: ../class/refund-manager.php:137 ../tables/list-refund.php:117
 msgid "Refunds"
 msgstr ""
 
-#: ../class/refund-manager.php:138
+#: ../class/refund-manager.php:137
 msgid ""
 "Before version 0.9.3, LWP hasn't save refund amount. The old values are just "
 "detected and can be change in many occasion.<br />For future coinsistence, "
 "you had better to save deteceted value as regular one."
 msgstr ""
 
-#: ../class/refund-manager.php:139
+#: ../class/refund-manager.php:138
 msgid "Are you really sure to fix refund price?"
 msgstr ""
 
-#: ../class/refund-manager.php:140
+#: ../class/refund-manager.php:139
 msgid "Are you really sure to make this transaction refunded?"
 msgstr ""
 
-#: ../class/refund-manager.php:141
+#: ../class/refund-manager.php:140
 msgid "Are you really sure to send request message to complete refund account?"
 msgstr ""
 
-#: ../class/refund-manager.php:157 ../class/refund-manager.php:180
+#: ../class/refund-manager.php:156 ../class/refund-manager.php:177
+#: ../class/refund-manager.php:201
 msgid "You don't have permission."
 msgstr ""
 
-#: ../class/refund-manager.php:160
+#: ../class/refund-manager.php:159 ../class/refund-manager.php:181
 msgid "Specified transaction doesn't exist."
 msgstr ""
 
-#: ../class/refund-manager.php:163
+#: ../class/refund-manager.php:162 ../class/refund-manager.php:184
 msgid "This transaction is not with refund status."
 msgstr ""
 
-#: ../class/refund-manager.php:167
+#: ../class/refund-manager.php:166
 msgid "This transaction's refund price seem to be valid."
 msgstr ""
 
-#: ../class/refund-manager.php:174
+#: ../class/refund-manager.php:173
 msgid "Transaction's refund price was updated."
 msgstr ""
 
-#: ../class/refund-manager.php:184
+#: ../class/refund-manager.php:189
+msgid "Transaction status has changed and notification message was sent."
+msgstr ""
+
+#: ../class/refund-manager.php:192
+msgid "Failed to send message"
+msgstr ""
+
+#: ../class/refund-manager.php:194
+msgid "But transaction was successfully updated."
+msgstr ""
+
+#: ../class/refund-manager.php:196
+msgid "And transaction failed to update. Please try again later."
+msgstr ""
+
+#: ../class/refund-manager.php:205
 msgid "Specified user doesn't exist."
 msgstr ""
 
-#: ../class/refund-manager.php:187
+#: ../class/refund-manager.php:208
 msgid "This user has already registered refund account."
 msgstr ""
 
-#: ../class/refund-manager.php:193
+#: ../class/refund-manager.php:211
+msgid "Request to compete refund account was sent."
+msgstr ""
+
+#: ../class/refund-manager.php:214
 msgid ""
 "Failed to send email. Please try again later or contact to user dirctory."
+msgstr ""
+
+#: ../class/refund-manager.php:257
+#: ../form-template/paypal-refund-account.php:56
+msgid "Normal Account"
+msgstr ""
+
+#: ../class/refund-manager.php:257
+#: ../form-template/paypal-refund-account.php:60
+msgid "Checking Account"
 msgstr ""
 
 #: ../class/reward.php:192
@@ -5155,6 +5218,7 @@ msgstr ""
 #: ../form-template/paypal-event-tickets.php:53
 #: ../form-template/paypal-event-user.php:25
 #: ../form-template/paypal-payment-info.php:33
+#: ../form-template/paypal-refund-account.php:89
 #, php-format
 msgid "Return to %s"
 msgstr ""
@@ -5297,6 +5361,7 @@ msgid "Please enter payment information for %s"
 msgstr ""
 
 #: ../form-template/paypal-payment.php:51
+#: ../form-template/paypal-refund-account.php:6
 msgid "Required"
 msgstr ""
 
@@ -5376,6 +5441,37 @@ msgstr ""
 
 #: ../form-template/paypal-payment.php:269
 msgid "Checkout &raquo;"
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:2
+msgid ""
+"Please enter the account to which refund will be transfered. This "
+"information is <strong>required</strong> to finish refund process. Account "
+"should be valid and your own."
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:22
+msgid "Bank of Tokyo-Mitsubishi UFJ"
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:26
+msgid "Bank Code"
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:38
+msgid "Aoyama Branch"
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:42
+msgid "Branch No."
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:50
+msgid "Account Type"
+msgstr ""
+
+#: ../form-template/paypal-refund-account.php:79
+msgid "James Bond"
 msgstr ""
 
 #: ../form-template/paypal-return.php:2
@@ -5542,7 +5638,7 @@ msgstr ""
 msgid "Promoted"
 msgstr ""
 
-#: ../help/account.php:3 ../tables/list-refund.php:115
+#: ../help/account.php:3
 msgid "Account"
 msgstr ""
 
@@ -6285,7 +6381,7 @@ msgstr ""
 #: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
 #: ../tables/list-download-logs.php:224 ../tables/list-event.php:268
 #: ../tables/list-history.php:268 ../tables/list-management.php:336
-#: ../tables/list-refund.php:257 ../tables/list-reward-history.php:200
+#: ../tables/list-refund.php:263 ../tables/list-reward-history.php:200
 #: ../tables/list-ticket.php:262 ../tables/list-transfers.php:288
 #, php-format
 msgid "%d per 1Page"
@@ -6353,7 +6449,7 @@ msgid "Event Starts"
 msgstr ""
 
 #: ../tables/list-event.php:140 ../tables/list-event.php:155
-#: ../tables/list-refund.php:198
+#: ../tables/list-refund.php:204
 #, php-format
 msgid "%s before"
 msgstr ""
@@ -6364,7 +6460,7 @@ msgid "%s later"
 msgstr ""
 
 #: ../tables/list-event.php:194 ../tables/list-management.php:136
-#: ../tables/list-management.php:271 ../tables/list-refund.php:215
+#: ../tables/list-management.php:271 ../tables/list-refund.php:221
 #: ../tables/list-reward-history.php:174 ../tables/list-transfers.php:228
 msgid "Detail"
 msgstr ""
@@ -6439,28 +6535,28 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: ../tables/list-refund.php:170
+#: ../tables/list-refund.php:173 ../tables/list-refund.php:175
 msgid "Not registered"
 msgstr ""
 
-#: ../tables/list-refund.php:170
+#: ../tables/list-refund.php:173
 msgid "Request user to register"
 msgstr ""
 
-#: ../tables/list-refund.php:185
+#: ../tables/list-refund.php:191
 msgid "Fix"
 msgstr ""
 
-#: ../tables/list-refund.php:185
+#: ../tables/list-refund.php:191
 msgid "Why need fix?"
 msgstr ""
 
-#: ../tables/list-refund.php:211
+#: ../tables/list-refund.php:217
 #, php-format
 msgid "%d days past"
 msgstr ""
 
-#: ../tables/list-refund.php:217
+#: ../tables/list-refund.php:223
 msgid "Refunded"
 msgstr ""
 

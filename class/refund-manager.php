@@ -60,7 +60,7 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 	
 	public function notify($key, $id){
 		global $wpdb, $lwp;
-		$placeholders = $this->get_place_holders('required');
+		$placeholders = $this->get_place_holders($key);
 		if(empty($placeholders)){
 			return false;
 		}
@@ -100,10 +100,10 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 					$repl = $this->get_item_name($transaction->book_id);
 					break;
 				case 'refund_price':
-					$repl = number_format_i18n($this->detect_refund_price($transaction)).' '.  lwp_currency_code();
+					$repl = number_format_i18n($this->detect_refund_price($transaction)).' '.lwp_currency_code();
 					break;
 				case 'paid_price':
-					$repl = number_format_i18n($transaction->price).' '.  lwp_currency_code();
+					$repl = number_format_i18n($transaction->price).' '.lwp_currency_code();
 					break;
 				case 'account_url':
 					$repl = lwp_refund_account_url();
@@ -128,10 +128,11 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 	}
 	
 	public function admin_enqueue_scripts() {
+		global $lwp;
 		if(isset($_GET['page']) && $_GET['page'] == 'lwp-refund'){
 			//jQuery UI Theme
 			wp_enqueue_style('jquery-ui-datepicker');
-			wp_enqueue_script('lwp-refund-helper', $this->url.'assets/js/refund-helper.js', array('jquery', 'jquery-ui-dialog'), $this->version);
+			wp_enqueue_script('lwp-refund-helper', $this->url.'assets/js/refund-helper.js', array('jquery', 'jquery-ui-dialog'), $lwp->version);
 			wp_localize_script('lwp-refund-helper', 'LWPRefund', array(
 				'message' => sprintf('<div title="%s"><p>%s</p></div>', sprintf($this->_('About %s'), $this->_('Refunds')), $this->_('Before version 0.9.3, LWP hasn\'t save refund amount. The old values are just detected and can be change in many occasion.<br />For future coinsistence, you had better to save deteceted value as regular one.')),
 				'confirm' => $this->_('Are you really sure to fix refund price?'),
@@ -172,7 +173,29 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 					$lwp->message[] = $this->_('Transaction\'s refund price was updated.');
 				}
 			}elseif(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_refund_done')){
-				
+				if(!current_user_can('edit_others_posts')){
+					$this->kill($this->_('You don\'t have permission.'), 403, true);
+				}
+				$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $_REQUEST['transaction_id']));
+				if(!$transaction){
+					$this->kill($this->_('Specified transaction doesn\'t exist.'), 404, true);
+				}
+				if($transaction->status != LWP_Payment_Status::REFUND_REQUESTING ){
+					$this->kill($this->_('This transaction is not with refund status.'), 403, true);
+				}
+				$updated = $wpdb->update($lwp->transaction, array('status' => LWP_Payment_Status::REFUND), array('ID' => $transaction->ID),
+						array('%s'), array('%d'));
+				if($this->notify('succeeded', $transaction->ID)){
+					$lwp->message[] = $this->_('Transaction status has changed and notification message was sent.');
+				}else{
+					$lwp->error = true;
+					$lwp->message[] = $this->_('Failed to send message');
+					if($updated){
+						$lwp->message[] = $this->_('But transaction was successfully updated.');
+					}else{
+						$lwp->message[] = $this->_('And transaction failed to update. Please try again later.');
+					}
+				}
 			}elseif(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_refund_account_request')){
 				if(!current_user_can('edit_others_posts')){
 					$this->kill($this->_('You don\'t have permission.'), 403, true);
@@ -190,6 +213,14 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 					$lwp->error = true;
 					$lwp->message[] = $this->_('Failed to send email. Please try again later or contact to user dirctory.');
 				}
+			}elseif(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_refund_message')){
+				$this->message = array(
+					'succeeded' => (string)$_REQUEST['refund_succeeded'],
+					'accepted' => (string)$_REQUEST['refund_accepted'],
+					'required' => (string)$_REQUEST['refund_required']
+				);
+				update_option('lwp_refund_message', $this->message);
+				$lwp->message[] = $this->_('Refund message are updated.');
 			}
 		}
 	}
@@ -223,7 +254,19 @@ EOS;
 		if($line_break === false){
 			return $account;
 		}else{
-			return implode($line_break, $account);
+			$bank_name = $account['bank_name'];
+			if(is_numeric($account['bank_code'])){
+				$bank_name .= " ({$account['bank_code']})";
+			}
+			$branch_name = $account['branch_name'];
+			if(is_numeric($account['branch_no'])){
+				$branch_name .= " ({$account['branch_no']})";
+			}
+			$type = $account['account_type'] == 'normal' ? $this->_('Normal Account') : $this->_('Checking Account');
+			
+			return implode($line_break, array_map('esc_html', array(
+				$bank_name, $branch_name, $type.' '.$account['account_no'], $account['account_holder']
+			)));
 		}
 	}
 	
