@@ -618,7 +618,13 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			for($i = 0; $i < $add; $i++){
 				$string .= ' ';
 			}
-			$string = base64_encode(mcrypt_cbc(MCRYPT_3DES, $this->crypt_key, $string, MCRYPT_ENCRYPT, $this->iv));
+			// Crypting
+			$resource = mcrypt_module_open(MCRYPT_3DES, '',  MCRYPT_MODE_CBC, '');;
+			mcrypt_generic_init($resource, $this->crypt_key, $this->iv);
+			$encrypted_data = mcrypt_generic($resource, $string);
+			mcrypt_generic_deinit($resource);
+			$string = base64_encode($encrypted_data);
+			mcrypt_module_close($resource);
 		}
 		return $string;
 	}
@@ -630,7 +636,11 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 */
 	private function decrypt($string){
 		if(!$this->is_sandbox && function_exists('mcrypt_cbc')){
-			$string = mb_convert_encoding(trim(mcrypt_cbc(MCRYPT_3DES, $this->crypt_key, base64_decode($string), MCRYPT_DECRYPT, $this->iv)), 'utf-8', 'sjis-win');
+			$resource = mcrypt_module_open(MCRYPT_3DES, '',  MCRYPT_MODE_CBC, '');;
+			mcrypt_generic_init($resource, $this->crypt_key, $this->iv);
+			$decrypted_data = mdecrypt_generic($resource, base64_decode($string));
+			mcrypt_generic_deinit($resource);
+			$string = mb_convert_encoding(trim($decrypted_data), 'utf-8', 'sjis-win');
 		}
 		return strval($string);
 	}
