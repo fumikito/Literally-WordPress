@@ -134,4 +134,26 @@ class Literally_WordPress_Common {
 		}
 		return $item_name;
 	}
+	
+	
+	
+	/**
+	 * Returns only numeric string
+	 * @param string $string
+	 * @return string
+	 */
+	protected function convert_numeric($string){
+		$string = mb_convert_kana($string, 'n', 'utf-8');
+		return preg_replace("/[^0-9]/", '', $string);
+	}
+	
+	/**
+	 * Returns only kana
+	 * @param string $string
+	 * @return string
+	 */
+	protected function convert_zenkaka_kana($string){
+		$string = mb_convert_kana($string, 'CKV', 'utf-8');
+		return preg_replace("/[^ァ-ヴー]/u", "", $string);
+	}
 }

@@ -82,7 +82,9 @@ EOS;
 		//WHERE
 		$where = array(
 			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('t.status IN (%s, %s, %s, %s)', LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::WAITING_CANCELLATION)
+			$wpdb->prepare('(t.status IN (%s, %s, %s, %s) OR (t.status = %s AND t.method IN (%s, %s, %s)))',
+					LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::WAITING_CANCELLATION,
+					LWP_Payment_Status::START, LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER)
 		);
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
@@ -173,9 +175,13 @@ EOS;
 				$tag = mysql2date(get_option('date_format'), $item->updated, false);
 				break;
 			case 'status':
-				$tag = $lwp->_($item->status);
+				$tag = ($item->status == LWP_Payment_Status::START)
+					? $lwp->_('Waiting for Payment')
+					: $lwp->_($item->status);
 				if($item->post_type == $lwp->event->post_type){
-					if(lwp_is_cancelable($item->post_parent) && $item->status == LWP_Payment_Status::SUCCESS){
+					if($item->status == LWP_Payment_Status::START){
+						$tag .= '<br /><small><a href="'.lwp_endpoint('payment-info').'&transaction='.$item->ID.'">'.$lwp->_ ('Detail').'</a></small>';
+					}elseif(lwp_is_cancelable($item->post_parent) && $item->status == LWP_Payment_Status::SUCCESS){
 						$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
 					}elseif($item->status != LWP_Payment_Status::WAITING_CANCELLATION){
 						$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';

@@ -17,6 +17,8 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	
 	const CVS_REQUEST_CODE = 'ST01-00101-701';
 	
+	const PAYEASY_REQUEST_CODE = 'ST01-00101-703';
+	
 	/**
 	 * creditcard list
 	 * @var array
@@ -70,6 +72,10 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name'
 	);
 	
+	public $blogname = '';
+	
+	public $blogname_kana = '';
+	
 	/**
 	 * Last error message
 	 * @var string
@@ -82,6 +88,8 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			'sb_webcvs' => array(),
 			'sb_payeasy' => false,
 			'sb_sandbox' => true,
+			'sb_blogname' => '',
+			'sb_blogname_kana' => '',
 			'sb_marchant_id' => '',
 			'sb_service_id' => '',
 			'sb_crypt_key' => '',
@@ -103,6 +111,8 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$this->prefix = (string)$option['sb_prefix'];
 		$this->iv = (string)$option['sb_iv'];
 		$this->crypt_key = (string)$option['sb_crypt_key'];
+		$this->blogname = (string)mb_convert_kana($option['sb_blogname'], 'ASKV', 'utf-8');
+		$this->blogname_kana = $this->convert_zenkaka_kana($option['sb_blogname_kana']);
 	}
 	
 	/**
@@ -168,7 +178,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$now = gmdate('Y-m-d H:i:s');
 		$order_id = $this->generate_order_id();
 		//Create XML
-		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price);
+		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price, true);
 		$xml_array['pay_method_info'] = array(
 				'cc_number' => $cc_number,
 				'cc_expiration' => $expiration,
@@ -300,8 +310,87 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		}
 	}
 	
+	/**
+	 * Returns payeasy transactioin request result.
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param string $item_name
+	 * @param int $post_id
+	 * @param int $price
+	 * @param int $quantity
+	 * @param array $creds
+	 * @return int
+	 */
 	public function do_payeasy_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
-		
+		global $lwp, $wpdb;
+		$now = gmdate('Y-m-d H:i:s');
+		$limit = $this->get_payment_limit($post_id, false, 'sb-cvs');
+		$order_id = $this->generate_order_id();
+		//Create common XML
+		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price);
+		//Get zip
+		$zip = array();
+		preg_match("/^([0-9]{3})([0-9]{4})$/", $creds['zipcode'], $zip);
+		//Get Office name
+		$office = isset($creds['office']) && !empty($creds['office']) ? $creds['office'] : '';
+		//Merge XML
+		$xml_array['pay_method_info'] = array(
+			'issue_type' => 0,
+			'last_name' => $creds['last_name'],
+			'first_name' => $creds['first_name'],
+			'last_name_kana' => $creds['last_name_kana'],
+			'first_name_kana' => $creds['first_name_kana'],
+			'first_zip' => $zip[1],
+			'second_zip' => $zip[2],
+			'add1' => $creds['prefecture'],
+			'add2' => mb_convert_kana($creds['city'].$creds['street'], 'AS', 'utf-8'),
+			'add3' => mb_convert_kana($office, 'AS', 'utf-8'),
+			'tel' => $creds['tel'],
+			'mail' => $wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE ID = %d", $user_id)),
+			'seiyakudate' => get_date_from_gmt($now, 'Ymd'),
+			'payeasy_type' => 'O',
+			'terminal_value' => 'P',
+			'bill_info_kana' => $this->blogname_kana,
+			'bill_info' => $this->blogname,
+			'bill_date' => date_i18n('Ymd', $limit),
+		);
+		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
+		$xml_array['request_date'] = get_date_from_gmt($now, 'YmdHis');
+		$xml_array['limit_second'] = 60;
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		//Do transaction 
+		$result = $this->get_request($this->make_xml(self::PAYEASY_REQUEST_CODE, $xml_array));
+		if(!$result['success']){
+			$this->last_error = $result['message'];
+			return 0;
+		}else{
+			$xml = $result['body'];
+			$inserted = $wpdb->insert($lwp->transaction,array(
+				"user_id" => $user_id,
+				"book_id" => $post_id,
+				"price" => $price,
+				"status" => LWP_Payment_Status::START,
+				"method" => LWP_Payment_Methods::SOFTBANK_PAYEASY,
+				"transaction_key" => $order_id,
+				'transaction_id' => $xml->res_sps_transaction_id,
+				'payer_mail' => $xml->res_tracking_id,
+				"registered" => $now,
+				"updated" => $now,
+				'misc' => serialize(array(
+					'invoice_no' => $this->decrypt($xml->res_pay_method_info->invoice_no),
+					'bill_date' => $this->decrypt($xml->res_pay_method_info->bill_date),
+					'skno' => $this->decrypt($xml->res_pay_method_info->skno),
+					'cust_number' => $this->decrypt($xml->res_pay_method_info->cust_number),
+				))
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s'));
+			if($inserted){
+				return $wpdb->insert_id;
+			}else{
+				$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+				return 0;
+			}
+		}
 	}
 	
 	/**
@@ -809,6 +898,6 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 */
 	private $tag_to_be_base64 = array(
 		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
-		'add1', 'add2', 'add3'
+		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
 	);
 }

@@ -470,7 +470,7 @@ EOS;
 					if($sb_cvs){
 						$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
 					}elseif($sb_payeasy){
-						
+						$transaction_id = $lwp->softbank->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
 					}
 					if(($transaction_id)){
 						if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
@@ -511,7 +511,7 @@ EOS;
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
-		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS)));
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER)));
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
 EOS;
@@ -532,7 +532,18 @@ EOS;
 				$status_color = 'dark-grey';
 				break;
 		}
+		$rows = array(
+			array($this->_('Status'), sprintf('<strong style="color:%s;">%s</strong>', $status_color, ($transaction->status == LWP_Payment_Status::START ? $this->_('Waiting for Payment') : $this->_($transaction->status) ) )),
+			array($this->_('Price'), number_format($transaction->price).' '.lwp_currency_code()),
+			array($this->_('Requested Date'), get_date_from_gmt($transaction->registered, get_option('date_format'))),
+		);
 		switch($transaction->method){
+			case LWP_Payment_Methods::TRANSFER:
+				$rows = array_merge($rows, array(
+					array($this->_('Payment Limit'), $lwp->notifier->get_limit_date($transaction->registered, get_option('date_format')).' ('.sprintf($this->_('%d days left'), $lwp->notifier->get_left_days($transaction->registered)).')'),
+					array($this->_('Bank Account'), $lwp->notifier->get_bank_account())
+				));
+				break;
 			case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
 				$data = unserialize($transaction->misc);
 				$cvs = $lwp->softbank->get_verbose_name($data['cvs']);
@@ -548,14 +559,11 @@ EOS;
 				}else{
 					$request_suffix = '';
 				}
-				$rows = array(
-					array($this->_('Status'), sprintf('<strong style="color:%s;">%s</strong>', $status_color, ($transaction->status == LWP_Payment_Status::START ? $this->_('Waiting for Payment') : $this->_($transaction->status) ) )),
-					array($this->_('Price'), number_format($transaction->price).' '.lwp_currency_code()),
-					array($this->_('Requested Date'), get_date_from_gmt($transaction->registered, get_option('date_format'))),
+				$rows =  array_merge($rows, array(
 					array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix),
 					array($this->_('CVS'), '<i class="lwp-cvs-small-icon small-icon-'.$data['cvs'].'"></i>'.$cvs),
 					array($this->_('How to pay'), $howto)
-				);
+				));
 				for($i = 0, $l = count($methods); $i < $l; $i++){
 					$rows[] = array($methods[$i], $data['cvs_pay_data'.($i + 1)]);
 				}
@@ -1474,26 +1482,6 @@ EOS;
 	 */
 	private function strip_ssl($url){
 		return str_replace('https://', 'http://', $url);
-	}
-	
-	/**
-	 * Returns only numeric string
-	 * @param string $string
-	 * @return string
-	 */
-	private function convert_numeric($string){
-		$string = mb_convert_kana($string, 'n', 'utf-8');
-		return preg_replace("/[^0-9]/", '', $string);
-	}
-	
-	/**
-	 * Returns only kana
-	 * @param string $string
-	 * @return string
-	 */
-	private function convert_zenkaka_kana($string){
-		$string = mb_convert_kana($string, 'CKV', 'utf-8');
-		return preg_replace("/[^ァ-ヴー]/u", "", $string);
 	}
 	
 	/**

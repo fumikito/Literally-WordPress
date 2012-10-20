@@ -470,4 +470,19 @@ EOS;
 		$body = apply_filters('lwp_show_thank_you', $body, $transaction);
 		return wpautop($body);
 	}
+	
+	/**
+	 * Returns bank accoun
+	 * @global wpdb $wpdb
+	 * @param boolean $pee
+	 * @return string
+	 */
+	public function get_bank_account($pee = true){
+		global $wpdb;
+		$bank = $wpdb->get_var($wpdb->prepare("SELECT post_content FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $this->post_type, "lwp-bank"));
+		if($pee){
+			$bank = wpautop($bank);
+		}
+		return $bank;
+	}
 }

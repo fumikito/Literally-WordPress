@@ -237,6 +237,8 @@ class Literally_WordPress{
 				'sb_webcvs' => array(),
 				'sb_payeasy' => false,
 				'sb_sandbox' => true,
+				'sb_blogname' => '',
+				'sb_blogname_kana' => '',
 				'sb_marchant_id' => '',
 				'sb_service_id' => '',
 				'sb_hash_key' => '',
@@ -739,6 +741,8 @@ class Literally_WordPress{
 						'sb_prefix' => substr(preg_replace("/[^0-9a-zA-Z]/", "", (string)$_REQUEST['sb_prefix']), 0, 8),
 						'sb_crypt_key' => (string)$_REQUEST['sb_crypt_key'],
 						'sb_iv' => (string)$_REQUEST['sb_iv'],
+						'sb_blogname' => (string)$_REQUEST['sb_blogname'],
+						'sb_blogname_kana' => (string)$_REQUEST['sb_blogname_kana']
 					);
 					break;
 				case 'post':

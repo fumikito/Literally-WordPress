@@ -188,7 +188,20 @@
 				<label>
 					<input type="checkbox" name="sb_payeasy" value="1" <?php if($this->softbank->payeasy) echo 'checked="checked"'; ?> />
 					<?php $this->e('Enables PayEasy'); ?> 
+				</label><br />
+				<label>
+					<input type="text" name="sb_blogname_kana" class="regular-text" value="<?php echo esc_html($this->softbank->blogname_kana); ?>" placeholder="ex. ワタシノブログ" />
+					<?php $this->e('Name Kana on Invoice'); ?>
+					<small><?php printf($this->_('(%d letters max)'), 48);?></small>
+				</label><br />
+				<label>
+					<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html($this->softbank->blogname); ?>" placeholder="ex. 私のブログ" />
+					<?php $this->e('Name on Invoice'); ?>
+					<small><?php printf($this->_('(%d letters max)'), 24);?></small>
 				</label>
+				<p class="description">
+					<?php $this->e('These values are required for PayEasy. Kana must be Zenkaku Kana.'); ?>
+				</p>
 			</td>
 		</tr>
 		<tr>
