@@ -545,10 +545,8 @@ EOS;
 				));
 				break;
 			case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
+			case LWP_Payment_Methods::SOFTBANK_PAYEASY:
 				$data = unserialize($transaction->misc);
-				$cvs = $lwp->softbank->get_verbose_name($data['cvs']);
-				$howto = $lwp->softbank->get_cvs_howtos($data['cvs']);
-				$methods = $lwp->softbank->get_cvs_howtos($data['cvs'], true);
 				$limit_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "$1-$2-$3 23:59:59", $data['bill_date']);
 				if($transaction->status == LWP_Payment_Status::START){
 					$left_days = floor((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
@@ -559,13 +557,26 @@ EOS;
 				}else{
 					$request_suffix = '';
 				}
-				$rows =  array_merge($rows, array(
-					array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix),
-					array($this->_('CVS'), '<i class="lwp-cvs-small-icon small-icon-'.$data['cvs'].'"></i>'.$cvs),
-					array($this->_('How to pay'), $howto)
-				));
-				for($i = 0, $l = count($methods); $i < $l; $i++){
-					$rows[] = array($methods[$i], $data['cvs_pay_data'.($i + 1)]);
+				$rows[] = array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix);
+				if($transaction->method == LWP_Payment_Methods::SOFTBANK_WEB_CVS){
+					$cvs = $lwp->softbank->get_verbose_name($data['cvs']);
+					$howto = $lwp->softbank->get_cvs_howtos($data['cvs']);
+					$methods = $lwp->softbank->get_cvs_howtos($data['cvs'], true);
+					$rows =  array_merge($rows, array(
+						array($this->_('CVS'), '<i class="lwp-cvs-small-icon small-icon-'.$data['cvs'].'"></i>'.$cvs),
+						array($this->_('How to pay'), $howto)
+					));
+					for($i = 0, $l = count($methods); $i < $l; $i++){
+						$rows[] = array($methods[$i], $data['cvs_pay_data'.($i + 1)]);
+					}
+				}else{
+					$cust_number = explode('-', $data['cust_number']);
+					$rows = array_merge($rows, array(
+						array($this->_('Invoice No.'), esc_html($data['invoice_no'])),
+						array('収納機関番号', esc_html($data['skno'])),
+						array('お客様番号', esc_html($cust_number[0])),
+						array('確認番号', esc_html($cust_number[1]))
+					));
 				}
 				break;
 		}

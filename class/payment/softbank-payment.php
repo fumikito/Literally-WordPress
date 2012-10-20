@@ -336,7 +336,7 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		$office = isset($creds['office']) && !empty($creds['office']) ? $creds['office'] : '';
 		//Merge XML
 		$xml_array['pay_method_info'] = array(
-			'issue_type' => 0,
+			'issue_type' => 2,
 			'last_name' => $creds['last_name'],
 			'first_name' => $creds['first_name'],
 			'last_name_kana' => $creds['last_name_kana'],
@@ -353,7 +353,6 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 			'terminal_value' => 'P',
 			'bill_info_kana' => $this->blogname_kana,
 			'bill_info' => $this->blogname,
-			'bill_date' => date_i18n('Ymd', $limit),
 		);
 		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
 		$xml_array['request_date'] = get_date_from_gmt($now, 'YmdHis');
@@ -630,6 +629,9 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @return string
 	 */
 	private function decrypt($string){
+		if(!$this->is_sandbox && function_exists('mcrypt_cbc')){
+			$string = mb_convert_encoding(trim(mcrypt_cbc(MCRYPT_3DES, $this->crypt_key, base64_decode($string), MCRYPT_DECRYPT, $this->iv)), 'utf-8', 'sjis-win');
+		}
 		return strval($string);
 	}
 	
