@@ -194,9 +194,9 @@ class LWP_Form extends Literally_WordPress_Common{
 							//Check if there is active transaction
 							$sql = <<<EOS
 								SELECT * FROM {$lwp->transaction}
-								WHERE user_id = %d AND book_id = %d AND status = %s AND DATE_ADD(registered, INTERVAL %d DAY) > NOW()
+								WHERE user_id = %d AND book_id = %d AND status = %s AND method = %s AND DATE_ADD(registered, INTERVAL %d DAY) > NOW()
 EOS;
-							$transaction = $wpdb->get_row($wpdb->prepare($sql, get_current_user_id(), $book_id, LWP_Payment_Status::START, $lwp->option['notification_limit']));
+							$transaction = $wpdb->get_row($wpdb->prepare($sql, get_current_user_id(), $book_id, LWP_Payment_Status::START, LWP_Payment_Methods::TRANSFER, $lwp->option['notification_limit']));
 							if(!$transaction){
 								//Register transaction with transfer
 								$data = array(
@@ -914,24 +914,22 @@ EOS;
 		}
 		//Get refund price
 		$refund_price = lwp_ticket_refund_price($transaction);
-		//Check if paypal refund is available
-		if($transaction->method == LWP_Payment_Methods::PAYPAL && !PayPal_Statics::is_refundable($transaction->updated)){
-			$message = apply_filters('lwp_event_paypal_outdated_refund', sprintf($this->_('Sorry, but paypal redunding is available only for 60 days. You made transaction at %1$s and it is %2$s today'), mysql2date(get_option('date_format'), $transaction->updated), date_i18n(get_option('date_format'))), $transaction, $refund_price);
-			$this->kill($message, 410);
-		}
 		//Now, let's start refund action
 		$status = false;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;
 		}else{
 			if($transaction->method == LWP_Payment_Methods::PAYPAL){
-				//Do paypal refunding. In case of refund 0, just change status
-				if(PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
+				if(!PayPal_Statics::is_refundable($transaction->updated)){
+					//PayPal refund is outdated. 60 days.
+					$status = LWP_Payment_Status::REFUND_REQUESTING;
+				}elseif(PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
+					//Do paypal refunding. In case of refund 0, just change status
 					$status = LWP_Payment_Status::REFUND;
 				}else{
 					$this->kill(sprintf($this->_('Sorry, but PayPal denies refunding. Please contact to %1$s administrator.'), get_bloginfo('name')), 500);
 				}
-			}elseif($transaction->method == LWP_Payment_Methods::TRANSFER){
+			}else{
 				$status = LWP_Payment_Status::REFUND_REQUESTING;
 			}
 		}
@@ -940,18 +938,21 @@ EOS;
 			$lwp->transaction,
 			array(
 				'status' => $status,
+				'refund' => $refund_price,
 				'updated' => gmdate('Y-m-d H:i:s')
 			),
 			array('ID' => $transaction->ID),
-			array('%s', '%s'),
+			array('%s', '%d', '%s'),
 			array('%d')
 		);
+		do_action('lwp_update_transaction', $transaction->ID);
 		//Show Form
 		$this->show_form('cancel-ticket-success', array(
 			'link' => get_permalink($event_id),
 			'event' => get_the_title($event_id),
-			'ticket' => get_the_title($transaction->book_id),
-			'transfer' => $transaction->method == LWP_Payment_Methods::TRANSFER
+			'message' => (false !== array_search($status , array(LWP_Payment_Status::REFUND)))
+					? sprintf($this->_('You have successfully canceled <strong>%1$s x %2$d</strong>.'), $this->get_item_name($transaction->book_id), $transaction->num)
+					: sprintf($this->_('Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please wait for our refund process finished.'), $this->get_item_name($transaction->book_id), $transaction->num)
 		));
 	}
 	

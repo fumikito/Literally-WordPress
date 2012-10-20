@@ -32,6 +32,7 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 	public function on_construct() {
 		add_action('admin_init', array($this, 'admin_init'));
 		add_action('init', array($this, 'init'));
+		add_action('lwp_update_transaction', array($this, 'on_transaction_update'));
 	}
 	
 	/**
@@ -58,6 +59,33 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 		}
 	}
 	
+	/**
+	 * Send message to Refund request
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 */
+	public function on_transaction_update($transaction_id){
+		global $wpdb, $lwp;
+		$status = $wpdb->get_var($wpdb->prepare("SELECT status FROM {$lwp->transaction} WHERE ID = %d", $transaction_id));
+		switch($status){
+			case LWP_Payment_Status::REFUND_REQUESTING:
+				$this->notify('accepted', $transaction_id);
+				break;
+			case LWP_Payment_Status::REFUND:
+				$this->notify('succeeded', $transaction_id);
+				break;
+		}
+	}
+	
+	/**
+	 * Send message to user
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param type $key
+	 * @param type $id
+	 * @return boolean
+	 */
 	public function notify($key, $id){
 		global $wpdb, $lwp;
 		$placeholders = $this->get_place_holders($key);
@@ -114,7 +142,7 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 		$headers = apply_filters('lwp_refund_message_header', "From: ".get_bloginfo('name')." <".get_option('admin_email').">\r\n", $key);
 		switch($key){
 			case 'succeeded':
-				$subject = $this->_('Refund is succeeded');
+				$subject = $this->_('Refund is finished');
 				break;
 			case 'accepted':
 				$subject = $this->_('Refund is accepted');
@@ -127,6 +155,10 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 		return wp_mail($user->user_email, $subject, $message, $headers);
 	}
 	
+	/**
+	 * Enqueue scripts
+	 * @global Literally_WordPress $lwp
+	 */
 	public function admin_enqueue_scripts() {
 		global $lwp;
 		if(isset($_GET['page']) && $_GET['page'] == 'lwp-refund'){

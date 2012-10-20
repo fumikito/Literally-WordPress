@@ -48,7 +48,7 @@ $list_table->display();
 		<tbody>
 			<tr>
 				<th valign="top">
-					<label for="refund_succeeded"><?php $this->e('Refund is succeeded'); ?></label>
+					<label for="refund_succeeded"><?php $this->e('Refund is finished'); ?></label>
 				</th>
 				<td>
 					<textarea rows="10" style="width: 90%;" name="refund_succeeded" id="refund_succeeded"><?php echo esc_html($this->refund_manager->message['succeeded']); ?></textarea>

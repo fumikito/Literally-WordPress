@@ -92,9 +92,6 @@ if($is_detail):
 			<th scope="row" valign="top"><?php $this->e('Purchase Method'); ?></th>
 			<td>
 				<?php $this->e($transaction->method); ?>
-				<?php if($transaction->method == LWP_Payment_Methods::PAYPAL): ?>
-				<br /><small><?php printf($this->_('Transaction ID: %s'), $transaction->transaction_id); ?></small>
-				<?php endif; ?>
 			</td>
 			<td>---</td>
 		</tr>
@@ -109,6 +106,37 @@ if($is_detail):
 			</td>
 			<td>---</td>
 		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Transaction ID'); ?></th>
+			<td>
+				<?php echo esc_html($transaction->transaction_id); ?>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php break; case LWP_Payment_Methods::APPLE: case LWP_Payment_Methods::ANDROID: ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Transaction ID'); ?></th>
+			<td>
+				<?php echo esc_html($transaction->transaction_key); ?>
+			</td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('UUID'); ?></th>
+			<td>
+				<?php echo esc_html($transaction->transaction_id); ?>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php if($transaction->method == LWP_Payment_Methods::ANDROID): ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Notification ID'); ?></th>
+			<td>
+				<?php echo esc_html($transaction->payer_mail); ?>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php endif; ?>
 		<?php break; case LWP_Payment_Methods::SOFTBANK_CC: case LWP_Payment_Methods::SOFTBANK_WEB_CVS: case LWP_Payment_Methods::SOFTBANK_PAYEASY: $info = unserialize($transaction->misc); ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('SPS Transaction ID'); ?></th>
@@ -143,6 +171,14 @@ if($is_detail):
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Notification Code'); ?></th>
 			<td><?php echo $transaction->transaction_key; ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Payment Limit'); ?></th>
+			<td>
+				<?php echo $this->notifier->get_limit_date($transaction->registered, get_option('date_format').' H:i:s'); ?>&nbsp;
+				<small>(<?php printf($this->_('%d days left'), $this->notifier->get_left_days($transaction->registered)); ?>)</small>
+			</td>
 			<td>---</td>
 		</tr>
 		<?php break; endswitch; ?>

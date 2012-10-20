@@ -1,6 +1,6 @@
 <?php /* @var $this LWP_Form */ ?>
 <p class="message success">
-	<?php printf($this->_('You have successfully canceled <strong>%1$s</strong> of %2$s.'), $ticket, $event); ?><br />
+	<?php echo $message; ?><br />
 	<?php printf($this->_("You will be redirected to <strong>%s</strong>"), $event);?><br />
 </p>
 <p class="indicator">
