@@ -192,6 +192,12 @@ class Literally_WordPress{
 	 */
 	public $softbank = null;
 	
+	/**
+	 * GMO Payment Gateway
+	 * @var LWP_GMO
+	 */
+	public $gmo = null;
+	
 	//--------------------------------------------
 	//
 	// 初期化処理
@@ -245,6 +251,10 @@ class Literally_WordPress{
 				'sb_prefix' => '',
 				'sb_crypt_key' => '',
 				'sb_iv' => '',
+				'gmo_shop_id' => '',
+				'gmo_shop_pass' => '',
+				'gmo_sandbox' => true,
+				'gmo_creditcard' => array(),
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -305,6 +315,8 @@ class Literally_WordPress{
 		$this->refund_manager = new LWP_Reufund_Manager($this->option);
 		//Initialize Softbank
 		$this->softbank = new LWP_SB_Payment($this->option);
+		//Initialize GMO
+		$this->gmo = new LWP_GMO($this->option);
 		//Register hooks
 		$this->register_hooks();
 	}
@@ -533,6 +545,15 @@ class Literally_WordPress{
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
 		//In case management or campaign, load datepicker.
+		if($this->is_admin('setting')){
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script(
+				"lwp-setting",
+				$this->url."assets/js/setting-helper.js",
+				array("jquery-ui-tabs"),
+				$this->version
+			);
+		}
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
 			wp_enqueue_style('jquery-ui-datepicker');
@@ -742,7 +763,11 @@ class Literally_WordPress{
 						'sb_crypt_key' => (string)$_REQUEST['sb_crypt_key'],
 						'sb_iv' => (string)$_REQUEST['sb_iv'],
 						'sb_blogname' => (string)$_REQUEST['sb_blogname'],
-						'sb_blogname_kana' => (string)$_REQUEST['sb_blogname_kana']
+						'sb_blogname_kana' => (string)$_REQUEST['sb_blogname_kana'],
+						'gmo_shop_id' => (string)$_REQUEST['gmo_shop_id'],
+						'gmo_shop_pass' => (string)$_REQUEST['gmo_shop_pass'],
+						'gmo_sandbox' => (boolean)(isset($_REQUEST['gmo_sandbox']) && $_REQUEST['gmo_sandbox']),
+						'gmo_creditcard' => (isset($_REQUEST['gmo_creditcard']) && !empty($_REQUEST['gmo_creditcard'])) ? (array)$_REQUEST['gmo_creditcard'] : array()
 					);
 					break;
 				case 'post':
@@ -1259,6 +1284,19 @@ EOS;
 			echo json_encode($date_array);
 			exit;
 		}
+	}
+	
+	/**
+	 * Returns 
+	 * @return boolean
+	 */
+	public function is_paypal_enbaled(){
+		return (
+			!empty($this->option['user_name']) &&
+			!empty($this->option['password']) &&
+			!empty($this->option['signature']) &&
+			!empty($this->option['token'])
+		);
 	}
 	
 	/**

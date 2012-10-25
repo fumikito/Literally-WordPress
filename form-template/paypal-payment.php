@@ -39,6 +39,15 @@
 		case 'sb-payeasy':
 			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_PAYEASY);
 			break;
+		case 'gmo-cc':
+			$method_name = $this->_(LWP_Payment_Methods::GMO_CC);
+			break;
+		case 'gmo-cvs':
+			$method_name = $this->_(LWP_Payment_Methods::GMO_WEB_CVS);
+			break;
+		case 'gmo-payeasy':
+			$method_name = $this->_(LWP_Payment_Methods::GMO_PAYEASY);
+			break;
 	}
 	printf($this->_("Please enter payment information for %s"), $method_name);
 ?></p>
@@ -56,25 +65,35 @@
 	<input type="hidden" name="lwp-method" value="<?php echo esc_attr($method); ?>" />
 	<table class="form-table">
 		<tbody>
-			<?php switch($method): case 'sb-cc': ?>
+			<?php switch($method): case 'sb-cc': case 'gmo-cc': ?>
 			<tr>
 				<th>
-					<?php wp_nonce_field('lwp_payment_sb_cc'); ?>
-					<label for="cc_number"><?php $this->e('Card No.'); ?></label>
+					<?php wp_nonce_field('lwp_payment_'.($method == 'gmo-cc' ? 'gmo' : 'sb').'_cc'); ?>
+					<label for="cc_number">
+						<?php $this->e('Card No.'); ?>
+						<span class="required">*</span>
+					</label>
 				</th>
 				<td>
 					<input type="text" class="middle-text" name="cc_number" id="cc_number" value="<?php if(isset($vars['cc_number'])) echo esc_attr($vars['cc_number']); ?>" placeholder="ex. 0123456789123" />
-					<span class="required">*</span>
 					<p class="description">
 						<?php $this->e('This informatin will <strong>never</strong> be saved on this site. '); ?>
 						<?php $this->e("You can pay with Credit Cards below.");?><br />
-						<?php foreach($lwp->softbank->get_available_cards() as $card): ?>
+						<?php
+							$cards = ($method == 'gmo-cc') ? $lwp->gmo->get_available_cards() : $lwp->softbank->get_available_cards();
+							foreach($cards as $card):
+						?>
 							<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
 						<?php endforeach; ?>
 				</td>
 			</tr>
 			<tr>
-				<th><label for="cc_expiration"><?php $this->e('Expiration'); ?></label></th>
+				<th>
+					<label for="cc_expiration">
+						<?php $this->e('Expiration'); ?>
+						<span class="required">*</span>
+					</label>
+				</th>
 				<td>
 					<select name="cc_month" id="cc_month">
 						<?php for($i = 0; $i < 12; $i++): ?>
@@ -96,14 +115,17 @@
 					<span class="description">
 						<?php $this->e('(Month / Year)'); ?>
 					</span>
-					<span class="required">*</span>
 				</td>
 			</tr>
 			<tr>
-				<th><label for="cc_sec"><?php $this->e('Security Code'); ?></label></th>
+				<th>
+					<label for="cc_sec">
+						<?php $this->e('Security Code'); ?>
+						<span class="required">*</span>
+					</label>
+				</th>
 				<td>
 					<input type="text" name="cc_sec" class="small-text" id="cc_sec" value="<?php if(isset($vars['cc_sec'])) echo esc_attr($vars['cc_sec']); ?>" placeholder="ex. 123" />
-					<span class="required">*</span>
 					<p class="description">
 						<?php $this->e('Security code is 3 or 4 digits written near the card number on the credit card.'); ?>
 					</p>

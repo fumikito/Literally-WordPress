@@ -1,5 +1,5 @@
 <?php
-class LWP_SB_Payment extends Literally_WordPress_Common {
+class LWP_SB_Payment extends LWP_Japanese_Payment {
 	
 	/**
 	 * Endpoint
@@ -20,68 +20,83 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	const PAYEASY_REQUEST_CODE = 'ST01-00101-703';
 	
 	/**
-	 * creditcard list
-	 * @var array
+	 * Initial Vector for Crypt
+	 * @var string
 	 */
-	private $_creditcard = array(
-		'visa' => false,
-		'master' => false,
-		'jcb' => false,
-		'amex' => false,
-		'diners' => false
-	);
-	
-	/**
-	 * CVS list
-	 * @var array 
-	 */
-	private $_webcvs = array(
-		'seven-eleven' => false,
-		'lawson' => false,
-		'circle-k' => false,
-		'sunkus' => false,
-		'ministop' => false,
-		'familymart' => false,
-		'daily-yamazaki' => false,
-		'seicomart' => false
-	);
-	
-	public $payeasy = false;
-	
-	public $is_sandbox = true;
-	
 	public $iv = '';
 	
+	/**
+	 * Crypt password
+	 * @var type 
+	 */
 	public $crypt_key = '';
 	
+	/**
+	 * Prefix for transaction
+	 * @var strign
+	 */
 	public $prefix = '';
 	
+	/**
+	 * Marchant ID
+	 * @var string
+	 */
 	private $_marchant_id = '';
 	
+	/**
+	 * Service ID of this site
+	 * @var type 
+	 */
 	private $_service_id = '';
 	
+	/**
+	 * Hash key to create SHA1 Hash
+	 * @var type 
+	 */
 	private $_hash_key = '';
 	
+	/**
+	 * Sandbox Marchant ID
+	 * @var string
+	 */
 	private $_sandbox_marchant_id = '62022';
 	
+	/**
+	 * Sandbox Service ID
+	 * @var string
+	 */
 	private $_sandbox_service_id = '001';
 	
+	/**
+	 * Hash key for Sandbox
+	 * @var string
+	 */
 	private $_sandbox_hash_key = 'd7b6640cc5d286cbceab99b53bf74870cf6bce9c';
 	
-	private $base64_key = array(
-		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name'
-	);
-	
+	/**
+	 * Blog name to display on PayEasy
+	 * @var string
+	 */
 	public $blogname = '';
 	
+	/**
+	 * Blog description for display on PayEasy
+	 */
 	public $blogname_kana = '';
 	
 	/**
-	 * Last error message
-	 * @var string
+	 * Tag to be base64 encoded.
+	 * @var array
 	 */
-	public $last_error = '';
+	private $tag_to_be_base64 = array(
+		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
+		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
+	);
 	
+	/**
+	 * Setup Options
+	 * @param array $option
+	 */
 	public function set_option($option = array()) {
 		$option = shortcode_atts(array(
 			'sb_creditcard' => array(),
@@ -122,41 +137,8 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @return string
 	 */
 	public function get_default_payment_info($user_id, $context = 'sb-cc'){
-		$user_info = array();
-		foreach(array('last_name','first_name','last_name_kana','first_name_kana',
-			'zipcode','prefecture','city','street','office','tel') as $key){
-			$user_info[$key] = get_user_meta($user_id, $key, true);
-		}
+		$user_info = $this->get_user_default($user_id);
 		return apply_filters('lwp_sb_cvs_default', $user_info, $context, $user_id);
-	}
-	
-	/**
-	 * Save payment information on success
-	 * @param int $user_id
-	 * @param array $post_data
-	 * @param string $context
-	 */
-	public function save_payment_info($user_id, $post_data, $context = 'sb-cc'){
-		$func = apply_filters('lwp_save_payment_info_func', array($this, '_save_payment_information'), $context);
-		if(is_callable($func)){
-			call_user_func_array($func, array($user_id, $post_data, $context));
-		}
-	}
-	
-	/**
-	 * Default function to save user payment information.
-	 * @param int $user_id
-	 * @param array $post_data
-	 * @param string $context
-	 */
-	public function _save_payment_information($user_id, $post_data, $context = 'sb-cc'){
-		$keys = array('last_name','first_name','last_name_kana','first_name_kana',
-			'zipcode','prefecture','city','street','office','tel');
-		foreach($keys as $key){
-			if(isset($post_data[$key])){
-				update_user_meta($user_id, $key, $post_data[$key]);
-			}
-		}
 	}
 	
 	/**
@@ -390,6 +372,16 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 				return 0;
 			}
 		}
+	}
+	
+	/**
+	 * Get Post data on Endpoint
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $post_data
+	 */
+	public function parse_request($post_data){
+		global $lwp, $wpdb;
 	}
 	
 	/**
@@ -672,104 +664,41 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 		return $this->is_sandbox && !$force ? $this->_sandbox_hash_key : $this->_hash_key;
 	}
 	
-	public function is_enabled() {
-		return (boolean)($this->is_cc_enabled() || $this->is_cvs_enabled() || $this->payeasy);
-	}
-	
 	/**
-	 * Returns if CC is enabled.
-	 * @return boolean
-	 */
-	public function is_cc_enabled(){
-		$cc = $this->get_available_cards();
-		return !empty($cc);
-	}
-	
-	/**
-	 * Returns if CVS is enabled
-	 * @return boolean
-	 */
-	public function is_cvs_enabled(){
-		$cvs = $this->get_available_cvs();
-		return !empty($cvs);
-	}
-	
-	/**
-	 * Returns available cards
-	 * @param boolean $all
-	 * @return array
-	 */
-	public function get_available_cards($all = false){
-		$cards = array();
-		foreach($this->_creditcard as $card => $bool){
-			if($bool || $all){
-				$cards[] = $card;
-			}
-		}
-		return $cards;
-	}
-	
-	/**
-	 * Returns available cvs
-	 * @param boolean $all
-	 * @return array
-	 */
-	public function get_available_cvs($all = false){
-		$cvss = array();
-		foreach($this->_webcvs as $cvs => $bool){
-			if($bool || $all){
-				$cvss[] = $cvs;
-			}
-		}
-		return $cvss;
-	}
-	
-	/**
-	 * Returns verbose string of sevices
-	 * @param string $slug
+	 * 
+	 * @param type $slug
+	 * @param type $code
 	 * @return string
 	 */
 	public function get_verbose_name($slug, $code = false){
-		switch($slug){
-			case 'visa':
-				return 'Visa';
-				break;
-			case 'master':
-				return 'Master';
-				break;
-			case 'jcb':
-				return 'JCB';
-				break;
-			case 'amex':
-				return 'American Express';
-				break;
-			case 'diners':
-				return 'Diner\'s';
-				break;
-			case 'seven-eleven':
-				return $code ? '001' : 'セブンイレブン';
-				break;
-			case 'lawson':
-				return $code ? '002' : 'ローソン';
-				break;
-			case 'circle-k':
-				return $code ? '017' : 'サークルK';
-				break;
-			case 'sunkus':
-				return $code ? '017' : 'サンクス';
-				break;
-			case 'ministop':
-				return $code ? '005' : 'ミニストップ';
-				break;
-			case 'familymart':
-				return $code ? '016' : 'ファミリーマート';
-				break;
-			case 'daily-yamazaki':
-				return $code ? '010' : 'デイリーヤマザキ';
-				break;
-			case 'seicomart':
-				return $code ? '018' : 'セイコーマート';
-				break;
+		if(!$code){
+			return parent::get_verbose_name($slug);
+		}else{
+			switch($slug){
+				case 'seven-eleven':
+					return '001';
+					break;
+				case 'lawson':
+					return '002';
+					break;
+				case 'circle-k':
+					return '017';
+					break;
+				case 'sunkus':
+					return '017';
+					break;
+				case 'ministop':
+					return '005';
+					break;
+				case 'familymart':
+					return '016';
+					break;
+				case 'daily-yamazaki':
+					return '010';
+					break;
+				case 'seicomart':
+					return '018';
+			}
 		}
 	}
 	
@@ -875,41 +804,31 @@ class LWP_SB_Payment extends Literally_WordPress_Common {
 	 * @return string|array
 	 */
 	public function get_cvs_howtos($cvs, $requirements = false){
-		switch($cvs){
-			case 'seven-eleven':
-				return !$requirements ? '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込みお支払いを行います。'
-				                     : array('払込票番号');
-				break;
-			case 'lawson':
-				return !$requirements ? '店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。'
-				                     : array('受付番号', '確認番号');
-				break;
-			case 'circle-k':
-			case 'sunkus':
-			case 'ministop':
-			case 'daily-yamazaki':
-				return !$requirements ? 'レジのタッチパネルにて決済番号を入力し、お支払いを行います。'
-				                     : array('オンライン決済番号');
-				break;
-			case 'familymart':
-				return !$requirements ? '店頭のFamiポート（またはファミネット）端末にて、決済を選択後「企業コード」と「注文番号」を入力してください。その後、端末から出力された「申込券／収納票」をレジに持参してお支払いを行います。'
-				                     : array('企業コード', '注文番号');
-				break;
-			case 'seicomart':
-				return !$requirements ? '店頭のクラブステーション端末にて、決済を選択後「受付番号」「確認番号」を入力してください。その後、端末から出力された申込券をレジに持参してお支払いを行います。'
-				                     : array('受付番号', '確認番号');
-				break;
-			default:
-				return !$requirements ? '' : array();
+		if(!$requirements){
+			return parent::get_cvs_howtos($cvs);
+		}else{
+			switch($cvs){
+				case 'seven-eleven':
+					return array('払込票番号');
+					break;
+				case 'lawson':
+					return array('受付番号', '確認番号');
+					break;
+				case 'circle-k':
+				case 'sunkus':
+				case 'ministop':
+				case 'daily-yamazaki':
+					return  array('オンライン決済番号');
+					break;
+				case 'familymart':
+					return  array('企業コード', '注文番号');
+					break;
+				case 'seicomart':
+					return  array('受付番号', '確認番号');
+					break;
+				default:
+					return array();
+			}
 		}
 	}
-	
-	/**
-	 * Tag to be base64 encoded.
-	 * @var array
-	 */
-	private $tag_to_be_base64 = array(
-		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
-		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
-	);
 }

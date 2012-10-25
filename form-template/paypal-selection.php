@@ -38,6 +38,7 @@
 	<?php wp_nonce_field('lwp_buynow', '_wpnonce', false); ?>
 	<table class="form-table lwp-method-table">
 		<tbody>
+			<?php if($lwp->is_paypal_enbaled()): ?>
 			<tr>
 				<th class="lwp-column-method">
 					<i class="lwp-cc-icon icon-paypal"></i><br />
@@ -52,18 +53,22 @@
 					</small>
 				</td>
 			</tr>
-			<?php if($lwp->softbank->is_cc_enabled()): ?>
+			<?php endif; ?>
+			<?php if($lwp->softbank->is_cc_enabled() || $lwp->gmo->is_cc_enabled()): ?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-creditcard"></i><br />
-						<input type="radio" name="lwp-method" value="sb-cc" />
+						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->is_cc_enabled() ? 'gmo-cc' : 'sb-cc'; ?>" />
 						<?php $this->e("Credit Card"); ?>
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
 					<?php $this->e("You can pay with Credit Cards below.");?><br />
-					<?php foreach($lwp->softbank->get_available_cards() as $card): ?>
+					<?php
+						$cards = $lwp->gmo->is_cc_enabled() ? $lwp->gmo->get_available_cards() : $lwp->softbank->get_available_cards();
+						foreach($cards as $card):
+					?>
 						<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
 					<?php endforeach; ?>
 					<br />
@@ -73,7 +78,7 @@
 					</small>
 				</td>
 			</tr>
-			<?php else: ?>
+			<?php elseif($lwp->is_paypal_enbaled()): ?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>

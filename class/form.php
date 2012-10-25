@@ -103,7 +103,7 @@ class LWP_Form extends Literally_WordPress_Common{
 		global $wpdb, $lwp;
 		//First of all, user must be logged in.
 		if(!is_user_logged_in()){
-			auth_redirect ($_SERVER["REQUEST_URI"]);
+			auth_redirect();
 			exit;
 		}
 		//If it's sandbox, just show form
@@ -305,6 +305,9 @@ EOS;
 					case 'sb-cc':
 					case 'sb-cvs':
 					case 'sb-payeasy':
+					case 'gmo-cc':
+					case 'gmo-cvs':
+					case 'gmo-payeasy':
 						header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
 						exit();
 						break;
@@ -332,7 +335,10 @@ EOS;
 		$allowed_methods = array(
 			'sb-cc' => $lwp->softbank->is_cc_enabled(),
 			'sb-cvs' => $lwp->softbank->is_cvs_enabled(),
-			'sb-payeasy' => $lwp->softbank->payeasy
+			'sb-payeasy' => $lwp->softbank->payeasy,
+			'gmo-cc' => $lwp->gmo->is_cc_enabled(),
+			'gmo-cvs' => $lwp->gmo->is_cvs_enabled(),
+			'gmo-payeasy' => $lwp->gmo->payeasy,
 		);
 		if(isset($_REQUEST['lwp-method'])){
 			$payment_method = $_REQUEST['lwp-method'];
@@ -381,108 +387,132 @@ EOS;
 		//Do transaction
 		if(isset($_REQUEST['_wpnonce'])){
 			$sb_cvs = $sb_payeasy = false;
-			if(wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_sb_cc')){
-				//Softbank Credit card
-				$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
-				$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
-				$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
-				$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
-				//Validate
-				if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
-					$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
-				}
-				$this_year = date('Y');
-				if($cc_year < $this_year || ($cc_year == $this_year && $cc_month < date('m'))){
-					$error[] = $this->_('Credit card is expired.');
-				}
-				if(!preg_match("/^[0-9]{3,4}$/", $cc_sec)){
-					$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
-				}
-				//All Green Make request
-				if(empty($error) && ($transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month))){
-					do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
-					header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
-					die();
-				}else{
-					$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
-				}
-				if(!empty($error)){
-					$vars = compact('cc_number', 'cc_month', 'cc_year', 'cc_sec');
-				}
-			}elseif(
-				($sb_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_cvs'))
-					||
-				($sb_payeasy = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_payeasy'))
-			){
-				//Softbank Payeasy or CVS
-				//Let's validate
-				if($sb_cvs){
-					if(!isset($_REQUEST['sb-cvs-name']) || false === array_search($_REQUEST['sb-cvs-name'], $lwp->softbank->get_available_cvs())){
-						$error[] = $this->_('CVS is not specified. please select one.');
-					}else{
-						$vars['cvs'] = $_REQUEST['sb-cvs-name'];
-					}
-				}
-				//shold be specified format
-				$zip = $this->convert_numeric($_REQUEST['zipcode']);
-				if(!preg_match("/^[0-9]{7}$/", $zip)){
-					$error[] = $this->_('Zip code is required and must be 7 digits.');
-				}
-				$tel = $this->convert_numeric($_REQUEST['tel']);
-				if(!preg_match("/^[0-9]{9,11}$/", $tel)){
-					$error[] = $this->_('Tel number is required and must be 9 - 11 digits.');
-				}
-				//not empty
-				foreach(array(
-					'last_name' => $this->_('Last Name'),
-					'first_name' => $this->_('First Name'),
-					'prefecture' => $this->_('Prefecture'),
-					'city' => $this->_('City'),
-					'street' => $this->_('Street')
-				) as $name => $value){
-					if(empty($_REQUEST[$name])){
-						$error[] = sprintf('%s is empty.', $value);
-					}
-				}
-				//must be kana
-				$last_name_kana = $this->convert_zenkaka_kana($_REQUEST['last_name_kana']);
-				if(empty($last_name_kana)){
-					$error[] = sprintf('%s must be zenkaku kana.', $this->_('Last Name Kana'));
-				}
-				$first_name_kana = $this->convert_zenkaka_kana($_REQUEST['first_name_kana']);
-				if(empty($first_name_kana)){
-					$error[] = sprintf('%s must be zenkaku kana.', $this->_('First Name Kana'));
-				}
-				//Set entered information
-				foreach(array('last_name', 'first_name', 'prefecture', 'city', 'street', 'office') as $key){
-					$vars[$key] = $_REQUEST[$key];
-				}
-				if($sb_cvs){
-					$vars['cvs'] = $_REQUEST['sb-cvs-name'];
-				}
-				$vars['tel'] = $tel;
-				$vars['zipcode'] = $zip;
-				$vars['last_name_kana'] = $last_name_kana;
-				$vars['first_name_kana'] = $first_name_kana;
-				//Make transaction
-				if(empty($error)){
-					//Try to save userdata
-					if($sb_cvs){
-						$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
-					}elseif($sb_payeasy){
-						$transaction_id = $lwp->softbank->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
-					}
-					if(($transaction_id)){
-						if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
-							$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
+			switch($payment_method){
+				case 'sb-cc':
+				case 'gmo-cc':
+					if(
+						($is_sb_cc = wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_sb_cc'))
+							||
+						($is_gmo_cc = wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_gmo_cc'))
+					){
+						//Credit card
+						$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
+						$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
+						$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
+						$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
+						//Validate
+						if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
+							$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
 						}
-						//Send mail
-						header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
-						die();
-					}else{
-						$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
+						$this_year = date('Y');
+						if($cc_year < $this_year || ($cc_year == $this_year && $cc_month < date('m'))){
+							$error[] = $this->_('Credit card is expired.');
+						}
+						if(!preg_match("/^[0-9]{3,4}$/", $cc_sec)){
+							$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
+						}
+						//All Green Make request
+						if(empty($error)){
+							$transaction_id = 0;
+							$error_msg = '';
+							if($is_sb_cc){
+								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
+								$error_msg = $lwp->softbank->last_error;
+							}elseif($is_gmo_cc){
+								var_dump($cc_month, $cc_year, $cc_number, $cc_sec);
+								die();
+							}
+							if($transaction_id){
+								do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
+								header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
+								die();
+							}else{
+								$error[] = $this->_('Failed to make transaction.').':'.$error_msg;
+							}
+						}
+						if(!empty($error)){
+							$vars = compact('cc_number', 'cc_month', 'cc_year', 'cc_sec');
+						}
 					}
-				}
+					break;
+				case 'sb-cvs':
+				case 'sb-payeasy':
+					if(
+						($sb_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_cvs'))
+							||
+						($sb_payeasy = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_payeasy'))
+					){
+						//Softbank Payeasy or CVS
+						//Let's validate
+						if($sb_cvs){
+							if(!isset($_REQUEST['sb-cvs-name']) || false === array_search($_REQUEST['sb-cvs-name'], $lwp->softbank->get_available_cvs())){
+								$error[] = $this->_('CVS is not specified. please select one.');
+							}else{
+								$vars['cvs'] = $_REQUEST['sb-cvs-name'];
+							}
+						}
+						//shold be specified format
+						$zip = $this->convert_numeric($_REQUEST['zipcode']);
+						if(!preg_match("/^[0-9]{7}$/", $zip)){
+							$error[] = $this->_('Zip code is required and must be 7 digits.');
+						}
+						$tel = $this->convert_numeric($_REQUEST['tel']);
+						if(!preg_match("/^[0-9]{9,11}$/", $tel)){
+							$error[] = $this->_('Tel number is required and must be 9 - 11 digits.');
+						}
+						//not empty
+						foreach(array(
+							'last_name' => $this->_('Last Name'),
+							'first_name' => $this->_('First Name'),
+							'prefecture' => $this->_('Prefecture'),
+							'city' => $this->_('City'),
+							'street' => $this->_('Street')
+						) as $name => $value){
+							if(empty($_REQUEST[$name])){
+								$error[] = sprintf('%s is empty.', $value);
+							}
+						}
+						//must be kana
+						$last_name_kana = $this->convert_zenkaka_kana($_REQUEST['last_name_kana']);
+						if(empty($last_name_kana)){
+							$error[] = sprintf('%s must be zenkaku kana.', $this->_('Last Name Kana'));
+						}
+						$first_name_kana = $this->convert_zenkaka_kana($_REQUEST['first_name_kana']);
+						if(empty($first_name_kana)){
+							$error[] = sprintf('%s must be zenkaku kana.', $this->_('First Name Kana'));
+						}
+						//Set entered information
+						foreach(array('last_name', 'first_name', 'prefecture', 'city', 'street', 'office') as $key){
+							$vars[$key] = $_REQUEST[$key];
+						}
+						if($sb_cvs){
+							$vars['cvs'] = $_REQUEST['sb-cvs-name'];
+						}
+						$vars['tel'] = $tel;
+						$vars['zipcode'] = $zip;
+						$vars['last_name_kana'] = $last_name_kana;
+						$vars['first_name_kana'] = $first_name_kana;
+						//Make transaction
+						if(empty($error)){
+							//Try to save userdata
+							if($sb_cvs){
+								$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
+							}elseif($sb_payeasy){
+								$transaction_id = $lwp->softbank->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
+							}
+							if(($transaction_id)){
+								if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
+									$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
+								}
+								//Send mail
+								header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
+								die();
+							}else{
+								$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
+							}
+						}
+					}
+					break;
 			}
 		}
 		$this->show_form('payment', array(
@@ -1344,6 +1374,11 @@ EOS;
 		));
 	}
 	
+	/**
+	 * Register refund information
+	 * @global Literally_WordPress $lwp
+	 * @param type $is_sandbox
+	 */
 	private function handle_refund_account($is_sandbox = false){
 		global $lwp;
 		//Auth redirect
@@ -1390,6 +1425,17 @@ EOS;
 			'account' => $account,
 			'back' => lwp_history_url()
 		));
+	}
+	
+	/**
+	 * Parse XML Data from Softbank Payment
+	 * @global Literally_WordPress $lwp
+	 */
+	private function handle_sb_payment(){
+		global $lwp;
+		$xml_data = file_get_contents('php://input');
+		$lwp->softbank->parse_request($xml_data);
+		die();
 	}
 	
 	/**

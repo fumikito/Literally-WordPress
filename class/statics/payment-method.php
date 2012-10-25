@@ -37,6 +37,21 @@ class LWP_Payment_Methods {
 	const SOFTBANK_WEB_CVS = 'SOFTBANK_WEB_CVS';
 	
 	/**
+	 * Name of payment method for GMO Payment Gateway's credit card
+	 */
+	const GMO_CC = 'GMO_CC';
+	
+	/**
+	 * Name of payment method for Softbank Payment's PayEasy
+	 */
+	const GMO_PAYEASY = 'GMO_PAYEASY';
+	
+	/**
+	 * Name of payment method for Softbank Payment's Web CVS
+	 */
+	const GMO_WEB_CVS = 'GMO_WEB_CVS';
+	
+	/**
 	 * Name of payment method for free campaign.
 	 */
 	const CAMPAIGN = 'CAMPAIGN';
@@ -65,6 +80,10 @@ class LWP_Payment_Methods {
 			self::TRANSFER,
 			self::APPLE,
 			self::ANDROID,
+			self::SOFTBANK_CC,
+			self::SOFTBANK_PAYEASY,
+			self::SOFTBANK_WEB_CVS,
+			self::GMO_CC,
 		);
 		return $methods;
 	}
@@ -85,5 +104,8 @@ class LWP_Payment_Methods {
 		$lwp->_('SOFTBANK_CC');
 		$lwp->_('SOFTBANK_PAYEASY');
 		$lwp->_('SOFTBANK_WEB_CVS');
+		$lwp->_('GMO_CC');
+		$lwp->_('GMO_PAYEASY');
+		$lwp->_('GMO_WEB_CVS');
 	}
 }
