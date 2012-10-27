@@ -137,6 +137,23 @@ if($is_detail):
 			<td>---</td>
 		</tr>
 		<?php endif; ?>
+		<?php break; case LWP_Payment_Methods::GMO_CC:  ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Transaction ID'); ?></th>
+			<td><?php echo esc_html($transaction->transaction_id); ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Order ID'); ?></th>
+			<td><?php echo esc_html($transaction->transaction_key); ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Approved No.'); ?></th>
+			<td><?php echo esc_html($transaction->payer_mail); ?></td>
+			<td>---</td>
+		</tr>
+		
 		<?php break; case LWP_Payment_Methods::SOFTBANK_CC: case LWP_Payment_Methods::SOFTBANK_WEB_CVS: case LWP_Payment_Methods::SOFTBANK_PAYEASY: $info = unserialize($transaction->misc); ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('SPS Transaction ID'); ?></th>
