@@ -419,8 +419,8 @@ EOS;
 								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
 								$error_msg = $lwp->softbank->last_error;
 							}elseif($is_gmo_cc){
-								var_dump($cc_month, $cc_year, $cc_number, $cc_sec);
-								die();
+								$transaction_id = $lwp->gmo->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
+								$error_msg = $lwp->gmo->last_error;
 							}
 							if($transaction_id){
 								do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));

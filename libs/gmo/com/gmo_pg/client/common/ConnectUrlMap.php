@@ -49,13 +49,23 @@ class ConnectUrlMap {
 	 * 初期化
 	 * 
 	 * <p>conf/connectors.propertiesを読み込み、$urlMapプロパティに格納します。</p>
+	 * 
+	 * @global Literally_WordPress $lwp
 	 */
 	function init() {
+		global $lwp;
 	    // include_pathを区切り文字で分割
         // ※get_include_path()はPHP4.3.0以降で動作します。
         $pathArray = split(PATH_SEPARATOR, get_include_path());
-
-        $prop_path = "conf/connector.properties";
+		
+		// サンドボックスか否かによって読み込む設定ファイルを変更
+		if($lwp->gmo->is_sandbox){
+			$prop_path = "conf/test_connector.properties";
+		}else{
+			$prop_path = "conf/run_connector.properties";
+		}
+        
+		
         $prop = null;
 
         foreach ($pathArray as $value) {
