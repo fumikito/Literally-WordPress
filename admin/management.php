@@ -154,6 +154,7 @@ if($is_detail):
 			<td>---</td>
 		</tr>
 		
+				&nbsp;<small>(<?php echo $this->softbank->get_cvs_code($info['cvs']); ?>)</small>
 		<?php break; case LWP_Payment_Methods::SOFTBANK_CC: case LWP_Payment_Methods::SOFTBANK_WEB_CVS: case LWP_Payment_Methods::SOFTBANK_PAYEASY: $info = unserialize($transaction->misc); ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('SPS Transaction ID'); ?></th>

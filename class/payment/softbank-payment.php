@@ -85,6 +85,21 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	public $blogname_kana = '';
 	
 	/**
+	 * CVS code
+	 * @var array 
+	 */
+	protected $cvs_codes = array(
+		'seven-eleven' => '001',
+		'lawson' => '002',
+		'circle-k' => '017',
+		'sunkus' => '017',
+		'ministop' => '005',
+		'familymart' => '016',
+		'daily-yamazaki' => '010',
+		'seicomart' => '018'
+	);
+	
+	/**
 	 * Tag to be base64 encoded.
 	 * @var array
 	 */
@@ -128,17 +143,6 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		$this->crypt_key = (string)$option['sb_crypt_key'];
 		$this->blogname = (string)mb_convert_kana($option['sb_blogname'], 'ASKV', 'utf-8');
 		$this->blogname_kana = $this->convert_zenkaka_kana($option['sb_blogname_kana']);
-	}
-	
-	/**
-	 * Get default value
-	 * @param string $context
-	 * @param int $user_id
-	 * @return string
-	 */
-	public function get_default_payment_info($user_id, $context = 'sb-cc'){
-		$user_info = $this->get_user_default($user_id);
-		return apply_filters('lwp_sb_cvs_default', $user_info, $context, $user_id);
 	}
 	
 	/**
@@ -250,7 +254,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			'tel' => $creds['tel'],
 			'mail' => $wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE ID = %d", $user_id)),
 			'seiyakudate' => get_date_from_gmt($now, 'Ymd'),
-			'webcvstype' => $this->get_verbose_name($creds['cvs'], true),
+			'webcvstype' => $this->get_cvs_code($creds['cvs']),
 			'bill_date' => date_i18n('Ymd', $limit),
 		);
 		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
@@ -665,44 +669,6 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	}
 	
 	/**
-	 * 
-	 * @param type $slug
-	 * @param type $code
-	 * @return string
-	 */
-	public function get_verbose_name($slug, $code = false){
-		if(!$code){
-			return parent::get_verbose_name($slug);
-		}else{
-			switch($slug){
-				case 'seven-eleven':
-					return '001';
-					break;
-				case 'lawson':
-					return '002';
-					break;
-				case 'circle-k':
-					return '017';
-					break;
-				case 'sunkus':
-					return '017';
-					break;
-				case 'ministop':
-					return '005';
-					break;
-				case 'familymart':
-					return '016';
-					break;
-				case 'daily-yamazaki':
-					return '010';
-					break;
-				case 'seicomart':
-					return '018';
-			}
-		}
-	}
-	
-	/**
 	 * Error Message
 	 * @var array
 	 */
@@ -796,39 +762,4 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		'95' => '顧客情報整合性エラー',
 		'96' => '2 重リクエストエラー'
 	);
-	
-	/**
-	 * Description for Web CVS
-	 * @param string $cvs
-	 * @param boolean $requirements If set to true, returns array of required information
-	 * @return string|array
-	 */
-	public function get_cvs_howtos($cvs, $requirements = false){
-		if(!$requirements){
-			return parent::get_cvs_howtos($cvs);
-		}else{
-			switch($cvs){
-				case 'seven-eleven':
-					return array('払込票番号');
-					break;
-				case 'lawson':
-					return array('受付番号', '確認番号');
-					break;
-				case 'circle-k':
-				case 'sunkus':
-				case 'ministop':
-				case 'daily-yamazaki':
-					return  array('オンライン決済番号');
-					break;
-				case 'familymart':
-					return  array('企業コード', '注文番号');
-					break;
-				case 'seicomart':
-					return  array('受付番号', '確認番号');
-					break;
-				default:
-					return array();
-			}
-		}
-	}
 }

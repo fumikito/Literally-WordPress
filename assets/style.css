@@ -155,7 +155,14 @@ h4.android .apple{
 input.short{
 	width:3em;
 }
-
+p.invalid{
+	color: #f00;
+	margin: 0.25em 0;
+}
+p.required{
+	color: orange;
+	margin: 0.25em 0;
+}
 /* Transaction Table*/
 .detail-table{
 	margin-bottom:20px;

@@ -218,6 +218,35 @@
 						</p>
 					</td>
 				</tr>
+				
+				<tr>
+					<th valign="top">
+						<label><?php $this->e('Web CVS'); ?></label>
+					</th>
+					<td>
+						<?php
+							$available_cvs = $this->gmo->get_available_cvs();
+							$cvs = $this->gmo->get_available_cvs(true);
+							foreach($cvs as $c):
+						?>
+						<label>
+							<input type="checkbox" name="gmo_webcvs[]" value="<?php echo esc_attr($c); ?>"<?php if(false !== array_search($c, $available_cvs)) echo ' checked="checked"'; ?> />
+							<?php echo esc_html($this->gmo->get_verbose_name($c)); ?>
+						</label>&nbsp;
+						<?php endforeach; ?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top">
+						<label><?php $this->e('PayEasy'); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="checkbox" name="gmo_payeasy" value="1" <?php if($this->gmo->payeasy) echo 'checked="checked"'; ?> />
+							<?php $this->e('Enables PayEasy'); ?> 
+						</label>
+					</td>
+				</tr>
 				<tr>
 					<th valign="top"><label for="gmo_shop_id"><?php $this->e('Shop ID'); ?></label></th>
 					<td><input type="text" name="gmo_shop_id" id="gmo_shop_id" value="<?php echo esc_attr($this->gmo->shop_id); ?>" placeholder="ex. shop10000000" class="regular-text" /></td>
@@ -225,6 +254,48 @@
 				<tr>
 					<th valign="top"><label for="gmo_shop_pass"><?php $this->e('Shop Password'); ?></label></th>
 					<td><input type="text" name="gmo_shop_pass" id="gmo_shop_pass" value="<?php echo esc_attr($this->gmo->shop_pass); ?>" placeholder="ex. abcdefghi" class="regular-text" /></td>
+				</tr>
+				<tr>
+					<th valign="top"><label for="gmo_tel"><?php $this->e('Contact Tel No.'); ?></label></th>
+					<td>
+						<input type="text" name="gmo_tel" id="gmo_tel" value="<?php echo esc_attr($this->gmo->tel_no); ?>" placeholder="ex. 03-1234-5786" class="regular-text" />
+						<?php if(!preg_match("/^[0-9\-]+$/", $this->gmo->tel_no)): ?>
+						<p class="invalid">
+							<?php $this->e('Wrong Format.'); ?>
+						</p>
+						<?php endif; ?>
+						<p class="description">
+							<?php $this->e('Required for Lawson and Family Mart.'); ?>
+							<?php $this->e('Allowed letters for Tel No. are <strong>0~9 and hyphen(-)</strong>.'); ?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Contact Open Hour'); ?></th>
+					<td>
+						<label>
+							<?php $this->e('Starts: '); ?>
+							<input type="text" name="gmo_contact_starts" value="<?php echo esc_attr($this->gmo->contact_starts); ?>" placeholder="ex. 09:00" class="middle-text hour-picker" />
+						</label>
+						~
+						<label>
+							<?php $this->e('Ends: '); ?>
+							<input type="text" name="gmo_contact_ends" value="<?php echo esc_attr($this->gmo->contact_ends); ?>" placeholder="ex. 17:00" class="middle-text hour-picker" />
+						</label>
+						<?php if(
+								!preg_match("/^[0-9]{2}:[0-9]{2}$/", $this->gmo->contact_starts)
+									||
+								!preg_match("/^[0-9]{2}:[0-9]{2}$/", $this->gmo->contact_ends)
+						): ?>
+						<p class="invalid">
+							<?php $this->e('Wrong Format.'); ?>
+						</p>
+						<?php endif; ?>
+						<p class="description">
+							<?php $this->e('Required for Lawson and Family Mart.'); ?>
+							 <?php $this->e('Hour format must be <strong>HH:MM</strong>.'); ?>
+						</p>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -274,7 +345,7 @@
 				</tr>
 				<tr>
 					<th valign="top">
-						<label><?php $this->e('PayEasy'); ?></label>
+						<label><?php $this->e('Web CVS'); ?></label>
 					</th>
 					<td>
 						<?php
@@ -291,23 +362,27 @@
 				</tr>
 				<tr>
 					<th valign="top">
-						<label><?php $this->e('Web CVS'); ?></label>
+						<label><?php $this->e('PayEasy'); ?></label>
 					</th>
 					<td>
 						<label>
 							<input type="checkbox" name="sb_payeasy" value="1" <?php if($this->softbank->payeasy) echo 'checked="checked"'; ?> />
 							<?php $this->e('Enables PayEasy'); ?> 
-						</label><br />
-						<label>
-							<input type="text" name="sb_blogname_kana" class="regular-text" value="<?php echo esc_html($this->softbank->blogname_kana); ?>" placeholder="ex. ワタシノブログ" />
-							<?php $this->e('Name Kana on Invoice'); ?>
-							<small><?php printf($this->_('(%d letters max)'), 48);?></small>
-						</label><br />
-						<label>
-							<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html($this->softbank->blogname); ?>" placeholder="ex. 私のブログ" />
-							<?php $this->e('Name on Invoice'); ?>
-							<small><?php printf($this->_('(%d letters max)'), 24);?></small>
 						</label>
+						<p>
+							<label>
+								<?php $this->e('Name Kana on Invoice'); ?><br />
+								<input type="text" name="sb_blogname_kana" class="regular-text" value="<?php echo esc_html($this->softbank->blogname_kana); ?>" placeholder="ex. ワタシノブログ" />
+								<small><?php printf($this->_('(%d letters max)'), 48);?></small>
+							</label>
+						</p>
+						<p>
+							<label>
+								<?php $this->e('Name on Invoice'); ?><br />
+								<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html($this->softbank->blogname); ?>" placeholder="ex. 私のブログ" />
+								<small><?php printf($this->_('(%d letters max)'), 24);?></small>
+							</label>
+						</p>
 						<p class="description">
 							<?php $this->e('These values are required for PayEasy. Kana must be Zenkaku Kana.'); ?>
 						</p>
@@ -412,6 +487,14 @@
 						</label>
 						<p class="description">
 							<?php $this->e('If you don\'t want to send reminder, set notification frequency to 0. Transfer transaction will be expired after notification limit days will have been past.'); ?><br />
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th><label><?php $this->e('Notification Message'); ?></label></th>
+					<td>
+						<p class="description">
+							<?php printf($this->_('You can customize notification message <a href="%s">here</a>.'), admin_url('edit.php?post_type='.$this->notifier->post_type)); ?>
 						</p>
 					</td>
 				</tr>

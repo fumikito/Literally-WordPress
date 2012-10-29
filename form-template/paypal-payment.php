@@ -136,26 +136,31 @@
 				<th><?php $this->e('Dealing Type'); ?></th>
 				<td><?php $this->e('At once'); ?></td>
 			</tr>
-			<?php break; case 'sb-cvs': case 'sb-payeasy': ?>
-			<?php if($method == 'sb-cvs'): ?>
+			<?php break; case 'sb-cvs': case 'sb-payeasy': case 'gmo-cvs':  case 'gmo-payeasy': ?>
+			<?php if(false !== array_search($method, array('sb-cvs', 'gmo-cvs'))): ?>
 			<tr>
-				<th><?php $this->e('CVS'); ?></th>
+				<th>
+					<?php $this->e('CVS'); ?>
+					<span class="required">*</span>
+				</th>
 				<td>
-					<?php foreach($lwp->softbank->get_available_cvs() as $cvs): ?>
+					<?php
+						$cvss = ($method == 'gmo-cvs') ? $lwp->gmo->get_available_cvs() : $lwp->softbank->get_available_cvs();
+						foreach($cvss as $cvs):
+					?>
 					<label class="cvs-container">
-						<input type="radio" name="sb-cvs-name" value="<?php echo $cvs; ?>"<?php if(isset($vars['cvs']) && $vars['cvs'] == $cvs) echo ' checked="checked"'; ?> /><br />
+						<input type="radio" name="cvs-name" value="<?php echo $cvs; ?>"<?php if(isset($vars['cvs']) && $vars['cvs'] == $cvs) echo ' checked="checked"'; ?> /><br />
 						<i class="lwp-cvs-small-icon small-icon-<?php echo $cvs; ?>"></i><br />
 						<?php echo $lwp->softbank->get_verbose_name($cvs); ?>
 					</label>
 					<?php endforeach; ?>
 					<p style="clear: both;">
-						<span class="required">*</span>
 						<?php $this->e('Payment flow is different with eacn CVS. For more detail, see the instruction on next page.'); ?>
 					</p>
 				</td>
 			</tr>
 			<?php endif; ?>
-			<?php if($method == 'sb-payeasy'): ?>
+			<?php if(false !== array_search($method, array('sb-payeasy', 'gmo-payeasy'))): ?>
 			<tr>
 				<th><?php $this->e('PayEasy'); ?></th>
 				<td>
@@ -177,6 +182,12 @@
 							case 'sb-cvs':
 								$suffix = 'sb_cvs';
 								break;
+							case 'gmo-cvs':
+								$suffix = 'gmo_cvs';
+								break;
+							case 'gmo-payeasy':
+								$suffix = 'gmo_payeasy';
+								break;
 						}
 						wp_nonce_field('lwp_payment_'.($suffix));
 					?>
@@ -184,7 +195,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th><?php $this->e('Name'); ?></th>
+				<th>
+					<?php $this->e('Name'); ?>
+					<span class="required">*</span>
+				</th>
 				<td>
 					<table class="name-table">
 						<tbody>
@@ -194,14 +208,12 @@
 										<input type="text" class="small-text" name="last_name_kana" value="<?php echo esc_attr($vars['last_name_kana']); ?>" placeholder="ヤマダ" />
 										<?php $this->e('Last Name Kana'); ?>
 									</label>
-									<span class="required">*</span>
 								</td>
 								<td>
 									<label>
 										<input type="text" class="small-text" name="first_name_kana" value="<?php echo esc_attr($vars['first_name_kana']); ?>" placeholder="ハナコ" />
 										<?php $this->e('First Name Kana'); ?>
 									</label>
-									<span class="required">*</span>
 								</td>
 							</tr>
 							<tr>
@@ -210,28 +222,29 @@
 										<input type="text" class="small-text" name="last_name" value="<?php echo esc_attr($vars['last_name']); ?>" placeholder="山田" />
 										<?php $this->e('Last Name'); ?>
 									</label>
-									<span class="required">*</span>
 								</td>
 								<td>
 									<label>
 										<input type="text" class="small-text" name="first_name" value="<?php echo esc_attr($vars['first_name']); ?>" placeholder="花子" />
 										<?php $this->e('First Name'); ?>
 									</label>
-									<span class="required">*</span>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</td>
 			</tr>
+			<?php if(false !== array_search($method, array('sb-payeasy', 'sb-cvs'))): ?>
 			<tr>
-				<th><?php $this->e('Address'); ?></th>
+				<th>
+					<?php $this->e('Address'); ?>
+					<span class="required">*</span>
+				</th>
 				<td>
 					<label>
 						<input type="text" class="small-text" name="zipcode" value="<?php echo esc_attr($vars['zipcode']); ?>" placeholder="1000001" />
 						<?php $this->e('Zip Code') ?>
 					</label>
-					<span class="required">*</span>
 					<?php $this->e('Only digits.'); ?>
 					<?php if(function_exists('zip_search_button')) zip_search_button(); ?>
 					<br />
@@ -247,31 +260,32 @@
 						</select>
 						<?php $this->e('Prefecture'); ?>
 					</label>
-					<span class="required">*</span>
 					<br />
 					<label>
 						<input type="text" name="city" value="<?php echo esc_attr($vars['city']); ?>" placeholder="千代田区" class="middle-text" />
 						<?php $this->e('City'); ?>
 					</label>
-					<span class="required">*</span>
 					<br />
 					<label>
 						<input type="text" name="street" value="<?php echo esc_attr($vars['street']); ?>" placeholder="千代田1番1号" class="regular-text" />
 						<?php $this->e('Street'); ?>
 					</label>
-					<span class="required">*</span>
 					<br />
 					<label>
 						<input type="text" name="office" value="<?php echo esc_attr($vars['office']); ?>" placeholder="千代田ビル4F" class="regular-text" />
 						<?php $this->e('Building, Room No.'); ?>
+						<?php $this->e(' (Option)'); ?>
 					</label>
 				</td>
 			</tr>
+			<?php endif; ?>
 			<tr>
-				<th><label for="tel"><?php $this->e('Tel'); ?></label></th>
+				<th>
+					<label for="tel"><?php $this->e('Tel'); ?></label>
+					<span class="required">*</span>
+				</th>
 				<td>
 					<input type="text" class="middle-text" name="tel" id="tel" value="<?php echo esc_attr($vars['tel']); ?>" placeholder="ex. 0312345678" />
-					<span class="required">*</span>
 					<?php $this->e('Only digits.'); ?>
 				</td>
 			</tr>

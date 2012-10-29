@@ -183,7 +183,7 @@ class EntryTranCvsInput extends BaseInput {
 	 */
 	function toString() {
 		
-	    $str .= 'ShopID=' . $this->encodeStr($this->getShopId());
+	    $str = 'ShopID=' . $this->encodeStr($this->getShopId());
 	    $str .= '&';
 	    $str .= 'ShopPass=' . $this->encodeStr($this->getShopPass());
 	    $str .= '&';

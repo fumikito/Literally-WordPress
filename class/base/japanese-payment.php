@@ -43,6 +43,12 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		'daily-yamazaki' => false,
 		'seicomart' => false
 	);
+
+	/**
+	 * CVS code. Must be overriden.
+	 * @var array
+	 */
+	protected $cvs_codes = array();
 	
 	/**
 	 * If PayEasy is enabled
@@ -83,14 +89,44 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	 * @param int $user_id
 	 * @return string
 	 */
-	protected function get_user_default($user_id){
+	protected function get_user_default($user_id, $context){
 		$user_info = array();
-		$meta_keys = apply_filters('lwp_user_default_key', array('last_name','first_name','last_name_kana','first_name_kana',
-			'zipcode','prefecture','city','street','office','tel'));
+		$default_keys = array();
+		switch($context){
+			case 'sb-cc':
+			case 'gmo-cc':
+				$default_keys = array();
+				break;
+			case 'sb-cvs':
+			case 'sb-payeasy':
+				$default_keys = array('last_name','first_name','last_name_kana','first_name_kana',
+			'zipcode','prefecture','city','street','office','tel');
+				break;
+			case 'gmo-cvs':
+			case 'gmo-payeasy':
+				$default_keys = array('last_name','first_name','last_name_kana','first_name_kana','tel');
+				break;
+			default:
+				return array();
+				break;
+		}
+		$meta_keys = apply_filters('lwp_user_default_key', $default_keys, $context);
 		foreach($meta_keys as $key){
 			$user_info[$key] = get_user_meta($user_id, $key, true);
 		}
 		return $user_info;
+	}
+	
+	/**
+	 * Get default value
+	 * @param string $context
+	 * @param int $user_id
+	 * @param string $context
+	 * @return string
+	 */
+	public function get_default_payment_info($user_id, $context = 'sb-cc'){
+		$user_info = $this->get_user_default($user_id, $context);
+		return apply_filters('lwp_get_default_payment_info', $user_info, $context, $user_id);
 	}
 	
 	/**
@@ -113,8 +149,7 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	 * @param string save_user_default$context
 	 */
 	public function save_user_default($user_id, $post_data, $context = 'sb-cc'){
-		$keys = array('last_name','first_name','last_name_kana','first_name_kana',
-			'zipcode','prefecture','city','street','office','tel');
+		$keys = $this->get_default_payment_info($user_id, $context);
 		foreach($keys as $key){
 			if(isset($post_data[$key])){
 				update_user_meta($user_id, $key, $post_data[$key]);
@@ -201,6 +236,18 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		}
 	}
 	
+	/**
+	 * Returns CVS code
+	 * @param string $slug
+	 * @return string
+	 */
+	public function get_cvs_code($slug){
+		if(isset($this->cvs_codes[$slug])){
+			return $this->cvs_codes[$slug];
+		}else{
+			return '';
+		}
+	}
 	
 	/**
 	 * Description for Web CVS
@@ -211,16 +258,16 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	public function get_cvs_howtos($cvs){
 		switch($cvs){
 			case 'seven-eleven':
-				return '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込みお支払いを行います。';
+				return '決済後、画面に表示された「払込票番号」を印刷またはメモし、それをセブンイレブンへ持ち込み、レジにてオンライン決済である旨をお伝えください。';
 				break;
 			case 'lawson':
-				return !'店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。';
+				return '店頭のLoppi端末にて、決済を選択後「受付番号」「確認番号」を入力、その後、端末から出力された申込券をレジに持参してお支払いを行います。';
 				break;
 			case 'circle-k':
 			case 'sunkus':
 			case 'ministop':
 			case 'daily-yamazaki':
-				return 'レジのタッチパネルにて決済番号を入力し、お支払いを行います。';
+				return '店頭のカルワザステーション（サークルKサンクスのみ）でオンライン決済番号および確認番号を入力して受付票をレジまでお持ち頂くか、レジにて店員にオンライン決済番号をお伝えください。';
 				break;
 			case 'familymart':
 				return '店頭のFamiポート（またはファミネット）端末にて、決済を選択後「企業コード」と「注文番号」を入力してください。その後、端末から出力された「申込券／収納票」をレジに持参してお支払いを行います。';
@@ -230,6 +277,61 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 				break;
 			default:
 				return '';
+		}
+	}
+	
+	/**
+	 * Returns available CVS group
+	 * @param string $cvs
+	 * @return array
+	 */
+	public function get_cvs_group($cvs){
+		switch($cvs){
+			case 'circle-k':
+			case 'sunkus':
+			case 'ministop':
+			case 'daily-yamazaki':
+				$group = array();
+				foreach(array('circle-k','sunkus','ministop','daily-yamazaki') as $key){
+					if($this->_webcvs[$key]){
+						$group[] = $key;
+					}
+				}
+				return $group;
+				break;
+			default:
+				return array($cvs);
+				break;
+		}
+	}
+	
+	/**
+	 * Returns CVS code label
+	 * @param string $cvs
+	 * @return array
+	 */
+	public function get_cvs_code_label($cvs){
+		switch($cvs){
+			case 'seven-eleven':
+				return array('払込票番号');
+				break;
+			case 'lawson':
+				return array('受付番号', '確認番号');
+				break;
+			case 'circle-k':
+			case 'sunkus':
+			case 'ministop':
+			case 'daily-yamazaki':
+				return  array('オンライン決済番号');
+				break;
+			case 'familymart':
+				return  array('企業コード', '注文番号');
+				break;
+			case 'seicomart':
+				return  array('受付番号', '確認番号');
+				break;
+			default:
+				return array();
 		}
 	}
 }

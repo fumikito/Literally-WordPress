@@ -100,18 +100,21 @@
 				</td>
 			</tr>
 			<?php endif; ?>
-			<?php if($lwp->softbank->is_cvs_enabled()): ?>
+			<?php if($lwp->softbank->is_cvs_enabled() || $lwp->gmo->is_cvs_enabled()): ?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-cvs"></i><br />
-						<input type="radio" name="lwp-method" value="sb-cvs" />
+						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->is_cvs_enabled() ? 'gmo' : 'sb'; ?>-cvs" />
 						<?php $this->e("Web CVS"); ?>
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
 					<?php $this->e('You can pay at CVS below.'); ?><br />
-					<?php foreach($lwp->softbank->get_available_cvs() as $cvs):  ?>
+					<?php
+						$cvss = $lwp->gmo->is_cvs_enabled() ? $lwp->gmo->get_available_cvs() : $lwp->softbank->get_available_cvs();
+						foreach($cvss as $cvs):
+					?>
 						<i class="lwp-cvs-small-icon small-icon-<?php echo $cvs; ?>"></i>
 					<?php endforeach; ?>
 					<br />
@@ -122,12 +125,12 @@
 				</td>
 			</tr>
 			<?php endif; ?>
-			<?php if($lwp->softbank->payeasy): ?>
+			<?php if($lwp->softbank->payeasy || $lwp->gmo->payeasy): ?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-payeasy"></i><br />
-						<input type="radio" name="lwp-method" value="sb-payeasy" />
+						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->payeasy ? 'gmo' : 'sb'; ?>-payeasy" />
 						<?php $this->e("PayEasy"); ?>
 					</label>
 				</th>

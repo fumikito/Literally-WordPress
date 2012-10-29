@@ -28,6 +28,11 @@
 				sprintf($this->_('Set up your PayPal information <a href="%s">here</a>.'), admin_url('admin.php?page=lwp-setting&view=payment'))
 			),
 			array(
+				$this->_('GMO Payment Gateway'),
+				$this->gmo->is_enabled(),
+				$this->_('Japanese domestic payment service. Credit card, Web CVS and PayEasy are supported.')
+			),
+			array(
 				$this->_('Softbank Payment'),
 				$this->softbank->is_enabled(),
 				$this->_('Japanese domestic payment service. Credit card, Web CVS and PayEasy are supported.')

@@ -350,7 +350,21 @@ EOS;
 		}
 		//Set default values.
 		$error = array();
-		$vars = $lwp->softbank->get_default_payment_info(get_current_user_id(), $_REQUEST['lwp-method']);
+		switch($payment_method){
+			case 'sb-cc':
+			case 'sb-cvs':
+			case 'sb-payeasy':
+				$vars = $lwp->softbank->get_default_payment_info(get_current_user_id(), $payment_method);
+				break;
+			case 'gmo-cc':
+			case 'gmo-cvs':
+			case 'gmo-payeasy':
+				$vars = $lwp->gmo->get_default_payment_info(get_current_user_id(), $payment_method);
+				break;
+			default:
+				$vars = array();
+				break;
+		}
 		if($is_sandbox){
 			//Get random post
 			$book = $this->get_random_post();
@@ -383,7 +397,12 @@ EOS;
 		$book = $this->test_post_id($book_id);
 		$item_name = $this->get_item_name($book);
 		$price = lwp_price($book);
-		$vars['limit'] = date_i18n(get_option('date_format'), $lwp->softbank->get_payment_limit($book, false, $payment_method));
+		//Get payment limit
+		if(false !== array_search($payment_method, array('sb-payeasy', 'sb-cvs'))){
+			$vars['limit'] = date_i18n(get_option('date_format'), $lwp->softbank->get_payment_limit($book, false, $payment_method));
+		}elseif(false !== array_search($payment_method, array('gmo-payeasy', 'gmo-cvs'))){
+			$vars['limit'] = date_i18n(get_option('date_format'), $lwp->gmo->get_payment_limit($book, false, $payment_method));
+		}
 		//Do transaction
 		if(isset($_REQUEST['_wpnonce'])){
 			$sb_cvs = $sb_payeasy = false;
@@ -435,39 +454,58 @@ EOS;
 						}
 					}
 					break;
+				case 'gmo-cvs':
+				case 'gmo-payeasy':
 				case 'sb-cvs':
 				case 'sb-payeasy':
+					$gmo_cvs = $gmo_payeasy = $sb_cvs = $sb_payeasy = false;
 					if(
 						($sb_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_cvs'))
 							||
 						($sb_payeasy = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_payeasy'))
+							||
+						($gmo_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_gmo_cvs'))
+							||
+						($gmo_payeasy = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_gmo_payeasy'))
 					){
-						//Softbank Payeasy or CVS
 						//Let's validate
-						if($sb_cvs){
-							if(!isset($_REQUEST['sb-cvs-name']) || false === array_search($_REQUEST['sb-cvs-name'], $lwp->softbank->get_available_cvs())){
+						//Validate CVS name.
+						if($sb_cvs || $gmo_cvs){
+							$cvss = ($gmo_cvs) ? $lwp->gmo->get_available_cvs() : $lwp->softbank->get_available_cvs();
+							if(!isset($_REQUEST['cvs-name']) || false === array_search($_REQUEST['cvs-name'], $cvss)){
 								$error[] = $this->_('CVS is not specified. please select one.');
 							}else{
-								$vars['cvs'] = $_REQUEST['sb-cvs-name'];
+								$vars['cvs'] = $_REQUEST['cvs-name'];
+							}
+							if($_REQUEST['cvs-name'] == 'seven-eleven' && $price < 200){
+								$error[] = $this->_('Seven Eleven doesn\'t accept payment amount less than 200 JPY. Please select other payment method.');
+							}	
+						}
+						//Zip No.
+						if($sb_cvs || $sb_payeasy){
+							$zip = $this->convert_numeric($_REQUEST['zipcode']);
+							if(!preg_match("/^[0-9]{7}$/", $zip)){
+								$error[] = $this->_('Zip code is required and must be 7 digits.');
 							}
 						}
-						//shold be specified format
-						$zip = $this->convert_numeric($_REQUEST['zipcode']);
-						if(!preg_match("/^[0-9]{7}$/", $zip)){
-							$error[] = $this->_('Zip code is required and must be 7 digits.');
-						}
+						//Tel No.
 						$tel = $this->convert_numeric($_REQUEST['tel']);
 						if(!preg_match("/^[0-9]{9,11}$/", $tel)){
 							$error[] = $this->_('Tel number is required and must be 9 - 11 digits.');
 						}
-						//not empty
-						foreach(array(
+						//Validate required String
+						$not_empty = array(
 							'last_name' => $this->_('Last Name'),
 							'first_name' => $this->_('First Name'),
-							'prefecture' => $this->_('Prefecture'),
-							'city' => $this->_('City'),
-							'street' => $this->_('Street')
-						) as $name => $value){
+						);
+						if($sb_cvs || $sb_payeasy){
+							$not_empty = array_merge($not_empty, array(
+								'prefecture' => $this->_('Prefecture'),
+								'city' => $this->_('City'),
+								'street' => $this->_('Street')
+							));
+						}
+						foreach($not_empty as $name => $value){
 							if(empty($_REQUEST[$name])){
 								$error[] = sprintf('%s is empty.', $value);
 							}
@@ -482,27 +520,54 @@ EOS;
 							$error[] = sprintf('%s must be zenkaku kana.', $this->_('First Name Kana'));
 						}
 						//Set entered information
-						foreach(array('last_name', 'first_name', 'prefecture', 'city', 'street', 'office') as $key){
+						$key_to_set = array('last_name', 'first_name');
+						if($sb_cvs || $sb_payeasy){
+							$key_to_set = array_merge($key_to_set, array(
+								'prefecture', 'city', 'street', 'office'
+							));
+						}
+						foreach($key_to_set as $key){
 							$vars[$key] = $_REQUEST[$key];
 						}
-						if($sb_cvs){
-							$vars['cvs'] = $_REQUEST['sb-cvs-name'];
+						if($sb_cvs || $gmo_cvs){
+							$vars['cvs'] = $_REQUEST['cvs-name'];
 						}
 						$vars['tel'] = $tel;
-						$vars['zipcode'] = $zip;
 						$vars['last_name_kana'] = $last_name_kana;
 						$vars['first_name_kana'] = $first_name_kana;
+						if($sb_cvs || $sb_payeasy){
+							$vars['zipcode'] = $zip;
+						}
 						//Make transaction
 						if(empty($error)){
-							//Try to save userdata
-							if($sb_cvs){
-								$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
-							}elseif($sb_payeasy){
-								$transaction_id = $lwp->softbank->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
+							$transaction_id = 0;
+							//Do transaction
+							switch(true){
+								case $sb_cvs:
+									$transaction_id = $lwp->softbank->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
+									break;
+								case $sb_payeasy:
+									$transaction_id = $lwp->softbank->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
+									break;
+								case $gmo_cvs:
+									$transaction_id = $lwp->gmo->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
+									break;
+								case $gmo_payeasy:
+									break;
 							}
 							if(($transaction_id)){
+								//Save payment information
 								if(isset($_REQUEST['save_info']) && $_REQUEST['save_info']){
-									$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
+									switch(true){
+										case $sb_cvs:
+										case $sb_payeasy:
+											$lwp->softbank->save_payment_info(get_current_user_id(), $vars, $payment_method);
+											break;
+										case $gmo_cvs:
+										case $gmo_payeasy:
+											$lwp->gmo->save_payment_info(get_current_user_id(), $vars, $payment_method);
+											break;
+									}
 								}
 								//Send mail
 								header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
@@ -541,7 +606,7 @@ EOS;
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
-		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER)));
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_WEB_CVS)));
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
 EOS;
@@ -567,39 +632,63 @@ EOS;
 			array($this->_('Price'), number_format($transaction->price).' '.lwp_currency_code()),
 			array($this->_('Requested Date'), get_date_from_gmt($transaction->registered, get_option('date_format'))),
 		);
-		switch($transaction->method){
-			case LWP_Payment_Methods::TRANSFER:
-				$rows = array_merge($rows, array(
-					array($this->_('Payment Limit'), $lwp->notifier->get_limit_date($transaction->registered, get_option('date_format')).' ('.sprintf($this->_('%d days left'), $lwp->notifier->get_left_days($transaction->registered)).')'),
-					array($this->_('Bank Account'), $lwp->notifier->get_bank_account())
-				));
-				break;
-			case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
-			case LWP_Payment_Methods::SOFTBANK_PAYEASY:
-				$data = unserialize($transaction->misc);
+		if($transaction->method == LWP_Payment_Methods::TRANSFER){
+			$rows = array_merge($rows, array(
+				array($this->_('Payment Limit'), $lwp->notifier->get_limit_date($transaction->registered, get_option('date_format')).' ('.sprintf($this->_('%d days left'), $lwp->notifier->get_left_days($transaction->registered)).')'),
+				array($this->_('Bank Account'), $lwp->notifier->get_bank_account())
+			));
+		}else{
+			$data = unserialize($transaction->misc);
+			if(preg_match("/^SB_/", $transaction->method)){
 				$limit_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "$1-$2-$3 23:59:59", $data['bill_date']);
-				if($transaction->status == LWP_Payment_Status::START){
-					$left_days = floor((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
-					$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
-					if($left_days < 1){
-						$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
-					}
-				}else{
-					$request_suffix = '';
+			}else{
+				$limit_date = $data['bill_date'];
+			}
+			if($transaction->status == LWP_Payment_Status::START){
+				$left_days = floor((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
+				$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
+				if($left_days < 1){
+					$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
 				}
-				$rows[] = array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix);
-				if($transaction->method == LWP_Payment_Methods::SOFTBANK_WEB_CVS){
-					$cvs = $lwp->softbank->get_verbose_name($data['cvs']);
-					$howto = $lwp->softbank->get_cvs_howtos($data['cvs']);
-					$methods = $lwp->softbank->get_cvs_howtos($data['cvs'], true);
+			}else{
+				$request_suffix = '';
+			}
+			$rows[] = array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix);
+			switch($transaction->method){
+				case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
+					$methods = $lwp->softbank->get_cvs_code_label($data['cvs']);
+					$cvss = $lwp->softbank->get_cvs_group($data['cvs']);
+					$cvs_icons = '';
+					foreach($cvss as $cvs){
+						$cvs_icons .= sprintf('<label class="cvs-container"><i class="lwp-cvs-small-icon small-icon-%s"></i><br />%s</label>',
+								$cvs, $lwp->softbank->get_verbose_name($cvs));
+					}
 					$rows =  array_merge($rows, array(
-						array($this->_('CVS'), '<i class="lwp-cvs-small-icon small-icon-'.$data['cvs'].'"></i>'.$cvs),
-						array($this->_('How to pay'), $howto)
+						array($this->_('CVS'), $cvs_icons),
+						array($this->_('How to pay'), $lwp->softbank->get_cvs_howtos($data['cvs']))
 					));
 					for($i = 0, $l = count($methods); $i < $l; $i++){
 						$rows[] = array($methods[$i], $data['cvs_pay_data'.($i + 1)]);
 					}
-				}else{
+					break;
+				case LWP_Payment_Methods::GMO_WEB_CVS:
+					$methods = $lwp->gmo->get_cvs_code_label($data['cvs']);
+					$cvss = $lwp->gmo->get_cvs_group($data['cvs']);
+					$cvs_icons = '';
+					foreach($cvss as $cvs){
+						$cvs_icons .= sprintf('<label class="cvs-container"><i class="lwp-cvs-small-icon small-icon-%s"></i><br />%s</label>',
+								$cvs, $lwp->gmo->get_verbose_name($cvs));
+					}
+					$rows =  array_merge($rows, array(
+						array($this->_('CVS'), $cvs_icons),
+						array($this->_('How to pay'), $lwp->gmo->get_cvs_howtos($data['cvs'])),
+						array($methods[0], $data['receipt_no'])
+					));
+					if(!empty($data['conf_no'])){
+						$rows[] = array('確認番号', $data['conf_no']);
+					}
+					break;
+				case LWP_Payment_Methods::SOFTBANK_PAYEASY:
 					$cust_number = explode('-', $data['cust_number']);
 					$rows = array_merge($rows, array(
 						array($this->_('Invoice No.'), esc_html($data['invoice_no'])),
@@ -607,8 +696,8 @@ EOS;
 						array('お客様番号', esc_html($cust_number[0])),
 						array('確認番号', esc_html($cust_number[1]))
 					));
-				}
-				break;
+					break;
+			}
 		}
 		$this->show_form('payment-info', array(
 			'item_name' => $this->get_item_name($book),

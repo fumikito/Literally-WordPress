@@ -255,6 +255,11 @@ class Literally_WordPress{
 				'gmo_shop_pass' => '',
 				'gmo_sandbox' => true,
 				'gmo_creditcard' => array(),
+				'gmo_webcvs' => array(),
+				'gmo_payeasy' => false,
+				'gmo_tel' => '',
+				'gmo_contact_starts' => '',
+				'gmo_contact_ends' => '',
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -550,9 +555,12 @@ class Literally_WordPress{
 			wp_enqueue_script(
 				"lwp-setting",
 				$this->url."assets/js/setting-helper.js",
-				array("jquery-ui-tabs"),
+				array("jquery-ui-tabs", 'jquery-ui-timepicker'),
 				$this->version
 			);
+			wp_localize_script('lwp-setting', 'LWPDatePicker', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
+				'timeFormat' => 'hh:mm'
+			)));
 		}
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
 			//datepickerを読み込み
@@ -767,7 +775,12 @@ class Literally_WordPress{
 						'gmo_shop_id' => (string)$_REQUEST['gmo_shop_id'],
 						'gmo_shop_pass' => (string)$_REQUEST['gmo_shop_pass'],
 						'gmo_sandbox' => (boolean)(isset($_REQUEST['gmo_sandbox']) && $_REQUEST['gmo_sandbox']),
-						'gmo_creditcard' => (isset($_REQUEST['gmo_creditcard']) && !empty($_REQUEST['gmo_creditcard'])) ? (array)$_REQUEST['gmo_creditcard'] : array()
+						'gmo_creditcard' => (isset($_REQUEST['gmo_creditcard']) && !empty($_REQUEST['gmo_creditcard'])) ? (array)$_REQUEST['gmo_creditcard'] : array(),
+						'gmo_webcvs' => (isset($_REQUEST['gmo_webcvs']) && !empty($_REQUEST['gmo_webcvs'])) ? (array)$_REQUEST['gmo_webcvs'] : array(),
+						'gmo_payeasy' => (isset($_REQUEST['gmo_payeasy']) && $_REQUEST['gmo_payeasy']),
+						'gmo_tel' => (string)$_REQUEST['gmo_tel'], 
+						'gmo_contact_starts' => (string)$_REQUEST['gmo_contact_starts'], 
+						'gmo_contact_ends' => (string)$_REQUEST['gmo_contact_ends'], 
 					);
 					break;
 				case 'post':
