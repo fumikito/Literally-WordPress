@@ -153,8 +153,33 @@ if($is_detail):
 			<td><?php echo esc_html($transaction->payer_mail); ?></td>
 			<td>---</td>
 		</tr>
-		
+		<?php break; case LWP_Payment_Methods::GMO_WEB_CVS: case LWP_Payment_Methods::GMO_PAYEASY: $info = unserialize($transaction->misc);?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Payment Limit'); ?></th>
+			<td><?php echo mysql2date(get_option('date_format'), $info['bill_date']); ?></td>
+			<td>---</td>
+		</tr>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('CVS'); ?></th>
+			<td>
+				<?php echo $this->softbank->get_verbose_name($info['cvs']); ?>
 				&nbsp;<small>(<?php echo $this->softbank->get_cvs_code($info['cvs']); ?>)</small>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php
+			$ticket_names = $this->gmo->get_cvs_code_label($info['cvs']);
+			foreach(array('receipt_no', 'conf_no') as $no => $key):
+				if(!isset($ticket_names[$no])){
+					continue;
+				}
+		?>
+		<tr>
+			<th scope="row" valign="top"><?php echo $ticket_names[$no]; ?></th>
+			<td><?php echo esc_html($info[$key]); ?></td>
+			<td>---</td>
+		</tr>
+		<?php endforeach; ?>
 		<?php break; case LWP_Payment_Methods::SOFTBANK_CC: case LWP_Payment_Methods::SOFTBANK_WEB_CVS: case LWP_Payment_Methods::SOFTBANK_PAYEASY: $info = unserialize($transaction->misc); ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('SPS Transaction ID'); ?></th>
@@ -166,12 +191,12 @@ if($is_detail):
 			<th scope="row" valign="top"><?php $this->e('CVS'); ?></th>
 			<td>
 				<?php echo $this->softbank->get_verbose_name($info['cvs']); ?>
-				&nbsp;<small>(<?php echo $this->softbank->get_verbose_name($info['cvs'], true); ?>)</small>
+				&nbsp;<small>(<?php echo $this->softbank->get_cvs_code($info['cvs']); ?>)</small>
 			</td>
 			<td>---</td>
 		</tr>
 		<?php
-			$ticket_names = $this->softbank->get_cvs_howtos($info['cvs'], true);
+			$ticket_names = $this->softbank->get_cvs_code_label($info['cvs']);
 			for($i = 0, $l = count($ticket_names); $i < $l; $i++):
 		?>
 		<tr>
