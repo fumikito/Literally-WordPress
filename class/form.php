@@ -1316,7 +1316,8 @@ EOS;
 			$this->show_form('event-tickets-awaiting', array(
 				'ticket' => $this->_('Event Name').' '.$ticket->post_title,
 				'link' => admin_url('themes.php?page=lwp-form-check'),
-				'message' => $lwp->event->awaiting_message
+				'message' => apply_filters('lwp_event_awaiting_message', $lwp->event->awaiting_message),
+				'deregister' => false
 			));
 		}
 		//Get ticket
@@ -1328,6 +1329,10 @@ EOS;
 		//Check if ticket can be sold
 		if(lwp_get_ticket_stock(false, $ticket) > 0){
 			$this->kill(sprintf($this->_('%s has stock to sell.'), $ticket_name), 403, true);
+		}
+		//Check if tikcet can be buy
+		if(!lwp_is_event_available($ticket->post_parent)){
+			$this->kill(sprintf($this->_('Sorry, but selling limit of %s has been outdated.'), $ticket_name), 403, true);
 		}
 		//Check if ticket can be waited for canellation.
 		if(!$lwp->event->has_cancel_list($ticket->ID)){
@@ -1355,7 +1360,54 @@ EOS;
 		$this->show_form('event-tickets-awaiting', array(
 			'ticket' => $ticket_name,
 			'link' => get_permalink($ticket->post_parent),
-			'message' => $lwp->event->awaiting_message
+			'message' => apply_filters('lwp_event_awaiting_message', $lwp->event->awaiting_message),
+			'deregister' => false
+		));
+	}
+	
+	/**
+	 * Handle action for deregister cancel list.
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param boolean $is_sandbox
+	 */
+	private function handle_ticket_awaiting_deregister($is_sandbox = false){
+		global $lwp, $wpdb;
+		//First of all, user must be logged in
+		$this->kill_anonymous_user(false);
+		//Check nonce
+		if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_deregistere_cancel_list_'.get_current_user_id())){
+			$this->kill($this->_('Sorry, but you took a wrong action.'), 403);
+		}
+		//Get waiting transaction
+		$sql = "SELECT * FROM {$wpdb->posts} WHERE ID = %d AND post_type = %s AND post_status = 'publish'";
+		if(!isset($_REQUEST['ticket_id']) || !($ticket = $wpdb->get_row($wpdb->prepare($sql, $_REQUEST['ticket_id'], $lwp->event->post_type)))){
+			$this->kill($this->_('Specified ticket doesn\'t exist.'), 404);
+		}
+		$ticket_name = get_the_title($ticket->post_parent).' '.$ticket->post_title;
+		//Check if user has transaction
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND book_id = %d AND status = %s",
+				get_current_user_id(), $ticket->ID, LWP_Payment_Status::WAITING_CANCELLATION));
+		if(!$transaction){
+			$this->kill(sprintf($this->_('Sorry, but you are not on cancel list of %s'), $ticket_name), 404, true);
+		}
+		//If event limit is exceeded, user can't change.
+		if(!lwp_is_event_available($ticket->post_parent)){
+			$this->kill(sprintf($this->_('Sorry, but %s is already outdated and you can\'t change satus.'), $ticket_name), 403, true);
+		}
+		//All gree, now status will be changed.
+		$update = $wpdb->update($lwp->transaction, array(
+			'status' => LWP_Payment_Status::QUIT_WAITNG_CANCELLATION,
+			'updated' => gmdate('Y-m-d H:i:s')
+		), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+		if(!$update){
+			$this->kill($this->_('Sorry, but failed to change transaction satatus. Please try again later.'), 500);
+		}
+		do_action('lwp_deregister_cancel_list', $transaction->ID, get_current_user_id(), $ticket_name);
+		$this->show_form('event-tickets-awaiting', array(
+			'link' => get_permalink($ticket->post_parent),
+			'message' => apply_filters('lwp_deregister_event_awaiting_message', sprintf($this->_('You are now deregistered from the cancel list of <strong>%s</strong>.'), $ticket_name), $transaction->ID, $ticket, get_current_user_id()),
+			'deregister' => true
 		));
 	}
 	
@@ -1529,6 +1581,7 @@ EOS;
 	
 	/**
 	 * Stop processing transaction of not logged in user. 
+	 * @param boolean $kill if set to false, user will be auth_redirec-ed.
 	 */
 	private function kill_anonymous_user($kill = true){
 		if(!is_user_logged_in()){

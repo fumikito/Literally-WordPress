@@ -1023,6 +1023,28 @@ function lwp_has_ticket($post = null){
 }
 
 /**
+ * Returns if event is currently available
+ * @global Literally_WordPress $lwp
+ * @param object $post
+ * @param int $time Timestamp. Default false(= Now)
+ * @return boolean
+ */
+function lwp_is_event_available($post = null, $time = false){
+	global $lwp;
+	$post = get_post($post);
+	$limit = get_post_meta($post->ID, $lwp->event->meta_selling_limit, true);
+	if(!$limit || !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $limit)){
+		return false;
+	}
+	if(!$time){
+		$time = current_time('timestamp');
+	}elseif(!is_numeric($time)){
+		$time = strtotime($time);
+	}
+	return (boolean)($time <= strtotime($limit.' 23:59:59'));
+}
+
+/**
  * Returns if user can wait for cancellation
  * @global Literally_WordPress $lwp
  * @param object $post
@@ -1042,9 +1064,21 @@ function lwp_has_cancel_list($post = null){
  * @return string
  */
 function lwp_cancel_list_url($post = null){
-	global $lwp;
 	$post = get_post($post);
 	return lwp_endpoint('ticket-awaiting').'&ticket_id='.$post->ID;
+}
+
+/**
+ * Returns url of deregistere cancel list
+ * @param object $post
+ * @return string
+ */
+function lwp_cancel_list_dequeue_url($post = null, $user_id = false){
+	$post = get_post($post);
+	if(!$user_id){
+		$user_id = get_current_user_id();
+	}
+	return wp_nonce_url(lwp_endpoint('ticket-awaiting-deregister').'&ticket_id='.$post->ID, 'lwp_deregistere_cancel_list_'.$user_id);
 }
 
 /**

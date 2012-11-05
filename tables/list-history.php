@@ -133,9 +133,8 @@ EOS;
 					$url = $lwp->subscription->get_subscription_archive();
 					$title = $item->post_title;
 				}elseif($item->post_type == $lwp->event->post_type){
-					$parent_id = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $item->book_id));
-					$url = lwp_ticket_url($parent_id);
-					$title = get_the_title($parent_id).'&nbsp;'.$item->post_title;
+					$url = lwp_ticket_url($item->post_parent);
+					$title = get_the_title($item->post_parent).'&nbsp;'.$item->post_title;
 				}else{
 					$url = get_permalink($item->book_id);
 					$title = $item->post_title;
@@ -179,14 +178,26 @@ EOS;
 				$tag = ($item->status == LWP_Payment_Status::START)
 					? $lwp->_('Waiting for Payment')
 					: $lwp->_($item->status);
-				if($item->status == LWP_Payment_Status::START){
+				if($item->status == LWP_Payment_Status::START && false === array_search($item->method, array(LWP_Payment_Methods::PAYPAL, LWP_Payment_Methods::GMO_CC, LWP_Payment_Methods::SOFTBANK_CC))){
 					$tag .= '<br /><small><a href="'.lwp_endpoint('payment-info').'&transaction='.$item->ID.'">'.$lwp->_ ('Detail').'</a></small>';
 				}
 				if($item->post_type == $lwp->event->post_type){
-					if(lwp_is_cancelable($item->post_parent) && $item->status == LWP_Payment_Status::SUCCESS){
-						$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
-					}elseif($item->status != LWP_Payment_Status::WAITING_CANCELLATION){
-						$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';
+					switch ($item->status){
+						case LWP_Payment_Status::SUCCESS:
+							if(lwp_is_cancelable($item->post_parent)){
+								$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
+							}else{
+								$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';
+							}
+							break;
+						case LWP_Payment_Status::WAITING_CANCELLATION:
+							if(lwp_is_event_available($item->post_parent) && $lwp->event->has_cancel_list($item->post_parent)){
+								$tag .= sprintf('<br /><small><a href="%s" onclick="if(!confirm(\'%s\')) return false;">%s</a></small>', 
+										lwp_cancel_list_dequeue_url($item->book_id), 
+										esc_js(sprintf($lwp->_('Are you sure to deregister from cancel list of %s?'), get_the_title($item->post_parent).' '.$item->post_title)), 
+										$lwp->_('Deregister'));
+							}
+							break;
 					}
 				}
 				break;

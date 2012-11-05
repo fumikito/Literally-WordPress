@@ -34,9 +34,14 @@ class LWP_Payment_Status {
 	const REFUND_REQUESTING = 'REFUND_REQUESTING';
 	
 	/**
-	 * Transaction is on 
+	 * Transaction is on cancel list
 	 */
 	const WAITING_CANCELLATION = 'WAITING_CANCELLATION';
+	
+	/**
+	 * Quit from cancel list
+	 */
+	const QUIT_WAITNG_CANCELLATION = 'QUIT_WAITNG_CANCELLATION';
 	
 	/**
 	 * Returns all Status
@@ -49,7 +54,8 @@ class LWP_Payment_Status {
 			self::SUCCESS,
 			self::REFUND,
 			self::REFUND_REQUESTING,
-			self::WAITING_CANCELLATION
+			self::WAITING_CANCELLATION,
+			self::QUIT_WAITNG_CANCELLATION
 		);
 	}
 	
@@ -66,5 +72,6 @@ class LWP_Payment_Status {
 		$lwp->_('REFUND');
 		$lwp->_('REFUND_REQUESTING');
 		$lwp->_('WAITING_CANCELLATION');
+		$lwp->_('QUIT_WAITNG_CANCELLATION');
 	}
 }
