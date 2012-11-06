@@ -512,5 +512,4 @@
 	</div>
 	<!-- //Transfer -->
 
-
 </div><!-- //#lwp-tab -->

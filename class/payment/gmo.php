@@ -413,6 +413,103 @@ class LWP_GMO extends LWP_Japanese_Payment {
 	}
 	
 	/**
+	 * Parse Request from GMO Payment
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function parse_notification($post){
+		global $lwp, $wpdb;
+		//Parse request from GMO
+		//Check Proper request
+		if(!isset($post['PayType'], $post['Status'], $post['ShopID'], $post['AccessID'], $post['OrderID'])){
+			return false;
+		}
+		if($post['ShopID'] != $this->shop_id){
+			return false;
+		}
+		//Check order exists
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE transaction_key = %s", $post['OrderID']));
+		if(!$transaction){
+			return false;
+		}
+		//Check access ID
+		$data = unserialize($transaction->misc);
+		if(!isset($data['access_id']) || $data['access_id'] != $post['AccessID']){
+			return false;
+		}
+		//Check Payment type
+		switch($post['PayType']){
+			case '0': //Credit card
+				if(!isset($post['TranID']) || $post['TranID'] != $transaction->transaction_id){
+					return false;
+				}
+				break;
+			case '3': //CVS
+				if(!isset($post['CvsConfNo']) || $post['CvsReceiptNo'] != $data['receipt_no']){
+					return false;
+				}
+				break;
+			case '4': //PayEasy
+				if(!isset($post['EncryptReceiptNo']) || $post['EncryptReceiptNo'] != $data['encrypted_receipt_no']){
+					return false;
+				}
+				break;
+			default:
+				return false;
+				break;
+		}
+		//Check status
+		switch($post['Status']){
+			case 'UNPROCESSED':
+			case 'REQSUCCESS':
+				return false;
+				break;
+			case 'AUTH':
+			case 'SAUTH':
+				return false;
+				break;
+			case 'CAPTURE':
+			case 'PAYSUCCESS':
+			case 'SALES':
+				$status = LWP_Payment_Status::SUCCESS;
+				break;
+			case 'CANCEL':
+			case 'EXPIRED':
+			case 'PAYFAIL':
+			case 'VOID':
+				$status = LWP_Payment_Status::CANCEL;
+				break;
+			case 'RETURN':
+			case 'RETURNX':
+				$status = LWP_Payment_Status::REFUND;
+				break;
+			case 'AUTHENTICATED':
+			case 'AUTHPROCESS':
+			case 'CHECK':
+			default:
+				return false;
+				break;
+		}
+		if($status != $transaction->status){
+			//Status was changed.
+			$updated = $wpdb->update($lwp->transaction, array(
+				'status' => $status,
+				'updated' => gmdate('Y-m-d H:i:s')
+			), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+			if($updated){
+				do_action('lwp_update_transaction', $transaction->ID);
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	/**
 	 * Generate uniq transaction ID
 	 * @return string
 	 */

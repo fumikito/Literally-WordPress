@@ -1585,6 +1585,17 @@ EOS;
 	}
 	
 	/**
+	 * Handle request from GMO
+	 * @global Literally_WordPress $lwp
+	 * @return
+	 */
+	private function handle_gmo_payment(){
+		global $lwp;
+		echo intval(!(boolean)$lwp->gmo->parse_notification($_POST));
+		die();
+	}
+	
+	/**
 	 * Parse XML Data from Softbank Payment
 	 * @global Literally_WordPress $lwp
 	 */
