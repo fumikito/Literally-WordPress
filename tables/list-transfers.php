@@ -222,7 +222,9 @@ EOS;
 				return sprintf('<%1$s style="color: %3$s;">%2$s</%1$s>', $tag, sprintf($lwp->_('%d days left'), $left), $color); 
 				break;
 			case 'status':
-				return $lwp->_($item->status);
+				return ($item->status == LWP_Payment_Status::START)
+					? $lwp->_('Waiting for Payment')
+					: $lwp->_($item->status);
 				break;
 			case 'action':
 				return sprintf('<a href="%s" class="button">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Detail'));

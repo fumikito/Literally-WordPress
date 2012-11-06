@@ -108,4 +108,27 @@ class LWP_Payment_Methods {
 		$lwp->_('GMO_PAYEASY');
 		$lwp->_('GMO_WEB_CVS');
 	}
+	
+	/**
+	 * Returns transfer method
+	 * @return array
+	 */
+	public static function get_transfer_methods(){
+		return array(
+			self::GMO_PAYEASY,
+			self::GMO_WEB_CVS,
+			self::SOFTBANK_PAYEASY,
+			self::SOFTBANK_WEB_CVS,
+			self::TRANSFER
+		);
+	}
+	
+	/**
+	 * Returns if method is transfer
+	 * @param string $method
+	 * @return boolean
+	 */
+	public static function is_transfer($method){
+		return false !== array_search($method, self::get_transfer_methods());
+	}
 }

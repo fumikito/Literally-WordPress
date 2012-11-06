@@ -134,18 +134,7 @@ EOS;
 											 $item->post_title, $status, get_post_type_object($item->post_type)->labels->name);
 				break;
 			case 'published':
-				if($item->start_date){
-					if(strtotime($item->start_date) < time()){
-						$style = ' style="color:darkgray;"';
-						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($item->start_date)));
-					}else{
-						$style = '';
-						$time = sprintf($lwp->_('%s later'), human_time_diff(strtotime($item->start_date)));
-					}
-					return  "<span{$style}>".mysql2date(get_option('date_format'), $item->start_date).'<br /><small>'.$time.'</small></span>';
-				}else{
-					return '-';
-				}
+				return mysql2date(get_option('date_format'), $item->post_date);
 				break;
 			case 'selling_limit':
 				if($item->limit_date){
@@ -163,8 +152,18 @@ EOS;
 				}
 				break;
 			case 'event_starts':
-				$starts = lwp_event_starts(get_option('date_format'), $item->ID);
-				return $starts ? $starts : '---' ;
+				if($item->start_date){
+					if(strtotime($item->start_date) < time()){
+						$style = ' style="color:darkgray;"';
+						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($item->start_date)));
+					}else{
+						$style = '';
+						$time = sprintf($lwp->_('%s later'), human_time_diff(strtotime($item->start_date)));
+					}
+					return  "<span{$style}>".mysql2date(get_option('date_format'), $item->start_date).'<br /><small>'.$time.'</small></span>';
+				}else{
+					return '-';
+				}
 				break;
 			case 'tickets':
 				$tickets = get_posts("post_parent={$item->ID}&post_type={$lwp->event->post_type}");

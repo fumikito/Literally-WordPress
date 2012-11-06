@@ -241,7 +241,9 @@ EOS;
 				return number_format_i18n($item->price)." ({$lwp->option['currency_code']})";
 				break;
 			case 'method':
-				return $lwp->_($item->method);
+				return (false !== array_search($item->status, array(LWP_Payment_Status::WAITING_CANCELLATION, LWP_Payment_Status::QUIT_WAITNG_CANCELLATION)))
+					? '---'
+					: $lwp->_($item->method);
 				break;
 			case 'registered':
 				return mysql2date(get_option('date_format').get_option('time_format') , get_date_from_gmt($item->registered), false);
@@ -252,20 +254,30 @@ EOS;
 			case 'status':
 				switch($item->status){
 					case LWP_Payment_Status::SUCCESS:
-						$placeholder = '<strong style="color: green;">%s</strong>';
+						return sprintf('<strong style="color: green;">%s</strong>', $lwp->_($item->status));
 						break;
 					case LWP_Payment_Status::CANCEL:
 					case LWP_Payment_Status::REFUND:
-						$placeholder = '<strong style="color: #999999;">%s</strong>';
+					case LWP_Payment_Status::QUIT_WAITNG_CANCELLATION:
+						return sprintf('<span style="color: #999;">%s</span>', $lwp->_($item->status));
 						break;
 					case LWP_Payment_Status::REFUND_REQUESTING:
-						$placeholder = '<strong style="color: #f00;">%s</strong>';
+						return sprintf('<strong style="color: #f00;">%s</strong>', $lwp->_($item->status));
+						break;
+					case LWP_Payment_Status::WAITING_CANCELLATION:
+						return sprintf('<strong style="color: orange;">%s</strong>', $lwp->_($item->status));
+						break;
+					case LWP_Payment_Status::START:
+						if(LWP_Payment_Methods::is_transfer($item->method)){
+							return sprintf('<strong>%s<br /><small>(%s)</small></strong>', $lwp->_('Waiting for Payment'), $lwp->_($item->status));
+						}else{
+							return sprintf('<span style="color: #999;">%s<br /><small>(%s)</small></span>', $lwp->_('Abondoned'), $lwp->_($item->status));
+						}
 						break;
 					default:
-						$placeholder  = '%s';
+						return $lwp->_($item->status);
 						break;
 				}
-				return sprintf($placeholder, $lwp->_($item->status));
 				break;
 			case 'detail';
 				return '<p><a class="button" href="'.admin_url("admin.php?page=lwp-management&transaction_id={$item->ID}").'">'.$lwp->_("Detail").'</a></p>';

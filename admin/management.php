@@ -91,11 +91,24 @@ if($is_detail):
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Purchase Method'); ?></th>
 			<td>
-				<?php $this->e($transaction->method); ?>
+				<?php if(false !== array_search($transaction->status, array(LWP_Payment_Status::WAITING_CANCELLATION, LWP_Payment_Status::QUIT_WAITNG_CANCELLATION))): ?>
+					---
+				<?php else: ?>
+					<?php $this->e($transaction->method); ?>
+				<?php endif; ?>
 			</td>
 			<td>---</td>
 		</tr>
 		<?php switch($transaction->method): case LWP_Payment_Methods::PAYPAL: ?>
+		<?php if(false !== array_search($transaction->status, array(LWP_Payment_Status::WAITING_CANCELLATION, LWP_Payment_Status::QUIT_WAITNG_CANCELLATION))): ?>
+		<tr>
+			<th scope="row" valign="top"><?php $this->e('Waiting No.'); ?></th>
+			<td>
+				<?php echo esc_html($transaction->transaction_key); ?>
+			</td>
+			<td>---</td>
+		</tr>
+		<?php else: ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Invoice Num'); ?></th>
 			<td>
@@ -113,6 +126,7 @@ if($is_detail):
 			</td>
 			<td>---</td>
 		</tr>
+		<?php endif; ?>
 		<?php break; case LWP_Payment_Methods::APPLE: case LWP_Payment_Methods::ANDROID: ?>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Transaction ID'); ?></th>
