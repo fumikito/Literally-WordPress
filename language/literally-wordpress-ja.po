@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-06 12:25+0900\n"
-"PO-Revision-Date: 2012-11-06 12:25+0900\n"
+"POT-Creation-Date: 2012-11-06 16:04+0900\n"
+"PO-Revision-Date: 2012-11-06 16:07+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -181,7 +181,7 @@ msgstr "キャンペーンアイテム"
 
 #: ../admin/campaign.php:31 ../admin/management.php:48 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:87 ../admin/settings/subscription.php:2
-#: ../class/campaign.php:265 ../class/form.php:730 ../class/form.php:783
+#: ../class/campaign.php:265 ../class/form.php:746 ../class/form.php:799
 #: ../class/subscription.php:81
 #: ../class/base/literally-wordpress-common.php:133
 #: ../tables/list-campaign.php:164 ../tables/list-history.php:145
@@ -514,7 +514,7 @@ msgstr "販売期限"
 msgid "Limit to cancel"
 msgstr "キャンセル期限"
 
-#: ../admin/event.php:68 ../class/event.php:924 ../class/form.php:1110
+#: ../admin/event.php:68 ../class/event.php:924 ../class/form.php:1126
 #: ../form-template/edit-detail-event.php:155
 #: ../form-template/paypal-cancel-ticket.php:13
 #: ../form-template/paypal-event-tickets-consume.php:15
@@ -523,7 +523,7 @@ msgid "Ticket Name"
 msgstr "チケット名"
 
 #: ../admin/event.php:69 ../admin/management.php:523 ../class/event.php:925
-#: ../class/form.php:632 ../class/form.php:1112
+#: ../class/form.php:633 ../class/form.php:1128
 #: ../class/literally-wordpress.php:1216 ../class/subscription.php:194
 #: ../form-template/edit-detail-event.php:115
 #: ../form-template/edit-detail.php:24
@@ -548,7 +548,7 @@ msgid "Sold"
 msgstr "販売数"
 
 #: ../admin/event.php:72 ../admin/management.php:87 ../class/event.php:927
-#: ../class/form.php:1114 ../form-template/paypal-event-tickets-consume.php:19
+#: ../class/form.php:1130 ../form-template/paypal-event-tickets-consume.php:19
 #: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr "使用分"
@@ -713,7 +713,7 @@ msgstr "項目名"
 #: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:60 ../admin/settings/dashboard.php:111
 #: ../admin/settings/dashboard.php:143 ../admin/settings/payment.php:7
-#: ../class/form.php:631 ../class/literally-wordpress.php:577
+#: ../class/form.php:632 ../class/literally-wordpress.php:577
 #: ../class/literally-wordpress.php:617 ../tables/list-history.php:46
 #: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
@@ -1121,7 +1121,7 @@ msgstr "購入価格"
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:87 ../class/event.php:926 ../class/form.php:1113
+#: ../admin/management.php:87 ../class/event.php:926 ../class/form.php:1129
 #: ../class/literally-wordpress.php:1215
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
@@ -1167,13 +1167,13 @@ msgid "Approved No."
 msgstr "承認番号"
 
 #: ../admin/management.php:172 ../admin/management.php:223
-#: ../admin/management.php:234 ../class/form.php:637 ../class/form.php:656
+#: ../admin/management.php:234 ../class/form.php:638 ../class/form.php:661
 #: ../form-template/paypal-payment.php:175 ../tables/list-transfers.php:159
 msgid "Payment Limit"
 msgstr "支払い期限"
 
 #: ../admin/management.php:177 ../admin/management.php:205
-#: ../class/form.php:667 ../class/form.php:683
+#: ../class/form.php:672 ../class/form.php:688
 #: ../form-template/paypal-payment.php:143
 msgid "CVS"
 msgstr "コンビニ"
@@ -1186,7 +1186,7 @@ msgstr "SPS決済ID"
 msgid "Notification Code"
 msgstr "通知コード"
 
-#: ../admin/management.php:237 ../class/form.php:637
+#: ../admin/management.php:237 ../class/form.php:638
 #: ../tables/list-history.php:172 ../tables/list-transfers.php:222
 #, php-format
 msgid "%d days left"
@@ -1490,7 +1490,7 @@ msgstr "ファイルが削除されました。"
 msgid "Failed to delete file."
 msgstr "ファイルの削除に失敗しました。"
 
-#: ../admin/upload.php:98 ../class/form.php:1662
+#: ../admin/upload.php:98 ../class/form.php:1678
 #: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr "処理中&hellip;"
@@ -1844,9 +1844,9 @@ msgstr ""
 #: ../admin/settings/misc.php:62 ../admin/settings/payment.php:87
 #: ../admin/settings/payment.php:122 ../admin/settings/payment.php:133
 #: ../admin/settings/payment.php:144 ../admin/settings/payment.php:155
-#: ../admin/settings/payment.php:172 ../admin/settings/payment.php:459
+#: ../admin/settings/payment.php:172 ../admin/settings/payment.php:468
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1942
+#: ../admin/settings/post.php:72 ../class/form.php:1958
 msgid "More &gt;"
 msgstr "もっと &gt;"
 
@@ -2059,21 +2059,21 @@ msgstr ""
 "契約し、認証用の情報を取得する必要があります。クレジットカードを有効にした場"
 "合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:191 ../admin/settings/payment.php:317
+#: ../admin/settings/payment.php:191 ../admin/settings/payment.php:326
 msgid "Sandbox"
 msgstr "サンドボックス"
 
-#: ../admin/settings/payment.php:196 ../admin/settings/payment.php:322
+#: ../admin/settings/payment.php:196 ../admin/settings/payment.php:331
 msgid "This is a develop enviorment and needs pseudo transaction."
 msgstr "これは開発環境であり、仮の決済情報を生成します。"
 
-#: ../admin/settings/payment.php:202 ../admin/settings/payment.php:328
+#: ../admin/settings/payment.php:202 ../admin/settings/payment.php:337
 #: ../form-template/paypal-selection.php:63
 #: ../form-template/paypal-selection.php:87
 msgid "Credit Card"
 msgstr "クレジットカード"
 
-#: ../admin/settings/payment.php:216 ../admin/settings/payment.php:342
+#: ../admin/settings/payment.php:216 ../admin/settings/payment.php:351
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted with."
@@ -2091,18 +2091,18 @@ msgstr ""
 "すが、ほとんどは５大国際サービスの代理店であるため、ユーザーの利便性を損なわ"
 "ないよう、すべてのクレジットカードを表示することはしません。"
 
-#: ../admin/settings/payment.php:224 ../admin/settings/payment.php:348
+#: ../admin/settings/payment.php:224 ../admin/settings/payment.php:357
 #: ../form-template/paypal-selection.php:109
 msgid "Web CVS"
 msgstr "コンビニ決済"
 
-#: ../admin/settings/payment.php:241 ../admin/settings/payment.php:365
+#: ../admin/settings/payment.php:241 ../admin/settings/payment.php:374
 #: ../form-template/paypal-payment.php:165
 #: ../form-template/paypal-selection.php:134
 msgid "PayEasy"
 msgstr "PayEasy"
 
-#: ../admin/settings/payment.php:246 ../admin/settings/payment.php:370
+#: ../admin/settings/payment.php:246 ../admin/settings/payment.php:379
 msgid "Enables PayEasy"
 msgstr "PayEasyを有効にする"
 
@@ -2148,7 +2148,23 @@ msgstr "終了："
 msgid "Hour format must be <strong>HH:MM</strong>."
 msgstr "書式は<strong>HH:MM</strong>でなくてはなりません。"
 
-#: ../admin/settings/payment.php:310
+#: ../admin/settings/payment.php:301
+msgid "Notification URL"
+msgstr "通知URL"
+
+#: ../admin/settings/payment.php:305
+msgid ""
+"If Web CVS or PayEasy is enabled, you must set up this URL as notification "
+"URL on GMO Payment Gateway's shop admin panel(Go to Manage Shop &gt; Shop "
+"Info &gt; Mail/Result notification and click &quot;edit&quot;.). Otherwise "
+"you loose payment status change."
+msgstr ""
+"コンビニ決済またはPayEasyを有効にした場合、このURLをGMOペイメント・ゲートウェ"
+"イのショップ管理画面で通知結果プログラムURLとして設定（ショップ管理 &gt; "
+"ショップ情報 &gt; メール／結果通知設定へ移動し、&quot;編集&quot;をクリック）"
+"してください。そうしないと、支払いステータスの変更がわからなくなります。"
+
+#: ../admin/settings/payment.php:319
 msgid ""
 "To use Softbank Payment, you have to contract with SOFTBANK Payment Service "
 "corp. and get credential infomation. If Credit Card is enabled, PayPal's "
@@ -2158,40 +2174,40 @@ msgstr ""
 "会社と契約し、認証用の情報を取得する必要があります。クレジットカードを有効に"
 "した場合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:374
+#: ../admin/settings/payment.php:383
 msgid "Name Kana on Invoice"
 msgstr "領収書に表示するカナ"
 
-#: ../admin/settings/payment.php:376 ../admin/settings/payment.php:383
+#: ../admin/settings/payment.php:385 ../admin/settings/payment.php:392
 #, php-format
 msgid "(%d letters max)"
 msgstr "（%d文字まで）"
 
-#: ../admin/settings/payment.php:381
+#: ../admin/settings/payment.php:390
 msgid "Name on Invoice"
 msgstr "領収虜に表示する名前"
 
-#: ../admin/settings/payment.php:387
+#: ../admin/settings/payment.php:396
 msgid "These values are required for PayEasy. Kana must be Zenkaku Kana."
 msgstr "これらの値はPayEasyに必須です。カナは全角カナにしてください。"
 
-#: ../admin/settings/payment.php:392
+#: ../admin/settings/payment.php:401
 msgid "Marchant ID"
 msgstr "マーチャントID"
 
-#: ../admin/settings/payment.php:398
+#: ../admin/settings/payment.php:407
 msgid "Service ID"
 msgstr "サービスID"
 
-#: ../admin/settings/payment.php:404
+#: ../admin/settings/payment.php:413
 msgid "Hash Key"
 msgstr "ハッシュキー"
 
-#: ../admin/settings/payment.php:410
+#: ../admin/settings/payment.php:419
 msgid "Service Prefix"
 msgstr "サービス接頭辞"
 
-#: ../admin/settings/payment.php:414
+#: ../admin/settings/payment.php:423
 msgid ""
 "Prefix is used to generate transaction ID for Softbank Payment. Must be "
 "alphanumeric and less than 9 letters. Once you start your service, please "
@@ -2200,19 +2216,19 @@ msgstr ""
 "接頭辞はソフトバンク・ペイメントの決済IDを生成するために使われます。8文字以下"
 "の半角英数字にしてください。サービス開始後は変更することはできません。"
 
-#: ../admin/settings/payment.php:419
+#: ../admin/settings/payment.php:428
 msgid "Crypt Information"
 msgstr "暗号化情報"
 
-#: ../admin/settings/payment.php:423
+#: ../admin/settings/payment.php:432
 msgid "Crypt Key"
 msgstr "暗号キー"
 
-#: ../admin/settings/payment.php:427
+#: ../admin/settings/payment.php:436
 msgid "IV (Initival Vector)"
 msgstr "IV（初期化ベクトル）"
 
-#: ../admin/settings/payment.php:429
+#: ../admin/settings/payment.php:438
 msgid ""
 "These keys are required for productional environment and will be provided "
 "<strong>after contract with SOFTBANK Payment Service corp.</strong>"
@@ -2220,26 +2236,26 @@ msgstr ""
 "これらのキーは本番環境で必要になります。<strong>ソフトバンク・ペイメント・"
 "サービス株式会社と契約後</strong>に提供されます。"
 
-#: ../admin/settings/payment.php:433
+#: ../admin/settings/payment.php:442
 msgid "Other Information"
 msgstr "その他の情報"
 
-#: ../admin/settings/payment.php:436
+#: ../admin/settings/payment.php:445
 #, php-format
 msgid "This server's IP Address: <code>%s</code><br />"
 msgstr "このサーバのIPアドレス: <code>%s</code><br />"
 
-#: ../admin/settings/payment.php:437
+#: ../admin/settings/payment.php:446
 #, php-format
 msgid "Endpoint: <code>%s</code><br />"
 msgstr "エンドポイント: <code>%s</code><br />"
 
-#: ../admin/settings/payment.php:438
+#: ../admin/settings/payment.php:447
 #, php-format
 msgid "PHP Mcrypt Extentions: <strong>%s</strong>."
 msgstr "PHP Mcrypt拡張: <strong>%s</strong>"
 
-#: ../admin/settings/payment.php:441
+#: ../admin/settings/payment.php:450
 msgid ""
 "This server is not ready for productional environment. Please contact to "
 "your server admin and ask him to install PHP Mcrypt."
@@ -2247,7 +2263,7 @@ msgstr ""
 "このサーバーは本番環境に対応していません。サーバ管理者にPHP Mcryptをインス"
 "トールするよう依頼してください。"
 
-#: ../admin/settings/payment.php:457
+#: ../admin/settings/payment.php:466
 msgid ""
 "If you accept transfer, users can pay with bank account or something that is "
 "not digital transaction."
@@ -2255,7 +2271,7 @@ msgstr ""
 "送金を受け付けると、ユーザーは銀行振込のように、電子的な方法によらない決済を"
 "利用することができます。"
 
-#: ../admin/settings/payment.php:458
+#: ../admin/settings/payment.php:467
 msgid ""
 "This helps users, but transactional process has a little bit more complex, "
 "because you have to check actual bank account to know whether bank deposit "
@@ -2265,33 +2281,33 @@ msgstr ""
 "なります。あなたは銀行口座を確認して入金が行われたかどうかを確かめる必要があ"
 "ります。"
 
-#: ../admin/settings/payment.php:466
+#: ../admin/settings/payment.php:475
 msgid "Accept Transfer"
 msgstr "送金の受付"
 
-#: ../admin/settings/payment.php:469 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:478 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr "許可しない"
 
-#: ../admin/settings/payment.php:470 ../admin/settings/subscription.php:15
+#: ../admin/settings/payment.php:479 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr "許可する"
 
-#: ../admin/settings/payment.php:474
+#: ../admin/settings/payment.php:483
 msgid "Notification Frequency"
 msgstr "通知頻度"
 
-#: ../admin/settings/payment.php:478
+#: ../admin/settings/payment.php:487
 #, php-format
 msgid "Send reminder on every %s days"
 msgstr "%s日ごとに通知を送る"
 
-#: ../admin/settings/payment.php:484
+#: ../admin/settings/payment.php:493
 #, php-format
 msgid "Transaction expires by %s days"
 msgstr "トランザクションは%s日で期限切れになります。"
 
-#: ../admin/settings/payment.php:489
+#: ../admin/settings/payment.php:498
 msgid ""
 "If you don't want to send reminder, set notification frequency to 0. "
 "Transfer transaction will be expired after notification limit days will have "
@@ -2300,11 +2316,11 @@ msgstr ""
 "通知を送りたくない場合は通知頻度を0にしてください。送金によるトランザクション"
 "は期限日を過ぎると無効になります。"
 
-#: ../admin/settings/payment.php:494
+#: ../admin/settings/payment.php:503
 msgid "Notification Message"
 msgstr "通知メッセージ"
 
-#: ../admin/settings/payment.php:497
+#: ../admin/settings/payment.php:506
 #, php-format
 msgid "You can customize notification message <a href=\"%s\">here</a>."
 msgstr "通知メッセージは<a href=\"%s\">ここ</a>でカスタマイズできます。"
@@ -2944,11 +2960,11 @@ msgstr "このチケットを編集する権限がありません。"
 msgid "Mail Subject is empty."
 msgstr "メール件名が空です。"
 
-#: ../class/event.php:661 ../class/form.php:1436
+#: ../class/event.php:661 ../class/form.php:1452
 msgid "Mail body is empty."
 msgstr "メール本文が空です。"
 
-#: ../class/event.php:680 ../class/form.php:1437
+#: ../class/event.php:680 ../class/form.php:1453
 msgid "Recipients not set."
 msgstr "送信先がセットされていません。"
 
@@ -3039,7 +3055,7 @@ msgstr "ユーザーを特定するコード"
 msgid "You cannot access here."
 msgstr "この場所へのアクセスは禁止されています。"
 
-#: ../class/form.php:41 ../class/form.php:1037
+#: ../class/form.php:41 ../class/form.php:1053
 msgid "Sorry, but You might make unexpected action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
@@ -3051,7 +3067,7 @@ msgstr "あなたはすでに定期購読者になっています。購入する
 msgid "Sorry, but there is no subscription plan."
 msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
 
-#: ../class/form.php:128 ../class/form.php:391 ../class/form.php:756
+#: ../class/form.php:128 ../class/form.php:391 ../class/form.php:772
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr ""
 "おや、商品を見つけられませんでした。支払い可能な投稿があるかチェックしてくだ"
@@ -3065,7 +3081,7 @@ msgstr "このアイテムは販売中ではありません。"
 msgid "Sorry, but we can't accept this payment method."
 msgstr "もうしわけありません、この支払い方法は受け付けられません。"
 
-#: ../class/form.php:302 ../class/form.php:449 ../class/form.php:576
+#: ../class/form.php:302 ../class/form.php:449 ../class/form.php:577
 msgid "Failed to make transaction."
 msgstr "トランザクションを開始できませんでした。"
 
@@ -3145,89 +3161,94 @@ msgstr "姓カナ"
 msgid "First Name Kana"
 msgstr "名カナ"
 
-#: ../class/form.php:615
+#: ../class/form.php:616
 msgid "Specified transaction is not found."
 msgstr "指定された決済情報が見つかりません。"
 
-#: ../class/form.php:631 ../tables/list-history.php:185
+#: ../class/form.php:632 ../tables/list-history.php:185
 #: ../tables/list-management.php:272 ../tables/list-transfers.php:226
 msgid "Waiting for Payment"
 msgstr "支払い待ち"
 
-#: ../class/form.php:633
+#: ../class/form.php:634
 msgid "Requested Date"
 msgstr "申込日"
 
-#: ../class/form.php:638 ../class/notifier.php:130
+#: ../class/form.php:639 ../class/notifier.php:130
 msgid "Bank Account"
 msgstr "銀行口座"
 
-#: ../class/form.php:649
+#: ../class/form.php:651
+#, php-format
+msgid " (%d days past)"
+msgstr "（%d日経過）"
+
+#: ../class/form.php:653
 #, php-format
 msgid " (%d days left)"
 msgstr "（あと%d日）"
 
-#: ../class/form.php:668 ../class/form.php:684
+#: ../class/form.php:673 ../class/form.php:689
 msgid "How to pay"
 msgstr "支払い方法"
 
-#: ../class/form.php:694 ../form-template/paypal-return.php:19
+#: ../class/form.php:710 ../form-template/paypal-return.php:19
 msgid "Invoice No."
 msgstr "取引 No."
 
-#: ../class/form.php:765
+#: ../class/form.php:781
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../class/form.php:769
+#: ../class/form.php:785
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../class/form.php:826
+#: ../class/form.php:842
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../class/form.php:941 ../class/ios.php:465 ../class/ios.php:487
+#: ../class/form.php:957 ../class/ios.php:465 ../class/ios.php:487
 #: ../class/post.php:629
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
-#: ../class/form.php:951
+#: ../class/form.php:967
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../class/form.php:983
+#: ../class/form.php:999
 msgid "Sorry, but you specified unexistant event."
 msgstr "申し訳ありません、イベントが見つかりません。"
 
-#: ../class/form.php:989
+#: ../class/form.php:1005
 #, php-format
 msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
 msgstr ""
 "申し訳ありません、キャンセル期限 %s が過ぎているため、キャンセルできません。"
 
-#: ../class/form.php:995
+#: ../class/form.php:1011
 msgid "Sorry, but you have no ticket to cancel."
 msgstr "申し訳ありませんが、キャンセルできるチケットがありません。"
 
-#: ../class/form.php:1001
+#: ../class/form.php:1017
 #, php-format
 msgid "%s charged."
 msgstr "手数料 %s"
 
-#: ../class/form.php:1031
+#: ../class/form.php:1047
 msgid "Deleted Ticket"
 msgstr "削除されたチケット"
 
-#: ../class/form.php:1037
+#: ../class/form.php:1053
 msgid "Cannot pass security check."
 msgstr "セキュリティチェックを通過できませんでした。"
 
-#: ../class/form.php:1051
+#: ../class/form.php:1067
 msgid "Sorry, but the tikcet id you specified is not cancelable."
 msgstr "申し訳ありません、指定されたチケットはキャンセルできません。"
 
-#: ../class/form.php:1068
+#: ../class/form.php:1084
 #, php-format
 msgid ""
 "Sorry, but PayPal denies refunding. Please contact to %1$s administrator."
@@ -3235,12 +3256,12 @@ msgstr ""
 "もうしわけありません、PayPalに返金を拒否されました。%1$s 管理者にコンタクトを"
 "とってください。"
 
-#: ../class/form.php:1092
+#: ../class/form.php:1108
 #, php-format
 msgid "You have successfully canceled <strong>%1$s x %2$d</strong>."
 msgstr "<strong>%1$s x %2$d</strong>をキャンセルいたしました。"
 
-#: ../class/form.php:1093
+#: ../class/form.php:1109
 #, php-format
 msgid ""
 "Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please "
@@ -3249,292 +3270,292 @@ msgstr ""
 "<strong>%1$s x %2$d</strong>の返金リンクエストが受け付けられました。返金処理"
 "が完了するまでしばらくお待ちください。"
 
-#: ../class/form.php:1111 ../form-template/paypal-cancel-ticket.php:14
+#: ../class/form.php:1127 ../form-template/paypal-cancel-ticket.php:14
 #: ../form-template/paypal-event-tickets-consume.php:16
 msgid "Bought"
 msgstr "購入日"
 
-#: ../class/form.php:1129
+#: ../class/form.php:1145
 msgid "A footer note which can be set on each post will be displayed here."
 msgstr "投稿ごとに設定できる註がここに表示されます。"
 
-#: ../class/form.php:1140 ../class/form.php:1198 ../class/form.php:1459
+#: ../class/form.php:1156 ../class/form.php:1214 ../class/form.php:1475
 msgid "Sorry, but no event is specified."
 msgstr "申し訳ありませんが、イベントが指定されておりません。"
 
-#: ../class/form.php:1154
+#: ../class/form.php:1170
 msgid "Sorry, but you have no tikcet to display."
 msgstr "申し訳ありませんが、表示できるチケットはございません。"
 
-#: ../class/form.php:1204
+#: ../class/form.php:1220
 msgid "Sorry, but specified user is not found."
 msgstr "もうしわけありません、ユーザーが見つかりません。"
 
-#: ../class/form.php:1208
+#: ../class/form.php:1224
 msgid "Sorry, but you have no capability to consume ticket."
 msgstr "申し訳ありませんが、チケットを消費する権限をお持ちでないようです。"
 
-#: ../class/form.php:1235
+#: ../class/form.php:1251
 #, php-format
 msgid "Sorry, but %s has no ticket on this event."
 msgstr "申し訳ありませんが、%sさんはこのイベントのチケットを持っていません。"
 
-#: ../class/form.php:1273 ../class/form.php:1444 ../class/form.php:1738
+#: ../class/form.php:1289 ../class/form.php:1460 ../class/form.php:1754
 msgid "Sorry, but event is not found."
 msgstr "申し訳ありませんが、イベントが見つかりません。"
 
-#: ../class/form.php:1277
+#: ../class/form.php:1293
 msgid "Sorry, but you have no permission."
 msgstr "申し訳ありませんが、権限をお持ちでありません。"
 
-#: ../class/form.php:1317 ../tables/list-event.php:33
+#: ../class/form.php:1333 ../tables/list-event.php:33
 msgid "Event Name"
 msgstr "イベント名"
 
-#: ../class/form.php:1326 ../class/form.php:1385
+#: ../class/form.php:1342 ../class/form.php:1401
 msgid "Specified ticket doesn't exist."
 msgstr "指定されたチケットは存在しません。"
 
-#: ../class/form.php:1331
+#: ../class/form.php:1347
 #, php-format
 msgid "%s has stock to sell."
 msgstr "%sは販売可能なチケットが残っています。"
 
-#: ../class/form.php:1335
+#: ../class/form.php:1351
 #, php-format
 msgid "Sorry, but selling limit of %s has been outdated."
 msgstr "申し訳ありません、販売期限 %s が過ぎています。"
 
-#: ../class/form.php:1339
+#: ../class/form.php:1355
 #, php-format
 msgid "Sorry, but %s dosen't have waiting list."
 msgstr "申し訳ありませんが、%sはキャンセル待ちを受け付けていません。"
 
-#: ../class/form.php:1343
+#: ../class/form.php:1359
 #, php-format
 msgid "You are already on waiting list of %s."
 msgstr "すでに%sのキャンセル待ちリストに追加されています。"
 
-#: ../class/form.php:1356
+#: ../class/form.php:1372
 msgid "Sorry, but failed to save data. Please retry later."
 msgstr "申し訳ございません、データを保存できませんでした。後で試してください。"
 
-#: ../class/form.php:1380
+#: ../class/form.php:1396
 msgid "Sorry, but you took a wrong action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
-#: ../class/form.php:1392
+#: ../class/form.php:1408
 #, php-format
 msgid "Sorry, but you are not on cancel list of %s"
 msgstr "申し訳ありませんが、%sのキャンセル待ちをしていません。"
 
-#: ../class/form.php:1396
+#: ../class/form.php:1412
 #, php-format
 msgid "Sorry, but %s is already outdated and you can't change satus."
 msgstr ""
 "申し訳ありません、%sの販売期限が過ぎているため、ステータスを変更できません。"
 
-#: ../class/form.php:1404
+#: ../class/form.php:1420
 msgid ""
 "Sorry, but failed to change transaction satatus. Please try again later."
 msgstr ""
 "申し訳ございません、決済ステータスを変更できませんでした。後で試してくださ"
 "い。"
 
-#: ../class/form.php:1409
+#: ../class/form.php:1425
 #, php-format
 msgid "You are now deregistered from the cancel list of <strong>%s</strong>."
 msgstr "<strong>%s</strong>のキャンセル待ちリストから削除されました。"
 
-#: ../class/form.php:1427
+#: ../class/form.php:1443
 #, php-format
 msgid "Admin email <%s>"
 msgstr "管理者メール <%s>"
 
-#: ../class/form.php:1428
+#: ../class/form.php:1444
 #, php-format
 msgid "Your email <%s>"
 msgstr "あなたのメール <%s>"
 
-#: ../class/form.php:1432
+#: ../class/form.php:1448
 msgid "Are you sure to send this mail? You can't cancel this action."
 msgstr "このメールを送信してよろしいですか？ このアクションは取り消せません。"
 
-#: ../class/form.php:1433
+#: ../class/form.php:1449
 msgid "Sending&hellip;"
 msgstr "送信中&hellip;"
 
-#: ../class/form.php:1434
+#: ../class/form.php:1450
 msgid "Please specify mail from."
 msgstr "メールの差出人を指定してください。"
 
-#: ../class/form.php:1435
+#: ../class/form.php:1451
 msgid "Subject is empty."
 msgstr "件名が空です。"
 
-#: ../class/form.php:1438 ../form-template/paypal-event-contact.php:74
+#: ../class/form.php:1454 ../form-template/paypal-event-contact.php:74
 msgid "Send"
 msgstr "送信"
 
-#: ../class/form.php:1463
+#: ../class/form.php:1479
 msgid "You do not have capability to contact participants."
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/form.php:1468
+#: ../class/form.php:1484
 #, php-format
 msgid "Post author email <%s>"
 msgstr "投稿者のメール <%s>"
 
-#: ../class/form.php:1476
+#: ../class/form.php:1492
 msgid "There is no one to contact."
 msgstr "コンタクトをとれるユーザーがいません。"
 
-#: ../class/form.php:1479
+#: ../class/form.php:1495
 #, php-format
 msgid "All Participants(%s people)"
 msgstr "すべての参加者（%s 人）"
 
-#: ../class/form.php:1482
+#: ../class/form.php:1498
 #, php-format
 msgid "All waitings(%s people)"
 msgstr "すべてのキャンセル待ち（%s人）"
 
-#: ../class/form.php:1495
+#: ../class/form.php:1511
 #, php-format
 msgid "Participants(%s people)"
 msgstr "参加者（%s 人）"
 
-#: ../class/form.php:1499
+#: ../class/form.php:1515
 #, php-format
 msgid "Waitings(%s people)"
 msgstr "キャンセル待ち（%s人）"
 
-#: ../class/form.php:1555 ../form-template/paypal-refund-account.php:18
+#: ../class/form.php:1571 ../form-template/paypal-refund-account.php:18
 msgid "Bank Name"
 msgstr "銀行名"
 
-#: ../class/form.php:1556 ../form-template/paypal-refund-account.php:34
+#: ../class/form.php:1572 ../form-template/paypal-refund-account.php:34
 msgid "Branch Name"
 msgstr "支店名"
 
-#: ../class/form.php:1557 ../form-template/paypal-refund-account.php:66
+#: ../class/form.php:1573 ../form-template/paypal-refund-account.php:66
 msgid "Account No."
 msgstr "口座番号"
 
-#: ../class/form.php:1558 ../form-template/paypal-refund-account.php:75
+#: ../class/form.php:1574 ../form-template/paypal-refund-account.php:75
 msgid "Account Holder"
 msgstr "口座名義"
 
-#: ../class/form.php:1561
+#: ../class/form.php:1577
 #, php-format
 msgid "%s is empty."
 msgstr "%sが空です。"
 
-#: ../class/form.php:1589
+#: ../class/form.php:1605
 msgid "You must be logged in to process transaction."
 msgstr "決済処理を進めるにはログインする必要があります。"
 
-#: ../class/form.php:1705
+#: ../class/form.php:1721
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../class/form.php:1715
+#: ../class/form.php:1731
 msgid "Selling limit has been past. There is no ticket available."
 msgstr "販売期限が過ぎています。ご利用になれるチケットはありません。"
 
-#: ../class/form.php:1721
+#: ../class/form.php:1737
 msgid "Sorry, but this ticket is sold out."
 msgstr "申し訳ありませんが、このチケットは売り切れです。"
 
-#: ../class/form.php:1750
+#: ../class/form.php:1766
 msgid "Dammy Ticket"
 msgstr "ダミーチケット"
 
-#: ../class/form.php:1815
+#: ../class/form.php:1831
 msgid "Select Payment"
 msgstr "支払い方法選択"
 
-#: ../class/form.php:1818
+#: ../class/form.php:1834
 msgid "Payment Information"
 msgstr "支払い情報"
 
-#: ../class/form.php:1821
+#: ../class/form.php:1837
 msgid "Payment Information Detail"
 msgstr "支払い情報詳細"
 
-#: ../class/form.php:1824 ../tables/list-refund.php:115
+#: ../class/form.php:1840 ../tables/list-refund.php:115
 msgid "Refund Account"
 msgstr "返金先口座"
 
-#: ../class/form.php:1827
+#: ../class/form.php:1843
 msgid "Transfer Accepted"
 msgstr "送金受付"
 
-#: ../class/form.php:1830
+#: ../class/form.php:1846
 msgid "Payment Confirmation"
 msgstr "支払い確認"
 
-#: ../class/form.php:1833
+#: ../class/form.php:1849
 msgid "Transaction Completed"
 msgstr "決済完了"
 
-#: ../class/form.php:1836
+#: ../class/form.php:1852
 msgid "Transaciton Canceled"
 msgstr "決済キャンセル"
 
-#: ../class/form.php:1839
+#: ../class/form.php:1855
 msgid "Ticket Cancel"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1842
+#: ../class/form.php:1858
 msgid "Ticket Canceled"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1845 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1861 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr "チケットリスト"
 
-#: ../class/form.php:1848
+#: ../class/form.php:1864
 msgid "Ticket Status"
 msgstr "チケットステータス"
 
-#: ../class/form.php:1851
+#: ../class/form.php:1867
 msgid "Waiting for ticket cancellation"
 msgstr "チケットのキャンセル待ち"
 
-#: ../class/form.php:1854
+#: ../class/form.php:1870
 msgid "Find User"
 msgstr "ユーザー検索"
 
-#: ../class/form.php:1857
+#: ../class/form.php:1873
 msgid "Contact to participants"
 msgstr "参加者へのコンタクト"
 
-#: ../class/form.php:1860
+#: ../class/form.php:1876
 msgid "Subscrition Plans"
 msgstr "定期購読プラン"
 
-#: ../class/form.php:1929 ../class/form.php:1932
+#: ../class/form.php:1945 ../class/form.php:1948
 msgid "Displays subscription plans."
 msgstr "定期購読プランを表示します。"
 
-#: ../class/form.php:1932
+#: ../class/form.php:1948
 msgid "User can select it and go to payment selection page."
 msgstr "ユーザーは選択した上で、支払い方法選択ページへ移動します。"
 
-#: ../class/form.php:1935
+#: ../class/form.php:1951
 msgid "Display thank you message when transaction finished."
 msgstr "決済が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1935 ../class/form.php:1960
+#: ../class/form.php:1951 ../class/form.php:1976
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr "ユーザーは5秒後にイベントページへリダイレクトされます。"
 
-#: ../class/form.php:1938
+#: ../class/form.php:1954
 msgid "Display message when user cancels transaction."
 msgstr "ユーザーが決済をキャンセルしたときにメッセージを表示します。"
 
-#: ../class/form.php:1941
+#: ../class/form.php:1957
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
@@ -3542,7 +3563,7 @@ msgstr ""
 "支払い方法を表示します。PayPalだけが支払い方法として有効なときにはこのフォー"
 "ムをスキップできます。"
 
-#: ../class/form.php:1945
+#: ../class/form.php:1961
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
@@ -3550,39 +3571,39 @@ msgstr ""
 "コンビニ決済、クレジットカードなどの支払い情報を入力するフォームを表示しま"
 "す。"
 
-#: ../class/form.php:1948
+#: ../class/form.php:1964
 msgid ""
 "Display currently quueued transaction. Especially for Web CVS or PayEasy."
 msgstr "現在処理中の決済情報を表示します。コンビニ決済、PayEasy向けです。"
 
-#: ../class/form.php:1951
+#: ../class/form.php:1967
 msgid ""
 "Display form of refund account which is required to complete refund process."
 msgstr "返金処理に必要な返金先アカウントを登録するためのフォームを表示します。"
 
-#: ../class/form.php:1954
+#: ../class/form.php:1970
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 "ユーザーがPayPalから戻ってきたときに決済を受諾するためのページを表示します。"
 
-#: ../class/form.php:1957 ../class/form.php:1963
+#: ../class/form.php:1973 ../class/form.php:1979
 msgid "Show list of tickets which user have bought."
 msgstr "ユーザーが購入したチケットのリストを表示します。"
 
-#: ../class/form.php:1957
+#: ../class/form.php:1973
 msgid "User can select ticket to cancel."
 msgstr "ユーザーはキャンセルするチケットを選択できます。"
 
-#: ../class/form.php:1957 ../class/form.php:1963
+#: ../class/form.php:1973 ../class/form.php:1979
 msgid "If user has no tickets, wp_die will be executed."
 msgstr "ユーザーがチケットを購入していない場合はwp_dieが実行されます。"
 
-#: ../class/form.php:1960
+#: ../class/form.php:1976
 msgid "Displays message to tell user cancel is completed."
 msgstr "キャンセル処理が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1966
+#: ../class/form.php:1982
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
@@ -3590,7 +3611,7 @@ msgstr ""
 "特定のユーザーが所有するチケットのリストを表示します。あなたはプルダウンメ"
 "ニューからチケットを使用済みにすることができます。"
 
-#: ../class/form.php:1969
+#: ../class/form.php:1985
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
@@ -3598,11 +3619,11 @@ msgstr ""
 "このプラグインが出力するコードからチケットの所有者を探します。このコードはイ"
 "ベント固有です。"
 
-#: ../class/form.php:1972
+#: ../class/form.php:1988
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
-#: ../class/form.php:1975
+#: ../class/form.php:1991
 msgid "Displayed when user choose to wait for cancellation."
 msgstr "ユーザーがキャンセル待ちを申し込んだときに表示されます。"
 
@@ -4571,14 +4592,16 @@ msgid "Subscribe"
 msgstr "定期購読"
 
 #: ../class/payment/gmo.php:159 ../class/payment/gmo.php:263
+#: ../class/payment/gmo.php:371
 msgid "Connection Error"
 msgstr "接続エラー"
 
-#: ../class/payment/gmo.php:244
+#: ../class/payment/gmo.php:244 ../class/payment/gmo.php:352
 msgid "Thank you for your order."
 msgstr "ご注文ありがとうございました。"
 
-#: ../class/payment/gmo.php:298 ../class/payment/softbank-payment.php:293
+#: ../class/payment/gmo.php:298 ../class/payment/gmo.php:408
+#: ../class/payment/softbank-payment.php:293
 #: ../class/payment/softbank-payment.php:375
 msgid ""
 "Payment requeist is succeeded, but failed to finish transaction. Please "

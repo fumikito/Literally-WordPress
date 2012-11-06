@@ -281,6 +281,50 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	}
 	
 	/**
+	 * Returns payeasy notice.
+	 * @param type $type
+	 * @param string $rtag if set false, raw string returns
+	 * @return array|string
+	 */
+	public function get_payeasy_notice($tag = 'li'){
+		$desc = array(
+			'notice' => array(
+				'お支払いの際、<strong>収納機関番号</strong>、<strong>お客様番号</strong>、<strong>確認番号</strong>が必要です。メモを取るか、このページを印刷してお持ちください。',
+				'みずほ銀行、りそな銀行、埼玉りそな銀行、三井住友銀行、ゆうちょ銀行、ちばぎんのATMでお支払いいただけます。',
+				'一部時間外手数料が発生する金融機関がございます。詳しくはお取引の金融機関にお問合せください。 ',
+				'法令改正のため、2007年1月4日より、<strong>ATMから10万円を超える現金の振込</strong>はできなくなりました。',
+				'ご利用明細票が領収書となりますので、お支払い後必ずお受け取りください。',
+				'ネットバンキングでのお支払いは金融機関に<strong>あらかじめ口座をお持ちの場合のみ</strong>ご利用いただけます。'
+			),
+			'atm' => array(
+				'上記の金融機関のATMで、<strong>「税金・料金払込み」</strong>を選択してください。',
+				'<strong>収納機関番号</strong>を入力し、<strong>「確認」</strong>を選択してください。',
+				'<strong>お客様番号</strong>を入力し、<strong>「確認」</strong>を選択してください。',
+				'<strong>確認番号</strong>を入力し、<strong>「確認」</strong>を選択してください。',
+				'表示される内容を確認のうえ、<strong>「確認」</strong>を選択してください。',
+				'<strong>「現金」</strong>または<strong>「キャッシュカード」</strong>を選択し、お支払いください。',
+				'ご利用明細票を必ずお受け取りください。',
+			),
+			'net' => array(
+				'ご利用の金融機関の案内に従って、<strong>ペイジーでのお支払い</strong>にお進みください。',
+				'<strong>収納機関番号</strong>、<strong>お客様番号</strong>、<strong>確認番号</strong>を入力してください。',
+				'お支払い内容を確認のうえ、料金をお支払いください。'
+			)
+		);
+		$return = array();
+		if($tag){
+			foreach($desc as $key => $d){
+				$return[$key] = implode('', array_map(create_function('$var', 'return "<'.$tag.'>".$var."</'.$tag.'>";'), $d));
+			}
+		}else{
+			foreach($desc as $key => $d){
+				$return[$key] = array_map('strip_tags', $d);
+			}
+		}
+		return $return;
+	}
+	
+	/**
 	 * Returns available CVS group
 	 * @param string $cvs
 	 * @return array

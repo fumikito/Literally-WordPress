@@ -302,6 +302,116 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		}
 	}
 	
+	
+	/**
+	 * Do PayEasy transaction and save result.
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @param string $item_name
+	 * @param int $post_id
+	 * @param price $price
+	 * @param int $quantity
+	 * @param array $creds
+	 * @return int
+	 */
+	public function do_payeasy_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
+		global $lwp, $wpdb;
+		$order_id = $this->generate_order_id();
+		$now = gmdate('Y-m-d H:i:s');
+		$user = get_userdata($user_id);
+		require_once('com/gmo_pg/client/common/ErrorHAndler.php');
+		require_once( 'com/gmo_pg/client/input/EntryTranPayEasyInput.php');
+		require_once( 'com/gmo_pg/client/input/ExecTranPayEasyInput.php');
+		require_once( 'com/gmo_pg/client/input/EntryExecTranPayEasyInput.php');
+		require_once( 'com/gmo_pg/client/tran/EntryExecTranPayEasy.php');
+
+		//入力パラメータクラスをインスタンス化します
+
+		//取引登録時に必要なパラメータ
+		$entryInput = new EntryTranPayEasyInput();
+		$entryInput->setShopId( $this->shop_id );
+		$entryInput->setShopPass( $this->shop_pass );
+		$entryInput->setOrderId( $order_id );
+		$entryInput->setAmount( $price);
+		$entryInput->setTax(0);
+
+		//決済実行のパラメータ
+		$execInput = new ExecTranPayEasyInput();
+		$execInput->setOrderId($order_id);
+		//顧客情報
+		$execInput->setCustomerName($this->convert_sjis( $creds['last_name'].$creds['first_name']));
+		$execInput->setCustomerKana($this->convert_sjis( $creds['last_name_kana'].$creds['first_name_kana']));
+		$execInput->setTelNo($this->convert_numeric($creds['tel']));
+		$execInput->setMailAddress($user->user_email);
+		//支払い期限日
+		$left_days = floor(($this->get_payment_limit($post_id, false, 'gmo-payeasy') - time()) / 60 / 60 / 24);
+		$execInput->setPaymentTermDay($left_days);
+		$blog_name = $this->convert_sjis(mb_convert_kana(get_bloginfo('name'), 'ASKV', 'utf-8'));
+		$execInput->setRegisterDisp1($blog_name);
+		$execInput->setReceiptsDisp1($this->convert_sjis(mb_convert_kana($this->_('Thank you for your order.'), 'ASKV', 'utf-8')));
+		$execInput->setReceiptsDisp11($blog_name);
+		$execInput->setReceiptsDisp12($this->convert_numeric($this->tel_no));
+		$execInput->setReceiptsDisp13($this->contact_starts.'-'.$this->contact_ends);
+		//取引登録＋決済実行の入力パラメータクラスをインスタンス化します
+		/* @var $input EntryExecTranPayEasyInput */
+		$input = new EntryExecTranPayEasyInput();
+		$input->setEntryTranPayEasyInput( $entryInput );
+		$input->setExecTranPayEasyInput( $execInput );
+		//API通信クラスをインスタンス化します
+		/* @var $exec EntryExecTranPayEasy */
+		$exe = new EntryExecTranPayEasy();
+		//パラメータオブジェクトを引数に、実行メソッドを呼びます。
+		//正常に終了した場合、結果オブジェクトが返るはずです。
+		/* @var $output EntryExecTranPayEasyOutput */
+		$output = $exe->exec( $input );
+		//実行後、その結果を確認します。
+		if( $exe->isExceptionOccured() ){
+			//取引の処理そのものがうまくいかない（通信エラー等）場合、例外が発生します。
+			$this->last_error = $this->_('Connection Error');
+			return 0;
+		}else{
+			//例外が発生していない場合、出力パラメータオブジェクトが戻ります。
+			if( $output->isErrorOccurred() ){//出力パラメータにエラーコードが含まれていないか、チェックしています。
+				$msg = array();
+				foreach(array_merge($output->getExecErrList(), $output->getEntryErrList()) as $errInfo){
+					/* @var $errInfo ErrHolder */
+					$msg[] = ((defined('WP_DEBUG') && WP_DEBUG) ? '['.$errInfo->getErrInfo().']' : '').
+							GMOErrorHandler::get_error_message($errInfo->getErrInfo());
+				}
+				$this->last_error = implode(' ', $msg);
+				return 0;
+			}else{
+				//例外発生せず、エラーの戻りもなく、3Dセキュアフラグもオフであるので、実行結果を表示します。
+				$inserted = $wpdb->insert($lwp->transaction,array(
+					"user_id" => $user_id,
+					"book_id" => $post_id,
+					"price" => $price,
+					"status" => LWP_Payment_Status::START,
+					"method" => LWP_Payment_Methods::GMO_PAYEASY,
+					"transaction_key" => $order_id,
+					"registered" => $now,
+					"updated" => $now,
+					'misc' => serialize(array(
+						'access_id' => $output->getAccessId(),
+						'access_pass' => $output->getAccessPass(),
+						'bill_date' => preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "$1-$2-$3 $4:$5:$6", $output->getPaymentTerm()),
+						'conf_no' => $output->getConfNo(),
+						'bkcode' => $output->getBkCode(),
+						'cust_id' => $output->getCustId(),
+						'encrypted_receipt_no' => $output->getEncryptReceiptNo()
+					))
+				), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s'));
+				if($inserted){
+					return $wpdb->insert_id;
+				}else{
+					$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+					return 0;
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Generate uniq transaction ID
 	 * @return string

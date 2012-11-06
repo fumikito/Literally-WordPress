@@ -553,6 +553,7 @@ EOS;
 									$transaction_id = $lwp->gmo->do_cvs_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars); 
 									break;
 								case $gmo_payeasy:
+									$transaction_id = $lwp->gmo->do_payeasy_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $vars);
 									break;
 							}
 							if(($transaction_id)){
@@ -606,7 +607,7 @@ EOS;
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
-		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_WEB_CVS)));
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY)));
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
 EOS;
@@ -645,9 +646,13 @@ EOS;
 				$limit_date = $data['bill_date'];
 			}
 			if($transaction->status == LWP_Payment_Status::START){
-				$left_days = floor((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
-				$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
-				if($left_days < 1){
+				$left_days = floor(strtotime($limit_date) - strtotime(date('Y-m-d'))) / 60 / 60 / 24;
+				if($left_days < 0){
+					$request_suffix = sprintf($this->_(' (%d days past)'), $left_days);
+				}else{
+					$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
+				}
+				if($left_days < 3){
 					$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
 				}
 			}else{
@@ -687,6 +692,17 @@ EOS;
 					if(!empty($data['conf_no'])){
 						$rows[] = array('確認番号', $data['conf_no']);
 					}
+					break;
+				case LWP_Payment_Methods::GMO_PAYEASY:
+					$notice = $lwp->gmo->get_payeasy_notice();
+					$rows = array_merge($rows, array(
+						array('収納機関番号', esc_html($data['bkcode'])),
+						array('お客様番号', esc_html($data['cust_id'])),
+						array('確認番号', esc_html($data['conf_no'])),
+						array('<i class="lwp-cc-icon icon-payeasy"></i><br />PayEasy注意事項', "<ul>{$notice['notice']}</ul>"),
+						array('ATMお支払い', "<ol>{$notice['atm']}</ol>"),
+						array('ネットバンキング', "<ol>{$notice['net']}</ol>")
+					));
 					break;
 				case LWP_Payment_Methods::SOFTBANK_PAYEASY:
 					$cust_number = explode('-', $data['cust_number']);

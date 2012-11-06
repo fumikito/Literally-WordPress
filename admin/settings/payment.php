@@ -297,6 +297,15 @@
 						</p>
 					</td>
 				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Notification URL'); ?></th>
+					<td>
+						<input type="text" readonly="readonly" onclick="this.select(0, this.value.length);" value="<?php echo esc_attr(lwp_endpoint('gmo-payment')); ?>" class="regular-text" />
+						<p class="description">
+							<?php $this->e('If Web CVS or PayEasy is enabled, you must set up this URL as notification URL on GMO Payment Gateway\'s shop admin panel(Go to Manage Shop &gt; Shop Info &gt; Mail/Result notification and click &quot;edit&quot;.). Otherwise you loose payment status change.'); ?>
+						</p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
