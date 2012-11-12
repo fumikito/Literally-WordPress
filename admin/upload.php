@@ -1,6 +1,7 @@
 <?php
 	/* @var $this LWP_Post */
-	
+
+	//Initial values
 	$file = false;
 	$uploading = false;
 	$uploaded = false;
@@ -10,11 +11,14 @@
 	$error = false;
 	$message = array();
 	$devices_registered = array();
-	//POSTが設定されていたら、アップロードアクション
-	if(
-		isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_upload")
-		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook"
-	){
+	//Check if current user can edit.
+	if(!isset($_REQUEST["post_id"], $_GET['tab']) || $_GET["tab"] != "ebook" || !user_can_edit_post(get_current_user_id(), $_REQUEST['post_id'])){
+		printf('<div class="error"><p>%s</p></div>', $this->_('You have no permission to upload file.'));
+		die();
+	}
+	//Post operation
+	if(isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_upload")){
+		//Upload action
 		//更新状態を変更
 		$uploaded = true;
 		//タイトルチェック
@@ -41,25 +45,22 @@
 			$message[] = $this->_ ('No device is specified.');
 			$error = true;
 		}
-		//エラー状態のチェック
+		//Check error
 		if(empty($message)){
-			$this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"]);
+			if($this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"])){
+				$message[] = $this->_('File is successfully uploaded.');
+			}else{
+				$message[] = sprintf($this->_('Sorry, but failed to upload file. Check permission of <code>%s</code>. It must be writable from WordPress.'), $this->file_directory);
+				$error = true;
+			}
 		}else{
 			$error = true;
 		}
-	}
-	//更新用アクション
-	elseif(
-		isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update")
-		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
-	){
+	}elseif(isset($_REQUEST["file_id"], $_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update")){
+		//Updating
 		$updating = true;
-	}
-	//更新完了アクション
-	elseif(
-		isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_updated")
-		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
-	){
+	}elseif(isset($_REQUEST["file_id"], $_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_updated")){
+		//Updated.
 		$updated = true;
 		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"])){
 			$message[] = $this->_ ('File is successfully updated.');
@@ -67,12 +68,8 @@
 			$message[] = $this->_('Failed to update file.');
 			$error = true;
 		}
-	}
-	//削除完了アクション
-	elseif(
-		isset($_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_deleted")
-		&& isset($_REQUEST["post_id"]) && $_GET["tab"] == "ebook" && isset($_REQUEST["file_id"])
-	){
+	}elseif(isset($_POST["_wpnonce"], $_REQUEST["file_id"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_deleted")){
+		//Deleted
 		$deleted = true;
 		if($this->delete_file($_REQUEST["file_id"])){
 			$message[] = $this->_('File deleted.');
@@ -80,13 +77,15 @@
 			$message[] = $this->_('Failed to delete file.');
 			$error = true;
 		}
-	}else
+	}else{
 		$uploading = true;
+	}
 	
-	//更新のとき
+	
+	//On updating
 	if($updating || $updated){
 		$file = $this->get_files(null, $_REQUEST["file_id"]);
-		if($req = $this->get_devices($_REQUEST['file_id'])){
+		if(($req = $this->get_devices($_REQUEST['file_id']))){
 			foreach($req as $r){
 				$devices_registered[] = $r->device_id;
 			}
@@ -99,7 +98,7 @@
 	<?php
 		if($updating || $updated){
 			wp_nonce_field("lwp_updated");
-			echo '<input type="hidden" name="file_id" value="'.$_REQUEST["file_id"].'" />';
+			echo '<input type="hidden" name="file_id" value="'.esc_attr($_REQUEST["file_id"]).'" />';
 		}else{
 			wp_nonce_field("lwp_upload");
 		}

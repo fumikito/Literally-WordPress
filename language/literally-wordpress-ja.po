@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-06 16:04+0900\n"
-"PO-Revision-Date: 2012-11-06 16:07+0900\n"
+"POT-Creation-Date: 2012-11-12 16:09+0900\n"
+"PO-Revision-Date: 2012-11-12 16:11+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -41,7 +41,7 @@ msgstr "登録されたファイル"
 msgid "File Name"
 msgstr "ファイル名"
 
-#: ../functions.php:477 ../admin/upload.php:178
+#: ../functions.php:477 ../admin/upload.php:177
 #: ../admin/settings/dashboard.php:144
 #: ../form-template/edit-detail-event.php:114
 msgid "Description"
@@ -236,7 +236,7 @@ msgstr "終了日"
 
 #: ../admin/campaign.php:132 ../admin/devices.php:32
 #: ../admin/personal-reward.php:107 ../admin/setting.php:53
-#: ../admin/upload.php:198 ../admin/upload.php:220
+#: ../admin/upload.php:197 ../admin/upload.php:219
 #: ../form-template/paypal-event-tickets-consume.php:41
 #: ../form-template/paypal-refund-account.php:85
 msgid "Update"
@@ -276,7 +276,7 @@ msgstr "すべてのアイテムに適用されるキャンペーン価格です
 msgid "Add new campaing"
 msgstr "新しいキャンペーンを追加"
 
-#: ../admin/devices.php:5 ../admin/upload.php:163 ../admin/upload.php:171
+#: ../admin/devices.php:5 ../admin/upload.php:162 ../admin/upload.php:170
 msgid "Devices"
 msgstr "端末"
 
@@ -1263,7 +1263,7 @@ msgstr "トップセールス"
 msgid "Royal user"
 msgstr "お得意様"
 
-#: ../admin/management.php:459 ../admin/upload.php:129
+#: ../admin/management.php:459 ../admin/upload.php:128
 #: ../form-template/reward-summary.php:63
 #: ../form-template/reward-summary.php:93
 msgid "Title"
@@ -1458,100 +1458,118 @@ msgstr "テンプレートファイルが%sにありません。"
 msgid "Transfer Management"
 msgstr "送金管理"
 
-#: ../admin/upload.php:22
+#: ../admin/upload.php:16
+msgid "You have no permission to upload file."
+msgstr "ファイルをアップロードする権限がありません。"
+
+#: ../admin/upload.php:26
 msgid "Title is empty."
 msgstr "タイトルが空です。"
 
-#: ../admin/upload.php:27
+#: ../admin/upload.php:31
 msgid "Select public status."
 msgstr "公開ステータスを選んでください。"
 
-#: ../admin/upload.php:32
+#: ../admin/upload.php:36
 msgid "No file is specified."
 msgstr "ファイルが指定されていません。"
 
-#: ../admin/upload.php:41
+#: ../admin/upload.php:45
 msgid "No device is specified."
 msgstr "端末が指定されていません。"
 
-#: ../admin/upload.php:65
+#: ../admin/upload.php:51
+msgid "File is successfully uploaded."
+msgstr "ファイルは更新されました。"
+
+#: ../admin/upload.php:53
+#, php-format
+msgid ""
+"Sorry, but failed to upload file. Check permission of <code>%s</code>. It "
+"must be writable from WordPress."
+msgstr ""
+"申し訳ありませんが、ファイルをアップロードできませんでした。<code>%s</code>の"
+"書き込み権限を確認してください。WordPressから書き込みできるようになっていない"
+"といけません。"
+
+#: ../admin/upload.php:66
 msgid "File is successfully updated."
 msgstr "ファイルは更新されました。"
 
-#: ../admin/upload.php:67
+#: ../admin/upload.php:68
 msgid "Failed to update file."
 msgstr "ファイルの更新に失敗しました。"
 
-#: ../admin/upload.php:78
+#: ../admin/upload.php:75
 msgid "File deleted."
 msgstr "ファイルが削除されました。"
 
-#: ../admin/upload.php:80
+#: ../admin/upload.php:77
 msgid "Failed to delete file."
 msgstr "ファイルの削除に失敗しました。"
 
-#: ../admin/upload.php:98 ../class/form.php:1678
+#: ../admin/upload.php:97 ../class/form.php:1689
 #: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr "処理中&hellip;"
 
-#: ../admin/upload.php:107
+#: ../admin/upload.php:106
 msgid "Manage files"
 msgstr "ファイル管理"
 
-#: ../admin/upload.php:111
+#: ../admin/upload.php:110
 msgid "Please update file information"
 msgstr "ファイル情報を更新してください。"
 
-#: ../admin/upload.php:113
+#: ../admin/upload.php:112
 msgid "Please upload file"
 msgstr "ファイルをアップロードしてください"
 
-#: ../admin/upload.php:133
+#: ../admin/upload.php:132
 msgid "Name of this file. ex. ePub for iBooks(2nd Edition)"
 msgstr "このファイルの名前です。 ex. iBooks用ePub（第2版）"
 
-#: ../admin/upload.php:138
+#: ../admin/upload.php:137
 msgid "Public Status"
 msgstr "公開ステータス"
 
-#: ../admin/upload.php:141 ../admin/settings/post.php:122
+#: ../admin/upload.php:140 ../admin/settings/post.php:122
 msgid "Public"
 msgstr "公開"
 
-#: ../admin/upload.php:142
+#: ../admin/upload.php:141
 msgid "Private"
 msgstr "非公開"
 
-#: ../admin/upload.php:143
+#: ../admin/upload.php:142
 msgid "Public status of this file. Private files won't be displayed."
 msgstr "このファイルの公開状態です。非公開のファイルは表示されません。"
 
-#: ../admin/upload.php:148
+#: ../admin/upload.php:147
 msgid "Access to File"
 msgstr "ファイルへのアクセス"
 
-#: ../admin/upload.php:151
+#: ../admin/upload.php:150
 msgid "Parchasers only"
 msgstr "購入者のみ"
 
-#: ../admin/upload.php:152
+#: ../admin/upload.php:151
 msgid "Members only"
 msgstr "会員のみ"
 
-#: ../admin/upload.php:153 ../admin/upload.php:156
+#: ../admin/upload.php:152 ../admin/upload.php:155
 #: ../tables/list-download-logs.php:155
 msgid "Anyone"
 msgstr "誰でも"
 
-#: ../admin/upload.php:155
+#: ../admin/upload.php:154
 msgid ""
 "File access permits user to <strong>download whole of the file</strong>."
 msgstr ""
 "ファイルへのアクセス権を持つユーザーは<strong>ファイル全体をダウンロード</"
 "strong>できます。"
 
-#: ../admin/upload.php:156
+#: ../admin/upload.php:155
 #, php-format
 msgid ""
 "If you want provide partial trial, <strong>make a partial file</strong> and "
@@ -1560,43 +1578,43 @@ msgstr ""
 "部分的なお試しを提供したいばあいは、<strong>その部分だけを含むファイル</"
 "strong>を作成し、それを&quot;%s&quot;に指定してください。"
 
-#: ../admin/upload.php:170
+#: ../admin/upload.php:169
 msgid "Check device which can read this file."
 msgstr "このファイルを読み込むことのできる端末を指定してください。"
 
-#: ../admin/upload.php:171
+#: ../admin/upload.php:170
 #, php-format
 msgid "To add device, go to %s."
 msgstr "デバイスの追加は%sで行ってください。"
 
-#: ../admin/upload.php:182
+#: ../admin/upload.php:181
 msgid "Enter if required."
 msgstr "必要ならば入力してください。"
 
-#: ../admin/upload.php:188
+#: ../admin/upload.php:187
 msgid "File"
 msgstr "ファイル"
 
-#: ../admin/upload.php:198 ../form-template/edit-detail-event.php:87
+#: ../admin/upload.php:197 ../form-template/edit-detail-event.php:87
 msgid "Add"
 msgstr "新規追加"
 
-#: ../admin/upload.php:200
+#: ../admin/upload.php:199
 msgid "Go to add file"
 msgstr "ファイルを追加する"
 
-#: ../admin/upload.php:209
+#: ../admin/upload.php:208
 msgid "Registered files"
 msgstr "登録されたファイル"
 
-#: ../admin/upload.php:215 ../class/literally-wordpress.php:640
+#: ../admin/upload.php:214 ../class/literally-wordpress.php:640
 #: ../form-template/edit-detail-event.php:75
 #: ../form-template/edit-detail-event.php:132 ../tables/list-campaign.php:120
 #: ../tables/list-devices.php:109
 msgid "Delete"
 msgstr "削除"
 
-#: ../admin/upload.php:215
+#: ../admin/upload.php:214
 msgid "Are you sure to delete?"
 msgstr "削除してよろしいですか？"
 
@@ -1846,7 +1864,7 @@ msgstr ""
 #: ../admin/settings/payment.php:144 ../admin/settings/payment.php:155
 #: ../admin/settings/payment.php:172 ../admin/settings/payment.php:468
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1958
+#: ../admin/settings/post.php:72 ../class/form.php:1969
 msgid "More &gt;"
 msgstr "もっと &gt;"
 
@@ -3209,7 +3227,7 @@ msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
 #: ../class/form.php:957 ../class/ios.php:465 ../class/ios.php:487
-#: ../class/post.php:629
+#: ../class/post.php:630
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
@@ -3300,7 +3318,7 @@ msgstr "申し訳ありませんが、チケットを消費する権限をお持
 msgid "Sorry, but %s has no ticket on this event."
 msgstr "申し訳ありませんが、%sさんはこのイベントのチケットを持っていません。"
 
-#: ../class/form.php:1289 ../class/form.php:1460 ../class/form.php:1754
+#: ../class/form.php:1289 ../class/form.php:1460 ../class/form.php:1765
 msgid "Sorry, but event is not found."
 msgstr "申し訳ありませんが、イベントが見つかりません。"
 
@@ -3451,111 +3469,111 @@ msgstr "口座名義"
 msgid "%s is empty."
 msgstr "%sが空です。"
 
-#: ../class/form.php:1605
+#: ../class/form.php:1616
 msgid "You must be logged in to process transaction."
 msgstr "決済処理を進めるにはログインする必要があります。"
 
-#: ../class/form.php:1721
+#: ../class/form.php:1732
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../class/form.php:1731
+#: ../class/form.php:1742
 msgid "Selling limit has been past. There is no ticket available."
 msgstr "販売期限が過ぎています。ご利用になれるチケットはありません。"
 
-#: ../class/form.php:1737
+#: ../class/form.php:1748
 msgid "Sorry, but this ticket is sold out."
 msgstr "申し訳ありませんが、このチケットは売り切れです。"
 
-#: ../class/form.php:1766
+#: ../class/form.php:1777
 msgid "Dammy Ticket"
 msgstr "ダミーチケット"
 
-#: ../class/form.php:1831
+#: ../class/form.php:1842
 msgid "Select Payment"
 msgstr "支払い方法選択"
 
-#: ../class/form.php:1834
+#: ../class/form.php:1845
 msgid "Payment Information"
 msgstr "支払い情報"
 
-#: ../class/form.php:1837
+#: ../class/form.php:1848
 msgid "Payment Information Detail"
 msgstr "支払い情報詳細"
 
-#: ../class/form.php:1840 ../tables/list-refund.php:115
+#: ../class/form.php:1851 ../tables/list-refund.php:115
 msgid "Refund Account"
 msgstr "返金先口座"
 
-#: ../class/form.php:1843
+#: ../class/form.php:1854
 msgid "Transfer Accepted"
 msgstr "送金受付"
 
-#: ../class/form.php:1846
+#: ../class/form.php:1857
 msgid "Payment Confirmation"
 msgstr "支払い確認"
 
-#: ../class/form.php:1849
+#: ../class/form.php:1860
 msgid "Transaction Completed"
 msgstr "決済完了"
 
-#: ../class/form.php:1852
+#: ../class/form.php:1863
 msgid "Transaciton Canceled"
 msgstr "決済キャンセル"
 
-#: ../class/form.php:1855
+#: ../class/form.php:1866
 msgid "Ticket Cancel"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1858
+#: ../class/form.php:1869
 msgid "Ticket Canceled"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1861 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1872 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr "チケットリスト"
 
-#: ../class/form.php:1864
+#: ../class/form.php:1875
 msgid "Ticket Status"
 msgstr "チケットステータス"
 
-#: ../class/form.php:1867
+#: ../class/form.php:1878
 msgid "Waiting for ticket cancellation"
 msgstr "チケットのキャンセル待ち"
 
-#: ../class/form.php:1870
+#: ../class/form.php:1881
 msgid "Find User"
 msgstr "ユーザー検索"
 
-#: ../class/form.php:1873
+#: ../class/form.php:1884
 msgid "Contact to participants"
 msgstr "参加者へのコンタクト"
 
-#: ../class/form.php:1876
+#: ../class/form.php:1887
 msgid "Subscrition Plans"
 msgstr "定期購読プラン"
 
-#: ../class/form.php:1945 ../class/form.php:1948
+#: ../class/form.php:1956 ../class/form.php:1959
 msgid "Displays subscription plans."
 msgstr "定期購読プランを表示します。"
 
-#: ../class/form.php:1948
+#: ../class/form.php:1959
 msgid "User can select it and go to payment selection page."
 msgstr "ユーザーは選択した上で、支払い方法選択ページへ移動します。"
 
-#: ../class/form.php:1951
+#: ../class/form.php:1962
 msgid "Display thank you message when transaction finished."
 msgstr "決済が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1951 ../class/form.php:1976
+#: ../class/form.php:1962 ../class/form.php:1987
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr "ユーザーは5秒後にイベントページへリダイレクトされます。"
 
-#: ../class/form.php:1954
+#: ../class/form.php:1965
 msgid "Display message when user cancels transaction."
 msgstr "ユーザーが決済をキャンセルしたときにメッセージを表示します。"
 
-#: ../class/form.php:1957
+#: ../class/form.php:1968
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
@@ -3563,7 +3581,7 @@ msgstr ""
 "支払い方法を表示します。PayPalだけが支払い方法として有効なときにはこのフォー"
 "ムをスキップできます。"
 
-#: ../class/form.php:1961
+#: ../class/form.php:1972
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
@@ -3571,39 +3589,39 @@ msgstr ""
 "コンビニ決済、クレジットカードなどの支払い情報を入力するフォームを表示しま"
 "す。"
 
-#: ../class/form.php:1964
+#: ../class/form.php:1975
 msgid ""
 "Display currently quueued transaction. Especially for Web CVS or PayEasy."
 msgstr "現在処理中の決済情報を表示します。コンビニ決済、PayEasy向けです。"
 
-#: ../class/form.php:1967
+#: ../class/form.php:1978
 msgid ""
 "Display form of refund account which is required to complete refund process."
 msgstr "返金処理に必要な返金先アカウントを登録するためのフォームを表示します。"
 
-#: ../class/form.php:1970
+#: ../class/form.php:1981
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 "ユーザーがPayPalから戻ってきたときに決済を受諾するためのページを表示します。"
 
-#: ../class/form.php:1973 ../class/form.php:1979
+#: ../class/form.php:1984 ../class/form.php:1990
 msgid "Show list of tickets which user have bought."
 msgstr "ユーザーが購入したチケットのリストを表示します。"
 
-#: ../class/form.php:1973
+#: ../class/form.php:1984
 msgid "User can select ticket to cancel."
 msgstr "ユーザーはキャンセルするチケットを選択できます。"
 
-#: ../class/form.php:1973 ../class/form.php:1979
+#: ../class/form.php:1984 ../class/form.php:1990
 msgid "If user has no tickets, wp_die will be executed."
 msgstr "ユーザーがチケットを購入していない場合はwp_dieが実行されます。"
 
-#: ../class/form.php:1976
+#: ../class/form.php:1987
 msgid "Displays message to tell user cancel is completed."
 msgstr "キャンセル処理が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:1982
+#: ../class/form.php:1993
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
@@ -3611,7 +3629,7 @@ msgstr ""
 "特定のユーザーが所有するチケットのリストを表示します。あなたはプルダウンメ"
 "ニューからチケットを使用済みにすることができます。"
 
-#: ../class/form.php:1985
+#: ../class/form.php:1996
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
@@ -3619,11 +3637,11 @@ msgstr ""
 "このプラグインが出力するコードからチケットの所有者を探します。このコードはイ"
 "ベント固有です。"
 
-#: ../class/form.php:1988
+#: ../class/form.php:1999
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
-#: ../class/form.php:1991
+#: ../class/form.php:2002
 msgid "Displayed when user choose to wait for cancellation."
 msgstr "ユーザーがキャンセル待ちを申し込んだときに表示されます。"
 
@@ -4245,27 +4263,27 @@ msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
 #: ../class/post.php:554
+msgid "PHP stops uploading."
+msgstr "PHPがアップロードを停止しました。"
+
+#: ../class/post.php:561
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせて"
 "ください。"
 
-#: ../class/post.php:557
-msgid "PHP stops uploading."
-msgstr "PHPがアップロードを停止しました。"
-
-#: ../class/post.php:721
+#: ../class/post.php:722
 #, php-format
 msgid "Can't make directory. Check parmissin of \"%s\""
 msgstr ""
 "ディレクトリを作成できませんでした。\"%s\"のパーミッションを確認してくださ"
 "い。"
 
-#: ../class/post.php:728
+#: ../class/post.php:729
 msgid "Directory isn't writable."
 msgstr "ディレクトリが書き込み不可能になっています"
 
-#: ../class/post.php:732
+#: ../class/post.php:733
 msgid ""
 "Your contents directory is inside plugins folder. Strongly recommended to "
 "place it outside of plugin folder to prevent it from being deleted on "
@@ -4274,11 +4292,11 @@ msgstr ""
 "コンテンツディレクトリがプラグインフォルダ内にあります。アップデート時に消さ"
 "れないよう、プラグインフォルダの外側に設置することをお勧めいたします。"
 
-#: ../class/post.php:739
+#: ../class/post.php:740
 msgid "Warning! This file is accessible!"
 msgstr "注意！このファイルはアクセスできます。"
 
-#: ../class/post.php:761
+#: ../class/post.php:762
 msgid "Directory is publically accessible via HTTP"
 msgstr "ディレクトリはHTTPでアクセスできてしまいます"
 

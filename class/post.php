@@ -410,7 +410,7 @@ EOS;
 		//Find directory and create if not exists.
 		$book_dir = $this->file_directory.DIRECTORY_SEPARATOR.$book_id;
 		if(!is_dir($book_dir)){
-			if(!@mkdir($book_dir)){
+			if(!@mkdir($book_dir, 0755, true)){
 				return false;
 			}
 		}
@@ -421,6 +421,7 @@ EOS;
 			return false;
 		}
 		//Write to database
+		$wpdb->show_errors();
 		$id = $wpdb->insert(
 			$lwp->files,
 			array(
@@ -436,20 +437,19 @@ EOS;
 			array("%d", "%s", "%s", "%s", "%d", "%d", "%s", "%s")
 		);
 		//Registr device
-		$inserted_id = $wpdb->insert_id;
-		if($inserted_id && !empty($devices)){
+		if($id && !empty($devices)){
 			foreach($devices as $d){
 				$wpdb->insert(
 					$lwp->file_relationships,
 					array(
-						"file_id" => $inserted_id,
+						"file_id" => $wpdb->insert_id,
 						"device_id" => $d
 					),
 					array("%d", "%d")
 				);
 			}
 		}
-		return $wpdb->insert_id;
+		return $id;
 	}
 	
 	/**
@@ -550,14 +550,15 @@ EOS;
             case UPLOAD_ERR_NO_TMP_DIR: 
                 $message = $this->_("No tmp directory exists. Contact to your server administrator."); 
                 break; 
-            case UPLOAD_ERR_CANT_WRITE: 
-                $message = $this->_("Failed to save the uploaded file. Contact to your server administrator.");; 
-                break; 
             case UPLOAD_ERR_EXTENSION: 
                 $message = $this->_("PHP stops uploading."); 
                 break;
 			case UPLOAD_ERR_OK:
 				$message = false;
+				break;
+            case UPLOAD_ERR_CANT_WRITE: 
+			default:
+                $message = $this->_("Failed to save the uploaded file. Contact to your server administrator.");; 
 				break;
 		}
 		return $message;
