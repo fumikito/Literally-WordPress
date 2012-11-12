@@ -150,7 +150,7 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	 */
 	public function save_user_default($user_id, $post_data, $context = 'sb-cc'){
 		$keys = $this->get_default_payment_info($user_id, $context);
-		foreach($keys as $key){
+		foreach($keys as $key => $value){
 			if(isset($post_data[$key])){
 				update_user_meta($user_id, $key, $post_data[$key]);
 			}

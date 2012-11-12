@@ -1,12 +1,6 @@
 <?php
 /**
- * 処理区分の定数定義
- * 
- * @package com.gmo_pg.client
- * @subpackage common
- * @author GMO PaymentGateway
- * @version 1.0
- * @created 01-01-2008 00:00:00
+ * GMO処理区分の定数定義
  */
 
 /**
@@ -38,5 +32,3 @@ define('JOBCODE_SALES', "SALES");
  *
  */
 define('JOBCODE_CANCEL', "CANCEL");
-
-?>

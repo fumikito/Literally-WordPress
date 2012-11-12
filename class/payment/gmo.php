@@ -89,13 +89,10 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		$this->contact_starts = (string)$option['gmo_contact_starts'];
 		$this->contact_ends = (string)$option['gmo_contact_ends'];
 	}
-	
-	/**
-	 * Do on construct
-	 */
+		
 	public function on_construct() {
 		if($this->is_enabled()){
-			set_include_path(get_include_path() . PATH_SEPARATOR . $this->dir.'libs'.DIRECTORY_SEPARATOR.'gmo');
+			require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'gmo_endpoints.php';
 		}
 	}
 	
@@ -117,79 +114,46 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		global $wpdb, $lwp;
 		$order_id = $this->generate_order_id();
 		$now = gmdate('Y-m-d H:i:s');
-		//Include Required files.
-		require_once('com/gmo_pg/client/common/Method.php');
-		require_once('com/gmo_pg/client/common/JobCode.php');
-		require_once('com/gmo_pg/client/common/ErrorHAndler.php');
-		require_once('com/gmo_pg/client/input/EntryTranInput.php');
-		require_once('com/gmo_pg/client/input/ExecTranInput.php');
-		require_once('com/gmo_pg/client/input/EntryExecTranInput.php');
-		require_once('com/gmo_pg/client/tran/EntryExecTran.php');
-
-		//取引登録時に必要なパラメータ
-		$entryInput = new EntryTranInput();
-		$entryInput->setShopId( $this->shop_id );
-		$entryInput->setShopPass( $this->shop_pass );
-		$entryInput->setJobCd(JOBCODE_CAPTURE);
-		$entryInput->setOrderId($order_id);
-		//$entryInput->setItemCode( $_POST['ItemCode'] );
-		$entryInput->setAmount($price);
-		$entryInput->setTax(0);
-		$entryInput->setTdFlag(0);
-		//$entryInput->setTdTenantName( $_POST['TdTenantName']);
-		//決済実行のパラメータ
-		$execInput = new ExecTranInput();
-		$execInput->setOrderId($order_id);
-		$execInput->setMethod( METHOD_IKKATU );
-		$execInput->setCardNo($cc_number);
-		$execInput->setExpire(substr($expiration, 2, 4));
-		$execInput->setSecurityCode($cc_sec);
-		//取引登録＋決済実行の入力パラメータクラスをインスタンス化します
-		$input = new EntryExecTranInput();
-		$input->setEntryTranInput( $entryInput );
-		$input->setExecTranInput( $execInput );
-		//API通信クラスをインスタンス化します
-		$exe = new EntryExecTran();
-		//パラメータオブジェクトを引数に、実行メソッドを呼びます。
-		//正常に終了した場合、結果オブジェクトが返るはずです。
-		$output = $exe->exec( $input );
-		//実行後、その結果を確認します。
-		if( $exe->isExceptionOccured() ){
-			//取引の処理そのものがうまくいかない（通信エラー等）場合、例外が発生します。
-			$this->last_error = $this->_('Connection Error');
+		$result = GMO_Endpoints::exec_tran_cc($this->is_sandbox, array(
+			'ShopID' => $this->shop_id,
+			'ShopPass' => $this->shop_pass,
+			'OrderID' => $order_id,
+			'JobCd' => JOBCODE_CAPTURE,
+			'Amount' => $price,
+			'Tax' => 0,
+			'TdFlag' => 0,
+			'Method' => METHOD_IKKATU,
+			'PayTimes' => 1,
+			'CardNo' => $cc_number,
+			'Expire' => substr($expiration, 2, 4),
+			'SecurityCode' => $cc_sec
+		));
+		
+		//Check result
+		if(!$result['success']){
+			//Error occurred
+			$this->last_error = implode(' ', $result['message']);
 			return 0;
 		}else{
-			//例外が発生していない場合、出力パラメータオブジェクトが戻ります。
-			if( $output->isErrorOccurred() ){
-				//出力パラメータにエラーコードが含まれていないか、チェックしています。
-				$msg = array();
-				foreach(array_merge($output->getExecErrList(), $output->getEntryErrList()) as $errInfo){
-					/* @var $errInfo ErrHolder */
-					$msg[] = ((defined('WP_DEBUG') && WP_DEBUG) ? '['.$errInfo->getErrInfo().']' : '').
-							GMOErrorHandler::get_error_message($errInfo->getErrInfo());
-				}
-				$this->last_error = implode(' ', $msg);
-				return 0;
-			}else{
-				//例外発生せず、エラーの戻りもなく、3Dセキュアフラグもオフであるので、実行結果を表示します。
-				$wpdb->insert($lwp->transaction, array(
-					"user_id" => $user_id,
-					"book_id" => $post_id,
-					"price" => $price,
-					"status" => LWP_Payment_Status::SUCCESS,
-					"method" => LWP_Payment_Methods::GMO_CC,
-					"transaction_key" => $order_id,
-					'transaction_id' => $output->getTranId(),
-					'payer_mail' => $output->getApprovalNo(),
-					"registered" => $now,
-					"updated" => $now,
-					'misc' => serialize(array(
-						'access_id' => $output->getAccessId(),
-						'access_pass' => $output->getAccessPass()
-					))
-				), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ));
-				return $wpdb->insert_id;
-			}
+			//Success
+			$wpdb->insert($lwp->transaction, array(
+				"user_id" => $user_id,
+				"book_id" => $post_id,
+				"price" => $price,
+				"status" => LWP_Payment_Status::SUCCESS,
+				"method" => LWP_Payment_Methods::GMO_CC,
+				"transaction_key" => $order_id,
+				'transaction_id' => $result['params']['TranID'],
+				'payer_mail' => $result['params']['Approve'],
+				"registered" => $now,
+				"updated" => $now,
+				'misc' => serialize(array(
+					'access_id' => $result['params']['AccessID'],
+					'access_pass' => $result['params']['AccessPass']
+				))
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ));
+			return $wpdb->insert_id;
+			
 		}
 	}
 	
@@ -207,97 +171,61 @@ class LWP_GMO extends LWP_Japanese_Payment {
 	 */
 	public function do_cvs_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
 		global $lwp, $wpdb;
-		require_once('com/gmo_pg/client/common/ErrorHAndler.php');
-		require_once('com/gmo_pg/client/input/EntryTranCvsInput.php');
-		require_once('com/gmo_pg/client/input/ExecTranCvsInput.php');
-		require_once('com/gmo_pg/client/input/EntryExecTranCvsInput.php');
-		require_once('com/gmo_pg/client/tran/EntryExecTranCvs.php');
 		$order_id = $this->generate_order_id();
 		$now = gmdate('Y-m-d H:i:s');
 		$user = get_userdata($user_id);
 		$order_ids = explode('-', $order_id);
 		$reserve_no = $order_ids[1].'-'.$order_ids[2];
-		//取引登録時に必要なパラメータ
-		$entryInput = new EntryTranCvsInput();
-		$entryInput->setShopId($this->shop_id);
-		$entryInput->setShopPass($this->shop_pass);
-		$entryInput->setOrderId($order_id);
-		$entryInput->setAmount($price);
-		$entryInput->setTax(0);
-		//決済実行のパラメータ
-		$execInput = new ExecTranCvsInput();
-		$execInput->setOrderId($order_id);
-		//メールアドレス
-		$execInput->setConvenience($this->get_cvs_code($creds['cvs']));
-		$execInput->setCustomerName($this->convert_sjis( $creds['last_name'].$creds['first_name']));
-		$execInput->setCustomerKana($this->convert_sjis( $creds['last_name_kana'].$creds['first_name_kana']) );
-		$execInput->setTelNo($this->convert_numeric($creds['tel']));
-		$execInput->setMailAddress($user->user_email);
-		$execInput->setReserveNo($reserve_no);
-		$execInput->setMemberNo(sprintf('%08d', $user_id));
-		//支払い期限日
-		$left_days = floor(($this->get_payment_limit($post_id, false, 'gmo-cvs') - time()) / 60 / 60 / 24);
-		$execInput->setPaymentTermDay($left_days);
-		//表示項目・問い合わせ情報
-		$blog_name = $this->convert_sjis(mb_convert_kana(get_bloginfo('name'), 'ASKV', 'utf-8'));
-		$execInput->setRegisterDisp1($blog_name);
-		$execInput->setReceiptsDisp1($this->convert_sjis(mb_convert_kana($this->_('Thank you for your order.'), 'ASKV', 'utf-8')));
-		$execInput->setReceiptsDisp11($blog_name);
-		$execInput->setReceiptsDisp12($this->convert_numeric($this->tel_no));
-		$execInput->setReceiptsDisp13($this->contact_starts.'-'.$this->contact_ends);
-		//取引登録＋決済実行の入力パラメータクラスをインスタンス化します
-		/* @var $input EntryExecTranCvsInput */
-		$input = new EntryExecTranCvsInput();
-		$input->setEntryTranCvsInput( $entryInput );
-		$input->setExecTranCvsInput( $execInput );
-		//API通信クラスをインスタンス化します
-		/* @var $exec EntryExecTranCvs */
-		$exe = new EntryExecTranCvs();
-		//パラメータオブジェクトを引数に、実行メソッドを呼びます。
-		//正常に終了した場合、結果オブジェクトが返るはずです。
-		/* @var $output EntryExecTranCvsOutput */
-		$output = $exe->exec( $input );
-		//実行後、その結果を確認します。
-		if( $exe->isExceptionOccured() ){
-			//取引の処理そのものがうまくいかない（通信エラー等）場合、例外が発生します。
-			$this->last_error = $this->_('Connection Error');
+		$blog_name = $this->convert_sjis(trim(mb_convert_kana(get_bloginfo('name'), 'ASKV', 'utf-8')));
+		$result = GMO_Endpoints::exec_tran_cvs($this->is_sandbox, array(
+			'ShopID' => $this->shop_id,
+			'ShopPass' => $this->shop_pass,
+			'OrderID' => $order_id,
+			'Amount' => $price,
+			'Tax' => 0,
+			'Convenience' => $this->get_cvs_code($creds['cvs']),
+			'CustomerName' => $this->convert_sjis( trim($creds['last_name'].$creds['first_name'])),
+			'CustomerKana' => $this->convert_sjis( trim($creds['last_name_kana'].$creds['first_name_kana'])),
+			'TelNo' => $this->convert_numeric($creds['tel']),
+			'MailAddress' => $user->user_email,
+			'ReserveNo' => $reserve_no,
+			'MemberNo' => sprintf('%08d', $user_id),
+			'PaymentTermDay' => floor(($this->get_payment_limit($post_id, false, 'gmo-cvs') - time()) / 60 / 60 / 24),
+			'RegisterDisp1' => $blog_name,
+			'ReceiptsDisp1' => $this->convert_sjis(trim(mb_convert_kana($this->_('Thank you for your order.'), 'ASKV', 'utf-8'))),
+			'ReceiptsDisp11' => $blog_name,
+			'ReceiptsDisp12' => $this->convert_numeric($this->tel_no),
+			'ReceiptsDisp13' => $this->contact_starts.'-'.$this->contact_ends
+		));
+		//Check result
+		if(!$result['success']){
+			//Error occurred
+			$this->last_error = implode(' ', $result['message']);
 			return 0;
 		}else{
-			//例外が発生していない場合、出力パラメータオブジェクトが戻ります。
-			if( $output->isErrorOccurred() ){//出力パラメータにエラーコードが含まれていないか、チェックしています。
-				$msg = array();
-				foreach(array_merge($output->getExecErrList(), $output->getEntryErrList()) as $errInfo){
-					/* @var $errInfo ErrHolder */
-					$msg[] = ((defined('WP_DEBUG') && WP_DEBUG) ? '['.$errInfo->getErrInfo().']' : '').
-							GMOErrorHandler::get_error_message($errInfo->getErrInfo());
-				}
-				$this->last_error = implode(' ', $msg);
-				return 0;
+			$inserted = $wpdb->insert($lwp->transaction,array(
+				"user_id" => $user_id,
+				"book_id" => $post_id,
+				"price" => $price,
+				"status" => LWP_Payment_Status::START,
+				"method" => LWP_Payment_Methods::GMO_WEB_CVS,
+				"transaction_key" => $order_id,
+				"registered" => $now,
+				"updated" => $now,
+				'misc' => serialize(array(
+					'cvs' => $creds['cvs'],
+					'access_id' => $result['params']['AccessID'],
+					'access_pass' => $result['params']['AccessPass'],
+					'bill_date' => preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "$1-$2-$3 $4:$5:$6", $result['params']['PaymentTerm']),
+					'conf_no' => $result['params']['ConfNo'],
+					'receipt_no' => $result['params']['ReceiptNo'],
+				))
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s'));
+			if($inserted){
+				return $wpdb->insert_id;
 			}else{
-				$inserted = $wpdb->insert($lwp->transaction,array(
-					"user_id" => $user_id,
-					"book_id" => $post_id,
-					"price" => $price,
-					"status" => LWP_Payment_Status::START,
-					"method" => LWP_Payment_Methods::GMO_WEB_CVS,
-					"transaction_key" => $order_id,
-					"registered" => $now,
-					"updated" => $now,
-					'misc' => serialize(array(
-						'cvs' => $creds['cvs'],
-						'access_id' => $output->getAccessId(),
-						'access_pass' => $output->getAccessPass(),
-						'bill_date' => preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "$1-$2-$3 $4:$5:$6", $output->getPaymentTerm()),
-						'conf_no' => $output->getConfNo(),
-						'receipt_no' => $output->getReceiptNo(),
-					))
-				), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s'));
-				if($inserted){
-					return $wpdb->insert_id;
-				}else{
-					$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
-					return 0;
-				}
+				$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+				return 0;
 			}
 		}
 	}
@@ -320,94 +248,56 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		$order_id = $this->generate_order_id();
 		$now = gmdate('Y-m-d H:i:s');
 		$user = get_userdata($user_id);
-		require_once('com/gmo_pg/client/common/ErrorHAndler.php');
-		require_once( 'com/gmo_pg/client/input/EntryTranPayEasyInput.php');
-		require_once( 'com/gmo_pg/client/input/ExecTranPayEasyInput.php');
-		require_once( 'com/gmo_pg/client/input/EntryExecTranPayEasyInput.php');
-		require_once( 'com/gmo_pg/client/tran/EntryExecTranPayEasy.php');
-
-		//入力パラメータクラスをインスタンス化します
-
-		//取引登録時に必要なパラメータ
-		$entryInput = new EntryTranPayEasyInput();
-		$entryInput->setShopId( $this->shop_id );
-		$entryInput->setShopPass( $this->shop_pass );
-		$entryInput->setOrderId( $order_id );
-		$entryInput->setAmount( $price);
-		$entryInput->setTax(0);
-
-		//決済実行のパラメータ
-		$execInput = new ExecTranPayEasyInput();
-		$execInput->setOrderId($order_id);
-		//顧客情報
-		$execInput->setCustomerName($this->convert_sjis( $creds['last_name'].$creds['first_name']));
-		$execInput->setCustomerKana($this->convert_sjis( $creds['last_name_kana'].$creds['first_name_kana']));
-		$execInput->setTelNo($this->convert_numeric($creds['tel']));
-		$execInput->setMailAddress($user->user_email);
-		//支払い期限日
-		$left_days = floor(($this->get_payment_limit($post_id, false, 'gmo-payeasy') - time()) / 60 / 60 / 24);
-		$execInput->setPaymentTermDay($left_days);
 		$blog_name = $this->convert_sjis(mb_convert_kana(get_bloginfo('name'), 'ASKV', 'utf-8'));
-		$execInput->setRegisterDisp1($blog_name);
-		$execInput->setReceiptsDisp1($this->convert_sjis(mb_convert_kana($this->_('Thank you for your order.'), 'ASKV', 'utf-8')));
-		$execInput->setReceiptsDisp11($blog_name);
-		$execInput->setReceiptsDisp12($this->convert_numeric($this->tel_no));
-		$execInput->setReceiptsDisp13($this->contact_starts.'-'.$this->contact_ends);
-		//取引登録＋決済実行の入力パラメータクラスをインスタンス化します
-		/* @var $input EntryExecTranPayEasyInput */
-		$input = new EntryExecTranPayEasyInput();
-		$input->setEntryTranPayEasyInput( $entryInput );
-		$input->setExecTranPayEasyInput( $execInput );
-		//API通信クラスをインスタンス化します
-		/* @var $exec EntryExecTranPayEasy */
-		$exe = new EntryExecTranPayEasy();
-		//パラメータオブジェクトを引数に、実行メソッドを呼びます。
-		//正常に終了した場合、結果オブジェクトが返るはずです。
-		/* @var $output EntryExecTranPayEasyOutput */
-		$output = $exe->exec( $input );
-		//実行後、その結果を確認します。
-		if( $exe->isExceptionOccured() ){
-			//取引の処理そのものがうまくいかない（通信エラー等）場合、例外が発生します。
-			$this->last_error = $this->_('Connection Error');
+		$result = GMO_Endpoints::exec_tran_payeasy($this->is_sandbox, array(
+			'ShopID' => $this->shop_id,
+			'ShopPass' => $this->shop_pass,
+			'OrderID' => $order_id,
+			'Amount' => $price,
+			'Tax' => 0,
+			'Convenience' => $this->get_cvs_code($creds['cvs']),
+			'CustomerName' => $this->convert_sjis( trim($creds['last_name'].$creds['first_name'])),
+			'CustomerKana' => $this->convert_sjis( trim($creds['last_name_kana'].$creds['first_name_kana'])),
+			'TelNo' => $this->convert_numeric($creds['tel']),
+			'MailAddress' => $user->user_email,
+			'PaymentTermDay' => floor(($this->get_payment_limit($post_id, false, 'gmo-payeasy') - time()) / 60 / 60 / 24),
+			'RegisterDisp1' => $blog_name,
+			'ReceiptsDisp1' => $this->convert_sjis(trim(mb_convert_kana($this->_('Thank you for your order.'), 'ASKV', 'utf-8'))),
+			'ReceiptsDisp11' => $blog_name,
+			'ReceiptsDisp12' => $this->convert_numeric($this->tel_no),
+			'ReceiptsDisp13' => $this->contact_starts.'-'.$this->contact_ends
+		));
+		//Check result
+		if(!$result['success']){
+			//Error occurred
+			$this->last_error = implode(' ', $result['message']);
 			return 0;
 		}else{
-			//例外が発生していない場合、出力パラメータオブジェクトが戻ります。
-			if( $output->isErrorOccurred() ){//出力パラメータにエラーコードが含まれていないか、チェックしています。
-				$msg = array();
-				foreach(array_merge($output->getExecErrList(), $output->getEntryErrList()) as $errInfo){
-					/* @var $errInfo ErrHolder */
-					$msg[] = ((defined('WP_DEBUG') && WP_DEBUG) ? '['.$errInfo->getErrInfo().']' : '').
-							GMOErrorHandler::get_error_message($errInfo->getErrInfo());
-				}
-				$this->last_error = implode(' ', $msg);
-				return 0;
+			//例外発生せず、エラーの戻りもなく、3Dセキュアフラグもオフであるので、実行結果を表示します。
+			$inserted = $wpdb->insert($lwp->transaction,array(
+				"user_id" => $user_id,
+				"book_id" => $post_id,
+				"price" => $price,
+				"status" => LWP_Payment_Status::START,
+				"method" => LWP_Payment_Methods::GMO_PAYEASY,
+				"transaction_key" => $order_id,
+				"registered" => $now,
+				"updated" => $now,
+				'misc' => serialize(array(
+					'access_id' => $result['params']['AccessID'],
+					'access_pass' => $result['params']['AccessPass'],
+					'bill_date' => preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "$1-$2-$3 $4:$5:$6", $result['params']['PaymentTerm']),
+					'conf_no' => $result['params']['ConfNo'],
+					'bkcode' => $result['params']['BkCode'],
+					'cust_id' => $result['params']['CustID'],
+					'encrypted_receipt_no' => $result['params']['EncryptReceiptNo']
+				))
+			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s'));
+			if($inserted){
+				return $wpdb->insert_id;
 			}else{
-				//例外発生せず、エラーの戻りもなく、3Dセキュアフラグもオフであるので、実行結果を表示します。
-				$inserted = $wpdb->insert($lwp->transaction,array(
-					"user_id" => $user_id,
-					"book_id" => $post_id,
-					"price" => $price,
-					"status" => LWP_Payment_Status::START,
-					"method" => LWP_Payment_Methods::GMO_PAYEASY,
-					"transaction_key" => $order_id,
-					"registered" => $now,
-					"updated" => $now,
-					'misc' => serialize(array(
-						'access_id' => $output->getAccessId(),
-						'access_pass' => $output->getAccessPass(),
-						'bill_date' => preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "$1-$2-$3 $4:$5:$6", $output->getPaymentTerm()),
-						'conf_no' => $output->getConfNo(),
-						'bkcode' => $output->getBkCode(),
-						'cust_id' => $output->getCustId(),
-						'encrypted_receipt_no' => $output->getEncryptReceiptNo()
-					))
-				), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s'));
-				if($inserted){
-					return $wpdb->insert_id;
-				}else{
-					$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
-					return 0;
-				}
+				$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+				return 0;
 			}
 		}
 	}
@@ -560,4 +450,5 @@ class LWP_GMO extends LWP_Japanese_Payment {
 	private function convert_sjis($string){
 		return mb_convert_encoding($string, 'sjis-win', 'utf-8');
 	}
+	
 }

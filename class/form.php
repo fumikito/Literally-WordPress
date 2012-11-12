@@ -574,7 +574,7 @@ EOS;
 								header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
 								die();
 							}else{
-								$error[] = $this->_('Failed to make transaction.').':'.$lwp->softbank->last_error;
+								$error[] = $this->_('Failed to make transaction.').':'.(($sb_cvs || $sb_payeasy) ? $lwp->softbank->last_error : $lwp->gmo->last_error);
 							}
 						}
 					}
@@ -1665,6 +1665,7 @@ EOS;
 			//なければ自作
 			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
 			add_action('wp_enqueue_scripts', array($this, 'enqueue_form_scripts'));
+			add_action('wp_head', array($this, 'form_wp_head'));
 			require_once $parent_directory."paypal-header.php";
 			do_action('lwp_before_form', $slug, $args);
 			require_once $parent_directory.$filename;
@@ -1672,6 +1673,13 @@ EOS;
 			require_once $parent_directory."paypal-footer.php";
 		}
 		exit;
+	}
+	
+	/**
+	 * Avoid Form to be crowled.
+	 */
+	public function form_wp_head(){
+		echo '<meta name="robots" content="noindex,nofollow" />';
 	}
 	
 	/**
