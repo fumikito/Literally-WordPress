@@ -715,12 +715,24 @@ EOS;
 					break;
 			}
 		}
+		switch(get_post_type($transaction->book_id)){
+			case $lwp->event->post_type:
+				$parent = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
+				$link = get_permalink($parent);
+				break;
+			case $lwp->subscription->post_type:
+				$link = $lwp->subscription->get_subscription_archive();
+				break;
+			default:
+				$link = get_permalink($transaction->book_id);
+				break;
+		}
 		$this->show_form('payment-info', array(
 			'item_name' => $this->get_item_name($book),
 			'quantity' => $transaction->num,
 			'method_name' => $this->_($transaction->method),
 			'link' => $link,
-			'rows' => $rows,
+			'rows' => apply_filters('lwp_payment_info_tbody', $rows, $transaction),
 			'back' => lwp_history_url()
 		));
 	}

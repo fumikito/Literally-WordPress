@@ -4,13 +4,6 @@
 </p>
 
 <table class="form-table lwp-ticket-table" id="lwp-ticket-table-list">
-	<thead>
-		<tr>
-			<?php foreach($headers as $header): ?>
-				<th scope="col"><?php echo esc_html($header); ?></th>
-			<?php endforeach; ?>
-		</tr>
-	</thead>
 	<tbody>
 		<?php foreach($rows as $row): ?>
 		<tr>
