@@ -3,9 +3,9 @@ Contributors: Takahashi_Fumiki
 Tags: payment, paypal
 Requires at least: 3.1
 Tested up to: 3.4.2
-Stable tag: 0.9.2.5
+Stable tag: 0.9.3
 
-This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.
+This plugin make your WordPress post payable. Registered users can buy your post via PayPal and so on.
 
 == Description ==
 
@@ -17,7 +17,7 @@ In other case, you can simply provide "Customer only" posts.
 Only users who bought your post can access to your post.
 How to reward to your customers is up to you.
 
-Literally WordPressはあなたの投稿を課金可能にします。登録ユーザーはPayPalを通じて投稿を買うことができます。
+Literally WordPressはあなたの投稿を課金可能にします。登録ユーザーはPayPalなどを通じて投稿を買うことができます。
 顧客に提供できるサービスにはいくつかあります。
 ePubやPDFなどの非公開ファイルを購入者がダウンロードできるようにするなどの方法が可能です。
 もちろん、LWPは非公開ファイルを保護する機能を持っています。
@@ -62,6 +62,11 @@ You can visit plugin support page and feel free to ask questions.
 2. Such form will be dipslayed on your payable post.
 
 == Changelog ==
+
+= 0.9.3.0 =
+
+* GMO Payment Gateway is now supported.
+* Many bug fix
 
 = 0.9.2.5 =
 

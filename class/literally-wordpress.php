@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.9.2.5";
+	public $version = "0.9.3.0";
 	
 	/**
 	 * 翻訳用ドメイン名
