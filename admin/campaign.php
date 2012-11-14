@@ -248,7 +248,7 @@ else: ?>
 					
 					<div class="form-field lwp-form-field">
 						<label for="end"><?php $this->e('End Date');?></label>
-						<input type="text" id="end_date" name="end" class="date-picker" placeholder="ex. <?php echo date('Y-m-d H:i:s', time() + 60 * 60 * 24 * 7); ?>"  />
+						<input type="text" id="end_date" name="end" class="date-picker" placeholder="ex. <?php echo date('Y-m-d H:i:s', current_time('timestamp') + 60 * 60 * 24 * 7); ?>"  />
 						<p>
 							<?php printf($this->_('Format must be %s.'), '<span class="cursive">YYYY-mm-dd HH:MM:SS</span>'); ?>
 						</p>

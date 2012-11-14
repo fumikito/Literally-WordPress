@@ -68,7 +68,7 @@ class LWP_Notifier extends Literally_WordPress_Common{
 			add_filter('user_can_richedit', array($this, 'rich_edit'));
 			//Register Cron
 			if ( !wp_next_scheduled( 'lwp_daily_notification' ) ) {
-				wp_schedule_event(time(), 'daily', 'lwp_daily_notification');
+				wp_schedule_event(current_time('timestamp'), 'daily', 'lwp_daily_notification');
 			}
 			add_action('lwp_daily_notification', array($this, 'daily_cron'));
 		}

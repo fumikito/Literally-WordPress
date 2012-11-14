@@ -641,7 +641,7 @@ function lwp_buy_now($post = null, $btn_src = false)
 		}
 		$tag = "<img src=\"".htmlspecialchars($btn_src, ENT_QUOTES, 'utf-8')."\" alt=\"".$lwp->_('Buy Now')."\" />";
 	}
-	return "<a class=\"lwp-buynow\" href=\"".  lwp_buy_url($post)."\">{$tag}</a>";
+	return "<a rel=\"noindex,nofollow\" class=\"lwp-buynow\" href=\"".  lwp_buy_url($post)."\">{$tag}</a>";
 }
 
 /**
@@ -1211,8 +1211,8 @@ function lwp_list_cancel_condition($args = array()){
 	$args = wp_parse_args($args, array(
 		'callback' => '',
 		'post' => get_the_ID(),
-		'before' => '<ol class="lwp-event-cancel-conditions">',
-		'after' => '</ol>',
+		'before' => sprintf('<table class="lwp-event-cancel-conditions"><caption>%s</caption><tbody>', $lwp->_('Cancel Condition')),
+		'after' => '</tbody></table>',
 		'order' => 'desc'
 	));
 	$limit = get_post_meta($args['post'], $lwp->event->meta_selling_limit, true).' 23:59:59';
@@ -1251,7 +1251,9 @@ function lwp_list_tickets($args = ''){
 		'post_id' => get_the_ID(),
 		'callback' => '',
 		'orderby' => 'date',
-		'order' => 'desc'
+		'order' => 'desc',
+		'wrap' => 'dl',
+		'class' => ''
 	));
 	$query = array(
 		'post_parent' => $args['post_id'],
@@ -1265,6 +1267,25 @@ function lwp_list_tickets($args = ''){
 	$parent_id = get_the_ID();
 	$new_query = new WP_Query($query);
 	if($new_query->have_posts()){
+		switch($args['wrap']){
+			case 'ul':
+			case 'ol':
+			case 'div':
+				printf('<%s class="lwp-ticket-list %s">', $args['wrap'], esc_attr($args['class']));
+				$after = "</{$args['wrap']}>";
+				break;
+			case 'table':
+				printf('<table class="lwp-ticket-list %s"><tbody>', $args['wrap'], esc_attr($args['class']));
+				$after = '</tbody></table>';
+				break;
+			case 'dl':
+				printf('<dl class="lwp-ticket-list %s">', esc_attr($args['class']));
+				$after = '</dl>';
+				break;
+			default:
+				$after = '';
+				break;
+		}
 		while($new_query->have_posts()){
 			$new_query->the_post();
 			if(!empty($args['callback']) && function_exists($args['callback'])){
@@ -1273,6 +1294,7 @@ function lwp_list_tickets($args = ''){
 				_lwp_show_ticket($parent_id);
 			}
 		}
+		echo $after;
 		$post = $old_post;
 		setup_postdata($old_post);
 	}
@@ -1387,7 +1409,7 @@ function lwp_is_outdated_event($post = null){
 		$post = get_post($post);
 	}
 	$end = get_post_meta($post->ID, $lwp->event->meta_end, true);
-	return $end && time() > strtotime($end);
+	return $end && current_time('timestamp') > strtotime($end);
 }
 
 /**

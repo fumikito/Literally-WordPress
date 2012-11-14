@@ -128,6 +128,7 @@ class LWP_Event extends Literally_WordPress_Common {
 			add_action('wp_ajax_lwp_contact_participants', array($this, 'contact_participants'));
 			add_action('wp_ajax_lwp_event_csv_output', array($this, 'output_csv'));
 			add_action('wp_ajax_lwp_ticket_presets', array($this, 'register_presets'));
+			add_filter('the_content', array($this, 'show_form'));
 			if(!empty($this->_mail_body)){
 				add_action('lwp_update_transaction', array($this, 'send_email'));
 			}
@@ -351,7 +352,7 @@ EOS;
 	 */
 	public function get_current_cancel_condition($post_id, $timestamp = false){
 		if(!$timestamp){
-			$timestamp = time();
+			$timestamp = current_time('timestamp');
 		}
 		$limit = false;
 		$selling_limits = get_post_meta($post_id, $this->meta_selling_limit, true);
@@ -367,7 +368,7 @@ EOS;
 						$limit = $cancel_limits[$i];
 						break;
 					}
-				}elseif(isset($cancel_limits[$i - 1])){
+				}else{
 					if($cancel_limits[$i - 1]['days'] > $left_days && $cancel_limits[$i]['days'] <= $left_days){
 						$limit = $cancel_limits[$i];
 						break;
@@ -412,6 +413,7 @@ EOS;
 EOS;
 		return $wpdb->get_results($wpdb->prepare($sql, $event_id, $user_id, LWP_Payment_Status::SUCCESS));
 	}
+	
 	
 	
 	public function is_refundable($ticket_id, $date){
@@ -1069,5 +1071,53 @@ EOS;
 	 */
 	public function generate_waiting_list_hash($user_id, $ticket_id){
 		return md5(uniqid($user_id.'-'.$ticket_id));
+	}
+	
+	/**
+	 * Show form if autoload
+	 * @global Literally_WordPress $lwp
+	 * @param string $content
+	 * @return string
+	 */
+	public function show_form($content){
+		global $lwp;
+		if($lwp->needs_auto_layout() && false !== array_search(get_post_type(), $this->post_types)){
+			$additional_table = apply_filters('lwp_event_condition_table', '', get_the_ID());
+			$event_table = <<<EOS
+<caption>%s</caption>
+<tbody>
+<tr>
+<th>%s</th>
+<td>%s</td>
+</tr>
+<tr>
+<th>%s</th>
+<td>%s</td>
+</tr>
+<tr>
+<th>%s</th>
+<td>%s</td>
+</tr>
+%s
+</tbody>
+EOS;
+			$format = get_option('date_format').get_option('time_format');
+			$event_ends = lwp_event_ends('U');
+			$event_ended = (!$event_ends || current_time('timestamp') < $event_ends) ? '' : '<span class="outdated">'.$this->_('Already ended.').'</span>';
+			$outdated = (lwp_is_event_available() ? '' : '<span class="outdated">'.$this->_('Expired').'</span>');
+			$table = sprintf($event_table, sprintf($this->_('%s\'s Detail'), get_the_title()),
+					$this->_('Starts at'), lwp_event_starts($format).$event_ended,
+					$this->_('Ends at'), date_i18n($format, $event_ends), 
+					$this->_('Selling Limit'), sprintf($this->_('Untill %s'), lwp_selling_limit()).$outdated,
+					$additional_table);
+			$content .= '<table class="lwp-event-condition">'.$table.'</table>';
+			ob_start();
+			lwp_list_tickets();
+			lwp_list_cancel_condition();
+			$ticket_list = ob_get_contents();
+			ob_end_clean();
+			$content .= $ticket_list;
+		}
+		return $content;
 	}
 }

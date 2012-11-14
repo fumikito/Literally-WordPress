@@ -62,7 +62,7 @@ class LWP_Subscription extends Literally_WordPress_Common{
 	 * @see Literally_WordPress_Common
 	 */
 	protected function on_construct() {
-		if($this->enabled){
+		if($this->is_enabled()){
 			add_action('init', array($this, 'register_post_type'));
 			add_action('admin_init', array($this, 'admin_init'));
 			add_action('edit_post', array($this, 'edit_post'));
@@ -251,45 +251,64 @@ class LWP_Subscription extends Literally_WordPress_Common{
 	 * @return string
 	 */
 	public function the_content($content){
-		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types) && !($this->is_subscriber() || current_user_can('edit_others_posts') || get_the_author_ID() == get_current_user_id()) && !lwp_is_free_subscription()){
-			//Get invitation message
-			$message = get_page_by_path($this->invitation_slug, 'OBJECT', $this->post_type);
-			$append = '<div class="lwp-invitation">'.apply_filters('get_the_content', $message->post_content).'</div>';
-			//Get current page infomation
-			global $page, $pages;
-			if($page > count($pages)){
-				$page = count($pages);
-			}
-			switch($this->format){
-				case 'more':
-					$more_page = 0;
-					if(!empty($pages)){
-						foreach($pages as $p){
-							$more_page++;
-							if(preg_match('/<!--more(.*?)?-->/', $p)){
-								break;
+		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types)){
+			if(lwp_is_free_subscription()){
+				$content .= "\n".'<div class="lwp-invitation">'.apply_filters('lwp_subscription_message', sprintf($this->_('%1$s are subscribers only but this %1$s is free!'), get_post_type_object(get_post_type())->labels->name), 'free').'</div>';
+			}elseif(user_can_edit_post(get_current_user_id(), get_the_ID())){
+				$content .= "\n".'<div class="lwp-invitation">'.apply_filters('lwp_subscription_message', sprintf($this->_('This %1$s is subscribers only but you see whole content because of your capability to edit %1$s.'), get_post_type_object(get_post_type())->labels->name), 'owner').'</div>';
+			}elseif($this->is_subscriber(get_current_user_id())){
+				$owned_subscription = $this->get_subscription_owned_by(get_current_user_id());
+				$message = sprintf($this->_('You have subscription plan \'%s\'.'), $owned_subscription->post_title);
+				if($owned_subscription->expires == '0000-00-00 00:00:00'){
+					$message .= $this->_('Your subscription is unlimited.');
+				}else{
+					$message .= sprintf(
+						$this->_('You got it at <strong>%s</strong> and it will be expired at <strong>%s</strong>.'),
+						mysql2date(get_option("date_format"), get_date_from_gmt($owned_subscription->updated)),
+						mysql2date(get_option("date_format"), get_date_from_gmt($owned_subscription->expires))
+					);
+				}
+				$content .= "\n".'<div class="lwp-invitation">'.apply_filters('lwp_subscription_message', $message, 'subscriber').'</div>';
+			}else{
+				//Get invitation message
+				$message = get_page_by_path($this->invitation_slug, 'OBJECT', $this->post_type);
+				$append = '<div class="lwp-invitation">'.apply_filters('get_the_content', $message->post_content).'</div>';
+				//Get current page infomation
+				global $page, $pages;
+				if($page > count($pages)){
+					$page = count($pages);
+				}
+				switch($this->format){
+					case 'more':
+						$more_page = 0;
+						if(!empty($pages)){
+							foreach($pages as $p){
+								$more_page++;
+								if(preg_match('/<!--more(.*?)?-->/', $p)){
+									break;
+								}
+							}
+							if($page == $more_page && preg_match("/<!--more(.*?)?-->/", $pages[$page - 1])){
+								$page_content = preg_split("/<span id=\"more-[0-9]+\"><\/span>/", $content);
+								remove_filter('the_content', array($this, 'the_content'));
+								$content = apply_filters('get_the_content', $page_content[0]).$append;
+								add_filter('the_content', array($this, 'the_content'));
+							}elseif($page > $more_page){
+								$content = $append;
 							}
 						}
-						if($page == $more_page && preg_match("/<!--more(.*?)?-->/", $pages[$page - 1])){
-							$page_content = preg_split("/<span id=\"more-[0-9]+\"><\/span>/", $content);
-							remove_filter('the_content', array($this, 'the_content'));
-							$content = apply_filters('get_the_content', $page_content[0]).$append;
-							add_filter('the_content', array($this, 'the_content'));
-						}elseif($page > $more_page){
-							$content = $append;
+						break;
+					case 'nextpage':
+						//if is paged and page is > 1, check if current user is subscriber.
+						if($page > 1){
+							$content = '';
 						}
-					}
-					break;
-				case 'nextpage':
-					//if is paged and page is > 1, check if current user is subscriber.
-					if($page > 1){
-						$content = '';
-					}
-					$content .= $append;
-					break;
-				default:
-					$content = $append;
-					break;
+						$content .= $append;
+						break;
+					default:
+						$content = $append;
+						break;
+				}
 			}
 		}
 		return $content;
@@ -367,8 +386,8 @@ EOS;
 		extract(shortcode_atts(array(
 			'title' => '',
 			'popup' => true,
-			'width' => 640,
-			'height' => 450,
+			'width' => 800,
+			'height' => 600,
 			'class' => ''
 		), $atts));
 		return ($this->enabled) ? lwp_subscription_link($title, $popup, $width, $height, false, $class) : '';

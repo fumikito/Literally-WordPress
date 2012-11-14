@@ -1,4 +1,7 @@
-<?php /* @var $this Literally_WordPress */ /* @var $subscriptions WP_Query */ ?>
+<?php
+/* @var $lwp Literally_WordPres */ /* @var $this LWP_Form */ /* @var $subscriptions WP_Query */
+global $lwp;
+?>
 <?php if(!$transaction): ?>
 	<p class="message notice"><?php printf($this->_("%s's subscription plans are below."), get_bloginfo('name')); ?></p>
 
@@ -36,11 +39,7 @@
 						<?php if(!is_user_logged_in()): ?>
 							<?php echo $counter; ?>
 						<?php else: ?>
-							<?php if($lwp->subscription->is_subscriber() == get_the_ID()): ?>
-								<img src="<?php echo $lwp->url; ?>/assets/icon-check-on.png" width="32" heigth="32" alt="ON" />
-							<?php else: ?>
-								<img src="<?php echo $lwp->url; ?>/assets/icon-check-off.png" width="32" heigth="32" alt="OFF" />
-							<?php endif; ?>
+							<?php echo ($lwp->subscription->is_subscriber() == get_the_ID()) ? $on_icon : $off_icon ; ?>
 						<?php endif; ?>
 					<?php endif; ?>
 				</th>
@@ -50,7 +49,7 @@
 					</label>
 				</td>
 				<td><?php echo get_post_meta(get_the_ID(), '_lwp_expires', true).' '; $this->e('Days');  ?></td>
-				<td><?php echo lwp_the_price()." (".$lwp->option['currency_code'].")"; ?></td>
+				<td><?php echo lwp_the_price()." (".lwp_currency_code().")"; ?></td>
 				<td><?php the_content(); ?></td>	
 			</tr>
 			<?php endwhile;wp_reset_query(); ?>

@@ -253,7 +253,7 @@ if($is_detail):
 						<?php foreach(LWP_Payment_Status::get_all_status() as $s): ?>
 						<?php if($s == LWP_Payment_Status::REFUND): ?>
 							<?php if($transaction->status == LWP_Payment_Status::SUCCESS): ?>
-								<?php $disabled = ($transaction->method == LWP_Payment_Methods::PAYPAL && 60 < ceil((time() - strtotime($transaction->updated)) / 60 / 60 / 24 )) ? ' disabled="disabled"' : '';  ?>
+								<?php $disabled = ($transaction->method == LWP_Payment_Methods::PAYPAL && 60 < ceil((current_time('timestamp') - strtotime($transaction->updated)) / 60 / 60 / 24 )) ? ' disabled="disabled"' : '';  ?>
 								<option value="<?php echo $s; ?>"<?php echo $disabled; ?>><?php $this->e($s); ?></option>
 							<?php elseif($transaction->status == LWP_Payment_Status::REFUND): ?>
 								<option value="<?php echo $s; ?>" checked="checked"><?php $this->e($s);?></option>
@@ -278,7 +278,7 @@ if($is_detail):
 					<?php if($transaction->expires == '0000-00-00 00:00:00'): ?>
 						<?php $this->e('No Limit.'); ?>
 					<?php else:?>
-						<strong><?php echo (strtotime($transaction->expires) < time()) ? $this->_('Expired'): $this->_('Valid');?></strong>
+						<strong><?php echo (strtotime($transaction->expires) < current_time('timestamp')) ? $this->_('Expired'): $this->_('Valid');?></strong>
 						<span class="description">(<?php echo mysql2date(get_option('date_format'), $transaction->expires); ?>)</span>
 					<?php endif; ?>
 				<?php else: ?>
@@ -347,7 +347,7 @@ $list_table->display();
  */
 else:
 //開始
-$from = isset($_GET['from']) ? esc_attr($_GET['from']) : date('Y-m-d', time() - (60 * 60 * 24 * 30));
+$from = isset($_GET['from']) ? esc_attr($_GET['from']) : date('Y-m-d', current_time('timestamp') - (60 * 60 * 24 * 30));
 //終了
 $to = isset($_GET['to']) ? esc_attr($_GET['to']) : date('Y-m-d');
 //ステータス

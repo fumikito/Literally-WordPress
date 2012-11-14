@@ -714,7 +714,7 @@ EOS;
 			$format = get_option('date_format');
 		}
 		if(is_null($time)){
-			$time = time();
+			$time = current_time('timestamp');
 		}else{
 			$time = strtotime($time);
 		}

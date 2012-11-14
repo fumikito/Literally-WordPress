@@ -1,0 +1,234 @@
+/**
+ * @package Literally WordPress
+ * @since 0.8
+ */
+@charset "utf-8";
+
+@import "compass/css3/border-radius";
+@import "compass/css3/box-sizing";
+
+
+.lwp-form{
+	clear:both;
+	width: 300px;
+	border: 1px solid #dfdfdf;
+	background: #f9f9f9;
+	padding: 2em 1em;
+	margin: 2em auto;
+	color: #444;
+	@include border-radius(10px);
+	text-align: center;
+	&.onsale{
+		background: #f9f9f9 url('../../label_sale.png') 1em 1em no-repeat;
+	}
+	.lwp-campaign-caption{
+		 text-align: center;
+		 font-size: 14px;
+		 color: rgb(0, 51, 102);
+		 font-weight: bold;
+	}
+}
+.lwp-timer{
+	font-size:18px;
+	color: #666;
+	span{
+		font-size: 28px;
+		font-family: 'Courier', mono-space;
+		color: #000;
+		&.price{
+			text-decoration: none;
+			font-family: "Georgia", serif;
+			font-size:30px !important;
+			color: rgb(255,169,38) !important;
+		}
+	}
+}
+
+.lwp-price{
+	small{
+		 color: #999;
+		 font-size: 14px;
+		 font-family: "Georgia", serif;
+		 margin-right: 0.5em;
+	}
+	del{
+		 font-size: 11px;
+		 color: #ccc;
+		 margin-right: 1em;
+	}
+	.lwp-off{
+		 font-family: 'Georgia', serif;
+		 font-style: italic;
+		 margin-left: 0.5em;
+		 font-size: 18px;
+	}
+}
+ 
+.lwp-button{
+	a.button{
+		font-family: sans-serif;
+		text-decoration: none;
+		font-size:14px !important;
+		line-height:16px;
+		padding: 6px 12px;
+		cursor: pointer;
+		border:1px solid #bbb;
+		color: #464646;
+		@include border-radius(15px);
+		@include box-sizing(content-box);
+		background: #f2f2f2 url('../../white-grad.png') repeat-x scroll left top;
+		margin-right: 20px;
+		&:hover{
+			color: #000;
+			border-color: #666;
+		}
+		&:active{
+			background: #eee url('../../white-grad-active.png') repeat-x scroll left top;
+		}
+	}
+}
+.lwp-files table.lwp-file-table,
+.lwp-devices table.lwp-device-table{
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	border: none;
+	thead th{
+		background: #f2f2f2 url(./white-grad.png) repeat-x scroll left top;
+		color: #999;
+		border-top: 1px solid #bbb;
+		border-bottom: 1px solid #bbb;
+		padding: 5px;
+	}
+	tbody td{
+		border-bottom: 1px solid #bbb;
+		padding: 5px;
+	}
+}
+.lwp-file-table p.desc{
+	font-size:0.8em;
+	color:#999;
+}
+
+
+/*
+------------------------
+Subscription
+------------------------
+*/
+.lwp-invitation{
+	border: 1px solid #e6db55;
+	padding: 1em;
+	margin: 0.5em 0 1emx;
+	background-color: #ffffe0;
+	color: #464646;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 1.2;
+}
+
+
+
+/*
+------------------------
+Event
+------------------------
+*/
+
+/* Event Ticket list*/
+.lwp-ticket-list{
+	padding: 1em;
+	background-color: #f9f9f9;
+	@include border-radius(5px);
+	.lwp-ticket-title{
+		font-weight: normal;
+		.lwp-ticket-price{
+			font-style: italic;
+			font-weight: bold;
+		}
+		.lwp-ticket-stock{
+			margin-left: 0.5em;
+			&.few{
+				color: crimson;
+			}
+			&.some{
+				color: orange;
+			}
+		}
+		del{
+			colro: #888;
+			font-style: italic;
+			margin-left: 0.5em;
+			margin-right: 0.5em;
+		}
+		small{
+			font-size: 0.8em;
+			padding: 2px 3px;
+			@include border-radius(3px);
+			color: #fff;
+			&.lwp-ticket-sale{
+				background: #FF1D23;
+			}
+			&.lwp-ticket-owner{
+				background: #1B76FF;
+				a{
+					color: #fff;
+					text-decoration: underline;
+					&:visited{
+						color: #fff;
+						text-decoration: underline;
+					}
+					&:hover{
+						color: orange;
+					}
+					&:active{
+						color: #f00;
+					}
+				}
+			}
+		}
+		.lwp-ticket-soldout{
+			display: inline-block;
+			padding: 5px 10px;
+			float: right;
+			@include border-radius(5px);
+			color: #fff;
+			background: #888;
+		}
+		.button{
+			float: right;
+			margin-right: 0;
+		}
+	}
+	.lwp-ticket-content{
+		clear: right;
+	}
+}
+
+/* Event condition*/
+.lwp-event-condition{
+	.outdated{
+		padding: 3px 5px;
+		font-size: 0.8em;
+		margin-left: 0.5em;
+		color: #fff;
+		background: #888;
+		@include border-radius(3px);
+	}
+}
+
+/*Cancel condition*/
+.lwp-event-cancel-conditions{
+	.outdated{
+		th,td{
+			text-decoration: line-through;
+		}
+	}
+	.current{
+		td:after{
+			content: ' <<<';
+			color: #1B76FF;
+		}
+	}
+}

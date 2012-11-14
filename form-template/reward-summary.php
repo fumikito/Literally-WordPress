@@ -13,7 +13,7 @@ if(isset($_GET['page'])){
 }else{
 	wp_die($this->e('You do not have permission to access this page.'));
 }
-$from = isset($_GET['from']) ? esc_attr($_GET['from']) : date('Y-m-d', time() - (60 * 60 * 24 * 30));
+$from = isset($_GET['from']) ? esc_attr($_GET['from']) : date('Y-m-d', current_time('timestamp') - (60 * 60 * 24 * 30));
 $to = isset($_GET['to']) ? esc_attr($_GET['to']) : date('Y-m-d');
 //Get Data
 $reward_fixed = $this->reward->get_estimated_reward($from, $to, $user_id,  LWP_Payment_Status::SUCCESS);

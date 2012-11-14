@@ -139,7 +139,7 @@ EOS;
 			case 'selling_limit':
 				if($item->limit_date){
 					$limit = $item->limit_date.' 23:59:59';
-					if(strtotime($limit) < time()){
+					if(strtotime($limit) < current_time('timestamp')){
 						$style = ' style="color:darkgray;"';
 						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($limit)));
 					}else{
@@ -153,7 +153,7 @@ EOS;
 				break;
 			case 'event_starts':
 				if($item->start_date){
-					if(strtotime($item->start_date) < time()){
+					if(strtotime($item->start_date) < current_time('timestamp')){
 						$style = ' style="color:darkgray;"';
 						$time = sprintf($lwp->_('%s before'), human_time_diff(strtotime($item->start_date)));
 					}else{

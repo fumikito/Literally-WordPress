@@ -89,7 +89,9 @@ class LWP_Form extends Literally_WordPress_Common{
 			'url' => $parent_url,
 			'total' => $is_subscription ? 4 : 0,
 			'current' => $is_subscription ? 1 : 0,
-			'transaction' => $is_subscription
+			'transaction' => $is_subscription,
+			'on_icon' => apply_filters('lwp_subscription_icon', sprintf('<img src="%s" width="32" heigth="32" alt="ON" />', $this->url.'assets/icon-check-on.png'), 'ON'),
+			'off_icon' => apply_filters('lwp_subscription_icon', sprintf('<img src="%s" width="32" heigth="32" alt="OFF" />', $this->url.'assets/icon-check-off.png'), 'OFF')
 		));
 	}
 	
@@ -252,7 +254,7 @@ EOS;
 						//Create transaction
 						$price = lwp_price($book_id);
 						//Get token
-						$invnum = sprintf("{$lwp->option['slug']}-%08d-%05d-%d", $book_id, get_current_user_id(), time());
+						$invnum = sprintf("{$lwp->option['slug']}-%08d-%05d-%d", $book_id, get_current_user_id(), current_time('timestamp'));
 						//Check is physical
 						switch($book->post_type){
 							case $lwp->event->post_type:
@@ -372,7 +374,7 @@ EOS;
 				//Find random post, show form
 				$item_name = $this->get_item_name($book);
 				$price = lwp_price($book->ID);
-				$vars['limit'] = date(get_option('date_format'), time() + 60 * 60 * 24 * 59);
+				$vars['limit'] = date(get_option('date_format'), current_time('timestamp') + 60 * 60 * 24 * 59);
 				$this->show_form('payment', array(
 					'prices' => array($book->ID => $price),
 					'items' => array($book->ID => $item_name),
@@ -1698,11 +1700,15 @@ EOS;
 		global $lwp;
 		//Load CSS, JS
 		//Screen CSS
-		$css = (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_stylesheet_directory_uri()."/lwp-form.css" : $lwp->url."assets/lwp-form.css";
-		wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
+		$css = apply_filters('lwp_css', (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_stylesheet_directory_uri()."/lwp-form.css" : $lwp->url."assets/compass/stylesheets/lwp-form.css", 'form');
+		if($css){
+			wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
+		}
 		//Print CSS
-		$print_css = (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_stylesheet_directory_uri()."/lwp-print.css" : $lwp->url."assets/lwp-print.css";
-		wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
+		$print_css = apply_filters('lwp_css', (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_stylesheet_directory_uri()."/lwp-print.css" : $lwp->url."assets/compass/stylesheets/lwp-print.css", 'print');
+		if($print_css){
+			wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
+		}
 		//JS for form helper
 		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form", 'jquery-effects-highlight'), $lwp->version, true);
 		//Add Common lables
@@ -1757,7 +1763,7 @@ EOS;
 			if($selling_limit && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $selling_limit)){
 				//Selling limit is found, so check if it's oudated
 				$limit = strtotime($selling_limit.' 23:59:59');
-				$current = time();
+				$current = current_time('timestamp');
 				if($limit < $current){
 					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
 				}

@@ -43,11 +43,11 @@ class LWP_List_History extends WP_List_Table {
 			'method' => $lwp->_('Method'),
 			'expires' => $lwp->_('Expires'),
 			'registered' => $lwp->_("Registered"),
-			'status' => $lwp->_('Status')
 		);
 		if(is_admin()){
 			$column['updated'] = $lwp->_("Last Updated");
 		}
+		$column['status'] = $lwp->_('Status');
 		return apply_filters('lwp_history_table_header', $column);
 	}
 	
@@ -165,20 +165,21 @@ EOS;
 				if($item->expires == '0000-00-00 00:00:00'){
 					return $lwp->_('No Limit');
 				}else{
-					$remain = ceil((strtotime($item->expires) - time()) / 60 / 60 / 24);
+					$date = get_date_from_gmt($item->expires);
+					$remain = ceil((strtotime($date) - current_time('timestamp')) / 60 / 60 / 24);
 					if($remain < 0){
 						$string = $lwp->_('Expired');
 					}else{
 						$string = sprintf($lwp->_('%d days left'), $remain);
 					}
-					$tag = $string.'<br /><small>'.mysql2date(get_option('date_fomrat'), $item->expires).'</small>';
+					$tag = $string.'<br /><small>'.mysql2date(get_option('date_fomrat'), $date).'</small>';
 				}
 				break;
 			case 'registered':
-				$tag = mysql2date(get_option('date_format'), $item->registered, false);
+				$tag = mysql2date(get_option('date_format'), get_date_from_gmt($item->registered), false);
 				break;
 			case 'updated':
-				$tag = mysql2date(get_option('date_format'), $item->updated, false);
+				$tag = mysql2date(get_option('date_format'), get_date_from_gmt($item->updated), false);
 				break;
 			case 'status':
 				$tag = ($item->status == LWP_Payment_Status::START)

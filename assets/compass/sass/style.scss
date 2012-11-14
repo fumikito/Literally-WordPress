@@ -10,7 +10,7 @@
 }
 
 div.ebook{
-	background: url('./book_32.png') left top no-repeat;
+	background: url('../../book_32.png') left top no-repeat;
 }
 small.tab-count{
 	padding: 3px 5px;
@@ -22,25 +22,26 @@ small.tab-count{
 	border-radius: 10px;
 }
 .icon32-posts-lwp_notification{
-	background-image: url('./mail_32.png');
+	background-image: url('../../mail_32.png');
 }
 .icon32-posts-lwp_subscription{
-	background-image: url('./icon-sucscription.png') !important;
+	background-image: url('../../icon-sucscription.png') !important;
 	background-position: left top !important;
 }
 .icon32-posts-ios-product,
 .icon32-ios-api{
-	background-image: url('./icon-iphone-32.png') !important;
+	background-image: url('../../icon-iphone-32.png') !important;
 	background-position: 0 0 !important;
 }
 .icon32-download-logs{
-	background-image: url('./icon-download.png') !important;
+	background-image: url('../../icon-download.png') !important;
 	background-position: 0 0 !important;
 }
 .icon32-reward,
 .icon32-refund,
+.icon32-history,
 .icon32-personal-reward{
-	background-image: url('./icon-dollar.png') !important;
+	background-image: url('../../icon-dollar.png') !important;
 	background-position: 0 0 !important;
 }
 .lwp-wrap h3{
@@ -77,10 +78,10 @@ li .experimental{
 .lwp-api-list h4 span{
 	margin-right: 1em;
 	padding-left: 40px;
-	background: url('./icon-ios.png') left center no-repeat;
+	background: url('../../icon-ios.png') left center no-repeat;
 }
 .lwp-api-list h4 .android{
-	background-image: url('./icon-android.png');
+	background-image: url('../../icon-android.png');
 }
 h4.apple .android,
 h4.android .apple{
@@ -286,10 +287,10 @@ pre.bash span{
 	table-layout: auto;
 	}
 	#ticket-list-table td.loading{
-		background: transparent url('./indicator-postbox.gif') right center no-repeat;
+		background: transparent url('../../indicator-postbox.gif') right center no-repeat;
 	}
 	.postbox p.loading{
-		background: transparent url('./indicator-postbox.gif') center center no-repeat;
+		background: transparent url('../../indicator-postbox.gif') center center no-repeat;
 	}
 /* Sumamry */
 .lwp-wrap h3.clear{
@@ -330,7 +331,7 @@ pre.bash span{
 span.lwp-transaction-ok{
 	display: block;
 	padding-left: 20px;
-	background: url('./icon-accepted.png') left center no-repeat;
+	background: url('../../icon-accepted.png') left center no-repeat;
 	color: #319F32;
 	white-space: nowrap;
 }
@@ -339,7 +340,7 @@ span.lwp-transaction-error{
 	display: block;
 	padding-left: 20px;
 	color: #f00;
-	background: url('./icon-cancel.png') left center no-repeat;
+	background: url('../../icon-cancel.png') left center no-repeat;
 }
 span.lwp-transaction-ok small,
 span.lwp-transaction-error small{
@@ -372,7 +373,7 @@ table.download-logs td.user_agent span:hover{
 .lwp-author-msg{
 	margin :20px 0;
 	padding: 20px;
-	background: #d0d0d0 url('./bg-texture-gray.jpg') left top repeat;
+	background: #d0d0d0 url('../../bg-texture-gray.jpg') left top repeat;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
@@ -508,12 +509,12 @@ hr.lwp-divider{
 }
 .lwp-form-table tbody td.status{
 	padding-left: 34px;
-	background-image: url('./icon-cancel.png');
+	background-image: url('../../icon-cancel.png');
 	background-position: 10px center;
 	background-repeat: no-repeat;
 }
 .lwp-form-table tbody .enabled td.status{
-	background-image: url('./icon-accepted.png');
+	background-image: url('../../icon-accepted.png');
 }
 .lwp-form-table tbody tr:nth-child(2n) td,
 .lwp-form-table tbody tr:nth-child(2n) th{
@@ -580,7 +581,7 @@ hr.lwp-divider{
 	background-color: #f9f9f9;
 }
 #campaign-post-list{
-	background-image: url('./indicator-postbox.gif');
+	background-image: url('../../indicator-postbox.gif');
 	background-position: center center;
 	background-repeat: no-repeat;
 	min-height: 16px;

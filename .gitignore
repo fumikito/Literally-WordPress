@@ -1,2 +1,4 @@
 .svn
 .DS_Store
+assets/compass/fire_app_log.txt
+*sass-cache*

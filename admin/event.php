@@ -34,7 +34,7 @@ if(isset($_GET['event_id'])): $event = wp_get_single_post($_GET['event_id']);
 						$end = '-';
 						$outdated = '';
 					}else{
-						if(time() < strtotime($end)){
+						if(current_time('timestamp') < strtotime($end)){
 							$outdated = '<br />'.human_time_diff(strtotime($end));
 						}elseif($end){
 							$outdated = '<br /><strong class="error">'.$this->_('Outdated').'</strong>';

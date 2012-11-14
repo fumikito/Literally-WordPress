@@ -442,7 +442,7 @@ class Literally_WordPress{
 		}
 		//CSS
 		if($this->option['load_assets'] > 1){
-			wp_enqueue_style("lwp-timer", $this->url."assets/lwp-buynow.css", array(), $this->version);
+			wp_enqueue_style("lwp-timer", $this->url."assets/compass/stylesheets/lwp-buynow.css", array(), $this->version);
 		}
 	}
 	
@@ -546,7 +546,7 @@ class Literally_WordPress{
 	 * @return void
 	 */
 	public function admin_assets(){
-		wp_enqueue_style("lwp-admin", $this->url."assets/style.css", array(), $this->version);
+		wp_enqueue_style("lwp-admin", $this->url."assets/compass/stylesheets/style.css", array(), $this->version);
 		wp_enqueue_style("thickbox");
 		wp_enqueue_script("thickbox");
 		//In case management or campaign, load datepicker.
@@ -1251,7 +1251,7 @@ EOS;
 	public function ajax_transaction_chart(){
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_area_chart')){
 			global $wpdb;
-			$from = isset($_REQUEST['from']) ? $_REQUEST['from'] : date('Y-m-d', time() - 60 * 60 * 24 * 30 );
+			$from = isset($_REQUEST['from']) ? $_REQUEST['from'] : date('Y-m-d', current_time('timestamp') - 60 * 60 * 24 * 30 );
 			$to = isset($_REQUEST['to']) ? $_REQUEST['to'] : date('Y-m-d');
 			$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : 'all';
 			$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : 'all';
