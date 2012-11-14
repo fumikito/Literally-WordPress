@@ -388,7 +388,7 @@ EOS;
 	public function get_sale_price($post_id, $time = false){
 		global $wpdb, $lwp;
 		if(!$time){
-			$time = date('Y-m-d H:i:s');
+			$time = date_i18n('Y-m-d H:i:s');
 		}
 		$sql = <<<EOS
 			SELECT DISTINCT c.* FROM {$lwp->campaign} AS c

@@ -1851,7 +1851,10 @@ EOS;
 		$methods = array();
 		foreach(get_class_methods($this) as $method){
 			if(0 === strpos($method, 'handle_')){
-				$methods[] = str_replace('_', '-', str_replace('handle_', '', $method));
+				$handle = str_replace('_', '-', str_replace('handle_', '', $method));
+				if(false === array_search($handle, array('gmo-payment', 'sb-payment', 'ticket-awaiting-deregister'))){
+					$methods[] = $handle;
+				}
 			}
 		}
 		return $methods;
