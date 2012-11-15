@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-14 15:25+0900\n"
-"PO-Revision-Date: 2012-11-14 15:25+0900\n"
+"POT-Creation-Date: 2012-11-15 23:14+0900\n"
+"PO-Revision-Date: 2012-11-15 23:14+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -1812,7 +1812,7 @@ msgstr ""
 #: ../admin/settings/payment.php:144 ../admin/settings/payment.php:155
 #: ../admin/settings/payment.php:172 ../admin/settings/payment.php:468
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:1995
+#: ../admin/settings/post.php:72 ../class/form.php:1998
 msgid "More &gt;"
 msgstr ""
 
@@ -3338,150 +3338,150 @@ msgstr ""
 msgid "Dammy Ticket"
 msgstr ""
 
-#: ../class/form.php:1868
+#: ../class/form.php:1871
 msgid "Select Payment"
 msgstr ""
 
-#: ../class/form.php:1871
+#: ../class/form.php:1874
 msgid "Payment Information"
 msgstr ""
 
-#: ../class/form.php:1874
+#: ../class/form.php:1877
 msgid "Payment Information Detail"
 msgstr ""
 
-#: ../class/form.php:1877 ../tables/list-refund.php:115
+#: ../class/form.php:1880 ../tables/list-refund.php:115
 msgid "Refund Account"
 msgstr ""
 
-#: ../class/form.php:1880
+#: ../class/form.php:1883
 msgid "Transfer Accepted"
 msgstr ""
 
-#: ../class/form.php:1883
+#: ../class/form.php:1886
 msgid "Payment Confirmation"
 msgstr ""
 
-#: ../class/form.php:1886
+#: ../class/form.php:1889
 msgid "Transaction Completed"
 msgstr ""
 
-#: ../class/form.php:1889
+#: ../class/form.php:1892
 msgid "Transaciton Canceled"
 msgstr ""
 
-#: ../class/form.php:1892
+#: ../class/form.php:1895
 msgid "Ticket Cancel"
 msgstr ""
 
-#: ../class/form.php:1895
+#: ../class/form.php:1898
 msgid "Ticket Canceled"
 msgstr ""
 
-#: ../class/form.php:1898 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1901 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr ""
 
-#: ../class/form.php:1901
+#: ../class/form.php:1904
 msgid "Ticket Status"
 msgstr ""
 
-#: ../class/form.php:1904
+#: ../class/form.php:1907
 msgid "Waiting for ticket cancellation"
 msgstr ""
 
-#: ../class/form.php:1907
+#: ../class/form.php:1910
 msgid "Find User"
 msgstr ""
 
-#: ../class/form.php:1910
+#: ../class/form.php:1913
 msgid "Contact to participants"
 msgstr ""
 
-#: ../class/form.php:1913
+#: ../class/form.php:1916
 msgid "Subscrition Plans"
 msgstr ""
 
-#: ../class/form.php:1982 ../class/form.php:1985
+#: ../class/form.php:1985 ../class/form.php:1988
 msgid "Displays subscription plans."
 msgstr ""
 
-#: ../class/form.php:1985
+#: ../class/form.php:1988
 msgid "User can select it and go to payment selection page."
 msgstr ""
 
-#: ../class/form.php:1988
+#: ../class/form.php:1991
 msgid "Display thank you message when transaction finished."
 msgstr ""
 
-#: ../class/form.php:1988 ../class/form.php:2013
+#: ../class/form.php:1991 ../class/form.php:2016
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr ""
 
-#: ../class/form.php:1991
+#: ../class/form.php:1994
 msgid "Display message when user cancels transaction."
 msgstr ""
 
-#: ../class/form.php:1994
+#: ../class/form.php:1997
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
 msgstr ""
 
-#: ../class/form.php:1998
+#: ../class/form.php:2001
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
 msgstr ""
 
-#: ../class/form.php:2001
+#: ../class/form.php:2004
 msgid ""
 "Display currently quueued transaction. Especially for Web CVS or PayEasy."
 msgstr ""
 
-#: ../class/form.php:2004
+#: ../class/form.php:2007
 msgid ""
 "Display form of refund account which is required to complete refund process."
 msgstr ""
 
-#: ../class/form.php:2007
+#: ../class/form.php:2010
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 
-#: ../class/form.php:2010 ../class/form.php:2016
+#: ../class/form.php:2013 ../class/form.php:2019
 msgid "Show list of tickets which user have bought."
 msgstr ""
 
-#: ../class/form.php:2010
+#: ../class/form.php:2013
 msgid "User can select ticket to cancel."
 msgstr ""
 
-#: ../class/form.php:2010 ../class/form.php:2016
+#: ../class/form.php:2013 ../class/form.php:2019
 msgid "If user has no tickets, wp_die will be executed."
 msgstr ""
 
-#: ../class/form.php:2013
+#: ../class/form.php:2016
 msgid "Displays message to tell user cancel is completed."
 msgstr ""
 
-#: ../class/form.php:2019
+#: ../class/form.php:2022
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
 msgstr ""
 
-#: ../class/form.php:2022
+#: ../class/form.php:2025
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
 msgstr ""
 
-#: ../class/form.php:2025
+#: ../class/form.php:2028
 msgid "Show mail form to send emails to event participants."
 msgstr ""
 
-#: ../class/form.php:2028
+#: ../class/form.php:2031
 msgid "Displayed when user choose to wait for cancellation."
 msgstr ""
 
@@ -3789,7 +3789,7 @@ msgstr ""
 msgid "Payment Method"
 msgstr ""
 
-#: ../class/literally-wordpress.php:1379
+#: ../class/literally-wordpress.php:1394
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -6811,6 +6811,19 @@ msgstr ""
 
 #: ../tables/list-history.php:205
 msgid "Deregister"
+msgstr ""
+
+#: ../tables/list-history.php:299
+msgid "Filter"
+msgstr ""
+
+#: ../tables/list-history.php:325
+msgid "1 item"
+msgstr ""
+
+#: ../tables/list-history.php:325
+#, php-format
+msgid "%s items"
 msgstr ""
 
 #: ../tables/list-management.php:219 ../tables/list-refund.php:162

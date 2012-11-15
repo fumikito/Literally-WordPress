@@ -1372,6 +1372,21 @@ EOS;
 	}
 	
 	/**
+	 * 
+	 * @param string $single
+	 * @param string $plural
+	 * @param int $number
+	 * @return string
+	 */
+	public function n($single, $plural, $number){
+		if($number > 1){
+			return $single;
+		}else{
+			return $plural;
+		}
+	}
+	
+	/**
 	 * 翻訳対象にならないものPoeditでひっかけるため
 	 * @return void
 	 */

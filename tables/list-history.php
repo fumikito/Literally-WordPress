@@ -296,7 +296,7 @@ EOS;
 				<?php endforeach; ?>
 			</select>
 			
-			<input type="submit" class="button-secondary" value="<?php _e('Filter'); ?>" />
+			<input type="submit" class="button-secondary" value="<?php $lwp->e('Filter'); ?>" />
 		</div>
 		<?php
 		endif;
@@ -306,7 +306,14 @@ EOS;
 		return array_merge(parent::get_table_classes(), array('lwp-table'));
 	}
 	
+	/**
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param string $which
+	 * @return string
+	 */
 	function pagination( $which ) {
+		global $lwp;
 		if(is_admin()){
 			parent::pagination($which);
 		}else{
@@ -315,7 +322,7 @@ EOS;
 
 			extract( $this->_pagination_args );
 
-			$output = '<span class="displaying-num">' . sprintf( _n( '1 item', '%s items', $total_items ), number_format_i18n( $total_items ) ) . '</span>';
+			$output = '<span class="displaying-num">' . sprintf( $lwp->n($lwp->_('1 item'), $lwp->_('%s items'), $total_items ), number_format_i18n( $total_items ) ) . '</span>';
 
 			$current = $this->get_pagenum();
 
