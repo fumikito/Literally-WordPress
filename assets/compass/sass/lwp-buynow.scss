@@ -7,7 +7,11 @@
 @import "compass/css3/border-radius";
 @import "compass/css3/box-sizing";
 
-
+/*
+------------------------
+Form on Front end
+------------------------
+*/
 .lwp-form{
 	clear:both;
 	width: 300px;
@@ -28,6 +32,7 @@
 		 font-weight: bold;
 	}
 }
+/* Campaign Timer */
 .lwp-timer{
 	font-size:18px;
 	color: #666;
@@ -43,7 +48,7 @@
 		}
 	}
 }
-
+/* Price */
 .lwp-price{
 	small{
 		 color: #999;
@@ -64,6 +69,7 @@
 	}
 }
  
+/* Buttons */
 .lwp-button{
 	a.button{
 		font-family: sans-serif;
@@ -94,7 +100,7 @@
 	background: #fff;
 	border: none;
 	thead th{
-		background: #f2f2f2 url(./white-grad.png) repeat-x scroll left top;
+		background: #f2f2f2 url('../../white-grad.png') repeat-x scroll left top;
 		color: #999;
 		border-top: 1px solid #bbb;
 		border-bottom: 1px solid #bbb;
@@ -230,5 +236,75 @@ Event
 			content: ' <<<';
 			color: #1B76FF;
 		}
+	}
+}
+
+/*
+------------------------
+Purchase History
+------------------------
+*/
+#book-shelf{
+	.tablenav{
+		.alignleft{
+			float: left;
+		}
+		.tablenav-pages{
+			text-align: right;
+		}
+		.clear{
+			clear: left;
+		}
+	}
+	.column-price{
+		white-space: nowrap;
+	}
+	.column-status{
+		white-space: nowrap;
+		.lwp-success{
+			color: green;
+			font-weight: bold;
+			i{
+				background-color: green;			
+			}
+		}
+		.lwp-cancel,
+		.lwp-refund{
+			color: #aaa;
+		}
+		.lwp-start{
+			color: crimson;
+			font-weight: bold;
+		}
+		.lwp-refund_requesting,
+		.lwp-waiting_cancellation{
+			color: orange;
+		}
+		small{
+			font-size: 0.8em;
+			font-weight: bold;
+			color: #aaa;
+		}
+		.lwp-action{
+			margin-left: 0.5em;
+			display: inline-block;
+			color: #464646;
+			padding: 2px 4px;
+			border: 1px solid #ccc;
+			background: #f9f9f9 url('../../white-grad.png') left top repeat-x;
+			font-size: 0.8em;
+			@include border-radius(2px);
+			text-decoration: none;
+			margin-top: 0.5empx;
+			&:hover{
+				border-color: #666;
+				text-decoration: none;
+			}
+			&:active{
+				text-decoration: none;
+				background-position: left bottom;
+			}
+		}
+		
 	}
 }

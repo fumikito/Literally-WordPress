@@ -152,7 +152,17 @@ EOS;
 				$tag = number_format_i18n($item->num);
 				break;
 			case 'price':
-				$tag = number_format($item->price)." ({$lwp->option['currency_code']})";
+				switch($item->status){
+					case LWP_Payment_Status::REFUND:
+					case LWP_Payment_Status::REFUND_REQUESTING:
+						return sprintf('<del>%s</del><br /><small>%s</small>',
+							number_format($item->price)." ".lwp_currency_code(),
+							number_format($lwp->refund_manager->detect_refund_price($item))." ".lwp_currency_code());
+						break;
+					default:
+						return number_format($item->price)." ".lwp_currency_code();
+						break;
+				}
 				break;
 			case 'method':
 				if(false === array_search($item->status, array(LWP_Payment_Status::WAITING_CANCELLATION, LWP_Payment_Status::QUIT_WAITNG_CANCELLATION))){
@@ -182,24 +192,34 @@ EOS;
 				$tag = mysql2date(get_option('date_format'), get_date_from_gmt($item->updated), false);
 				break;
 			case 'status':
-				$tag = ($item->status == LWP_Payment_Status::START)
-					? $lwp->_('Waiting for Payment')
-					: $lwp->_($item->status);
+				switch($item->status){
+					case LWP_Payment_Status::START:
+						$text = $lwp->_('Waiting for Payment');
+						break;
+					case LWP_Payment_Status::REFUND:
+						$refund = $lwp->refund_manager->detect_refund_price($item);
+						$text = ($refund == $item->price) ? $lwp->_($item->status) : $lwp->_('Partial Refund');
+						break;
+					default:
+						$text = $lwp->_($item->status);
+						break;
+				}
+				$tag = sprintf('<span class="lwp-%2$s"><i></i>%1$s</span>', $text, strtolower($item->status));
 				if($item->status == LWP_Payment_Status::START && false === array_search($item->method, array(LWP_Payment_Methods::PAYPAL, LWP_Payment_Methods::GMO_CC, LWP_Payment_Methods::SOFTBANK_CC))){
-					$tag .= '<br /><small><a href="'.lwp_endpoint('payment-info').'&transaction='.$item->ID.'">'.$lwp->_ ('Detail').'</a></small>';
+					$tag .= '<a class="lwp-action" href="'.lwp_endpoint('payment-info').'&transaction='.$item->ID.'">'.$lwp->_ ('Detail').'</a>';
 				}
 				if($item->post_type == $lwp->event->post_type){
 					switch ($item->status){
 						case LWP_Payment_Status::SUCCESS:
 							if(lwp_is_cancelable($item->post_parent)){
-								$tag .= '<br /><small><a href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a></small>';
+								$tag .= '<a class="lwp-action" href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a>';
 							}else{
-								$tag .= '<br /><small>'.$lwp->_('Uncancelable').'</small>';
+								$tag .= '<small> - '.$lwp->_('Uncancelable').'</small>';
 							}
 							break;
 						case LWP_Payment_Status::WAITING_CANCELLATION:
 							if(lwp_is_event_available($item->post_parent) && $lwp->event->has_cancel_list($item->post_parent)){
-								$tag .= sprintf('<br /><small><a href="%s" onclick="if(!confirm(\'%s\')) return false;">%s</a></small>', 
+								$tag .= sprintf('<a class="lwp-action" href="%s" onclick="if(!confirm(\'%s\')) return false;">%s</a>', 
 										lwp_cancel_list_dequeue_url($item->book_id), 
 										esc_js(sprintf($lwp->_('Are you sure to deregister from cancel list of %s?'), get_the_title($item->post_parent).' '.$item->post_title)), 
 										$lwp->_('Deregister'));
@@ -363,7 +383,7 @@ EOS;
 				);
 
 			$html_total_pages = sprintf( "<span class='total-pages'>%s</span>", number_format_i18n( $total_pages ) );
-			$page_links[] = '<span class="paging-input">' . sprintf( _x( '%1$s of %2$s', 'paging' ), $html_current_page, $html_total_pages ) . '</span>';
+			$page_links[] = '<span class="paging-input">' . sprintf( $lwp->_( '%1$s of %2$s'), $html_current_page, $html_total_pages ) . '</span>';
 
 			$page_links[] = sprintf( "<a class='%s' title='%s' href='%s'>%s</a>",
 				'next-page' . $disable_last,

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 23:14+0900\n"
-"PO-Revision-Date: 2012-11-15 23:15+0900\n"
+"POT-Creation-Date: 2012-11-16 12:06+0900\n"
+"PO-Revision-Date: 2012-11-16 12:06+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -1238,7 +1238,7 @@ msgid "Notification Code"
 msgstr "通知コード"
 
 #: ../admin/management.php:237 ../class/form.php:640
-#: ../tables/list-history.php:173 ../tables/list-transfers.php:222
+#: ../tables/list-history.php:183 ../tables/list-transfers.php:222
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
@@ -1261,7 +1261,7 @@ msgid "No Limit."
 msgstr "無期限"
 
 #: ../admin/management.php:281 ../class/event.php:1107
-#: ../class/notifier.php:190 ../tables/list-history.php:171
+#: ../class/notifier.php:190 ../tables/list-history.php:181
 msgid "Expired"
 msgstr "期限切れ"
 
@@ -3260,7 +3260,7 @@ msgstr "名カナ"
 msgid "Specified transaction is not found."
 msgstr "指定された決済情報が見つかりません。"
 
-#: ../class/form.php:634 ../tables/list-history.php:186
+#: ../class/form.php:634 ../tables/list-history.php:197
 #: ../tables/list-management.php:272 ../tables/list-transfers.php:226
 msgid "Waiting for Payment"
 msgstr "支払い待ち"
@@ -4869,7 +4869,7 @@ msgstr "完了"
 #: ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:171
-#: ../form-template/paypal-subscription.php:64 ../tables/list-history.php:195
+#: ../form-template/paypal-subscription.php:64 ../tables/list-history.php:215
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -7261,7 +7261,7 @@ msgstr "%s値引き"
 
 #: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
 #: ../tables/list-download-logs.php:224 ../tables/list-event.php:267
-#: ../tables/list-history.php:294 ../tables/list-management.php:348
+#: ../tables/list-history.php:314 ../tables/list-management.php:348
 #: ../tables/list-refund.php:263 ../tables/list-reward-history.php:200
 #: ../tables/list-ticket.php:262 ../tables/list-transfers.php:290
 #, php-format
@@ -7336,14 +7336,14 @@ msgstr "%s前"
 msgid "%s later"
 msgstr "%s後"
 
-#: ../tables/list-event.php:193 ../tables/list-history.php:189
+#: ../tables/list-event.php:193 ../tables/list-history.php:209
 #: ../tables/list-management.php:136 ../tables/list-management.php:283
 #: ../tables/list-refund.php:221 ../tables/list-reward-history.php:174
 #: ../tables/list-transfers.php:230
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:247 ../tables/list-history.php:267
+#: ../tables/list-event.php:247 ../tables/list-history.php:287
 #: ../tables/list-management.php:325 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
@@ -7366,35 +7366,44 @@ msgstr "支払い方法"
 msgid "Last Updated"
 msgstr "最終更新"
 
-#: ../tables/list-history.php:166
+#: ../tables/list-history.php:176
 msgid "No Limit"
 msgstr "期限なし"
 
-#: ../tables/list-history.php:197
+#: ../tables/list-history.php:201
+msgid "Partial Refund"
+msgstr "一部返金済み"
+
+#: ../tables/list-history.php:217
 msgid "Uncancelable"
 msgstr "キャンセル不可"
 
-#: ../tables/list-history.php:204
+#: ../tables/list-history.php:224
 #, php-format
 msgid "Are you sure to deregister from cancel list of %s?"
 msgstr "%sのキャンセル待ちリストから削除してよろしいですか？"
 
-#: ../tables/list-history.php:205
+#: ../tables/list-history.php:225
 msgid "Deregister"
 msgstr "登録解除"
 
-#: ../tables/list-history.php:299
+#: ../tables/list-history.php:319
 msgid "Filter"
 msgstr "絞り込み"
 
-#: ../tables/list-history.php:325
+#: ../tables/list-history.php:345
 msgid "1 item"
 msgstr "1項目"
 
-#: ../tables/list-history.php:325
+#: ../tables/list-history.php:345
 #, php-format
 msgid "%s items"
 msgstr "%s項目"
+
+#: ../tables/list-history.php:386
+#, php-format
+msgid "%1$s of %2$s"
+msgstr "%1$s / %2$s"
 
 #: ../tables/list-management.php:219 ../tables/list-refund.php:162
 #: ../tables/list-ticket.php:139
@@ -7577,9 +7586,6 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
-
-#~ msgid "By %1$s, %2$s"
-#~ msgstr "%1$sまでは%2$s返金"
 
 #~ msgid "Connection Error"
 #~ msgstr "接続エラー"

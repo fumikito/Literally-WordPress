@@ -213,25 +213,27 @@ p.required{
 	table-layout: auto;
 	border-collapse: collapse;
 	margin: 1em 0;
-}
-.price-table th,
-.price-table td{
-	padding: 10px;
-}
-.price-table thead th{
-	border-bottom: 1px solid #ddd;
-}
-.price-table tbody th,
-.price-table tbody td{
-	border-bottom: 1px dotted #f0f0f0;
-}
-.price-table tbody tr:nth-child(odd) th,
-.price-table tbody tr:nth-child(odd) td{
-	background-color: #f9f9f9;
-}
-.price-table tbody tr:last-child th,
-.price-table tbody tr:last-child td{
-	border-bottom: none;
+	th,td{
+		padding: 10px;
+	}
+	th{
+		border-bottom: 1px solid #ddd;
+	}
+	tbody{
+		th, td{
+			border-bottom: 1px dotted #f0f0f0;
+		}
+		tr:nth-child(odd){
+			th, td{
+				background-color: #f9f9f9;
+			}
+		}
+		tr:last-child{
+			th, td{
+				border-bottom: none;
+			}
+		}
+	}
 }
 .price-table .price{
 	white-space: nowrap;
@@ -398,6 +400,11 @@ p.required{
 
 #lwp-invoice .footer{
 	text-align:center;
+}
+/* Redirect indicator */
+p.indicator{
+	margin: 1em 0;
+	text-align: center;
 }
 /* Indicator */
 .lwp-indicator{
