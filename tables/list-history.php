@@ -155,7 +155,7 @@ EOS;
 				switch($item->status){
 					case LWP_Payment_Status::REFUND:
 					case LWP_Payment_Status::REFUND_REQUESTING:
-						return sprintf('<del>%s</del><br /><small>%s</small>',
+						return sprintf('%2$s<br /><del>%1$s</del>',
 							number_format($item->price)." ".lwp_currency_code(),
 							number_format($lwp->refund_manager->detect_refund_price($item))." ".lwp_currency_code());
 						break;
