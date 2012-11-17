@@ -121,7 +121,7 @@
 			</p>
 		</div>
 		<?php endif; ?>
-		<table class="describe lwp-uploader-tabel">
+		<table class="describe lwp-uploader-table">
 			<tbody>
 				<tr>
 					<th scope="row" valign="top" class="label">

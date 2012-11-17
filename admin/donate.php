@@ -41,7 +41,7 @@
 
 	</div><!-- Paypal //-->
 	
-	<h3><?php $this->e("Donation & Promotion by Plugin author"); ?></h3>
+	<h3><?php $this->e("For site owner from plugin author"); ?></h3>
 	<?php echo get_avatar('takahashi.fumiki@hametuha.co.jp', 80); ?>
 	<p class="bio">
 		<?php printf($this->_('I am <a href="http://takahashifumiki.com" target="_blank">%1$s</a>, the author of this plugin and a Japanese novelist.'), $this->_("Takahashi Fumiki")); ?>
@@ -53,8 +53,10 @@
 		<?php $this->e('This plugin is developed individually. If you have some opinion, please don\'t hesitate to tell me that. There are meny ways to send feedback.');  ?>
 	</p>
 	<dl>
+		<dt><?php $this->e('Visit Plugin site'); ?></dt>
+		<dd><?php $this->e('Plugin site <a href="http://lwper.info">LWPer.info</a> is usefull for LWP user. It also has user forum, so feel free to make a topic.'); ?></dd>
 		<dt><?php $this->e('Rate on WordPress.org'); ?></dt>
-		<dd><?php $this->e('You can vote this plugin or create thread <a href="http://wordpress.org/extend/plugins/literally-wordpress/" target="_blank">HERE</a>.'); ?></dd>
+		<dd><?php $this->e('You can vote this plugin or create thread at <a href="http://wordpress.org/extend/plugins/literally-wordpress/" target="_blank">Official Repository</a>.'); ?></dd>
 		<dt><?php $this->e('Collaborate on Github'); ?></dt>
 		<dd><?php printf($this->_('The source code is hosted on <a href="%s">GitHub</a>. You can review all of it and make pull request.'), 'https://github.com/fumikito/Literally-WordPress'); ?></dd>
 		<dt><?php $this->e('Social feedback'); ?></dt>
@@ -66,7 +68,7 @@
 	</dl>
 	<p class="notice">
 		<img src="<?php echo $this->url; ?>assets/lightbulb_on_16.png" alt="notice" width="16" height="16" />
-		<?php $this->e('This message is displayed only for users who have editor capability. I don\'t care about your client because it\'s free :p');  ?>
+		<?php $this->e('This message is displayed only for users who have editor capability. Please allow me to advertise because it\'s free :)');  ?>
 	</p>
 </div>
 <?php endif; ?>

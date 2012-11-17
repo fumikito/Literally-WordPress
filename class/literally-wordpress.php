@@ -365,6 +365,8 @@ class Literally_WordPress{
 			}
 			////Add Action links on plugin lists.
 			add_filter('plugin_action_links', array($this, 'plugin_page_link'), 500, 2);
+			//Contact
+			add_action('wp_ajax_lwp_contact_payment_agency', array($this, 'contact_ajax'));
 		}else{ //Hooks only for public area
 			//Highjack frontpage request if lwp is set
 			add_action("template_redirect", array($this->form, 'avoid_caonnical_redirect'), 1);
@@ -555,11 +557,13 @@ class Literally_WordPress{
 			wp_enqueue_script(
 				"lwp-setting",
 				$this->url."assets/js/setting-helper.js",
-				array("jquery-ui-tabs", 'jquery-ui-timepicker'),
+				array("jquery-ui-tabs", 'jquery-ui-timepicker', 'jquery-form', 'jquery-ui-dialog'),
 				$this->version
 			);
 			wp_localize_script('lwp-setting', 'LWPDatePicker', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
-				'timeFormat' => 'hh:mm'
+				'timeFormat' => 'hh:mm',
+				'btnCancel' => $this->_('Cancel'),
+				'btnSubmit' => $this->_('Submit')
 			)));
 		}
 		if(($this->is_admin('management') && isset($_REQUEST['transaction_id'])) || $this->is_admin('campaign')){
@@ -1296,6 +1300,138 @@ EOS;
 			header('Content-Type: application/json; charset=utf-8');
 			echo json_encode($date_array);
 			exit;
+		}
+	}
+	
+	/**
+	 * Do contact
+	 */
+	public function contact_ajax(){
+		if(current_user_can('manage_options') && isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_agency_contact')){
+			$json = array('success' => false, 'errors' => array());
+			//Validate Not to be empty
+			foreach(array('user_name' => $this->_('Name'), 'marchandise' => $this->_('Marchandise')) as $key => $label){
+				if(!isset($_REQUEST[$key]) || empty($_REQUEST[$key])){
+					$json['errors'][] = array(
+						'selector' => "input[name={$key}],select[name={$key}]",
+						"message" => sprintf($this->_('%s is empty.'), $label)
+					);
+				}
+			}
+			//Validate email
+			if(!isset($_REQUEST['email']) || !is_email($_REQUEST['email'])){
+				$json['errors'][] = array(
+					'selector' => 'input[name=email]',
+					'message' => $this->_('Email isn\'t valid format.')
+				);
+			}
+			//Validate tel
+			if(!isset($_REQUEST['tel']) || !($tel = preg_replace("/[^0-9]/", '', mb_convert_kana($_REQUEST['tel'], 'n', 'utf-8')) )|| !preg_match("/^[0-9]{10,11}$/", $tel)){
+				$json['errors'][] = array(
+					'selector' => 'input[name=tel]',
+					'message' => $this->_('Tel isn\'t valid format.')
+				);
+			}
+			//Checkbox
+			foreach(array('method' => $this->_('Payment Medhot'), 'agency' => $this->_('Payment Agency')) as $key => $label){
+				if(!isset($_REQUEST[$key]) || !is_array($_REQUEST[$key]) || count($_REQUEST[$key]) < 1){
+					$json['errors'][] = array(
+						'selector' => ".{$key}-container",
+						'message' => sprintf($this->_('At lease one %s must be specified.'), $label)
+					);
+				}
+			}
+			//validate company name
+			if($_REQUEST['is_company'] && empty($_REQUEST['company'])){
+				$json['errors'][] = array(
+					'selector' => 'input[name=company]',
+					'message' => $this->_('Company name is empty.')
+				);
+				
+			}
+			//If softbank, must be corporative
+			if(!(isset($_REQUEST['is_company'], $_REQUEST['agency']) && $_REQUEST['is_company']) && false !== array_search('sb', $_REQUEST['agency'])){
+				$json['errors'][] = array(
+					'selector' => 'select[name=is_company]',
+					'message' => 'ソフトバンクペイメントサービスは個人の方にサービスを提供していません。'
+				);
+			}
+			if(empty($json['errors'])){
+				$bcc = sprintf('agency%s', '@hametuha.co.jp');
+				$headers = implode("\r\n", array(
+					sprintf('From: %s<%s>', $_REQUEST['user_name'], $_REQUEST['email']),
+					sprintf('Cc: %s', $bcc)
+				))."\r\n\\";
+				$tel = mb_convert_kana($_REQUEST['tel'], 'n', 'utf-8');
+				$methods = implode('、', $_REQUEST['method']);
+				$url = empty($_REQUEST['url']) ? '入力なし' : $_REQUEST['url'];
+				$legal_entity = (isset($_REQUEST['is_company']) && $_REQUEST['is_company']) ? '法人' : '個人';
+				$company = (isset($_REQUEST['company']) && !empty($_REQUEST['company'])) ? $_REQUEST['company'] : '入力なし';
+				$marchindise = (isset($_REQUEST['marchandise']) && !empty($_REQUEST['marchandise'])) ? $_REQUEST['marchandise'] : '入力なし';
+				$message = (isset($_REQUEST['misc']) && !empty($_REQUEST['misc'])) ? $_REQUEST['misc'] : '入力なし';
+				$sales = '¥'.number_format_i18n($_REQUEST['sales']);
+				$body = <<<EOS
+
+お名前： {$_REQUEST['user_name']}
+営業形態： {$legal_entity}
+企業名： {$company}
+電話番号： {$tel}
+メール: {$_REQUEST['email']}
+
+---------------------------
+
+商材： {$marchindise}
+契約対詳サイト： {$url}
+月間予測売上： {$sales}
+希望決済方法： {$methods}
+
+---------------------------
+
+メッセージ：
+{$message}
+
+
+
+---------------------------
+
+このメールは株式会社破滅派が配布するWordPressプラグイン
+Literally WordPressのコンタクトフォームから送信されました。
+
+URL : http://hametuha.co.jp
+Mail: {$bcc}
+Tel :050-5532-8327
+
+EOS;
+				foreach($_REQUEST['agency'] as $agency){
+					switch($agency){
+						case 'gmo':
+							$agent = 'GMOペイメントゲートウェイ';
+							$to = 'fumikito@yahoo.co.jp';
+							$subject = '未定';
+							$flg = true;
+							break;
+						case 'sb':
+							$agent = 'ソフトバンクペイメントサービス';
+							$to = 'fumikito@yahoo.co.jp';
+							$subject = '未定';
+							break;
+					}
+					if(!wp_mail($to, $subject, $body, $headers)){
+						$json['errors'][] = array(
+							'selector' => false,
+							'message' => sprintf('%sにメールを送信できませんでした', $agent)
+						);
+					}
+				}
+			}
+			
+			if(empty($json['errors'])){
+				$json['success'] = true;
+				$json['message'] = $this->_('Message was sent to agency. Please wait for their response.');
+			}
+			header('Content-Type: application/json');
+			echo json_encode($json);
+			die();
 		}
 	}
 	
