@@ -14,6 +14,11 @@ class LWP_Payment_Status {
 	const SUCCESS = 'SUCCESS';
 	
 	/**
+	 * Transaction is authorized
+	 */
+	const AUTH = 'AUTH';
+	
+	/**
 	 * Transaction was canceled.
 	 */
 	const CANCEL = 'Cancel';
@@ -50,6 +55,7 @@ class LWP_Payment_Status {
 	public static function get_all_status(){
 		return array(
 			self::START,
+			self::AUTH,
 			self::CANCEL,
 			self::SUCCESS,
 			self::REFUND,
@@ -67,6 +73,7 @@ class LWP_Payment_Status {
 	private function _($text){
 		global $lwp;
 		$lwp->_('SUCCESS');
+		$lwp->_('AUTH');
 		$lwp->_('Cancel');
 		$lwp->_('START');
 		$lwp->_('REFUND');

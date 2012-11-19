@@ -349,7 +349,7 @@ else:
 //開始
 $from = isset($_GET['from']) ? esc_attr($_GET['from']) : date('Y-m-d', current_time('timestamp') - (60 * 60 * 24 * 30));
 //終了
-$to = isset($_GET['to']) ? esc_attr($_GET['to']) : date('Y-m-d');
+$to = isset($_GET['to']) ? esc_attr($_GET['to']) : date('Y-m-d', current_time('timestamp'));
 //ステータス
 $status = (isset($_GET['status']) && !empty($_GET['status'])) ? $_GET['status'] : LWP_Payment_Status::SUCCESS;
 //投稿タイプ

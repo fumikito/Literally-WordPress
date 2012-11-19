@@ -221,6 +221,9 @@ input.short{
 p.invalid{
 	color: #f00;
 	margin: 0.25em 0;
+	padding: 0.25em 0.5em;
+	background-color: #ffebe8;
+	@include border-radius(3px);
 }
 small.required{
 	color: crimson;

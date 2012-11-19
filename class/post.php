@@ -203,7 +203,7 @@ class LWP_Post extends Literally_WordPress_Common{
 			$content .= lwp_show_form();
 			//if file exists, display file list table.
 			if($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$lwp->files} WHERE book_id = %d", get_the_ID()))){
-				$content .= lwp_get_device_table().lwp_get_file_list();
+				$content .= lwp_get_device_table().lwp_list_files(array('echo' => false));
 			}
 		}
 		return $content;

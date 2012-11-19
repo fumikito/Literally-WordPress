@@ -438,13 +438,24 @@ EOS;
 							$error_msg = '';
 							if($is_sb_cc){
 								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
+								if($transaction_id){
+									if($book->post_type == $lwp->event->post_type && lwp_is_cancelable($book->post_parent)){
+										do_action('_lwp_event_authorized_for_sb', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+									}else{
+										if($lwp->softbank->capture_authorized_transaction($transaction_id)){
+											$wpdb->update($lwp->transaction, array('status' => LWP_Payment_Status::SUCCESS), array('ID' => $transaction_id), array('%s'), array('%d'));
+										}else{
+											$transaction_id = 0;
+										}
+									}
+								}
 								$error_msg = $lwp->softbank->last_error;
 							}elseif($is_gmo_cc){
 								$transaction_id = $lwp->gmo->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
 								$error_msg = $lwp->gmo->last_error;
 							}
 							if($transaction_id){
-								do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
+								do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
 								header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
 								die();
 							}else{
@@ -648,7 +659,7 @@ EOS;
 				$limit_date = $data['bill_date'];
 			}
 			if($transaction->status == LWP_Payment_Status::START){
-				$left_days = floor(strtotime($limit_date) - strtotime(date('Y-m-d'))) / 60 / 60 / 24;
+				$left_days = floor(strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24;
 				if($left_days < 0){
 					$request_suffix = sprintf($this->_(' (%d days past)'), $left_days);
 				}else{
@@ -1071,9 +1082,9 @@ EOS;
 		//Get transaction
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction}
-			WHERE ID = %d AND user_id = %d AND status = %s
+			WHERE ID = %d AND user_id = %d AND ( (status = %s) OR (method = %s AND status = %s))
 EOS;
-		$transaction = $wpdb->get_row($wpdb->prepare($sql, $ticket_id, get_current_user_id(), LWP_Payment_Status::SUCCESS));
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $ticket_id, get_current_user_id(), LWP_Payment_Status::SUCCESS, LWP_Payment_Methods::SOFTBANK_CC, LWP_Payment_Status::AUTH));
 		//Check if cancelable transaction exists
 		$event_id = $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id));
 		$current_condition = $lwp->event->get_current_cancel_condition($event_id);
@@ -1087,18 +1098,29 @@ EOS;
 		if($refund_price == 0){
 			$status = LWP_Payment_Status::REFUND;
 		}else{
-			if($transaction->method == LWP_Payment_Methods::PAYPAL){
-				if(!PayPal_Statics::is_refundable($transaction->updated)){
-					//PayPal refund is outdated. 60 days.
-					$status = LWP_Payment_Status::REFUND_REQUESTING;
-				}elseif(PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
-					//Do paypal refunding. In case of refund 0, just change status
-					$status = LWP_Payment_Status::REFUND;
-				}else{
-					$this->kill(sprintf($this->_('Sorry, but PayPal denies refunding. Please contact to %1$s administrator.'), get_bloginfo('name')), 500);
-				}
-			}else{
-				$status = LWP_Payment_Status::REFUND_REQUESTING;
+			$status = LWP_Payment_Status::REFUND_REQUESTING;
+			switch($transaction->method){
+				case LWP_Payment_Methods::PAYPAL:
+					if(PayPal_Statics::is_refundable($transaction->updated) && PayPal_Statics::do_refund($transaction->transaction_id, $refund_price)){
+						//Do paypal refunding. In case of refund 0, just change status
+						$status = LWP_Payment_Status::REFUND;
+					}
+					break;
+				case LWP_Payment_Methods::SOFTBANK_CC:
+					switch($transaction->status){
+						case LWP_Payment_Status::SUCCESS:
+							if($lwp->softbank->cancel_credit_transaction($transaction->ID)){
+								//Total Refund, do refund
+								$status = LWP_Payment_Status::REFUND;
+							}
+							break;
+						case LWP_Payment_Status::AUTH:
+							if($lwp->softbank->capture_authorized_transaction($transaction->ID,  ($transaction->price - $refund_price))){
+								$status = LWP_Payment_Status::REFUND;
+							}
+							break;
+					}
+					break;
 			}
 		}
 		//Update transaction status
@@ -1148,7 +1170,7 @@ EOS;
 			$check_url = lwp_ticket_check_url(get_current_user_id(), $event);
 			$this->show_form('event-tickets', array(
 				'title' => $event->post_title,
-				'limit' => date('Y-m-d'),
+				'limit' => date('Y-m-d', current_time('timestamp')),
 				'link' => get_permalink($event->ID),
 				'headers' => $headers,
 				'post_type' => get_post_type_object($event->post_type)->labels->name,

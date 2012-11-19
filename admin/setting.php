@@ -21,12 +21,14 @@
 
 <div class="lwp-main-container">
 	<div class="lwp-container-inner">	
-		<form id="lwp-setting-form" method="post" action="<?php echo admin_url('admin.php?page=lwp-setting'); ?>">
+		<?php
+			$action_url = 'admin.php?page=lwp-setting';
+			if(isset($_REQUEST['view'])){
+				$action_url .= '&view='.$_REQUEST['view'];
+			}
+		?>
+		<form id="lwp-setting-form" method="post" action="<?php echo esc_attr(admin_url($action_url)); ?>">
 			<?php wp_nonce_field("lwp_update_option"); ?>
-			<?php if(isset($_REQUEST['view'])): ?>
-			<input type="hidden" name="view" value="<?php echo esc_attr($_REQUEST['view']); ?>" />
-			<?php endif; ?>
-
 			<?php
 				switch(isset($_REQUEST['view']) ? $_REQUEST['view'] : ''){
 					case 'payment':

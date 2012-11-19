@@ -4,7 +4,9 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	/**
 	 * Endpoint
 	 */
-	const PAYMENT_ENDPOINT = 'https://stbfep.sps-system.com/api/xmlapi.do';
+	const PAYMENT_ENDPOINT_SANDBOX = 'https://stbfep.sps-system.com/api/xmlapi.do';
+	
+	const PAYMENT_ENDPOINT_PRODUCTION = 'https://api.sps-system.com/api/xmlapi.do';
 	
 	/**
 	 * Server of Softbank
@@ -14,6 +16,12 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	const PAYMENT_REQUEST_CODE = 'ST01-00101-101';
 	
 	const PAYMENT_FIX_CODE = 'ST02-00101-101';
+	
+	const PAYMENT_SALES_CODE = 'ST02-00201-101';
+	
+	const CANCEL_PAYMENT = 'ST02-00303-101';
+	
+	const CANCEL_AUTH = 'ST02-00305-101';
 	
 	const CVS_REQUEST_CODE = 'ST01-00101-701';
 	
@@ -59,19 +67,19 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 * Sandbox Marchant ID
 	 * @var string
 	 */
-	private $_sandbox_marchant_id = '62022';
+	private $_sandbox_marchant_id = '30132';
 	
 	/**
 	 * Sandbox Service ID
 	 * @var string
 	 */
-	private $_sandbox_service_id = '001';
+	private $_sandbox_service_id = '002';
 	
 	/**
 	 * Hash key for Sandbox
 	 * @var string
 	 */
-	private $_sandbox_hash_key = 'd7b6640cc5d286cbceab99b53bf74870cf6bce9c';
+	private $_sandbox_hash_key = '8435dbd48f2249807ec216c3d5ecab714264cc4a';
 	
 	/**
 	 * Blog name to display on PayEasy
@@ -107,6 +115,13 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
 		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
 	);
+	
+	
+	/**
+	 * @var string
+	 */
+	private $cron_name = '_lwp_sbpayment_event_cron';
+	
 	
 	/**
 	 * Setup Options
@@ -145,6 +160,65 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		$this->blogname_kana = $this->convert_zenkaka_kana($option['sb_blogname_kana']);
 	}
 	
+	public function on_construct() {
+		add_action('init', array($this, 'init'));
+		if ( !wp_next_scheduled( $this->cron_name ) ) {
+			//wp_schedule_event(current_time('timestamp'), 'daily', $this->cron_name);
+		}
+		add_action($this->cron_name, array($this, 'daily_cron'));
+	}
+	
+	public function init(){
+		global $lwp;
+		if($lwp->event->is_enabled()){
+			//Hook for event notification despite order is authed.
+			add_action('_lwp_event_authorized_for_sb', array($this, 'notify_on_event_auth'));
+		}
+		$this->daily_cron();
+	}
+	
+	/**
+	 * Wrapper for sender notification on Event transction
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 */
+	public function notify_on_event_auth($transaction_id){
+		global $wpdb, $lwp;
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d AND status = %s AND method = %s", $transaction_id, LWP_Payment_Status::AUTH, LWP_Payment_Methods::SOFTBANK_CC));
+		if($transaction){
+			$lwp->event->notify($transaction);
+		}
+	}
+	
+	/**
+	 * Daily Cron to finish auth
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 */
+	public function daily_cron(){
+		global $lwp, $wpdb;
+		if($lwp->event->is_enabled()){
+			set_time_limit(0);
+			$yesterday = date('Y-m-d', current_time('timestamp') - 60 * 60 * 24);
+			$sql = <<<EOS
+				SELECT t.* FROM {$lwp->transaction} AS t
+				INNER JOIN {$wpdb->posts} AS p
+				ON t.book_id = p.ID AND p.post_type = %s
+				LEFT JOIN {$wpdb->postmeta} AS pm
+				ON p.ID = pm.post_id AND pm.meta_key = %s
+EOS;
+			$query = $wpdb->prepare($sql, $lwp->event->post_type, $lwp->event->meta_selling_limit);
+			$wheres = array(
+				$wpdb->prepare("t.status = %s", LWP_Payment_Status::AUTH),
+				$wpdb->prepare("pm.meta_value = %s", $yesterday)
+			);
+			$query .= " WHERE ".implode(' AND ', array_map(create_function('$var', 'return "(".$var.")";'), $wheres));
+			//var_dump($query, $wpdb->get_results($query));
+			//die();
+		}
+	}
+	
 	/**
 	 * Create transaction.
 	 * @global Literally_WordPress $lwp
@@ -166,9 +240,9 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		//Create XML
 		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price, true);
 		$xml_array['pay_method_info'] = array(
-				'cc_number' => $cc_number,
-				'cc_expiration' => $expiration,
-				'security_code' => $cc_sec,
+				'cc_number' => $this->is_sandbox ? '5250729026209007' : $cc_number,
+				'cc_expiration' => $this->is_sandbox ? '201103' : $expiration,
+				'security_code' => $this->is_sandbox ? '798' : $cc_sec,
 				'cust_manage_flg' => 0);
 		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
 		$xml_array['request_date'] = mysql2date("YmdHis", get_date_from_gmt($now));
@@ -187,32 +261,119 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 				'sps_transaction_id' => $xml->res_sps_transaction_id,
 				'tracking_id' => $xml->res_tracking_id,
 				'processing_datetime' => '',
-				'request_date' => date('YmdHis'),
+				'request_date' => date('YmdHis', current_time('timestamp')),
 				'limit_second' => ''
 			);
 			$hash_key = $this->get_hash_key_from_array($commit_array);
 			$commit_array['sps_hashcode'] = $hash_key;
 			$commit_result = $this->get_request($this->make_xml(self::PAYMENT_FIX_CODE, $commit_array));
 			if($commit_result['success']){
-				$status = LWP_Payment_Status::SUCCESS;
+				$inserted = $wpdb->insert($lwp->transaction,array(
+					"user_id" => $user_id,
+					"book_id" => $post_id,
+					"price" => $price,
+					"status" => LWP_Payment_Status::AUTH,
+					"method" => LWP_Payment_Methods::SOFTBANK_CC,
+					"transaction_key" => $order_id,
+					'transaction_id' => $xml->res_sps_transaction_id,
+					'payer_mail' => $xml->res_tracking_id,
+					"registered" => $now,
+					"updated" => $now
+				), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ));
+				if($inserted){
+					return $wpdb->insert_id;
+				}else{
+					$this->last_error = $this->_('Payment requeist is succeeded, but failed to finish transaction. Please contact to Administrator.');
+					return 0;
+				}
 			}else{
-				$status = LWP_Payment_Status::CANCEL;
 				$this->last_error = $this->_('Cannot commit transaction.');
+				return 0;
 			}
-			$wpdb->insert($lwp->transaction,array(
-				"user_id" => $user_id,
-				"book_id" => $post_id,
-				"price" => $price,
-				"status" => $status,
-				"method" => LWP_Payment_Methods::SOFTBANK_CC,
-				"transaction_key" => $order_id,
-				'transaction_id' => $xml->res_sps_transaction_id,
-				'payer_mail' => $xml->res_tracking_id,
-				"registered" => $now,
-				"updated" => $now
-			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ));
-			return $commit_result['success'] ? $wpdb->insert_id : 0;
 		}
+	}
+	
+	/**
+	 * Do commited transaction status to Sales
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 * @param int $price
+	 * @return boolean
+	 */
+	public function capture_authorized_transaction($transaction_id, $price = 0){
+		global $wpdb, $lwp;
+		$tran = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d AND status = %s", $transaction_id, LWP_Payment_Status::AUTH));
+		if(!$tran){
+			return false;
+		}
+		$price = ($price > 0 && $price <= $tran->price) ? $price : $tran->price;
+		$now = current_time('mysql', true);
+		$now_local = get_date_from_gmt($now, 'YmdHis');
+		$xml_array = array(
+			'merchant_id' => $this->marchant_id(),
+			'service_id' => $this->service_id(),
+			'sps_transaction_id' => $tran->transaction_id,
+			'tracking_id' => $tran->payer_mail,
+			'processing_datetime' => $now_local,
+			'pay_option_manage' => array(
+				'amount' => $price
+			),
+			'request_date' => $now_local
+		);
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		$result = $this->get_request($this->make_xml(self::PAYMENT_SALES_CODE, $xml_array));
+		if($result['success']){
+			return true;
+		}else{
+			$this->last_error = $result['message'];
+			return false;
+		}
+	}
+	
+	/**
+	 * Cancel Payment 
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 * @return boolean
+	 */
+	public function cancel_credit_transaction($transaction_id){
+		global $wpdb, $lwp;
+		$tran = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id));
+		if(!$tran){
+			return false;
+		}
+		switch($tran->status){
+			case LWP_Payment_Status::AUTH:
+				$action = self::CANCEL_AUTH;
+				break;
+			case LWP_Payment_Status::SUCCESS:
+				$action = self::CANCEL_PAYMENT;
+				break;
+			default:
+				return false;
+				break;
+		}
+		$now = current_time('mysql', true);
+		$now_local = get_date_from_gmt($now, 'YmdHis');
+		$xml_array = array(
+			'merchant_id' => $this->marchant_id(),
+			'service_id' => $this->service_id(),
+			'sps_transaction_id' => $tran->transaction_id,
+			'tracking_id' => $tran->payer_mail,
+			'processing_datetime' => $now_local,
+			'request_date' => $now_local
+		);
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		$result = $this->get_request($this->make_xml($action, $xml_array));
+		if($result['success']){
+			return true;
+		}else{
+			$this->last_error = $result['message'];
+			return false;
+		}
+
 	}
 	
 	/**
@@ -378,6 +539,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		}
 	}
 	
+	
 	/**
 	 * Get Post data on Endpoint
 	 * @global Literally_WordPress $lwp
@@ -486,7 +648,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 */
 	private function get_request($xml){
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, self::PAYMENT_ENDPOINT);
+		curl_setopt($ch, CURLOPT_URL, $this->get_endpoint());
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->marchant_id().$this->service_id().":".$this->hash_key());
@@ -667,6 +829,14 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	public function hash_key($force = false){
 		return $this->is_sandbox && !$force ? $this->_sandbox_hash_key : $this->_hash_key;
 	}
+	
+	/**
+	 * Returns endpoint
+	 * @return string
+	 */
+	public function get_endpoint(){
+		return $this->is_sandbox ? self::PAYMENT_ENDPOINT_SANDBOX : self::PAYMENT_ENDPOINT_PRODUCTION;
+	}	
 	
 	/**
 	 * Error Message

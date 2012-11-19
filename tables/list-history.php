@@ -84,8 +84,8 @@ EOS;
 		//WHERE
 		$where = array(
 			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('(t.status IN (%s, %s, %s) OR (t.status = %s AND t.method IN (%s, %s, %s, %s, %s)) OR ( (t.status = %s) AND (pm2.meta_value IS NOT NULL) AND (TO_DAYS(NOW()) <= TO_DAYS(pm2.meta_value))) )',
-					LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING,
+			$wpdb->prepare('(t.status IN (%s, %s, %s, %s) OR (t.status = %s AND t.method IN (%s, %s, %s, %s, %s)) OR ( (t.status = %s) AND (pm2.meta_value IS NOT NULL) AND (TO_DAYS(NOW()) <= TO_DAYS(pm2.meta_value))) )',
+					LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::AUTH,
 					LWP_Payment_Status::START,
 					LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY,
 					LWP_Payment_Status::WAITING_CANCELLATION)
@@ -157,7 +157,7 @@ EOS;
 					case LWP_Payment_Status::REFUND_REQUESTING:
 						return sprintf('%2$s<br /><del>%1$s</del>',
 							number_format($item->price)." ".lwp_currency_code(),
-							number_format($lwp->refund_manager->detect_refund_price($item))." ".lwp_currency_code());
+							number_format($item->price - $lwp->refund_manager->detect_refund_price($item))." ".lwp_currency_code());
 						break;
 					default:
 						return number_format($item->price)." ".lwp_currency_code();
@@ -211,6 +211,7 @@ EOS;
 				if($item->post_type == $lwp->event->post_type){
 					switch ($item->status){
 						case LWP_Payment_Status::SUCCESS:
+						case LWP_Payment_Status::AUTH:
 							if(lwp_is_cancelable($item->post_parent)){
 								$tag .= '<a class="lwp-action" href="'.lwp_cancel_url($item->post_parent).'">'.$lwp->_('Cancel').'</a>';
 							}else{

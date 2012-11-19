@@ -19,12 +19,12 @@
 				$this->is_paypal_enbaled()
 			),
 			array(
-				$this->_('Softbank Payment'),
-				$this->softbank->is_enabled()
-			),
-			array(
 				$this->_('GMO Payment Gateway'),
 				$this->gmo->is_enabled()
+			),
+			array(
+				$this->_('Softbank Payment'),
+				$this->softbank->is_enabled()
 			),
 			array(
 				$this->_('Transfer'),
@@ -91,6 +91,7 @@
 				<tr>
 					<th valign="top">
 						<label for="country_code"><?php $this->e("Country Code");?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<select name="country_code" id="country_code">
@@ -103,6 +104,7 @@
 				<tr>
 					<th valign="top">
 						<label for="currency_code"><?php $this->e("Currency Code");?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<select name="currency_code" id="currency_code">
@@ -115,6 +117,7 @@
 				<tr>
 					<th valign="top">
 						<label for="user_name"><?php $this->e("PayPal API User Name");?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<input id="user_name" name="user_name" class="regular-text" type="text" value="<?php echo esc_attr($this->option["user_name"]); ?>" />
@@ -126,6 +129,7 @@
 				<tr>
 					<th valign="top">
 						<label for="marchand_pass"><?php $this->e("PayPal Password");?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<input id="marchand_pass" name="marchand_pass" class="regular-text" type="text" value="<?php echo esc_attr($this->option["password"]); ?>" />
@@ -137,6 +141,7 @@
 				<tr>
 					<th valign="top">
 						<label for="signature"><?php $this->e("PayPal Signature");?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<input id="signature" name="signature" class="regular-text" type="text" value="<?php echo esc_attr($this->option["signature"]); ?>" />
@@ -148,6 +153,7 @@
 				<tr>
 					<th valign="top">
 						<label for="token"><?php $this->e('PayPal PDT Token'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<input id="token" name="token" class="regular-text" type="text" value="<?php echo esc_attr($this->option["token"]); ?>" />
@@ -164,6 +170,7 @@
 				<tr>
 					<th valign="top">
 						<label for="product_slug"><?php $this->e('Product slug'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
 					</th>
 					<td>
 						<input id="product_slug" name="product_slug" type="text" value="<?php echo esc_attr($this->option['slug']); ?>" />
@@ -248,11 +255,17 @@
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="gmo_shop_id"><?php $this->e('Shop ID'); ?></label></th>
+					<th valign="top">
+						<label for="gmo_shop_id"><?php $this->e('Shop ID'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td><input type="text" name="gmo_shop_id" id="gmo_shop_id" value="<?php echo esc_attr($this->gmo->shop_id); ?>" placeholder="ex. shop10000000" class="regular-text" /></td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="gmo_shop_pass"><?php $this->e('Shop Password'); ?></label></th>
+					<th valign="top">
+						<label for="gmo_shop_pass"><?php $this->e('Shop Password'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td><input type="text" name="gmo_shop_pass" id="gmo_shop_pass" value="<?php echo esc_attr($this->gmo->shop_pass); ?>" placeholder="ex. abcdefghi" class="regular-text" /></td>
 				</tr>
 				<tr>
@@ -380,52 +393,101 @@
 						</label>
 						<p>
 							<label>
-								<?php $this->e('Name Kana on Invoice'); ?><br />
-								<input type="text" name="sb_blogname_kana" class="regular-text" value="<?php echo esc_html($this->softbank->blogname_kana); ?>" placeholder="ex. ワタシノブログ" />
+								<?php $this->e('Name Kana on Invoice'); ?>
+								<small class="required"><?php $this->e('Required'); ?></small><br />
+								<input type="text" name="sb_blogname_kana" class="regular-text" value="<?php echo esc_html(($blogname_kana = $this->softbank->blogname_kana)); ?>" placeholder="ex. ワタシノブログ" />
 								<small><?php printf($this->_('(%d letters max)'), 48);?></small>
 							</label>
 						</p>
 						<p>
 							<label>
-								<?php $this->e('Name on Invoice'); ?><br />
-								<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html($this->softbank->blogname); ?>" placeholder="ex. 私のブログ" />
+								<?php $this->e('Name on Invoice'); ?>
+								<small class="required"><?php $this->e('Required'); ?></small><br />
+								<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html(($blogname = $this->softbank->blogname)); ?>" placeholder="ex. 私のブログ" />
 								<small><?php printf($this->_('(%d letters max)'), 24);?></small>
 							</label>
 						</p>
 						<p class="description">
 							<?php $this->e('These values are required for PayEasy. Kana must be Zenkaku Kana.'); ?>
 						</p>
+						<?php if($this->softbank->payeasy): ?>
+							<?php
+								$err = array();
+								if(empty($blogname) || mb_strlen($blogname, 'utf-8') > 24 ){
+									$err[] = sprintf($this->_('%1$s is required for %2$s and character length must be %3$d and less.'), $this->_('Name on Invoice'), 'PayEasy', 24);
+								}
+								if(empty($blogname_kana) || mb_strlen($blogname_kana, 'utf-8') > 48 ){
+									$err[] = sprintf($this->_('%1$s is required for %2$s and character length must be %3$d and less.'), $this->_('Name Kana on Invoice'), 'PayEasy', 48);
+								}
+								if(!empty($blogname_kana) && !preg_match("/^[ァ-ヾ]+$/u", $blogname_kana)){
+									$err[] = sprintf($this->_('%s must be Zenkaku Kana.'), $this->_('Name Kana on Invoice'));
+								}
+								if(!empty($err)){
+									printf('<p class="invalid">%s</p>', implode('<br />', $err));
+								}
+							?>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="sb_marchant_id"><?php $this->e('Marchant ID'); ?></label></th>
+					<th valign="top">
+						<label for="sb_marchant_id"><?php $this->e('Marchant ID'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td>
-						<input type="text" name="sb_marchant_id" id="sb_marchant_id" class="regular-text" value="<?php echo esc_attr($this->softbank->marchant_id(true)); ?>" />
+						<?php $marchant_id = $this->softbank->marchant_id(true); ?>
+						<input type="text" name="sb_marchant_id" id="sb_marchant_id" class="regular-text" value="<?php echo esc_attr($marchant_id); ?>" />
+						<?php if(!$this->softbank->is_sandbox && empty($marchant_id)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Marchant ID')); ?></p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="sb_service_id"><?php $this->e('Service ID'); ?></label></th>
+					<th valign="top">
+						<label for="sb_service_id"><?php $this->e('Service ID'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td>
-						<input type="text" name="sb_service_id" id="sb_service_id" class="regular-text" value="<?php echo esc_attr($this->softbank->service_id(true)); ?>" />
+						<?php $service_id = $this->softbank->service_id(true); ?>
+						<input type="text" name="sb_service_id" id="sb_service_id" class="regular-text" value="<?php echo esc_attr($service_id); ?>" />
+						<?php if(!$this->softbank->is_sandbox && empty($service_id)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Service ID')); ?></p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="sb_hash_key"><?php $this->e('Hash Key'); ?></label></th>
+					<th valign="top">
+						<label for="sb_hash_key"><?php $this->e('Hash Key'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td>
-						<input type="text" name="sb_hash_key" id="sb_hash_key" class="regular-text" value="<?php echo esc_attr($this->softbank->hash_key(true)); ?>" />
+						<?php $hash_key = $this->softbank->hash_key(true); ?>
+						<input type="text" name="sb_hash_key" id="sb_hash_key" class="regular-text" value="<?php echo esc_attr($hash_key); ?>" />
+						<?php if(!$this->softbank->is_sandbox && empty($hash_key)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Hash Key')); ?></p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><label for="sb_prefix"><?php $this->e('Service Prefix'); ?></label></th>
+					<th valign="top">
+						<label for="sb_prefix"><?php $this->e('Service Prefix'); ?></label>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td>
 						<input type="text" name="sb_prefix" id="sb_prefix" class="" value="<?php echo esc_attr($this->softbank->prefix); ?>" />
 						<p class="description">
 							<?php $this->e('Prefix is used to generate transaction ID for Softbank Payment. Must be alphanumeric and less than 9 letters. Once you start your service, please don\'t change.'); ?>
 						</p>
+						<?php if(empty($this->softbank->prefix) || strlen($this->softbank->prefix) > 8): ?>
+						<p class="invalid"><?php printf($this->_('%1$s is required for %2$s and character length must be %3$d and less.'), $this->_('Service Prefix'), $this->_('Production Environment'), 8); ?></p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><?php $this->e('Crypt Information'); ?></th>
+					<th valign="top">
+						<?php $this->e('Crypt Information'); ?>
+						<small class="required"><?php $this->e('Required'); ?></small>
+					</th>
 					<td>
 						<label>
 							<input class="regular-text" type="text" name="sb_crypt_key" value="<?php echo esc_attr($this->softbank->crypt_key); ?>" />
@@ -436,6 +498,18 @@
 							<?php $this->e('IV (Initival Vector)'); ?>
 						</label>
 						<p><?php $this->e('These keys are required for productional environment and will be provided <strong>after contract with SOFTBANK Payment Service corp.</strong>'); ?></p>
+						<?php if(!$this->softbank->is_sandbox && (empty($this->softbank->iv) || empty($this->softbank->crypt_key))): ?>
+						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Crypt Information')); ?></p>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Notification URL'); ?></th>
+					<td>
+						<input type="text" readonly="readonly" onclick="this.select(0, this.value.length);" value="<?php echo esc_attr(lwp_endpoint('sb-payment')); ?>" class="regular-text" />
+						<p class="description">
+							<?php $this->e('If Web CVS or PayEasy is enabled, you must set up this URL as notification URL. Otherwise you loose payment status change.'); ?>
+						</p>
 					</td>
 				</tr>
 				<tr>
@@ -443,12 +517,9 @@
 					<td>
 						<?php
 							printf($this->_('This server\'s IP Address: <code>%s</code><br />'), $_SERVER['SERVER_ADDR']);
-							printf($this->_('Endpoint: <code>%s</code><br />'), lwp_endpoint('sb-payment'));
 							printf($this->_('PHP Mcrypt Extentions: <strong>%s</strong>.'), (function_exists('mcrypt_cbc') ? 'OK' : 'NG'));
 							if(!function_exists('mcrypt_cbc')){
-								echo '<strong style="color:red;">';
-								printf($this->e('This server is not ready for productional environment. Please contact to your server admin and ask him to install PHP Mcrypt.'));
-								echo '</strong>';
+								printf('<p class="invalid">%s</p>', $this->_('This server is not ready for productional environment. Please contact to your server admin and ask him to install PHP Mcrypt.'));
 							}
 						?>
 					</td>

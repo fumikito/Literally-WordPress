@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-17 15:42+0900\n"
-"PO-Revision-Date: 2012-11-17 15:42+0900\n"
+"POT-Creation-Date: 2012-11-18 17:11+0900\n"
+"PO-Revision-Date: 2012-11-18 17:11+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -22,182 +22,191 @@ msgstr ""
 msgid "<strong>%1$d</strong> of %2$d Steps"
 msgstr ""
 
-#: ../functions-internal.php:84
+#: ../functions-internal.php:65 ../functions.php:488
+msgid "download"
+msgstr ""
+
+#: ../functions-internal.php:66 ../functions.php:489
+#: ../admin/form-check.php:39 ../help/customize.php:122
+msgid "Unavailable"
+msgstr ""
+
+#: ../functions-internal.php:84 ../functions.php:491
+#, php-format
+msgid "Published: %s"
+msgstr ""
+
+#: ../functions-internal.php:132
 #, php-format
 msgid "Refunds %s of bought price"
 msgstr ""
 
-#: ../functions-internal.php:86
+#: ../functions-internal.php:134
 #, php-format
 msgid "Refunds bought price - %s"
 msgstr ""
 
-#: ../functions-internal.php:88
+#: ../functions-internal.php:136
 #, php-format
 msgid "Refunds %s"
 msgstr ""
 
-#: ../functions-internal.php:92
+#: ../functions-internal.php:140
 #, php-format
 msgid "Until %s"
 msgstr ""
 
-#: ../functions-internal.php:116 ../functions-internal.php:125
+#: ../functions-internal.php:164 ../functions-internal.php:173
 msgid "Sold Out"
 msgstr ""
 
-#: ../functions-internal.php:120
+#: ../functions-internal.php:168
 msgid "You are waiting"
 msgstr ""
 
-#: ../functions-internal.php:122
+#: ../functions-internal.php:170
 #, php-format
 msgid "Are you sure to register on waiting list for %2$s of %1$s?"
 msgstr ""
 
-#: ../functions-internal.php:122
+#: ../functions-internal.php:170
 msgid "Wait for Cancellation"
 msgstr ""
 
-#: ../functions-internal.php:129 ../functions.php:637 ../functions.php:642
+#: ../functions-internal.php:177 ../functions.php:709 ../functions.php:714
 #: ../admin/settings/sidebar.php:9 ../widgets/buynow.php:111
 msgid "Buy Now"
 msgstr ""
 
-#: ../functions-internal.php:135
+#: ../functions-internal.php:183
 #, php-format
 msgid "(%s tickets)"
 msgstr ""
 
-#: ../functions-internal.php:140
+#: ../functions-internal.php:188
 #, php-format
 msgid "Discount price untill <strong>%s</strong>"
 msgstr ""
 
-#: ../functions-internal.php:144
+#: ../functions-internal.php:192
 #, php-format
 msgid ""
 "You have this ticket. See <a href=\"%1$s\">Purchase History</a> or <a href="
 "\"%2$s\">Ticket List</a>."
 msgstr ""
 
-#: ../functions.php:471
+#: ../functions.php:472 ../functions.php:535
 msgid "Registered Files"
 msgstr ""
 
-#: ../functions.php:476 ../tables/list-download-logs.php:111
+#: ../functions.php:477 ../functions.php:536
+#: ../tables/list-download-logs.php:111
 msgid "File Name"
 msgstr ""
 
-#: ../functions.php:477 ../admin/upload.php:177
+#: ../functions.php:478 ../functions.php:536 ../admin/upload.php:177
 #: ../admin/settings/dashboard.php:144
 #: ../form-template/edit-detail-event.php:114
 msgid "Description"
 msgstr ""
 
-#: ../functions.php:478
+#: ../functions.php:479 ../functions.php:536
 msgid "Available with"
 msgstr ""
 
-#: ../functions.php:479 ../help/customize.php:106
+#: ../functions.php:480 ../functions.php:536 ../help/customize.php:106
 msgid "Download"
-msgstr ""
-
-#: ../functions.php:487
-msgid "download"
-msgstr ""
-
-#: ../functions.php:488 ../admin/form-check.php:39 ../help/customize.php:122
-msgid "Unavailable"
-msgstr ""
-
-#: ../functions.php:489
-#, php-format
-msgid "File Size: %s"
 msgstr ""
 
 #: ../functions.php:490
 #, php-format
-msgid "Published: %s"
+msgid "File Size: %s"
 msgstr ""
 
-#: ../functions.php:491
+#: ../functions.php:492
 #, php-format
 msgid "Updated: %s"
 msgstr ""
 
-#: ../functions.php:518
+#: ../functions.php:536 ../admin/management.php:71 ../class/event.php:922
+#: ../class/literally-wordpress.php:1226 ../tables/list-refund.php:119
+#: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
+#: ../tables/list-ticket.php:37
+msgid "Updated"
+msgstr ""
+
+#: ../functions.php:590
 msgid "Devices Available With"
 msgstr ""
 
-#: ../functions.php:523 ../admin/devices.php:15 ../admin/devices.php:72
+#: ../functions.php:595 ../admin/devices.php:15 ../admin/devices.php:72
 #: ../tables/list-devices.php:90
 msgid "Device Name"
 msgstr ""
 
-#: ../functions.php:524
+#: ../functions.php:596
 msgid "Avalability"
 msgstr ""
 
-#: ../functions.php:530
+#: ../functions.php:602
 msgid "Available"
 msgstr ""
 
-#: ../functions.php:530
+#: ../functions.php:602
 msgid "Unconfirmed"
 msgstr ""
 
-#: ../functions.php:723
+#: ../functions.php:795
 msgid "Subscription list"
 msgstr ""
 
-#: ../functions.php:756
+#: ../functions.php:828
 msgid "Left time: "
 msgstr ""
 
-#: ../functions.php:775
+#: ../functions.php:847
 msgid "day"
 msgstr ""
 
-#: ../functions.php:775
+#: ../functions.php:847
 msgid "days"
 msgstr ""
 
-#: ../functions.php:776
+#: ../functions.php:848
 #, php-format
 msgid "<span class=\"day\">%1$d</span>%2$s"
 msgstr ""
 
-#: ../functions.php:778
+#: ../functions.php:850
 #, php-format
 msgid "<span class=\"hour\">%02d</span>h "
 msgstr ""
 
-#: ../functions.php:779
+#: ../functions.php:851
 #, php-format
 msgid "<span class=\"minutes\">%02d</span>m "
 msgstr ""
 
-#: ../functions.php:780
+#: ../functions.php:852
 #, php-format
 msgid "<span class=\"seconds\">%02d</span>s"
 msgstr ""
 
-#: ../functions.php:799
+#: ../functions.php:871
 #, php-format
 msgid "%d%% Off"
 msgstr ""
 
-#: ../functions.php:824
+#: ../functions.php:896
 #, php-format
 msgid "On SALE till %s"
 msgstr ""
 
-#: ../functions.php:1214
+#: ../functions.php:1286
 msgid "Cancel Condition"
 msgstr ""
 
-#: ../functions.php:1677
+#: ../functions.php:1749
 msgid "Check Token"
 msgstr ""
 
@@ -279,7 +288,7 @@ msgid "End Date"
 msgstr ""
 
 #: ../admin/campaign.php:132 ../admin/devices.php:32
-#: ../admin/personal-reward.php:107 ../admin/setting.php:53
+#: ../admin/personal-reward.php:107 ../admin/setting.php:55
 #: ../admin/upload.php:197 ../admin/upload.php:219
 #: ../form-template/paypal-event-tickets-consume.php:41
 #: ../form-template/paypal-refund-account.php:85
@@ -1084,13 +1093,6 @@ msgstr ""
 msgid "Deleted User"
 msgstr ""
 
-#: ../admin/management.php:71 ../class/event.php:922
-#: ../class/literally-wordpress.php:1226 ../tables/list-refund.php:119
-#: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
-#: ../tables/list-ticket.php:37
-msgid "Updated"
-msgstr ""
-
 #: ../admin/management.php:74 ../class/literally-wordpress.php:1225
 #: ../tables/list-history.php:45 ../tables/list-management.php:134
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
@@ -1434,7 +1436,7 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../admin/setting.php:42
+#: ../admin/setting.php:44
 #, php-format
 msgid "Template file does not exists at %s."
 msgstr ""
@@ -1624,7 +1626,7 @@ msgstr ""
 msgid "Set up your PayPal information <a href=\"%s\">here</a>."
 msgstr ""
 
-#: ../admin/settings/dashboard.php:31 ../admin/settings/payment.php:26
+#: ../admin/settings/dashboard.php:31 ../admin/settings/payment.php:22
 msgid "GMO Payment Gateway"
 msgstr ""
 
@@ -1634,7 +1636,7 @@ msgid ""
 "supported."
 msgstr ""
 
-#: ../admin/settings/dashboard.php:36 ../admin/settings/payment.php:22
+#: ../admin/settings/dashboard.php:36 ../admin/settings/payment.php:26
 msgid "Softbank Payment"
 msgstr ""
 
@@ -1822,9 +1824,9 @@ msgstr ""
 
 #: ../admin/settings/misc.php:20 ../admin/settings/misc.php:39
 #: ../admin/settings/misc.php:62 ../admin/settings/payment.php:87
-#: ../admin/settings/payment.php:122 ../admin/settings/payment.php:133
-#: ../admin/settings/payment.php:144 ../admin/settings/payment.php:155
-#: ../admin/settings/payment.php:172 ../admin/settings/payment.php:468
+#: ../admin/settings/payment.php:125 ../admin/settings/payment.php:137
+#: ../admin/settings/payment.php:149 ../admin/settings/payment.php:161
+#: ../admin/settings/payment.php:179 ../admin/settings/payment.php:539
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
 #: ../admin/settings/post.php:72 ../class/form.php:1998
 msgid "More &gt;"
@@ -1948,162 +1950,175 @@ msgstr ""
 msgid "Country Code"
 msgstr ""
 
-#: ../admin/settings/payment.php:105
+#: ../admin/settings/payment.php:94 ../admin/settings/payment.php:107
+#: ../admin/settings/payment.php:120 ../admin/settings/payment.php:132
+#: ../admin/settings/payment.php:144 ../admin/settings/payment.php:156
+#: ../admin/settings/payment.php:173 ../admin/settings/payment.php:260
+#: ../admin/settings/payment.php:267 ../admin/settings/payment.php:397
+#: ../admin/settings/payment.php:405 ../admin/settings/payment.php:435
+#: ../admin/settings/payment.php:448 ../admin/settings/payment.php:461
+#: ../admin/settings/payment.php:474 ../admin/settings/payment.php:489
+#: ../form-template/paypal-payment.php:60
+#: ../form-template/paypal-refund-account.php:6
+msgid "Required"
+msgstr ""
+
+#: ../admin/settings/payment.php:106
 msgid "Currency Code"
 msgstr ""
 
-#: ../admin/settings/payment.php:117
+#: ../admin/settings/payment.php:119
 msgid "PayPal API User Name"
 msgstr ""
 
-#: ../admin/settings/payment.php:122
+#: ../admin/settings/payment.php:125
 msgid "PayPal API User Name issued by PayPal."
 msgstr ""
 
-#: ../admin/settings/payment.php:128
+#: ../admin/settings/payment.php:131
 msgid "PayPal Password"
 msgstr ""
 
-#: ../admin/settings/payment.php:133
+#: ../admin/settings/payment.php:137
 msgid "API password issued by PayPal"
 msgstr ""
 
-#: ../admin/settings/payment.php:139
+#: ../admin/settings/payment.php:143
 msgid "PayPal Signature"
 msgstr ""
 
-#: ../admin/settings/payment.php:144
+#: ../admin/settings/payment.php:149
 msgid "API signature issued by PayPal"
 msgstr ""
 
-#: ../admin/settings/payment.php:150
+#: ../admin/settings/payment.php:155
 msgid "PayPal PDT Token"
 msgstr ""
 
-#: ../admin/settings/payment.php:155
+#: ../admin/settings/payment.php:161
 msgid "Token issued by PayPal. Required for transaction."
 msgstr ""
 
-#: ../admin/settings/payment.php:159
+#: ../admin/settings/payment.php:165
 #, php-format
 msgid "This Token might be incorrect. See %s and get correct PDT Token."
 msgstr ""
 
-#: ../admin/settings/payment.php:159 ../admin/settings/post.php:23
+#: ../admin/settings/payment.php:165 ../admin/settings/post.php:23
 #: ../admin/settings/post.php:28
 msgid "Help"
 msgstr ""
 
-#: ../admin/settings/payment.php:166 ../help/account.php:61
+#: ../admin/settings/payment.php:172 ../help/account.php:61
 msgid "Product slug"
 msgstr ""
 
-#: ../admin/settings/payment.php:171
+#: ../admin/settings/payment.php:178
 msgid ""
 "Slug for product ID displayed on PayPal Account Panel. It is usefull if you "
 "have multiple business on singular account."
 msgstr ""
 
-#: ../admin/settings/payment.php:173
+#: ../admin/settings/payment.php:180
 msgid ""
 "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID "
 "follow this slug. <small>ex: example-100</small>"
 msgstr ""
 
-#: ../admin/settings/payment.php:185
+#: ../admin/settings/payment.php:192
 msgid ""
 "To use GMO Payment Gateway, you have to contract with GMO Payment Gateway "
 "inc. and get credential infomation. If Credit Card is enabled, PayPal's "
 "credit card will be override."
 msgstr ""
 
-#: ../admin/settings/payment.php:191 ../admin/settings/payment.php:326
+#: ../admin/settings/payment.php:198 ../admin/settings/payment.php:339
 msgid "Sandbox"
 msgstr ""
 
-#: ../admin/settings/payment.php:196 ../admin/settings/payment.php:331
+#: ../admin/settings/payment.php:203 ../admin/settings/payment.php:344
 msgid "This is a develop enviorment and needs pseudo transaction."
 msgstr ""
 
-#: ../admin/settings/payment.php:202 ../admin/settings/payment.php:337
+#: ../admin/settings/payment.php:209 ../admin/settings/payment.php:350
 #: ../form-template/paypal-selection.php:63
 #: ../form-template/paypal-selection.php:87
 msgid "Credit Card"
 msgstr ""
 
-#: ../admin/settings/payment.php:216 ../admin/settings/payment.php:351
+#: ../admin/settings/payment.php:223 ../admin/settings/payment.php:364
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted with."
 msgstr ""
 
-#: ../admin/settings/payment.php:217
+#: ../admin/settings/payment.php:224
 msgid ""
 "Though GMO Payment has many credit cards available(Nicos, Mistui-Sumitomo, "
 "JACCS), most of them are aquirer of 5 famous international service above and "
 "it loses usability to display all cards available."
 msgstr ""
 
-#: ../admin/settings/payment.php:224 ../admin/settings/payment.php:357
+#: ../admin/settings/payment.php:231 ../admin/settings/payment.php:370
 #: ../form-template/paypal-selection.php:109
 msgid "Web CVS"
 msgstr ""
 
-#: ../admin/settings/payment.php:241 ../admin/settings/payment.php:374
+#: ../admin/settings/payment.php:248 ../admin/settings/payment.php:387
 #: ../form-template/paypal-payment.php:165
 #: ../form-template/paypal-selection.php:134
 msgid "PayEasy"
 msgstr ""
 
-#: ../admin/settings/payment.php:246 ../admin/settings/payment.php:379
+#: ../admin/settings/payment.php:253 ../admin/settings/payment.php:392
 msgid "Enables PayEasy"
 msgstr ""
 
-#: ../admin/settings/payment.php:251
+#: ../admin/settings/payment.php:259
 msgid "Shop ID"
 msgstr ""
 
-#: ../admin/settings/payment.php:255
+#: ../admin/settings/payment.php:266
 msgid "Shop Password"
 msgstr ""
 
-#: ../admin/settings/payment.php:259
+#: ../admin/settings/payment.php:272
 msgid "Contact Tel No."
 msgstr ""
 
-#: ../admin/settings/payment.php:264 ../admin/settings/payment.php:291
+#: ../admin/settings/payment.php:277 ../admin/settings/payment.php:304
 msgid "Wrong Format."
 msgstr ""
 
-#: ../admin/settings/payment.php:268 ../admin/settings/payment.php:295
+#: ../admin/settings/payment.php:281 ../admin/settings/payment.php:308
 msgid "Required for Lawson and Family Mart."
 msgstr ""
 
-#: ../admin/settings/payment.php:269
+#: ../admin/settings/payment.php:282
 msgid "Allowed letters for Tel No. are <strong>0~9 and hyphen(-)</strong>."
 msgstr ""
 
-#: ../admin/settings/payment.php:274
+#: ../admin/settings/payment.php:287
 msgid "Contact Open Hour"
 msgstr ""
 
-#: ../admin/settings/payment.php:277
+#: ../admin/settings/payment.php:290
 msgid "Starts: "
 msgstr ""
 
-#: ../admin/settings/payment.php:282
+#: ../admin/settings/payment.php:295
 msgid "Ends: "
 msgstr ""
 
-#: ../admin/settings/payment.php:296
+#: ../admin/settings/payment.php:309
 msgid "Hour format must be <strong>HH:MM</strong>."
 msgstr ""
 
-#: ../admin/settings/payment.php:301
+#: ../admin/settings/payment.php:314 ../admin/settings/payment.php:507
 msgid "Notification URL"
 msgstr ""
 
-#: ../admin/settings/payment.php:305
+#: ../admin/settings/payment.php:318
 msgid ""
 "If Web CVS or PayEasy is enabled, you must set up this URL as notification "
 "URL on GMO Payment Gateway's shop admin panel(Go to Manage Shop &gt; Shop "
@@ -2111,147 +2126,170 @@ msgid ""
 "you loose payment status change."
 msgstr ""
 
-#: ../admin/settings/payment.php:319
+#: ../admin/settings/payment.php:332
 msgid ""
 "To use Softbank Payment, you have to contract with SOFTBANK Payment Service "
 "corp. and get credential infomation. If Credit Card is enabled, PayPal's "
 "credit card will be override."
 msgstr ""
 
-#: ../admin/settings/payment.php:383
+#: ../admin/settings/payment.php:396 ../admin/settings/payment.php:420
+#: ../admin/settings/payment.php:423
 msgid "Name Kana on Invoice"
 msgstr ""
 
-#: ../admin/settings/payment.php:385 ../admin/settings/payment.php:392
+#: ../admin/settings/payment.php:399 ../admin/settings/payment.php:407
 #, php-format
 msgid "(%d letters max)"
 msgstr ""
 
-#: ../admin/settings/payment.php:390
+#: ../admin/settings/payment.php:404 ../admin/settings/payment.php:417
 msgid "Name on Invoice"
 msgstr ""
 
-#: ../admin/settings/payment.php:396
+#: ../admin/settings/payment.php:411
 msgid "These values are required for PayEasy. Kana must be Zenkaku Kana."
 msgstr ""
 
-#: ../admin/settings/payment.php:401
-msgid "Marchant ID"
-msgstr ""
-
-#: ../admin/settings/payment.php:407
-msgid "Service ID"
-msgstr ""
-
-#: ../admin/settings/payment.php:413
-msgid "Hash Key"
-msgstr ""
-
-#: ../admin/settings/payment.php:419
-msgid "Service Prefix"
+#: ../admin/settings/payment.php:417 ../admin/settings/payment.php:420
+#: ../admin/settings/payment.php:482
+#, php-format
+msgid "%1$s is required for %2$s and character length must be %3$d and less."
 msgstr ""
 
 #: ../admin/settings/payment.php:423
+#, php-format
+msgid "%s must be Zenkaku Kana."
+msgstr ""
+
+#: ../admin/settings/payment.php:434 ../admin/settings/payment.php:441
+msgid "Marchant ID"
+msgstr ""
+
+#: ../admin/settings/payment.php:441 ../admin/settings/payment.php:454
+#: ../admin/settings/payment.php:467 ../admin/settings/payment.php:502
+#, php-format
+msgid "%s is required for production environment."
+msgstr ""
+
+#: ../admin/settings/payment.php:447 ../admin/settings/payment.php:454
+msgid "Service ID"
+msgstr ""
+
+#: ../admin/settings/payment.php:460 ../admin/settings/payment.php:467
+msgid "Hash Key"
+msgstr ""
+
+#: ../admin/settings/payment.php:473 ../admin/settings/payment.php:482
+msgid "Service Prefix"
+msgstr ""
+
+#: ../admin/settings/payment.php:479
 msgid ""
 "Prefix is used to generate transaction ID for Softbank Payment. Must be "
 "alphanumeric and less than 9 letters. Once you start your service, please "
 "don't change."
 msgstr ""
 
-#: ../admin/settings/payment.php:428
+#: ../admin/settings/payment.php:482
+msgid "Production Environment"
+msgstr ""
+
+#: ../admin/settings/payment.php:488 ../admin/settings/payment.php:502
 msgid "Crypt Information"
 msgstr ""
 
-#: ../admin/settings/payment.php:432
+#: ../admin/settings/payment.php:494
 msgid "Crypt Key"
 msgstr ""
 
-#: ../admin/settings/payment.php:436
+#: ../admin/settings/payment.php:498
 msgid "IV (Initival Vector)"
 msgstr ""
 
-#: ../admin/settings/payment.php:438
+#: ../admin/settings/payment.php:500
 msgid ""
 "These keys are required for productional environment and will be provided "
 "<strong>after contract with SOFTBANK Payment Service corp.</strong>"
 msgstr ""
 
-#: ../admin/settings/payment.php:442
+#: ../admin/settings/payment.php:511
+msgid ""
+"If Web CVS or PayEasy is enabled, you must set up this URL as notification "
+"URL. Otherwise you loose payment status change."
+msgstr ""
+
+#: ../admin/settings/payment.php:516
 msgid "Other Information"
 msgstr ""
 
-#: ../admin/settings/payment.php:445
+#: ../admin/settings/payment.php:519
 #, php-format
 msgid "This server's IP Address: <code>%s</code><br />"
 msgstr ""
 
-#: ../admin/settings/payment.php:446
-#, php-format
-msgid "Endpoint: <code>%s</code><br />"
-msgstr ""
-
-#: ../admin/settings/payment.php:447
+#: ../admin/settings/payment.php:520
 #, php-format
 msgid "PHP Mcrypt Extentions: <strong>%s</strong>."
 msgstr ""
 
-#: ../admin/settings/payment.php:450
+#: ../admin/settings/payment.php:522
 msgid ""
 "This server is not ready for productional environment. Please contact to "
 "your server admin and ask him to install PHP Mcrypt."
 msgstr ""
 
-#: ../admin/settings/payment.php:466
+#: ../admin/settings/payment.php:537
 msgid ""
 "If you accept transfer, users can pay with bank account or something that is "
 "not digital transaction."
 msgstr ""
 
-#: ../admin/settings/payment.php:467
+#: ../admin/settings/payment.php:538
 msgid ""
 "This helps users, but transactional process has a little bit more complex, "
 "because you have to check actual bank account to know whether bank deposit "
 "transfer has been made."
 msgstr ""
 
-#: ../admin/settings/payment.php:475
+#: ../admin/settings/payment.php:546
 msgid "Accept Transfer"
 msgstr ""
 
-#: ../admin/settings/payment.php:478 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:549 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr ""
 
-#: ../admin/settings/payment.php:479 ../admin/settings/subscription.php:15
+#: ../admin/settings/payment.php:550 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr ""
 
-#: ../admin/settings/payment.php:483
+#: ../admin/settings/payment.php:554
 msgid "Notification Frequency"
 msgstr ""
 
-#: ../admin/settings/payment.php:487
+#: ../admin/settings/payment.php:558
 #, php-format
 msgid "Send reminder on every %s days"
 msgstr ""
 
-#: ../admin/settings/payment.php:493
+#: ../admin/settings/payment.php:564
 #, php-format
 msgid "Transaction expires by %s days"
 msgstr ""
 
-#: ../admin/settings/payment.php:498
+#: ../admin/settings/payment.php:569
 msgid ""
 "If you don't want to send reminder, set notification frequency to 0. "
 "Transfer transaction will be expired after notification limit days will have "
 "been past."
 msgstr ""
 
-#: ../admin/settings/payment.php:503
+#: ../admin/settings/payment.php:574
 msgid "Notification Message"
 msgstr ""
 
-#: ../admin/settings/payment.php:506
+#: ../admin/settings/payment.php:577
 #, php-format
 msgid "You can customize notification message <a href=\"%s\">here</a>."
 msgstr ""
@@ -3805,7 +3843,7 @@ msgstr ""
 msgid "This page does not exist. Template not found."
 msgstr ""
 
-#: ../class/literally-wordpress.php:565 ../class/statics/payment-status.php:70
+#: ../class/literally-wordpress.php:565 ../class/statics/payment-status.php:77
 #: ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:171
@@ -4516,24 +4554,25 @@ msgid "Thank you for your order."
 msgstr ""
 
 #: ../class/payment/gmo.php:227 ../class/payment/gmo.php:299
-#: ../class/payment/softbank-payment.php:293
-#: ../class/payment/softbank-payment.php:375
+#: ../class/payment/softbank-payment.php:220
+#: ../class/payment/softbank-payment.php:304
+#: ../class/payment/softbank-payment.php:386
 msgid ""
 "Payment requeist is succeeded, but failed to finish transaction. Please "
 "contact to Administrator."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:200
+#: ../class/payment/softbank-payment.php:202
 msgid "Cannot commit transaction."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:507
-#: ../class/payment/softbank-payment.php:524
-#: ../class/payment/softbank-payment.php:528
+#: ../class/payment/softbank-payment.php:518
+#: ../class/payment/softbank-payment.php:535
+#: ../class/payment/softbank-payment.php:539
 msgid "Sorry, but connection is failed. Please try again later."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:515
+#: ../class/payment/softbank-payment.php:526
 msgid "Transaction is succeeded."
 msgstr ""
 
@@ -4654,27 +4693,31 @@ msgstr "PayEasy"
 msgid "GMO_WEB_CVS"
 msgstr "Web CVS"
 
-#: ../class/statics/payment-status.php:69
+#: ../class/statics/payment-status.php:75
 msgid "SUCCESS"
 msgstr "Success"
 
-#: ../class/statics/payment-status.php:71
+#: ../class/statics/payment-status.php:76
+msgid "AUTH"
+msgstr "Authorized"
+
+#: ../class/statics/payment-status.php:78
 msgid "START"
 msgstr "Start"
 
-#: ../class/statics/payment-status.php:72
+#: ../class/statics/payment-status.php:79
 msgid "REFUND"
 msgstr "Refund"
 
-#: ../class/statics/payment-status.php:73
+#: ../class/statics/payment-status.php:80
 msgid "REFUND_REQUESTING"
 msgstr "Refund requesting"
 
-#: ../class/statics/payment-status.php:74
+#: ../class/statics/payment-status.php:81
 msgid "WAITING_CANCELLATION"
 msgstr "Waiting Cancellation"
 
-#: ../class/statics/payment-status.php:75
+#: ../class/statics/payment-status.php:82
 msgid "QUIT_WAITNG_CANCELLATION"
 msgstr "Stop Waiting"
 
@@ -5840,11 +5883,6 @@ msgstr ""
 #: ../form-template/paypal-payment.php:52
 #, php-format
 msgid "Please enter payment information for %s"
-msgstr ""
-
-#: ../form-template/paypal-payment.php:60
-#: ../form-template/paypal-refund-account.php:6
-msgid "Required"
 msgstr ""
 
 #: ../form-template/paypal-payment.php:73

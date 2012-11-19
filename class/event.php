@@ -294,9 +294,10 @@ EOS;
 			SELECT t.ID FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			WHERE t.user_id = %d AND t.status = %s AND p.post_parent = %d
+			WHERE t.user_id = %d AND ( (t.status = %s) OR (t.status = %s AND t.method = %s) ) AND p.post_parent = %d
 EOS;
-		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS,$post_id));
+			var_dump('キタコレ');
+		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS, LWP_Payment_Status::AUTH, LWP_Payment_Methods::SOFTBANK_CC, $post_id));
 	}
 	
 	/**
@@ -409,9 +410,9 @@ EOS;
 			SELECT t.*, p.post_title FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			WHERE p.post_parent = %d AND t.user_id = %d AND t.status = %s
+			WHERE p.post_parent = %d AND t.user_id = %d AND ( (t.status = %s) OR (t.method = %s AND t.status = %s))
 EOS;
-		return $wpdb->get_results($wpdb->prepare($sql, $event_id, $user_id, LWP_Payment_Status::SUCCESS));
+		return $wpdb->get_results($wpdb->prepare($sql, $event_id, $user_id, LWP_Payment_Status::SUCCESS, LWP_Payment_Methods::SOFTBANK_CC, LWP_Payment_Status::AUTH));
 	}
 	
 	
@@ -952,8 +953,9 @@ EOS;
 	}
 	
 	/**
-	 * Send email on transaction
+	 * Send email on transaction Updated
 	 * @param int $transaction_id 
+	 * @return boolean
 	 */
 	public function send_email($transaction_id){
 		global $lwp, $wpdb;
@@ -965,8 +967,18 @@ EOS;
 EOS;
 		$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id, $this->post_type, LWP_Payment_Status::SUCCESS));
 		if(!$transaction){
-			return;
+			return false;
+		}else{
+			return $this->notify($transaction);
 		}
+	}
+	
+	/**
+	 * Notify user about event transaction
+	 * @param object $transaction Must be valid transaction
+	 * @return boolean
+	 */
+	public function notify($transaction){
 		$user = get_userdata($transaction->user_id);
 		$body = $this->get_mail_body($transaction)."\r\n".$this->get_signature();
 		$to = $user->user_email;

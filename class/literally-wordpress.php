@@ -961,18 +961,25 @@ EOS;
 	
 	/**
 	 * Return if user has transaction
+	 * @global Literally_WordPress $lwp
 	 * @param object|int $post (optional)
 	 * @param int $user_id (optional)
 	 * @return boolean
 	 */
 	public function is_owner($post = null, $user_id = null){
+		global $lwp;
 		$post = get_post($post);
 		if(!$user_id){
 			$user_id = get_current_user_id();
 		}
 		global $wpdb;
-		$sql = "SELECT ID FROM {$this->transaction} WHERE user_id = %d AND book_id = %d AND status = %s";
-		return (boolean) $wpdb->get_row($wpdb->prepare($sql, $user_id, $post->ID, LWP_Payment_Status::SUCCESS));
+		$query = $wpdb->prepare("SELECT ID FROM {$this->transaction} WHERE user_id = %d AND book_id = %d", $user_id, $post->ID)." AND";
+		$wheres = array($wpdb->prepare("(status = %s)", LWP_Payment_Status::SUCCESS));
+		if($post->post_type == $lwp->event->post_type){
+			$wheres[] = $wpdb->prepare("(status = %s AND method = %s)", LWP_Payment_Status::AUTH, LWP_Payment_Methods::SOFTBANK_CC);
+		}
+		$query .= '( '.implode(' OR ', $wheres).' )';
+		return (boolean) $wpdb->get_var($query);
 	}
 	
 	/**
@@ -1256,7 +1263,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_area_chart')){
 			global $wpdb;
 			$from = isset($_REQUEST['from']) ? $_REQUEST['from'] : date('Y-m-d', current_time('timestamp') - 60 * 60 * 24 * 30 );
-			$to = isset($_REQUEST['to']) ? $_REQUEST['to'] : date('Y-m-d');
+			$to = isset($_REQUEST['to']) ? $_REQUEST['to'] : date('Y-m-d', current_time('timestamp'));
 			$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : 'all';
 			$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : 'all';
 			$sql = <<<EOS

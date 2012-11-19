@@ -59,6 +59,54 @@ EOS;
 	echo apply_filters('lwp_show_indicator', $markup, $total, $current);
 }
 
+function _lwp_list_files($file, $user_can_access, $url, $size, $ext, $devices, $list_type){
+	global $lwp;
+	$button = $user_can_access
+		? sprintf('<a class="button lwp-dl" href="%s" rel="noindex,nofollow">%s</a>', $url, $lwp->_('download'))
+		: sprintf('<a class="button disabled" href="#" onclick="return false;">%s</a>', $lwp->_('Unavailable'));
+	switch($list_type){
+		case 'table':
+			return sprintf('
+				<tr>
+					<td class="name %s">%s</td>
+					<td class="description">%s</td>
+					<td class="device">%s</td>
+					<td class="updated">
+						%s
+						<span class="published">%s</span>
+					</td>
+					<td class="download lwp-button">%s
+						<span class="lwp-file-size">%s</span>
+					</td>
+				</tr>
+			', $ext, esc_html($file->name), nl2br(esc_html($file->detail)), implode(', ', $devices),
+			mysql2date(get_option('date_format'),$file->updated),
+			sprintf($lwp->_("Published: %s"), mysql2date(get_option('date_format'), $file->registered)),
+			$button, $size);
+			break;
+		case 'dl':
+			return sprintf('
+				<dt class="%s name">%s</dt>
+				<dd class="lwp-button">
+				<p class="description">%s</p>
+				<span class="device">(%s)</span>
+				%s
+				<span class="lwp-file-size">%s</span>
+				</dd>', $ext, esc_html($file->name), nl2br($file->detail), implode(', ', $devices), $button, $size);
+			break;
+		default:
+			return sprintf('
+				<li class="%s lwp-button">
+				<strong>%s</strong> - 
+				<span class="device">(%s)</span>
+				%s
+				<span class="lwp-file-size">%s</span>
+				</li>', $ext, esc_html($file->name), implode(', ', $devices), $button, $size);
+			break;
+	}
+}
+
+
 /**
  * Callback function for lwp_list_cancel_condition
  * @global Literally_WordPress $lwp

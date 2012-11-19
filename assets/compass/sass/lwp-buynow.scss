@@ -93,27 +93,34 @@ Form on Front end
 		}
 	}
 }
-.lwp-files table.lwp-file-table,
-.lwp-devices table.lwp-device-table{
-	width: 100%;
-	border-collapse: collapse;
-	background: #fff;
-	border: none;
-	thead th{
-		background: #f2f2f2 url('../../white-grad.png') repeat-x scroll left top;
-		color: #999;
-		border-top: 1px solid #bbb;
-		border-bottom: 1px solid #bbb;
-		padding: 5px;
+
+
+
+
+/*
+------------------------
+FileList
+------------------------
+*/
+
+.lwp-file-table{
+	td.updated,
+	td.name{
+		white-space: nowrap;
 	}
-	tbody td{
-		border-bottom: 1px solid #bbb;
-		padding: 5px;
+	span.published{
+		display: block;
+		font-size: 0.85em;
 	}
-}
-.lwp-file-table p.desc{
-	font-size:0.8em;
-	color:#999;
+	td.download{
+		span.lwp-file-size{
+			display: block;
+		}
+	}
+	span.lwp-file-size{
+		font-size: 0.85em;
+		color: #888;
+	}
 }
 
 
@@ -239,6 +246,7 @@ Event
 	}
 }
 
+
 /*
 ------------------------
 Purchase History
@@ -256,11 +264,24 @@ Purchase History
 			clear: left;
 		}
 	}
+	thead,tfoot{
+		.column-price,
+		.column-expires,
+		.column-registered{
+			&.desc:after{
+				content: ' ▼';
+			}
+			&.asc:after{
+				content: ' ▲';
+			}
+		}
+	}
 	.column-price{
 		white-space: nowrap;
 	}
 	.column-status{
 		white-space: nowrap;
+		.lwp-auth,
 		.lwp-success{
 			color: green;
 			font-weight: bold;

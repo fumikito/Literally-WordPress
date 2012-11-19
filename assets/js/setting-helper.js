@@ -1,6 +1,14 @@
 jQuery(document).ready(function($){
 	//Tabs
 	$('#lwp-tab').tabs();
+	$('#lwp-tab ul:first-child a').click(function(){
+		action = $(this).parents('form').attr('action');
+		if(action.match(/#setting/)){
+			action = action.replace(/#setting.*$/, '');
+		}
+		action += $(this).attr('href');
+		$(this).parents('form').attr('action', action);
+	});
 	//Timepicker
 	for(prop in LWPDatePicker){
 		var propToSplit = ['monthNames','dayNames','monthNamesShort','dayNamesMin','dayNamesShort'];

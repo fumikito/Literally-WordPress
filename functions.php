@@ -461,6 +461,7 @@ function lwp_get_date($file, $registered = true, $echo = true)
 
 /**
  * 登録されているファイルのリストを返す
+ * @deprecated 0.9.3
  * @global Literally_WordPress $lwp
  * @param string $accessibility
  * @param object $post
@@ -504,6 +505,77 @@ EOS;
 	}
 	$tag .= "</tbody></table></div>";
 	return $tag;
+}
+
+/**
+ * Display File tables
+ * @global Literally_WordPress $lwp
+ * @param array $args
+ * @return boolean|string
+ */
+function lwp_list_files($args = array()){
+	global $lwp;
+	$args = wp_parse_args($args, array(
+		'list_type' => 'table',
+		'list_class' => 'lwp-file-table',
+		'echo' => true,
+		'callback' => '_lwp_list_files',
+		'post' => null,
+		'accessibility' => 'all'
+	));
+	$post = get_post($args['post']);
+	switch($args['list_type']){
+		case 'table':
+			$before = sprintf('<table class="%s"><caption>%s</caption><thead><tr>'.
+				'<th class="name">%s</th>'.
+				'<th class="description">%s</th>'.
+				'<th class="device">%s</th>'.
+				'<th class="updated">%s</th>'.
+				'<th class="donload">%s</th>'.
+				'</tr></thead><tbody>', esc_attr($args['list_class']), $lwp->_('Registered Files'),
+				$lwp->_('File Name'), $lwp->_('Description'), $lwp->_('Available with'), $lwp->_('Updated'), $lwp->_('Download'));
+			$after = '</tbody></table>';
+			break;
+		case 'ul':
+		case 'dl':
+		case 'ol':
+			$before = sprintf('<%s class="%s">', $args['list_type'], esc_attr($args['list_class']));
+			$after = sprintf('</%s>', $args['list_type']);
+			break;
+		default:
+			$before = '';
+			$after = '';
+			break;
+	}
+	switch($args['accessibility']){
+		case 'owner':
+		case 'member':
+			$accessibility = $args['accessibility'];
+			break;
+		default:
+			$accessibility = 'all';
+			break;
+	}
+	$files = lwp_get_files($accessibility, $post);
+	if(empty($files)){
+		return false;
+	}
+	$list = '';
+	$callback = is_callable($args['callback']) ? $args['callback'] : '_lwp_list_files';
+	foreach($files as $file){
+		$ext = lwp_get_ext($file);
+		$url = lwp_file_link($file->ID);
+		$user_can_access = lwp_file_accessible($file);
+		$size = lwp_get_size($file);
+		$devices = lwp_get_file_devices($file);
+		$list .= call_user_func_array($callback, array($file, $user_can_access, $url, $size, $ext, $devices, $args['list_type']));
+	}
+	if($args['echo']){
+		echo $before.$list.$after;
+		return true;
+	}else{
+		return $before.$list.$after;
+	}
 }
 
 /**
