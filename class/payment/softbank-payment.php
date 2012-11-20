@@ -116,6 +116,17 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
 	);
 	
+	/**
+	 * Must be 1~60 days
+	 * @var int
+	 */
+	public $cvs_limit = 1;
+	
+	/**
+	 * Must be 1-60 days.
+	 * @var int
+	 */
+	public $payeasy_limit = 1;
 	
 	/**
 	 * @var string
@@ -140,7 +151,9 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			'sb_crypt_key' => '',
 			'sb_iv' => '',
 			'sb_hash_key' => '',
-			'sb_prefix' => ''
+			'sb_prefix' => '',
+			'sb_cvs_limit' => $this->cvs_limit,
+			'sb_payeasy_limit' => $this->payeasy_limit
 		), $option);
 		foreach($this->_creditcard as $cc => $bool){
 			$this->_creditcard[$cc] = (false !== array_search($cc, (array)$option['sb_creditcard']));
@@ -158,6 +171,8 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		$this->crypt_key = (string)$option['sb_crypt_key'];
 		$this->blogname = (string)mb_convert_kana($option['sb_blogname'], 'ASKV', 'utf-8');
 		$this->blogname_kana = $this->convert_zenkaka_kana($option['sb_blogname_kana']);
+		$this->cvs_limit = intval($option['sb_cvs_limit']);
+		$this->payeasy_limit = intval($option['sb_payeasy_limit']);
 	}
 	
 	public function on_construct() {
@@ -174,7 +189,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			//Hook for event notification despite order is authed.
 			add_action('_lwp_event_authorized_for_sb', array($this, 'notify_on_event_auth'));
 		}
-		$this->daily_cron();
+		//$this->daily_cron();
 	}
 	
 	/**
@@ -436,16 +451,16 @@ EOS;
 				"status" => LWP_Payment_Status::START,
 				"method" => LWP_Payment_Methods::SOFTBANK_WEB_CVS,
 				"transaction_key" => $order_id,
-				'transaction_id' => $xml->res_sps_transaction_id,
-				'payer_mail' => $xml->res_tracking_id,
+				'transaction_id' => (string)$xml->res_sps_transaction_id,
+				'payer_mail' => (string)$xml->res_tracking_id,
 				"registered" => $now,
 				"updated" => $now,
 				'misc' => serialize(array(
 					'cvs' => $creds['cvs'],
-					'invoice_no' => $this->decrypt($xml->res_pay_method_info->invoice_no),
-					'bill_date' => $this->decrypt($xml->res_pay_method_info->bill_date),
-					'cvs_pay_data1' => $this->decrypt($xml->res_pay_method_info->cvs_pay_data1),
-					'cvs_pay_data2' => $this->decrypt($xml->res_pay_method_info->cvs_pay_data2),
+					'invoice_no' => $this->decrypt((string)$xml->res_pay_method_info->invoice_no),
+					'bill_date' => $this->decrypt((string)$xml->res_pay_method_info->bill_date),
+					'cvs_pay_data1' => $this->decrypt((string)$xml->res_pay_method_info->cvs_pay_data1),
+					'cvs_pay_data2' => $this->decrypt((string)$xml->res_pay_method_info->cvs_pay_data2),
 				))
 			), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s'));
 			if($inserted){
@@ -615,13 +630,25 @@ EOS;
 		}
 		switch($context){
 			case 'sb-cvs':
-				$time += 60 * 60 * 24 * 59; //TODO: 設定値は変更できる
+				$time += 60 * 60 * 24 * $this->cvs_limit;
 				break;
 			case 'sb-payeasy':
-				$time += 60 * 60 * 24 * 59; //TODO: 設定値は変更できる
+				$time += 60 * 60 * 24 * $this->payeasy_limit;
 				break;
 		}
 		return $selling_limit ? min($time, $selling_limit) : $time;
+	}
+	
+	/**
+	 * If payment limit is not set, return false
+	 * @param object $post
+	 * @param string $method
+	 * @return boolean
+	 */
+	public function can_pay_with($post, $method = 'sb-cvs'){
+		$limit = $this->get_payment_limit($post, false, $method);
+		$now = current_time('timestamp');
+		return ($limit > $now && date('Y-m-d', $limit) != date('Y-m-d', $now));
 	}
 	
 	/**
@@ -653,7 +680,7 @@ EOS;
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->marchant_id().$this->service_id().":".$this->hash_key());
 		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
 		curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

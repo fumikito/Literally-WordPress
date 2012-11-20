@@ -100,21 +100,37 @@
 				</td>
 			</tr>
 			<?php endif; ?>
-			<?php if($lwp->softbank->is_cvs_enabled() || $lwp->gmo->is_cvs_enabled()): ?>
-			<tr>
+			<?php
+				foreach(array('gmo' => $lwp->gmo->is_cvs_enabled(), 'sb' => $lwp->softbank->is_cvs_enabled()) as $vender => $available):
+					if(!$available){
+						continue;
+					}
+					switch($vender){
+						case 'gmo':
+							$cvss = $lwp->gmo->get_available_cvs();
+							$selectable = false;
+							break;
+						case 'sb':
+							$cvss = $lwp->softbank->get_available_cvs();
+							$selectable = $lwp->softbank->can_pay_with($post_id);
+							break;
+					}
+			?>
+			<tr<?php if(!$selectable) echo ' class="disabled"'; ?>>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-cvs"></i><br />
-						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->is_cvs_enabled() ? 'gmo' : 'sb'; ?>-cvs" />
+						<input type="radio" name="lwp-method" value="<?php echo $vender; ?>-cvs"<?php if(!$selectable) echo ' disabled="disabled"';?> />
 						<?php $this->e("Web CVS"); ?>
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($selectable): ?>
 					<?php $this->e('You can pay at CVS below.'); ?><br />
-					<?php
-						$cvss = $lwp->gmo->is_cvs_enabled() ? $lwp->gmo->get_available_cvs() : $lwp->softbank->get_available_cvs();
-						foreach($cvss as $cvs):
-					?>
+					<?php else: ?>
+					<p class="invalid"><?php printf($this->_('You can\'t select %s because selling limit is today.'), $this->_('Web CVS')); ?></p>
+					<?php endif; ?>
+					<?php foreach($cvss as $cvs): ?>
 						<i class="lwp-cvs-small-icon small-icon-<?php echo $cvs; ?>"></i>
 					<?php endforeach; ?>
 					<br />
@@ -124,7 +140,7 @@
 					</small>
 				</td>
 			</tr>
-			<?php endif; ?>
+			<?php endforeach;?>
 			<?php if($lwp->softbank->payeasy || $lwp->gmo->payeasy): ?>
 			<tr>
 				<th class="lwp-column-method">

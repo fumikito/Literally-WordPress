@@ -245,7 +245,7 @@
 						<input type="text" class="small-text" name="zipcode" value="<?php echo esc_attr($vars['zipcode']); ?>" placeholder="1000001" />
 						<?php $this->e('Zip Code') ?>
 					</label>
-					<?php $this->e('Only digits.'); ?>
+					<?php $this->e('(Only digits)'); ?>
 					<?php if(function_exists('zip_search_button')) zip_search_button(); ?>
 					<br />
 					<label>

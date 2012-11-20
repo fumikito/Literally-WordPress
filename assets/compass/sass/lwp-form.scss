@@ -103,6 +103,19 @@ a.button, a.button-primary{
 	display: inline-block;
 }
 
+/* Input */
+input{
+	&.regular-text{
+		width: 18em !important;
+	}
+	&.middle-text{
+		width: 12em !important;
+	}
+	&.small-text{
+		width: 5em !important;
+	}
+}
+	
 /* Submit button */
 .submit{
 	input.button-primary,
@@ -138,6 +151,9 @@ a.button, a.button-primary{
 	table-layout: auto;
 	tr{
 		background: #f3f3f3;
+		&.disabled{
+			opacity: 0.6;
+		}
 	}
 	th{
 		font-size: 13px;
@@ -173,21 +189,18 @@ a.button, a.button-primary{
 	p{
 		margin:4px 0 0 0;
 		font-size:11px;
-
+		&.invalid{
+			color: #f00;
+			margin: 0.25em 0;
+			padding: 0.25em 0.5em;
+			background-color: #ffebe8;
+			@include border-radius(3px);
+		}
 	}
 	input{
 		line-height:20px;
 		font-size:15px;
 		padding:2px;
-		&.regular-text{
-			width: 18em;
-		}
-		&.middle-text{
-			width: 12em;
-		}
-		&.small-text{
-			width: 5em;
-		}
 	}
 	textarea,
 	input[type=text]{

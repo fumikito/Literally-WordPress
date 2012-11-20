@@ -380,6 +380,11 @@
 							<?php echo esc_html($this->softbank->get_verbose_name($c)); ?>
 						</label>&nbsp;
 						<?php endforeach; ?>
+						<br />
+						<label><?php printf($this->_('Payment must be finished within %s days.'), sprintf('<input type="text" class="small-text" name="sb_cvs_limit" value="%s" placeholder="1" />', esc_attr(($this->softbank->cvs_limit)))); ?></label>
+						<?php if($this->softbank->cvs_limit < 1 || $this->softbank->cvs_limit > 60): ?>
+						<p class="invalid"><?php $this->e('PayEasy\'s payment limit must be between 1 and 60.'); ?></p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
@@ -406,7 +411,9 @@
 								<input type="text" name="sb_blogname" class="regular-text" value="<?php echo esc_html(($blogname = $this->softbank->blogname)); ?>" placeholder="ex. 私のブログ" />
 								<small><?php printf($this->_('(%d letters max)'), 24);?></small>
 							</label>
+
 						</p>
+						<label><?php printf($this->_('Payment must be finished within %s days.'), sprintf('<input type="text" class="small-text" name="sb_payeasy_limit" value="%s" placeholder="1" />', esc_attr(($this->softbank->payeasy_limit)))); ?></label>
 						<p class="description">
 							<?php $this->e('These values are required for PayEasy. Kana must be Zenkaku Kana.'); ?>
 						</p>
@@ -421,6 +428,9 @@
 								}
 								if(!empty($blogname_kana) && !preg_match("/^[ァ-ヾ]+$/u", $blogname_kana)){
 									$err[] = sprintf($this->_('%s must be Zenkaku Kana.'), $this->_('Name Kana on Invoice'));
+								}
+								if($this->softbank->payeasy_limit > 60 || $this->softbank->payeasy_limit < 1){
+									$err[] = $this->_('PayEasy\'s payment limit must be between 1 and 60.');
 								}
 								if(!empty($err)){
 									printf('<p class="invalid">%s</p>', implode('<br />', $err));

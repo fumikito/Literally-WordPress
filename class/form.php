@@ -304,12 +304,22 @@ EOS;
 							$message = $this->_("Failed to make transaction.");
 						}
 						break;
-					case 'sb-cc':
 					case 'sb-cvs':
 					case 'sb-payeasy':
-					case 'gmo-cc':
+						if(!$lwp->softbank->can_pay_with($book)){
+							$this->kill(sprintf($this->_('You can\'t select %s because selling limit is today.'),
+								( ($method == 'sb-cvs') ? $this->_('Web CVS') : 'PayEasy')
+							), 403);
+						}else{
+							header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
+							exit();
+						}
+						break;
 					case 'gmo-cvs':
 					case 'gmo-payeasy':
+						
+					case 'sb-cc':
+					case 'gmo-cc':
 						header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
 						exit();
 						break;
@@ -659,7 +669,7 @@ EOS;
 				$limit_date = $data['bill_date'];
 			}
 			if($transaction->status == LWP_Payment_Status::START){
-				$left_days = floor(strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24;
+				$left_days = ceil((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
 				if($left_days < 0){
 					$request_suffix = sprintf($this->_(' (%d days past)'), $left_days);
 				}else{
