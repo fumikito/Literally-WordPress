@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 15:56+0900\n"
-"PO-Revision-Date: 2012-11-19 15:56+0900\n"
+"POT-Creation-Date: 2012-11-21 22:56+0900\n"
+"PO-Revision-Date: 2012-11-21 22:56+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -1641,7 +1641,7 @@ msgid "Softbank Payment"
 msgstr ""
 
 #: ../admin/settings/dashboard.php:41 ../admin/settings/payment.php:30
-#: ../admin/settings/payment.php:66 ../form-template/paypal-selection.php:168
+#: ../admin/settings/payment.php:66 ../form-template/paypal-selection.php:187
 #: ../help/transfer.php:2
 msgid "Transfer"
 msgstr ""
@@ -2067,7 +2067,7 @@ msgstr ""
 
 #: ../admin/settings/payment.php:248 ../admin/settings/payment.php:392
 #: ../form-template/paypal-payment.php:165
-#: ../form-template/paypal-selection.php:150
+#: ../form-template/paypal-selection.php:165
 msgid "PayEasy"
 msgstr ""
 
@@ -3855,7 +3855,7 @@ msgstr ""
 #: ../class/literally-wordpress.php:567 ../class/statics/payment-status.php:77
 #: ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
-#: ../form-template/paypal-selection.php:187
+#: ../form-template/paypal-selection.php:206
 #: ../form-template/paypal-subscription.php:64 ../tables/list-history.php:216
 msgid "Cancel"
 msgstr "Cancel"
@@ -4564,8 +4564,8 @@ msgstr ""
 
 #: ../class/payment/gmo.php:227 ../class/payment/gmo.php:299
 #: ../class/payment/softbank-payment.php:301
-#: ../class/payment/softbank-payment.php:471
-#: ../class/payment/softbank-payment.php:553
+#: ../class/payment/softbank-payment.php:469
+#: ../class/payment/softbank-payment.php:551
 msgid ""
 "Payment requeist is succeeded, but failed to finish transaction. Please "
 "contact to Administrator."
@@ -4575,13 +4575,13 @@ msgstr ""
 msgid "Cannot commit transaction."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:699
-#: ../class/payment/softbank-payment.php:716
-#: ../class/payment/softbank-payment.php:720
+#: ../class/payment/softbank-payment.php:650
+#: ../class/payment/softbank-payment.php:667
+#: ../class/payment/softbank-payment.php:671
 msgid "Sorry, but connection is failed. Please try again later."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:707
+#: ../class/payment/softbank-payment.php:658
 msgid "Transaction is succeeded."
 msgstr ""
 
@@ -5934,7 +5934,7 @@ msgid ""
 msgstr ""
 
 #: ../form-template/paypal-payment.php:169
-#: ../form-template/paypal-selection.php:154
+#: ../form-template/paypal-selection.php:170
 msgid "You can pay from your bank account via PayEasy."
 msgstr ""
 
@@ -6034,8 +6034,8 @@ msgstr ""
 #: ../form-template/paypal-selection.php:76
 #: ../form-template/paypal-selection.php:97
 #: ../form-template/paypal-selection.php:138
-#: ../form-template/paypal-selection.php:156
-#: ../form-template/paypal-selection.php:174
+#: ../form-template/paypal-selection.php:175
+#: ../form-template/paypal-selection.php:193
 msgid "Note:"
 msgstr ""
 
@@ -6066,23 +6066,30 @@ msgid "You can pay at CVS below."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:139
-#: ../form-template/paypal-selection.php:157
+#: ../form-template/paypal-selection.php:176
 msgid "To finish transaction, you should follow the instruction on next step."
 msgstr ""
 
 #: ../form-template/paypal-selection.php:172
+#, php-format
+msgid ""
+"You can't select %1$s because %1$s can be available no later than %2$d days "
+"before the selling limit."
+msgstr ""
+
+#: ../form-template/paypal-selection.php:191
 msgid ""
 "You can pay through specified bank account. The account will be displayed on "
 "next page."
 msgstr ""
 
-#: ../form-template/paypal-selection.php:175
+#: ../form-template/paypal-selection.php:194
 msgid ""
 "Transaction will not have been complete, unless you will send deposit to the "
 "specified bank account. This means you can't get contents immediately."
 msgstr ""
 
-#: ../form-template/paypal-selection.php:183
+#: ../form-template/paypal-selection.php:202
 #: ../form-template/paypal-subscription.php:60
 msgid "Next &raquo;"
 msgstr ""

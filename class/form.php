@@ -449,14 +449,10 @@ EOS;
 							if($is_sb_cc){
 								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
 								if($transaction_id){
-									if($book->post_type == $lwp->event->post_type && lwp_is_cancelable($book->post_parent)){
-										do_action('_lwp_event_authorized_for_sb', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+									if($lwp->softbank->capture_authorized_transaction($transaction_id)){
+										$wpdb->update($lwp->transaction, array('status' => LWP_Payment_Status::SUCCESS), array('ID' => $transaction_id), array('%s'), array('%d'));
 									}else{
-										if($lwp->softbank->capture_authorized_transaction($transaction_id)){
-											$wpdb->update($lwp->transaction, array('status' => LWP_Payment_Status::SUCCESS), array('ID' => $transaction_id), array('%s'), array('%d'));
-										}else{
-											$transaction_id = 0;
-										}
+										$transaction_id = 0;
 									}
 								}
 								$error_msg = $lwp->softbank->last_error;
@@ -1119,7 +1115,7 @@ EOS;
 				case LWP_Payment_Methods::SOFTBANK_CC:
 					switch($transaction->status){
 						case LWP_Payment_Status::SUCCESS:
-							if($lwp->softbank->cancel_credit_transaction($transaction->ID)){
+							if(($refund_price == $transaction->price) && $lwp->softbank->cancel_credit_transaction($transaction->ID)){
 								//Total Refund, do refund
 								$status = LWP_Payment_Status::REFUND;
 							}

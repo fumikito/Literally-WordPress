@@ -141,24 +141,43 @@
 				</td>
 			</tr>
 			<?php endforeach;?>
-			<?php if($lwp->softbank->payeasy || $lwp->gmo->payeasy): ?>
+			<?php
+				foreach(array('gmo' => $lwp->gmo->payeasy, 'sb' => $lwp->softbank->payeasy) as $vender => $available):
+					if(!$available){
+						continue;
+					}
+					switch($vender){
+						case 'gmo':
+							$selectable = $lwp->gmo->can_pay_with($post_id, 'gmo-payeasy');
+							$limit = 10;
+							break;
+						case 'sb':
+							$selectable = $lwp->softbank->can_pay_with($post_id, 'sb-payeasy');
+							$limit = $lwp->softbank->payeasy_limit;
+							break;
+					}
+			?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-payeasy"></i><br />
-						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->payeasy ? 'gmo' : 'sb'; ?>-payeasy" />
+						<input type="radio" name="lwp-method" value="<?php echo $vender; ?>-payeasy" <?php if(!$selectable) echo ' disabled="disabled"';?> />
 						<?php $this->e("PayEasy"); ?>
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
-					<?php $this->e('You can pay from your bank account via PayEasy.'); ?><br />
+					<?php if($selectable): ?>
+						<?php $this->e('You can pay from your bank account via PayEasy.'); ?><br />
+					<?php else: ?>
+						<p class="invalid"><?php printf($this->_('You can\'t select %1$s because %1$s can be available no later than %2$d days before the selling limit.'), 'PayEasy', $limit); ?></p>
+					<?php endif; ?>
 					<small>
 						<strong><?php $this->e('Note:');  ?></strong><br />
 						<?php $this->e('To finish transaction, you should follow the instruction on next step.'); ?>
 					</small>
 				</td>
 			</tr>
-			<?php endif; ?>
+			<?php endforeach; ?>
 			<?php if($lwp->notifier->is_enabled()): ?>
 			<tr>
 				<th class="lwp-column-method">

@@ -604,52 +604,6 @@ EOS;
 		return $xml_array;
 	}
 	
-	/**
-	 * Returns payment limit for specified post
-	 * @global Literally_WordPress $lwp
-	 * @param int|object $post
-	 * @param int $time
-	 * @param string $context
-	 * @return int
-	 */
-	public function get_payment_limit($post, $time = false, $context = 'sb-cvs'){
-		global $lwp;
-		if(!$time){
-			$time = current_time('timestamp');
-		}
-		$post = get_post($post);
-		if($post->post_type == $lwp->event->post_type){
-			$selling_limit = get_post_meta($post->post_parent, $lwp->event->meta_selling_limit, TRUE);
-			if($selling_limit && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $selling_limit)){
-				$selling_limit = strtotime($selling_limit.' 23:59:59');
-			}else{
-				$selling_limit = false;
-			}
-		}else{
-			$selling_limit = false;
-		}
-		switch($context){
-			case 'sb-cvs':
-				$time += 60 * 60 * 24 * $this->cvs_limit;
-				break;
-			case 'sb-payeasy':
-				$time += 60 * 60 * 24 * $this->payeasy_limit;
-				break;
-		}
-		return $selling_limit ? min($time, $selling_limit) : $time;
-	}
-	
-	/**
-	 * If payment limit is not set, return false
-	 * @param object $post
-	 * @param string $method
-	 * @return boolean
-	 */
-	public function can_pay_with($post, $method = 'sb-cvs'){
-		$limit = $this->get_payment_limit($post, false, $method);
-		$now = current_time('timestamp');
-		return ($limit > $now && date('Y-m-d', $limit) != date('Y-m-d', $now));
-	}
 	
 	/**
 	 * Generate uniq transaction ID
