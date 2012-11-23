@@ -1641,10 +1641,45 @@ EOS;
 	 * Parse XML Data from Softbank Payment
 	 * @global Literally_WordPress $lwp
 	 */
-	private function handle_sb_payment(){
-		global $lwp;
-		$xml_data = file_get_contents('php://input');
-		$lwp->softbank->parse_request($xml_data);
+	private function handle_sb_payment($is_sandbox){
+		global $lwp, $wpdb;
+		if($_SERVER["REQUEST_METHOD"] != "POST"){
+			$this->kill_anonymous_user();
+			if(!current_user_can('manage_options')){
+				$this->kill($this->_('You have no permission to see this URL.'), 403);
+			}
+			//Request
+			$response = false;
+			if(isset($_GET['sb_transaction'], $_GET['sb_status'])){
+				$xml = mb_convert_encoding($lwp->softbank->make_pseudo_request($_GET['sb_transaction'], $_GET['sb_status']), 'utf-8', 'sjis-win');
+				$response_xml = simplexml_load_string($xml);
+				$response = '';
+				if($response_xml->res_err_code){
+					$response .= "Error: \n".mb_convert_encoding(base64_decode(strval($response_xml->res_err_code)), 'utf-8', 'sjis-win')."\n\n----------------\n\n";
+				}
+				$response .= $this->_("Parsed Data: \n").var_export($response_xml, true)."\n\n----------------\n\n";
+				$response .= "XML: \n". $xml;
+			}
+			//Transaction to be change
+			$sql = <<<EOS
+				SELECT * FROM {$lwp->transaction}
+				WHERE method IN (%s, %s) AND status = %s
+EOS;
+			$this->show_form('sb-check', array(
+				'transactions' => $wpdb->get_results($wpdb->prepare($sql, LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Status::START)),
+				'action' => lwp_endpoint('sb-payment'),
+				'message' =>  $lwp->softbank->is_sandbox
+					? '<p class="message">'.sprintf($this->_('This page confirm whether your endpoint <code>%s</code> works in order. Please select transaction to be finished.'), lwp_endpoint('sb-payment')).'</p>'
+					: '<p class="message error">'.$this->_('This is not sandbox environment. Are you sure to change status?').'</p>',
+				'link' => admin_url('admin.php?page=lwp-setting&view=payment#setting-softbank'),
+				'response' => $response
+			), false);
+			exit;
+		}else{
+			$xml_data = file_get_contents('php://input');
+			header('Content-Type: text/xml; charset=Shift_JIS');
+			echo $lwp->softbank->parse_request($xml_data);
+		}
 		die();
 	}
 	
@@ -1681,7 +1716,7 @@ EOS;
 	 * @param string $slug
 	 * @param array $args
 	 */
-	private function show_form($slug, $args = array()){
+	private function show_form($slug, $args = array(), $die = true){
 		$args['meta_title'] = $this->get_form_title($slug).' : '.get_bloginfo('name');
 		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);
@@ -1702,7 +1737,9 @@ EOS;
 			do_action('lwp_after_form', $slug, $args);
 			require_once $parent_directory."paypal-footer.php";
 		}
-		exit;
+		if($die){
+			exit;
+		}
 	}
 	
 	/**
@@ -1943,6 +1980,9 @@ EOS;
 			case 'subscription':
 				$meta_title = $this->_('Subscrition Plans');
 				break;
+			case 'sb-check':
+				$meta_title = $this->_('Softbank Payment Service Notification Check');
+				break;
 			default:
 				$meta_title = '';
 				break;
@@ -1963,6 +2003,7 @@ EOS;
 			case 'payment':
 			case 'payment-info':
 			case 'refund-account':
+			case 'sb-payment':
 				return $action;
 				break;
 			case 'pricelist':
@@ -2057,6 +2098,9 @@ EOS;
 				break;
 			case 'ticket-awaiting':
 				return $this->_('Displayed when user choose to wait for cancellation.');
+				break;
+			case 'sb-payment':
+				return $this->_('Check endpoint availability. Use only on sandbox.');
 				break;
 			default:
 				return '';

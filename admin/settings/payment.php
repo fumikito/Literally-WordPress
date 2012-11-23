@@ -520,6 +520,7 @@
 						<p class="description">
 							<?php $this->e('If Web CVS or PayEasy is enabled, you must set up this URL as notification URL. Otherwise you loose payment status change.'); ?>
 						</p>
+						<a href="<?php echo lwp_endpoint('sb-payment'); ?>" class="button"><?php $this->e('Check endpoint'); ?></a>
 					</td>
 				</tr>
 				<tr>

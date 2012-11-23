@@ -27,6 +27,14 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	
 	const PAYEASY_REQUEST_CODE = 'ST01-00101-703';
 	
+	const PAYEASY_SUCCESS_RESPONSE_CODE = 'NT01-00103-703';
+	
+	const PAYEASY_CANCEL_RESPONSE_CODE = 'NT01-00104-703';
+	
+	const CVS_SUCCESS_RESPONSE_CODE = 'NT01-00103-701';
+	
+	const CVS_CANCEL_RESPONSE_CODE = 'NT01-00104-701';
+	
 	/**
 	 * Initial Vector for Crypt
 	 * @var string
@@ -113,8 +121,36 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 */
 	private $tag_to_be_base64 = array(
 		'item_name', 'free1', 'free2', 'free3', 'dtl_item_name', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
-		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana'
+		'add1', 'add2', 'add3', 'bill_info', 'bill_info_kana', 'res_err_code'
 	);
+	
+	/**
+	 * These tags must be crypted if 3DES flg is true.
+	 * @var array 
+	 */
+	private $tag_to_be_crypt = array(
+		'issue_type', 'last_name', 'first_name', 'last_name_kana', 'first_name_kana', 'first_zip', 'second_zip', 'add1', 'add2', 'add3',
+		'tel', 'mail', 'seiyakudate', 'webcvstype', 'bill_date', 'payeasy_type', 'terminal_value', 'pay_csv', 'bill_info_kana', 'bill_info', 'bill_notes',
+		'cc_number', 'cc_expiration', 'security_code', 'dealings_type', 'divide_times', 'cust_manage_flg'
+	);
+	
+	/**
+	 * These tag must be crypted despite 3DES flag.
+	 * @var array
+	 */
+	private $tag_to_be_crypt_force = array('rec_type', 'rec_amount', 'rec_amount_total', 'res_mail', 'rec_extra');
+	
+	/**
+	 * These tag must be decrypted if 3DES flag is true.
+	 * @var array
+	 */
+	private $tag_to_be_decrypt_force = array('rec_type', 'rec_amount', 'rec_amount_total', 'res_mail', 'rec_extra');
+	
+	/**
+	 * These tags must be base64 decoded
+	 * @var array
+	 */
+	private $tag_to_be_base64_decode = array('rec_extra');
 	
 	/**
 	 * Must be 1~60 days
@@ -177,17 +213,17 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	
 	public function on_construct() {
 		add_action('init', array($this, 'init'));
-		if ( !wp_next_scheduled( $this->cron_name ) ) {
+		//if ( !wp_next_scheduled( $this->cron_name ) ) {
 			//wp_schedule_event(current_time('timestamp'), 'daily', $this->cron_name);
-		}
-		add_action($this->cron_name, array($this, 'daily_cron'));
+		//}
+		//add_action($this->cron_name, array($this, 'daily_cron'));
 	}
 	
 	public function init(){
 		global $lwp;
 		if($lwp->event->is_enabled()){
 			//Hook for event notification despite order is authed.
-			add_action('_lwp_event_authorized_for_sb', array($this, 'notify_on_event_auth'));
+			//add_action('_lwp_event_authorized_for_sb', array($this, 'notify_on_event_auth'));
 		}
 		//$this->daily_cron();
 	}
@@ -208,6 +244,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	
 	/**
 	 * Daily Cron to finish auth
+	 * @deprecated since version 0.9.3
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 */
@@ -556,16 +593,6 @@ EOS;
 	
 	
 	/**
-	 * Get Post data on Endpoint
-	 * @global Literally_WordPress $lwp
-	 * @global wpdb $wpdb
-	 * @param string $post_data
-	 */
-	public function parse_request($post_data){
-		global $lwp, $wpdb;
-	}
-	
-	/**
 	 * Returns common xml array
 	 * @param string $order_id
 	 * @param int $user_id
@@ -606,6 +633,166 @@ EOS;
 	
 	
 	/**
+	 * Get Post data on Endpoint
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param string $post_data
+	 */
+	public function parse_request($post_data){
+		global $lwp, $wpdb;
+		$xml_string = preg_replace("/(encoding=\")Shift_JIS(\")/", "$1utf-8$2", mb_convert_encoding($post_data, 'utf-8', 'sjis-win'));
+		$xml = simplexml_load_string($xml_string);
+		$status = 'NG';
+		if(isset($xml['id'])){
+			$transaction = null;
+			$sql = "SELECT * FROM {$lwp->transaction} WHERE payer_mail = %s AND method = %s";
+			$action = $xml['id'];
+			//Get transaction
+			switch($action){
+				case self::CVS_CANCEL_RESPONSE_CODE:
+				case self::CVS_SUCCESS_RESPONSE_CODE:
+					$transaction = $wpdb->get_row($wpdb->prepare($sql, $xml->tracking_id, LWP_Payment_Methods::SOFTBANK_WEB_CVS));
+					break;
+				case self::PAYEASY_CANCEL_RESPONSE_CODE:
+				case self::PAYEASY_SUCCESS_RESPONSE_CODE:
+					$transaction = $wpdb->get_row($wpdb->prepare($sql, $xml->tracking_id, LWP_Payment_Methods::SOFTBANK_PAYEASY));
+					break;
+			}
+			if(!$transaction){
+				$message = $this->_('Specified transaction is not found.');
+			}elseif(!$this->check_sum($xml)){
+				$message = $this->_('Check sum is wrong.');
+			}else{
+				//This is valid request, so change status as it request.
+				switch($action){
+					case self::CVS_CANCEL_RESPONSE_CODE:
+					case self::PAYEASY_CANCEL_RESPONSE_CODE:
+						if($transaction->status != LWP_Payment_Status::CANCEL){
+							$updated = $wpdb->update($lwp->transaction, array(
+								'status' => LWP_Payment_Status::CANCEL,
+								'updated' => current_time('mysql', true)
+							), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+							if($updated){
+								do_action('lwp_update_transaction', $transaction->ID);
+								$status = 'OK';
+								$message = $this->_('Transaction was successfully changed.');
+							}else{
+								$message = $this->_('Failed to update database. Please try again later.');
+							}
+						}
+						break;
+					case self::CVS_SUCCESS_RESPONSE_CODE:
+					case self::PAYEASY_SUCCESS_RESPONSE_CODE:
+						$code = intval($this->decrypt((string)$xml->pay_method_info->rec_type, true));
+						$status_to = false;
+						switch($code){
+							case 1:
+							case 3:
+								$price = $this->decrypt((string)$xml->pay_method_info->rec_amount, true);
+								if($price == $transaction->price){
+									$status_to = LWP_Payment_Status::SUCCESS;
+								}else{
+									$message = $this->_('Reported amount is different from transaction log.');
+								}
+								break;
+							case 2:
+							case 4:
+								$status_to = LWP_Payment_Status::START;
+								break;
+						}
+						if($status_to){
+							if($transaction->status != $status_to){
+								$updated = $wpdb->update($lwp->transaction, array(
+									'status' => $status_to,
+									'updated' => current_time('mysql', true)
+								), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+								if($updated){
+									do_action('lwp_update_transaction', $transaction->ID);
+									$status = 'OK';
+									$message = $this->_('Transaction was successfully changed.');
+								}else{
+									$message = $this->_('Failed to update database. Please try again later.');
+								}
+							}else{
+								//No need to update
+								$status = 'OK';
+								$message = $this->_('Nothing needs update.');
+							}
+						}else{
+							$message = $this->_('Request type is wrong.');
+						}
+						break;
+				}
+			}
+		}else{
+			$message = $this->_('ID is not set.');
+			$action = self::CVS_CANCEL_RESPONSE_CODE;
+		}
+		return $this->make_xml($action, array(
+			'res_result' => $status,
+			'res_err_code' => $message
+		), true);
+	}
+		
+	/**
+	 * Make pseudo request to self server
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 * @param int $status
+	 * @return string XML Format
+	 */
+	public function make_pseudo_request($transaction_id, $status){
+		global $wpdb, $lwp;
+		$sql = "SELECT * FROM {$lwp->transaction} WHERE ID = %d";
+		$transaction = $wpdb->get_row($wpdb->prepare($sql, $transaction_id));
+		if(!$transaction){
+			return $this->make_xml(self::CVS_CANCEL_RESPONSE_CODE, array(
+				'res_result' => 'NG',
+				'res_err_code' => $this->_('Specified transaction is not found.')
+			), true);
+		}elseif(false === array_search ($transaction->method, array(LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::SOFTBANK_PAYEASY))){
+			return $this->make_xml(self::CVS_CANCEL_RESPONSE_CODE, array(
+				'res_result' => 'NG',
+				'res_err_code' => sprintf($this->_('Specified transaction\'s payment method is %s.'), $this->_($transaction->method))
+			), true);
+		}else{
+			switch($transaction->method){
+				case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
+					$action = $status ? self::CVS_SUCCESS_RESPONSE_CODE : self::CVS_CANCEL_RESPONSE_CODE;
+					break;
+				case LWP_Payment_Methods::SOFTBANK_PAYEASY:
+					$action = $status ? self::PAYEASY_SUCCESS_RESPONSE_CODE : self::PAYEASY_CANCEL_RESPONSE_CODE;
+					break;
+			}
+			$now = date('YmdHis', current_time('timestamp'));
+			$xml_array = array(
+				'merchant_id' => $this->marchant_id(),
+				'service_id' => $this->service_id(),
+				'sps_transaction_id' => $transaction->transaction_id,
+				'tracking_id' => $transaction->payer_mail,
+				'rec_datetime' => $now
+			);
+			if($status){
+				$user = get_userdata($transaction->user_id);
+				$xml_array = array_merge($xml_array, array(
+					'pay_method_info' => array(
+						'rec_type' => 1,
+						'rec_amount' => $transaction->price,
+						'rec_amount_total' => $transaction->price,
+						'res_mail' => $user->user_email,
+						'rec_extra' => ''
+					)
+				));
+			}
+			$xml_array['request_date'] = $now;
+			$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+			return $this->get_request($this->make_xml($action, $xml_array), true);
+		}
+	}
+	
+	
+	/**
 	 * Generate uniq transaction ID
 	 * @return string
 	 */
@@ -627,9 +814,9 @@ EOS;
 	 * @param string $xml
 	 * @return array contains from success, message, body
 	 */
-	private function get_request($xml){
+	private function get_request($xml, $pseudo = false){
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->get_endpoint());
+		curl_setopt($ch, CURLOPT_URL, $pseudo ? lwp_endpoint('sb-payment') : $this->get_endpoint());
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->marchant_id().$this->service_id().":".$this->hash_key());
@@ -641,6 +828,10 @@ EOS;
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		$result = curl_exec($ch);
+		if($pseudo){
+			curl_close($ch);
+			return $result;
+		}
 		$response = array(
 			'success' => false,
 			'message' => '',
@@ -668,7 +859,7 @@ EOS;
 					}
 				}
 			}else{
-				$response['message'] = "XML".$this->_('Sorry, but connection is failed. Please try again later.');
+				$response['message'] = $this->_('Sorry, but connection is failed. Please try again later.');
 			}
 		}
 		curl_close($ch);
@@ -681,11 +872,12 @@ EOS;
 	 * @param array $xml_array
 	 * @return string
 	 */
-	private function make_xml($action, $xml_array){
+	private function make_xml($action, $xml_array, $response = false){
 		$tag = $this->make_tag('', $xml_array);
-		$xml = '<?xml version="1.0" encoding="Shift_JIS" ?>'.
-			sprintf('<sps-api-request id="%s">', $action);
-		$xml .= $tag."</sps-api-request>";
+		$xml_type = $response ? 'response' : 'request';
+		$xml = '<?xml version="1.0" encoding="Shift_JIS" ?>'."\n".
+			sprintf('<sps-api-%s id="%s">', $xml_type, $action)."\n";
+		$xml .= $tag."</sps-api-{$xml_type}>";
 		return mb_convert_encoding($xml, 'sjis-win', 'utf-8');
 	}
 	
@@ -701,7 +893,7 @@ EOS;
 			foreach($value as $k => $v){
 				$tag .= $this->make_tag($k, $v);
 			}
-			return empty($key) ? $tag : sprintf('<%1$s>%2$s</%1$s>', $key, $tag);
+			return empty($key) ? $tag : sprintf('<%1$s>%2$s</%1$s>', $key, $tag)."\n";
 		}else{
 			if(empty($key)){
 				return $value;
@@ -709,7 +901,8 @@ EOS;
 				if(false !== array_search($key, $this->tag_to_be_base64)){
 					$value = base64_encode(mb_convert_encoding($value, 'sjis-win', 'utf-8'));
 				}
-				return sprintf('<%1$s>%2$s</%1$s>', $key, $value);
+				
+				return sprintf('<%1$s>%2$s</%1$s>', $key, $this->crypt($key, $value))."\n";
 			}
 		}
 	}
@@ -731,6 +924,37 @@ EOS;
 	}
 	
 	/**
+	 * Check SimpleXMLElement has valid checksum.
+	 * @param SimpleXMLElement $xml
+	 * @return boolean
+	 */
+	private function check_sum($xml){
+		switch($xml['id']){
+			case self::CVS_CANCEL_RESPONSE_CODE:
+			case self::PAYEASY_CANCEL_RESPONSE_CODE:
+				$hash_source = array($xml->merchant_id, $xml->service_id, $xml->sps_transaction_id, $xml->tracking_id, $xml->rec_datetime, $xml->request_date);
+				break;
+			case self::CVS_SUCCESS_RESPONSE_CODE:
+			case self::PAYEASY_SUCCESS_RESPONSE_CODE:
+				$hash_source = array(
+					$xml->merchant_id, $xml->service_id, $xml->sps_transaction_id, $xml->tracking_id, $xml->rec_datetime,
+					$this->decrypt((string)$xml->pay_method_info->rec_type, true),
+					$this->decrypt((string)$xml->pay_method_info->rec_amount, true),
+					$this->decrypt((string)$xml->pay_method_info->rec_amount_total, true),
+					$this->decrypt((string)$xml->pay_method_info->res_mail, true),
+					base64_decode($this->decrypt((string)$xml->pay_method_info->rec_extra, true)),
+					$xml->request_date
+				);
+				break;
+			default:
+				return false;
+				break;
+		}
+		$hash = sha1(implode('', array_map('trim', array_map('strval', $hash_source))).$this->hash_key());
+		return ($hash == (string)$xml->sps_hashcode);
+	}
+	
+	/**
 	 * 
 	 * @param string $key
 	 * @param string|array $value
@@ -747,11 +971,16 @@ EOS;
 	
 	/**
 	 * Crypt data to Softbank way
+	 * @param string $key
 	 * @param string $string
 	 * @return string
 	 */
-	private function crypt($string){
-		if(!$this->is_sandbox && function_exists('mcrypt_cbc')){
+	private function crypt($key, $string){
+		if(function_exists('mcrypt_cbc') && !empty($string) && (
+			(!$this->is_sandbox && false !== array_search($key, $this->tag_to_be_crypt))
+				||
+			(false !== array_search($key, $this->tag_to_be_crypt_force))
+		)){
 			//Padding the text
 			$add = strlen($string) % 8;
 			for($i = 0; $i < $add; $i++){
@@ -773,8 +1002,8 @@ EOS;
 	 * @param string $string
 	 * @return string
 	 */
-	private function decrypt($string){
-		if(!$this->is_sandbox && function_exists('mcrypt_cbc')){
+	private function decrypt($string, $force = false){
+		if(!empty($string) && function_exists('mcrypt_cbc') && (!$this->is_sandbox || $force) ){
 			$resource = mcrypt_module_open(MCRYPT_3DES, '',  MCRYPT_MODE_CBC, '');;
 			mcrypt_generic_init($resource, $this->crypt_key, $this->iv);
 			$decrypted_data = mdecrypt_generic($resource, base64_decode($string));

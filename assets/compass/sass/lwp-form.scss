@@ -411,7 +411,19 @@ p.success{
 		  height: 0;   
 		  clear: both;   
 		  visibility: hidden;  
-		}  
+		} 
+		pre{
+			margin: 1em 0;
+			padding: 0.5em;
+			font-family: monospace;
+			background: #888;
+			color: #fff;
+			text-shadow: 1px 1px 5px #000;
+			letter-spacing: 0.1em;
+			font-size: 1.1em;
+			line-height: 1.4;
+			overflow: auto;
+		}
 	}
 	.footer{
 		text-align: center;
