@@ -57,6 +57,29 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	public $payeasy = false;
 	
 	/**
+	 * Offline payment method
+	 * @var array
+	 */
+	protected $offline_context = array();
+
+	/**
+	 * override parent constructor
+	 * @param array $option
+	 */
+	public function __construct($option = array()) {
+		parent::__construct($option);
+		$this->register_offline_methods();
+		//Hook on off line paymen cancelation
+		add_action('lwp_update_transaction', array($this, 'offline_payment_cancelation'));
+	}
+
+
+	/**
+	 * Register offline methods to hook on notification
+	 */
+	protected function register_offline_methods(){}
+	
+	/**
 	 * Returns if CVS is enabled
 	 * @return boolean
 	 */
@@ -456,4 +479,48 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		}
 	}
 	
+	/**
+	 * Do payment notification on cancelation
+	 * @param type $transaciton_id
+	 */
+	public function offline_payment_cancelation($transaction_id){
+		global $lwp, $wpdb;
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id));
+		if($transaction->status == LWP_Payment_Status::CANCEL && false !== array_search($transaction->method, $this->offline_context)){
+			$subject = sprintf('%s :: %s', $this->_('Transaction was canceled'), get_bloginfo('name'));
+			$user = get_userdata($transaction->user_id);
+			$item_name = $this->get_item_name($transaction->book_id);
+			$price = number_format($transaction->price)." ".lwp_currency_code();
+			$method = $this->_($transaction->method);
+			$misc = unserialize($transaction->misc);
+			$payment_limit = mysql2date(get_option('date_format'), $misc['bill_date']);
+			$history_url = lwp_history_url();
+			$body = sprintf($this->_('Dear %1$s, 
+
+
+Your order was canceled because the payment limt has been passed.
+
+--------------
+Item Name: %2$s
+Price: %3$s
+Payment Method: %4$s
+Order Date: %9$s
+Payment Limit: %5$s
+--------------
+
+Please see detail at your purchase histroy.
+%6$s
+
+%7$s
+%8$s'), $user->display_name, $item_name, $price, $method, $payment_limit, $history_url, get_bloginfo('name'), get_bloginfo('url'), get_date_from_gmt($transaction->registered, get_option('date_format')));
+			$mail = apply_filters('lwp_offline_cancel_notification', array(
+				'subject' => $subject,
+				'body' => $body,
+				'headers' => sprintf("From: %s <%s>\\", get_bloginfo('name'), get_option('admin_email'))
+				), $method, $user, $transaction);
+			if($mail){
+				wp_mail($user->user_email, $mail['subject'], $mail['body'], $mail['headers']);
+			}
+		}
+	}
 }

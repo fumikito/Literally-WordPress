@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-23 17:21+0900\n"
-"PO-Revision-Date: 2012-11-23 17:25+0900\n"
+"POT-Creation-Date: 2012-11-26 06:10+0900\n"
+"PO-Revision-Date: 2012-11-26 06:11+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -3452,8 +3452,8 @@ msgstr "姓カナ"
 msgid "First Name Kana"
 msgstr "名カナ"
 
-#: ../class/form.php:635 ../class/payment/softbank-payment.php:660
-#: ../class/payment/softbank-payment.php:691
+#: ../class/form.php:635 ../class/payment/softbank-payment.php:677
+#: ../class/payment/softbank-payment.php:767
 msgid "Specified transaction is not found."
 msgstr "指定された決済情報が見つかりません。"
 
@@ -4975,6 +4975,51 @@ msgstr "<strong>%s</strong>に購入し、期限は<strong>%s</strong>までで�
 msgid "Subscribe"
 msgstr "定期購読"
 
+#: ../class/base/japanese-payment.php:490
+msgid "Transaction was canceled"
+msgstr "決済はキャンセルされました"
+
+#: ../class/base/japanese-payment.php:498
+#, php-format
+msgid ""
+"Dear %1$s, \n"
+"\n"
+"\n"
+"Your order was canceled because the payment limt has been passed.\n"
+"\n"
+"--------------\n"
+"Item Name: %2$s\n"
+"Price: %3$s\n"
+"Payment Method: %4$s\n"
+"Order Date: %9$s\n"
+"Payment Limit: %5$s\n"
+"--------------\n"
+"\n"
+"Please see detail at your purchase histroy.\n"
+"%6$s\n"
+"\n"
+"%7$s\n"
+"%8$s"
+msgstr ""
+"%1$s様\n"
+"\n"
+"\n"
+"支払い期限を過ぎたため、ご注文はキャンセルされました。\n"
+"\n"
+"--------------\n"
+"商品名: %2$s\n"
+"金額: %3$s\n"
+"お支払い方法: %4$s\n"
+"ご注文日: %9$s\n"
+"お支払い期限: %5$s\n"
+"--------------\n"
+"\n"
+"詳細は購入履歴ページをご覧下さい。\n"
+"%6$s\n"
+"\n"
+"%7$s\n"
+"%8$s"
+
 #: ../class/base/literally-wordpress-common.php:130
 msgid "Package Purchase"
 msgstr "一括購入"
@@ -4984,9 +5029,9 @@ msgid "Thank you for your order."
 msgstr "ご注文ありがとうございました。"
 
 #: ../class/payment/gmo.php:227 ../class/payment/gmo.php:299
-#: ../class/payment/softbank-payment.php:338
-#: ../class/payment/softbank-payment.php:506
-#: ../class/payment/softbank-payment.php:588
+#: ../class/payment/softbank-payment.php:353
+#: ../class/payment/softbank-payment.php:521
+#: ../class/payment/softbank-payment.php:603
 msgid ""
 "Payment requeist is succeeded, but failed to finish transaction. Please "
 "contact to Administrator."
@@ -4994,30 +5039,52 @@ msgstr ""
 "支払い申請は受け付けましたが、決済処理の完了に失敗しました。管理者にコンタク"
 "トをとってください。"
 
-#: ../class/payment/softbank-payment.php:342
+#: ../class/payment/softbank-payment.php:357
 msgid "Cannot commit transaction."
 msgstr "決済を完了できませんでした。"
 
-#: ../class/payment/softbank-payment.php:662
+#: ../class/payment/softbank-payment.php:679
 msgid "Check sum is wrong."
 msgstr "チェックサムがまちがっています。"
 
-#: ../class/payment/softbank-payment.php:667
+#: ../class/payment/softbank-payment.php:693
+#: ../class/payment/softbank-payment.php:727
+msgid "Transaction was successfully changed."
+msgstr "決済は更新されました。"
+
+#: ../class/payment/softbank-payment.php:695
+#: ../class/payment/softbank-payment.php:729
+msgid "Failed to update database. Please try again later."
+msgstr "データベースの更新に失敗しました。後でもう一度試してください。"
+
+#: ../class/payment/softbank-payment.php:710
+msgid "Reported amount is different from transaction log."
+msgstr "報告された入金額が決済のログと異なります。"
+
+#: ../class/payment/softbank-payment.php:734
+msgid "Nothing needs update."
+msgstr "更新するものがありません。"
+
+#: ../class/payment/softbank-payment.php:737
+msgid "Request type is wrong."
+msgstr "不正なリクエストタイプです。"
+
+#: ../class/payment/softbank-payment.php:743
 msgid "ID is not set."
 msgstr "IDが設定されていません。"
 
-#: ../class/payment/softbank-payment.php:696
+#: ../class/payment/softbank-payment.php:772
 #, php-format
 msgid "Specified transaction's payment method is %s."
 msgstr "指定された決済の支払い方法は%sです。"
 
-#: ../class/payment/softbank-payment.php:780
-#: ../class/payment/softbank-payment.php:797
-#: ../class/payment/softbank-payment.php:801
+#: ../class/payment/softbank-payment.php:856
+#: ../class/payment/softbank-payment.php:873
+#: ../class/payment/softbank-payment.php:877
 msgid "Sorry, but connection is failed. Please try again later."
 msgstr "申し訳ございません、接続に失敗しました。後ほどやり直してください。"
 
-#: ../class/payment/softbank-payment.php:788
+#: ../class/payment/softbank-payment.php:864
 msgid "Transaction is succeeded."
 msgstr "決済が完了しました。"
 

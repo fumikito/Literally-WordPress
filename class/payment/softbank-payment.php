@@ -99,7 +99,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 * Blog description for display on PayEasy
 	 */
 	public $blogname_kana = '';
-	
+		
 	/**
 	 * CVS code
 	 * @var array 
@@ -217,6 +217,18 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			//wp_schedule_event(current_time('timestamp'), 'daily', $this->cron_name);
 		//}
 		//add_action($this->cron_name, array($this, 'daily_cron'));
+		
+	}
+	
+	/**
+	 * @see LWP_Japanese_Payment::register_offline_methods()
+	 */
+	protected function register_offline_methods(){
+		//Set up offline context
+		$this->offline_context = array(
+			LWP_Payment_Methods::SOFTBANK_PAYEASY,
+			LWP_Payment_Methods::SOFTBANK_WEB_CVS
+		);
 	}
 	
 	public function init(){
@@ -230,6 +242,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	
 	/**
 	 * Wrapper for sender notification on Event transction
+	 * @deprecated since version 0.9.3
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param int $transaction_id
@@ -495,7 +508,7 @@ EOS;
 				'misc' => serialize(array(
 					'cvs' => $creds['cvs'],
 					'invoice_no' => $this->decrypt((string)$xml->res_pay_method_info->invoice_no),
-					'bill_date' => $this->decrypt((string)$xml->res_pay_method_info->bill_date),
+					'bill_date' => preg_replace('/([0-9]{4})([0-9]{2})([0-9]{2})/', '$1-$2-$3 23:59:59', $this->decrypt($xml->res_pay_method_info->bill_date)),
 					'cvs_pay_data1' => $this->decrypt((string)$xml->res_pay_method_info->cvs_pay_data1),
 					'cvs_pay_data2' => $this->decrypt((string)$xml->res_pay_method_info->cvs_pay_data2),
 				))
@@ -577,7 +590,7 @@ EOS;
 				"updated" => $now,
 				'misc' => serialize(array(
 					'invoice_no' => $this->decrypt($xml->res_pay_method_info->invoice_no),
-					'bill_date' => $this->decrypt($xml->res_pay_method_info->bill_date),
+					'bill_date' => preg_replace('/([0-9]{4})([0-9]{2})([0-9]{2})/', '$1-$2-$3 23:59:59', $this->decrypt($xml->res_pay_method_info->bill_date)),
 					'skno' => $this->decrypt($xml->res_pay_method_info->skno),
 					'cust_number' => $this->decrypt($xml->res_pay_method_info->cust_number),
 				))
@@ -643,6 +656,7 @@ EOS;
 		$xml_string = preg_replace("/(encoding=\")Shift_JIS(\")/", "$1utf-8$2", mb_convert_encoding($post_data, 'utf-8', 'sjis-win'));
 		$xml = simplexml_load_string($xml_string);
 		$status = 'NG';
+		$message = '';
 		if(isset($xml['id'])){
 			$transaction = null;
 			$sql = "SELECT * FROM {$lwp->transaction} WHERE payer_mail = %s AND method = %s";

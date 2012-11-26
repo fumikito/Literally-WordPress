@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-23 17:21+0900\n"
-"PO-Revision-Date: 2012-11-23 17:21+0900\n"
+"POT-Creation-Date: 2012-11-26 06:10+0900\n"
+"PO-Revision-Date: 2012-11-26 06:10+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -3221,8 +3221,8 @@ msgstr ""
 msgid "First Name Kana"
 msgstr ""
 
-#: ../class/form.php:635 ../class/payment/softbank-payment.php:660
-#: ../class/payment/softbank-payment.php:691
+#: ../class/form.php:635 ../class/payment/softbank-payment.php:677
+#: ../class/payment/softbank-payment.php:767
 msgid "Specified transaction is not found."
 msgstr ""
 
@@ -4593,6 +4593,33 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
+#: ../class/base/japanese-payment.php:490
+msgid "Transaction was canceled"
+msgstr ""
+
+#: ../class/base/japanese-payment.php:498
+#, php-format
+msgid ""
+"Dear %1$s, \n"
+"\n"
+"\n"
+"Your order was canceled because the payment limt has been passed.\n"
+"\n"
+"--------------\n"
+"Item Name: %2$s\n"
+"Price: %3$s\n"
+"Payment Method: %4$s\n"
+"Order Date: %9$s\n"
+"Payment Limit: %5$s\n"
+"--------------\n"
+"\n"
+"Please see detail at your purchase histroy.\n"
+"%6$s\n"
+"\n"
+"%7$s\n"
+"%8$s"
+msgstr ""
+
 #: ../class/base/literally-wordpress-common.php:130
 msgid "Package Purchase"
 msgstr ""
@@ -4602,38 +4629,60 @@ msgid "Thank you for your order."
 msgstr ""
 
 #: ../class/payment/gmo.php:227 ../class/payment/gmo.php:299
-#: ../class/payment/softbank-payment.php:338
-#: ../class/payment/softbank-payment.php:506
-#: ../class/payment/softbank-payment.php:588
+#: ../class/payment/softbank-payment.php:353
+#: ../class/payment/softbank-payment.php:521
+#: ../class/payment/softbank-payment.php:603
 msgid ""
 "Payment requeist is succeeded, but failed to finish transaction. Please "
 "contact to Administrator."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:342
+#: ../class/payment/softbank-payment.php:357
 msgid "Cannot commit transaction."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:662
+#: ../class/payment/softbank-payment.php:679
 msgid "Check sum is wrong."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:667
+#: ../class/payment/softbank-payment.php:693
+#: ../class/payment/softbank-payment.php:727
+msgid "Transaction was successfully changed."
+msgstr ""
+
+#: ../class/payment/softbank-payment.php:695
+#: ../class/payment/softbank-payment.php:729
+msgid "Failed to update database. Please try again later."
+msgstr ""
+
+#: ../class/payment/softbank-payment.php:710
+msgid "Reported amount is different from transaction log."
+msgstr ""
+
+#: ../class/payment/softbank-payment.php:734
+msgid "Nothing needs update."
+msgstr ""
+
+#: ../class/payment/softbank-payment.php:737
+msgid "Request type is wrong."
+msgstr ""
+
+#: ../class/payment/softbank-payment.php:743
 msgid "ID is not set."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:696
+#: ../class/payment/softbank-payment.php:772
 #, php-format
 msgid "Specified transaction's payment method is %s."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:780
-#: ../class/payment/softbank-payment.php:797
-#: ../class/payment/softbank-payment.php:801
+#: ../class/payment/softbank-payment.php:856
+#: ../class/payment/softbank-payment.php:873
+#: ../class/payment/softbank-payment.php:877
 msgid "Sorry, but connection is failed. Please try again later."
 msgstr ""
 
-#: ../class/payment/softbank-payment.php:788
+#: ../class/payment/softbank-payment.php:864
 msgid "Transaction is succeeded."
 msgstr ""
 
