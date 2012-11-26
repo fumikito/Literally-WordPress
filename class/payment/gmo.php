@@ -96,6 +96,13 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		}
 	}
 	
+	public function register_offline_methods() {
+		$this->offline_context = array(
+			LWP_Payment_Methods::GMO_PAYEASY,
+			LWP_Payment_Methods::GMO_WEB_CVS
+		);
+	}
+	
 	/**
 	 * Do transaction and returns transaciton ID
 	 * @global wpdb $wpdb

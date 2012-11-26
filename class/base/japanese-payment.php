@@ -70,7 +70,9 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		parent::__construct($option);
 		$this->register_offline_methods();
 		//Hook on off line paymen cancelation
-		add_action('lwp_update_transaction', array($this, 'offline_payment_cancelation'));
+		if($this->is_enabled()){
+			add_action('lwp_update_transaction', array($this, 'offline_payment_cancelation'));
+		}
 	}
 
 
