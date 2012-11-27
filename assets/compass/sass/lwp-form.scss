@@ -211,6 +211,17 @@ input{
 	th p{
 		font-weight:normal;
 	}
+	p.vender{
+		font-size: 0.9em;
+		text-align: right;
+		margin: 0.5em 0 0;
+		span{
+			background: #fff;
+			padding: 0.25em 0.5em;
+			color: #aaa;
+			@include border-radius(3px);
+		}
+	}
 }
 
 /* Name Table */

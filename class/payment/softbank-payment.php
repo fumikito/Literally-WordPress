@@ -13,6 +13,8 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 */
 	const SOFTBANK_IP_ADDRESS = '61.215.213.47';
 	
+	const USER_INFO = 'MG02-00104-101';
+	
 	const PAYMENT_REQUEST_CODE = 'ST01-00101-101';
 	
 	const PAYMENT_FIX_CODE = 'ST02-00101-101';
@@ -99,7 +101,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 * Blog description for display on PayEasy
 	 */
 	public $blogname_kana = '';
-		
+	
 	/**
 	 * CVS code
 	 * @var array 
@@ -114,6 +116,24 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		'daily-yamazaki' => '010',
 		'seicomart' => '018'
 	);
+	
+	/**
+	 * Production endpoint.
+	 * @var string
+	 */
+	private $production_endpoint = false;
+	
+	/**
+	 * Whether if save credit information
+	 * @var boolean
+	 */
+	public $save_cc = true;
+	
+	/**
+	 * User meta key for save credit card number flg
+	 * @var string
+	 */
+	public $meta_cc_number_flg = '_lwp_sb_cc_number';
 	
 	/**
 	 * Tag to be base64 encoded.
@@ -188,6 +208,8 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			'sb_iv' => '',
 			'sb_hash_key' => '',
 			'sb_prefix' => '',
+			'sb_endpoint' => false,
+			'sb_save_cc_number' => true,
 			'sb_cvs_limit' => $this->cvs_limit,
 			'sb_payeasy_limit' => $this->payeasy_limit
 		), $option);
@@ -209,6 +231,8 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		$this->blogname_kana = $this->convert_zenkaka_kana($option['sb_blogname_kana']);
 		$this->cvs_limit = intval($option['sb_cvs_limit']);
 		$this->payeasy_limit = intval($option['sb_payeasy_limit']);
+		$this->production_endpoint = (!empty($option['sb_endpoint'])) ? (string)$option['sb_endpoint'] : false;
+		$this->save_cc = (boolean)$option['sb_save_cc_number'];
 	}
 	
 	public function on_construct() {
@@ -239,6 +263,8 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		}
 		//$this->daily_cron();
 	}
+	
+	
 	
 	/**
 	 * Wrapper for sender notification on Event transction
@@ -296,19 +322,28 @@ EOS;
 	 * @param string $cc_number
 	 * @param string $cc_sec
 	 * @param string $expiration
+	 * @param boolean $save_cc_number
+	 * @param boolean $use_same_card
 	 * @return int transaction ID
 	 */
-	public function do_credit_authorization($user_id, $item_name, $post_id, $price, $quantity, $cc_number, $cc_sec, $expiration){
+	public function do_credit_authorization($user_id, $item_name, $post_id, $price, $quantity, $cc_number, $cc_sec, $expiration, $save_cc_number, $use_same_card = false){
 		global $lwp, $wpdb;
 		$now = gmdate('Y-m-d H:i:s');
 		$order_id = $this->generate_order_id();
+		$save_cc_number = ($save_cc_number && $this->save_cc);
 		//Create XML
 		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price, true);
-		$xml_array['pay_method_info'] = array(
-				'cc_number' => $this->is_sandbox ? '5250729026209007' : $cc_number,
-				'cc_expiration' => $this->is_sandbox ? '201103' : $expiration,
-				'security_code' => $this->is_sandbox ? '798' : $cc_sec,
-				'cust_manage_flg' => 0);
+		if(!$use_same_card){
+			$xml_array['pay_method_info'] = array(
+					'cc_number' => $this->is_sandbox ? '5250729026209007' : $cc_number,
+					'cc_expiration' => $this->is_sandbox ? '201103' : $expiration,
+					'security_code' => $this->is_sandbox ? '798' : $cc_sec,
+					'cust_manage_flg' => intval($save_cc_number));
+		}else{
+			$xml_array['pay_method_info'] = array(
+				'cust_manage_flg' => 0
+			);
+		}
 		$xml_array['encrypted_flg'] = intval(!$this->is_sandbox);
 		$xml_array['request_date'] = mysql2date("YmdHis", get_date_from_gmt($now));
 		$xml_array['limit_second'] = 60;
@@ -319,6 +354,9 @@ EOS;
 			$this->last_error = $result['message'];
 			return false;
 		}else{
+			if($save_cc_number){
+				update_user_meta($user_id, $this->meta_cc_number_flg, true);
+			}
 			$xml = $result['body'];
 			$commit_array = array(
 				'merchant_id' => $this->marchant_id(),
@@ -824,6 +862,45 @@ EOS;
 	}
 	
 	/**
+	 * Returns if this user has registered information
+	 * @param int $user_id
+	 * @return boolean
+	 */
+	public function has_saved_cc($user_id){
+		return (boolean)  get_user_meta($user_id, $this->meta_cc_number_flg, true);
+	}
+	
+	/**
+	 * Returns saved credit card information
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function get_cc_information($user_id){
+		if(!$this->has_saved_cc($user_id)){
+			return array();
+		}
+		$xml_array = array(
+			'merchant_id' => $this->marchant_id(),
+			'service_id' => $this->service_id(),
+			'cust_code' => $this->generate_user_id($user_id),
+			'sps_cust_info_return_flg' => 0,
+			'response_info_type' => 2,
+			'encrypted_flg' => intval(!$this->is_sandbox),
+			'request_date' => date('YmdHis', current_time('timestamp'))
+		);
+		$xml_array['sps_hashcode'] = $this->get_hash_key_from_array($xml_array);
+		$result = $this->get_request($this->make_xml(self::USER_INFO, $xml_array));
+		if($result['success']){
+			return array(
+				'number' => $this->decrypt((string)$result['body']->res_pay_method_info->cc_number),
+				'expiration' => preg_replace('/([0-9]{4})([0-9]{2})/', '$1-$2-01 00:00:00', $this->decrypt((string)$result['body']->res_pay_method_info->cc_expiration))
+			);
+		}else{
+			return array();
+		}		
+	}
+	
+	/**
 	 * Return string to XML and get request.
 	 * @param string $xml
 	 * @return array contains from success, message, body
@@ -1058,9 +1135,17 @@ EOS;
 	 * Returns endpoint
 	 * @return string
 	 */
-	public function get_endpoint(){
-		return $this->is_sandbox ? self::PAYMENT_ENDPOINT_SANDBOX : self::PAYMENT_ENDPOINT_PRODUCTION;
+	public function get_endpoint($force = false){
+		return ($this->is_sandbox && !$force)
+			? self::PAYMENT_ENDPOINT_SANDBOX
+			: $this->production_endpoint;
 	}	
+	
+	public function vendor_name($short = false){
+		return $short
+			? $this->_('Softbank Payment')
+			: $this->_('SOFTBANK Payment Service corp.');
+	}
 	
 	/**
 	 * Error Message

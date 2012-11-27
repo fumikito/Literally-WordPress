@@ -525,4 +525,12 @@ Please see detail at your purchase histroy.
 			}
 		}
 	}
+	
+	/**
+	 * Returns vendor name. must be overriden
+	 * @return string
+	 */
+	public function vendor_name(){
+		return $this->_('No name');
+	}
 }

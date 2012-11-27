@@ -253,6 +253,8 @@ class Literally_WordPress{
 				'sb_iv' => '',
 				'sb_cvs_limit' => 1,
 				'sb_payeasy_limit' => 1,
+				'sb_endpoint' => false,
+				'sb_save_cc_number' => true,
 				'gmo_shop_id' => '',
 				'gmo_shop_pass' => '',
 				'gmo_sandbox' => true,
@@ -299,7 +301,8 @@ class Literally_WordPress{
 				"custom_post_type" => array(),
 				"payable_post_types" => array(),
 				"show_form" => true,
-				"load_assets" => 2
+				"load_assets" => 2,
+				'show_payment_agency' => false
 			)
 		);
 		//Initialize iOS
@@ -754,13 +757,14 @@ class Literally_WordPress{
 			switch((isset($_REQUEST['view']) ? $_REQUEST['view'] : '')){
 				case 'payment':
 					$option = array(
+						"skip_payment_selection" => isset($_REQUEST['skip_payment_selection']) && (boolean)$_REQUEST['skip_payment_selection'],
+						'show_payment_agency' => (isset($_REQUEST['show_payment_agency']) && $_REQUEST['show_payment_agency']),
 						'sandbox' => isset($_REQUEST['sandbox']) ? true : false,
 						"user_name" => $_REQUEST["user_name"],
 						"password" => $_REQUEST["marchand_pass"],
 						'signature' => $_REQUEST['signature'],
 						"token" => $_REQUEST["token"],
 						"slug" => $_REQUEST["product_slug"],
-						"skip_payment_selection" => isset($_REQUEST['skip_payment_selection']) && (boolean)$_REQUEST['skip_payment_selection'],
 						"transfer" => (boolean)$_REQUEST['transfer'],
 						"notification_frequency" => (int) $_REQUEST['notification_frequency'],
 						"notification_limit" => (int) $_REQUEST['notification_limit'],
@@ -776,6 +780,8 @@ class Literally_WordPress{
 						'sb_prefix' => substr(preg_replace("/[^0-9a-zA-Z]/", "", (string)$_REQUEST['sb_prefix']), 0, 8),
 						'sb_crypt_key' => (string)$_REQUEST['sb_crypt_key'],
 						'sb_iv' => (string)$_REQUEST['sb_iv'],
+						'sb_save_cc_number' => (isset($_REQUEST['sb_save_cc_number']) && $_REQUEST['sb_save_cc_number']),
+						'sb_endpoint' => ((preg_match('/^https?:\/\//', $_REQUEST['sb_endpoint'])) ? (string)$_REQUEST['sb_endpoint'] : false),
 						'sb_blogname' => (string)$_REQUEST['sb_blogname'],
 						'sb_blogname_kana' => (string)$_REQUEST['sb_blogname_kana'],
 						'sb_cvs_limit' => (int)$_REQUEST['sb_cvs_limit'],
@@ -1465,6 +1471,14 @@ EOS;
 	 */
 	public function needs_auto_layout(){
 		return (boolean)$this->option['show_form'];
+	}
+	
+	/**
+	 * Returns if payment agency name will be shown
+	 * @return boolean
+	 */
+	public function show_payment_agency(){
+		return (boolean)$this->option['show_payment_agency'];
 	}
 	
 	/**

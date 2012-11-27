@@ -54,6 +54,12 @@
 		<?php $this->e('Skip payment selection form if PayPal is only available payment method.'); ?>
 	</label>
 </p>
+<p>
+	<label>
+		<input type="checkbox" name="show_payment_agency" value="1" <?php if($this->show_payment_agency()) echo 'checked="checked" ';?>/>
+		<?php $this->e('Show payment agency name on payment method selection screen.'); ?>
+	</label>
+</p>
 
 <div style="clear: both;"></div>
 
@@ -361,7 +367,13 @@
 						</label>&nbsp;
 						<?php endforeach; ?>
 						<p class="description">
-							<?php $this->e('Checked credit cards are displayed on transaction form. Please check credit cards which you have contracted with.'); ?>
+							<?php $this->e('Checked credit cards are displayed on transaction form. Please check credit cards which you have contracted to use.'); ?>
+						</p>
+						<p>
+							<label>
+								<input type="checkbox" value="1" name="sb_save_cc_number"<?php if($this->softbank->save_cc) echo ' checked="checked"'; ?> />
+								<?php $this->e('Let users order without inputing credit card number after the 2nd time.'); ?>
+							</label>
 						</p>
 					</td>
 				</tr>
@@ -510,6 +522,18 @@
 						<p><?php $this->e('These keys are required for productional environment and will be provided <strong>after contract with SOFTBANK Payment Service corp.</strong>'); ?></p>
 						<?php if(!$this->softbank->is_sandbox && (empty($this->softbank->iv) || empty($this->softbank->crypt_key))): ?>
 						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Crypt Information')); ?></p>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Connection URL'); ?></th>
+					<td>
+						<input type="text" value="<?php echo esc_attr($this->softbank->get_endpoint(true)); ?>" name="sb_endpoint" class="regular-text" />
+						<p class="description">
+							<?php printf($this->_('This is required for production environment. After contracting with %s, URL will be provied.'), $this->softbank->vendor_name()); ?>
+						</p>
+						<?php if(!$this->softbank->is_sandbox && !$this->softbank->get_endpoint()): ?>
+						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Connection URL')); ?></p>
 						<?php endif; ?>
 					</td>
 				</tr>

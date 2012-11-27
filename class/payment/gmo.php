@@ -414,7 +414,6 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		return uniqid(sprintf('%s-%02d-', preg_replace('/[^0-9]/', '', $this->shop_id), rand(0,99)), false);
 	}
 	
-	
 	/**
 	 * Convert Encoding to SJIS
 	 * @param type $string
@@ -424,4 +423,12 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		return mb_convert_encoding($string, 'sjis-win', 'utf-8');
 	}
 	
+	/**
+	 * @see Literally_WordPress_Common::vendor_name()
+	 */
+	public function vendor_name($short = false){
+		return $short
+			? $this->_('GMO')
+			: $this->_('GMO Payment Gateway inc.');
+	}
 }

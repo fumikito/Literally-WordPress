@@ -66,6 +66,20 @@
 	<table class="form-table">
 		<tbody>
 			<?php switch($method): case 'sb-cc': case 'gmo-cc': ?>
+			<?php
+				switch($method){
+					case 'gmo-cc':
+						$save_cc = $lwp->gmo->save_cc;
+						$cc_info = array();
+						$same_card = false;
+						break;
+					case 'sb-cc':
+						$save_cc = $lwp->softbank->save_cc;
+						$cc_info = $lwp->softbank->get_cc_information(get_current_user_id());
+						$same_card = !empty($cc_info) && !isset($_REQUEST['newcard']);
+						break;
+				}
+			?>
 			<tr>
 				<th>
 					<?php wp_nonce_field('lwp_payment_'.($method == 'gmo-cc' ? 'gmo' : 'sb').'_cc'); ?>
@@ -75,16 +89,37 @@
 					</label>
 				</th>
 				<td>
-					<input type="text" class="middle-text" name="cc_number" id="cc_number" value="<?php if(isset($vars['cc_number'])) echo esc_attr($vars['cc_number']); ?>" placeholder="ex. 0123456789123" />
-					<p class="description">
-						<?php $this->e('This informatin will <strong>never</strong> be saved on this site. '); ?>
-						<?php $this->e("You can pay with Credit Cards below.");?><br />
+					<?php if($same_card): ?>
+						<input type="hidden" name="same_card" value="1" />
+						<strong><?php echo esc_html($cc_info['number']); ?></strong>
+						<p class="description">
+							<?php printf($this->_('This is same number as previous order. To order with different card, click <a href="%s">here</a>.'), lwp_endpoint('payment')."&lwp-method={$method}&lwp-id={$post_id}&newcard=true"); ?>
+						</p>
+					<?php else: ?>
+						<input type="text" class="middle-text" name="cc_number" id="cc_number" value="<?php if(isset($vars['cc_number'])) echo esc_attr($vars['cc_number']); ?>" placeholder="ex. 0123456789123" />
 						<?php
-							$cards = ($method == 'gmo-cc') ? $lwp->gmo->get_available_cards() : $lwp->softbank->get_available_cards();
-							foreach($cards as $card):
+							if($save_cc):
 						?>
-							<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
-						<?php endforeach; ?>
+							<p>
+								<label>
+									<input type="checkbox" value="1" name="save_cc_number" checked="checked" />
+									<?php $this->e('Order without credit card number next time'); ?>
+								</label>
+							</p>
+							<p class="description">
+								<?php $this->e('This informatin will be saved on Payment Agency and <strong>never</strong> on this site. '); ?>
+							</p>
+						<?php endif; ?>
+						<p>
+							<?php $this->e("You can pay with Credit Cards below.");?><br />
+							<?php
+								$cards = ($method == 'gmo-cc') ? $lwp->gmo->get_available_cards() : $lwp->softbank->get_available_cards();
+								foreach($cards as $card):
+							?>
+								<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
+							<?php endforeach; ?>
+						</p>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
@@ -95,28 +130,33 @@
 					</label>
 				</th>
 				<td>
-					<select name="cc_month" id="cc_month">
-						<?php for($i = 0; $i < 12; $i++): ?>
-						<option name="<?php echo $i + 1; ?>"<?php if(isset($vars['cc_month']) && $vars['cc_month'] == $i + 1) echo ' selected="selected"'; ?>>
-							<?php printf("%02d", $i + 1); ?>
-						</option>
-						<?php endfor; ?>
-					</select>&nbsp;/&nbsp;
-					<select name="cc_year" id="cc_year">
-						<?php
-							$this_year = date('Y');
-							for($i = 0; $i < 10; $i++):
-						?>
-						<option value="<?php echo $this_year + $i; ?>"<?php if(isset($vars['cc_year']) && $vars['cc_year'] == $this_year + 1) echo ' selected="selected"'; ?>>
-							<?php echo $this_year + $i; ?>
-						</option>
-						<?php endfor; ?>
-					</select>
-					<span class="description">
-						<?php $this->e('(Month / Year)'); ?>
-					</span>
+					<?php if($same_card): ?>
+					<strong><?php echo mysql2date($this->_('M, Y'), $cc_info['expiration']); ?></strong>
+					<?php else: ?>
+						<select name="cc_month" id="cc_month">
+							<?php for($i = 0; $i < 12; $i++): ?>
+							<option name="<?php echo $i + 1; ?>"<?php if(isset($vars['cc_month']) && $vars['cc_month'] == $i + 1) echo ' selected="selected"'; ?>>
+								<?php printf("%02d", $i + 1); ?>
+							</option>
+							<?php endfor; ?>
+						</select>&nbsp;/&nbsp;
+						<select name="cc_year" id="cc_year">
+							<?php
+								$this_year = date('Y');
+								for($i = 0; $i < 10; $i++):
+							?>
+							<option value="<?php echo $this_year + $i; ?>"<?php if(isset($vars['cc_year']) && $vars['cc_year'] == $this_year + 1) echo ' selected="selected"'; ?>>
+								<?php echo $this_year + $i; ?>
+							</option>
+							<?php endfor; ?>
+						</select>
+						<span class="description">
+							<?php $this->e('(Month / Year)'); ?>
+						</span>
+					<?php endif; ?>
 				</td>
 			</tr>
+			<?php if(!$same_card): ?>
 			<tr>
 				<th>
 					<label for="cc_sec">
@@ -132,10 +172,12 @@
 					<img src="<?php echo $lwp->url; ?>assets/security-code.png" alt="Where the security code is" width="247" height="80" />
 				</td>
 			</tr>
+			<?php endif; ?>
 			<tr>
 				<th><?php $this->e('Dealing Type'); ?></th>
 				<td><?php $this->e('At once'); ?></td>
 			</tr>
+			<?php ?>
 			<?php break; case 'sb-cvs': case 'sb-payeasy': case 'gmo-cvs':  case 'gmo-payeasy': ?>
 			<?php if(false !== array_search($method, array('sb-cvs', 'gmo-cvs'))): ?>
 			<tr>

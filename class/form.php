@@ -426,28 +426,37 @@ EOS;
 							||
 						($is_gmo_cc = wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_gmo_cc'))
 					){
-						//Credit card
-						$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
-						$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
-						$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
-						$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
-						//Validate
-						if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
-							$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
-						}
-						$this_year = date('Y');
-						if($cc_year < $this_year || ($cc_year == $this_year && $cc_month < date('m'))){
-							$error[] = $this->_('Credit card is expired.');
-						}
-						if(!preg_match("/^[0-9]{3,4}$/", $cc_sec)){
-							$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
+						//If samecard flg is not set, validate Card number
+						$use_same_card = (boolean)(isset($_REQUEST['same_card']) && $_REQUEST['same_card']);
+						if(!$use_same_card){
+							//Credit card
+							$cc_number = $this->convert_numeric((string)$_REQUEST['cc_number']);
+							$cc_month = $this->convert_numeric((string)$_REQUEST['cc_month']);
+							$cc_year = $this->convert_numeric((string)$_REQUEST['cc_year']);
+							$cc_sec = $this->convert_numeric((string)$_REQUEST['cc_sec']);
+							//Validate
+							if(empty($cc_number) || !preg_match("/^[0-9]{14,16}$/", $cc_number)){
+								$error[] = $this->_('Credit card number should be 14 - 16 digits and is required.');
+							}
+							$this_year = date('Y');
+							if($cc_year < $this_year || ($cc_year == $this_year && $cc_month < date('m'))){
+								$error[] = $this->_('Credit card is expired.');
+							}
+							if(!preg_match("/^[0-9]{3,4}$/", $cc_sec)){
+								$error[] = $this->_('Security code is wrong. ').$this->_('Security code is 3 or 4 digits written near the card number on the credit card.');
+							}
+							//Save Payment information 
+							$save_customer_info = (boolean)(isset($_REQUEST['save_cc_number']) && $_REQUEST['save_cc_number']);
+						}else{
+							$cc_number = $cc_sec = $cc_year = $cc_month = '';
+							$save_customer_info = false;
 						}
 						//All Green Make request
 						if(empty($error)){
 							$transaction_id = 0;
 							$error_msg = '';
 							if($is_sb_cc){
-								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month);
+								$transaction_id = $lwp->softbank->do_credit_authorization(get_current_user_id(), $item_name, $book_id, $price, 1, $cc_number, $cc_sec, $cc_year.$cc_month, $save_customer_info, $use_same_card);
 								if($transaction_id){
 									if($lwp->softbank->capture_authorized_transaction($transaction_id)){
 										$wpdb->update($lwp->transaction, array('status' => LWP_Payment_Status::SUCCESS), array('ID' => $transaction_id), array('%s'), array('%d'));
@@ -461,7 +470,7 @@ EOS;
 								$error_msg = $lwp->gmo->last_error;
 							}
 							if($transaction_id){
-								do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE ID = %d", $transaction_id)));
+								do_action('lwp_update_transaction', $transaction_id);
 								header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
 								die();
 							}else{

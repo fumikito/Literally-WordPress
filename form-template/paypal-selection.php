@@ -38,12 +38,21 @@
 	<?php wp_nonce_field('lwp_buynow', '_wpnonce', false); ?>
 	<table class="form-table lwp-method-table">
 		<tbody>
-			<?php if($lwp->is_paypal_enbaled()): ?>
+			<?php
+				//--------------------------
+				//
+				// PayaPal
+				//
+				//--------------------------
+				if($lwp->is_paypal_enbaled()):
+			?>
 			<tr>
 				<th class="lwp-column-method">
-					<i class="lwp-cc-icon icon-paypal"></i><br />
-					<input checked="checked" type="radio" name="lwp-method" value="paypal" />
-					<?php $this->e("PayPal"); ?>
+					<label>
+						<i class="lwp-cc-icon icon-paypal"></i><br />
+						<input checked="checked" type="radio" name="lwp-method" value="paypal" />
+						<?php $this->e("PayPal"); ?>
+					</label>
 				</th>
 				<td class="lwp-column-method-desc">
 					<?php $this->e("You can pay with PayPal account.");?><br />
@@ -51,34 +60,21 @@
 						<strong><?php $this->e('Note:');  ?></strong><br />
 						<?php $this->e('Clicking \'Next\', You will be redirect to PayPal web site. Logging in PayPal, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete.'); ?>
 					</small>
+					<?php if($lwp->show_payment_agency()): ?>
+						<p class="vender">
+							<span><?php printf($this->_('Payment Agency: %s'), 'PayPal'); ?></span>
+						</p>
+					<?php endif; ?>
 				</td>
 			</tr>
-			<?php endif; ?>
-			<?php if($lwp->softbank->is_cc_enabled() || $lwp->gmo->is_cc_enabled()): ?>
-			<tr>
-				<th class="lwp-column-method">
-					<label>
-						<i class="lwp-cc-icon icon-creditcard"></i><br />
-						<input type="radio" name="lwp-method" value="<?php echo $lwp->gmo->is_cc_enabled() ? 'gmo-cc' : 'sb-cc'; ?>" />
-						<?php $this->e("Credit Card"); ?>
-					</label>
-				</th>
-				<td class="lwp-column-method-desc">
-					<?php $this->e("You can pay with Credit Cards below.");?><br />
-					<?php
-						$cards = $lwp->gmo->is_cc_enabled() ? $lwp->gmo->get_available_cards() : $lwp->softbank->get_available_cards();
-						foreach($cards as $card):
-					?>
-						<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
-					<?php endforeach; ?>
-					<br />
-					<small>
-						<strong><?php $this->e('Note:');  ?></strong><br />
-						<?php $this->e('Clicking \'Next\', you will enter credit card infomation form.'); ?>
-					</small>
-				</td>
-			</tr>
-			<?php elseif($lwp->is_paypal_enbaled()): ?>
+			<?php
+				//--------------------------
+				//
+				// If PayaPal is only method for Credit cards
+				//
+				//--------------------------
+				if(!$lwp->gmo->is_cc_enabled() && !$lwp->softbank->is_cc_enabled()):
+			?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
@@ -97,10 +93,70 @@
 						<strong><?php $this->e('Note:');  ?></strong><br />
 						<?php $this->e('Clicking \'Next\', You will be redirect to PayPal web site. Entering CC number, you will be redirected to this site again. And then, by confirming payment on this site, your transaction will be complete.'); ?>
 					</small>
+					<?php if($lwp->show_payment_agency()): ?>
+						<p class="vender">
+							<span><?php printf($this->_('Payment Agency: %s'), 'PayPal'); ?></span>
+						</p>
+					<?php endif; ?>
 				</td>
 			</tr>
-			<?php endif; ?>
 			<?php
+				endif; //PayPal CC
+				endif; //PayPal
+			?>
+			<?php
+				//--------------------------
+				//
+				// Credit Cards
+				//
+				//--------------------------
+				foreach(array('gmo' => $lwp->gmo->is_cc_enabled(), 'sb' => $lwp->softbank->is_cc_enabled()) as $vender => $available):
+					if(!$available){
+						continue;
+					}
+					switch($vender){
+						case 'gmo':
+							$cards = $lwp->gmo->get_available_cards();
+							$vendor_name = $lwp->gmo->vendor_name();
+							break;
+						case 'sb':
+							$cards = $lwp->softbank->get_available_cards();
+							$vendor_name = $lwp->softbank->vendor_name();
+							break;
+					}
+			?>
+			<tr>
+				<th class="lwp-column-method">
+					<label>
+						<i class="lwp-cc-icon icon-creditcard"></i><br />
+						<input type="radio" name="lwp-method" value="<?php echo $vender.'-cc'; ?>" />
+						<?php $this->e("Credit Card"); ?>
+					</label>
+				</th>
+				<td class="lwp-column-method-desc">
+					<?php $this->e("You can pay with Credit Cards below.");?><br />
+					<?php foreach($cards as $card): ?>
+						<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
+					<?php endforeach; ?>
+					<br />
+					<small>
+						<strong><?php $this->e('Note:');  ?></strong><br />
+						<?php $this->e('Clicking \'Next\', you will enter credit card infomation form.'); ?>
+					</small>
+					<?php if($lwp->show_payment_agency()): ?>
+						<p class="vender">
+							<span><?php printf($this->_('Payment Agency: %s'), $vendor_name); ?></span>
+						</p>
+					<?php endif; ?>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+			<?php
+				//--------------------------
+				//
+				// Web CVS
+				//
+				//--------------------------
 				foreach(array('gmo' => $lwp->gmo->is_cvs_enabled(), 'sb' => $lwp->softbank->is_cvs_enabled()) as $vender => $available):
 					if(!$available){
 						continue;
@@ -108,11 +164,13 @@
 					switch($vender){
 						case 'gmo':
 							$cvss = $lwp->gmo->get_available_cvs();
-							$selectable = false;
+							$selectable = $lwp->gmo->can_pay_with($post_id, 'gmo-cvs');
+							$vendor_name = $lwp->gmo->vendor_name();
 							break;
 						case 'sb':
 							$cvss = $lwp->softbank->get_available_cvs();
-							$selectable = $lwp->softbank->can_pay_with($post_id);
+							$vendor_name = $lwp->softbank->vendor_name();
+							$selectable = $lwp->softbank->can_pay_with($post_id, 'sb-cvs');
 							break;
 					}
 			?>
@@ -138,10 +196,20 @@
 						<strong><?php $this->e('Note:');  ?></strong><br />
 						<?php $this->e('To finish transaction, you should follow the instruction on next step.'); ?>
 					</small>
+					<?php if($lwp->show_payment_agency()): ?>
+						<p class="vender">
+							<span><?php printf($this->_('Payment Agency: %s'), $vendor_name); ?></span>
+						</p>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<?php endforeach;?>
 			<?php
+				//--------------------------
+				//
+				// PayEasy
+				//
+				//--------------------------
 				foreach(array('gmo' => $lwp->gmo->payeasy, 'sb' => $lwp->softbank->payeasy) as $vender => $available):
 					if(!$available){
 						continue;
@@ -149,15 +217,17 @@
 					switch($vender){
 						case 'gmo':
 							$selectable = $lwp->gmo->can_pay_with($post_id, 'gmo-payeasy');
+							$vendor_name = $lwp->gmo->vendor_name();
 							$limit = 10;
 							break;
 						case 'sb':
 							$selectable = $lwp->softbank->can_pay_with($post_id, 'sb-payeasy');
+							$vendor_name = $lwp->softbank->vendor_name();
 							$limit = $lwp->softbank->payeasy_limit;
 							break;
 					}
 			?>
-			<tr>
+			<tr<?php if(!$selectable) echo ' class="disabled"'; ?>>
 				<th class="lwp-column-method">
 					<label>
 						<i class="lwp-cc-icon icon-payeasy"></i><br />
@@ -175,10 +245,22 @@
 						<strong><?php $this->e('Note:');  ?></strong><br />
 						<?php $this->e('To finish transaction, you should follow the instruction on next step.'); ?>
 					</small>
+					<?php if($lwp->show_payment_agency()): ?>
+						<p class="vender">
+							<span><?php printf($this->_('Payment Agency: %s'), $vendor_name); ?></span>
+						</p>
+					<?php endif; ?>
 				</td>
 			</tr>
 			<?php endforeach; ?>
-			<?php if($lwp->notifier->is_enabled()): ?>
+			<?php
+				//--------------------------
+				//
+				// Transfer
+				//
+				//--------------------------
+				if($lwp->notifier->is_enabled()):
+			?>
 			<tr>
 				<th class="lwp-column-method">
 					<label>
@@ -196,6 +278,7 @@
 				</td>
 			</tr>
 			<?php endif; ?>
+			
 		</tbody>
 	</table>
 	<p class="submit">
