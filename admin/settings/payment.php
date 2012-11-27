@@ -174,6 +174,16 @@
 					</td>
 				</tr>
 				<tr>
+					<th valign="top"><?php $this->e('Connection Check'); ?></th>
+					<td>
+						<?php if(PayPal_Statics::is_valid_creds()): ?>
+						<p class="description"><?php $this->e('Credential informations are valid.'); ?></p>
+						<?php else: ?>
+						<p class="invalid"><?php $this->e('Failed to connect with PayPal API. Please check your credential infos.'); ?></p>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top">
 						<label for="product_slug"><?php $this->e('Product slug'); ?></label>
 						<small class="required"><?php $this->e('Required'); ?></small>

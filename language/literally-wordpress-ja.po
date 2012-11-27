@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-27 11:55+0900\n"
-"PO-Revision-Date: 2012-11-27 11:56+0900\n"
+"POT-Creation-Date: 2012-11-28 03:06+0900\n"
+"PO-Revision-Date: 2012-11-28 03:07+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -587,7 +587,7 @@ msgstr "販売期限"
 msgid "Limit to cancel"
 msgstr "キャンセル期限"
 
-#: ../admin/event.php:68 ../class/event.php:927 ../class/form.php:1177
+#: ../admin/event.php:68 ../class/event.php:927 ../class/form.php:1176
 #: ../form-template/edit-detail-event.php:155
 #: ../form-template/paypal-cancel-ticket.php:13
 #: ../form-template/paypal-event-tickets-consume.php:15
@@ -596,7 +596,7 @@ msgid "Ticket Name"
 msgstr "チケット名"
 
 #: ../admin/event.php:69 ../admin/management.php:523 ../class/event.php:928
-#: ../class/form.php:661 ../class/form.php:1179
+#: ../class/form.php:661 ../class/form.php:1178
 #: ../class/literally-wordpress.php:1237 ../class/subscription.php:194
 #: ../form-template/edit-detail-event.php:115
 #: ../form-template/edit-detail.php:24
@@ -621,7 +621,7 @@ msgid "Sold"
 msgstr "販売数"
 
 #: ../admin/event.php:72 ../admin/management.php:87 ../class/event.php:930
-#: ../class/form.php:1181 ../form-template/paypal-event-tickets-consume.php:19
+#: ../class/form.php:1180 ../form-template/paypal-event-tickets-consume.php:19
 #: ../tables/list-ticket.php:39
 msgid "Consumed"
 msgstr "使用分"
@@ -1189,7 +1189,7 @@ msgstr "購入価格"
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:87 ../class/event.php:929 ../class/form.php:1180
+#: ../admin/management.php:87 ../class/event.php:929 ../class/form.php:1179
 #: ../class/literally-wordpress.php:1236
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
@@ -1236,13 +1236,13 @@ msgstr "承認番号"
 
 #: ../admin/management.php:172 ../admin/management.php:223
 #: ../admin/management.php:234 ../class/form.php:666 ../class/form.php:689
-#: ../form-template/paypal-payment.php:215 ../tables/list-transfers.php:159
+#: ../form-template/paypal-payment.php:217 ../tables/list-transfers.php:159
 msgid "Payment Limit"
 msgstr "支払い期限"
 
 #: ../admin/management.php:177 ../admin/management.php:205
 #: ../class/form.php:700 ../class/form.php:716
-#: ../form-template/paypal-payment.php:183
+#: ../form-template/paypal-payment.php:185
 msgid "CVS"
 msgstr "コンビニ"
 
@@ -1347,7 +1347,7 @@ msgstr "件数"
 #: ../admin/management.php:521 ../admin/settings/sidebar.php:65
 #: ../admin/settings/sidebar.php:70 ../class/literally-wordpress.php:1330
 #: ../form-template/edit-detail-event.php:113
-#: ../form-template/paypal-payment.php:239
+#: ../form-template/paypal-payment.php:241
 #: ../form-template/reward-summary.php:151
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
@@ -1578,7 +1578,7 @@ msgstr "ファイルが削除されました。"
 msgid "Failed to delete file."
 msgstr "ファイルの削除に失敗しました。"
 
-#: ../admin/upload.php:97 ../class/form.php:1789
+#: ../admin/upload.php:97 ../class/form.php:1788
 #: ../form-template/paypal-event-contact.php:66
 msgid "Processing&hellip;"
 msgstr "処理中&hellip;"
@@ -1933,9 +1933,9 @@ msgstr ""
 #: ../admin/settings/misc.php:62 ../admin/settings/payment.php:93
 #: ../admin/settings/payment.php:131 ../admin/settings/payment.php:143
 #: ../admin/settings/payment.php:155 ../admin/settings/payment.php:167
-#: ../admin/settings/payment.php:185 ../admin/settings/payment.php:574
+#: ../admin/settings/payment.php:195 ../admin/settings/payment.php:584
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:2076
+#: ../admin/settings/post.php:72 ../class/form.php:2075
 msgid "More &gt;"
 msgstr "もっと &gt;"
 
@@ -2077,11 +2077,11 @@ msgstr "国別コード"
 #: ../admin/settings/payment.php:100 ../admin/settings/payment.php:113
 #: ../admin/settings/payment.php:126 ../admin/settings/payment.php:138
 #: ../admin/settings/payment.php:150 ../admin/settings/payment.php:162
-#: ../admin/settings/payment.php:179 ../admin/settings/payment.php:266
-#: ../admin/settings/payment.php:273 ../admin/settings/payment.php:414
-#: ../admin/settings/payment.php:422 ../admin/settings/payment.php:457
-#: ../admin/settings/payment.php:470 ../admin/settings/payment.php:483
-#: ../admin/settings/payment.php:496 ../admin/settings/payment.php:511
+#: ../admin/settings/payment.php:189 ../admin/settings/payment.php:276
+#: ../admin/settings/payment.php:283 ../admin/settings/payment.php:424
+#: ../admin/settings/payment.php:432 ../admin/settings/payment.php:467
+#: ../admin/settings/payment.php:480 ../admin/settings/payment.php:493
+#: ../admin/settings/payment.php:506 ../admin/settings/payment.php:521
 #: ../form-template/paypal-payment.php:60
 #: ../form-template/paypal-refund-account.php:6
 msgid "Required"
@@ -2135,11 +2135,23 @@ msgstr ""
 msgid "Help"
 msgstr "ヘルプ"
 
-#: ../admin/settings/payment.php:178 ../help/account.php:61
+#: ../admin/settings/payment.php:177
+msgid "Connection Check"
+msgstr "接続チェック"
+
+#: ../admin/settings/payment.php:180
+msgid "Credential informations are valid."
+msgstr "認証情報が無効です。"
+
+#: ../admin/settings/payment.php:182
+msgid "Failed to connect with PayPal API. Please check your credential infos."
+msgstr "PayPal APIへの接続に失敗しました。認証情報が正しいか確認してください。"
+
+#: ../admin/settings/payment.php:188 ../help/account.php:61
 msgid "Product slug"
 msgstr "商品スラッグ"
 
-#: ../admin/settings/payment.php:184
+#: ../admin/settings/payment.php:194
 msgid ""
 "Slug for product ID displayed on PayPal Account Panel. It is usefull if you "
 "have multiple business on singular account."
@@ -2147,7 +2159,7 @@ msgstr ""
 "PayPalの管理画面で表示される取引IDにつけるスラッグです。一つのアカウントで複"
 "数の取引を行っている場合に役立ちます。"
 
-#: ../admin/settings/payment.php:186
+#: ../admin/settings/payment.php:196
 msgid ""
 "Set <strong>about 10 alphanumeric letters</strong>. Hypen and product ID "
 "follow this slug. <small>ex: example-100</small>"
@@ -2155,7 +2167,7 @@ msgstr ""
 "<strong>10文字程度のアルファベット</strong>を設定してください。ハイフンと商品"
 "IDがスラッグの後ろに付与されます。<small>ex: example-100</small>"
 
-#: ../admin/settings/payment.php:198
+#: ../admin/settings/payment.php:208
 msgid ""
 "To use GMO Payment Gateway, you have to contract with GMO Payment Gateway "
 "inc. and get credential infomation. If Credit Card is enabled, PayPal's "
@@ -2165,21 +2177,21 @@ msgstr ""
 "契約し、認証用の情報を取得する必要があります。クレジットカードを有効にした場"
 "合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:204 ../admin/settings/payment.php:345
+#: ../admin/settings/payment.php:214 ../admin/settings/payment.php:355
 msgid "Sandbox"
 msgstr "サンドボックス"
 
-#: ../admin/settings/payment.php:209 ../admin/settings/payment.php:350
+#: ../admin/settings/payment.php:219 ../admin/settings/payment.php:360
 msgid "This is a develop enviorment and needs pseudo transaction."
 msgstr "これは開発環境であり、仮の決済情報を生成します。"
 
-#: ../admin/settings/payment.php:215 ../admin/settings/payment.php:356
+#: ../admin/settings/payment.php:225 ../admin/settings/payment.php:366
 #: ../form-template/paypal-selection.php:83
 #: ../form-template/paypal-selection.php:133
 msgid "Credit Card"
 msgstr "クレジットカード"
 
-#: ../admin/settings/payment.php:229
+#: ../admin/settings/payment.php:239
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted with."
@@ -2187,7 +2199,7 @@ msgstr ""
 "チェックされたクレジットカードは決済フォームに表示されます。契約したクレジッ"
 "トカードにチェックを入れてください。"
 
-#: ../admin/settings/payment.php:230
+#: ../admin/settings/payment.php:240
 msgid ""
 "Though GMO Payment has many credit cards available(Nicos, Mistui-Sumitomo, "
 "JACCS), most of them are aquirer of 5 famous international service above and "
@@ -2197,70 +2209,70 @@ msgstr ""
 "すが、ほとんどは５大国際サービスの代理店であるため、ユーザーの利便性を損なわ"
 "ないよう、すべてのクレジットカードを表示することはしません。"
 
-#: ../admin/settings/payment.php:237 ../admin/settings/payment.php:382
+#: ../admin/settings/payment.php:247 ../admin/settings/payment.php:392
 #: ../class/form.php:311 ../form-template/paypal-sb-check.php:30
 #: ../form-template/paypal-selection.php:182
 #: ../form-template/paypal-selection.php:189
 msgid "Web CVS"
 msgstr "コンビニ決済"
 
-#: ../admin/settings/payment.php:254 ../admin/settings/payment.php:404
-#: ../form-template/paypal-payment.php:205
+#: ../admin/settings/payment.php:264 ../admin/settings/payment.php:414
+#: ../form-template/paypal-payment.php:207
 #: ../form-template/paypal-selection.php:235
 msgid "PayEasy"
 msgstr "PayEasy"
 
-#: ../admin/settings/payment.php:259 ../admin/settings/payment.php:409
+#: ../admin/settings/payment.php:269 ../admin/settings/payment.php:419
 msgid "Enables PayEasy"
 msgstr "PayEasyを有効にする"
 
-#: ../admin/settings/payment.php:265
+#: ../admin/settings/payment.php:275
 msgid "Shop ID"
 msgstr "ショップID"
 
-#: ../admin/settings/payment.php:272
+#: ../admin/settings/payment.php:282
 msgid "Shop Password"
 msgstr "ショップパスワード"
 
-#: ../admin/settings/payment.php:278
+#: ../admin/settings/payment.php:288
 msgid "Contact Tel No."
 msgstr "お問い合わせ電話番号"
 
-#: ../admin/settings/payment.php:283 ../admin/settings/payment.php:310
+#: ../admin/settings/payment.php:293 ../admin/settings/payment.php:320
 msgid "Wrong Format."
 msgstr "書式が間違っています。"
 
-#: ../admin/settings/payment.php:287 ../admin/settings/payment.php:314
+#: ../admin/settings/payment.php:297 ../admin/settings/payment.php:324
 msgid "Required for Lawson and Family Mart."
 msgstr "ローソンとファミリーマートで必須です。"
 
-#: ../admin/settings/payment.php:288
+#: ../admin/settings/payment.php:298
 msgid "Allowed letters for Tel No. are <strong>0~9 and hyphen(-)</strong>."
 msgstr ""
 "お問い合わせ電話番号に使用できる文字は<strong>0~9とハイフン(-)</strong>のみで"
 "す。"
 
-#: ../admin/settings/payment.php:293
+#: ../admin/settings/payment.php:303
 msgid "Contact Open Hour"
 msgstr "お問い合わせ時間"
 
-#: ../admin/settings/payment.php:296
+#: ../admin/settings/payment.php:306
 msgid "Starts: "
 msgstr "開始："
 
-#: ../admin/settings/payment.php:301
+#: ../admin/settings/payment.php:311
 msgid "Ends: "
 msgstr "終了："
 
-#: ../admin/settings/payment.php:315
+#: ../admin/settings/payment.php:325
 msgid "Hour format must be <strong>HH:MM</strong>."
 msgstr "書式は<strong>HH:MM</strong>でなくてはなりません。"
 
-#: ../admin/settings/payment.php:320 ../admin/settings/payment.php:541
+#: ../admin/settings/payment.php:330 ../admin/settings/payment.php:551
 msgid "Notification URL"
 msgstr "通知URL"
 
-#: ../admin/settings/payment.php:324
+#: ../admin/settings/payment.php:334
 msgid ""
 "If Web CVS or PayEasy is enabled, you must set up this URL as notification "
 "URL on GMO Payment Gateway's shop admin panel(Go to Manage Shop &gt; Shop "
@@ -2272,7 +2284,7 @@ msgstr ""
 "ショップ情報 &gt; メール／結果通知設定へ移動し、&quot;編集&quot;をクリック）"
 "してください。そうしないと、支払いステータスの変更がわからなくなります。"
 
-#: ../admin/settings/payment.php:338
+#: ../admin/settings/payment.php:348
 msgid ""
 "To use Softbank Payment, you have to contract with SOFTBANK Payment Service "
 "corp. and get credential infomation. If Credit Card is enabled, PayPal's "
@@ -2282,7 +2294,7 @@ msgstr ""
 "会社と契約し、認証用の情報を取得する必要があります。クレジットカードを有効に"
 "した場合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:370
+#: ../admin/settings/payment.php:380
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted to use."
@@ -2290,72 +2302,72 @@ msgstr ""
 "チェックされたクレジットカードは決済フォームに表示されます。審査の完了したク"
 "レジットカードにチェックを入れてください。"
 
-#: ../admin/settings/payment.php:375
+#: ../admin/settings/payment.php:385
 msgid "Let users order without inputing credit card number after the 2nd time."
 msgstr "ユーザーが2回目以降クレジットカード番号入力を省略できるようにする。"
 
-#: ../admin/settings/payment.php:396 ../admin/settings/payment.php:428
+#: ../admin/settings/payment.php:406 ../admin/settings/payment.php:438
 #, php-format
 msgid "Payment must be finished within %s days."
 msgstr "支払い期限を%s日にする。"
 
-#: ../admin/settings/payment.php:398 ../admin/settings/payment.php:445
+#: ../admin/settings/payment.php:408 ../admin/settings/payment.php:455
 msgid "PayEasy's payment limit must be between 1 and 60."
 msgstr "PayEasyの支払い期限は1〜60日です。"
 
-#: ../admin/settings/payment.php:413 ../admin/settings/payment.php:439
-#: ../admin/settings/payment.php:442
+#: ../admin/settings/payment.php:423 ../admin/settings/payment.php:449
+#: ../admin/settings/payment.php:452
 msgid "Name Kana on Invoice"
 msgstr "領収書に表示するカナ"
 
-#: ../admin/settings/payment.php:416 ../admin/settings/payment.php:424
+#: ../admin/settings/payment.php:426 ../admin/settings/payment.php:434
 #, php-format
 msgid "(%d letters max)"
 msgstr "（%d文字まで）"
 
-#: ../admin/settings/payment.php:421 ../admin/settings/payment.php:436
+#: ../admin/settings/payment.php:431 ../admin/settings/payment.php:446
 msgid "Name on Invoice"
 msgstr "領収虜に表示する名前"
 
-#: ../admin/settings/payment.php:430
+#: ../admin/settings/payment.php:440
 msgid "These values are required for PayEasy. Kana must be Zenkaku Kana."
 msgstr "これらの値はPayEasyに必須です。カナは全角カナにしてください。"
 
-#: ../admin/settings/payment.php:436 ../admin/settings/payment.php:439
-#: ../admin/settings/payment.php:504
+#: ../admin/settings/payment.php:446 ../admin/settings/payment.php:449
+#: ../admin/settings/payment.php:514
 #, php-format
 msgid "%1$s is required for %2$s and character length must be %3$d and less."
 msgstr "%1$sは%2$sに必須です。%3$d文字以下でなくてはなりません。"
 
-#: ../admin/settings/payment.php:442
+#: ../admin/settings/payment.php:452
 #, php-format
 msgid "%s must be Zenkaku Kana."
 msgstr "%sは全角カナでなくてはなりません。"
 
-#: ../admin/settings/payment.php:456 ../admin/settings/payment.php:463
+#: ../admin/settings/payment.php:466 ../admin/settings/payment.php:473
 msgid "Marchant ID"
 msgstr "マーチャントID"
 
-#: ../admin/settings/payment.php:463 ../admin/settings/payment.php:476
-#: ../admin/settings/payment.php:489 ../admin/settings/payment.php:524
-#: ../admin/settings/payment.php:536
+#: ../admin/settings/payment.php:473 ../admin/settings/payment.php:486
+#: ../admin/settings/payment.php:499 ../admin/settings/payment.php:534
+#: ../admin/settings/payment.php:546
 #, php-format
 msgid "%s is required for production environment."
 msgstr "%sは本番環境に必須です。"
 
-#: ../admin/settings/payment.php:469 ../admin/settings/payment.php:476
+#: ../admin/settings/payment.php:479 ../admin/settings/payment.php:486
 msgid "Service ID"
 msgstr "サービスID"
 
-#: ../admin/settings/payment.php:482 ../admin/settings/payment.php:489
+#: ../admin/settings/payment.php:492 ../admin/settings/payment.php:499
 msgid "Hash Key"
 msgstr "ハッシュキー"
 
-#: ../admin/settings/payment.php:495 ../admin/settings/payment.php:504
+#: ../admin/settings/payment.php:505 ../admin/settings/payment.php:514
 msgid "Service Prefix"
 msgstr "サービス接頭辞"
 
-#: ../admin/settings/payment.php:501
+#: ../admin/settings/payment.php:511
 msgid ""
 "Prefix is used to generate transaction ID for Softbank Payment. Must be "
 "alphanumeric and less than 9 letters. Once you start your service, please "
@@ -2364,23 +2376,23 @@ msgstr ""
 "接頭辞はソフトバンク・ペイメントの決済IDを生成するために使われます。8文字以下"
 "の半角英数字にしてください。サービス開始後は変更することはできません。"
 
-#: ../admin/settings/payment.php:504
+#: ../admin/settings/payment.php:514
 msgid "Production Environment"
 msgstr "本番環境"
 
-#: ../admin/settings/payment.php:510 ../admin/settings/payment.php:524
+#: ../admin/settings/payment.php:520 ../admin/settings/payment.php:534
 msgid "Crypt Information"
 msgstr "暗号化情報"
 
-#: ../admin/settings/payment.php:516
+#: ../admin/settings/payment.php:526
 msgid "Crypt Key"
 msgstr "暗号キー"
 
-#: ../admin/settings/payment.php:520
+#: ../admin/settings/payment.php:530
 msgid "IV (Initival Vector)"
 msgstr "IV（初期化ベクトル）"
 
-#: ../admin/settings/payment.php:522
+#: ../admin/settings/payment.php:532
 msgid ""
 "These keys are required for productional environment and will be provided "
 "<strong>after contract with SOFTBANK Payment Service corp.</strong>"
@@ -2388,18 +2400,18 @@ msgstr ""
 "これらのキーは本番環境で必要になります。<strong>ソフトバンク・ペイメント・"
 "サービス株式会社と契約後</strong>に提供されます。"
 
-#: ../admin/settings/payment.php:529 ../admin/settings/payment.php:536
+#: ../admin/settings/payment.php:539 ../admin/settings/payment.php:546
 msgid "Connection URL"
 msgstr "接続URL"
 
-#: ../admin/settings/payment.php:533
+#: ../admin/settings/payment.php:543
 #, php-format
 msgid ""
 "This is required for production environment. After contracting with %s, URL "
 "will be provied."
 msgstr "本番環境に必須です。%sと契約後、URLが提供されます。"
 
-#: ../admin/settings/payment.php:545
+#: ../admin/settings/payment.php:555
 msgid ""
 "If Web CVS or PayEasy is enabled, you must set up this URL as notification "
 "URL. Otherwise you loose payment status change."
@@ -2407,25 +2419,25 @@ msgstr ""
 "コンビニ決済またはPayEasyを有効にした場合、このURLを結果通知URLとして設定して"
 "ください。そうしないと、支払いステータスの変更がわからなくなります。"
 
-#: ../admin/settings/payment.php:547
+#: ../admin/settings/payment.php:557
 msgid "Check endpoint"
 msgstr "エンドポイントをチェック"
 
-#: ../admin/settings/payment.php:551
+#: ../admin/settings/payment.php:561
 msgid "Other Information"
 msgstr "その他の情報"
 
-#: ../admin/settings/payment.php:554
+#: ../admin/settings/payment.php:564
 #, php-format
 msgid "This server's IP Address: <code>%s</code><br />"
 msgstr "このサーバのIPアドレス: <code>%s</code><br />"
 
-#: ../admin/settings/payment.php:555
+#: ../admin/settings/payment.php:565
 #, php-format
 msgid "PHP Mcrypt Extentions: <strong>%s</strong>."
 msgstr "PHP Mcrypt拡張: <strong>%s</strong>"
 
-#: ../admin/settings/payment.php:557
+#: ../admin/settings/payment.php:567
 msgid ""
 "This server is not ready for productional environment. Please contact to "
 "your server admin and ask him to install PHP Mcrypt."
@@ -2433,7 +2445,7 @@ msgstr ""
 "このサーバーは本番環境に対応していません。サーバ管理者にPHP Mcryptをインス"
 "トールするよう依頼してください。"
 
-#: ../admin/settings/payment.php:572
+#: ../admin/settings/payment.php:582
 msgid ""
 "If you accept transfer, users can pay with bank account or something that is "
 "not digital transaction."
@@ -2441,7 +2453,7 @@ msgstr ""
 "送金を受け付けると、ユーザーは銀行振込のように、電子的な方法によらない決済を"
 "利用することができます。"
 
-#: ../admin/settings/payment.php:573
+#: ../admin/settings/payment.php:583
 msgid ""
 "This helps users, but transactional process has a little bit more complex, "
 "because you have to check actual bank account to know whether bank deposit "
@@ -2451,33 +2463,33 @@ msgstr ""
 "なります。あなたは銀行口座を確認して入金が行われたかどうかを確かめる必要があ"
 "ります。"
 
-#: ../admin/settings/payment.php:581
+#: ../admin/settings/payment.php:591
 msgid "Accept Transfer"
 msgstr "送金の受付"
 
-#: ../admin/settings/payment.php:584 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:594 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr "許可しない"
 
-#: ../admin/settings/payment.php:585 ../admin/settings/subscription.php:15
+#: ../admin/settings/payment.php:595 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr "許可する"
 
-#: ../admin/settings/payment.php:589
+#: ../admin/settings/payment.php:599
 msgid "Notification Frequency"
 msgstr "通知頻度"
 
-#: ../admin/settings/payment.php:593
+#: ../admin/settings/payment.php:603
 #, php-format
 msgid "Send reminder on every %s days"
 msgstr "%s日ごとに通知を送る"
 
-#: ../admin/settings/payment.php:599
+#: ../admin/settings/payment.php:609
 #, php-format
 msgid "Transaction expires by %s days"
 msgstr "トランザクションは%s日で期限切れになります。"
 
-#: ../admin/settings/payment.php:604
+#: ../admin/settings/payment.php:614
 msgid ""
 "If you don't want to send reminder, set notification frequency to 0. "
 "Transfer transaction will be expired after notification limit days will have "
@@ -2486,11 +2498,11 @@ msgstr ""
 "通知を送りたくない場合は通知頻度を0にしてください。送金によるトランザクション"
 "は期限日を過ぎると無効になります。"
 
-#: ../admin/settings/payment.php:609
+#: ../admin/settings/payment.php:619
 msgid "Notification Message"
 msgstr "通知メッセージ"
 
-#: ../admin/settings/payment.php:612
+#: ../admin/settings/payment.php:622
 #, php-format
 msgid "You can customize notification message <a href=\"%s\">here</a>."
 msgstr "通知メッセージは<a href=\"%s\">ここ</a>でカスタマイズできます。"
@@ -2941,7 +2953,7 @@ msgid "Required for corporative."
 msgstr "法人の場合は必須"
 
 #: ../admin/settings/sidebar.php:66 ../admin/settings/sidebar.php:71
-#: ../form-template/paypal-payment.php:324
+#: ../form-template/paypal-payment.php:326
 msgid "Tel"
 msgstr "電話"
 
@@ -3253,11 +3265,11 @@ msgstr "このチケットを編集する権限がありません。"
 msgid "Mail Subject is empty."
 msgstr "メール件名が空です。"
 
-#: ../class/event.php:664 ../class/form.php:1503
+#: ../class/event.php:664 ../class/form.php:1502
 msgid "Mail body is empty."
 msgstr "メール本文が空です。"
 
-#: ../class/event.php:683 ../class/form.php:1504
+#: ../class/event.php:683 ../class/form.php:1503
 msgid "Recipients not set."
 msgstr "送信先がセットされていません。"
 
@@ -3370,7 +3382,7 @@ msgstr "%sまで"
 msgid "You cannot access here."
 msgstr "この場所へのアクセスは禁止されています。"
 
-#: ../class/form.php:41 ../class/form.php:1093
+#: ../class/form.php:41 ../class/form.php:1092
 msgid "Sorry, but You might make unexpected action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
@@ -3425,7 +3437,7 @@ msgstr "クレジットカードが期限切れです。"
 msgid "Security code is wrong. "
 msgstr "セキュリティコードがまちがっています。"
 
-#: ../class/form.php:446 ../form-template/paypal-payment.php:168
+#: ../class/form.php:446 ../form-template/paypal-payment.php:170
 msgid ""
 "Security code is 3 or 4 digits written near the card number on the credit "
 "card."
@@ -3453,31 +3465,31 @@ msgstr "郵便番号は必須です。7桁の数字で入力してください�
 msgid "Tel number is required and must be 9 - 11 digits."
 msgstr "電話番号は必須です。9から11桁の数字で入力してください。"
 
-#: ../class/form.php:526 ../form-template/paypal-payment.php:263
+#: ../class/form.php:526 ../form-template/paypal-payment.php:265
 msgid "Last Name"
 msgstr "姓"
 
-#: ../class/form.php:527 ../form-template/paypal-payment.php:269
+#: ../class/form.php:527 ../form-template/paypal-payment.php:271
 msgid "First Name"
 msgstr "名"
 
-#: ../class/form.php:531 ../form-template/paypal-payment.php:301
+#: ../class/form.php:531 ../form-template/paypal-payment.php:303
 msgid "Prefecture"
 msgstr "都道府県"
 
-#: ../class/form.php:532 ../form-template/paypal-payment.php:306
+#: ../class/form.php:532 ../form-template/paypal-payment.php:308
 msgid "City"
 msgstr "市区町村"
 
-#: ../class/form.php:533 ../form-template/paypal-payment.php:311
+#: ../class/form.php:533 ../form-template/paypal-payment.php:313
 msgid "Street"
 msgstr "番地"
 
-#: ../class/form.php:544 ../form-template/paypal-payment.php:249
+#: ../class/form.php:544 ../form-template/paypal-payment.php:251
 msgid "Last Name Kana"
 msgstr "姓カナ"
 
-#: ../class/form.php:548 ../form-template/paypal-payment.php:255
+#: ../class/form.php:548 ../form-template/paypal-payment.php:257
 msgid "First Name Kana"
 msgstr "名カナ"
 
@@ -3525,56 +3537,56 @@ msgstr "PayPalへの接続に失敗しました。"
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../class/form.php:882
+#: ../class/form.php:881
 msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
-#: ../class/form.php:997 ../class/ios.php:465 ../class/ios.php:487
+#: ../class/form.php:996 ../class/ios.php:465 ../class/ios.php:487
 #: ../class/post.php:630
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
-#: ../class/form.php:1007
+#: ../class/form.php:1006
 msgid "You have no permission to access this file."
 msgstr "このファイルへのアクセス権がありません。"
 
-#: ../class/form.php:1039
+#: ../class/form.php:1038
 msgid "Sorry, but you specified unexistant event."
 msgstr "申し訳ありません、イベントが見つかりません。"
 
-#: ../class/form.php:1045
+#: ../class/form.php:1044
 #, php-format
 msgid "Sorry, but cancel limit %s is outdated and you cannot cancel."
 msgstr ""
 "申し訳ありません、キャンセル期限 %s が過ぎているため、キャンセルできません。"
 
-#: ../class/form.php:1051
+#: ../class/form.php:1050
 msgid "Sorry, but you have no ticket to cancel."
 msgstr "申し訳ありませんが、キャンセルできるチケットがありません。"
 
-#: ../class/form.php:1057
+#: ../class/form.php:1056
 #, php-format
 msgid "%s charged."
 msgstr "手数料 %s"
 
-#: ../class/form.php:1087
+#: ../class/form.php:1086
 msgid "Deleted Ticket"
 msgstr "削除されたチケット"
 
-#: ../class/form.php:1093
+#: ../class/form.php:1092
 msgid "Cannot pass security check."
 msgstr "セキュリティチェックを通過できませんでした。"
 
-#: ../class/form.php:1107
+#: ../class/form.php:1106
 msgid "Sorry, but the tikcet id you specified is not cancelable."
 msgstr "申し訳ありません、指定されたチケットはキャンセルできません。"
 
-#: ../class/form.php:1159
+#: ../class/form.php:1158
 #, php-format
 msgid "You have successfully canceled <strong>%1$s x %2$d</strong>."
 msgstr "<strong>%1$s x %2$d</strong>をキャンセルいたしました。"
 
-#: ../class/form.php:1160
+#: ../class/form.php:1159
 #, php-format
 msgid ""
 "Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please "
@@ -3583,197 +3595,197 @@ msgstr ""
 "<strong>%1$s x %2$d</strong>の返金リンクエストが受け付けられました。返金処理"
 "が完了するまでしばらくお待ちください。"
 
-#: ../class/form.php:1178 ../form-template/paypal-cancel-ticket.php:14
+#: ../class/form.php:1177 ../form-template/paypal-cancel-ticket.php:14
 #: ../form-template/paypal-event-tickets-consume.php:16
 msgid "Bought"
 msgstr "購入日"
 
-#: ../class/form.php:1196
+#: ../class/form.php:1195
 msgid "A footer note which can be set on each post will be displayed here."
 msgstr "投稿ごとに設定できる註がここに表示されます。"
 
-#: ../class/form.php:1207 ../class/form.php:1265 ../class/form.php:1526
+#: ../class/form.php:1206 ../class/form.php:1264 ../class/form.php:1525
 msgid "Sorry, but no event is specified."
 msgstr "申し訳ありませんが、イベントが指定されておりません。"
 
-#: ../class/form.php:1221
+#: ../class/form.php:1220
 msgid "Sorry, but you have no tikcet to display."
 msgstr "申し訳ありませんが、表示できるチケットはございません。"
 
-#: ../class/form.php:1271
+#: ../class/form.php:1270
 msgid "Sorry, but specified user is not found."
 msgstr "もうしわけありません、ユーザーが見つかりません。"
 
-#: ../class/form.php:1275
+#: ../class/form.php:1274
 msgid "Sorry, but you have no capability to consume ticket."
 msgstr "申し訳ありませんが、チケットを消費する権限をお持ちでないようです。"
 
-#: ../class/form.php:1302
+#: ../class/form.php:1301
 #, php-format
 msgid "Sorry, but %s has no ticket on this event."
 msgstr "申し訳ありませんが、%sさんはこのイベントのチケットを持っていません。"
 
-#: ../class/form.php:1340 ../class/form.php:1511 ../class/form.php:1865
+#: ../class/form.php:1339 ../class/form.php:1510 ../class/form.php:1864
 msgid "Sorry, but event is not found."
 msgstr "申し訳ありませんが、イベントが見つかりません。"
 
-#: ../class/form.php:1344
+#: ../class/form.php:1343
 msgid "Sorry, but you have no permission."
 msgstr "申し訳ありませんが、権限をお持ちでありません。"
 
-#: ../class/form.php:1384 ../tables/list-event.php:33
+#: ../class/form.php:1383 ../tables/list-event.php:33
 msgid "Event Name"
 msgstr "イベント名"
 
-#: ../class/form.php:1393 ../class/form.php:1452
+#: ../class/form.php:1392 ../class/form.php:1451
 msgid "Specified ticket doesn't exist."
 msgstr "指定されたチケットは存在しません。"
 
-#: ../class/form.php:1398
+#: ../class/form.php:1397
 #, php-format
 msgid "%s has stock to sell."
 msgstr "%sは販売可能なチケットが残っています。"
 
-#: ../class/form.php:1402
+#: ../class/form.php:1401
 #, php-format
 msgid "Sorry, but selling limit of %s has been outdated."
 msgstr "申し訳ありません、販売期限 %s が過ぎています。"
 
-#: ../class/form.php:1406
+#: ../class/form.php:1405
 #, php-format
 msgid "Sorry, but %s dosen't have waiting list."
 msgstr "申し訳ありませんが、%sはキャンセル待ちを受け付けていません。"
 
-#: ../class/form.php:1410
+#: ../class/form.php:1409
 #, php-format
 msgid "You are already on waiting list of %s."
 msgstr "すでに%sのキャンセル待ちリストに追加されています。"
 
-#: ../class/form.php:1423
+#: ../class/form.php:1422
 msgid "Sorry, but failed to save data. Please retry later."
 msgstr "申し訳ございません、データを保存できませんでした。後で試してください。"
 
-#: ../class/form.php:1447
+#: ../class/form.php:1446
 msgid "Sorry, but you took a wrong action."
 msgstr "申し訳ありません、想定外のリクエストです。"
 
-#: ../class/form.php:1459
+#: ../class/form.php:1458
 #, php-format
 msgid "Sorry, but you are not on cancel list of %s"
 msgstr "申し訳ありませんが、%sのキャンセル待ちをしていません。"
 
-#: ../class/form.php:1463
+#: ../class/form.php:1462
 #, php-format
 msgid "Sorry, but %s is already outdated and you can't change satus."
 msgstr ""
 "申し訳ありません、%sの販売期限が過ぎているため、ステータスを変更できません。"
 
-#: ../class/form.php:1471
+#: ../class/form.php:1470
 msgid ""
 "Sorry, but failed to change transaction satatus. Please try again later."
 msgstr ""
 "申し訳ございません、決済ステータスを変更できませんでした。後で試してくださ"
 "い。"
 
-#: ../class/form.php:1476
+#: ../class/form.php:1475
 #, php-format
 msgid "You are now deregistered from the cancel list of <strong>%s</strong>."
 msgstr "<strong>%s</strong>のキャンセル待ちリストから削除されました。"
 
-#: ../class/form.php:1494
+#: ../class/form.php:1493
 #, php-format
 msgid "Admin email <%s>"
 msgstr "管理者メール <%s>"
 
-#: ../class/form.php:1495
+#: ../class/form.php:1494
 #, php-format
 msgid "Your email <%s>"
 msgstr "あなたのメール <%s>"
 
-#: ../class/form.php:1499
+#: ../class/form.php:1498
 msgid "Are you sure to send this mail? You can't cancel this action."
 msgstr "このメールを送信してよろしいですか？ このアクションは取り消せません。"
 
-#: ../class/form.php:1500
+#: ../class/form.php:1499
 msgid "Sending&hellip;"
 msgstr "送信中&hellip;"
 
-#: ../class/form.php:1501
+#: ../class/form.php:1500
 msgid "Please specify mail from."
 msgstr "メールの差出人を指定してください。"
 
-#: ../class/form.php:1502
+#: ../class/form.php:1501
 msgid "Subject is empty."
 msgstr "件名が空です。"
 
-#: ../class/form.php:1505 ../form-template/paypal-event-contact.php:74
+#: ../class/form.php:1504 ../form-template/paypal-event-contact.php:74
 #: ../form-template/paypal-sb-check.php:50
 msgid "Send"
 msgstr "送信"
 
-#: ../class/form.php:1530
+#: ../class/form.php:1529
 msgid "You do not have capability to contact participants."
 msgstr "参加者にコンタクトする権限がありません。"
 
-#: ../class/form.php:1535
+#: ../class/form.php:1534
 #, php-format
 msgid "Post author email <%s>"
 msgstr "投稿者のメール <%s>"
 
-#: ../class/form.php:1543
+#: ../class/form.php:1542
 msgid "There is no one to contact."
 msgstr "コンタクトをとれるユーザーがいません。"
 
-#: ../class/form.php:1546
+#: ../class/form.php:1545
 #, php-format
 msgid "All Participants(%s people)"
 msgstr "すべての参加者（%s 人）"
 
-#: ../class/form.php:1549
+#: ../class/form.php:1548
 #, php-format
 msgid "All waitings(%s people)"
 msgstr "すべてのキャンセル待ち（%s人）"
 
-#: ../class/form.php:1562
+#: ../class/form.php:1561
 #, php-format
 msgid "Participants(%s people)"
 msgstr "参加者（%s 人）"
 
-#: ../class/form.php:1566
+#: ../class/form.php:1565
 #, php-format
 msgid "Waitings(%s people)"
 msgstr "キャンセル待ち（%s人）"
 
-#: ../class/form.php:1622 ../form-template/paypal-refund-account.php:18
+#: ../class/form.php:1621 ../form-template/paypal-refund-account.php:18
 msgid "Bank Name"
 msgstr "銀行名"
 
-#: ../class/form.php:1623 ../form-template/paypal-refund-account.php:34
+#: ../class/form.php:1622 ../form-template/paypal-refund-account.php:34
 msgid "Branch Name"
 msgstr "支店名"
 
-#: ../class/form.php:1624 ../form-template/paypal-refund-account.php:66
+#: ../class/form.php:1623 ../form-template/paypal-refund-account.php:66
 msgid "Account No."
 msgstr "口座番号"
 
-#: ../class/form.php:1625 ../form-template/paypal-refund-account.php:75
+#: ../class/form.php:1624 ../form-template/paypal-refund-account.php:75
 msgid "Account Holder"
 msgstr "口座名義"
 
-#: ../class/form.php:1628 ../class/literally-wordpress.php:1334
+#: ../class/form.php:1627 ../class/literally-wordpress.php:1334
 #, php-format
 msgid "%s is empty."
 msgstr "%sが空です。"
 
-#: ../class/form.php:1658
+#: ../class/form.php:1657
 msgid "You have no permission to see this URL."
 msgstr "このURLを閲覧すぐ権限はありません。"
 
-#: ../class/form.php:1669
+#: ../class/form.php:1668
 msgid "Parsed Data: \n"
 msgstr "解析されたデータ: \n"
 
-#: ../class/form.php:1681
+#: ../class/form.php:1680
 #, php-format
 msgid ""
 "This page confirm whether your endpoint <code>%s</code> works in order. "
@@ -3782,120 +3794,120 @@ msgstr ""
 "これはあなたのエンドポイント<code>%s</code>が正常に動いているかを確認するため"
 "のページです。変更する決済を選んでください。"
 
-#: ../class/form.php:1682
+#: ../class/form.php:1681
 msgid "This is not sandbox environment. Are you sure to change status?"
 msgstr ""
 "これはサンドボックス環境ではありません。ステータスを変更してよろしいですか？"
 
-#: ../class/form.php:1702
+#: ../class/form.php:1701
 msgid "You must be logged in to process transaction."
 msgstr "決済処理を進めるにはログインする必要があります。"
 
-#: ../class/form.php:1832
+#: ../class/form.php:1831
 msgid "No content is specified."
 msgstr "コンテンツが指定されていません。"
 
-#: ../class/form.php:1842
+#: ../class/form.php:1841
 msgid "Selling limit has been past. There is no ticket available."
 msgstr "販売期限が過ぎています。ご利用になれるチケットはありません。"
 
-#: ../class/form.php:1848
+#: ../class/form.php:1847
 msgid "Sorry, but this ticket is sold out."
 msgstr "申し訳ありませんが、このチケットは売り切れです。"
 
-#: ../class/form.php:1877
+#: ../class/form.php:1876
 msgid "Dammy Ticket"
 msgstr "ダミーチケット"
 
-#: ../class/form.php:1945
+#: ../class/form.php:1944
 msgid "Select Payment"
 msgstr "支払い方法選択"
 
-#: ../class/form.php:1948
+#: ../class/form.php:1947
 msgid "Payment Information"
 msgstr "支払い情報"
 
-#: ../class/form.php:1951
+#: ../class/form.php:1950
 msgid "Payment Information Detail"
 msgstr "支払い情報詳細"
 
-#: ../class/form.php:1954 ../tables/list-refund.php:115
+#: ../class/form.php:1953 ../tables/list-refund.php:115
 msgid "Refund Account"
 msgstr "返金先口座"
 
-#: ../class/form.php:1957
+#: ../class/form.php:1956
 msgid "Transfer Accepted"
 msgstr "送金受付"
 
-#: ../class/form.php:1960
+#: ../class/form.php:1959
 msgid "Payment Confirmation"
 msgstr "支払い確認"
 
-#: ../class/form.php:1963
+#: ../class/form.php:1962
 msgid "Transaction Completed"
 msgstr "決済完了"
 
-#: ../class/form.php:1966
+#: ../class/form.php:1965
 msgid "Transaciton Canceled"
 msgstr "決済キャンセル"
 
-#: ../class/form.php:1969
+#: ../class/form.php:1968
 msgid "Ticket Cancel"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1972
+#: ../class/form.php:1971
 msgid "Ticket Canceled"
 msgstr "チケットキャンセル"
 
-#: ../class/form.php:1975 ../form-template/edit-detail-event.php:109
+#: ../class/form.php:1974 ../form-template/edit-detail-event.php:109
 msgid "Ticket List"
 msgstr "チケットリスト"
 
-#: ../class/form.php:1978
+#: ../class/form.php:1977
 msgid "Ticket Status"
 msgstr "チケットステータス"
 
-#: ../class/form.php:1981
+#: ../class/form.php:1980
 msgid "Waiting for ticket cancellation"
 msgstr "チケットのキャンセル待ち"
 
-#: ../class/form.php:1984
+#: ../class/form.php:1983
 msgid "Find User"
 msgstr "ユーザー検索"
 
-#: ../class/form.php:1987
+#: ../class/form.php:1986
 msgid "Contact to participants"
 msgstr "参加者へのコンタクト"
 
-#: ../class/form.php:1990
+#: ../class/form.php:1989
 msgid "Subscrition Plans"
 msgstr "定期購読プラン"
 
-#: ../class/form.php:1993
+#: ../class/form.php:1992
 msgid "Softbank Payment Service Notification Check"
 msgstr "ソフトバンクペイメントサービス通知チェック"
 
-#: ../class/form.php:2063 ../class/form.php:2066
+#: ../class/form.php:2062 ../class/form.php:2065
 msgid "Displays subscription plans."
 msgstr "定期購読プランを表示します。"
 
-#: ../class/form.php:2066
+#: ../class/form.php:2065
 msgid "User can select it and go to payment selection page."
 msgstr "ユーザーは選択した上で、支払い方法選択ページへ移動します。"
 
-#: ../class/form.php:2069
+#: ../class/form.php:2068
 msgid "Display thank you message when transaction finished."
 msgstr "決済が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:2069 ../class/form.php:2094
+#: ../class/form.php:2068 ../class/form.php:2093
 msgid "User will be soon redirected to original event page in 5 seconds."
 msgstr "ユーザーは5秒後にイベントページへリダイレクトされます。"
 
-#: ../class/form.php:2072
+#: ../class/form.php:2071
 msgid "Display message when user cancels transaction."
 msgstr "ユーザーが決済をキャンセルしたときにメッセージを表示します。"
 
-#: ../class/form.php:2075
+#: ../class/form.php:2074
 msgid ""
 "Displays payment methods. You can skip this form if paypal is the only "
 "method available."
@@ -3903,7 +3915,7 @@ msgstr ""
 "支払い方法を表示します。PayPalだけが支払い方法として有効なときにはこのフォー"
 "ムをスキップできます。"
 
-#: ../class/form.php:2079
+#: ../class/form.php:2078
 msgid ""
 "Display form to fulfill payment information like Web CVS, CreditCard and so "
 "on."
@@ -3911,39 +3923,39 @@ msgstr ""
 "コンビニ決済、クレジットカードなどの支払い情報を入力するフォームを表示しま"
 "す。"
 
-#: ../class/form.php:2082
+#: ../class/form.php:2081
 msgid ""
 "Display currently quueued transaction. Especially for Web CVS or PayEasy."
 msgstr "現在処理中の決済情報を表示します。コンビニ決済、PayEasy向けです。"
 
-#: ../class/form.php:2085
+#: ../class/form.php:2084
 msgid ""
 "Display form of refund account which is required to complete refund process."
 msgstr "返金処理に必要な返金先アカウントを登録するためのフォームを表示します。"
 
-#: ../class/form.php:2088
+#: ../class/form.php:2087
 msgid ""
 "Displays form to confirm transaction when user retruns from paypal web site."
 msgstr ""
 "ユーザーがPayPalから戻ってきたときに決済を受諾するためのページを表示します。"
 
-#: ../class/form.php:2091 ../class/form.php:2097
+#: ../class/form.php:2090 ../class/form.php:2096
 msgid "Show list of tickets which user have bought."
 msgstr "ユーザーが購入したチケットのリストを表示します。"
 
-#: ../class/form.php:2091
+#: ../class/form.php:2090
 msgid "User can select ticket to cancel."
 msgstr "ユーザーはキャンセルするチケットを選択できます。"
 
-#: ../class/form.php:2091 ../class/form.php:2097
+#: ../class/form.php:2090 ../class/form.php:2096
 msgid "If user has no tickets, wp_die will be executed."
 msgstr "ユーザーがチケットを購入していない場合はwp_dieが実行されます。"
 
-#: ../class/form.php:2094
+#: ../class/form.php:2093
 msgid "Displays message to tell user cancel is completed."
 msgstr "キャンセル処理が完了したあとにメッセージを表示します。"
 
-#: ../class/form.php:2100
+#: ../class/form.php:2099
 msgid ""
 "Displays list of tikcets owned by specified user. You can consume ticket "
 "with pulldown menu."
@@ -3951,7 +3963,7 @@ msgstr ""
 "特定のユーザーが所有するチケットのリストを表示します。あなたはプルダウンメ"
 "ニューからチケットを使用済みにすることができます。"
 
-#: ../class/form.php:2103
+#: ../class/form.php:2102
 msgid ""
 "Search tikcet owner from code which have been generared by this plugin. This "
 "code is related to particular event."
@@ -3959,15 +3971,15 @@ msgstr ""
 "このプラグインが出力するコードからチケットの所有者を探します。このコードはイ"
 "ベント固有です。"
 
-#: ../class/form.php:2106
+#: ../class/form.php:2105
 msgid "Show mail form to send emails to event participants."
 msgstr "イベント参加者に一括メールを送信するフォームを表示できます。"
 
-#: ../class/form.php:2109
+#: ../class/form.php:2108
 msgid "Displayed when user choose to wait for cancellation."
 msgstr "ユーザーがキャンセル待ちを申し込んだときに表示されます。"
 
-#: ../class/form.php:2112
+#: ../class/form.php:2111
 msgid "Check endpoint availability. Use only on sandbox."
 msgstr ""
 "エンドポイントの有効性を確認します。サンドボックスでのみ使用してください。"
@@ -5275,815 +5287,815 @@ msgstr "キャンセル待ち"
 msgid "QUIT_WAITNG_CANCELLATION"
 msgstr "キャンセル待ち解除"
 
-#: ../class/statics/paypal.php:320
+#: ../class/statics/paypal.php:329
 msgid "ÅLAND ISLANDS"
 msgstr "オーランド諸島"
 
-#: ../class/statics/paypal.php:321
+#: ../class/statics/paypal.php:330
 msgid "ALBANIA"
 msgstr "アルバニア"
 
-#: ../class/statics/paypal.php:322
+#: ../class/statics/paypal.php:331
 msgid "ALGERIA"
 msgstr "アルジェリア"
 
-#: ../class/statics/paypal.php:323
+#: ../class/statics/paypal.php:332
 msgid "AMERICAN SAMOA"
 msgstr "サモア"
 
-#: ../class/statics/paypal.php:324
+#: ../class/statics/paypal.php:333
 msgid "ANDORRA"
 msgstr "アンドラ"
 
-#: ../class/statics/paypal.php:325
+#: ../class/statics/paypal.php:334
 msgid "ANGUILLA"
 msgstr "アンギラ"
 
-#: ../class/statics/paypal.php:326
+#: ../class/statics/paypal.php:335
 msgid "ANTARCTICA"
 msgstr "南極"
 
-#: ../class/statics/paypal.php:327
+#: ../class/statics/paypal.php:336
 msgid "ANTIGUA AND BARBUDA"
 msgstr "アンティグア・バーブーダ"
 
-#: ../class/statics/paypal.php:328
+#: ../class/statics/paypal.php:337
 msgid "ARGENTINA"
 msgstr "アルゼンチン"
 
-#: ../class/statics/paypal.php:329
+#: ../class/statics/paypal.php:338
 msgid "ARMENIA"
 msgstr "アルメニア"
 
-#: ../class/statics/paypal.php:330
+#: ../class/statics/paypal.php:339
 msgid "ARUBA"
 msgstr "アルバ"
 
-#: ../class/statics/paypal.php:331
+#: ../class/statics/paypal.php:340
 msgid "AUSTRALIA"
 msgstr "オーストラリア"
 
-#: ../class/statics/paypal.php:332
+#: ../class/statics/paypal.php:341
 msgid "AUSTRIA"
 msgstr "オーストリア"
 
-#: ../class/statics/paypal.php:333
+#: ../class/statics/paypal.php:342
 msgid "BAHAMAS"
 msgstr "バハマ"
 
-#: ../class/statics/paypal.php:334
+#: ../class/statics/paypal.php:343
 msgid "BAHRAIN"
 msgstr "バーレーン"
 
-#: ../class/statics/paypal.php:335
+#: ../class/statics/paypal.php:344
 msgid "BARBADOS"
 msgstr "バルバドス"
 
-#: ../class/statics/paypal.php:336
+#: ../class/statics/paypal.php:345
 msgid "BELGIUM"
 msgstr "ベルギー"
 
-#: ../class/statics/paypal.php:337
+#: ../class/statics/paypal.php:346
 msgid "BELIZE"
 msgstr "ベリーズ"
 
-#: ../class/statics/paypal.php:338
+#: ../class/statics/paypal.php:347
 msgid "BENIN"
 msgstr "ベナン"
 
-#: ../class/statics/paypal.php:339
+#: ../class/statics/paypal.php:348
 msgid "BERMUDA"
 msgstr "バミューダ"
 
-#: ../class/statics/paypal.php:340
+#: ../class/statics/paypal.php:349
 msgid "BHUTAN"
 msgstr "ブータン"
 
-#: ../class/statics/paypal.php:341
+#: ../class/statics/paypal.php:350
 msgid "BOTSWANA"
 msgstr "ボツワナ"
 
-#: ../class/statics/paypal.php:342
+#: ../class/statics/paypal.php:351
 msgid "BOUVET ISLAND"
 msgstr "ブーベ島"
 
-#: ../class/statics/paypal.php:343
+#: ../class/statics/paypal.php:352
 msgid "BRAZIL"
 msgstr "ブラジル"
 
-#: ../class/statics/paypal.php:344
+#: ../class/statics/paypal.php:353
 msgid "BRITISH INDIAN OCEAN TERRITORY"
 msgstr "イギリス領インド洋地域"
 
-#: ../class/statics/paypal.php:345
+#: ../class/statics/paypal.php:354
 msgid "BRUNEI DARUSSALAM"
 msgstr "ブルネイ"
 
-#: ../class/statics/paypal.php:346
+#: ../class/statics/paypal.php:355
 msgid "BULGARIA"
 msgstr "ブルガリア"
 
-#: ../class/statics/paypal.php:347
+#: ../class/statics/paypal.php:356
 msgid "BURKINA FASO"
 msgstr "ブルキナ・ファソ"
 
-#: ../class/statics/paypal.php:348
+#: ../class/statics/paypal.php:357
 msgid "CANADA"
 msgstr "カナダ"
 
-#: ../class/statics/paypal.php:349
+#: ../class/statics/paypal.php:358
 msgid "CAPE VERDE"
 msgstr "カーボヴェルデ"
 
-#: ../class/statics/paypal.php:350
+#: ../class/statics/paypal.php:359
 msgid "CAYMAN ISLANDS"
 msgstr "ケイマン諸島"
 
-#: ../class/statics/paypal.php:351
+#: ../class/statics/paypal.php:360
 msgid "CENTRAL AFRICAN REPUBLIC"
 msgstr "中央アフリカ共和国"
 
-#: ../class/statics/paypal.php:352
+#: ../class/statics/paypal.php:361
 msgid "CHILE"
 msgstr "チリ"
 
-#: ../class/statics/paypal.php:353
+#: ../class/statics/paypal.php:362
 msgid "CHINA"
 msgstr "中国"
 
-#: ../class/statics/paypal.php:354
+#: ../class/statics/paypal.php:363
 msgid "CHRISTMAS ISLAND"
 msgstr "クリスマス諸島"
 
-#: ../class/statics/paypal.php:355
+#: ../class/statics/paypal.php:364
 msgid "COCOS (KEELING) ISLANDS"
 msgstr "ココス諸島"
 
-#: ../class/statics/paypal.php:356
+#: ../class/statics/paypal.php:365
 msgid "COLOMBIA"
 msgstr "コロンビア"
 
-#: ../class/statics/paypal.php:357
+#: ../class/statics/paypal.php:366
 msgid "COOK ISLANDS"
 msgstr "クック諸島"
 
-#: ../class/statics/paypal.php:358
+#: ../class/statics/paypal.php:367
 msgid "COSTA RICA"
 msgstr "コスタ・リカ"
 
-#: ../class/statics/paypal.php:359
+#: ../class/statics/paypal.php:368
 msgid "CYPRUS"
 msgstr "キプロス"
 
-#: ../class/statics/paypal.php:360
+#: ../class/statics/paypal.php:369
 msgid "CZECH REPUBLIC"
 msgstr "チェコ共和国"
 
-#: ../class/statics/paypal.php:361
+#: ../class/statics/paypal.php:370
 msgid "DENMARK"
 msgstr "デンマーク"
 
-#: ../class/statics/paypal.php:362
+#: ../class/statics/paypal.php:371
 msgid "DJIBOUTI"
 msgstr "ヂブチ"
 
-#: ../class/statics/paypal.php:363
+#: ../class/statics/paypal.php:372
 msgid "DOMINICA"
 msgstr "ドミニカ"
 
-#: ../class/statics/paypal.php:364
+#: ../class/statics/paypal.php:373
 msgid "DOMINICAN REPUBLIC"
 msgstr "ドミニカ共和国"
 
-#: ../class/statics/paypal.php:365
+#: ../class/statics/paypal.php:374
 msgid "EGYPT"
 msgstr "エジプト"
 
-#: ../class/statics/paypal.php:366
+#: ../class/statics/paypal.php:375
 msgid "EL SALVADOR"
 msgstr "エルサルバドル"
 
-#: ../class/statics/paypal.php:367
+#: ../class/statics/paypal.php:376
 msgid "ESTONIA"
 msgstr "エストニア"
 
-#: ../class/statics/paypal.php:368
+#: ../class/statics/paypal.php:377
 msgid "FALKLAND ISLANDS (MALVINAS)"
 msgstr "フォークランド諸島"
 
-#: ../class/statics/paypal.php:369
+#: ../class/statics/paypal.php:378
 msgid "FAROE ISLANDS"
 msgstr "フェロー諸島"
 
-#: ../class/statics/paypal.php:370
+#: ../class/statics/paypal.php:379
 msgid "FIJI"
 msgstr "フィジー"
 
-#: ../class/statics/paypal.php:371
+#: ../class/statics/paypal.php:380
 msgid "FINLAND"
 msgstr "フィンランド"
 
-#: ../class/statics/paypal.php:372
+#: ../class/statics/paypal.php:381
 msgid "FRANCE"
 msgstr "フランス"
 
-#: ../class/statics/paypal.php:373
+#: ../class/statics/paypal.php:382
 msgid "FRENCH GUIANA"
 msgstr "仏領ギアナ"
 
-#: ../class/statics/paypal.php:374
+#: ../class/statics/paypal.php:383
 msgid "FRENCH POLYNESIA"
 msgstr "仏領ポリネシア"
 
-#: ../class/statics/paypal.php:375
+#: ../class/statics/paypal.php:384
 msgid "FRENCH SOUTHERN TERRITORIES"
 msgstr "フランス南部海外領"
 
-#: ../class/statics/paypal.php:376
+#: ../class/statics/paypal.php:385
 msgid "GAMBIA"
 msgstr "ガンビア"
 
-#: ../class/statics/paypal.php:377
+#: ../class/statics/paypal.php:386
 msgid "GEORGIA"
 msgstr "ジョージア"
 
-#: ../class/statics/paypal.php:378
+#: ../class/statics/paypal.php:387
 msgid "GERMANY"
 msgstr "ドイツ"
 
-#: ../class/statics/paypal.php:379
+#: ../class/statics/paypal.php:388
 msgid "GHANA"
 msgstr "ガーナ"
 
-#: ../class/statics/paypal.php:380
+#: ../class/statics/paypal.php:389
 msgid "GIBRALTAR"
 msgstr "ジブラルタル"
 
-#: ../class/statics/paypal.php:381
+#: ../class/statics/paypal.php:390
 msgid "GREECE"
 msgstr "ギリシャ"
 
-#: ../class/statics/paypal.php:382
+#: ../class/statics/paypal.php:391
 msgid "GREENLAND"
 msgstr "グリーンランド"
 
-#: ../class/statics/paypal.php:383
+#: ../class/statics/paypal.php:392
 msgid "GRENADA"
 msgstr "グレナダ"
 
-#: ../class/statics/paypal.php:384
+#: ../class/statics/paypal.php:393
 msgid "GUADELOUPE"
 msgstr "グアドループ"
 
-#: ../class/statics/paypal.php:385
+#: ../class/statics/paypal.php:394
 msgid "GUAM"
 msgstr "グアム"
 
-#: ../class/statics/paypal.php:386
+#: ../class/statics/paypal.php:395
 msgid "GUERNSEY"
 msgstr "ガーンジー"
 
-#: ../class/statics/paypal.php:387
+#: ../class/statics/paypal.php:396
 msgid "HEARD ISLAND AND MCDONALD ISLANDS"
 msgstr "ハード島とマクドナルド諸島"
 
-#: ../class/statics/paypal.php:388
+#: ../class/statics/paypal.php:397
 msgid "HOLY SEE (VATICAN CITY STATE)"
 msgstr "ヴァチカン市国"
 
-#: ../class/statics/paypal.php:389
+#: ../class/statics/paypal.php:398
 msgid "HONDURAS"
 msgstr "ホンジュラス"
 
-#: ../class/statics/paypal.php:390
+#: ../class/statics/paypal.php:399
 msgid "HONG KONG"
 msgstr "香港"
 
-#: ../class/statics/paypal.php:391
+#: ../class/statics/paypal.php:400
 msgid "HUNGARY"
 msgstr "ハンガリー"
 
-#: ../class/statics/paypal.php:392
+#: ../class/statics/paypal.php:401
 msgid "ICELAND"
 msgstr "アイスランド"
 
-#: ../class/statics/paypal.php:393
+#: ../class/statics/paypal.php:402
 msgid "INDIA"
 msgstr "インド"
 
-#: ../class/statics/paypal.php:394
+#: ../class/statics/paypal.php:403
 msgid "INDONESIA"
 msgstr "インドネシア"
 
-#: ../class/statics/paypal.php:395
+#: ../class/statics/paypal.php:404
 msgid "IRELAND"
 msgstr "アイルランド"
 
-#: ../class/statics/paypal.php:396
+#: ../class/statics/paypal.php:405
 msgid "ISLE OF MAN"
 msgstr "マン島"
 
-#: ../class/statics/paypal.php:397
+#: ../class/statics/paypal.php:406
 msgid "ISRAEL"
 msgstr "イスラエル"
 
-#: ../class/statics/paypal.php:398
+#: ../class/statics/paypal.php:407
 msgid "ITALY"
 msgstr "イタリア"
 
-#: ../class/statics/paypal.php:399
+#: ../class/statics/paypal.php:408
 msgid "JAMAICA"
 msgstr "ジャマイカ"
 
-#: ../class/statics/paypal.php:400
+#: ../class/statics/paypal.php:409
 msgid "JAPAN"
 msgstr "日本"
 
-#: ../class/statics/paypal.php:401
+#: ../class/statics/paypal.php:410
 msgid "JERSEY"
 msgstr "ジャージー"
 
-#: ../class/statics/paypal.php:402
+#: ../class/statics/paypal.php:411
 msgid "JORDAN"
 msgstr "ヨルダン"
 
-#: ../class/statics/paypal.php:403
+#: ../class/statics/paypal.php:412
 msgid "KAZAKHSTAN"
 msgstr "カザフスタン"
 
-#: ../class/statics/paypal.php:404
+#: ../class/statics/paypal.php:413
 msgid "KIRIBATI"
 msgstr "キリバツ"
 
-#: ../class/statics/paypal.php:405
+#: ../class/statics/paypal.php:414
 msgid "KOREA, REPUBLIC OF"
 msgstr "韓国"
 
-#: ../class/statics/paypal.php:406
+#: ../class/statics/paypal.php:415
 msgid "KUWAIT"
 msgstr "クウェート"
 
-#: ../class/statics/paypal.php:407
+#: ../class/statics/paypal.php:416
 msgid "KYRGYZSTAN"
 msgstr "キルギスタン"
 
-#: ../class/statics/paypal.php:408
+#: ../class/statics/paypal.php:417
 msgid "LATVIA"
 msgstr "ラトヴィア"
 
-#: ../class/statics/paypal.php:409
+#: ../class/statics/paypal.php:418
 msgid "LESOTHO"
 msgstr "レソト"
 
-#: ../class/statics/paypal.php:410
+#: ../class/statics/paypal.php:419
 msgid "LIECHTENSTEIN"
 msgstr "リヒテンシュタイン"
 
-#: ../class/statics/paypal.php:411
+#: ../class/statics/paypal.php:420
 msgid "LITHUANIA"
 msgstr "リトアニア"
 
-#: ../class/statics/paypal.php:412
+#: ../class/statics/paypal.php:421
 msgid "LUXEMBOURG"
 msgstr "ルクセンブルク"
 
-#: ../class/statics/paypal.php:413
+#: ../class/statics/paypal.php:422
 msgid "MACAO"
 msgstr "マカオ"
 
-#: ../class/statics/paypal.php:414
+#: ../class/statics/paypal.php:423
 msgid "MALAWI"
 msgstr "マラウィ"
 
-#: ../class/statics/paypal.php:415
+#: ../class/statics/paypal.php:424
 msgid "MALAYSIA"
 msgstr "マレーシア"
 
-#: ../class/statics/paypal.php:416
+#: ../class/statics/paypal.php:425
 msgid "MALTA"
 msgstr "マルタ"
 
-#: ../class/statics/paypal.php:417
+#: ../class/statics/paypal.php:426
 msgid "MARSHALL ISLANDS"
 msgstr "マーシャル諸島"
 
-#: ../class/statics/paypal.php:418
+#: ../class/statics/paypal.php:427
 msgid "MARTINIQUE"
 msgstr "マルティニーク島"
 
-#: ../class/statics/paypal.php:419
+#: ../class/statics/paypal.php:428
 msgid "MAURITANIA"
 msgstr "モーリタニア"
 
-#: ../class/statics/paypal.php:420
+#: ../class/statics/paypal.php:429
 msgid "MAURITIUS"
 msgstr "モーリシャス"
 
-#: ../class/statics/paypal.php:421
+#: ../class/statics/paypal.php:430
 msgid "MAYOTTE"
 msgstr "マヨット"
 
-#: ../class/statics/paypal.php:422
+#: ../class/statics/paypal.php:431
 msgid "MEXICO"
 msgstr "メキシコ"
 
-#: ../class/statics/paypal.php:423
+#: ../class/statics/paypal.php:432
 msgid "MICRONESIA, FEDERATED STATES OF"
 msgstr "ミクロネシア連邦"
 
-#: ../class/statics/paypal.php:424
+#: ../class/statics/paypal.php:433
 msgid "MOLDOVA, REPUBLIC OF"
 msgstr "モルドヴァ"
 
-#: ../class/statics/paypal.php:425
+#: ../class/statics/paypal.php:434
 msgid "MONACO"
 msgstr "モナコ"
 
-#: ../class/statics/paypal.php:426
+#: ../class/statics/paypal.php:435
 msgid "MONGOLIA"
 msgstr "モンゴル"
 
-#: ../class/statics/paypal.php:427
+#: ../class/statics/paypal.php:436
 msgid "MONTSERRAT"
 msgstr "モントセラト"
 
-#: ../class/statics/paypal.php:428
+#: ../class/statics/paypal.php:437
 msgid "MOROCCO"
 msgstr "モロッコ"
 
-#: ../class/statics/paypal.php:429
+#: ../class/statics/paypal.php:438
 msgid "MOZAMBIQUE"
 msgstr "モザンビーク"
 
-#: ../class/statics/paypal.php:430
+#: ../class/statics/paypal.php:439
 msgid "NAMIBIA"
 msgstr "ナミビア"
 
-#: ../class/statics/paypal.php:431
+#: ../class/statics/paypal.php:440
 msgid "NAURU"
 msgstr "ナウル"
 
-#: ../class/statics/paypal.php:432
+#: ../class/statics/paypal.php:441
 msgid "NEPAL"
 msgstr "ネパール"
 
-#: ../class/statics/paypal.php:433
+#: ../class/statics/paypal.php:442
 msgid "NETHERLANDS"
 msgstr "オランダ"
 
-#: ../class/statics/paypal.php:434
+#: ../class/statics/paypal.php:443
 msgid "NETHERLANDS ANTILLES"
 msgstr "ん"
 
-#: ../class/statics/paypal.php:435
+#: ../class/statics/paypal.php:444
 msgid "NEW CALEDONIA"
 msgstr "ニューカレドニア"
 
-#: ../class/statics/paypal.php:436
+#: ../class/statics/paypal.php:445
 msgid "NEW ZEALAND"
 msgstr "ニュージーランド"
 
-#: ../class/statics/paypal.php:437
+#: ../class/statics/paypal.php:446
 msgid "NICARAGUA"
 msgstr "ニカラグア"
 
-#: ../class/statics/paypal.php:438
+#: ../class/statics/paypal.php:447
 msgid "NIGER"
 msgstr "ナイジェリア"
 
-#: ../class/statics/paypal.php:439
+#: ../class/statics/paypal.php:448
 msgid "NIUE"
 msgstr "に"
 
-#: ../class/statics/paypal.php:440
+#: ../class/statics/paypal.php:449
 msgid "NORFOLK ISLAND"
 msgstr "ノーフォーク島"
 
-#: ../class/statics/paypal.php:441
+#: ../class/statics/paypal.php:450
 msgid "NORTHERN MARIANA ISLANDS"
 msgstr "北マリアナ諸島"
 
-#: ../class/statics/paypal.php:442
+#: ../class/statics/paypal.php:451
 msgid "NORWAY"
 msgstr "ノルウェー"
 
-#: ../class/statics/paypal.php:443
+#: ../class/statics/paypal.php:452
 msgid "OMAN"
 msgstr "オマーン"
 
-#: ../class/statics/paypal.php:444
+#: ../class/statics/paypal.php:453
 msgid "PALAU"
 msgstr "パラオ"
 
-#: ../class/statics/paypal.php:445
+#: ../class/statics/paypal.php:454
 msgid "PANAMA"
 msgstr "パナマ"
 
-#: ../class/statics/paypal.php:446
+#: ../class/statics/paypal.php:455
 msgid "PARAGUAY"
 msgstr "パラグアイ"
 
-#: ../class/statics/paypal.php:447
+#: ../class/statics/paypal.php:456
 msgid "PERU"
 msgstr "ペルー"
 
-#: ../class/statics/paypal.php:448
+#: ../class/statics/paypal.php:457
 msgid "PHILIPPINES"
 msgstr "フィリピン"
 
-#: ../class/statics/paypal.php:449
+#: ../class/statics/paypal.php:458
 msgid "PITCAIRN"
 msgstr "ピトケアン諸島"
 
-#: ../class/statics/paypal.php:450
+#: ../class/statics/paypal.php:459
 msgid "POLAND"
 msgstr "ポーランド"
 
-#: ../class/statics/paypal.php:451
+#: ../class/statics/paypal.php:460
 msgid "PORTUGAL"
 msgstr "ポルトガル"
 
-#: ../class/statics/paypal.php:452
+#: ../class/statics/paypal.php:461
 msgid "PUERTO RICO"
 msgstr "プエルト・リコ"
 
-#: ../class/statics/paypal.php:453
+#: ../class/statics/paypal.php:462
 msgid "QATAR"
 msgstr "カタール"
 
-#: ../class/statics/paypal.php:454
+#: ../class/statics/paypal.php:463
 msgid "REUNION"
 msgstr "レユニオン"
 
-#: ../class/statics/paypal.php:455
+#: ../class/statics/paypal.php:464
 msgid "ROMANIA"
 msgstr "ルーマニア"
 
-#: ../class/statics/paypal.php:456
+#: ../class/statics/paypal.php:465
 msgid "SAINT HELENA"
 msgstr "セント・ヘレナ"
 
-#: ../class/statics/paypal.php:457
+#: ../class/statics/paypal.php:466
 msgid "SAINT KITTS AND NEVIS"
 msgstr "セントクリストファー・ネイビス"
 
-#: ../class/statics/paypal.php:458
+#: ../class/statics/paypal.php:467
 msgid "SAINT LUCIA"
 msgstr "セントルシア"
 
-#: ../class/statics/paypal.php:459
+#: ../class/statics/paypal.php:468
 msgid "SAINT PIERRE AND MIQUELON"
 msgstr "サンピエール島・ミクロン島"
 
-#: ../class/statics/paypal.php:460
+#: ../class/statics/paypal.php:469
 msgid "SAINT VINCENT AND THE GRENADINES"
 msgstr "セントビンセント・グレナディーン"
 
-#: ../class/statics/paypal.php:461
+#: ../class/statics/paypal.php:470
 msgid "SAMOA"
 msgstr "サモア"
 
-#: ../class/statics/paypal.php:462
+#: ../class/statics/paypal.php:471
 msgid "SAN MARINO"
 msgstr "サン・マリノ"
 
-#: ../class/statics/paypal.php:463
+#: ../class/statics/paypal.php:472
 msgid "SAO TOME AND PRINCIPE"
 msgstr "サントメ・ピリンシペ"
 
-#: ../class/statics/paypal.php:464
+#: ../class/statics/paypal.php:473
 msgid "SAUDI ARABIA"
 msgstr "サウジアラビア"
 
-#: ../class/statics/paypal.php:465
+#: ../class/statics/paypal.php:474
 msgid "SENEGAL"
 msgstr "セネガル"
 
-#: ../class/statics/paypal.php:466
+#: ../class/statics/paypal.php:475
 msgid "SEYCHELLES"
 msgstr "セーシェル"
 
-#: ../class/statics/paypal.php:467
+#: ../class/statics/paypal.php:476
 msgid "SINGAPORE"
 msgstr "シンガポール"
 
-#: ../class/statics/paypal.php:468
+#: ../class/statics/paypal.php:477
 msgid "SLOVAKIA"
 msgstr "スロバキア"
 
-#: ../class/statics/paypal.php:469
+#: ../class/statics/paypal.php:478
 msgid "SLOVENIA"
 msgstr "スロヴェニア"
 
-#: ../class/statics/paypal.php:470
+#: ../class/statics/paypal.php:479
 msgid "SOLOMON ISLANDS"
 msgstr "ソロモン諸島"
 
-#: ../class/statics/paypal.php:471
+#: ../class/statics/paypal.php:480
 msgid "SOUTH AFRICA"
 msgstr "南アフリカ"
 
-#: ../class/statics/paypal.php:472
+#: ../class/statics/paypal.php:481
 msgid "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
 msgstr " サウスジョージア・サウスサンドウィッチ諸島"
 
-#: ../class/statics/paypal.php:473
+#: ../class/statics/paypal.php:482
 msgid "SPAIN"
 msgstr "スペイン"
 
-#: ../class/statics/paypal.php:474
+#: ../class/statics/paypal.php:483
 msgid "SURINAME"
 msgstr "スリナメ"
 
-#: ../class/statics/paypal.php:475
+#: ../class/statics/paypal.php:484
 msgid "SVALBARD AND JAN MAYEN"
 msgstr "スヴァーバル諸島"
 
-#: ../class/statics/paypal.php:476
+#: ../class/statics/paypal.php:485
 msgid "SWAZILAND"
 msgstr "スワジランド"
 
-#: ../class/statics/paypal.php:477
+#: ../class/statics/paypal.php:486
 msgid "SWEDEN"
 msgstr "スウェーデン"
 
-#: ../class/statics/paypal.php:478
+#: ../class/statics/paypal.php:487
 msgid "SWITZERLAND"
 msgstr "スイス"
 
-#: ../class/statics/paypal.php:479
+#: ../class/statics/paypal.php:488
 msgid "TAIWAN, PROVINCE OF CHINA"
 msgstr "台湾"
 
-#: ../class/statics/paypal.php:480
+#: ../class/statics/paypal.php:489
 msgid "TANZANIA, UNITED REPUBLIC OF"
 msgstr "タンザニア共和国"
 
-#: ../class/statics/paypal.php:481
+#: ../class/statics/paypal.php:490
 msgid "THAILAND"
 msgstr "タイ"
 
-#: ../class/statics/paypal.php:482
+#: ../class/statics/paypal.php:491
 msgid "TOKELAU"
 msgstr "トケラウ"
 
-#: ../class/statics/paypal.php:483
+#: ../class/statics/paypal.php:492
 msgid "TONGA"
 msgstr "トンガ"
 
-#: ../class/statics/paypal.php:484
+#: ../class/statics/paypal.php:493
 msgid "TRINIDAD AND TOBAGO"
 msgstr "トリニダード・トバゴ"
 
-#: ../class/statics/paypal.php:485
+#: ../class/statics/paypal.php:494
 msgid "TUNISIA"
 msgstr "チュニジア"
 
-#: ../class/statics/paypal.php:486
+#: ../class/statics/paypal.php:495
 msgid "TURKEY"
 msgstr "トルコ"
 
-#: ../class/statics/paypal.php:487
+#: ../class/statics/paypal.php:496
 msgid "TURKS AND CAICOS ISLANDS"
 msgstr "タークス・カイコス諸島"
 
-#: ../class/statics/paypal.php:488
+#: ../class/statics/paypal.php:497
 msgid "TUVALU"
 msgstr "ツバル"
 
-#: ../class/statics/paypal.php:489
+#: ../class/statics/paypal.php:498
 msgid "UKRAINE"
 msgstr "ウクライナ"
 
-#: ../class/statics/paypal.php:490
+#: ../class/statics/paypal.php:499
 msgid "UNITED ARAB EMIRATES"
 msgstr "アラブ首長国連邦"
 
-#: ../class/statics/paypal.php:491
+#: ../class/statics/paypal.php:500
 msgid "UNITED KINGDOM"
 msgstr "イギリス"
 
-#: ../class/statics/paypal.php:492
+#: ../class/statics/paypal.php:501
 msgid "UNITED STATES"
 msgstr "アメリカ合衆国"
 
-#: ../class/statics/paypal.php:493
+#: ../class/statics/paypal.php:502
 msgid "UNITED STATES MINOR OUTLYING ISLANDS"
 msgstr "合衆国領有小離島"
 
-#: ../class/statics/paypal.php:494
+#: ../class/statics/paypal.php:503
 msgid "URUGUAY"
 msgstr "ウルグアイ"
 
-#: ../class/statics/paypal.php:495
+#: ../class/statics/paypal.php:504
 msgid "VIET NAM"
 msgstr "ヴェトナム"
 
-#: ../class/statics/paypal.php:496
+#: ../class/statics/paypal.php:505
 msgid "VIRGIN ISLANDS, BRITISH"
 msgstr "イギリス領ヴァージン諸島"
 
-#: ../class/statics/paypal.php:497
+#: ../class/statics/paypal.php:506
 msgid "VIRGIN ISLANDS, U.S."
 msgstr "アメリカ領ヴァージン諸島"
 
-#: ../class/statics/paypal.php:498
+#: ../class/statics/paypal.php:507
 msgid "WALLIS AND FUTUNA"
 msgstr "ウォリス・フツナ"
 
-#: ../class/statics/paypal.php:499
+#: ../class/statics/paypal.php:508
 msgid "ZAMBIA"
 msgstr "ザンビア"
 
-#: ../class/statics/paypal.php:512
+#: ../class/statics/paypal.php:521
 msgid "Australian Dollar"
 msgstr "豪ドル"
 
-#: ../class/statics/paypal.php:513
+#: ../class/statics/paypal.php:522
 msgid "Brazilian Real"
 msgstr "ブラジルレアル"
 
-#: ../class/statics/paypal.php:514
+#: ../class/statics/paypal.php:523
 msgid "Canadian Dollar"
 msgstr "カナダドル"
 
-#: ../class/statics/paypal.php:515
+#: ../class/statics/paypal.php:524
 msgid "Czech Koruna"
 msgstr "チェコ・コルナ"
 
-#: ../class/statics/paypal.php:516
+#: ../class/statics/paypal.php:525
 msgid "Danish Krone"
 msgstr "デンマーククローネ"
 
-#: ../class/statics/paypal.php:517
+#: ../class/statics/paypal.php:526
 msgid "Euro"
 msgstr "ユーロ"
 
-#: ../class/statics/paypal.php:518
+#: ../class/statics/paypal.php:527
 msgid "Hong Kong Dollar"
 msgstr "香港ドル"
 
-#: ../class/statics/paypal.php:519
+#: ../class/statics/paypal.php:528
 msgid "Hungarian Forint"
 msgstr "フォリント"
 
-#: ../class/statics/paypal.php:520
+#: ../class/statics/paypal.php:529
 msgid "Israeli New Sheqel"
 msgstr "新シェケル"
 
-#: ../class/statics/paypal.php:521
+#: ../class/statics/paypal.php:530
 msgid "Japanese Yen"
 msgstr "日本円"
 
-#: ../class/statics/paypal.php:522
+#: ../class/statics/paypal.php:531
 msgid "Malaysian Ringgit"
 msgstr "マレーシアリンギット"
 
-#: ../class/statics/paypal.php:523
+#: ../class/statics/paypal.php:532
 msgid "Mexican Peso"
 msgstr "メキシコペソ"
 
-#: ../class/statics/paypal.php:524
+#: ../class/statics/paypal.php:533
 msgid "Norwegian Krone"
 msgstr "ノルウェイクローネ"
 
-#: ../class/statics/paypal.php:525
+#: ../class/statics/paypal.php:534
 msgid "New Zealand Dollar"
 msgstr "ニュージーランドドル"
 
-#: ../class/statics/paypal.php:526
+#: ../class/statics/paypal.php:535
 msgid "Philippine Peso"
 msgstr "フィリピンペソ"
 
-#: ../class/statics/paypal.php:527
+#: ../class/statics/paypal.php:536
 msgid "Polish Zloty"
 msgstr "ポーランドズウォーティ"
 
-#: ../class/statics/paypal.php:528
+#: ../class/statics/paypal.php:537
 msgid "Pound Sterling"
 msgstr "イギリスポンド"
 
-#: ../class/statics/paypal.php:529
+#: ../class/statics/paypal.php:538
 msgid "Singapore Dollar"
 msgstr "シンガポールドル"
 
-#: ../class/statics/paypal.php:530
+#: ../class/statics/paypal.php:539
 msgid "Swedish Krona"
 msgstr "スウェーデンクローネ"
 
-#: ../class/statics/paypal.php:531
+#: ../class/statics/paypal.php:540
 msgid "Swiss Franc"
 msgstr "スイスフラン"
 
-#: ../class/statics/paypal.php:532
+#: ../class/statics/paypal.php:541
 msgid "Taiwan New Dollar"
 msgstr "台湾ドル"
 
-#: ../class/statics/paypal.php:533
+#: ../class/statics/paypal.php:542
 msgid "Thai Baht"
 msgstr "タイバーツ"
 
-#: ../class/statics/paypal.php:534
+#: ../class/statics/paypal.php:543
 msgid "U.S. Dollar"
 msgstr "USドル"
 
@@ -6312,7 +6324,7 @@ msgid "Transaction is canceled."
 msgstr "決済はキャンセルされました。"
 
 #: ../form-template/paypal-cancel.php:5
-#: ../form-template/paypal-payment.php:350
+#: ../form-template/paypal-payment.php:352
 #: ../form-template/paypal-subscription.php:72
 #: ../form-template/paypal-subscription.php:74
 #: ../form-template/paypal-subscription.php:76
@@ -6467,11 +6479,11 @@ msgstr ""
 "これは前回注文時と同じ番号です。別のカードで注文する場合は<a href=\"%s\">こち"
 "ら</a>。"
 
-#: ../form-template/paypal-payment.php:105
+#: ../form-template/paypal-payment.php:106
 msgid "Order without credit card number next time"
 msgstr "次回からクレジットカード番号を入力しないで注文する"
 
-#: ../form-template/paypal-payment.php:108
+#: ../form-template/paypal-payment.php:110
 msgid ""
 "This informatin will be saved on Payment Agency and <strong>never</strong> "
 "on this site. "
@@ -6479,36 +6491,36 @@ msgstr ""
 "カード情報は決済代行業者に登録され、このサイトには<strong>絶対に</strong>保存"
 "されません。"
 
-#: ../form-template/paypal-payment.php:112
+#: ../form-template/paypal-payment.php:114
 #: ../form-template/paypal-selection.php:137
 msgid "You can pay with Credit Cards below."
 msgstr "次のクレジットカードが利用できます。"
 
-#: ../form-template/paypal-payment.php:126
+#: ../form-template/paypal-payment.php:128
 msgid "Expiration"
 msgstr "有効期限"
 
-#: ../form-template/paypal-payment.php:132
+#: ../form-template/paypal-payment.php:134
 msgid "M, Y"
 msgstr "Y年n月"
 
-#: ../form-template/paypal-payment.php:152
+#: ../form-template/paypal-payment.php:154
 msgid "(Month / Year)"
 msgstr "（月／年）"
 
-#: ../form-template/paypal-payment.php:161
+#: ../form-template/paypal-payment.php:163
 msgid "Security Code"
 msgstr "セキュリティコード"
 
-#: ../form-template/paypal-payment.php:175
+#: ../form-template/paypal-payment.php:177
 msgid "Dealing Type"
 msgstr "取り扱い種別"
 
-#: ../form-template/paypal-payment.php:176
+#: ../form-template/paypal-payment.php:178
 msgid "At once"
 msgstr "一括払い"
 
-#: ../form-template/paypal-payment.php:198
+#: ../form-template/paypal-payment.php:200
 msgid ""
 "Payment flow is different with eacn CVS. For more detail, see the "
 "instruction on next page."
@@ -6516,45 +6528,45 @@ msgstr ""
 "支払いの流れはコンビニによって異なります。詳しくは次ページの指示に従ってくだ"
 "さい。"
 
-#: ../form-template/paypal-payment.php:209
+#: ../form-template/paypal-payment.php:211
 #: ../form-template/paypal-selection.php:240
 msgid "You can pay from your bank account via PayEasy."
 msgstr "PayEasyを使って銀行口座からお支払いできます。"
 
-#: ../form-template/paypal-payment.php:234
+#: ../form-template/paypal-payment.php:236
 #, php-format
 msgid "Please finish payment by <strong>%s</strong>."
 msgstr "支払いは<strong>%s</strong>までに完了してください。"
 
-#: ../form-template/paypal-payment.php:280
+#: ../form-template/paypal-payment.php:282
 msgid "Address"
 msgstr "住所"
 
-#: ../form-template/paypal-payment.php:286
+#: ../form-template/paypal-payment.php:288
 msgid "Zip Code"
 msgstr "郵便番号"
 
-#: ../form-template/paypal-payment.php:288
+#: ../form-template/paypal-payment.php:290
 msgid "(Only digits)"
 msgstr "（数字のみ）"
 
-#: ../form-template/paypal-payment.php:316
+#: ../form-template/paypal-payment.php:318
 msgid "Building, Room No."
 msgstr "建物、部屋番号"
 
-#: ../form-template/paypal-payment.php:317
+#: ../form-template/paypal-payment.php:319
 msgid " (Option)"
 msgstr "（オプション）"
 
-#: ../form-template/paypal-payment.php:329
+#: ../form-template/paypal-payment.php:331
 msgid "Only digits."
 msgstr "数字のみ"
 
-#: ../form-template/paypal-payment.php:337
+#: ../form-template/paypal-payment.php:339
 msgid "Save these information"
 msgstr "この情報を保存する"
 
-#: ../form-template/paypal-payment.php:345
+#: ../form-template/paypal-payment.php:347
 msgid "Checkout &raquo;"
 msgstr "チェックアウト &raquo;"
 

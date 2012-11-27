@@ -135,6 +135,15 @@ class PayPal_Statics {
 	}
 	
 	/**
+	 * Returns if credential informations are valid
+	 */
+	public static function is_valid_creds(){
+		$nvpstr = "&TOKEN=aaaa";
+		$resArray = self::hash_call("GetExpressCheckoutDetails",$nvpstr);
+		return (10410 == $resArray['L_ERRORCODE0']);
+	}
+	
+	/**
 	 * トランザクションを完了させる
 	 * 
 	 * @param array $transaction_info get_transaction_infoで取得した配列
