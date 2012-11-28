@@ -55,6 +55,9 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($lwp->option['sandbox']): ?>
+						<p class="sandbox"><?php $this->e('Sandbox'); ?></p>
+					<?php endif; ?>
 					<?php $this->e("You can pay with PayPal account.");?><br />
 					<small>
 						<strong><?php $this->e('Note:');  ?></strong><br />
@@ -84,6 +87,9 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($lwp->option['sandbox']): ?>
+						<p class="sandbox"><?php $this->e('Sandbox'); ?></p>
+					<?php endif; ?>
 					<?php $this->e("You can pay with credit cards below via PayPal.");?><br />
 					<?php foreach(PayPal_Statics::get_available_cards($lwp->option['country_code']) as $card): ?>
 						<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
@@ -118,10 +124,12 @@
 						case 'gmo':
 							$cards = $lwp->gmo->get_available_cards();
 							$vendor_name = $lwp->gmo->vendor_name();
+							$sandbox = $lwp->gmo->is_sandbox;
 							break;
 						case 'sb':
 							$cards = $lwp->softbank->get_available_cards();
 							$vendor_name = $lwp->softbank->vendor_name();
+							$sandbox = $lwp->softbank->is_sandbox;
 							break;
 					}
 			?>
@@ -134,6 +142,10 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($sandbox): ?>
+						<p class="sandbox"><?php $this->e('Sandbox'); ?></p>
+					<?php endif; ?>
+
 					<?php $this->e("You can pay with Credit Cards below.");?><br />
 					<?php foreach($cards as $card): ?>
 						<i class="lwp-cc-small-icon small-icon-<?php echo $card; ?>"></i>
@@ -166,11 +178,13 @@
 							$cvss = $lwp->gmo->get_available_cvs();
 							$selectable = $lwp->gmo->can_pay_with($post_id, 'gmo-cvs');
 							$vendor_name = $lwp->gmo->vendor_name();
+							$sandbox = $lwp->gmo->is_sandbox;
 							break;
 						case 'sb':
 							$cvss = $lwp->softbank->get_available_cvs();
 							$vendor_name = $lwp->softbank->vendor_name();
 							$selectable = $lwp->softbank->can_pay_with($post_id, 'sb-cvs');
+							$sandbox = $lwp->softbank->is_sandbox;
 							break;
 					}
 			?>
@@ -183,6 +197,9 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($sandbox): ?>
+						<p class="sandbox"><?php $this->e('Sandbox'); ?></p>
+					<?php endif; ?>
 					<?php if($selectable): ?>
 					<?php $this->e('You can pay at CVS below.'); ?><br />
 					<?php else: ?>
@@ -218,12 +235,14 @@
 						case 'gmo':
 							$selectable = $lwp->gmo->can_pay_with($post_id, 'gmo-payeasy');
 							$vendor_name = $lwp->gmo->vendor_name();
-							$limit = 10;
+							$sandbox = $lwp->gmo->is_sandbox;
+							$limit = $lwp->gmo->payeasy_limit;
 							break;
 						case 'sb':
 							$selectable = $lwp->softbank->can_pay_with($post_id, 'sb-payeasy');
 							$vendor_name = $lwp->softbank->vendor_name();
 							$limit = $lwp->softbank->payeasy_limit;
+							$sandbox = $lwp->softbank->is_sandbox;
 							break;
 					}
 			?>
@@ -236,6 +255,9 @@
 					</label>
 				</th>
 				<td class="lwp-column-method-desc">
+					<?php if($sandbox): ?>
+						<p class="sandbox"><?php $this->e('Sandbox'); ?></p>
+					<?php endif; ?>
 					<?php if($selectable): ?>
 						<?php $this->e('You can pay from your bank account via PayEasy.'); ?><br />
 					<?php else: ?>

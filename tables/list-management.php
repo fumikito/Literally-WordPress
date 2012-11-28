@@ -275,7 +275,6 @@ EOS;
 						}
 						break;
 					default:
-						echo $item->status;
 						return $lwp->_($item->status);
 						break;
 				}
