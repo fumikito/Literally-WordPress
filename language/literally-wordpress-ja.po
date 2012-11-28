@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-28 03:06+0900\n"
-"PO-Revision-Date: 2012-11-28 03:07+0900\n"
+"PO-Revision-Date: 2012-11-28 11:13+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -2141,7 +2141,7 @@ msgstr "接続チェック"
 
 #: ../admin/settings/payment.php:180
 msgid "Credential informations are valid."
-msgstr "認証情報が無効です。"
+msgstr "認証情報は有効です。"
 
 #: ../admin/settings/payment.php:182
 msgid "Failed to connect with PayPal API. Please check your credential infos."

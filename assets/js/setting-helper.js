@@ -17,6 +17,18 @@ jQuery(document).ready(function($){
 		}
 	}
 	$('.hour-picker').timepicker(LWPDatePicker);
+	//PayPal indicator
+	if($('#lwp-paypal-connector').length > 0){
+		$.get($('#lwp-paypal-connector .loading small').text(), {}, function(result){
+			var className = result.success ? 'valid' : 'invalid';
+			$('#lwp-paypal-connector span').each(function(index, elt){
+				if(!$(elt).hasClass(className)){
+					$(elt).remove();
+				}
+			});
+			$('#lwp-paypal-connector').addClass(className);
+		});
+	}
 	//Dialog
 	loading = false;
 	$('#lwp-pa-contact').dialog({

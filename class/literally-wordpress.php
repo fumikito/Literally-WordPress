@@ -345,6 +345,8 @@ class Literally_WordPress{
 		add_action('admin_bar_menu', array($this, 'admin_bar'));
 		//Ajax action to list transactions
 		add_action('wp_ajax_lwp_transaction_chart', array($this, 'ajax_transaction_chart'));
+		//Ajax action to PayPal credentials
+		add_action('wp_ajax_lwp_paypal_creds', array($this, 'ajax_paypal_creds'));
 		if(is_admin()){ //Hooks only for admin panels.
 			//Add hook to update option
 			if($this->is_admin("setting")){
@@ -882,7 +884,14 @@ class Literally_WordPress{
 		}
 	}
 	
-	
+	/**
+	 * Check whether PayPal is active
+	 */
+	public function ajax_paypal_creds(){
+		header('Content-Type: application/json');
+		echo json_encode(array('success' => PayPal_Statics::is_valid_creds()));
+		exit;
+	}
 	
 	//--------------------------------------------
 	//

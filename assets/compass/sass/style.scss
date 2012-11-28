@@ -218,12 +218,19 @@ Elements
 input.short{
 	width:3em;
 }
-p.invalid{
-	color: #f00;
+p.invalid,
+p.valid{
 	margin: 0.25em 0;
 	padding: 0.25em 0.5em;
-	background-color: #ffebe8;
 	@include border-radius(3px);
+}
+p.invalid{
+	background-color: #ffebe8;
+	color: #f00;
+}
+p.valid{
+	color: #059119;
+	background-color: #c6f4cd;
 }
 small.required{
 	color: crimson;
@@ -420,7 +427,7 @@ General Compornents
 		}
 	}
 }
-#lwp-tab .form-table{
+.lwp-wrap .form-table{
 	tbody{
 		tr:nth-child(even){
 			td,th{
@@ -550,6 +557,34 @@ General Compornents
 	table-layout: auto;
 }
 
+
+
+/*
+------------------
+Setting Page
+------------------
+*/
+#lwp-paypal-connector{
+	line-height: 16px;
+	height: 16px;
+	img{
+		vertical-align: top;
+	}
+	span{
+		display: none;
+	}
+	.loading{
+		display: inline;
+		color: #888;
+		small{
+			display: none;
+		}
+	}
+	&.valid .valid,
+	&.invalid .invalid{
+		display: inline;
+	}
+}
 
 
 
@@ -765,7 +800,7 @@ Uploader
 
 /*
 ------------------
-Uploader
+Campaign
 ------------------
 */
 #campaign-post-list{

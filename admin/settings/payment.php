@@ -78,6 +78,7 @@
 		<p class="description">
 			<?php $this->e('First of all, you must registere PayPal. PayPal let your site to adopt credit card payemnt.'); ?>
 		</p>
+		<hr />
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -176,11 +177,11 @@
 				<tr>
 					<th valign="top"><?php $this->e('Connection Check'); ?></th>
 					<td>
-						<?php if(PayPal_Statics::is_valid_creds()): ?>
-						<p class="description"><?php $this->e('Credential informations are valid.'); ?></p>
-						<?php else: ?>
-						<p class="invalid"><?php $this->e('Failed to connect with PayPal API. Please check your credential infos.'); ?></p>
-						<?php endif; ?>
+						<p id="lwp-paypal-connector">
+							<span class="loading"><small><?php echo admin_url('admin-ajax.php?action=lwp_paypal_creds'); ?></small><img src="<?php echo $this->url; ?>assets/indicator-postbox.gif" alt="loading" width="16" height="16" />&nbsp;<?php $this->e('Checking...'); ?></span>
+							<span class="valid"><?php $this->e('Credential informations are valid.'); ?></span>
+							<span class="invalid"><?php $this->e('Failed to connect with PayPal API. Please check your credential infos.'); ?></span>
+						</p>
 					</td>
 				</tr>
 				<tr>
@@ -207,6 +208,7 @@
 		<p class="description">
 			<?php $this->e('To use GMO Payment Gateway, you have to contract with GMO Payment Gateway inc. and get credential infomation. If Credit Card is enabled, PayPal\'s credit card will be override.'); ?>
 		</p>
+		<hr />
 		<table class="form-table">
 			<tbody>
 				<tr>
