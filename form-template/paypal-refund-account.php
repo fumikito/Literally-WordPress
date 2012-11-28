@@ -15,8 +15,10 @@
 		<tbody>
 			<tr>
 				<th valign="top">
-					<label for="bank_name"><?php $this->e('Bank Name'); ?></label>
-					<span class="required">*</span>
+					<label for="bank_name">
+						<?php $this->e('Bank Name'); ?>
+						<span class="required">*</span>
+					</label>
 				</th>
 				<td>
 					<input type="text" name="bank_name" id="bank_name" class="regular-text" value="<?php echo esc_html($account['bank_name']); ?>" placeholder="ex. <?php $this->e('Bank of Tokyo-Mitsubishi UFJ'); ?>" />
@@ -31,8 +33,10 @@
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="branch_name"><?php $this->e('Branch Name'); ?></label>
-					<span class="required">*</span>
+					<label for="branch_name">
+						<?php $this->e('Branch Name'); ?>
+						<span class="required">*</span>
+					</label>
 				</th>
 				<td>
 					<input type="text" name="branch_name" id="branch_name" class="middle-text" value="<?php echo esc_html($account['branch_name']); ?>" placeholder="ex. <?php $this->e('Aoyama Branch'); ?>" />
@@ -63,8 +67,10 @@
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="account_no"><?php $this->e('Account No.'); ?></label>
-					<span class="required">*</span>
+					<label for="account_no">
+						<?php $this->e('Account No.'); ?>
+						<span class="required">*</span>
+					</label>
 				</th>
 				<td>
 					<input type="text" name="account_no" id="account_no" class="regular-text" value="<?php echo esc_html($account['account_no']); ?>" placeholder="ex. 1234567" />
@@ -72,8 +78,10 @@
 			</tr>
 			<tr>
 				<th valign="top">
-					<label for="account_holder"><?php $this->e('Account Holder'); ?></label>
-					<span class="required">*</span>
+					<label for="account_holder">
+						<?php $this->e('Account Holder'); ?>
+						<span class="required">*</span>
+					</label>
 				</th>
 				<td>
 					<input type="text" name="account_holder" id="account_holder" class="regular-text" value="<?php echo esc_html($account['account_holder']); ?>" placeholder="ex. <?php $this->e('James Bond'); ?>" />

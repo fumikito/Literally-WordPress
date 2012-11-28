@@ -59,6 +59,18 @@ EOS;
 	echo apply_filters('lwp_show_indicator', $markup, $total, $current);
 }
 
+/**
+ * 
+ * @global Literally_WordPress $lwp
+ * @param type $file
+ * @param type $user_can_access
+ * @param type $url
+ * @param type $size
+ * @param type $ext
+ * @param type $devices
+ * @param type $list_type
+ * @return type
+ */
 function _lwp_list_files($file, $user_can_access, $url, $size, $ext, $devices, $list_type){
 	global $lwp;
 	$button = $user_can_access

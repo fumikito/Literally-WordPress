@@ -312,6 +312,18 @@ EOS;
 	}
 	
 	/**
+	 * Whether user is waiting for redund
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $user_id
+	 * @return boolean
+	 */
+	public function is_user_on_refund_queue($user_id){
+		global $wpdb, $lwp;
+		return 0 < intval($wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM {$lwp->transaction} WHERE user_id = %d AND status = %s", $user_id, LWP_Payment_Status::REFUND_REQUESTING)));
+	}
+	
+	/**
 	 * Returns if refund price is suspicious
 	 * @since 0.9.3
 	 * @param object $transaction

@@ -13,7 +13,7 @@ Form on Front end
 ------------------------
 */
 .lwp-form{
-	clear:both;
+	clear: both;
 	width: 300px;
 	border: 1px solid #dfdfdf;
 	background: #f9f9f9;
@@ -72,6 +72,8 @@ Form on Front end
 /* Buttons */
 .lwp-button{
 	a.button{
+		display: inline-block;
+		white-space: nowrap;
 		font-family: sans-serif;
 		text-decoration: none;
 		font-size:14px !important;
@@ -328,4 +330,12 @@ Purchase History
 		}
 		
 	}
+}
+p.lwp-error-message{
+	padding: 1em;
+	margin: 5px 0 15px;
+	color: #666;
+	@include border-radius(3px);
+	line-height: 1.2;
+	background-color: #ffebe8;
 }

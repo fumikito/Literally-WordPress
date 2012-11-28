@@ -587,8 +587,8 @@ function lwp_list_files($args = array()){
  */
 function lwp_get_device_table($post = null){
 	global $lwp;
-	$tag = "<!-- Literally WordPress {$lwp->version} --><div class=\"lwp-devices\"><h3>".$lwp->_('Devices Available With')."</h3>";
-	$tag .= "<table class=\"lwp-device-table\">";
+	$tag = "<!-- Literally WordPress {$lwp->version} --><div class=\"lwp-devices\">";
+	$tag .= "<table class=\"lwp-device-table\"><caption>".$lwp->_('Devices Available With')."</caption>";
 	$tag .= "
 		<thead>
 			<tr>

@@ -69,7 +69,7 @@ class LWP_Form extends Literally_WordPress_Common{
 		//All green.
 		//Let's show subsctiption lists.
 		$parent_url = home_url();
-		foreach($this->subscription->post_types as $post_type){
+		foreach($lwp->subscription->post_types as $post_type){
 			if($post_type != 'post' && $post_type != 'page' && ($url = get_post_type_archive_link($post_type))){
 				$parent_url = $url;
 			}

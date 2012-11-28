@@ -282,6 +282,14 @@ EOS;
 	function extra_tablenav($which) {
 		global $lwp;
 		if($which == 'top'):
+			if($lwp->refund_manager->is_user_on_refund_queue(get_current_user_id()) && !$lwp->refund_manager->did_user_register_account(get_current_user_id())){
+				if(is_admin()){
+					$tag = '<div class="error"><p>%s</p></div>';
+				}else{
+					$tag = '<p class="lwp-error-message">%s</p>';
+				}
+				printf($tag, sprintf($lwp->_('You are now on the refund request queueue, but have no account registered. Please register your bank account information <a href="%s">here</a>.'), lwp_refund_account_url()));
+			}
 		?>
 		<div class="alignleft acitions">
 			<?php
