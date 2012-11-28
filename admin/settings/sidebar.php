@@ -17,6 +17,9 @@
 			<p>
 				<a href="http://www.gmo-pg.com" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/gmopg-logo.gif" alt="GMO Payment Gateway inc." width="300" height="52" /></a>
 			</p>
+			<p>
+				<a href="http://www.sbpayment.jp/" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/softbankps-logo.png" alt="SOFTBANK Payment Service corp." width="300" height="25" /></a>
+			</p>
 			<p class="center"><a class="button-primary" href="#" id="contact-opener"><?php $this->e('Contact'); ?></a></p>
 			<div id="lwp-pa-contact" title="<?php $this->e('Contact to Payment Agency'); ?>">
 				<?php $user = get_userdata(get_current_user_id()); ?>
