@@ -268,7 +268,8 @@
 							<input type="checkbox" name="gmo_webcvs[]" value="<?php echo esc_attr($c); ?>"<?php if(false !== array_search($c, $available_cvs)) echo ' checked="checked"'; ?> />
 							<?php echo esc_html($this->gmo->get_verbose_name($c)); ?>
 						</label>&nbsp;
-						<?php endforeach; ?>
+						<?php endforeach; ?><br />
+						<label><?php printf($this->_('Payment must be finished within %s days.'), sprintf('<input type="text" class="small-text" name="gmo_cvs_limit" value="%s" placeholder="1" />', esc_attr(($this->gmo->cvs_limit)))); ?></label>
 					</td>
 				</tr>
 				<tr>
@@ -279,7 +280,8 @@
 						<label>
 							<input type="checkbox" name="gmo_payeasy" value="1" <?php if($this->gmo->payeasy) echo 'checked="checked"'; ?> />
 							<?php $this->e('Enables PayEasy'); ?> 
-						</label>
+						</label><br />
+						<label><?php printf($this->_('Payment must be finished within %s days.'), sprintf('<input type="text" class="small-text" name="gmo_payeasy_limit" value="%s" placeholder="1" />', esc_attr(($this->gmo->payeasy_limit)))); ?></label>
 					</td>
 				</tr>
 				<tr>
@@ -427,7 +429,7 @@
 						<br />
 						<label><?php printf($this->_('Payment must be finished within %s days.'), sprintf('<input type="text" class="small-text" name="sb_cvs_limit" value="%s" placeholder="1" />', esc_attr(($this->softbank->cvs_limit)))); ?></label>
 						<?php if($this->softbank->cvs_limit < 1 || $this->softbank->cvs_limit > 60): ?>
-						<p class="invalid"><?php $this->e('PayEasy\'s payment limit must be between 1 and 60.'); ?></p>
+						<p class="invalid"><?php $this->e('Web CVS\'s payment limit must be between 1 and 60.'); ?></p>
 						<?php endif; ?>
 					</td>
 				</tr>

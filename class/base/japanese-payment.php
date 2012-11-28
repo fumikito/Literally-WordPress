@@ -51,6 +51,18 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	protected $cvs_codes = array();
 	
 	/**
+	 * Limit day to pay with Web CVS
+	 * @var int
+	 */
+	public $cvs_limit = 30;
+	
+	/**
+	 * Limit day to pay with PayEasy
+	 * @var int
+	 */
+	public $payeasy_limit = 30;
+	
+	/**
 	 * If PayEasy is enabled
 	 * @var boolean
 	 */
@@ -436,10 +448,10 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		}
 		switch($context){
 			case 'gmo-cvs':
-				$time += (60 * 60 * 24 * 30) - 1; //TODO: 設定値は変更できる
+				$time += 60 * 60 * 24 * $this->cvs_limit; //TODO: 設定値は変更できる
 				break;
 			case 'gmo-payeasy':
-				$time += (60 * 60 * 24 * 30) - 1; //TODO: 設定値は変更できる
+				$time += 60 * 60 * 24 * $this->payeasy_limit; //TODO: 設定値は変更できる
 				break;
 			case 'sb-cvs':
 				$time += 60 * 60 * 24 * $this->cvs_limit;

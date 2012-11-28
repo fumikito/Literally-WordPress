@@ -68,7 +68,9 @@ class LWP_GMO extends LWP_Japanese_Payment {
 			'gmo_shop_id' => '',
 			'gmo_shop_pass' => '',
 			'gmo_webcvs' => array(),
+			'gmo_cvs_limit' => 30,
 			'gmo_payeasy' => false,
+			'gmo_payeasy_limit' => 30,
 			'gmo_sandbox' => true,
 			'gmo_stealth' => false,
 			'gmo_creditcard' => array(),
@@ -86,7 +88,9 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		foreach($this->_webcvs as $cvs => $bool){
 			$this->_webcvs[$cvs] = (false !== array_search($cvs, (array)$option['gmo_webcvs']));
 		}
+		$this->cvs_limit = intval($option['gmo_cvs_limit']);
 		$this->payeasy = (boolean)$option['gmo_payeasy'];
+		$this->payeasy_limit = intval($option['gmo_payeasy_limit']);
 		$this->tel_no = (string)$option['gmo_tel'];
 		$this->contact_starts = (string)$option['gmo_contact_starts'];
 		$this->contact_ends = (string)$option['gmo_contact_ends'];
