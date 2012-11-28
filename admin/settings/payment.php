@@ -223,6 +223,16 @@
 					</td>
 				</tr>
 				<tr>
+					<th valign="top"><?php $this->e('Sthealth mode'); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="gmo_stealth" value="1"<?php if($this->gmo->is_stealth) echo ' checked="checked"'; ?> />
+							<?php $this->e('Enable stealth mode'); ?>
+						</label>
+						<p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top">
 						<label><?php $this->e('Credit Card'); ?></label>
 					</th>
@@ -361,6 +371,16 @@
 							<input type="checkbox" name="sb_sandbox" id="sb_sandbox" value="1"<?php if($this->option['sb_sandbox']) echo ' checked="checked"';?> />
 							<?php $this->e("This is a develop enviorment and needs pseudo transaction.")?>
 						</label>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Sthealth mode'); ?></th>
+					<td>
+						<label>
+							<input type="checkbox" name="sb_stealth" value="1"<?php if($this->softbank->is_stealth) echo ' checked="checked"'; ?> />
+							<?php $this->e('Enable stealth mode'); ?>
+						</label>
+						<p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
 					</td>
 				</tr>
 				<tr>

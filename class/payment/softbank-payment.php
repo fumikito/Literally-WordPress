@@ -200,6 +200,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			'sb_webcvs' => array(),
 			'sb_payeasy' => false,
 			'sb_sandbox' => true,
+			'sb_stealth' => false,
 			'sb_blogname' => '',
 			'sb_blogname_kana' => '',
 			'sb_marchant_id' => '',
@@ -221,6 +222,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 		}
 		$this->payeasy = (boolean)$option['sb_payeasy'];
 		$this->is_sandbox = (boolean)$option['sb_sandbox'];
+		$this->is_stealth = (boolean)$option['sb_stealth'];
 		$this->_marchant_id = (string)$option['sb_marchant_id'];
 		$this->_service_id = (string)$option['sb_service_id'];
 		$this->_hash_key = (string)$option['sb_hash_key'];

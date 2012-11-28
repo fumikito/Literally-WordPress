@@ -76,7 +76,7 @@
 				// If PayaPal is only method for Credit cards
 				//
 				//--------------------------
-				if(!$lwp->gmo->is_cc_enabled() && !$lwp->softbank->is_cc_enabled()):
+				if(!($lwp->gmo->is_cc_enabled() && $lwp->gmo->stealth_check()) && !($lwp->softbank->is_cc_enabled() && $lwp->softbank->stealth_check())):
 			?>
 			<tr>
 				<th class="lwp-column-method">
@@ -116,7 +116,10 @@
 				// Credit Cards
 				//
 				//--------------------------
-				foreach(array('gmo' => $lwp->gmo->is_cc_enabled(), 'sb' => $lwp->softbank->is_cc_enabled()) as $vender => $available):
+				foreach(array(
+					'gmo' => ($lwp->gmo->is_cc_enabled() && $lwp->gmo->stealth_check()),
+					'sb' => ($lwp->softbank->is_cc_enabled() && $lwp->softbank->stealth_check())
+				) as $vender => $available):
 					if(!$available){
 						continue;
 					}
@@ -169,7 +172,10 @@
 				// Web CVS
 				//
 				//--------------------------
-				foreach(array('gmo' => $lwp->gmo->is_cvs_enabled(), 'sb' => $lwp->softbank->is_cvs_enabled()) as $vender => $available):
+				foreach(array(
+					'gmo' => ( $lwp->gmo->is_cvs_enabled() && $lwp->gmo->stealth_check()),
+					'sb' => ( $lwp->softbank->is_cvs_enabled() && $lwp->softbank->stealth_check())
+				) as $vender => $available):
 					if(!$available){
 						continue;
 					}
@@ -227,7 +233,10 @@
 				// PayEasy
 				//
 				//--------------------------
-				foreach(array('gmo' => $lwp->gmo->payeasy, 'sb' => $lwp->softbank->payeasy) as $vender => $available):
+				foreach(array(
+					'gmo' => ( $lwp->gmo->payeasy && $lwp->gmo->stealth_check()),
+					'sb' => ( $lwp->softbank->payeasy && $lwp->softbank->stealth_check())
+				) as $vender => $available):
 					if(!$available){
 						continue;
 					}

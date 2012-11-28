@@ -61,6 +61,12 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 	 * @var array
 	 */
 	protected $offline_context = array();
+	
+	/**
+	 * Stealth mode flg
+	 * @var boolean
+	 */
+	public $is_stealth = false;
 
 	/**
 	 * override parent constructor
@@ -532,5 +538,13 @@ Please see detail at your purchase histroy.
 	 */
 	public function vendor_name(){
 		return $this->_('No name');
+	}
+	
+	/**
+	 * If current user can go through stealth mode, returns true.
+	 * @return boolean
+	 */
+	public function stealth_check(){
+		return !$this->is_stealth || current_user_can('manage_options');
 	}
 }

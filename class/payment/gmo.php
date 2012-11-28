@@ -70,6 +70,7 @@ class LWP_GMO extends LWP_Japanese_Payment {
 			'gmo_webcvs' => array(),
 			'gmo_payeasy' => false,
 			'gmo_sandbox' => true,
+			'gmo_stealth' => false,
 			'gmo_creditcard' => array(),
 			'gmo_tel' => '',
 			'gmo_contact_starts' => '',
@@ -78,6 +79,7 @@ class LWP_GMO extends LWP_Japanese_Payment {
 		$this->shop_id = (string)$option['gmo_shop_id'];
 		$this->shop_pass = (string)$option['gmo_shop_pass'];
 		$this->is_sandbox = (boolean)$option['gmo_sandbox'];
+		$this->is_stealth = (boolean)$option['gmo_stealth'];
 		foreach($this->_creditcard as $cc => $bool){
 			$this->_creditcard[$cc] = (false !== array_search($cc, (array)$option['gmo_creditcard']));
 		}
