@@ -62,14 +62,14 @@ EOS;
 /**
  * 
  * @global Literally_WordPress $lwp
- * @param type $file
- * @param type $user_can_access
- * @param type $url
- * @param type $size
- * @param type $ext
- * @param type $devices
- * @param type $list_type
- * @return type
+ * @param object $file
+ * @param boolean $user_can_access
+ * @param string $url
+ * @param string $size
+ * @param string $ext
+ * @param array $devices
+ * @param string $list_type
+ * @return strint
  */
 function _lwp_list_files($file, $user_can_access, $url, $size, $ext, $devices, $list_type){
 	global $lwp;
@@ -106,7 +106,8 @@ function _lwp_list_files($file, $user_can_access, $url, $size, $ext, $devices, $
 				<span class="lwp-file-size">%s</span>
 				</dd>', $ext, esc_html($file->name), nl2br($file->detail), implode(', ', $devices), $button, $size);
 			break;
-		default:
+		case 'ul':
+		case 'ol':
 			return sprintf('
 				<li class="%s lwp-button">
 				<strong>%s</strong> - 
@@ -114,6 +115,15 @@ function _lwp_list_files($file, $user_can_access, $url, $size, $ext, $devices, $
 				%s
 				<span class="lwp-file-size">%s</span>
 				</li>', $ext, esc_html($file->name), implode(', ', $devices), $button, $size);
+			break;
+		default:
+			return sprintf('
+				<div class="%s lwp-button">
+				<strong>%s</strong> - 
+				<span class="device">(%s)</span>
+				%s
+				<span class="lwp-file-size">%s</span>
+				</div>', $ext, esc_html($file->name), implode(', ', $devices), $button, $size);
 			break;
 	}
 }
