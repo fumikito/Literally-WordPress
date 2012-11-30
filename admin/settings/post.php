@@ -18,15 +18,10 @@
 					<?php $this->e('Directory to save files. This should be writable and innaccessible via HTTP.'); ?>
 					<small>（<?php echo $this->help("dir", $this->_("More &gt;"))?>）</small>
 				</p>
-				<?php if(!is_writable($this->option["dir"])): ?>
-				<p class="error">
-					<?php printf($this->_('Directory isn\'t writable. You can\'t upload files. See %s and set appropriate permission.'), $this->help("dir", $this->_("Help")));?>
-				</p>
-				<?php endif; ?>
-				<?php if(!empty($this->message["access"])): ?>
-				<p class="error">
-					<?php printf($this->_('Directory is accessible via HTTP. See %s and prepend others from direct access.'), $this->help('dir', $this->_('Help'))); ?>
-				</p>
+				<?php if(($dir_check = $this->post->directory_safety_warning())): ?>
+					<p class="invalid">
+						<?php echo esc_html($dir_check);?>
+					</p>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -71,6 +66,23 @@
 					<?php $this->e('You can manually make any post type payable. See detail at how to customize.'); ?>
 					<small>（<?php echo $this->help("customize", $this->_("More &gt;"))?>）</small>
 				</p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top"><?php $this->e('User XML-RPC API'); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="use_xmlrpc_api" value="1"<?php if($this->post->xmlrpc) echo ' checked="checked"'; ?> />
+					<?php $this->e('Enable XML-RPC API endpoint'); ?>
+				</label>
+				<p class="description"><?php $this->e('XML-RPC provides interface to other softwares. This is for experienced developer.'); ?></p>
+				<?php if($this->post->xmlrpc): ?>
+					<?php if(!get_option('enable_xmlrpc')): ?>
+						<p class="invalid"><?php printf($this->_('WordPress XML-RPC endpoint is not working. Please enable it <a href="%s">here</a>.'), admin_url('options-writing.php')); ?></p>
+					<?php else: ?>
+						<p class="valid"><?php $this->e('XML-RPC API is working in order.'); ?></p>
+					<?php endif; ?>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>

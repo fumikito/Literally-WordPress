@@ -22,6 +22,18 @@ class LWP_Post extends Literally_WordPress_Common{
 	public $file_directory = '';
 	
 	/**
+	 * Whether use XML-RPC API
+	 * @var boolean
+	 */
+	public $xmlrpc = false;
+	
+	/**
+	 * XML-RPC method names.
+	 * @var array
+	 */
+	private $methods = array();
+	
+	/**
 	 * Additional mime types to upload
 	 * @var type 
 	 */
@@ -31,13 +43,26 @@ class LWP_Post extends Literally_WordPress_Common{
 	);
 	
 	/**
+	 * Meta key name for post token 
+	 * @var string
+	 */
+	public $meta_token_key = '_lwp_post_token';
+	
+	/**
+	 * Meta key name for post token expires.
+	 * @var string
+	 */
+	public $meta_token_updated = '_lwp_token_expires';
+	
+	/**
 	 * @see Literally_WordPress_Common
 	 */
 	public function set_option($option) {
 		$option = shortcode_atts(array(
 			'payable_post_types' => array(),
 			'custom_post_type' => array(),
-			'dir' => ''
+			'dir' => '',
+			'use_xmlrpc_api' => false
 		), $option);
 		if(!empty($option['custom_post_type'])){
 			if(empty($option['custom_post_type']['singular'])){
@@ -51,6 +76,7 @@ class LWP_Post extends Literally_WordPress_Common{
 		$this->custom_post_type = $option['custom_post_type'];
 		$this->file_directory = $option['dir'];
 		$this->enabled = !empty($this->post_types);
+		$this->xmlrpc = (boolean)$option['use_xmlrpc_api'];
 	}
 	
 	/**
@@ -77,6 +103,10 @@ class LWP_Post extends Literally_WordPress_Common{
 			//Short code
 			add_shortcode("lwp", array($this, "shortcode_capability"));
 			add_shortcode('buynow', array($this, 'shortcode_buynow'));
+			//XML RPC API
+			if($this->xmlrpc){
+				add_filter('xmlrpc_methods', array($this, 'xmlrpc_methods'));
+			}
 		}
 	}
 	
@@ -763,5 +793,188 @@ EOS;
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Register all methods starting with api_
+	 * @param array $methods
+	 * @return array
+	 */
+	public function xmlrpc_methods($methods){
+		foreach(get_class_methods($this) as $method){
+			if(0 === strpos($method, 'api_')){
+				$methods_name = preg_replace('/_(\w)/e', 'ucfirst(\\1)', str_replace('api_', '', $method));
+				$methods['lwp.file.'.$methods_name] = array($this, $method);
+			}
+		}
+		$this->methods = array_keys($methods);
+		return $methods;
+	}
+	
+	/**
+	 * Returns SSL version
+	 * @global Literally_WordPress $lwp
+	 * @global string $wp_version
+	 * @return array
+	 */
+	public function api_information(){
+		global $lwp, $wp_version;
+		return array(
+			'force_ssl' => (FORCE_SSL_ADMIN || FORCE_SSL_LOGIN),
+			'lwp_version' => $lwp->version,
+			'wp_version' => $wp_version
+		);
+	}
+	
+	/**
+	 * Get file list
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param array $args
+	 * @return array
+	 */
+	public function api_list_files($args){
+		global $wpdb, $lwp;
+		$post_id = intval($args);
+		$sql = <<<EOS
+			SELECT * FROM {$lwp->files}
+			WHERE book_id = %d
+			ORDER BY registered DESC
+EOS;
+		$files = $wpdb->get_results($wpdb->prepare($sql, $post_id), ARRAY_A);
+		$return = array();
+		$relation_query = <<<EOS
+			SELECT d.name, d.slug FROM {$lwp->file_relationships} AS r
+			INNER JOIN {$lwp->devices} AS d
+			ON r.device_id = d.ID
+			WHERE r.file_id = %d
+EOS;
+		foreach($files as $file){
+			$file['devices'] = $wpdb->get_results($wpdb->prepare($relation_query, $file['ID']), ARRAY_A);
+			$return[] = $file;
+		}
+		return $return;
+	}
+	
+	/**
+	 * Get file with token
+	 * @global Literally_WordPress $lwp
+	 * @param array $args
+	 * @return array
+	 */
+	public function api_get_file($args){
+		global $lwp;
+		$token = $this->val($args, 0);
+		$user_id = $this->get_user_id_from_token($token);
+		$file_id = $this->val($args, 1);
+		$file = $this->get_files(null, $file_id);
+		if(
+			($file->free == 0 && !$lwp->is_owner($file->book_id, $user_id))
+				||
+			($file->free == 1 && !$user_id())
+				||
+			$file->public != 1
+		){
+			$this->kill($this->_('You have no permission to access this file.'), 403);
+		}
+		//Filter path info. You can override it.
+		$path = apply_filters('lwp_file_path', $this->get_file_path($file), $file, $user_id);
+		if(!$path || !file_exists($path)){
+			$this->kill($this->_('Specified file does not exist.'), 404);
+		}
+		/*
+		 * Here you are, all green.
+		 * Let's start print file.
+		 */
+		//Get file information.
+		$mime = $this->detect_mime($file->file);
+		$size = filesize($path);
+		$limit = apply_filters('lwp_xmlrpc_file_limit', 128);
+		if($size * .0009765625 * .0009765625 > $limit){
+			$this->kill($this->_('File is too large. You cannot get file.'), 500);
+		}
+		ini_set('memory_limit', $limit.'M');
+		$data = new IXR_Base64(file_get_contents($path));
+		return array(
+			'file' => $data,
+			'name' => $file->name,
+			'mime' => $mime,
+			'size' => filesize($path),
+			'hash' => md5_file($path)
+		);
+	}
+	
+	/**
+	 * Returns user id from token
+	 * @global wpdb $wpdb
+	 * @param string $token
+	 * @return int
+	 */
+	private function get_user_id_from_token($token){
+		global $wpdb;
+		return (int)$wpdb->get_var($wpdb->prepare("SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = %s AND meta_value = %s", $this->meta_token_key, $token));
+	}
+	
+	/**
+	 * Returns token with auth credentials
+	 * @param array $args
+	 * @return false|string If authentication succeeded token will be returned, 
+	 */
+	public function api_get_token($args = array()){
+		global $wp_xmlrpc_server;
+		$user_name_or_email = $this->val($args, 0);
+		$password = $this->val($args, 1);
+		if(is_email($user_name_or_email)){
+			$user = get_user_by('email', $user_name_or_email);
+			if($user){
+				$user_name_or_email = $user->user_login;
+			}else{
+				return false;
+			}
+		}
+		if(($user = wp_authenticate($wp_xmlrpc_server->escape($user_name_or_email), $wp_xmlrpc_server->escape($password)))){
+			return $this->generate_token($user->ID);
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns token
+	 * @global wpdb $wpdb
+	 * @param int $user_id
+	 * @return string
+	 */
+	private function generate_token($user_id){
+		global $wpdb; 
+		$hash = get_user_meta($user_id, $this->meta_token_key, true);
+		if($hash && strlen($hash) == 40){
+			return $hash;
+		}else{
+			$user_login = $wpdb->get_var($wpdb->prepare("SELECT user_login FROM {$wpdb->users} WHERE ID = %d", $user_id));
+			if($user_login){
+				//Generate token
+				$hash = sha1(uniqid($user_login, true));
+				update_user_meta($user_id, $this->meta_token_key, $hash);
+				update_user_meta($user_id, $this->meta_token_updated, current_time('mysql'));
+				return $hash;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+	/**
+	 * Retruns specified index from XML-RPC args
+	 * @param array $arg
+	 * @param int $index
+	 * @return mixed
+	 */
+	private function val($arg, $index){
+		if(isset($arg[$index])){
+			return $arg[$index];
+		}else{
+			return null;
+		}
 	}
 }

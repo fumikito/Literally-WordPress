@@ -82,6 +82,16 @@
 		<table class="form-table">
 			<tbody>
 				<tr>
+					<th valign="top"><?php $this->e('Connection Check'); ?></th>
+					<td>
+						<p id="lwp-paypal-connector">
+							<span class="loading"><small><?php echo admin_url('admin-ajax.php?action=lwp_paypal_creds'); ?></small><img src="<?php echo $this->url; ?>assets/indicator-postbox.gif" alt="loading" width="16" height="16" />&nbsp;<?php $this->e('Checking...'); ?></span>
+							<span class="valid"><?php $this->e('Credential informations are valid.'); ?></span>
+							<span class="invalid"><?php $this->e('Failed to connect with PayPal API. Please check your credential infos.'); ?></span>
+						</p>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top">
 						<label><?php $this->e("Use Sandbox"); ?></label>
 					</th>
@@ -172,16 +182,6 @@
 							<?php printf($this->_('This Token might be incorrect. See %s and get correct PDT Token.'), $this->help('account', $this->_('Help'))); ?>
 						</p>
 						<?php endif; ?>
-					</td>
-				</tr>
-				<tr>
-					<th valign="top"><?php $this->e('Connection Check'); ?></th>
-					<td>
-						<p id="lwp-paypal-connector">
-							<span class="loading"><small><?php echo admin_url('admin-ajax.php?action=lwp_paypal_creds'); ?></small><img src="<?php echo $this->url; ?>assets/indicator-postbox.gif" alt="loading" width="16" height="16" />&nbsp;<?php $this->e('Checking...'); ?></span>
-							<span class="valid"><?php $this->e('Credential informations are valid.'); ?></span>
-							<span class="invalid"><?php $this->e('Failed to connect with PayPal API. Please check your credential infos.'); ?></span>
-						</p>
 					</td>
 				</tr>
 				<tr>

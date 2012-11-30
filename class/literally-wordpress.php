@@ -304,6 +304,7 @@ class Literally_WordPress{
 				"mypage" => 0,
 				"custom_post_type" => array(),
 				"payable_post_types" => array(),
+				'use_xmlrpc_api' => false,
 				"show_form" => true,
 				"load_assets" => 2,
 				'show_payment_agency' => false
@@ -810,6 +811,7 @@ class Literally_WordPress{
 				case 'post':
 					$option = array(
 						"dir" => $_REQUEST["dir"],
+						'use_xmlrpc_api' => (isset($_REQUEST['use_xmlrpc_api']) && $_REQUEST['use_xmlrpc_api']),
 						'ios' => (boolean)$_REQUEST['ios'],
 						'android' => (boolean)$_REQUEST['android'],
 						'ios_public' => (boolean)$_REQUEST['ios_public'],

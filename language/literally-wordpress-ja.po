@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-28 18:50+0900\n"
-"PO-Revision-Date: 2012-11-28 18:51+0900\n"
+"POT-Creation-Date: 2012-11-30 01:38+0900\n"
+"PO-Revision-Date: 2012-11-30 01:41+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -37,59 +37,59 @@ msgstr "利用不可能"
 msgid "Published: %s"
 msgstr "公開日: %s"
 
-#: ../functions-internal.php:144
+#: ../functions-internal.php:154
 #, php-format
 msgid "Refunds %s of bought price"
 msgstr "購入価格の%sを返金"
 
-#: ../functions-internal.php:146
+#: ../functions-internal.php:156
 #, php-format
 msgid "Refunds bought price - %s"
 msgstr "購入価格から%s引いた額を返金"
 
-#: ../functions-internal.php:148
+#: ../functions-internal.php:158
 #, php-format
 msgid "Refunds %s"
 msgstr "%sを返金"
 
-#: ../functions-internal.php:152
+#: ../functions-internal.php:162
 #, php-format
 msgid "Until %s"
 msgstr "%sまで"
 
-#: ../functions-internal.php:176 ../functions-internal.php:185
+#: ../functions-internal.php:186 ../functions-internal.php:195
 msgid "Sold Out"
 msgstr "売り切れ"
 
-#: ../functions-internal.php:180
+#: ../functions-internal.php:190
 msgid "You are waiting"
 msgstr "キャンセル待ち中"
 
-#: ../functions-internal.php:182
+#: ../functions-internal.php:192
 #, php-format
 msgid "Are you sure to register on waiting list for %2$s of %1$s?"
 msgstr "%1$sの%2$sをキャンセル待ちいたしますか？"
 
-#: ../functions-internal.php:182
+#: ../functions-internal.php:192
 msgid "Wait for Cancellation"
 msgstr "キャンセル待ち"
 
-#: ../functions-internal.php:189 ../functions.php:709 ../functions.php:714
+#: ../functions-internal.php:199 ../functions.php:709 ../functions.php:714
 #: ../admin/settings/sidebar.php:9 ../widgets/buynow.php:111
 msgid "Buy Now"
 msgstr "いますぐ購入"
 
-#: ../functions-internal.php:195
+#: ../functions-internal.php:205
 #, php-format
 msgid "(%s tickets)"
 msgstr "（%s枚）"
 
-#: ../functions-internal.php:200
+#: ../functions-internal.php:210
 #, php-format
 msgid "Discount price untill <strong>%s</strong>"
 msgstr "<strong>%s</strong>までセール中"
 
-#: ../functions-internal.php:204
+#: ../functions-internal.php:214
 #, php-format
 msgid ""
 "You have this ticket. See <a href=\"%1$s\">Purchase History</a> or <a href="
@@ -132,7 +132,7 @@ msgid "Updated: %s"
 msgstr "更新日: %s"
 
 #: ../functions.php:536 ../admin/management.php:71 ../class/event.php:923
-#: ../class/literally-wordpress.php:1260 ../tables/list-refund.php:119
+#: ../class/literally-wordpress.php:1262 ../tables/list-refund.php:119
 #: ../tables/list-reward-history.php:35 ../tables/list-reward-request.php:119
 #: ../tables/list-ticket.php:37
 msgid "Updated"
@@ -553,7 +553,7 @@ msgstr ""
 msgid "File Download Logs"
 msgstr "ファイルダウンロードログ"
 
-#: ../admin/event.php:4 ../class/literally-wordpress.php:509
+#: ../admin/event.php:4 ../class/literally-wordpress.php:510
 msgid "Event Management"
 msgstr "イベント管理"
 
@@ -597,7 +597,7 @@ msgstr "チケット名"
 
 #: ../admin/event.php:69 ../admin/management.php:523 ../class/event.php:928
 #: ../class/form.php:661 ../class/form.php:1178
-#: ../class/literally-wordpress.php:1254 ../class/subscription.php:194
+#: ../class/literally-wordpress.php:1256 ../class/subscription.php:194
 #: ../form-template/edit-detail-event.php:115
 #: ../form-template/edit-detail.php:24
 #: ../form-template/paypal-cancel-ticket.php:15
@@ -626,7 +626,7 @@ msgstr "販売数"
 msgid "Consumed"
 msgstr "使用分"
 
-#: ../admin/event.php:73 ../class/literally-wordpress.php:610
+#: ../admin/event.php:73 ../class/literally-wordpress.php:611
 msgid "Sales"
 msgstr "売上"
 
@@ -654,7 +654,7 @@ msgstr ""
 msgid "Get CSV"
 msgstr "CSV取得"
 
-#: ../admin/form-check.php:4 ../class/literally-wordpress.php:514
+#: ../admin/form-check.php:4 ../class/literally-wordpress.php:515
 msgid "LWP Form Check"
 msgstr "LWP フォーム確認"
 
@@ -749,7 +749,7 @@ msgstr "タイトルをテーマディレクトリ内のロゴ画像に変える
 msgid "Don't forget to change logo in PayPal's landing page."
 msgstr "PayPalの支払いページのロゴを変えることを忘れないでください。"
 
-#: ../admin/history.php:2 ../class/literally-wordpress.php:512
+#: ../admin/history.php:2 ../class/literally-wordpress.php:513
 #: ../form-template/paypal-payment-info.php:26
 #: ../form-template/paypal-refund-account.php:97
 msgid "Purchase History"
@@ -787,8 +787,8 @@ msgstr "項目名"
 #: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:60 ../admin/settings/dashboard.php:111
 #: ../admin/settings/dashboard.php:143 ../admin/settings/payment.php:7
-#: ../class/form.php:660 ../class/literally-wordpress.php:592
-#: ../class/literally-wordpress.php:632
+#: ../class/form.php:660 ../class/literally-wordpress.php:593
+#: ../class/literally-wordpress.php:633
 #: ../form-template/paypal-sb-check.php:35 ../tables/list-history.php:50
 #: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
@@ -815,8 +815,8 @@ msgstr "SSL強制"
 
 #: ../admin/ios-api.php:41 ../admin/settings/dashboard.php:48
 #: ../admin/settings/dashboard.php:99 ../admin/settings/dashboard.php:130
-#: ../admin/settings/payment.php:36 ../admin/settings/post.php:94
-#: ../admin/settings/post.php:101 ../admin/settings/post.php:161
+#: ../admin/settings/payment.php:36 ../admin/settings/post.php:106
+#: ../admin/settings/post.php:113 ../admin/settings/post.php:173
 msgid "Enabled"
 msgstr "有効"
 
@@ -1136,21 +1136,21 @@ msgstr "値"
 msgid "Action"
 msgstr "アクション"
 
-#: ../admin/management.php:39 ../class/literally-wordpress.php:1252
+#: ../admin/management.php:39 ../class/literally-wordpress.php:1254
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
 #: ../tables/list-management.php:129 ../tables/list-refund.php:113
 #: ../tables/list-transfers.php:155
 msgid "Item Name"
 msgstr "アイテム名"
 
-#: ../admin/management.php:55 ../class/literally-wordpress.php:657
+#: ../admin/management.php:55 ../class/literally-wordpress.php:658
 #: ../form-template/edit-detail-event.php:129 ../tables/list-campaign.php:185
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr "編集"
 
 #: ../admin/management.php:58 ../class/event.php:925
-#: ../class/literally-wordpress.php:1258 ../tables/list-download-logs.php:112
+#: ../class/literally-wordpress.php:1260 ../tables/list-download-logs.php:112
 #: ../tables/list-management.php:130 ../tables/list-refund.php:114
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:154
 msgid "User Name"
@@ -1165,7 +1165,7 @@ msgid "See all transactions"
 msgstr "すべての決済を見る"
 
 #: ../admin/management.php:66 ../admin/management.php:534
-#: ../class/event.php:940 ../class/literally-wordpress.php:1274
+#: ../class/event.php:940 ../class/literally-wordpress.php:1276
 #: ../form-template/reward-summary.php:165
 #: ../tables/list-download-logs.php:179 ../tables/list-management.php:222
 #: ../tables/list-refund.php:165 ../tables/list-reward-history.php:150
@@ -1173,7 +1173,7 @@ msgstr "すべての決済を見る"
 msgid "Deleted User"
 msgstr "削除されたユーザー"
 
-#: ../admin/management.php:74 ../class/literally-wordpress.php:1259
+#: ../admin/management.php:74 ../class/literally-wordpress.php:1261
 #: ../tables/list-history.php:45 ../tables/list-management.php:134
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
 #: ../tables/list-reward-request.php:118 ../tables/list-transfers.php:158
@@ -1190,7 +1190,7 @@ msgid "Original Price"
 msgstr "定価"
 
 #: ../admin/management.php:87 ../class/event.php:929 ../class/form.php:1179
-#: ../class/literally-wordpress.php:1253
+#: ../class/literally-wordpress.php:1255
 #: ../form-template/paypal-event-tickets-consume.php:18
 #: ../tables/list-history.php:41 ../tables/list-ticket.php:38
 msgid "Quantity"
@@ -1204,7 +1204,7 @@ msgstr "購入方法"
 msgid "Waiting No."
 msgstr "キャンセル待ち番号"
 
-#: ../admin/management.php:113 ../class/literally-wordpress.php:1256
+#: ../admin/management.php:113 ../class/literally-wordpress.php:1258
 msgid "Invoice Num"
 msgstr "領収番号"
 
@@ -1214,7 +1214,7 @@ msgid "Payer Email: %s"
 msgstr "支払い者のメール：%s"
 
 #: ../admin/management.php:123 ../admin/management.php:132
-#: ../admin/management.php:156 ../class/literally-wordpress.php:1257
+#: ../admin/management.php:156 ../class/literally-wordpress.php:1259
 msgid "Transaction ID"
 msgstr "決済ID"
 
@@ -1345,7 +1345,7 @@ msgid "Count"
 msgstr "件数"
 
 #: ../admin/management.php:521 ../admin/settings/sidebar.php:68
-#: ../admin/settings/sidebar.php:73 ../class/literally-wordpress.php:1347
+#: ../admin/settings/sidebar.php:73 ../class/literally-wordpress.php:1349
 #: ../form-template/edit-detail-event.php:113
 #: ../form-template/paypal-payment.php:241
 #: ../form-template/reward-summary.php:151
@@ -1505,7 +1505,7 @@ msgid "Event"
 msgstr "イベント"
 
 #: ../admin/setting.php:12 ../admin/settings/dashboard.php:123
-#: ../admin/settings/reward.php:2 ../class/literally-wordpress.php:504
+#: ../admin/settings/reward.php:2 ../class/literally-wordpress.php:505
 #: ../form-template/reward-summary.php:64
 #: ../form-template/reward-summary.php:94
 #: ../form-template/reward-summary.php:154
@@ -1523,7 +1523,7 @@ msgstr "その他"
 msgid "Template file does not exists at %s."
 msgstr "テンプレートファイルが%sにありません。"
 
-#: ../admin/transfer.php:2 ../class/literally-wordpress.php:478
+#: ../admin/transfer.php:2 ../class/literally-wordpress.php:479
 #: ../help/transfer.php:22
 msgid "Transfer Management"
 msgstr "送金管理"
@@ -1603,7 +1603,7 @@ msgstr "このファイルの名前です。 ex. iBooks用ePub（第2版）"
 msgid "Public Status"
 msgstr "公開ステータス"
 
-#: ../admin/upload.php:140 ../admin/settings/post.php:122
+#: ../admin/upload.php:140 ../admin/settings/post.php:134
 msgid "Public"
 msgstr "公開"
 
@@ -1677,7 +1677,7 @@ msgstr "ファイルを追加する"
 msgid "Registered files"
 msgstr "登録されたファイル"
 
-#: ../admin/upload.php:214 ../class/literally-wordpress.php:655
+#: ../admin/upload.php:214 ../class/literally-wordpress.php:656
 #: ../form-template/edit-detail-event.php:75
 #: ../form-template/edit-detail-event.php:132 ../tables/list-campaign.php:120
 #: ../tables/list-devices.php:109
@@ -1930,12 +1930,12 @@ msgstr ""
 "履歴ページは管理画面にのみ表示されます。"
 
 #: ../admin/settings/misc.php:20 ../admin/settings/misc.php:39
-#: ../admin/settings/misc.php:62 ../admin/settings/payment.php:94
-#: ../admin/settings/payment.php:132 ../admin/settings/payment.php:144
-#: ../admin/settings/payment.php:156 ../admin/settings/payment.php:168
+#: ../admin/settings/misc.php:62 ../admin/settings/payment.php:104
+#: ../admin/settings/payment.php:142 ../admin/settings/payment.php:154
+#: ../admin/settings/payment.php:166 ../admin/settings/payment.php:178
 #: ../admin/settings/payment.php:196 ../admin/settings/payment.php:608
-#: ../admin/settings/post.php:19 ../admin/settings/post.php:55
-#: ../admin/settings/post.php:72 ../class/form.php:2075
+#: ../admin/settings/post.php:19 ../admin/settings/post.php:50
+#: ../admin/settings/post.php:67 ../class/form.php:2075
 msgid "More &gt;"
 msgstr "もっと &gt;"
 
@@ -2054,15 +2054,31 @@ msgstr ""
 "まず最初にPayPalへ登録してください。PayPalはクレジットカードによる決済を可能"
 "にします。"
 
-#: ../admin/settings/payment.php:86 ../help/account.php:44
+#: ../admin/settings/payment.php:85
+msgid "Connection Check"
+msgstr "接続チェック"
+
+#: ../admin/settings/payment.php:88
+msgid "Checking..."
+msgstr "チェック中......"
+
+#: ../admin/settings/payment.php:89
+msgid "Credential informations are valid."
+msgstr "認証情報は有効です。"
+
+#: ../admin/settings/payment.php:90
+msgid "Failed to connect with PayPal API. Please check your credential infos."
+msgstr "PayPal APIへの接続に失敗しました。認証情報が正しいか確認してください。"
+
+#: ../admin/settings/payment.php:96 ../help/account.php:44
 msgid "Use Sandbox"
 msgstr "サンドボックスを使用する"
 
-#: ../admin/settings/payment.php:91
+#: ../admin/settings/payment.php:101
 msgid "This is a develop enviorment."
 msgstr "これは開発環境です。"
 
-#: ../admin/settings/payment.php:94
+#: ../admin/settings/payment.php:104
 msgid ""
 "Sandbox means develop enviorment. You can test your settings by checking "
 "above."
@@ -2070,13 +2086,13 @@ msgstr ""
 "サンドボックスとは開発環境のことです。チェックを入れることで設定があっている"
 "かをテストすることができます。"
 
-#: ../admin/settings/payment.php:100
+#: ../admin/settings/payment.php:110
 msgid "Country Code"
 msgstr "国別コード"
 
-#: ../admin/settings/payment.php:101 ../admin/settings/payment.php:114
-#: ../admin/settings/payment.php:127 ../admin/settings/payment.php:139
-#: ../admin/settings/payment.php:151 ../admin/settings/payment.php:163
+#: ../admin/settings/payment.php:111 ../admin/settings/payment.php:124
+#: ../admin/settings/payment.php:137 ../admin/settings/payment.php:149
+#: ../admin/settings/payment.php:161 ../admin/settings/payment.php:173
 #: ../admin/settings/payment.php:190 ../admin/settings/payment.php:290
 #: ../admin/settings/payment.php:297 ../admin/settings/payment.php:448
 #: ../admin/settings/payment.php:456 ../admin/settings/payment.php:491
@@ -2087,69 +2103,52 @@ msgstr "国別コード"
 msgid "Required"
 msgstr "必須"
 
-#: ../admin/settings/payment.php:113
+#: ../admin/settings/payment.php:123
 msgid "Currency Code"
 msgstr "通貨コード"
 
-#: ../admin/settings/payment.php:126
+#: ../admin/settings/payment.php:136
 msgid "PayPal API User Name"
 msgstr "PayPal API ユーザー名"
 
-#: ../admin/settings/payment.php:132
+#: ../admin/settings/payment.php:142
 msgid "PayPal API User Name issued by PayPal."
 msgstr "PayPalから発行されるAPI利用のためのユーザー名です。"
 
-#: ../admin/settings/payment.php:138
+#: ../admin/settings/payment.php:148
 msgid "PayPal Password"
 msgstr "PayPal パスワード"
 
-#: ../admin/settings/payment.php:144
+#: ../admin/settings/payment.php:154
 msgid "API password issued by PayPal"
 msgstr "PayPalから提供されるAPI利用のためのパスワードです。"
 
-#: ../admin/settings/payment.php:150
+#: ../admin/settings/payment.php:160
 msgid "PayPal Signature"
 msgstr "PayPal署名"
 
-#: ../admin/settings/payment.php:156
+#: ../admin/settings/payment.php:166
 msgid "API signature issued by PayPal"
 msgstr "PayPalから発行されるAPI利用のための署名です。"
 
-#: ../admin/settings/payment.php:162
+#: ../admin/settings/payment.php:172
 msgid "PayPal PDT Token"
 msgstr "PayPal PDT トークン"
 
-#: ../admin/settings/payment.php:168
+#: ../admin/settings/payment.php:178
 msgid "Token issued by PayPal. Required for transaction."
 msgstr "PayPalから発行されるトークンです。決済に必要です。"
 
-#: ../admin/settings/payment.php:172
+#: ../admin/settings/payment.php:182
 #, php-format
 msgid "This Token might be incorrect. See %s and get correct PDT Token."
 msgstr ""
 "このトークンは間違っているかもしれません。%sを見て、正しいPDTトークンを取得し"
 "てください。"
 
-#: ../admin/settings/payment.php:172 ../admin/settings/post.php:23
-#: ../admin/settings/post.php:28
+#: ../admin/settings/payment.php:182
 msgid "Help"
 msgstr "ヘルプ"
-
-#: ../admin/settings/payment.php:178
-msgid "Connection Check"
-msgstr "接続チェック"
-
-#: ../admin/settings/payment.php:181
-msgid "Checking..."
-msgstr "チェック中......"
-
-#: ../admin/settings/payment.php:182
-msgid "Credential informations are valid."
-msgstr "認証情報は有効です。"
-
-#: ../admin/settings/payment.php:183
-msgid "Failed to connect with PayPal API. Please check your credential infos."
-msgstr "PayPal APIへの接続に失敗しました。認証情報が正しいか確認してください。"
 
 #: ../admin/settings/payment.php:189 ../help/account.php:61
 msgid "Product slug"
@@ -2557,55 +2556,37 @@ msgstr ""
 "ファイルを保存するディレクトリです。このフォルダは書き込み可能であり、HTTPで"
 "アクセス不可能な場所にある必要があります。"
 
-#: ../admin/settings/post.php:23
-#, php-format
-msgid ""
-"Directory isn't writable. You can't upload files. See %s and set appropriate "
-"permission."
-msgstr ""
-"ディレクトリは書き込みできません。ファイルをアップロードできません。%sを見"
-"て、適切なパーミッションを設定してください。"
-
-#: ../admin/settings/post.php:28
-#, php-format
-msgid ""
-"Directory is accessible via HTTP. See %s and prepend others from direct "
-"access."
-msgstr ""
-"ディレクトリはHTTPでアクセスできてしまいます。%sを見て、第三者がディレクトリ"
-"にアクセスできないようにしてください。"
-
-#: ../admin/settings/post.php:35
+#: ../admin/settings/post.php:30
 msgid "Custom Post Type"
 msgstr "カスタム投稿タイプ"
 
-#: ../admin/settings/post.php:40
+#: ../admin/settings/post.php:35
 msgid "Custom post name"
 msgstr "カスタプ投稿タイプの名前"
 
-#: ../admin/settings/post.php:41
+#: ../admin/settings/post.php:36
 msgid "If not needed, leave it blank. ex: eBooks"
 msgstr "必要なければ空白にしてください。ex. eBooks"
 
-#: ../admin/settings/post.php:45
+#: ../admin/settings/post.php:40
 msgid "Custom post name in Singular"
 msgstr "カスタム投稿タイプの単数形"
 
-#: ../admin/settings/post.php:46
+#: ../admin/settings/post.php:41
 msgid "If you don't specified, this same as above field. ex: eBook"
 msgstr "指定しない場合は上と同じものが使われます。ex: eBook"
 
-#: ../admin/settings/post.php:50
+#: ../admin/settings/post.php:45
 msgid "Custom post slug"
 msgstr "カスタム投稿タイプのスラッグ"
 
-#: ../admin/settings/post.php:51
+#: ../admin/settings/post.php:46
 msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
 msgstr ""
 "小文字のアルファベットでなくてはなりません。パーマリンクに使われます。ex: "
 "ebook"
 
-#: ../admin/settings/post.php:54
+#: ../admin/settings/post.php:49
 msgid ""
 "If you need detailed settings, please leave it blank and make custom post by "
 "yourself. 3rd party plugins will help you."
@@ -2613,26 +2594,55 @@ msgstr ""
 "細かい調整が必要な場合は空白のままにして、ご自分でカスタム投稿タイプを作成し"
 "てください。サードパーティのプラグインが役に立つでしょう。"
 
-#: ../admin/settings/post.php:61
+#: ../admin/settings/post.php:56
 msgid "Payable Post Types"
 msgstr "支払い可能な投稿タイプ"
 
-#: ../admin/settings/post.php:71
+#: ../admin/settings/post.php:66
 msgid ""
 "You can manually make any post type payable. See detail at how to customize."
 msgstr ""
 "どの投稿タイプも手動で支払い可能にすることができます。詳細はカスタマイズ方法"
 "を御覧ください。"
 
-#: ../admin/settings/post.php:80
+#: ../admin/settings/post.php:72
+msgid "User XML-RPC API"
+msgstr "XML-RPC APIを使う"
+
+#: ../admin/settings/post.php:76
+msgid "Enable XML-RPC API endpoint"
+msgstr "XML-RPC APIを有効にする"
+
+#: ../admin/settings/post.php:78
+msgid ""
+"XML-RPC provides interface to other softwares. This is for experienced "
+"developer."
+msgstr ""
+"XML-RPCは他のソフトウェアとの間のインターフェースを提供します。これは経験のあ"
+"る開発者向きです。"
+
+#: ../admin/settings/post.php:81
+#, php-format
+msgid ""
+"WordPress XML-RPC endpoint is not working. Please enable it <a href=\"%s"
+"\">here</a>."
+msgstr ""
+"WordPressのXML-RPCは動いていません。<a href=\"%s\">こちら</a>から有効化してく"
+"ださい。"
+
+#: ../admin/settings/post.php:83
+msgid "XML-RPC API is working in order."
+msgstr "XML-RPC APIは有効に動いています。"
+
+#: ../admin/settings/post.php:92
 msgid "Cooperating with Smartphone Application"
 msgstr "スマートフォンアプリケーションとの連携"
 
-#: ../admin/settings/post.php:81 ../admin/settings/reward.php:3
+#: ../admin/settings/post.php:93 ../admin/settings/reward.php:3
 msgid "EXPERIMENTAL"
 msgstr "実験的"
 
-#: ../admin/settings/post.php:84
+#: ../admin/settings/post.php:96
 msgid ""
 "Smartphone applications have so-called <strong>In-App Purchase</strong>. LWP "
 "can be a content delivery server for them with XML-RPC protocol. Now iOS and "
@@ -2642,7 +2652,7 @@ msgstr ""
 "</strong>。LWPはXML-RPCプロトコルを利用してコンテンツ配信サーバになることがで"
 "きます。いまのところiOSとAndroid（Google Play）がサポートされています。"
 
-#: ../admin/settings/post.php:85
+#: ../admin/settings/post.php:97
 #, php-format
 msgid ""
 "Once you enable it, new post type will be created <a href=\"%1$s\">here</a> "
@@ -2651,28 +2661,28 @@ msgstr ""
 "有効化すると新しい投稿タイプが<a href=\"%1$s\">ここ</a>に作成され、<a href="
 "\"%2$s\">API マニュアル</a>にアクセスできるようになります。"
 
-#: ../admin/settings/post.php:87
+#: ../admin/settings/post.php:99
 msgid ""
 "<strong>Note: </strong> This feature is only for experienced developers."
 msgstr "<strong>※注 </strong> この機能は経験のある開発者向けです。"
 
-#: ../admin/settings/post.php:92
+#: ../admin/settings/post.php:104
 msgid "Enable iOS In App Purchase"
 msgstr "iOSアプリ内購入を有効化"
 
-#: ../admin/settings/post.php:95 ../admin/settings/post.php:102
+#: ../admin/settings/post.php:107 ../admin/settings/post.php:114
 msgid "Disabled"
 msgstr "無効"
 
-#: ../admin/settings/post.php:99
+#: ../admin/settings/post.php:111
 msgid "Enable android In-app Billing"
 msgstr "androidアプリ内課金を有効化"
 
-#: ../admin/settings/post.php:103
+#: ../admin/settings/post.php:115
 msgid "Android Public Key"
 msgstr "Android公開鍵"
 
-#: ../admin/settings/post.php:106
+#: ../admin/settings/post.php:118
 #, php-format
 msgid ""
 "To verify receipt sent from Android application, WordPress needs Public key. "
@@ -2681,7 +2691,7 @@ msgstr ""
 "WordPressがAndroidアプリから送信されるレシートを認証するために公開鍵が必要で"
 "す。<a href=\"%s\">Google Playデベロッパーコンソール</a>で入手できます。"
 
-#: ../admin/settings/post.php:107
+#: ../admin/settings/post.php:119
 msgid ""
 "<strong>Note: </strong>PHP's OpenSSL can't treat Google Play's RSA public "
 "key as-is. It should be converted like below and paste the result above."
@@ -2689,31 +2699,31 @@ msgstr ""
 "<strong>※注 </strong>PHPのOpenSSLはGoogle PlayのRSA公開鍵をそのままで扱えませ"
 "ん。以下の通り変換し、上のフォームにペーストしてください。"
 
-#: ../admin/settings/post.php:110
+#: ../admin/settings/post.php:122
 msgid "Copy and paste public key and save it as pubkey.txt."
 msgstr "公開鍵をコピー＆ペーストし、pubkey.txtとして保存してください。"
 
-#: ../admin/settings/post.php:111
+#: ../admin/settings/post.php:123
 msgid "Decode public key with Base64 and save it."
 msgstr "公開鍵をBase64でデコードし、保存します。"
 
-#: ../admin/settings/post.php:113
+#: ../admin/settings/post.php:125
 msgid "Convert DER pubkey to PEM format."
 msgstr "DER公開鍵をPEM形式に変換します。"
 
-#: ../admin/settings/post.php:115
+#: ../admin/settings/post.php:127
 msgid "Encode public key and save it."
 msgstr "公開鍵をエンコードし、保存します。"
 
-#: ../admin/settings/post.php:120
+#: ../admin/settings/post.php:132
 msgid "Post Type public"
 msgstr "投稿タイプの公開"
 
-#: ../admin/settings/post.php:123
+#: ../admin/settings/post.php:135
 msgid "Hidden"
 msgstr "非表示"
 
-#: ../admin/settings/post.php:125
+#: ../admin/settings/post.php:137
 msgid ""
 "If you choose public, this post type is publicly displayed and can be "
 "accessed on Web site."
@@ -2721,41 +2731,41 @@ msgstr ""
 "公開を選択した場合、この投稿タイプは公開画面に表示され、Webサイトからアクセス"
 "可能になります。"
 
-#: ../admin/settings/post.php:130
+#: ../admin/settings/post.php:142
 msgid "Availability"
 msgstr "利用形態"
 
-#: ../admin/settings/post.php:132
+#: ../admin/settings/post.php:144
 msgid "Available from Web site"
 msgstr "Webサイトから購入可能"
 
-#: ../admin/settings/post.php:133
+#: ../admin/settings/post.php:145
 msgid "Only available with Smartphone"
 msgstr "スマートフォンでのみ購入可能"
 
-#: ../admin/settings/post.php:135
+#: ../admin/settings/post.php:147
 msgid ""
 "If you enable this, post type for smartphone can be bought from Web site."
 msgstr ""
 "これを選んだ場合、スマートフォン用の投稿タイプはWebサイトから購入できます。"
 
-#: ../admin/settings/post.php:140
+#: ../admin/settings/post.php:152
 msgid "Force SSL on XML-RPC"
 msgstr "XML-RPCでSSLを強制する"
 
-#: ../admin/settings/post.php:142
+#: ../admin/settings/post.php:154
 msgid "Force"
 msgstr "強制"
 
-#: ../admin/settings/post.php:143
+#: ../admin/settings/post.php:155
 msgid "Depends on WordPress setting"
 msgstr "WordPress設定と同じ"
 
-#: ../admin/settings/post.php:144
+#: ../admin/settings/post.php:156
 msgid "Do nothing"
 msgstr "なにもしない"
 
-#: ../admin/settings/post.php:147
+#: ../admin/settings/post.php:159
 #, php-format
 msgid ""
 "Your current WordPress setting: Admin Panel SSL = <strong>%1$s</strong> , "
@@ -2764,15 +2774,15 @@ msgstr ""
 "現在のWordPress設定: 管理画面SSL = <strong>%1$s</strong>　ログインSSL = "
 "<strong>%2$s</strong> "
 
-#: ../admin/settings/post.php:154
+#: ../admin/settings/post.php:166
 msgid "Endpoint"
 msgstr "エンドポイント"
 
-#: ../admin/settings/post.php:158
+#: ../admin/settings/post.php:170
 msgid "XML-RPC availability"
 msgstr "XML-RPC有効性"
 
-#: ../admin/settings/post.php:163
+#: ../admin/settings/post.php:175
 #, php-format
 msgid "XML-RPC is disabled. Please enable it <a href=\"%s\">here</a>"
 msgstr ""
@@ -2995,7 +3005,7 @@ msgstr "eメール"
 msgid "Site to contract"
 msgstr "契約対象サイト"
 
-#: ../admin/settings/sidebar.php:95 ../class/literally-wordpress.php:1347
+#: ../admin/settings/sidebar.php:95 ../class/literally-wordpress.php:1349
 msgid "Marchandise"
 msgstr "商材"
 
@@ -3023,7 +3033,7 @@ msgstr "その他"
 msgid "Month"
 msgstr "月"
 
-#: ../admin/settings/sidebar.php:126 ../class/literally-wordpress.php:1255
+#: ../admin/settings/sidebar.php:126 ../class/literally-wordpress.php:1257
 msgid "Payment Method"
 msgstr "支払い方法"
 
@@ -3167,7 +3177,7 @@ msgstr "%sを編集する権限がありません。"
 msgid "Please select item."
 msgstr "アイテムを選択してください。"
 
-#: ../class/campaign.php:83 ../class/post.php:187
+#: ../class/campaign.php:83 ../class/post.php:195
 msgid "Price must be numeric."
 msgstr "価格は半角数字でなければなりません。"
 
@@ -3216,44 +3226,44 @@ msgid "Tickets"
 msgstr "チケット"
 
 #: ../class/event.php:148 ../class/ios.php:128 ../class/notifier.php:87
-#: ../class/post.php:91 ../class/subscription.php:86
+#: ../class/post.php:99 ../class/subscription.php:86
 msgid "Add New"
 msgstr "新規追加"
 
 #: ../class/event.php:149 ../class/event.php:151 ../class/ios.php:129
 #: ../class/ios.php:131 ../class/ios.php:167 ../class/notifier.php:88
-#: ../class/notifier.php:90 ../class/post.php:92 ../class/post.php:94
+#: ../class/notifier.php:90 ../class/post.php:100 ../class/post.php:102
 #: ../class/subscription.php:87 ../class/subscription.php:89
 #, php-format
 msgid "Add New %s"
 msgstr "新規%s追加"
 
 #: ../class/event.php:150 ../class/ios.php:130 ../class/ios.php:165
-#: ../class/notifier.php:89 ../class/post.php:93 ../class/subscription.php:88
+#: ../class/notifier.php:89 ../class/post.php:101 ../class/subscription.php:88
 #, php-format
 msgid "Edit %s"
 msgstr "%sを編集"
 
 #: ../class/event.php:152 ../class/ios.php:132 ../class/notifier.php:91
-#: ../class/post.php:95 ../class/subscription.php:90
+#: ../class/post.php:103 ../class/subscription.php:90
 #, php-format
 msgid "View %s"
 msgstr "%sを見る"
 
 #: ../class/event.php:153 ../class/ios.php:133 ../class/ios.php:160
-#: ../class/notifier.php:92 ../class/post.php:96 ../class/subscription.php:91
+#: ../class/notifier.php:92 ../class/post.php:104 ../class/subscription.php:91
 #, php-format
 msgid "Search %s"
 msgstr "%sを検索"
 
 #: ../class/event.php:154 ../class/ios.php:134 ../class/notifier.php:93
-#: ../class/post.php:97 ../class/subscription.php:92
+#: ../class/post.php:105 ../class/subscription.php:92
 #, php-format
 msgid "No %s was found."
 msgstr "%sは見つかりませんでした"
 
 #: ../class/event.php:155 ../class/ios.php:135 ../class/notifier.php:94
-#: ../class/post.php:98 ../class/subscription.php:93
+#: ../class/post.php:106 ../class/subscription.php:93
 #, php-format
 msgid "No %s was found in trash."
 msgstr "ゴミ箱に%sは見つかりませんでした"
@@ -3338,7 +3348,7 @@ msgstr "イベントが見つかりません。"
 msgid "You have no permission."
 msgstr "権限をお持ちではありません。"
 
-#: ../class/event.php:910 ../class/literally-wordpress.php:1239
+#: ../class/event.php:910 ../class/literally-wordpress.php:1241
 msgid "No ticket match your qriteria.: "
 msgstr "チケットが見つかりませんでした。"
 
@@ -3346,7 +3356,7 @@ msgstr "チケットが見つかりませんでした。"
 msgid "Code"
 msgstr "コード"
 
-#: ../class/event.php:931 ../class/literally-wordpress.php:1261
+#: ../class/event.php:931 ../class/literally-wordpress.php:1263
 msgid "Transaction Status"
 msgstr "決済ステータス"
 
@@ -3572,7 +3582,7 @@ msgid "Transaction Failed to finish."
 msgstr "トランザクションを完了できませんでした。"
 
 #: ../class/form.php:996 ../class/ios.php:465 ../class/ios.php:487
-#: ../class/post.php:630
+#: ../class/post.php:638
 msgid "Specified file does not exist."
 msgstr "指定されたファイルは存在しません。"
 
@@ -3802,7 +3812,7 @@ msgstr "口座番号"
 msgid "Account Holder"
 msgstr "口座名義"
 
-#: ../class/form.php:1627 ../class/literally-wordpress.php:1351
+#: ../class/form.php:1627 ../class/literally-wordpress.php:1353
 #, php-format
 msgid "%s is empty."
 msgstr "%sが空です。"
@@ -4149,74 +4159,74 @@ msgstr "このAPIはログイン情報が必要です。"
 msgid "Thank you for your patience. Please wait for our contact."
 msgstr "お手数をおかけいたしますが、こちらからのご連絡をお待ちください。"
 
-#: ../class/literally-wordpress.php:412
+#: ../class/literally-wordpress.php:413
 msgid "Marchand ID and PDT Token required for transaction"
 msgstr "マーチャントIDとPDTトークンは決済に必要です"
 
-#: ../class/literally-wordpress.php:416
+#: ../class/literally-wordpress.php:417
 msgid "Currency code is invalid."
 msgstr "通貨コードが不正です。"
 
-#: ../class/literally-wordpress.php:419
+#: ../class/literally-wordpress.php:420
 msgid "Country code is invalid."
 msgstr "国コードが不正です。"
 
-#: ../class/literally-wordpress.php:442
+#: ../class/literally-wordpress.php:443
 msgid "Literally WordPress successfully upgrades database."
 msgstr "Literally WordPressはデータベースの更新に成功しました。"
 
-#: ../class/literally-wordpress.php:471 ../help/transfer.php:16
+#: ../class/literally-wordpress.php:472 ../help/transfer.php:16
 msgid "General Setting"
 msgstr "全般設定"
 
-#: ../class/literally-wordpress.php:473
+#: ../class/literally-wordpress.php:474
 msgid "Transaction Management"
 msgstr "決済管理"
 
-#: ../class/literally-wordpress.php:477
+#: ../class/literally-wordpress.php:478
 #, php-format
 msgid "%d waiting transfers."
 msgstr "%dが送金待ちです"
 
-#: ../class/literally-wordpress.php:482
+#: ../class/literally-wordpress.php:483
 #, php-format
 msgid "%d waiting refunds."
 msgstr "%d返金要求中"
 
-#: ../class/literally-wordpress.php:483
+#: ../class/literally-wordpress.php:484
 msgid "Refund History"
 msgstr "返金履歴"
 
-#: ../class/literally-wordpress.php:485
+#: ../class/literally-wordpress.php:486
 msgid "Campaign Management"
 msgstr "キャンペーン管理"
 
-#: ../class/literally-wordpress.php:488
+#: ../class/literally-wordpress.php:489
 msgid "Download logs"
 msgstr "ダウンロードログ"
 
-#: ../class/literally-wordpress.php:490
+#: ../class/literally-wordpress.php:491
 msgid "Device Setting"
 msgstr "端末設定"
 
-#: ../class/literally-wordpress.php:494
+#: ../class/literally-wordpress.php:495
 msgid "API Manual"
 msgstr "APIマニュアル"
 
-#: ../class/literally-wordpress.php:500
+#: ../class/literally-wordpress.php:501
 #, php-format
 msgid "%d rewards are waiting queueue."
 msgstr "%d件の報酬が支払い待ちです"
 
-#: ../class/literally-wordpress.php:501
+#: ../class/literally-wordpress.php:502
 msgid "Reward Management"
 msgstr "報酬管理"
 
-#: ../class/literally-wordpress.php:532
+#: ../class/literally-wordpress.php:533
 msgid "This page does not exist. Template not found."
 msgstr "ページが見つかりません。テンプレートが存在しません。"
 
-#: ../class/literally-wordpress.php:576 ../class/statics/payment-status.php:77
+#: ../class/literally-wordpress.php:577 ../class/statics/payment-status.php:77
 #: ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:320
@@ -4224,60 +4234,60 @@ msgstr "ページが見つかりません。テンプレートが存在しませ
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../class/literally-wordpress.php:577
+#: ../class/literally-wordpress.php:578
 msgid "Submit"
 msgstr "送信"
 
-#: ../class/literally-wordpress.php:591 ../class/literally-wordpress.php:631
+#: ../class/literally-wordpress.php:592 ../class/literally-wordpress.php:632
 msgid "Reward Amount Summary"
 msgstr "報酬総額サマリー"
 
-#: ../class/literally-wordpress.php:594 ../class/literally-wordpress.php:634
+#: ../class/literally-wordpress.php:595 ../class/literally-wordpress.php:635
 #: ../form-template/reward-summary.php:49
 msgid "Fixed"
 msgstr "確定"
 
-#: ../class/literally-wordpress.php:595 ../class/literally-wordpress.php:635
+#: ../class/literally-wordpress.php:596 ../class/literally-wordpress.php:636
 msgid "Unfixed"
 msgstr "未確定"
 
-#: ../class/literally-wordpress.php:596 ../class/literally-wordpress.php:636
+#: ../class/literally-wordpress.php:597 ../class/literally-wordpress.php:637
 msgid "Lost"
 msgstr "失効"
 
-#: ../class/literally-wordpress.php:597 ../class/literally-wordpress.php:609
-#: ../class/literally-wordpress.php:637
+#: ../class/literally-wordpress.php:598 ../class/literally-wordpress.php:610
+#: ../class/literally-wordpress.php:638
 msgid "Daily Report"
 msgstr "日別リポート"
 
-#: ../class/literally-wordpress.php:598 ../class/literally-wordpress.php:611
-#: ../class/literally-wordpress.php:638
+#: ../class/literally-wordpress.php:599 ../class/literally-wordpress.php:612
+#: ../class/literally-wordpress.php:639
 msgid "Date"
 msgstr "日付"
 
-#: ../class/literally-wordpress.php:606
+#: ../class/literally-wordpress.php:607
 msgid "Sales per post type"
 msgstr "投稿タイプ別売上"
 
-#: ../class/literally-wordpress.php:607
+#: ../class/literally-wordpress.php:608
 msgid "Post type"
 msgstr "投稿タイプ"
 
-#: ../class/literally-wordpress.php:654
+#: ../class/literally-wordpress.php:655
 #: ../form-template/edit-detail-event.php:72
 #, php-format
 msgid "Cacnelable till %1$s days before, %2$s"
 msgstr "%1$s日前までキャンセル可 %2$s返金"
 
-#: ../class/literally-wordpress.php:656
+#: ../class/literally-wordpress.php:657
 msgid "Are you sure to delete this ticket?"
 msgstr "このチケットを削除してよろしいですか？"
 
-#: ../class/literally-wordpress.php:658
+#: ../class/literally-wordpress.php:659
 msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
 msgstr "返金は数値（正負）またはパーセント（ex. 50%）でなければなりません。"
 
-#: ../class/literally-wordpress.php:691
+#: ../class/literally-wordpress.php:692
 #, php-format
 msgid ""
 "User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
@@ -4286,35 +4296,35 @@ msgstr ""
 "ユーザーが登録できません。<a href=\"%s\">一般設定</a>へ行き、ユーザーの新規登"
 "録を許可してください。"
 
-#: ../class/literally-wordpress.php:724 ../help/index.php:12
+#: ../class/literally-wordpress.php:725 ../help/index.php:12
 msgid "Literally WordPress Help"
 msgstr "Literally WordPressヘルプ"
 
-#: ../class/literally-wordpress.php:739
+#: ../class/literally-wordpress.php:740
 msgid "Purchase history"
 msgstr "購入履歴"
 
-#: ../class/literally-wordpress.php:881
+#: ../class/literally-wordpress.php:883
 msgid "Option updated."
 msgstr "設定が更新されました。"
 
-#: ../class/literally-wordpress.php:884
+#: ../class/literally-wordpress.php:886
 msgid "Option values are same, so nothing has changed."
 msgstr "オプション値が同じだったため、変更はありませんでした。"
 
-#: ../class/literally-wordpress.php:887
+#: ../class/literally-wordpress.php:889
 msgid "Failed to updated options."
 msgstr "設定の更新に失敗しました。"
 
-#: ../class/literally-wordpress.php:979
+#: ../class/literally-wordpress.php:981
 msgid "You've kindly given a present."
 msgstr "プレゼントを渡しました。"
 
-#: ../class/literally-wordpress.php:984
+#: ../class/literally-wordpress.php:986
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../class/literally-wordpress.php:1103
+#: ../class/literally-wordpress.php:1105
 msgid ""
 "You can't refund via PayPal because 60 days have past since the transaction "
 "occurred."
@@ -4322,53 +4332,53 @@ msgstr ""
 "トランザクションが発生してから60日が経過したため、PayPalでの返金はできませ"
 "ん。"
 
-#: ../class/literally-wordpress.php:1108
+#: ../class/literally-wordpress.php:1110
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../class/literally-wordpress.php:1110
+#: ../class/literally-wordpress.php:1112
 msgid "Sorry, but PayPal denied."
 msgstr "PayPalが拒否しました。"
 
-#: ../class/literally-wordpress.php:1142
+#: ../class/literally-wordpress.php:1144
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../class/literally-wordpress.php:1144
+#: ../class/literally-wordpress.php:1146
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../class/literally-wordpress.php:1359
+#: ../class/literally-wordpress.php:1361
 msgid "Email isn't valid format."
 msgstr "メールアドレスの形式が不正です。"
 
-#: ../class/literally-wordpress.php:1366
+#: ../class/literally-wordpress.php:1368
 msgid "Tel isn't valid format."
 msgstr "電話番号の形式が不正です。"
 
-#: ../class/literally-wordpress.php:1370
+#: ../class/literally-wordpress.php:1372
 msgid "Payment Medhot"
 msgstr "支払い方法"
 
-#: ../class/literally-wordpress.php:1370
+#: ../class/literally-wordpress.php:1372
 msgid "Payment Agency"
 msgstr "決済代行業者"
 
-#: ../class/literally-wordpress.php:1374
+#: ../class/literally-wordpress.php:1376
 #, php-format
 msgid "At lease one %s must be specified."
 msgstr "少なくとも1つの%sが指定されていなければなりません。"
 
-#: ../class/literally-wordpress.php:1382
+#: ../class/literally-wordpress.php:1384
 msgid "Company name is empty."
 msgstr "企業名が空白です。"
 
-#: ../class/literally-wordpress.php:1464
+#: ../class/literally-wordpress.php:1466
 msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 "決済代行業者にメッセージが送信されました。返答が来るのをお待ちください。"
 
-#: ../class/literally-wordpress.php:1572
+#: ../class/literally-wordpress.php:1574
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -4619,31 +4629,31 @@ msgstr ""
 "通知メールはプレーンテキストとして送信されます。<strong>HTMLを使わないでくだ"
 "さい</strong>"
 
-#: ../class/post.php:159
+#: ../class/post.php:167
 msgid "LWP Post sell Setting"
 msgstr "LWP投稿販売設定"
 
-#: ../class/post.php:310
+#: ../class/post.php:318
 msgid "Device added."
 msgstr "端末が追加されました。"
 
-#: ../class/post.php:312
+#: ../class/post.php:320
 msgid "Failed to add device."
 msgstr "端末の追加に失敗しました。"
 
-#: ../class/post.php:321
+#: ../class/post.php:329
 msgid "Device deleted."
 msgstr "端末が削除されました。"
 
-#: ../class/post.php:337
+#: ../class/post.php:345
 msgid "Device updated."
 msgstr "端末が更新されました。"
 
-#: ../class/post.php:349
+#: ../class/post.php:357
 msgid "Downloadble Contents"
 msgstr "ダウンロード用コンテンツ"
 
-#: ../class/post.php:539
+#: ../class/post.php:547
 msgid ""
 "Uploaded file size exceeds the &quot;upload_max_filesize&quot; value defined "
 "in php.ini"
@@ -4651,46 +4661,46 @@ msgstr ""
 "アップロードされたファイルサイズはphp.iniで定義されたupload_max_filesizeを超"
 "えています。"
 
-#: ../class/post.php:542
+#: ../class/post.php:550
 msgid "Uploaded file size exceeds"
 msgstr "アップロードされたファイルサイズが大きすぎます。"
 
-#: ../class/post.php:545
+#: ../class/post.php:553
 msgid "File has been uploaded incompletely. Check your internet connection."
 msgstr ""
 "ファイルが完全にアップロードされませんでした。インターネット接続を確認してく"
 "ださい。"
 
-#: ../class/post.php:548
+#: ../class/post.php:556
 msgid "No file was uploaded."
 msgstr "ファイルがアップロードされませんでした。"
 
-#: ../class/post.php:551
+#: ../class/post.php:559
 msgid "No tmp directory exists. Contact to your server administrator."
 msgstr "tmpディレクトリが存在しません。サーバー管理者に問い合わせてください。"
 
-#: ../class/post.php:554
+#: ../class/post.php:562
 msgid "PHP stops uploading."
 msgstr "PHPがアップロードを停止しました。"
 
-#: ../class/post.php:561
+#: ../class/post.php:569
 msgid "Failed to save the uploaded file. Contact to your server administrator."
 msgstr ""
 "アップロードされたファイルの保存に失敗しました。サーバー管理者に問い合わせて"
 "ください。"
 
-#: ../class/post.php:722
+#: ../class/post.php:730
 #, php-format
 msgid "Can't make directory. Check parmissin of \"%s\""
 msgstr ""
 "ディレクトリを作成できませんでした。\"%s\"のパーミッションを確認してくださ"
 "い。"
 
-#: ../class/post.php:729
+#: ../class/post.php:737
 msgid "Directory isn't writable."
 msgstr "ディレクトリが書き込み不可能になっています"
 
-#: ../class/post.php:733
+#: ../class/post.php:741
 msgid ""
 "Your contents directory is inside plugins folder. Strongly recommended to "
 "place it outside of plugin folder to prevent it from being deleted on "
@@ -4699,11 +4709,11 @@ msgstr ""
 "コンテンツディレクトリがプラグインフォルダ内にあります。アップデート時に消さ"
 "れないよう、プラグインフォルダの外側に設置することをお勧めいたします。"
 
-#: ../class/post.php:740
+#: ../class/post.php:748
 msgid "Warning! This file is accessible!"
 msgstr "注意！このファイルはアクセスできます。"
 
-#: ../class/post.php:762
+#: ../class/post.php:770
 msgid "Directory is publically accessible via HTTP"
 msgstr "ディレクトリはHTTPでアクセスできてしまいます"
 
@@ -8067,6 +8077,20 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid ""
+#~ "Directory isn't writable. You can't upload files. See %s and set "
+#~ "appropriate permission."
+#~ msgstr ""
+#~ "ディレクトリは書き込みできません。ファイルをアップロードできません。%sを見"
+#~ "て、適切なパーミッションを設定してください。"
+
+#~ msgid ""
+#~ "Directory is accessible via HTTP. See %s and prepend others from direct "
+#~ "access."
+#~ msgstr ""
+#~ "ディレクトリはHTTPでアクセスできてしまいます。%sを見て、第三者がディレクト"
+#~ "リにアクセスできないようにしてください。"
 
 #~ msgid "Note: Same number as previous order"
 #~ msgstr "※ 前回注文時と同じ番号"

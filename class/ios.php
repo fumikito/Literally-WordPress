@@ -489,10 +489,11 @@ EOS;
 		//All green. Now you can get file
 		$hash = md5_file($path);
 		$size = filesize($path);
-		if($size * .0009765625 * .0009765625 > 128){
+		$limit = apply_filters('lwp_xmlrpc_file_limit', 128);
+		if($size * .0009765625 * .0009765625 > $limit){
 			$this->kill($this->_('File is too large. You cannot get file.'), 500);
 		}
-		ini_set('memory_limit', '128M');
+		ini_set('memory_limit', $limit.'M');
 		$data = new IXR_Base64(file_get_contents($path));
 		$mime = $lwp->post->detect_mime($path);
 		//Save download log
