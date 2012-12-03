@@ -898,6 +898,7 @@ EOS;
 		return array(
 			'file' => $data,
 			'name' => $file->name,
+			'path' => $file->file,
 			'mime' => $mime,
 			'size' => filesize($path),
 			'hash' => md5_file($path)
