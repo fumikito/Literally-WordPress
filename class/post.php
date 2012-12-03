@@ -895,6 +895,8 @@ EOS;
 		}
 		ini_set('memory_limit', $limit.'M');
 		$data = new IXR_Base64(file_get_contents($path));
+		//ログを取る
+		$this->save_donwload_log($file->ID);
 		return array(
 			'file' => $data,
 			'name' => $file->name,
