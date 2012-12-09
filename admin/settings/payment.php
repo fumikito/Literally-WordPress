@@ -560,18 +560,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th valign="top"><?php $this->e('Connection URL'); ?></th>
-					<td>
-						<input type="text" value="<?php echo esc_attr($this->softbank->get_endpoint(true)); ?>" name="sb_endpoint" class="regular-text" />
-						<p class="description">
-							<?php printf($this->_('This is required for production environment. After contracting with %s, URL will be provied.'), $this->softbank->vendor_name()); ?>
-						</p>
-						<?php if(!$this->softbank->is_sandbox && !$this->softbank->get_endpoint()): ?>
-						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Connection URL')); ?></p>
-						<?php endif; ?>
-					</td>
-				</tr>
-				<tr>
 					<th valign="top"><?php $this->e('Notification URL'); ?></th>
 					<td>
 						<input type="text" readonly="readonly" onclick="this.select(0, this.value.length);" value="<?php echo esc_attr(lwp_endpoint('sb-payment')); ?>" class="regular-text" />

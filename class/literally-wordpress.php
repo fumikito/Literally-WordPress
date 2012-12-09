@@ -789,7 +789,6 @@ class Literally_WordPress{
 						'sb_crypt_key' => (string)$_REQUEST['sb_crypt_key'],
 						'sb_iv' => (string)$_REQUEST['sb_iv'],
 						'sb_save_cc_number' => (isset($_REQUEST['sb_save_cc_number']) && $_REQUEST['sb_save_cc_number']),
-						'sb_endpoint' => ((preg_match('/^https?:\/\//', $_REQUEST['sb_endpoint'])) ? (string)$_REQUEST['sb_endpoint'] : false),
 						'sb_blogname' => (string)$_REQUEST['sb_blogname'],
 						'sb_blogname_kana' => (string)$_REQUEST['sb_blogname_kana'],
 						'sb_cvs_limit' => (int)$_REQUEST['sb_cvs_limit'],

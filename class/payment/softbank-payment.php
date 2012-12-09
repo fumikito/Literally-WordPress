@@ -209,7 +209,6 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 			'sb_iv' => '',
 			'sb_hash_key' => '',
 			'sb_prefix' => '',
-			'sb_endpoint' => false,
 			'sb_save_cc_number' => true,
 			'sb_cvs_limit' => $this->cvs_limit,
 			'sb_payeasy_limit' => $this->payeasy_limit
@@ -577,7 +576,7 @@ EOS;
 	public function do_payeasy_authorization($user_id, $item_name, $post_id, $price, $quantity, $creds){
 		global $lwp, $wpdb;
 		$now = gmdate('Y-m-d H:i:s');
-		$limit = $this->get_payment_limit($post_id, false, 'sb-cvs');
+		$limit = $this->get_payment_limit($post_id, false, 'sb-payeasy');
 		$order_id = $this->generate_order_id();
 		//Create common XML
 		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price);
@@ -1074,10 +1073,12 @@ EOS;
 				||
 			(false !== array_search($key, $this->tag_to_be_crypt_force))
 		)){
-			//Padding the text
-			$add = strlen($string) % 8;
-			for($i = 0; $i < $add; $i++){
-				$string .= ' ';
+			// Padding the text
+			$surplus = strlen($string) % 8;
+			if($surplus > 0){
+				for($i = $surplus; $i < 8; $i++){
+					$string .= ' ';
+				}
 			}
 			// Crypting
 			$resource = mcrypt_module_open(MCRYPT_3DES, '',  MCRYPT_MODE_CBC, '');;
@@ -1140,7 +1141,7 @@ EOS;
 	public function get_endpoint($force = false){
 		return ($this->is_sandbox && !$force)
 			? self::PAYMENT_ENDPOINT_SANDBOX
-			: $this->production_endpoint;
+			: self::PAYMENT_ENDPOINT_PRODUCTION;
 	}	
 	
 	public function vendor_name($short = false){
