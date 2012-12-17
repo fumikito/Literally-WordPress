@@ -1,10 +1,23 @@
 <?php
 
-if(!function_exists('get_current_screen')){
-	function get_current_screen(){
-		
+// If History talbe is on public page, 
+// Load WP_Screen class which is required by WP_Lit_Table
+global $wp_version;
+if(!function_exists('convert_to_screen') && version_compare('3.5', $wp_version) < 1){
+	require_once ABSPATH.'wp-admin/includes/screen.php';
+	function convert_to_screen(){
+		return WP_Screen::get('histories');
 	}
 }
+
+// Under 3.4, this function is required.
+if(!function_exists('get_current_screen')){
+	function get_current_screen(){
+		return null;
+	}
+}
+
+
 
 /**
  * Controle user purchase history
