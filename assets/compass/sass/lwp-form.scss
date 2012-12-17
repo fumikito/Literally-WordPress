@@ -83,13 +83,15 @@ p{
 .submit a{
 	font-family: sans-serif;
 	text-decoration: none;
-	font-size: 14px !important;
-	line-height: 16px;
-	padding: 6px 12px;
+	font-size: 12px !important;
+	line-height: 23px;
+	height: 24px;
+	padding: 0 10px 1px;
 	cursor: pointer;
 	border: 1px solid #bbb;
 	color: #464646;
-	@include border-radius(15px);
+	white-space: nowrap;
+	@include border-radius(3px);
 	@include box-sizing(content-box);
 	background: #f2f2f2 url('../../white-grad.png') repeat-x scroll left top;
 	&:hover{
@@ -121,7 +123,8 @@ input{
 .submit{
 	input.button-primary,
 	a.button-primary{
-		border-color: #298cba;
+		border-color: #21759b;
+		border-bottom-color: #1e6a8d;
 		font-weight: bold;
 		color: #fff;
 		background: #21759B url('../../button-grad.png') repeat-x scroll left top;
