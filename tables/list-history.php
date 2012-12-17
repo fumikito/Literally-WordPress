@@ -266,7 +266,13 @@ EOS;
 	 * @return int
 	 */
 	function get_pagenum() {
-		return isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
+		if(is_admin()){
+			return isset($_GET['paged']) ? max(1, absint($_GET['paged'])) : 1;
+		}else{
+			global $wp_query;
+			$paged = (int)$wp_query->get('paged');
+			return max(1, $paged);
+		}
 	}
 	
 	
