@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 00:00+0900\n"
-"PO-Revision-Date: 2012-12-18 00:00+0900\n"
+"POT-Creation-Date: 2012-12-18 01:07+0900\n"
+"PO-Revision-Date: 2012-12-18 01:08+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -230,6 +230,14 @@ msgstr "加えて、このプラグインはcURLモジュールを必要とし�
 msgid ""
 " Please contact to your server administrator to change server configuration."
 msgstr "サーバ管理者に連絡を取り、設定を変えてもらってください。"
+
+#: ../literally-wordpress.php:60
+msgid ""
+"This plugin make your WordPress post object payable via PayPal and so on. "
+"ePub, PDF, MP3, Live ticket, Web-Magazine... What you sell is up to you."
+msgstr ""
+"このプラグインはWordPressの投稿オブジェクトをPayPalなどで購入可能にします。"
+"ePub, PDF, MP3, ライブチケット、Webマガジン...... 何を売るかはあなた次第。"
 
 #: ../admin/campaign.php:2 ../form-template/edit-detail.php:28
 msgid "Campaign"
@@ -4438,16 +4446,6 @@ msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 "決済代行業者にメッセージが送信されました。返答が来るのをお待ちください。"
 
-#: ../class/literally-wordpress.php:1579
-msgid ""
-"This plugin make your WordPress post payable. Registered users can buy your "
-"post via PayPal. You can provide several ways to reward their buying. Add "
-"rights to download private file, to accesss private post and so on."
-msgstr ""
-"このプラグインはあなたのWordPressを課金可能にします。登録したユーザーはPayPal"
-"を通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセス権な"
-"ど、購入したユーザーに対して提供できるものはいくつかあります。"
-
 #: ../class/notifier.php:82 ../help/transfer.php:27
 msgid "Notification"
 msgstr "通知"
@@ -7795,7 +7793,7 @@ msgstr "%s値引き"
 
 #: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
 #: ../tables/list-download-logs.php:224 ../tables/list-event.php:267
-#: ../tables/list-history.php:336 ../tables/list-management.php:348
+#: ../tables/list-history.php:342 ../tables/list-management.php:348
 #: ../tables/list-refund.php:263 ../tables/list-reward-history.php:200
 #: ../tables/list-ticket.php:262 ../tables/list-transfers.php:290
 #, php-format
@@ -7877,7 +7875,7 @@ msgstr "%s後"
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:247 ../tables/list-history.php:309
+#: ../tables/list-event.php:247 ../tables/list-history.php:315
 #: ../tables/list-management.php:325 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
@@ -7921,7 +7919,7 @@ msgstr "%sのキャンセル待ちリストから削除してよろしいです�
 msgid "Deregister"
 msgstr "登録解除"
 
-#: ../tables/list-history.php:304
+#: ../tables/list-history.php:310
 #, php-format
 msgid ""
 "You are now on the refund request queueue, but have no account registered. "
@@ -7930,20 +7928,20 @@ msgstr ""
 "あなたは現在返金要求中ですが、入金先が登録されていません。<a href=\"%s\">こち"
 "ら</a>で入金先を登録してください。"
 
-#: ../tables/list-history.php:341
+#: ../tables/list-history.php:347
 msgid "Filter"
 msgstr "絞り込み"
 
-#: ../tables/list-history.php:367
+#: ../tables/list-history.php:373
 msgid "1 item"
 msgstr "1項目"
 
-#: ../tables/list-history.php:367
+#: ../tables/list-history.php:373
 #, php-format
 msgid "%s items"
 msgstr "%s項目"
 
-#: ../tables/list-history.php:408
+#: ../tables/list-history.php:414
 #, php-format
 msgid "%1$s of %2$s"
 msgstr "%1$s / %2$s"
@@ -8129,6 +8127,16 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid ""
+#~ "This plugin make your WordPress post payable. Registered users can buy "
+#~ "your post via PayPal. You can provide several ways to reward their "
+#~ "buying. Add rights to download private file, to accesss private post and "
+#~ "so on."
+#~ msgstr ""
+#~ "このプラグインはあなたのWordPressを課金可能にします。登録したユーザーは"
+#~ "PayPalを通じて投稿を購入可能です。ファイルのダウンロード権や投稿へのアクセ"
+#~ "ス権など、購入したユーザーに対して提供できるものはいくつかあります。"
 
 #~ msgid "Real Product Sales"
 #~ msgstr "物販"

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Litteraly WordPress
- * Plugin URI: http://wordpress.org/extend/plugins/literally-wordpress/
- * Description: This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.
+ * Plugin URI: http://lwper.info
+ * Description: This plugin make your WordPress post object payable via PayPal and so on. ePub, PDF, MP3, Live ticket, Web-Magazine... What you sell is up to you.
  * Author: Takahashi Fumiki<takahashi.fumiki@hametuha.co.jp>
  * Version: 0.9.3.0
- * Author URI: http://lwper.info
+ * Author URI: http://takahashifumiki.com
  * Text Domain: literally-wordpress
  * Domain Path: /language/
  */
@@ -57,6 +57,7 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 		$lwp->_('Literally WordPress is activated but is not available. This plugin needs PHP version 5<. Your PHP version is %1$s.');
 		$lwp->_(' Furthermore, this plugin needs cURL module.');
 		$lwp->_(' Please contact to your server administrator to change server configuration.');
+		$lwp->_('This plugin make your WordPress post object payable via PayPal and so on. ePub, PDF, MP3, Live ticket, Web-Magazine... What you sell is up to you.');
 	}
 	
 }else{

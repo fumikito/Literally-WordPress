@@ -1571,11 +1571,4 @@ EOS;
 		}
 	}
 	
-	/**
-	 * 翻訳対象にならないものPoeditでひっかけるため
-	 * @return void
-	 */
-	private function ___(){
-		$this->_('This plugin make your WordPress post payable. Registered users can buy your post via PayPal. You can provide several ways to reward their buying. Add rights to download private file, to accesss private post and so on.');
-	}
 }

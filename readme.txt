@@ -3,8 +3,8 @@
 Contributors: Takahashi_Fumiki
 Tags: payment, paypal, ebook, ticket, subscription, monetize
 Requires at least: 3.1
-Tested up to: 3.4.2
-Stable tag: 0.9.3
+Tested up to: 3.5
+Stable tag: 0.9.3.0
 
 This plugin make your WordPress post payable. Registered users can buy your post via PayPal and so on.
 
@@ -163,7 +163,8 @@ Yes to both. LWP has some proper UIs like forms, button and so on, and they are 
 
 = 0.9.3.0 =
 
-Refund place will be saved. Old partial refund(only event ticket) is detected information. You can fix them from `Literally WP > Refund History`.
+* Refund price will be saved. Old partial refund(only event ticket) is detected information. You can fix them from `Literally WP > Refund History`.
+* Form template was added. If you have custom design, please check your own style.
 
 = 0.8 =
 
