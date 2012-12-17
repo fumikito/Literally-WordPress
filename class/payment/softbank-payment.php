@@ -13,6 +13,28 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 */
 	const SOFTBANK_IP_ADDRESS = '61.215.213.47';
 	
+	/**
+	 * Sandbox Marchant ID
+	 */
+	const SANDBOX_MARCHAND_ID = '30132';
+	
+	/**
+	 * Sandbox Service ID
+	 */
+	const SANDBOX_SERVICE_ID = '002';
+	
+	/**
+	 * Hash key for Sandbox
+	 */
+	const SANDBOX_HASH_KEY = '8435dbd48f2249807ec216c3d5ecab714264cc4a';
+
+	const SANDBOX_CC_NUMBER = '5250729026209007';
+	const SANDBOX_CC_EXPIRATION = '201103';
+	const SANDBOX_CC_SEC_CODE = '798';
+	
+	/**
+	 * Operation IDs
+	 */
 	const USER_INFO = 'MG02-00104-101';
 	
 	const PAYMENT_REQUEST_CODE = 'ST01-00101-101';
@@ -72,25 +94,7 @@ class LWP_SB_Payment extends LWP_Japanese_Payment {
 	 * @var type 
 	 */
 	private $_hash_key = '';
-	
-	/**
-	 * Sandbox Marchant ID
-	 * @var string
-	 */
-	private $_sandbox_marchant_id = '30132';
-	
-	/**
-	 * Sandbox Service ID
-	 * @var string
-	 */
-	private $_sandbox_service_id = '002';
-	
-	/**
-	 * Hash key for Sandbox
-	 * @var string
-	 */
-	private $_sandbox_hash_key = '8435dbd48f2249807ec216c3d5ecab714264cc4a';
-	
+		
 	/**
 	 * Blog name to display on PayEasy
 	 * @var string
@@ -336,9 +340,9 @@ EOS;
 		$xml_array = $this->create_common_xml($order_id, $user_id, $post_id, $item_name, $price, true);
 		if(!$use_same_card){
 			$xml_array['pay_method_info'] = array(
-					'cc_number' => $this->is_sandbox ? '5250729026209007' : $cc_number,
-					'cc_expiration' => $this->is_sandbox ? '201103' : $expiration,
-					'security_code' => $this->is_sandbox ? '798' : $cc_sec,
+					'cc_number' =>  $cc_number,
+					'cc_expiration' => ($this->is_sandbox && $this->_marchant_id == self::SANDBOX_MARCHAND_ID ) ? '201103' : $expiration, //Change expiration if it is sandbox and before constract.
+					'security_code' => $cc_sec,
 					'cust_manage_flg' => intval($save_cc_number));
 		}else{
 			$xml_array['pay_method_info'] = array(
@@ -1108,30 +1112,38 @@ EOS;
 	}
 	
 	/**
+	 * check if Softban Payment is enabled.
+	 * @return boolean
+	 */
+	public function is_enabled() {
+		return (!empty($this->_marchant_id) && !empty($this->_service_id) && !empty($this->_hash_key) && parent::is_enabled());
+	}
+	
+	/**
 	 * Returns Marchand ID
-	 * @param boolean $force To get original string, pass TRUE.
+	 * @param boolean $deprecated No longer used.
 	 * @return string
 	 */
-	public function marchant_id($force = false){
-		return $this->is_sandbox && !$force ? $this->_sandbox_marchant_id : $this->_marchant_id;
+	public function marchant_id($deprecated = false){
+		return $this->_marchant_id;
 	}
 	
 	/**
 	 * Returns Service ID
-	 * @param boolean $force To get original string, pass TRUE.
+	 * @param boolean $deprecated No longer used.
 	 * @return string
 	 */
-	public function service_id($force = false){
-		return $this->is_sandbox && !$force ? $this->_sandbox_service_id : $this->_service_id;
+	public function service_id($deprecated = false){
+		return $this->_service_id;
 	}
 	
 	/**
 	 * Returns Hash key
-	 * @param boolean $force To get original string, pass TRUE.
+	 * @param boolean $deprecated No longer used.
 	 * @return string
 	 */
-	public function hash_key($force = false){
-		return $this->is_sandbox && !$force ? $this->_sandbox_hash_key : $this->_hash_key;
+	public function hash_key($deprecated = false){
+		return $this->_hash_key;
 	}
 	
 	/**

@@ -365,6 +365,19 @@
 		<table class="form-table">
 			<tbody>
 				<tr>
+					<th valign="top"><?php $this->e('Status'); ?></th>
+					<td>
+						<?php if($this->softbank->is_enabled()): ?>
+							<p class="valid">
+								<?php printf($this->_('This payment method is enabled as %s.'),
+										($this->softbank->is_sandbox ? $this->_('Sandbox') : $this->_('Productional environment'))); ?>
+							</p>
+						<?php else: ?>
+							<p class="invalid"><?php $this->e('This payment method is invalid.'); ?></p>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<tr>
 					<th valign="top">
 						<label><?php $this->e('Sandbox'); ?></label>
 					</th>
@@ -493,9 +506,12 @@
 					<td>
 						<?php $marchant_id = $this->softbank->marchant_id(true); ?>
 						<input type="text" name="sb_marchant_id" id="sb_marchant_id" class="regular-text" value="<?php echo esc_attr($marchant_id); ?>" />
-						<?php if(!$this->softbank->is_sandbox && empty($marchant_id)): ?>
-						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Marchant ID')); ?></p>
+						<?php if(empty($marchant_id)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required.'), $this->_('Marchant ID')); ?></p>
 						<?php endif; ?>
+						<p class="description">
+							<?php printf($this->_('If you are not contracted with Softbank Payment, use <code>%s</code> instead.'), LWP_SB_Payment::SANDBOX_MARCHAND_ID); ?>
+						</p>
 					</td>
 				</tr>
 				<tr>
@@ -506,9 +522,12 @@
 					<td>
 						<?php $service_id = $this->softbank->service_id(true); ?>
 						<input type="text" name="sb_service_id" id="sb_service_id" class="regular-text" value="<?php echo esc_attr($service_id); ?>" />
-						<?php if(!$this->softbank->is_sandbox && empty($service_id)): ?>
-						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Service ID')); ?></p>
+						<?php if(empty($service_id)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required.'), $this->_('Service ID')); ?></p>
 						<?php endif; ?>
+						<p class="description">
+							<?php printf($this->_('If you are not contracted with Softbank Payment, use <code>%s</code> instead.'), LWP_SB_Payment::SANDBOX_SERVICE_ID); ?>
+						</p>
 					</td>
 				</tr>
 				<tr>
@@ -519,9 +538,12 @@
 					<td>
 						<?php $hash_key = $this->softbank->hash_key(true); ?>
 						<input type="text" name="sb_hash_key" id="sb_hash_key" class="regular-text" value="<?php echo esc_attr($hash_key); ?>" />
-						<?php if(!$this->softbank->is_sandbox && empty($hash_key)): ?>
-						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Hash Key')); ?></p>
+						<?php if(empty($hash_key)): ?>
+						<p class="invalid"><?php printf($this->_('%s is required.'), $this->_('Hash Key')); ?></p>
 						<?php endif; ?>
+						<p class="description">
+							<?php printf($this->_('If you are not contracted with Softbank Payment, use <code>%s</code> instead.'), LWP_SB_Payment::SANDBOX_HASH_KEY); ?>
+						</p>
 					</td>
 				</tr>
 				<tr>
@@ -553,7 +575,12 @@
 							<input class="regular-text" type="text" name="sb_iv" value="<?php echo esc_attr($this->softbank->iv) ?>" />
 							<?php $this->e('IV (Initival Vector)'); ?>
 						</label>
-						<p><?php $this->e('These keys are required for productional environment and will be provided <strong>after contract with SOFTBANK Payment Service corp.</strong>'); ?></p>
+						<p>
+							<?php $this->e('These keys are required for productional environment and will be provided <strong>after contract with SOFTBANK Payment Service corp.</strong>'); ?>
+							<?php printf($this->_('Before contracting, use <code>%1$s</code> for %2$s, <code>%3$s</code> for %4$s.'),
+									'123456789012345678901234', $this->_('Crypt Key'),
+									'00000000', $this->_('IV (Initival Vector)')); ?>
+						</p>
 						<?php if(!$this->softbank->is_sandbox && (empty($this->softbank->iv) || empty($this->softbank->crypt_key))): ?>
 						<p class="invalid"><?php printf($this->_('%s is required for production environment.'), $this->_('Crypt Information')); ?></p>
 						<?php endif; ?>
@@ -567,6 +594,11 @@
 							<?php $this->e('If Web CVS or PayEasy is enabled, you must set up this URL as notification URL. Otherwise you loose payment status change.'); ?>
 						</p>
 						<a href="<?php echo lwp_endpoint('sb-payment'); ?>" class="button"><?php $this->e('Check endpoint'); ?></a>
+						<?php if(!preg_match("/^https/", lwp_endpoint('sb-payment'))): ?>
+						<p class="invalid">
+							<?php $this->e('Softbank Payment requires SSL connection, but Notification URL is not over SSL. It depends on constants <code>FORCE_SSL_LOGIN</code> or <code>FORCE_SSL_ADMIN</code> which is defined in wp-config.php. Of course, your server must be set up properly to be accessible over HTTPS protocol. For more details, see <a href="http://codex.wordpress.org/Administration_Over_SSL">Codex</a>.'); ?>
+						</p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
@@ -579,6 +611,22 @@
 								printf('<p class="invalid">%s</p>', $this->_('This server is not ready for productional environment. Please contact to your server admin and ask him to install PHP Mcrypt.'));
 							}
 						?>
+					</td>
+				</tr>
+				<tr>
+					<th valign="top"><?php $this->e('Test credit card'); ?></th>
+					<td>
+						<label>
+							<input type="text" onclick="this.select(0, this.value.length);" class="regular-text" readonly="readonly" value="<?php echo LWP_SB_Payment::SANDBOX_CC_NUMBER; ?>" />
+							<?php $this->e('Card No.'); ?>
+						</label><br />
+						<label>
+							<input type="text" onclick="this.select(0, this.value.length);" class="regular-text" readonly="readonly" value="<?php echo LWP_SB_Payment::SANDBOX_CC_SEC_CODE; ?>" />
+							<?php $this->e('Security Code'); ?>
+						</label>
+						<p class="description">
+							<?php $this->e('Before constact, use this credit card information. After contract you will be provided test card information.'); ?>
+						</p>
 					</td>
 				</tr>
 			</tbody>
