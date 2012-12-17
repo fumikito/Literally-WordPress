@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 18:03+0900\n"
-"PO-Revision-Date: 2012-12-17 18:03+0900\n"
+"POT-Creation-Date: 2012-12-18 00:00+0900\n"
+"PO-Revision-Date: 2012-12-18 00:00+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -244,7 +244,7 @@ msgstr "キャンペーンアイテム"
 #: ../class/campaign.php:265 ../class/form.php:786 ../class/form.php:839
 #: ../class/subscription.php:81
 #: ../class/base/literally-wordpress-common.php:136
-#: ../tables/list-campaign.php:164 ../tables/list-history.php:145
+#: ../tables/list-campaign.php:164 ../tables/list-history.php:158
 #: ../tables/list-management.php:233
 msgid "Subscription"
 msgstr "定期購読"
@@ -787,9 +787,9 @@ msgstr "項目名"
 #: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:60 ../admin/settings/dashboard.php:111
 #: ../admin/settings/dashboard.php:143 ../admin/settings/payment.php:7
-#: ../admin/settings/payment.php:368 ../class/form.php:660
+#: ../admin/settings/payment.php:369 ../class/form.php:660
 #: ../class/literally-wordpress.php:593 ../class/literally-wordpress.php:633
-#: ../form-template/paypal-sb-check.php:35 ../tables/list-history.php:50
+#: ../form-template/paypal-sb-check.php:35 ../tables/list-history.php:63
 #: ../tables/list-management.php:132 ../tables/list-reward-history.php:36
 #: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
 #: ../tables/list-transfers.php:161
@@ -1137,7 +1137,7 @@ msgid "Action"
 msgstr "アクション"
 
 #: ../admin/management.php:39 ../class/literally-wordpress.php:1253
-#: ../tables/list-download-logs.php:110 ../tables/list-history.php:40
+#: ../tables/list-download-logs.php:110 ../tables/list-history.php:53
 #: ../tables/list-management.php:129 ../tables/list-refund.php:113
 #: ../tables/list-transfers.php:155
 msgid "Item Name"
@@ -1174,13 +1174,13 @@ msgid "Deleted User"
 msgstr "削除されたユーザー"
 
 #: ../admin/management.php:74 ../class/literally-wordpress.php:1260
-#: ../tables/list-history.php:45 ../tables/list-management.php:134
+#: ../tables/list-history.php:58 ../tables/list-management.php:134
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
 #: ../tables/list-reward-request.php:118 ../tables/list-transfers.php:158
 msgid "Registered"
 msgstr "登録日"
 
-#: ../admin/management.php:79 ../tables/list-history.php:42
+#: ../admin/management.php:79 ../tables/list-history.php:55
 #: ../tables/list-management.php:131
 msgid "Purchased Price"
 msgstr "購入価格"
@@ -1192,7 +1192,7 @@ msgstr "定価"
 #: ../admin/management.php:87 ../class/event.php:929 ../class/form.php:1179
 #: ../class/literally-wordpress.php:1254
 #: ../form-template/paypal-event-tickets-consume.php:18
-#: ../tables/list-history.php:41 ../tables/list-ticket.php:38
+#: ../tables/list-history.php:54 ../tables/list-ticket.php:38
 msgid "Quantity"
 msgstr "数量"
 
@@ -1255,7 +1255,7 @@ msgid "Notification Code"
 msgstr "通知コード"
 
 #: ../admin/management.php:237 ../class/form.php:666
-#: ../tables/list-history.php:183 ../tables/list-transfers.php:222
+#: ../tables/list-history.php:196 ../tables/list-transfers.php:222
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
@@ -1269,7 +1269,7 @@ msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
 msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
 #: ../admin/management.php:275 ../class/subscription.php:198
-#: ../tables/list-history.php:44
+#: ../tables/list-history.php:57
 msgid "Expires"
 msgstr "期限"
 
@@ -1278,7 +1278,7 @@ msgid "No Limit."
 msgstr "無期限"
 
 #: ../admin/management.php:281 ../class/event.php:1119
-#: ../class/notifier.php:190 ../tables/list-history.php:181
+#: ../class/notifier.php:190 ../tables/list-history.php:194
 msgid "Expired"
 msgstr "期限切れ"
 
@@ -1933,7 +1933,7 @@ msgstr ""
 #: ../admin/settings/misc.php:62 ../admin/settings/payment.php:104
 #: ../admin/settings/payment.php:142 ../admin/settings/payment.php:154
 #: ../admin/settings/payment.php:166 ../admin/settings/payment.php:178
-#: ../admin/settings/payment.php:196 ../admin/settings/payment.php:644
+#: ../admin/settings/payment.php:196 ../admin/settings/payment.php:646
 #: ../admin/settings/post.php:19 ../admin/settings/post.php:50
 #: ../admin/settings/post.php:67 ../class/form.php:2075
 msgid "More &gt;"
@@ -2093,11 +2093,11 @@ msgstr "国別コード"
 #: ../admin/settings/payment.php:111 ../admin/settings/payment.php:124
 #: ../admin/settings/payment.php:137 ../admin/settings/payment.php:149
 #: ../admin/settings/payment.php:161 ../admin/settings/payment.php:173
-#: ../admin/settings/payment.php:190 ../admin/settings/payment.php:290
-#: ../admin/settings/payment.php:297 ../admin/settings/payment.php:461
-#: ../admin/settings/payment.php:469 ../admin/settings/payment.php:504
-#: ../admin/settings/payment.php:520 ../admin/settings/payment.php:536
-#: ../admin/settings/payment.php:552 ../admin/settings/payment.php:567
+#: ../admin/settings/payment.php:190 ../admin/settings/payment.php:291
+#: ../admin/settings/payment.php:298 ../admin/settings/payment.php:463
+#: ../admin/settings/payment.php:471 ../admin/settings/payment.php:506
+#: ../admin/settings/payment.php:522 ../admin/settings/payment.php:538
+#: ../admin/settings/payment.php:554 ../admin/settings/payment.php:569
 #: ../form-template/paypal-payment.php:60
 #: ../form-template/paypal-refund-account.php:6
 msgid "Required"
@@ -2180,8 +2180,8 @@ msgstr ""
 "契約し、認証用の情報を取得する必要があります。クレジットカードを有効にした場"
 "合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:216 ../admin/settings/payment.php:373
-#: ../admin/settings/payment.php:382 ../form-template/paypal-selection.php:59
+#: ../admin/settings/payment.php:216 ../admin/settings/payment.php:374
+#: ../admin/settings/payment.php:383 ../form-template/paypal-selection.php:59
 #: ../form-template/paypal-selection.php:91
 #: ../form-template/paypal-selection.php:149
 #: ../form-template/paypal-selection.php:207
@@ -2189,19 +2189,29 @@ msgstr ""
 msgid "Sandbox"
 msgstr "サンドボックス"
 
-#: ../admin/settings/payment.php:221 ../admin/settings/payment.php:387
+#: ../admin/settings/payment.php:221 ../admin/settings/payment.php:388
 msgid "This is a develop enviorment and needs pseudo transaction."
 msgstr "これは開発環境であり、仮の決済情報を生成します。"
 
-#: ../admin/settings/payment.php:226 ../admin/settings/payment.php:392
+#: ../admin/settings/payment.php:223 ../admin/settings/payment.php:390
+msgid ""
+"This payment method is very experimenal. <strong>Test on Sandbox is strongly "
+"recommended</strong>. If you find some bug please contact to plugin author "
+"at <a href=\"http://lwper.info\">LWPper.info</a>"
+msgstr ""
+"この支払い方法は取り組み始めて間もない機能です。<strong>サンドボックスでのテ"
+"ストを強くお勧めします</strong>。もしバグを発見したら、<a href=\"http://"
+"lwper.info\">LWPper.info</a>で開発者にコンタクトをとってください。"
+
+#: ../admin/settings/payment.php:227 ../admin/settings/payment.php:394
 msgid "Sthealth mode"
 msgstr "ステルスモード"
 
-#: ../admin/settings/payment.php:230 ../admin/settings/payment.php:396
+#: ../admin/settings/payment.php:231 ../admin/settings/payment.php:398
 msgid "Enable stealth mode"
 msgstr "ステルスモードを有効にする"
 
-#: ../admin/settings/payment.php:232 ../admin/settings/payment.php:398
+#: ../admin/settings/payment.php:233 ../admin/settings/payment.php:400
 msgid ""
 "If stealth mode is on, only administrator can see this payment option on "
 "transaction form. This is useful for productional test."
@@ -2209,13 +2219,13 @@ msgstr ""
 "ステルスモードが有効になっている場合、決済フォームにおいて管理者だけがこの支"
 "払い方法を見ることができます。本番環境でのテストに役立ちます。"
 
-#: ../admin/settings/payment.php:237 ../admin/settings/payment.php:403
+#: ../admin/settings/payment.php:238 ../admin/settings/payment.php:405
 #: ../form-template/paypal-selection.php:86
 #: ../form-template/paypal-selection.php:144
 msgid "Credit Card"
 msgstr "クレジットカード"
 
-#: ../admin/settings/payment.php:251
+#: ../admin/settings/payment.php:252
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted with."
@@ -2223,7 +2233,7 @@ msgstr ""
 "チェックされたクレジットカードは決済フォームに表示されます。契約したクレジッ"
 "トカードにチェックを入れてください。"
 
-#: ../admin/settings/payment.php:252
+#: ../admin/settings/payment.php:253
 msgid ""
 "Though GMO Payment has many credit cards available(Nicos, Mistui-Sumitomo, "
 "JACCS), most of them are aquirer of 5 famous international service above and "
@@ -2233,76 +2243,76 @@ msgstr ""
 "すが、ほとんどは５大国際サービスの代理店であるため、ユーザーの利便性を損なわ"
 "ないよう、すべてのクレジットカードを表示することはしません。"
 
-#: ../admin/settings/payment.php:259 ../admin/settings/payment.php:429
+#: ../admin/settings/payment.php:260 ../admin/settings/payment.php:431
 #: ../class/form.php:311 ../form-template/paypal-sb-check.php:30
 #: ../form-template/paypal-selection.php:202
 #: ../form-template/paypal-selection.php:212
 msgid "Web CVS"
 msgstr "コンビニ決済"
 
-#: ../admin/settings/payment.php:272 ../admin/settings/payment.php:284
-#: ../admin/settings/payment.php:443 ../admin/settings/payment.php:475
+#: ../admin/settings/payment.php:273 ../admin/settings/payment.php:285
+#: ../admin/settings/payment.php:445 ../admin/settings/payment.php:477
 #, php-format
 msgid "Payment must be finished within %s days."
 msgstr "支払い期限を%s日にする。"
 
-#: ../admin/settings/payment.php:277 ../admin/settings/payment.php:451
+#: ../admin/settings/payment.php:278 ../admin/settings/payment.php:453
 #: ../form-template/paypal-payment.php:207
 #: ../form-template/paypal-selection.php:263
 msgid "PayEasy"
 msgstr "PayEasy"
 
-#: ../admin/settings/payment.php:282 ../admin/settings/payment.php:456
+#: ../admin/settings/payment.php:283 ../admin/settings/payment.php:458
 msgid "Enables PayEasy"
 msgstr "PayEasyを有効にする"
 
-#: ../admin/settings/payment.php:289
+#: ../admin/settings/payment.php:290
 msgid "Shop ID"
 msgstr "ショップID"
 
-#: ../admin/settings/payment.php:296
+#: ../admin/settings/payment.php:297
 msgid "Shop Password"
 msgstr "ショップパスワード"
 
-#: ../admin/settings/payment.php:302
+#: ../admin/settings/payment.php:303
 msgid "Contact Tel No."
 msgstr "お問い合わせ電話番号"
 
-#: ../admin/settings/payment.php:307 ../admin/settings/payment.php:334
+#: ../admin/settings/payment.php:308 ../admin/settings/payment.php:335
 msgid "Wrong Format."
 msgstr "書式が間違っています。"
 
-#: ../admin/settings/payment.php:311 ../admin/settings/payment.php:338
+#: ../admin/settings/payment.php:312 ../admin/settings/payment.php:339
 msgid "Required for Lawson and Family Mart."
 msgstr "ローソンとファミリーマートで必須です。"
 
-#: ../admin/settings/payment.php:312
+#: ../admin/settings/payment.php:313
 msgid "Allowed letters for Tel No. are <strong>0~9 and hyphen(-)</strong>."
 msgstr ""
 "お問い合わせ電話番号に使用できる文字は<strong>0~9とハイフン(-)</strong>のみで"
 "す。"
 
-#: ../admin/settings/payment.php:317
+#: ../admin/settings/payment.php:318
 msgid "Contact Open Hour"
 msgstr "お問い合わせ時間"
 
-#: ../admin/settings/payment.php:320
+#: ../admin/settings/payment.php:321
 msgid "Starts: "
 msgstr "開始："
 
-#: ../admin/settings/payment.php:325
+#: ../admin/settings/payment.php:326
 msgid "Ends: "
 msgstr "終了："
 
-#: ../admin/settings/payment.php:339
+#: ../admin/settings/payment.php:340
 msgid "Hour format must be <strong>HH:MM</strong>."
 msgstr "書式は<strong>HH:MM</strong>でなくてはなりません。"
 
-#: ../admin/settings/payment.php:344 ../admin/settings/payment.php:590
+#: ../admin/settings/payment.php:345 ../admin/settings/payment.php:592
 msgid "Notification URL"
 msgstr "通知URL"
 
-#: ../admin/settings/payment.php:348
+#: ../admin/settings/payment.php:349
 msgid ""
 "If Web CVS or PayEasy is enabled, you must set up this URL as notification "
 "URL on GMO Payment Gateway's shop admin panel(Go to Manage Shop &gt; Shop "
@@ -2314,7 +2324,7 @@ msgstr ""
 "ショップ情報 &gt; メール／結果通知設定へ移動し、&quot;編集&quot;をクリック）"
 "してください。そうしないと、支払いステータスの変更がわからなくなります。"
 
-#: ../admin/settings/payment.php:362
+#: ../admin/settings/payment.php:363
 msgid ""
 "To use Softbank Payment, you have to contract with SOFTBANK Payment Service "
 "corp. and get credential infomation. If Credit Card is enabled, PayPal's "
@@ -2324,20 +2334,20 @@ msgstr ""
 "会社と契約し、認証用の情報を取得する必要があります。クレジットカードを有効に"
 "した場合、PayPalのクレジットカードは使えなくなります。"
 
-#: ../admin/settings/payment.php:372
+#: ../admin/settings/payment.php:373
 #, php-format
 msgid "This payment method is enabled as %s."
 msgstr "この支払い方法は%sとして有効化されています。"
 
-#: ../admin/settings/payment.php:373
+#: ../admin/settings/payment.php:374
 msgid "Productional environment"
 msgstr "本番環境"
 
-#: ../admin/settings/payment.php:376
+#: ../admin/settings/payment.php:377
 msgid "This payment method is invalid."
 msgstr "この支払い方法は無効です。"
 
-#: ../admin/settings/payment.php:417
+#: ../admin/settings/payment.php:419
 msgid ""
 "Checked credit cards are displayed on transaction form. Please check credit "
 "cards which you have contracted to use."
@@ -2345,59 +2355,59 @@ msgstr ""
 "チェックされたクレジットカードは決済フォームに表示されます。審査の完了したク"
 "レジットカードにチェックを入れてください。"
 
-#: ../admin/settings/payment.php:422
+#: ../admin/settings/payment.php:424
 msgid "Let users order without inputing credit card number after the 2nd time."
 msgstr "ユーザーが2回目以降クレジットカード番号入力を省略できるようにする。"
 
-#: ../admin/settings/payment.php:445
+#: ../admin/settings/payment.php:447
 msgid "Web CVS's payment limit must be between 1 and 60."
 msgstr "Webコンビニの支払い期限は1〜60日です。"
 
-#: ../admin/settings/payment.php:460 ../admin/settings/payment.php:486
-#: ../admin/settings/payment.php:489
+#: ../admin/settings/payment.php:462 ../admin/settings/payment.php:488
+#: ../admin/settings/payment.php:491
 msgid "Name Kana on Invoice"
 msgstr "領収書に表示するカナ"
 
-#: ../admin/settings/payment.php:463 ../admin/settings/payment.php:471
+#: ../admin/settings/payment.php:465 ../admin/settings/payment.php:473
 #, php-format
 msgid "(%d letters max)"
 msgstr "（%d文字まで）"
 
-#: ../admin/settings/payment.php:468 ../admin/settings/payment.php:483
+#: ../admin/settings/payment.php:470 ../admin/settings/payment.php:485
 msgid "Name on Invoice"
 msgstr "領収虜に表示する名前"
 
-#: ../admin/settings/payment.php:477
+#: ../admin/settings/payment.php:479
 msgid "These values are required for PayEasy. Kana must be Zenkaku Kana."
 msgstr "これらの値はPayEasyに必須です。カナは全角カナにしてください。"
 
-#: ../admin/settings/payment.php:483 ../admin/settings/payment.php:486
-#: ../admin/settings/payment.php:560
+#: ../admin/settings/payment.php:485 ../admin/settings/payment.php:488
+#: ../admin/settings/payment.php:562
 #, php-format
 msgid "%1$s is required for %2$s and character length must be %3$d and less."
 msgstr "%1$sは%2$sに必須です。%3$d文字以下でなくてはなりません。"
 
-#: ../admin/settings/payment.php:489
+#: ../admin/settings/payment.php:491
 #, php-format
 msgid "%s must be Zenkaku Kana."
 msgstr "%sは全角カナでなくてはなりません。"
 
-#: ../admin/settings/payment.php:492
+#: ../admin/settings/payment.php:494
 msgid "PayEasy's payment limit must be between 1 and 60."
 msgstr "PayEasyの支払い期限は1〜60日です。"
 
-#: ../admin/settings/payment.php:503 ../admin/settings/payment.php:510
+#: ../admin/settings/payment.php:505 ../admin/settings/payment.php:512
 msgid "Marchant ID"
 msgstr "マーチャントID"
 
-#: ../admin/settings/payment.php:510 ../admin/settings/payment.php:526
-#: ../admin/settings/payment.php:542 ../admin/settings/sidebar.php:30
+#: ../admin/settings/payment.php:512 ../admin/settings/payment.php:528
+#: ../admin/settings/payment.php:544 ../admin/settings/sidebar.php:30
 #, php-format
 msgid "%s is required."
 msgstr "%sは必須項目です。"
 
-#: ../admin/settings/payment.php:513 ../admin/settings/payment.php:529
-#: ../admin/settings/payment.php:545
+#: ../admin/settings/payment.php:515 ../admin/settings/payment.php:531
+#: ../admin/settings/payment.php:547
 #, php-format
 msgid ""
 "If you are not contracted with Softbank Payment, use <code>%s</code> instead."
@@ -2405,19 +2415,19 @@ msgstr ""
 "ソフトバンク・ペイメントと契約していない場合は<code>%s</code>を代わりに使って"
 "ください。"
 
-#: ../admin/settings/payment.php:519 ../admin/settings/payment.php:526
+#: ../admin/settings/payment.php:521 ../admin/settings/payment.php:528
 msgid "Service ID"
 msgstr "サービスID"
 
-#: ../admin/settings/payment.php:535 ../admin/settings/payment.php:542
+#: ../admin/settings/payment.php:537 ../admin/settings/payment.php:544
 msgid "Hash Key"
 msgstr "ハッシュキー"
 
-#: ../admin/settings/payment.php:551 ../admin/settings/payment.php:560
+#: ../admin/settings/payment.php:553 ../admin/settings/payment.php:562
 msgid "Service Prefix"
 msgstr "サービス接頭辞"
 
-#: ../admin/settings/payment.php:557
+#: ../admin/settings/payment.php:559
 msgid ""
 "Prefix is used to generate transaction ID for Softbank Payment. Must be "
 "alphanumeric and less than 9 letters. Once you start your service, please "
@@ -2426,23 +2436,23 @@ msgstr ""
 "接頭辞はソフトバンク・ペイメントの決済IDを生成するために使われます。8文字以下"
 "の半角英数字にしてください。サービス開始後は変更することはできません。"
 
-#: ../admin/settings/payment.php:560
+#: ../admin/settings/payment.php:562
 msgid "Production Environment"
 msgstr "本番環境"
 
-#: ../admin/settings/payment.php:566 ../admin/settings/payment.php:585
+#: ../admin/settings/payment.php:568 ../admin/settings/payment.php:587
 msgid "Crypt Information"
 msgstr "暗号化情報"
 
-#: ../admin/settings/payment.php:572 ../admin/settings/payment.php:581
+#: ../admin/settings/payment.php:574 ../admin/settings/payment.php:583
 msgid "Crypt Key"
 msgstr "暗号キー"
 
-#: ../admin/settings/payment.php:576 ../admin/settings/payment.php:582
+#: ../admin/settings/payment.php:578 ../admin/settings/payment.php:584
 msgid "IV (Initival Vector)"
 msgstr "IV（初期化ベクトル）"
 
-#: ../admin/settings/payment.php:579
+#: ../admin/settings/payment.php:581
 msgid ""
 "These keys are required for productional environment and will be provided "
 "<strong>after contract with SOFTBANK Payment Service corp.</strong>"
@@ -2450,7 +2460,7 @@ msgstr ""
 "これらのキーは本番環境で必要になります。<strong>ソフトバンク・ペイメント・"
 "サービス株式会社と契約後</strong>に提供されます。"
 
-#: ../admin/settings/payment.php:580
+#: ../admin/settings/payment.php:582
 #, php-format
 msgid ""
 "Before contracting, use <code>%1$s</code> for %2$s, <code>%3$s</code> for "
@@ -2458,12 +2468,12 @@ msgid ""
 msgstr ""
 "契約前は%2$sに<code>%1$s</code>を、%4$sに<code>%3$s</code>を使ってください。"
 
-#: ../admin/settings/payment.php:585
+#: ../admin/settings/payment.php:587
 #, php-format
 msgid "%s is required for production environment."
 msgstr "%sは本番環境に必須です。"
 
-#: ../admin/settings/payment.php:594
+#: ../admin/settings/payment.php:596
 msgid ""
 "If Web CVS or PayEasy is enabled, you must set up this URL as notification "
 "URL. Otherwise you loose payment status change."
@@ -2471,11 +2481,11 @@ msgstr ""
 "コンビニ決済またはPayEasyを有効にした場合、このURLを結果通知URLとして設定して"
 "ください。そうしないと、支払いステータスの変更がわからなくなります。"
 
-#: ../admin/settings/payment.php:596
+#: ../admin/settings/payment.php:598
 msgid "Check endpoint"
 msgstr "エンドポイントをチェック"
 
-#: ../admin/settings/payment.php:599
+#: ../admin/settings/payment.php:601
 msgid ""
 "Softbank Payment requires SSL connection, but Notification URL is not over "
 "SSL. It depends on constants <code>FORCE_SSL_LOGIN</code> or "
@@ -2491,21 +2501,21 @@ msgstr ""
 "\"http://codex.wordpress.org/Administration_Over_SSL\">Codex</a>を参照してく"
 "ださい。"
 
-#: ../admin/settings/payment.php:605
+#: ../admin/settings/payment.php:607
 msgid "Other Information"
 msgstr "その他の情報"
 
-#: ../admin/settings/payment.php:608
+#: ../admin/settings/payment.php:610
 #, php-format
 msgid "This server's IP Address: <code>%s</code><br />"
 msgstr "このサーバのIPアドレス: <code>%s</code><br />"
 
-#: ../admin/settings/payment.php:609
+#: ../admin/settings/payment.php:611
 #, php-format
 msgid "PHP Mcrypt Extentions: <strong>%s</strong>."
 msgstr "PHP Mcrypt拡張: <strong>%s</strong>"
 
-#: ../admin/settings/payment.php:611
+#: ../admin/settings/payment.php:613
 msgid ""
 "This server is not ready for productional environment. Please contact to "
 "your server admin and ask him to install PHP Mcrypt."
@@ -2513,19 +2523,19 @@ msgstr ""
 "このサーバーは本番環境に対応していません。サーバ管理者にPHP Mcryptをインス"
 "トールするよう依頼してください。"
 
-#: ../admin/settings/payment.php:617
+#: ../admin/settings/payment.php:619
 msgid "Test credit card"
 msgstr "テスト用クレジットカード"
 
-#: ../admin/settings/payment.php:621 ../form-template/paypal-payment.php:87
+#: ../admin/settings/payment.php:623 ../form-template/paypal-payment.php:87
 msgid "Card No."
 msgstr "カード番号"
 
-#: ../admin/settings/payment.php:625 ../form-template/paypal-payment.php:163
+#: ../admin/settings/payment.php:627 ../form-template/paypal-payment.php:163
 msgid "Security Code"
 msgstr "セキュリティコード"
 
-#: ../admin/settings/payment.php:628
+#: ../admin/settings/payment.php:630
 msgid ""
 "Before constact, use this credit card information. After contract you will "
 "be provided test card information."
@@ -2533,7 +2543,7 @@ msgstr ""
 "契約前はこのカード情報を使ってください。契約後はテストカード情報が提供されま"
 "す。"
 
-#: ../admin/settings/payment.php:642
+#: ../admin/settings/payment.php:644
 msgid ""
 "If you accept transfer, users can pay with bank account or something that is "
 "not digital transaction."
@@ -2541,7 +2551,7 @@ msgstr ""
 "送金を受け付けると、ユーザーは銀行振込のように、電子的な方法によらない決済を"
 "利用することができます。"
 
-#: ../admin/settings/payment.php:643
+#: ../admin/settings/payment.php:645
 msgid ""
 "This helps users, but transactional process has a little bit more complex, "
 "because you have to check actual bank account to know whether bank deposit "
@@ -2551,33 +2561,33 @@ msgstr ""
 "なります。あなたは銀行口座を確認して入金が行われたかどうかを確かめる必要があ"
 "ります。"
 
-#: ../admin/settings/payment.php:651
+#: ../admin/settings/payment.php:653
 msgid "Accept Transfer"
 msgstr "送金の受付"
 
-#: ../admin/settings/payment.php:654 ../admin/settings/subscription.php:14
+#: ../admin/settings/payment.php:656 ../admin/settings/subscription.php:14
 msgid "Disallow"
 msgstr "許可しない"
 
-#: ../admin/settings/payment.php:655 ../admin/settings/subscription.php:15
+#: ../admin/settings/payment.php:657 ../admin/settings/subscription.php:15
 msgid "Allow"
 msgstr "許可する"
 
-#: ../admin/settings/payment.php:659
+#: ../admin/settings/payment.php:661
 msgid "Notification Frequency"
 msgstr "通知頻度"
 
-#: ../admin/settings/payment.php:663
+#: ../admin/settings/payment.php:665
 #, php-format
 msgid "Send reminder on every %s days"
 msgstr "%s日ごとに通知を送る"
 
-#: ../admin/settings/payment.php:669
+#: ../admin/settings/payment.php:671
 #, php-format
 msgid "Transaction expires by %s days"
 msgstr "トランザクションは%s日で期限切れになります。"
 
-#: ../admin/settings/payment.php:674
+#: ../admin/settings/payment.php:676
 msgid ""
 "If you don't want to send reminder, set notification frequency to 0. "
 "Transfer transaction will be expired after notification limit days will have "
@@ -2586,11 +2596,11 @@ msgstr ""
 "通知を送りたくない場合は通知頻度を0にしてください。送金によるトランザクション"
 "は期限日を過ぎると無効になります。"
 
-#: ../admin/settings/payment.php:679
+#: ../admin/settings/payment.php:681
 msgid "Notification Message"
 msgstr "通知メッセージ"
 
-#: ../admin/settings/payment.php:682
+#: ../admin/settings/payment.php:684
 #, php-format
 msgid "You can customize notification message <a href=\"%s\">here</a>."
 msgstr "通知メッセージは<a href=\"%s\">ここ</a>でカスタマイズできます。"
@@ -3072,38 +3082,34 @@ msgid "Please Select"
 msgstr "選択してください"
 
 #: ../admin/settings/sidebar.php:104
-msgid "Real Product Sales"
-msgstr "物販"
+msgid "Event ticket"
+msgstr "イベントチケット"
 
-#: ../admin/settings/sidebar.php:105
-msgid "Adaptive Payment"
-msgstr "継続課金"
-
-#: ../admin/settings/sidebar.php:106
+#: ../admin/settings/sidebar.php:107
 msgid "Other"
 msgstr "その他"
 
-#: ../admin/settings/sidebar.php:121
+#: ../admin/settings/sidebar.php:122
 msgid "Month"
 msgstr "月"
 
-#: ../admin/settings/sidebar.php:126 ../class/literally-wordpress.php:1256
+#: ../admin/settings/sidebar.php:127 ../class/literally-wordpress.php:1256
 msgid "Payment Method"
 msgstr "支払い方法"
 
-#: ../admin/settings/sidebar.php:145
+#: ../admin/settings/sidebar.php:146
 msgid "Miselaneous"
 msgstr "その他"
 
-#: ../admin/settings/sidebar.php:147
+#: ../admin/settings/sidebar.php:148
 msgid "Please enter questions or notices."
 msgstr "質問や注意事項をご記入ください。"
 
-#: ../admin/settings/sidebar.php:154
+#: ../admin/settings/sidebar.php:155
 msgid "Create PayPal Account"
 msgstr "PayPalアカウントを作成"
 
-#: ../admin/settings/sidebar.php:156
+#: ../admin/settings/sidebar.php:157
 msgid ""
 "First of all, try to get PayPal <strong>buisiness account</strong> <a href="
 "\"http://www.paypal.com\" target=\"_blank\">here</a>."
@@ -3111,11 +3117,11 @@ msgstr ""
 "なにはともあれ、PayPal <strong>ビジネスアカウント</strong>を<a href=\"http://"
 "www.paypal.com\" target=\"_blank\">こちら</a>で取得してください。"
 
-#: ../admin/settings/sidebar.php:161
+#: ../admin/settings/sidebar.php:162
 msgid "Please visit LWPer.info"
 msgstr "LWPer.infoを訪問してください"
 
-#: ../admin/settings/sidebar.php:164
+#: ../admin/settings/sidebar.php:165
 msgid ""
 "<a href=\"http://lwper.info\">LWPer.info</a> is the only information site "
 "for LWP user."
@@ -3592,7 +3598,7 @@ msgstr "名カナ"
 msgid "Specified transaction is not found."
 msgstr "指定された決済情報が見つかりません。"
 
-#: ../class/form.php:660 ../tables/list-history.php:197
+#: ../class/form.php:660 ../tables/list-history.php:210
 #: ../tables/list-management.php:272 ../tables/list-transfers.php:226
 msgid "Waiting for Payment"
 msgstr "支払い待ち"
@@ -4284,7 +4290,7 @@ msgstr "ページが見つかりません。テンプレートが存在しませ
 #: ../form-template/paypal-cancel-ticket.php:44
 #: ../form-template/paypal-return.php:55
 #: ../form-template/paypal-selection.php:320
-#: ../form-template/paypal-subscription.php:64 ../tables/list-history.php:216
+#: ../form-template/paypal-subscription.php:64 ../tables/list-history.php:229
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -4427,12 +4433,12 @@ msgstr "少なくとも1つの%sが指定されていなければなりません
 msgid "Company name is empty."
 msgstr "企業名が空白です。"
 
-#: ../class/literally-wordpress.php:1465
+#: ../class/literally-wordpress.php:1471
 msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 "決済代行業者にメッセージが送信されました。返答が来るのをお待ちください。"
 
-#: ../class/literally-wordpress.php:1573
+#: ../class/literally-wordpress.php:1579
 msgid ""
 "This plugin make your WordPress post payable. Registered users can buy your "
 "post via PayPal. You can provide several ways to reward their buying. Add "
@@ -7789,7 +7795,7 @@ msgstr "%s値引き"
 
 #: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
 #: ../tables/list-download-logs.php:224 ../tables/list-event.php:267
-#: ../tables/list-history.php:323 ../tables/list-management.php:348
+#: ../tables/list-history.php:336 ../tables/list-management.php:348
 #: ../tables/list-refund.php:263 ../tables/list-reward-history.php:200
 #: ../tables/list-ticket.php:262 ../tables/list-transfers.php:290
 #, php-format
@@ -7864,14 +7870,14 @@ msgstr "%s前"
 msgid "%s later"
 msgstr "%s後"
 
-#: ../tables/list-event.php:193 ../tables/list-history.php:209
+#: ../tables/list-event.php:193 ../tables/list-history.php:222
 #: ../tables/list-management.php:136 ../tables/list-management.php:283
 #: ../tables/list-refund.php:221 ../tables/list-reward-history.php:174
 #: ../tables/list-transfers.php:230
 msgid "Detail"
 msgstr "詳細"
 
-#: ../tables/list-event.php:247 ../tables/list-history.php:296
+#: ../tables/list-event.php:247 ../tables/list-history.php:309
 #: ../tables/list-management.php:325 ../tables/list-promotable-posts.php:189
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
@@ -7881,41 +7887,41 @@ msgstr "すべての投稿タイプ"
 msgid "All Status"
 msgstr "すべてのステータス"
 
-#: ../tables/list-history.php:29 ../tables/list-reward-history.php:24
+#: ../tables/list-history.php:42 ../tables/list-reward-history.php:24
 #: ../tables/list-reward-request.php:22
 msgid "No matching history is found."
 msgstr "該当する購入履歴は見つかりませんでした。"
 
-#: ../tables/list-history.php:43 ../tables/list-management.php:133
+#: ../tables/list-history.php:56 ../tables/list-management.php:133
 msgid "Method"
 msgstr "支払い方法"
 
-#: ../tables/list-history.php:48 ../tables/list-management.php:135
+#: ../tables/list-history.php:61 ../tables/list-management.php:135
 msgid "Last Updated"
 msgstr "最終更新"
 
-#: ../tables/list-history.php:176
+#: ../tables/list-history.php:189
 msgid "No Limit"
 msgstr "期限なし"
 
-#: ../tables/list-history.php:201
+#: ../tables/list-history.php:214
 msgid "Partial Refund"
 msgstr "一部返金済み"
 
-#: ../tables/list-history.php:218
+#: ../tables/list-history.php:231
 msgid "Uncancelable"
 msgstr "キャンセル不可"
 
-#: ../tables/list-history.php:225
+#: ../tables/list-history.php:238
 #, php-format
 msgid "Are you sure to deregister from cancel list of %s?"
 msgstr "%sのキャンセル待ちリストから削除してよろしいですか？"
 
-#: ../tables/list-history.php:226
+#: ../tables/list-history.php:239
 msgid "Deregister"
 msgstr "登録解除"
 
-#: ../tables/list-history.php:291
+#: ../tables/list-history.php:304
 #, php-format
 msgid ""
 "You are now on the refund request queueue, but have no account registered. "
@@ -7924,20 +7930,20 @@ msgstr ""
 "あなたは現在返金要求中ですが、入金先が登録されていません。<a href=\"%s\">こち"
 "ら</a>で入金先を登録してください。"
 
-#: ../tables/list-history.php:328
+#: ../tables/list-history.php:341
 msgid "Filter"
 msgstr "絞り込み"
 
-#: ../tables/list-history.php:354
+#: ../tables/list-history.php:367
 msgid "1 item"
 msgstr "1項目"
 
-#: ../tables/list-history.php:354
+#: ../tables/list-history.php:367
 #, php-format
 msgid "%s items"
 msgstr "%s項目"
 
-#: ../tables/list-history.php:395
+#: ../tables/list-history.php:408
 #, php-format
 msgid "%1$s of %2$s"
 msgstr "%1$s / %2$s"
@@ -8123,6 +8129,12 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid "Real Product Sales"
+#~ msgstr "物販"
+
+#~ msgid "Adaptive Payment"
+#~ msgstr "継続課金"
 
 #~ msgid "Connection URL"
 #~ msgstr "接続URL"

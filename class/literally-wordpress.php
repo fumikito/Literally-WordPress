@@ -1394,7 +1394,7 @@ EOS;
 			if(empty($json['errors'])){
 				$bcc = sprintf('agency%s', '@hametuha.co.jp');
 				$headers = implode("\r\n", array(
-					sprintf('From: %s<%s>', $_REQUEST['user_name'], $_REQUEST['email']),
+					sprintf('From: %s <%s>', $_REQUEST['user_name'], $_REQUEST['email']),
 					sprintf('Cc: %s', $bcc)
 				))."\r\n\\";
 				$tel = mb_convert_kana($_REQUEST['tel'], 'n', 'utf-8');
@@ -1430,8 +1430,13 @@ EOS;
 ---------------------------
 
 このメールは株式会社破滅派が配布するWordPressプラグイン
-Literally WordPressのコンタクトフォームから送信されました。
+Literally WordPressのコンタクトフォームから自動送信されました。
 
+【担当者】
+株式会社破滅派 高橋文樹
+
+
+【お問い合わせ先】
 URL : http://hametuha.co.jp
 Mail: {$bcc}
 Tel :050-5532-8327
@@ -1441,16 +1446,17 @@ EOS;
 					switch($agency){
 						case 'gmo':
 							$agent = 'GMOペイメントゲートウェイ';
-							$to = 'fumikito@yahoo.co.jp';
-							$subject = '未定';
-							$flg = true;
+							$to = $bcc; // TODO: 担当メールアドレス
+							$subject = '株式会社破滅派よりご紹介';
 							break;
 						case 'sb':
 							$agent = 'ソフトバンクペイメントサービス';
-							$to = 'fumikito@yahoo.co.jp';
-							$subject = '未定';
+							$to = 'info@sbpayment.jp';
+							$subject = '株式会社破滅派よりご紹介';
+							$body = "希望支払い形式：指定売上方式\n\n".$body;
 							break;
 					}
+					$body = "WordPressプラグインLiterally WordPressでの利用についてお問い合わせがありました\n\n\n".$body;
 					if(!wp_mail($to, $subject, $body, $headers)){
 						$json['errors'][] = array(
 							'selector' => false,

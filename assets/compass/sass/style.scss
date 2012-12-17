@@ -218,19 +218,36 @@ Elements
 input.short{
 	width:3em;
 }
-p.invalid,
-p.valid{
-	margin: 0.25em 0;
-	padding: 0.25em 0.5em;
-	@include border-radius(3px);
-}
-p.invalid{
-	background-color: #ffebe8;
-	color: #f00;
-}
-p.valid{
-	color: #059119;
-	background-color: #c6f4cd;
+p{
+	&.invalid,
+	&.valid,
+	&.info{
+		margin: 0.25em 0;
+		padding: 0.25em 0.5em;
+		@include border-radius(3px);
+		a:link,
+		a:visited{
+			color: inherit;
+			text-decoration: underline;
+		}
+		a:hover,
+		a:active{
+			text-decoration: none;
+		}
+	}
+	&.info{
+		background-color: #9fc9f4 ;
+		color: #05a;
+	}
+	&.invalid{
+		background-color: #ffebe8;
+		color: #f00;
+	}
+	&.valid{
+		color: #059119;
+		background-color: #c6f4cd;
+	}
+
 }
 small.required{
 	color: crimson;

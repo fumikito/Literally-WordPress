@@ -220,6 +220,7 @@
 							<input type="checkbox" name="gmo_sandbox" id="gmo_sandbox" value="1"<?php if($this->gmo->is_sandbox) echo ' checked="checked"';?> />
 							<?php $this->e("This is a develop enviorment and needs pseudo transaction.")?>
 						</label>
+						<p class="info"><?php $this->e('This payment method is very experimenal. <strong>Test on Sandbox is strongly recommended</strong>. If you find some bug please contact to plugin author at <a href="http://lwper.info">LWPper.info</a>'); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -386,6 +387,7 @@
 							<input type="checkbox" name="sb_sandbox" id="sb_sandbox" value="1"<?php if($this->option['sb_sandbox']) echo ' checked="checked"';?> />
 							<?php $this->e("This is a develop enviorment and needs pseudo transaction.")?>
 						</label>
+						<p class="info"><?php $this->e('This payment method is very experimenal. <strong>Test on Sandbox is strongly recommended</strong>. If you find some bug please contact to plugin author at <a href="http://lwper.info">LWPper.info</a>'); ?></p>
 					</td>
 				</tr>
 				<tr>

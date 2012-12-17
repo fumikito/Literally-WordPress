@@ -18,7 +18,7 @@
 				<a href="http://www.gmo-pg.com" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/gmopg-logo.gif" alt="GMO Payment Gateway inc." width="300" height="52" /></a>
 			</p>
 			<p>
-				<a href="http://www.sbpayment.jp/" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/softbankps-logo.png" alt="SOFTBANK Payment Service corp." width="300" height="25" /></a>
+				<a href="http://www.sbpayment.jp/" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/softbankps-logo.png" alt="SOFTBANK Payment Service corp." width="300" height="40" /></a>
 			</p>
 			<p class="center"><a class="button-primary" href="#" id="contact-opener"><?php $this->e('Contact'); ?></a></p>
 			<div id="lwp-pa-contact" title="<?php $this->e('Contact to Payment Agency'); ?>">
@@ -101,8 +101,9 @@
 									<option value=""><?php $this->e('Please Select'); ?></option>
 									<?php foreach(array(
 										$this->_('Digital Contents'),
-										$this->_('Real Product Sales'),
-										$this->_('Adaptive Payment'),
+										$this->_('Event ticket'),
+										//$this->_('Real Product Sales'),
+										//$this->_('Adaptive Payment'),
 										$this->_('Other')
 									) as $val): ?>
 									<option value="<?php echo esc_attr($val); ?>"><?php echo esc_html($val); ?></option>
