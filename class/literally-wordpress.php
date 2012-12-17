@@ -1565,9 +1565,9 @@ EOS;
 	 */
 	public function n($single, $plural, $number){
 		if($number > 1){
-			return $single;
-		}else{
 			return $plural;
+		}else{
+			return $single;
 		}
 	}
 	
