@@ -296,7 +296,6 @@ EOS;
 			ON t.book_id = p.ID
 			WHERE t.user_id = %d AND ( (t.status = %s) OR (t.status = %s AND t.method = %s) ) AND p.post_parent = %d
 EOS;
-			var_dump('キタコレ');
 		return $wpdb->get_var($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS, LWP_Payment_Status::AUTH, LWP_Payment_Methods::SOFTBANK_CC, $post_id));
 	}
 	
