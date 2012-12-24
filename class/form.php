@@ -310,12 +310,23 @@ EOS;
 								"updated" => gmdate('Y-m-d H:i:s')
 							);
 							$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s");
-							if(($tran_id = lwp_is_user_waiting($book_id, get_current_user_id()))){
+							$sql = <<<EOS
+								SELECT ID FROM {$lwp->transaction}
+								WHERE transaction_key = %s
+EOS;
+							if($wpdb->get_var($wpdb->prepare($sql, $invnum))){
+								//If invnum is same as a recent transaction,
+								//This transaction may be created in very few seconds.
+								//Nothing to do and just skip.
+							}elseif(($tran_id = lwp_is_user_waiting($book_id, get_current_user_id()))){
+								// User is waiting cancellation on event selling.
+								// So reuse transaction.
 								unset($data['registered']);
 								array_pop($where);
 								$wpdb->update($lwp->transaction, $data, array('ID' => $tran_id), $where, array('%d'));
 								do_action('lwp_update_transaction', $tran_id);
 							}else{
+								// Virgin session, let's create transaction.
 								$wpdb->insert( $lwp->transaction, $data, $where);
 								//Execute hook
 								do_action('lwp_create_transaction', $wpdb->insert_id);
