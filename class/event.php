@@ -863,6 +863,12 @@ EOS;
 			$this->e('Event not found.');
 			die();
 		}
+		//Check permission
+		if(!user_can_edit_post(get_current_user_id(), $_REQUEST['event_id'])){
+			status_header(403);
+			$this->e('You have no permission.');
+			die();
+		}
 		//Create Query
 		$sql = <<<EOS
 			SELECT DISTINCT

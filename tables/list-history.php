@@ -78,11 +78,15 @@ class LWP_List_History extends WP_List_Table {
 			ON t.book_id = p.ID
 			INNER JOIN {$wpdb->postmeta} AS pm
 			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
+			LEFT JOIN {$wpdb->postmeta} AS pm2
+			ON p.post_parent = pm2.post_id AND pm2.meta_key = '{$lwp->event->meta_selling_limit}'
 EOS;
 		//WHERE
 		$where = array(
 			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('t.status IN (%s, %s, %s, %s)', LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::WAITING_CANCELLATION)
+			$wpdb->prepare('(t.status IN (%s, %s, %s) OR ( (t.status = %s) AND (pm2.meta_value IS NOT NULL) AND (TO_DAYS(NOW()) <= TO_DAYS(pm2.meta_value))) )',
+				LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING,
+				LWP_Payment_Status::WAITING_CANCELLATION)
 		);
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
@@ -151,7 +155,11 @@ EOS;
 				$tag = number_format($item->price)." ({$lwp->option['currency_code']})";
 				break;
 			case 'method':
-				$tag = $lwp->_($item->method);
+				if(false === array_search($item->status, array(LWP_Payment_Status::WAITING_CANCELLATION))){
+					$tag = $lwp->_($item->method);
+				}else{
+					$tag = '-';
+				}
 				break;
 			case 'expires':
 				if($item->expires == '0000-00-00 00:00:00'){
@@ -270,7 +278,7 @@ EOS;
 				<?php endforeach; ?>
 			</select>
 			
-			<input type="submit" class="button-secondary" value="<?php _e('Filter'); ?>" />
+			<input type="submit" class="button-secondary" value="絞り込み" />
 		</div>
 		<?php
 		endif;
@@ -289,7 +297,7 @@ EOS;
 
 			extract( $this->_pagination_args );
 
-			$output = '<span class="displaying-num">' . sprintf( _n( '1 item', '%s items', $total_items ), number_format_i18n( $total_items ) ) . '</span>';
+			$output = '<span class="displaying-num">' . sprintf( '%s項目', number_format_i18n( $total_items ) ) . '</span>';
 
 			$current = $this->get_pagenum();
 
@@ -330,7 +338,7 @@ EOS;
 				);
 
 			$html_total_pages = sprintf( "<span class='total-pages'>%s</span>", number_format_i18n( $total_pages ) );
-			$page_links[] = '<span class="paging-input">' . sprintf( _x( '%1$s of %2$s', 'paging' ), $html_current_page, $html_total_pages ) . '</span>';
+			$page_links[] = '<span class="paging-input">' . sprintf('%1$s / %2$s', $html_current_page, $html_total_pages ) . '</span>';
 
 			$page_links[] = sprintf( "<a class='%s' title='%s' href='%s'>%s</a>",
 				'next-page' . $disable_last,

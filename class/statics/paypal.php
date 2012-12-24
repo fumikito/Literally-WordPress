@@ -49,7 +49,7 @@ class PayPal_Statics {
 			return urldecode($resArray["TOKEN"]);
 		}else{
 			self::log(var_export($resArray, true));
-			self::log(var_export($nvpstr, true));
+			self::log(var_export($nvpstrs, true));
 			return false;
 		}
 	}

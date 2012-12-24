@@ -278,7 +278,7 @@ EOS;
 						//Create transaction
 						$price = lwp_price($book_id);
 						//Get token
-						$invnum = sprintf("{$lwp->option['slug']}-%08d-%05d-%d", $book_id, get_current_user_id(), time());
+						$invnum = sprintf("{$lwp->option['slug']}-%08d-%08d-%d", $book_id, get_current_user_id(), time());
 						//Check is physical
 						switch($book->post_type){
 							case $lwp->event->post_type:
@@ -393,7 +393,7 @@ EOS;
 			if(!$info){
 				$message = $this->_("Failed to connect with PayPal.");
 			}
-			$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE transaction_id = %s", $_REQUEST['token']));
+			$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND transaction_key = %s", get_current_user_id(), $info['INVNUM']));
 			if(!$transaction){
 				$message = $this->_("Failed to get the transactional information.");
 			}
@@ -429,19 +429,18 @@ EOS;
 		}else{
 			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
 				//データを更新
-				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE transaction_id = %s", $_POST["TOKEN"])); 
+				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE transaction_key = %s", $_POST["INVNUM"])); 
 				$wpdb->update(
 					$lwp->transaction,
 					array(
 						"status" => LWP_Payment_Status::SUCCESS,
-						"transaction_key" => $_POST['INVNUM'],
 						"transaction_id" => $transaction_id,
 						"payer_mail" => $_POST["EMAIL"],
 						'updated' => gmdate("Y-m-d H:i:s"),
 						'expires' => lwp_expires_date($post_id)
 					),
 					array(
-						"transaction_id" => $_POST["TOKEN"]
+						"transaction_key" => $_POST["INVNUM"]
 					),
 					array("%s", "%s", "%s", "%s", "%s", "%s"),
 					array("%s")
@@ -450,6 +449,7 @@ EOS;
 				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
 				//サンキューページを表示する
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
+				die();
 			}else{
 				$this->kill($this->_("Transaction Failed to finish."));
 			}
