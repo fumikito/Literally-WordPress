@@ -1045,7 +1045,7 @@ EOS;
 			$this->kill($this->_('Sorry, but no event is specified.'), 404);
 		}
 		//Check user capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && $event->post_author != get_current_user_id()){
 			$this->kill($this->_('You do not have capability to contact participants.'), 403);
 		}
 		//Add Post owner
