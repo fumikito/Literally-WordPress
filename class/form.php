@@ -842,7 +842,7 @@ EOS;
 			$this->kill($this->_('Sorry, but specified user is not found.'), 404);
 		}
 		//Check if current user has capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 			$this->kill($this->_('Sorry, but you have no capability to consume ticket.'), 403);
 		}
 		//if nonce is ok, update
@@ -911,7 +911,7 @@ EOS;
 			$this->kill($this->_('Sorry, but event is not found.'), 404);
 		}
 		//Check user capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 			$this->kill($this->_('Sorry, but you have no permission.'), 403);
 		}
 		//Check if Error occurs
