@@ -461,7 +461,7 @@ EOS;
 			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
 			if(!$event || false === array_search($event->post_type, $this->post_types)){
 				$message = $this->_('This post is not event.');
-			}elseif(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			}elseif(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 				$message = $this->_('You have no permission to edit this post.');
 			}elseif($this->presets_registered($event)){
 				$message = $this->_('Preset tickets are already registered.');
@@ -526,7 +526,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_event_detail')){
 			global $wpdb;
 			$parent = (int) $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['post_parent']));
-			if(!user_can_edit_post(get_current_user_id(), $_REQUEST['post_parent'])){
+			if(!current_user_can('edit_others_posts') && !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['post_parent'], get_current_user_id()))){
 				$status = false;
 			}else{
 				$post_arr =  array(
@@ -583,7 +583,7 @@ EOS;
 				'status' => true,
 				'message' => ''
 			);
-			if(user_can_edit_post(get_current_user_id(), $_REQUEST['post_id'])){
+			if(current_user_can('edit_others_posts') || $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['post_id'], get_current_user_id()))){
 				wp_delete_post($_REQUEST['post_id']);
 			}else{
 				$json['status'] = false;
@@ -638,7 +638,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id'], $_REQUEST['from'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['to'], $_REQUEST['current'], $_REQUEST['total']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_contact_participants_'.get_current_user_id())){
 			//Get Event and check nonce
 			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
-			if($event && false !== array_search($event->post_type, $this->post_types) && user_can_edit_post(get_current_user_id(), $event->ID)){
+			if($event && false !== array_search($event->post_type, $this->post_types) && (current_user_can('edit_others_posts') || get_current_user_id() == $event->post_author)){
 				//Check from and permisson
 				if(false !== array_search($_REQUEST['from'], array('admin', 'you', 'author')) && (current_user_can('edit_others_posts') || $_REQUEST['from'] != 'author')){
 					switch($_REQUEST['from']){
@@ -864,7 +864,7 @@ EOS;
 			die();
 		}
 		//Check permission
-		if(!user_can_edit_post(get_current_user_id(), $_REQUEST['event_id'])){
+		if(!current_user_can('edit_others_posts') && !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['event_id'], get_current_user_id()))){
 			status_header(403);
 			$this->e('You have no permission.');
 			die();
