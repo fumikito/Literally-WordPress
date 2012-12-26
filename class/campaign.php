@@ -117,7 +117,7 @@ class LWP_Campaign extends Literally_WordPress_Common {
 					//Date format is invalie
 					$lwp->error = true;
 					$lwp->message[] = $this->_("Date format is invalid.");
-				}elseif(strtotime($_REQUEST["end"]) < get_current_theme('timestamp') || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
+				}elseif(strtotime($_REQUEST["end"]) < current_time('timestamp') || strtotime($_REQUEST["end"]) < strtotime($_REQUEST["start"])){
 					//End dat past.
 					$lwp->error = true;
 					$lwp->message[] = $this->_("End date was past.");
