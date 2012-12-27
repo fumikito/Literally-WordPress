@@ -94,18 +94,19 @@ class LWP_List_History extends WP_List_Table {
 			LEFT JOIN {$wpdb->postmeta} AS pm2
 			ON p.post_parent = pm2.post_id AND pm2.meta_key = '{$lwp->event->meta_selling_limit}'
 EOS;
-		//WHERE
-		$where = array(
-			$wpdb->prepare('t.user_id = %d', $user_ID),
-			$wpdb->prepare('(t.status IN (%s, %s, %s, %s) OR (t.status = %s AND t.method IN (%s, %s, %s, %s, %s)) OR ( (t.status = %s) AND (pm2.meta_value IS NOT NULL) AND (TO_DAYS(NOW()) <= TO_DAYS(pm2.meta_value))) )',
+		//Create where clause, user ID
+		$where = array( $wpdb->prepare('t.user_id = %d', $user_ID));
+		//Status
+		$where[] = $wpdb->prepare('(t.status IN (%s, %s, %s, %s) OR (t.status = %s AND t.method IN (%s, %s, %s, %s, %s)) OR ( (t.status = %s) AND (pm2.meta_value IS NOT NULL) AND (TO_DAYS(NOW()) <= TO_DAYS(pm2.meta_value))) )',
 					LWP_Payment_Status::SUCCESS, LWP_Payment_Status::REFUND, LWP_Payment_Status::REFUND_REQUESTING, LWP_Payment_Status::AUTH,
 					LWP_Payment_Status::START,
 					LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY,
-					LWP_Payment_Status::WAITING_CANCELLATION)
-		);
+					LWP_Payment_Status::WAITING_CANCELLATION);
+		//Post type
 		if($this->get_post_type() != 'all'){
 			$where[] = $wpdb->prepare("p.post_type = %s", $this->get_post_type());
 		}
+		//Search
 		if(isset($_GET['s']) && !empty($_GET["s"])){
 			$where[] = $wpdb->prepare("((p.post_title LIKE %s) OR (p.post_content LIKE %s) OR (p.post_excerpt LIKE %s))", '%'.$_GET["s"].'%', '%'.$_GET["s"].'%', '%'.$_GET["s"].'%');
 		}

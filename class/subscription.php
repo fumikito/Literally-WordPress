@@ -254,7 +254,7 @@ class LWP_Subscription extends Literally_WordPress_Common{
 		if(!is_admin() && $this->enabled && false !== array_search(get_post_type(), $this->post_types)){
 			if(lwp_is_free_subscription()){
 				$content .= "\n".'<div class="lwp-invitation">'.apply_filters('lwp_subscription_message', sprintf($this->_('%1$s are subscribers only but this %1$s is free!'), get_post_type_object(get_post_type())->labels->name), 'free').'</div>';
-			}elseif(user_can_edit_post(get_current_user_id(), get_the_ID())){
+			}elseif(current_user_can('edit_others_posts') || get_current_user_id() == get_the_author_meta('ID')){
 				$content .= "\n".'<div class="lwp-invitation">'.apply_filters('lwp_subscription_message', sprintf($this->_('This %1$s is subscribers only but you see whole content because of your capability to edit %1$s.'), get_post_type_object(get_post_type())->labels->name), 'owner').'</div>';
 			}elseif($this->is_subscriber(get_current_user_id())){
 				$owned_subscription = $this->get_subscription_owned_by(get_current_user_id());

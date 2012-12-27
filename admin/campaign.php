@@ -6,7 +6,7 @@
  * 個別表示
  */
 if(isset($_REQUEST["campaign"]) && $campaign = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->campaign} WHERE ID = %d", $_REQUEST["campaign"]))):
-$post = wp_get_single_post($campaign->book_id);
+$post = get_post($campaign->book_id);
 if($campaign->type == LWP_Campaign_Type::SINGULAR){
 	$post_ids = array($campaign->book_id);
 }elseif($campaign->type == LWP_Campaign_Type::SET){

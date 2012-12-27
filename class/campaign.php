@@ -54,7 +54,7 @@ class LWP_Campaign extends Literally_WordPress_Common {
 				}elseif(count($ids) > 1){
 					$type = LWP_Campaign_Type::SET;
 					foreach($ids as $id){
-						if(!user_can_edit_post(get_current_user_id(), $id)){
+						if(!current_user_can('edit_others_posts') && $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $id, get_current_user_id()))){
 							$lwp->error = true;
 							$lwp->message[] = sprintf($this->_('You don\'t have capability to edit %s'), get_the_title($id));
 							break;
@@ -62,7 +62,7 @@ class LWP_Campaign extends Literally_WordPress_Common {
 					}
 				}elseif(count($ids) == 1){
 					$type = LWP_Campaign_Type::SINGULAR;
-					if(!user_can_edit_post(get_current_user_id(), $ids[0])){
+					if(!current_user_can('edit_others_posts') && $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $ids[0], get_current_user_id()))){
 						$lwp->error = true;
 						$lwp->message[] = sprintf($this->_('You don\'t have capability to edit %s'), get_the_title($ids[0]));
 					}

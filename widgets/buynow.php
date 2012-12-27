@@ -35,7 +35,7 @@ class lwpBuyNow extends WP_Widget{
 		extract($args);
 		extract($instance);
 		if($post_id && !empty($post_id)){
-			$post = wp_get_single_post($post_id);
+			$post = get_post($post_id);
 		}elseif(!is_singular()){
 			return;
 		}else{

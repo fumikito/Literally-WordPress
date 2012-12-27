@@ -11,7 +11,7 @@
 </h2>
 
 <?php
-if(isset($_GET['event_id'])): $event = wp_get_single_post($_GET['event_id']);
+if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 	require_once $this->dir.DIRECTORY_SEPARATOR."tables".DIRECTORY_SEPARATOR."list-ticket.php";
 	$list_table = new LWP_List_Ticket();
 

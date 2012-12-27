@@ -22,7 +22,7 @@ $is_detail = isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction
  * 個別表示
  */
 if($is_detail):
-		$book = wp_get_single_post($transaction->book_id);
+		$book = get_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 ?>
 <h3><?php $this->e('Transaction Detail'); ?></h3>

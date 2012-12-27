@@ -1210,7 +1210,7 @@ EOS;
 		if(
 			!isset($_GET['lwp-event'])
 				||
-			!($event = wp_get_single_post($_GET['lwp-event']) )
+			!($event = get_post($_GET['lwp-event']) )
 				||
 			(false === array_search($event->post_type, $lwp->event->post_types))
 		){
@@ -1270,7 +1270,7 @@ EOS;
 			));
 		}
 		//Get event object
-		$event = isset($_GET['lwp-event']) ? wp_get_single_post($_GET['lwp-event']) : false;
+		$event = isset($_GET['lwp-event']) ? get_post($_GET['lwp-event']) : false;
 		if(!$event){
 			$this->kill($this->_('Sorry, but no event is specified.'), 404);
 		}
@@ -1281,7 +1281,7 @@ EOS;
 			$this->kill($this->_('Sorry, but specified user is not found.'), 404);
 		}
 		//Check if current user has capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 			$this->kill($this->_('Sorry, but you have no capability to consume ticket.'), 403);
 		}
 		//if nonce is ok, update
@@ -1350,7 +1350,7 @@ EOS;
 			$this->kill($this->_('Sorry, but event is not found.'), 404);
 		}
 		//Check user capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 			$this->kill($this->_('Sorry, but you have no permission.'), 403);
 		}
 		//Check if Error occurs
@@ -1536,7 +1536,7 @@ EOS;
 			$this->kill($this->_('Sorry, but no event is specified.'), 404);
 		}
 		//Check user capability
-		if(!user_can_edit_post(get_current_user_id(), $event->ID)){
+		if(!current_user_can('edit_others_posts') && $event->post_author != get_current_user_id()){
 			$this->kill($this->_('You do not have capability to contact participants.'), 403);
 		}
 		//Add Post owner

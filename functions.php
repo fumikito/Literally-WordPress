@@ -1745,7 +1745,7 @@ function lwp_token_chekcer($post = null){
 	}else{
 		$post = get_post($post);
 	}
-	if(user_can_edit_post(get_current_user_id(), $post->ID)){
+	if(current_user_can('edit_others_posts') || get_current_user_id() == $post->post_author){
 		echo '<a class="button" href="'.  lwp_ticket_token_url($post).'">'.$lwp->_('Check Token').'</a>';
 	}
 }

@@ -463,7 +463,7 @@ EOS;
 			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
 			if(!$event || false === array_search($event->post_type, $this->post_types)){
 				$message = $this->_('This post is not event.');
-			}elseif(!user_can_edit_post(get_current_user_id(), $event->ID)){
+			}elseif(!current_user_can('edit_others_posts') && get_current_user_id() != $event->post_author){
 				$message = $this->_('You have no permission to edit this post.');
 			}elseif($this->presets_registered($event)){
 				$message = $this->_('Preset tickets are already registered.');
@@ -528,7 +528,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_event_detail')){
 			global $wpdb;
 			$parent = (int) $wpdb->get_var($wpdb->prepare("SELECT post_author FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['post_parent']));
-			if(!user_can_edit_post(get_current_user_id(), $_REQUEST['post_parent'])){
+			if(!current_user_can('edit_others_posts') && !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['post_parent'], get_current_user_id()))){
 				$status = false;
 			}else{
 				$post_arr =  array(
@@ -555,7 +555,7 @@ EOS;
 					$mode = 'insert';
 				}
 				if($status){
-					$post = wp_get_single_post($post_id);
+					$post = get_post($post_id);
 					update_post_meta($post->ID, $this->meta_stock, intval($_REQUEST['stock']));
 					update_post_meta($post->ID, 'lwp_price', $_REQUEST['price']);
 				}
@@ -585,7 +585,7 @@ EOS;
 				'status' => true,
 				'message' => ''
 			);
-			if(user_can_edit_post(get_current_user_id(), $_REQUEST['post_id'])){
+			if(current_user_can('edit_others_posts') || $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['post_id'], get_current_user_id()))){
 				wp_delete_post($_REQUEST['post_id']);
 			}else{
 				$json['status'] = false;
@@ -606,7 +606,7 @@ EOS;
 				'status' => false,
 				'message' => ''
 			);
-			$post = wp_get_single_post($_REQUEST['post_id']);
+			$post = get_post($_REQUEST['post_id']);
 			if($post){
 				$json['status'] = true;
 				$json['post_title'] = $post->post_title;
@@ -640,7 +640,7 @@ EOS;
 		if(isset($_REQUEST['_wpnonce'], $_REQUEST['event_id'], $_REQUEST['from'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['to'], $_REQUEST['current'], $_REQUEST['total']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_contact_participants_'.get_current_user_id())){
 			//Get Event and check nonce
 			$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['event_id']));
-			if($event && false !== array_search($event->post_type, $this->post_types) && user_can_edit_post(get_current_user_id(), $event->ID)){
+			if($event && false !== array_search($event->post_type, $this->post_types) && (current_user_can('edit_others_posts') || get_current_user_id() == $event->post_author)){
 				//Check from and permisson
 				if(false !== array_search($_REQUEST['from'], array('admin', 'you', 'author')) && (current_user_can('edit_others_posts') || $_REQUEST['from'] != 'author')){
 					switch($_REQUEST['from']){
@@ -860,13 +860,13 @@ EOS;
 			die();
 		}
 		//Get Event
-		if(!isset($_REQUEST['event_id']) || !($event = wp_get_single_post($_REQUEST['event_id'])) || false === array_search($event->post_type, $this->post_types)){
+		if(!isset($_REQUEST['event_id']) || !($event = get_post($_REQUEST['event_id'])) || false === array_search($event->post_type, $this->post_types)){
 			status_header(404);
 			$this->e('Event not found.');
 			die();
 		}
-		//Permission check
-		if(!user_can_edit_post(get_current_user_id(), $_REQUEST['event_id'])){
+		//Check permission
+		if(!current_user_can('edit_others_posts') && !$wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['event_id'], get_current_user_id()))){
 			status_header(403);
 			$this->e('You have no permission.');
 			die();
@@ -1005,7 +1005,7 @@ EOS;
 			global $wpdb;
 			$body = $this->_mail_body;
 			$user = get_userdata($transaction->user_id);
-			$event = wp_get_single_post($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id)));
+			$event = get_post($wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $transaction->book_id)));
 			foreach($this->get_place_holders() as $key => $desc){
 				switch($key){
 					case 'user_name':

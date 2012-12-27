@@ -1,6 +1,7 @@
 <?php
 	/* @var $this LWP_Post */
-
+	/* @var $wpdb wpdb */
+	global $wpdb;
 	//Initial values
 	$file = false;
 	$uploading = false;
@@ -12,7 +13,7 @@
 	$message = array();
 	$devices_registered = array();
 	//Check if current user can edit.
-	if(!isset($_REQUEST["post_id"], $_GET['tab']) || $_GET["tab"] != "ebook" || !user_can_edit_post(get_current_user_id(), $_REQUEST['post_id'])){
+	if(!isset($_REQUEST["post_id"], $_GET['tab']) || $_GET["tab"] != "ebook" || !( current_user_can('edit_others_posts') || $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE ID = %d AND post_author = %d", $_REQUEST['post_id'], get_current_user_id()))) ){
 		printf('<div class="error"><p>%s</p></div>', $this->_('You have no permission to upload file.'));
 		die();
 	}
