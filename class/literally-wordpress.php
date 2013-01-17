@@ -1079,7 +1079,7 @@ EOS;
 		global $wpdb;
 		$sql = <<<EOS
 			SELECT DISTINCT
-				t.*, p.post_title, u.user_login, u.display_name
+				t.*, p.post_title, p.post_parent, p.post_type, u.user_login, u.display_name
 			FROM {$this->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
@@ -1137,8 +1137,19 @@ EOS;
 		fputcsv($out, $first_row);
 		set_time_limit(0);
 		foreach($results as $result){
+			switch($result->post_type){
+				case $this->event->post_type:
+					$post_title = get_the_title($result->post_parent).' - '.$result->post_title;
+					break;
+				case $this->subscription->post_type:
+					$post_title = $this->_('Subscription').' - '.$result->post_title;
+					break;
+				default:
+					$post_title = $result->post_title;
+					break;
+			}
 			$row = apply_filters('lwp_transaction_csv_row', array(
-				$result->post_title,
+				$post_title,
 				$result->num,
 				$result->price,
 				$this->_($result->method),
