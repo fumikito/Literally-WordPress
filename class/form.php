@@ -868,23 +868,18 @@ EOS;
 			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
 				//データを更新
 				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE transaction_key = %s", $_POST["INVNUM"])); 
-				$wpdb->update(
-					$lwp->transaction,
-					array(
-						"status" => LWP_Payment_Status::SUCCESS,
-						"transaction_id" => $transaction_id,
-						"payer_mail" => $_POST["EMAIL"],
-						'updated' => gmdate("Y-m-d H:i:s"),
-						'expires' => lwp_expires_date($post_id)
-					),
-					array(
-						"transaction_key" => $_POST["INVNUM"]
-					),
-					array("%s", "%s", "%s", "%s", "%s", "%s"),
-					array("%s")
-				);
+				$sql = <<<EOS
+					UPDATE {$lwp->transaction}
+					SET status = %s, transaction_id = %s, payer_mail = %s, updated = %s, expires = %s
+					WHERE user_id = %d AND transaction_key = %s
+					LIMIT 1
+EOS;
+				$wpdb->query($wpdb->prepare(
+						$sql, 
+						LWP_Payment_Status::SUCCESS, $transaction_id, $_POST['EMAIL'], current_time('mysql', true), lwp_expires_date($post_id),
+						get_current_user_id(), $_POST['INVNUM']));
 				//Do action hook on transaction updated
-				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE transaction_id = %s", $transaction_id)));
+				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE user_id = %d AND transaction_id = %s LIMIT 1", get_current_user_id(), $transaction_id)));
 				//サンキューページを表示する
 				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
 				exit;
