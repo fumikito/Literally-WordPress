@@ -217,6 +217,12 @@ class LWP_Post extends Literally_WordPress_Common{
 				$lwp->message[] = $this->_("Price must be numeric.");
 				$lwp->error = true;
 			}
+			$download_limit = isset($_REQUEST['lwp_donwload_limit_days']) ? intval($_REQUEST['lwp_donwload_limit_days']) : 0;
+			if($download_limit){
+				update_post_meta($post_id, '_lwp_donwload_limit', $download_limit);
+			}else{
+				delete_post_meta($post_id, '_lwp_donwload_limit');
+			}
 		} 
 	}
 
@@ -730,6 +736,43 @@ EOS;
 			'ip_address' => $_SERVER['REMOTE_ADDR'],
 			'updated' => gmdate('Y-m-d H:i:s')
 		), array('%d', '%d', '%s', '%s', '%s'));
+	}
+	
+	/**
+	 * Return download limit date
+	 * @param int $post_id
+	 * @return int
+	 */
+	public function get_download_limit($post_id){
+		return (int) get_post_meta($post_id, '_lwp_donwload_limit', true);
+	}
+	
+	/**
+	 * Returns if specified user's transaction exceeds donwload limit
+	 * @global Literally_WordPress $lwp
+	 * @param int $post_id
+	 * @param int $user_id
+	 * @param int $datetime MySQL format datetime string
+	 * @return boolean
+	 */
+	public function before_download_limit($post_id, $user_id = false, $datetime = false){
+		global $lwp, $wpdb;
+		$days = $this->get_donwload_limit($post_id);
+		if($days){
+			if(!$datetime){
+				$datetime = current_time('mysql');
+			}
+			if(!$user_id){
+				$user_id = get_current_user_id();
+			}
+			$sql = <<<EOS
+				SELECT ID FROM {$lwp->transaction}
+				WHERE book_id = %d AND user_id = %d AND status = %s AND updated <= DATE_SUB(%s, INTERVAL %d DAY)
+EOS;
+			return (boolean)$wpdb->get_var($wpdb->prepare($sql, $post_id, $user_id, LWP_Payment_Status::SUCCESS, $datetime, $days));
+		}else{
+			return true;
+		}
 	}
 	
 	/**

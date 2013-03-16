@@ -17,12 +17,35 @@
 		<tr>
 			<th><?php $this->e('Files'); ?></th>
 			<td>
-				<a title="<?php $this->e('Upload File'); ?>" class="thickbox button" href="<?php echo admin_url('media-upload.php?post_id='.$post->ID.'&tab=ebook&TB_iframe=1'); ?>"><?php $this->e('Open File Manager'); ?></a>
+				<a title="<?php $this->e('File Manager'); ?>" class="thickbox button" href="<?php echo admin_url('media-upload.php?post_id='.$post->ID.'&tab=ebook&TB_iframe=1'); ?>">
+					<?php $this->e('Manage File'); ?>
+				</a>
 			</td>
 		</tr>
 		<tr>
 			<th><label for="lwp_price"><?php $this->e("Price");?></label></th>
 			<td><input type="text" name="lwp_price" id="lwp_price" value="<?php echo lwp_original_price(); ?>" /> (<?php echo lwp_currency_code(); ?>)</td>
+		</tr>
+		<tr>
+			<th><?php $this->e('Download Limit'); ?></th>
+			<td>
+				<label><input type="text" class="short" name="lwp_donwload_limit_days" id="lwp_donwload_limit_days" value="<?php echo $this->get_download_limit($post->ID); ?>" /> <?php $this->e('Days'); ?></label>
+				<a class="thickbox" href="#TB_inline?width=auto&amp;height=auto&amp;inlineId=lwp-faq-about-limit&amp;modal=true" title="<?php $this->e('About Download Limit'); ?>">[?]</a>
+				<br />
+				<div id="lwp-faq-about-limit" class="lwp-hidden">
+					<div class="lwp-faq-inner">
+						<p><?php $this->e('You can set download limit to digital contents in 2 ways.'); ?></p>
+						<p><strong><?php $this->e('1. Limit by days'); ?></strong></p>
+						<p><?php $this->e('For example, If you set 10 days as download limit, a user will not be able to donwload 10 days after transaction. &quot;0&quot; means no limit. This option is valid for all files associated to this post.'); ?></p>
+						<p><strong><?php $this->e('2. Limit by times'); ?></strong></p>
+						<p><?php $this->e('For example, If you set 10 times as donwload limit, a user can donwload only 10 times. &quot;0&quot; means no limit. This option must be set to each files on the file manager.'); ?></p>
+						<p class="info"><?php $this->e('You can set both limit, but simple usage is recommended. Too many limitation will confuse your users.'); ?></p>
+						<p class="lwp-faq-close">
+							<a class="button" href="#" onclick="if(tb_remove) tb_remove(); return false;"><?php $this->e('Close'); ?></a>
+						</p>
+					</div>
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<th><?php $this->e('Campaign'); ?></th>

@@ -2,6 +2,47 @@
 
 @import "compass/css3/border-radius";
 
+/*
+------------------
+Elements
+------------------
+*/
+input.short{
+	width:3em;
+}
+p{
+	&.invalid,
+	&.valid,
+	&.info{
+		margin: 0.25em 0;
+		padding: 0.25em 0.5em;
+		@include border-radius(3px);
+		a:link,
+		a:visited{
+			color: inherit;
+			text-decoration: underline;
+		}
+		a:hover,
+		a:active{
+			text-decoration: none;
+		}
+	}
+	&.info{
+		background-color: #9fc9f4 ;
+		color: #05a;
+	}
+	&.invalid{
+		background-color: #ffebe8;
+		color: #f00;
+	}
+	&.valid{
+		color: #059119;
+		background-color: #c6f4cd;
+	}
+
+}
+
+
 
 /*
 ------------------
@@ -205,50 +246,24 @@ Help Page
 		}
 	}
 }
-
-
-
-
-
-/*
-------------------
-Elements
-------------------
-*/
-input.short{
-	width:3em;
+//Inline FAQ
+.lwp-hidden{
+	display: none;
 }
-p{
-	&.invalid,
-	&.valid,
-	&.info{
-		margin: 0.25em 0;
-		padding: 0.25em 0.5em;
-		@include border-radius(3px);
-		a:link,
-		a:visited{
-			color: inherit;
-			text-decoration: underline;
-		}
-		a:hover,
-		a:active{
-			text-decoration: none;
-		}
+.lwp-faq-inner{
+	font-size: 14px;
+	.lwp-faq-close{
+		text-align: right;
+		border-top: 1px dotted #ddd;
+		padding-top: 1em !important;
 	}
-	&.info{
-		background-color: #9fc9f4 ;
-		color: #05a;
+	p.notice{
+		padding: 0.25em 0.5em !important;
 	}
-	&.invalid{
-		background-color: #ffebe8;
-		color: #f00;
-	}
-	&.valid{
-		color: #059119;
-		background-color: #c6f4cd;
-	}
-
 }
+
+
+
 small.required{
 	color: crimson;
 }
