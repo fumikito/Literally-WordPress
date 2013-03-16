@@ -442,6 +442,74 @@ function lwp_file_accessible($file){
 }
 
 /**
+ * Returns if user can download file
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @param object|int $file file object or file ID
+ * @param int $user_id
+ * @return boolean
+ */
+function lwp_user_can_download($file, $user_id = null){
+	global $lwp, $wpdb;
+	if(is_numeric($file)){
+		$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->files}", $file));
+	}
+	if(!$user_id){
+		$user_id = get_current_user_id();
+	}
+	// Global flag
+	if(!$file->public){
+		return false;
+	}else{
+		switch($file->free){
+			case 0:
+				if(!lwp_is_owner($file->book_id, $user_id)){
+					return false;
+				}
+				break;
+			case 1:
+				if(!is_user_logged_in()){
+					return false;
+				}
+				break;
+			default:
+				return false;
+				break;
+		}
+	}
+	// If no accessiblity, return false.
+	$downloadable = true;
+	// Get parent post's user meta
+	if(!$lwp->post->before_download_limit($file->book_id, $user_id)){
+		$downloadable = false;
+	}
+	// Get file limitation
+	if($file->limitation > 0 && $user_id > 0 && $file->limitation <= lwp_user_download_count($file->ID, $user_id)){
+		//Get download log
+		$downloadable = false;
+	}
+	return $downloadable;
+}
+
+/**
+ * Get user donwload count.
+ * @global Literally_WordPress $lwp
+ * @global wpdb $wpdb
+ * @param int $file_id
+ * @param int $user_id
+ * @return int
+ */
+function lwp_user_download_count($file_id, $user_id){
+	global $lwp, $wpdb;
+	$sql = <<<EOS
+		SELECT COUNT(ID) FROM {$lwp->file_logs}
+		WHERE file_id = %d AND user_id = %d
+EOS;
+	return (int) $wpdb->get_var($wpdb->prepare($sql, $file_id, $user_id));
+}
+
+
+/**
  * ファイルの最終更新日を返す
  * 
  * @param object $file ファイルオブジェクト
@@ -485,8 +553,10 @@ function lwp_get_file_list($accessibility = "all", $post = null){
 	foreach(lwp_get_files($accessibility, $post) as $file){
 		$ext = lwp_get_ext($file);
 		$desc = wpautop($file->detail);
-		$button = lwp_file_accessible($file) ? "<a class=\"button lwp-dl\" href=\"".lwp_file_link($file->ID)."\">".$lwp->_('download')."</a>"
-											 : "<a class=\"button disabled\">".$lwp->_('Unavailable')."</a>";
+		$button = lwp_user_can_download($file, get_current_user_id())
+				? "<a class=\"button lwp-dl\" href=\"".lwp_file_link($file->ID)."\">".$lwp->_('download')."</a>"
+				: "<a class=\"button disabled\">".$lwp->_('Unavailable')."</a>";
+		
 		$size = sprintf($lwp->_("File Size: %s"), lwp_get_size($file));
 		$published = sprintf($lwp->_("Published: %s"), lwp_get_date($file, true, false));
 		$updated = sprintf($lwp->_("Updated: %s"), lwp_get_date($file, false, false));
@@ -565,7 +635,7 @@ function lwp_list_files($args = array()){
 	foreach($files as $file){
 		$ext = lwp_get_ext($file);
 		$url = lwp_file_link($file->ID);
-		$user_can_access = lwp_file_accessible($file);
+		$user_can_access = lwp_user_can_download($file);
 		$size = lwp_get_size($file);
 		$devices = lwp_get_file_devices($file);
 		$list .= call_user_func_array($callback, array($file, $user_can_access, $url, $size, $ext, $devices, $args['list_type']));

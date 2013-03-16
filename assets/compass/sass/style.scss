@@ -824,6 +824,28 @@ Uploader
 		color: #888;
 		margin: 0.5em 0;
 	}
+	input.short{
+		width: 3em !important;
+	}
+}
+.media-item .lwp-mediauploader-filename{
+	padding: 10px;
+	line-height: 1.4;
+	.title{
+		font-weight: bold;
+		font-size: 1.2em;
+	}
+	.spec{
+		font-size: 0.85em;
+		color: #888;
+		strong{
+			color: #000;
+			font-weight: normal;
+		}
+	}
+	p.description{
+		font-size: 11px;
+	}
 }
 
 

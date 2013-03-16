@@ -10,7 +10,7 @@ class LWP_Tables{
 	/**
 	 * Table version 
 	 */
-	const VERSION = '0.9.3';
+	const VERSION = '0.9.3.0.1';
 	
 	/**
 	 * Table prefix for this plugin
@@ -147,6 +147,7 @@ class LWP_Tables{
 				free INT NOT NULL DEFAULT 0,
 				registered DATETIME NOT NULL,
 				updated DATETIME NOT NULL,
+				limitation INT NOT NULL DEFAULT 0,
 				PRIMARY KEY  (ID)
 			) ENGINE = MYISAM DEFAULT CHARSET = {$char};
 EOS;

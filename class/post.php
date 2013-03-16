@@ -439,9 +439,10 @@ EOS;
 	 * @param string $desc
 	 * @param int $public
 	 * @param int $free
+	 * @param int $limit
 	 * @return boolean
 	 */
-	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0){
+	public function upload_file($book_id, $name, $file, $path, $devices, $desc = "", $public = 1, $free = 0, $limit = 0){
 		global $wpdb, $lwp;
 		//Find directory and create if not exists.
 		$book_dir = $this->file_directory.DIRECTORY_SEPARATOR.$book_id;
@@ -467,10 +468,11 @@ EOS;
 				"file" => $file,
 				"public" => $public,
 				"free" => $free,
+				"limitation" => intval($limit),
 				"registered" => gmdate("Y-m-d H:i:s"),
 				"updated" => gmdate("Y-m-d H:i:s")
 			),
-			array("%d", "%s", "%s", "%s", "%d", "%d", "%s", "%s")
+			array("%d", "%s", "%s", "%s", "%d", "%d", "%d", "%s", "%s")
 		);
 		//Registr device
 		if($id && !empty($devices)){
@@ -498,9 +500,10 @@ EOS;
 	 * @param string $desc
 	 * @param int $public default 1
 	 * @param int $free default 0
+	 * @param int $limit int
 	 * @return boolean
 	 */
-	private function update_file($file_id, $name, $devices, $desc, $public = 1, $free = 0){
+	private function update_file($file_id, $name, $devices, $desc, $public = 1, $free = 0, $limit = 0){
 		global $wpdb, $lwp;
 		$req = $wpdb->update(
 			$lwp->files,
@@ -509,10 +512,11 @@ EOS;
 				"detail" => $desc,
 				"public" => $public,
 				"free" => $free,
+				"limitation" => intval($limit),
 				"updated" => gmdate("Y-m-d H:i:s")
 			),
 			array("ID" => $file_id),
-			array("%s", "%s", "%d", "%d", "%s"),
+			array("%s", "%s", "%d", "%d", "%d", "%s"),
 			array("%d")
 		);
 		if($req){
@@ -757,7 +761,7 @@ EOS;
 	 */
 	public function before_download_limit($post_id, $user_id = false, $datetime = false){
 		global $lwp, $wpdb;
-		$days = $this->get_donwload_limit($post_id);
+		$days = $this->get_download_limit($post_id);
 		if($days){
 			if(!$datetime){
 				$datetime = current_time('mysql');
@@ -767,9 +771,11 @@ EOS;
 			}
 			$sql = <<<EOS
 				SELECT ID FROM {$lwp->transaction}
-				WHERE book_id = %d AND user_id = %d AND status = %s AND updated <= DATE_SUB(%s, INTERVAL %d DAY)
+				WHERE book_id = %d AND user_id = %d AND status = %s AND updated >= DATE_SUB(%s, INTERVAL %d DAY)
 EOS;
-			return (boolean)$wpdb->get_var($wpdb->prepare($sql, $post_id, $user_id, LWP_Payment_Status::SUCCESS, $datetime, $days));
+			$res = (boolean)$wpdb->get_var($wpdb->prepare($sql, $post_id, $user_id, LWP_Payment_Status::SUCCESS, $datetime, $days));
+			var_dump($wpdb->last_query);
+			return $res;
 		}else{
 			return true;
 		}

@@ -1002,13 +1002,7 @@ EOS;
 			$this->kill($this->_('Specified file does not exist.'), 404);
 		}
 		//Check user permission
-		if(
-			($file->free == 0 && !$lwp->is_owner($file->book_id, get_current_user_id())) //File is production and not file owner
-				||
-			($file->free == 1 && !is_user_logged_in()) //File requires loogged in user but not logged in
-				||
-			$file->public != 1 //File is private
-		){
+		if(!lwp_user_can_download($file, get_current_user_id())){
 			$this->kill($this->_('You have no permission to access this file.'), 403);
 		}
 		//Try Print file

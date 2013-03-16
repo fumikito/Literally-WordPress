@@ -48,7 +48,7 @@
 		}
 		//Check error
 		if(empty($message)){
-			if($this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"])){
+			if($this->upload_file($_REQUEST["post_id"], $_REQUEST["title"], $_FILES["file"]["name"], $_FILES["file"]["tmp_name"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"], $_REQUEST['limit'])){
 				$message[] = $this->_('File is successfully uploaded.');
 			}else{
 				$message[] = sprintf($this->_('Sorry, but failed to upload file. Check permission of <code>%s</code>. It must be writable from WordPress.'), $this->file_directory);
@@ -63,7 +63,7 @@
 	}elseif(isset($_REQUEST["file_id"], $_POST["_wpnonce"]) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_updated")){
 		//Updated.
 		$updated = true;
-		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"])){
+		if($this->update_file($_REQUEST["file_id"], $_REQUEST["title"], $_REQUEST['devices'], $_REQUEST["desc"], $_REQUEST["public"], $_REQUEST["free"], $_REQUEST['limit'])){
 			$message[] = $this->_ ('File is successfully updated.');
 		}else{
 			$message[] = $this->_('Failed to update file.');
@@ -182,6 +182,15 @@
 						<p class="help"><?php $this->e('Enter if required.'); ?></p>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row" valign="top" class="label">
+						<label for="limit"><?php $this->e('Download Limit'); ?></label>
+					</th>
+					<td class="field">
+						<input type="text" class="short" id="limit" name="limit" value="<?php echo intval($file->limitation); ?>" /> <?php $this->e('Times'); ?>
+						<p class="help"><?php $this->e('If you set 10, a user can download 10 times. &quot;0&quot; means unlimited. This option is not valid for public files.'); ?></p>
+					</td>
+				</tr>
 				<?php if(!($updating || $updated)): ?>
 				<tr>
 					<th scope="row" valign="top" class="label">
@@ -195,7 +204,7 @@
 			</tbody>
 		</table>
 		<p class="submit">
-			<input type="submit" name="submit" value="<?php echo ($updating || $updated) ? $this->_('Update') : $this->_('Add'); ?>" />
+			<input type="submit" name="submit" class="button-primary" value="<?php echo ($updating || $updated) ? $this->_('Update') : $this->_('Add'); ?>" />
 			<?php if(($updating || $updated)): ?>
 			<a class="button" href=""><?php $this->e('Go to add file'); ?></a>
 			<?php endif; ?>
@@ -219,8 +228,46 @@
 				<input type="hidden" value="<?php echo $f->ID; ?>" name="file_id" />
 				<input type="submit" class="button" value="<?php $this->e('Update') ?>" />
 			</form>
-			<div class="filename">
-				<span class="title"><?php echo esc_html($f->name); ?></span>
+			<div class="filename lwp-mediauploader-filename">
+				<span class="title">
+					<?php echo esc_html($f->name); ?>
+					<small>&nbsp;(<?php echo esc_html($f->file); ?>)</small>
+				</span><br />
+				<span class="spec">
+					<?php $this->e('Size'); ?>: 
+					<strong><?php echo lwp_get_size($f); ?></strong>
+					 / <?php $this->e('Accessibility'); ?>: <strong><?php
+						switch($f->free){
+							case 2:
+								$this->e('Anyone');
+								break;
+							case 1:
+								$this->e('Members only');
+								break;
+							default:
+								$this->e('Parchasers only');
+								break;
+						}
+					?></strong>
+					 / <?php $this->e('Donwload Limit'); ?>: <strong><?php
+						if($f->limitation > 0){
+							printf($this->_('%s times'), $f-limitation);
+						}else{
+							$this->e('No limit');
+						}
+					?></strong><br />
+					<?php $this->e('Devices'); ?>: <strong><?php
+						$devices = lwp_get_file_devices($f);
+						if(empty($devices)){
+							$this->e('None');
+						}else{
+							echo implode(', ', $devices);
+						}
+					?></strong>
+				</span>
+				<p class="description">
+					<?php echo esc_html($f->detail); ?>
+				</p>
 			</div>
 			<br style="clear:both" />
 		</div>
