@@ -26,7 +26,11 @@
 			<tr>
 				<th><?php $this->e("Name"); ?></th>
 				<td>
-					<?php echo $info["LASTNAME"].", ".$info["FIRSTNAME"]; ?>
+					<?php
+						echo get_locale() == 'ja'
+							? $info["LASTNAME"]." ".$info["FIRSTNAME"]
+							: $info["FIRSTNAME"]." ".$info["LASTNAME"];
+					?>
 				</td>
 			</tr>
 			<tr>

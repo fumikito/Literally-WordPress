@@ -1037,10 +1037,6 @@ function lwp_endpoint($action = 'buy', $is_sanbdox = false){
 	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
 }
 
-add_filter('lwp_cart_available_quantity', function($num){
-	return $num + 1;
-});
-
 /**
  * 公開ページへのリンクをSSLでなくする
  * @param string $url
