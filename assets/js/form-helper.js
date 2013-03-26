@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
-	//Check if it is sandbox
+	// Check if it is sandbox
 	var sandbox = window.location.href.match(/sandbox=true/);
-	//Kill every action 
+	// Kill every action 
 	if(sandbox){
 		$('form').submit(function(e){
 			e.preventDefault();
@@ -10,11 +10,33 @@ jQuery(document).ready(function($){
 			e.preventDefault();
 		});
 	}
-	//Prepend user to double submit
+	// Prepend user to double submit
 	$('form').submit(function(e){
 		$(this).find('input[type=submit]').val(LWP.labelProcessing).attr('disabled', true).addClass('disabled');
 	});
-	//Auto Redirect
+	// Highlight on change
+	$('#lwp-payment-cart select').change(function(){
+		$('#lwp-payment-cart .recalculate').effect('highlight', 1000);
+	});
+	// Force recalculate
+	$('#lwp-payment-method-form input[type=submit]').click(function(e){
+		flg = false;
+		$(this).parents('form').find('input[name^=quantity]').each(function(index,elt){
+			var qty = parseInt($(elt).val());
+			var qtyInput = $('#lwp-payment-cart select[name="' + $(elt).attr('name') + '"]');
+			if(qtyInput.length > 0 && parseInt(qtyInput.val(), 10) !== qty){
+				flg = true;
+				alert(LWP.labelRecalculating);
+				$('html,body').animate({ scrollTop: 0 }, 'fast');
+				$('#lwp-payment-cart .recalculate').effect('highlight', 1000);
+				return false;
+			}
+		});
+		if(flg){
+			e.preventDefault();
+		}
+	});
+	// Auto Redirect
 	if(!sandbox && $("#lwp-auto-redirect").length > 0){
 		href = $("#lwp-auto-redirect").attr('href');
 		left = 5;

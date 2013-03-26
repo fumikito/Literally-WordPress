@@ -1,9 +1,10 @@
 <?php /* @var $this LWP_Form */?>
 <?php /* @var $lwp Literally_WordPress */ global $lwp; ?>
-<form method="get" action="<?php echo lwp_endpoint('buy'); ?>">
+<form method="get" action="<?php echo lwp_endpoint('buy'); ?>" id="lwp-payment-cart">
 	<input type="hidden" name="lwp" value="buy" />
 	<input type="hidden" name="lwp-id" value="<?php echo $post_id; ?>" />
 	<table class="price-table">
+		<caption><?php $this->e('Order Detail'); ?></caption>
 		<thead>
 			<tr>
 				<th scope="col"><?php $this->e('Item'); ?></th>
@@ -66,12 +67,12 @@
 	</table>
 </form>
 
-	<p class="message notice">
-		<?php $this->e('Please select payment method below.'); ?>
-	</p>
+<p class="message notice">
+	<?php $this->e('Please select payment method below.'); ?>
+</p>
 
 	
-<form method="post" action="<?php echo lwp_endpoint('buy'); ?>">
+<form method="post" action="<?php echo lwp_endpoint('buy'); ?>" id="lwp-payment-method-form">
 	<input type="hidden" name="lwp" value="buy" />
 	<input type="hidden" name="lwp-id" value="<?php echo $post_id; ?>" />
 	<?php foreach($quantities as $id => $quantity): ?>
@@ -79,6 +80,7 @@
 	<?php endforeach; ?>
 	<?php wp_nonce_field('lwp_buynow', '_wpnonce', false); ?>
 	<table class="form-table lwp-method-table">
+		<caption><?php $this->e('Payment Method'); ?></caption>
 		<tbody>
 			<?php
 				//--------------------------

@@ -183,6 +183,9 @@ class LWP_Form extends Literally_WordPress_Common{
 			// Now define max_quantity
 			$allowed_quantity = min($max_quantity, $available_quantity);
 			$current_quantity = min($specified_quantity, $allowed_quantity);
+			if($current_quantity < 1){
+				$this->kill($this->_('Item quantity must be at least 1.'), 500);
+			}
 			//Start Transaction
 			if(!$this->can_skip_payment_selection() && (!isset($_REQUEST['_wpnonce'], $_REQUEST['lwp-method']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
@@ -1814,6 +1817,7 @@ EOS;
 		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form", 'jquery-effects-highlight'), $lwp->version, true);
 		//Add Common lables
 		$this->_LWP['labelProcessing'] = $this->_('Processing&hellip;');
+		$this->_LWP['labelRecalculating'] = $this->_('You changed item quantity. Please click recalculate and confirm your order.');
 		wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
 		//Do action hook for other plugins
 		do_action('lwp_form_enqueue_scripts');
