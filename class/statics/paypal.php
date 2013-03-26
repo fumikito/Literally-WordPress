@@ -33,6 +33,7 @@ class PayPal_Statics {
 	 */
 	public static function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url, $billing = true, $items = array()){
 		global $lwp;
+		$item_strval = array();
 		//Make string for SetExpressCheckout APIに投げる値を作成
 		$nvpstrs = array_merge(array_merge(self::simple_transaction_nvpstrs($return_url, $cancel_url, $billing), array(
 			'PAYMENTREQUEST_0_AMT' => $paymentAmount,

@@ -132,7 +132,7 @@ class LWP_Form extends Literally_WordPress_Common{
 		}
 		//Let's start transaction!
 		//Get book id
-		$book_id = (isset($_GET['lwp-id'])) ? intval($_GET['lwp-id']) : 0;
+		$book_id = (isset($_REQUEST['lwp-id'])) ? intval($_REQUEST['lwp-id']) : 0;
 		$book = $this->test_post_id($book_id);
 		//Let's do action hook to delegate transaction to other plugin
 		do_action('lwp_before_transaction', $book);
@@ -169,27 +169,43 @@ class LWP_Form extends Literally_WordPress_Common{
 				$this->kill($this->_("This itme is not on sale."), 403);
 			}
 		}else{
-			//Current step
+			// Current step
 			$total = $book->post_type == $lwp->subscription->post_type ? 4 : 3;
 			$current = $book->post_type == $lwp->subscription->post_type ? 2 : 1;
 			$item_name = $this->get_item_name($book);
+			// If payment selection required or nonce isn't corret, show form.
+			// Get current quantity
+			$specified_quantity = isset($_REQUEST['quantity']) ? max(1, absint(current( (array)$_REQUEST['quantity']))) : apply_filters('lwp_cart_initial_quantity', 1, $book, get_current_user_id());
+			// Get max quantity for this product
+			$max_quantity = apply_filters('lwp_cart_max_quantity', 100, $book, get_current_user_id());
+			// Available quantity
+			$available_quantity = apply_filters('lwp_cart_available_quantity', 1, $book, get_current_user_id());
+			// Now define max_quantity
+			$allowed_quantity = min($max_quantity, $available_quantity);
+			$current_quantity = min($specified_quantity, $allowed_quantity);
 			//Start Transaction
-			//If payment selection required or nonce isn't corret, show form.
-			if(!$this->can_skip_payment_selection() && (!isset($_GET['_wpnonce'], $_GET['lwp-method']) || !wp_verify_nonce($_GET['_wpnonce'], 'lwp_buynow'))){
+			if(!$this->can_skip_payment_selection() && (!isset($_REQUEST['_wpnonce'], $_REQUEST['lwp-method']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
 				$price = lwp_price($book_id);
 				$this->show_form('selection', array(
-					'prices' => array($book_id => $price),
+					'prices' => array($book_id => $price * $current_quantity),
 					'items' => array($book_id => $item_name),
-					'quantities' => array($book_id => 1),
-					'total_price' => $price,
+					'quantities' => array($book_id => $current_quantity),
+					'max_quantities' => array($book_id => $allowed_quantity),
+					'selectable' => array($book_id => $available_quantity > 1),
+					'total_price' => $price * $current_quantity,
 					'post_id' => $book_id,
+					'quanity' => $current_quantity,
 					'current' => $current,
 					'total' => $total
 				));
 			}else{
 				//User selected payment method and start transaction
-				$method = isset($_GET['lwp-method']) ? $_GET['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
+				$method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
+				$fixed_quantity = min($current_quantity, $allowed_quantity);
+				if($fixed_quantity < 1){
+					$this->kill($this->_('Item quantity is wrong. Please go back and select item quantity.'), 500);
+				}
 				switch($method){
 					case 'transfer':
 						if($lwp->option['transfer']){
@@ -204,14 +220,15 @@ EOS;
 								$data = array(
 									"user_id" => get_current_user_id(),
 									"book_id" => $book_id,
-									"price" => lwp_price($book_id),
+									"price" => lwp_price($book_id) * $fixed_quantity,
 									"transaction_key" => sprintf("%08d", get_current_user_id()),
 									"status" => LWP_Payment_Status::START,
 									"method" => LWP_Payment_Methods::TRANSFER,
+									'num' => $fixed_quantity,
 									"registered" => gmdate('Y-m-d H:i:s'),
 									"updated" => gmdate('Y-m-d H:i:s')
 								);
-								$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s");
+								$where = array("%d", "%d", "%d", "%s", "%s", "%s", '%d', "%s", "%s");
 								if((($tran_id = lwp_is_user_waiting($book_id, get_current_user_id())))){
 									unset($data['registered']);
 									array_pop($where);
@@ -264,11 +281,11 @@ EOS;
 								$physical = false;
 								break;
 						}
-						$token = PayPal_Statics::get_transaction_token($price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'),
+						$token = PayPal_Statics::get_transaction_token($fixed_quantity * $price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'),
 								($method == 'cc'), array(array(
 									'name' => $item_name,
 									'amt' => $price,
-									'quantity' => 1,
+									'quantity' => $fixed_quantity,
 									'physical' => $physical,
 									'url' => get_permalink($book_id)
 								)));
@@ -277,15 +294,16 @@ EOS;
 							$data = array(
 								"user_id" => get_current_user_id(),
 								"book_id" => $book_id,
-								"price" => $price,
+								"price" => $price * $fixed_quantity,
 								"status" => LWP_Payment_Status::START,
 								"method" => LWP_Payment_Methods::PAYPAL,
+								'num' => $fixed_quantity,
 								"transaction_key" => $invnum,
 								"transaction_id" => $token,
 								"registered" => gmdate('Y-m-d H:i:s'),
 								"updated" => gmdate('Y-m-d H:i:s')
 							);
-							$where = array("%d", "%d", "%d", "%s", "%s", "%s", "%s", "%s", "%s");
+							$where = array("%d", "%d", "%d", "%s", "%s", '%d', "%s", "%s", "%s", "%s");
 							$sql = <<<EOS
 								SELECT ID FROM {$lwp->transaction}
 								WHERE transaction_key = %s
@@ -835,34 +853,44 @@ EOS;
 			if(!$transaction){
 				$message = $this->_("Failed to get the transactional information.");
 			}
-			$post = get_post($transaction->book_id);
 			if(empty($message)){
-				if($post->post_type == $lwp->subscription->post_type){
-					$link = $lwp->subscription->get_subscription_archive();
-				}else{
-					$link = get_permalink($post->ID);
+				//Get itemss
+				$transactions = $lwp->get_transaction_items($transaction);
+				$items = array();
+				$include_subscription = false;
+				foreach($transactions as $tran){
+					$post = get_post($tran->book_id);
+					if($post->post_type == $lwp->subscription->post_type){
+						$include_subscription = true;
+					}
+					$item_data = array(
+						'post_id' => $tran->book_id,
+						'price' => $tran->price,
+						'quantity' => $tran->num
+					);
+					switch($post->post_type){
+						case $lwp->event->post_type:
+							$item_data['name'] = get_the_title($post->post_parent).' '.$post->post_title;
+							break;
+						case $lwp->subscription->post_type:
+							$item_data['name'] = $this->_('Subscription').' '.$post->post_title;
+							break;
+						default:
+							$item_data['name'] = $post->post_title;
+							break;
+					}
+					$items[] = $item_data;
 				}
-				switch($post->post_type){
-					case $lwp->event->post_type:
-						$item_name = get_the_title($post->post_parent).' '.$post->post_title;
-						break;
-					case $lwp->subscription->post_type:
-						$item_name = $this->_('Subscription').' '.$post->post_title;
-						break;
-					default:
-						$item_name = $post->post_title;
-						break;
-				}
+				$post = get_post($transaction->book_id);
 				$this->show_form("return", array(
 					"info" => $info,
 					"transaction" => $transaction,
-					"item_name" => $item_name,
-					'link' => $link,
-					'total' => ($post->post_type == $lwp->subscription->post_type) ? 4 : 3,
-					'current' => ($post->post_type == $lwp->subscription->post_type) ? 3 : 2
+					"items" => $items,
+					'total' => $include_subscription ? 4 : 3,
+					'current' => $include_subscription ? 3 : 2,
 				));
 			}else{
-				$this->kill($message);
+				$this->kill(apply_filters('lwp_confirm_failure_message', $message.sprintf($this->_(' Please contact to Administrator of <strong>%s</strong>'), get_bloginfo('name'))), 500);
 			}
 		}else{
 			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){

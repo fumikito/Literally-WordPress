@@ -955,10 +955,8 @@ function lwp_discout_rate($post = null){
  */
 function lwp_show_form($post = null, $btn_src = null){
 	global $lwp;
-	if(!$post){
-		global $post;
-	}
-	if(!$post){
+	$post = get_post($post);
+	if(!$post || false === array_search($post->post_type, $lwp->post->post_types)){
 		return "";
 	}
 	$timer = lwp_campaign_timer($post);
@@ -967,26 +965,29 @@ function lwp_show_form($post = null, $btn_src = null){
 	}
 	$currency_code = $lwp->option['currency_code'];
 	$currency_symbol = PayPal_Statics::currency_entity($currency_code);
+	$class_name = 'lwp-form';
 	if(lwp_on_sale($post)){
 		//セール中の場合
 		$original_price = lwp_original_price($post);
 		$current_price = lwp_price($post);
 		$price_tag = "<p class=\"lwp-price\"><small>({$currency_code})</small><del>{$currency_symbol} ".number_format($original_price)."</del><span class=\"price\">{$currency_symbol} ".number_format($current_price)."</span><span class=\"lwp-off\">".  lwp_discout_rate($post)."</span></p>";
-		$class = "lwp-form onsale";
+		$class_name .= " onsale";
 	}elseif(lwp_original_price() > 0){
 		//売り物だけどセール中じゃない場合
 		$price_tag = "<p class=\"lwp-price\"><small>({$currency_code})</small><span class=\"price\">{$currency_symbol} ".  number_format(lwp_price($post))."</span></p>";
-		$class = "lwp-form";
+	}else{
+		//Free
+		$price_tag = "";
 	}
 	if(is_user_logged_in()){
-		$button = $btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post);
-		$button = "<p class=\"lwp-button\">{$button}</p>";
+		$button = sprintf('<p class="lwp-button">%s</p>', 
+					($btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post)));
 	}else{
 		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(lwp_endpoint('buy')."&lwp-id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
 	}
 	return <<<EOS
 <!-- Literally WordPress {$lwp->version} -->
-<div class="{$class}">
+<div class="{$class_name}">
 	{$timer}
 	{$price_tag}
 	{$button}
@@ -1034,6 +1035,23 @@ function lwp_endpoint($action = 'buy', $is_sanbdox = false){
 	}
 	$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
 	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
+}
+
+add_filter('lwp_cart_available_quantity', function($num){
+	return $num + 1;
+});
+
+/**
+ * 公開ページへのリンクをSSLでなくする
+ * @param string $url
+ * @return string
+ */
+function lwp_unsslize($url){
+	$home = get_option('siteurl', '');
+	if(false !== strpos($home, 'https://')){
+		$url = str_replace('https://', 'http://', $url);
+	}
+	return $url;
 }
 
 /**
@@ -1818,4 +1836,23 @@ function lwp_token_chekcer($post = null){
 	if(current_user_can('edit_others_posts') || get_current_user_id() == $post->post_author){
 		echo '<a class="button" href="'.  lwp_ticket_token_url($post).'">'.$lwp->_('Check Token').'</a>';
 	}
+}
+
+/**
+ * Returns sarray with kip number for option tag
+ * @param int $max
+ * @return array
+ */
+function lwp_option_steps($max){
+	$options = array();
+	for($i = 1; $i <= $max; $i++){
+		if($i <= 20){
+			$options[] = $i;
+		}elseif($i <= 100){
+			if($i % 10 == 0){
+				$options[] = $i;
+			}
+		}
+	}
+	return $options;
 }

@@ -13,6 +13,7 @@
 	<input type="hidden" name="EMAIL" value="<?php echo $info['EMAIL']; ?>" />
 	
 	<table class="form-table">
+		<caption><?php $this->e('Customer information'); ?></caption>
 		<tbody>
 			<tr>
 				<th>
@@ -23,28 +24,54 @@
 				</td>
 			</tr>
 			<tr>
-				<th><?php $this->e("Your Name"); ?></th>
+				<th><?php $this->e("Name"); ?></th>
 				<td>
 					<?php echo $info["LASTNAME"].", ".$info["FIRSTNAME"]; ?>
-					<small><?php echo $info["EMAIL"]; ?></small>
 				</td>
 			</tr>
 			<tr>
-				<th>
-					<?php $this->e("Item"); ?>
-				</th>
+				<th><?php $this->e('Mail'); ?></th>
 				<td>
-					<?php echo $item_name;?>
+					<?php echo $info["EMAIL"]; ?><br /> 
+					<small class="description"><?php $this->e('This e-mail address has been entered on PayPal by you.') ?></small>
 				</td>
 			</tr>
+		</tbody>
+	</table>
+	
+	<table class="price-table">
+		<caption><?php $this->e('Order detail'); ?></caption>
+		<thead>
 			<tr>
-				<th>
-					<?php $this->e("Amount"); ?>
+				<th scope="col"><?php $this->e('Item'); ?></th>
+				<th scope="col"><?php $this->e('Quantity'); ?></th>
+				<th scope="col">&nbsp;</th>
+				<th class="price" scope="col"><?php $this->e('Subtotal'); ?></th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td class="recalculate">&nbsp;</td>
+				<th scope="col">&nbsp;</th>
+				<th scope="row"><?php $this->e('Total'); ?></th>
+				<td class="price"><?php echo number_format_i18n($transaction->price)." ".lwp_currency_code(); ?></td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<?php foreach($items as $item): ?>
+			<tr>
+				<th scope="row">
+					<?php echo apply_filters('lwp_cart_product_title', esc_html($item['name']), $item['post_id']); ?>
 				</th>
-				<td>
-					<?php echo PayPal_Statics::currency_entity($this->option['currency_code']).number_format($info['AMT'])."({$this->option['currency_code']})";?>
+				<td class="quantity">
+					<?php printf('<span>%s</span>', $item['quantity']); ?>
+				</td>
+				<td class="misc"><?php do_action('lwp_cart_row_desc', '', $item['post_id'], $item['price'], $item['quantity']); ?></td>
+				<td class="price">
+					<?php echo number_format_i18n($item['price'])." ".lwp_currency_code(); ?>
 				</td>
 			</tr>
+			<?php endforeach; ?>
 		</tbody>
 	</table>
 	<p class="submit">

@@ -1084,6 +1084,29 @@ EOS;
 	}
 	
 	/**
+	 * Get transaction items
+	 * 
+	 * @global wpdb $wpdb
+	 * @param object|int $transaction
+	 * @return array Array of transaction rows
+	 */
+	public function get_transaction_items($transaction){
+		global $wpdb, $lwp;
+		if(is_numeric($transaction)){
+			$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction));
+			if(!$transaction){
+				return array();
+			}
+		}
+		if($transaction->book_id > 0){
+			return array($transaction);
+		}else{
+			// TODO: Cart handling
+			return array();
+		}
+	}
+	
+	/**
 	 * Update transaction
 	 * @return void
 	 */

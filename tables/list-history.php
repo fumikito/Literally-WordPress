@@ -152,7 +152,7 @@ EOS;
 					$url = lwp_ticket_url($item->post_parent);
 					$title = get_the_title($item->post_parent).'&nbsp;'.$item->post_title;
 				}else{
-					$url = get_permalink($item->book_id);
+					$url = lwp_unsslize(get_permalink($item->book_id));
 					$title = $item->post_title;
 				}
 				if($item->post_type == $lwp->subscription->post_type){
