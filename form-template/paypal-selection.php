@@ -8,6 +8,7 @@
 		<thead>
 			<tr>
 				<th scope="col"><?php $this->e('Item'); ?></th>
+				<th scope="col"><?php $this->e('@'); ?></th>
 				<th scope="col"><?php $this->e('Quantity'); ?></th>
 				<th scope="col">&nbsp;</th>
 				<th class="price" scope="col"><?php $this->e('Subtotal'); ?></th>
@@ -15,7 +16,7 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<td class="recalculate">
+				<td class="recalculate" colspan="3">
 					<?php
 						$can_select = false;
 						foreach($selectable as $s){
@@ -32,7 +33,6 @@
 						&nbsp;
 					<?php endif; ?>
 				</td>
-				<th scope="col">&nbsp;</th>
 				<th scope="row"><?php $this->e('Total'); ?></th>
 				<td class="price"><?php echo number_format_i18n($total_price)." ".lwp_currency_code(); ?></td>
 			</tr>
@@ -43,6 +43,9 @@
 				<th scope="row">
 					<?php echo apply_filters('lwp_cart_product_title', esc_html($item), $id); ?>
 				</th>
+				<td>
+					<?php echo number_format_i18n($unit_prices[$id])." ".lwp_currency_code(); ?>
+				</td>
 				<td class="quantity">
 					<?php if($selectable[$id]): ?>
 						<input type="hidden" class="current_quantity" value="<?php echo $quantities[$id]; ?>" />

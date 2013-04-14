@@ -197,6 +197,7 @@ class LWP_Form extends Literally_WordPress_Common{
 					'max_quantities' => array($book_id => $allowed_quantity),
 					'selectable' => array($book_id => $available_quantity > 1),
 					'total_price' => $price * $current_quantity,
+					'unit_prices' => array($book_id => $price),
 					'post_id' => $book_id,
 					'quanity' => $current_quantity,
 					'current' => $current,
