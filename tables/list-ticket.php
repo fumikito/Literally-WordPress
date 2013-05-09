@@ -169,7 +169,7 @@ EOS;
 				return number_format_i18n($item->consumed);
 				break;
 			case 'price':
-				return number_format_i18n($item->num * $item->price).' '.  lwp_currency_code();
+				return number_format_i18n($item->price).' '.  lwp_currency_code();
 				break;
 			case 'actions':
 				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Transaction').'</a>';
