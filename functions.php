@@ -9,6 +9,7 @@
 //Load internal functions
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR."functions-internal.php";
 
+
 /**
  * ユーザーが電子書籍を所有しているか否かを返す
  * 

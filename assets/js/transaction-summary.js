@@ -1,6 +1,14 @@
 jQuery(document).ready(function($){
 	//Enable tabs
 	$('#lwp-dashboard-ranking').tabs();
+	//Show Datepicker
+	for(prop in LWP){
+		var propToSplit = ['monthNames','dayNames','monthNamesShort','dayNamesMin','dayNamesShort'];
+		if($.inArray(prop, propToSplit) > -1){
+			LWP[prop] = LWP[prop].split(',');
+		}
+	}
+	$('.date-picker').datepicker(LWP);
 });
 
 //Draw Pie chart
