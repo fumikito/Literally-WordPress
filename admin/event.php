@@ -125,30 +125,31 @@ if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 </table>
 <br style="clear: both;" />
 <h3><?php $this->e('Ticket transaction list'); ?></h3>
-<iframe src="" name="lwp-csv-output" height="0" width="100%"></iframe>
-<form id="lwp-csv-output-form" method="get" action="<?php echo admin_url('admin-ajax.php'); ?>" target="lwp-csv-output">
-	<input type="hidden" name="action" value="lwp_event_csv_output" />
-	<?php wp_nonce_field('lwp_event_csv_output');?>
-	<input type="hidden" name="event_id" value="<?php echo esc_attr($_GET['event_id']); ?>" />
-	<input type="hidden" name="status" value="" />
-	<input type="hidden" name="ticket" value="" />
-	<input type="hidden" name="from" value="" />
-	<input type="hidden" name="to" value="" />
-	<p class="description">
-		<?php printf( $this->_('You can get participants list of <strong>%1$s</strong> in status below.'), $event->post_title); ?>
-		<input type="submit" class="button-primary" value="<?php $this->e('Get CSV'); ?>" /><br />
-	</p>
-</form>
+<?php if($this->caps->current_user_can(LWP_Capabilities::DOWNLOAD_EVENT_CSV)): ?>
+	<iframe src="" name="lwp-csv-output" height="0" width="100%"></iframe>
+	<form id="lwp-csv-output-form" method="get" action="<?php echo admin_url('admin-ajax.php'); ?>" target="lwp-csv-output">
+		<input type="hidden" name="action" value="lwp_event_csv_output" />
+		<?php wp_nonce_field('lwp_event_csv_output');?>
+		<input type="hidden" name="event_id" value="<?php echo esc_attr($_GET['event_id']); ?>" />
+		<input type="hidden" name="status" value="" />
+		<input type="hidden" name="ticket" value="" />
+		<input type="hidden" name="from" value="" />
+		<input type="hidden" name="to" value="" />
+		<p class="description">
+			<?php printf( $this->_('You can get participants list of <strong>%1$s</strong> in status below.'), $event->post_title); ?>
+			<input type="submit" class="button-primary" value="<?php $this->e('Get CSV'); ?>" /><br />
+		</p>
+	</form>
+<?php endif; ?>
 <form method="get" action="<?php echo admin_url('admin.php'); ?>">
 	<input type="hidden" name="page" value="lwp-event" />
 	<input type="hidden" name="event_id" value="<?php echo intval($_GET['event_id']); ?>" />
-<?php
-$list_table->prepare_items();
-do_action('admin_notice');
-$list_table->search_box(__('Search'), 's');
-$list_table->display();
-
-?>
+	<?php
+		$list_table->prepare_items();
+		do_action('admin_notice');
+		$list_table->search_box(__('Search'), 's');
+		$list_table->display();
+	?>
 </form>
 
 

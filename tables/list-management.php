@@ -45,6 +45,9 @@ class LWP_List_Management extends WP_List_Table{
 EOS;
 		//Create Where section
 		$wheres = array();
+		if(!current_user_can('edit_others_posts')){
+			$wheres[] = $wpdb->prepare("p.post_author = %d", get_current_user_id());
+		}
 		$filter = $this->get_filter();
 		if($filter != 'all'){
 			$wheres[] = $wpdb->prepare("t.status = %s", $filter);

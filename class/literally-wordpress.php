@@ -133,6 +133,12 @@ class Literally_WordPress{
 	public $message = array();
 	
 	/**
+	 *
+	 * @var LWP_Capabilities
+	 */
+	public $caps = null;
+	
+	/**
 	 * Post sell utility
 	 * @var LWP_Post
 	 */
@@ -310,6 +316,8 @@ class Literally_WordPress{
 				'show_payment_agency' => false
 			)
 		);
+		//Initialize Capbability
+		$this->caps = new LWP_Capabilities();
 		//Initialize iOS
 		$this->ios = new LWP_iOS($this->option);
 		//Register form action
@@ -470,7 +478,9 @@ class Literally_WordPress{
 		//Setting Pagees
 		add_menu_page("Literally WordPress", "Literally WP", 5, "lwp-setting", array($this, "load"), $this->url."/assets/book.png");
 		add_submenu_page("lwp-setting", $this->_("General Setting"), $this->_("General Setting"), 'manage_options', "lwp-setting", array($this, "load"));
-		//Transaction list
+		// Summary
+		add_submenu_page('lwp-setting', $this->_('Transaction Summary'), $this->_('Summary'), 'edit_posts', 'lwp-summary', array($this, 'load'));
+		// Transaction list
 		add_submenu_page("lwp-setting", $this->_("Transaction Management"), $this->_("Transaction Management"), 'edit_posts', "lwp-management", array($this, "load"));
 		//Transfer Page if enabled
 		if($this->notifier->is_enabled()){
@@ -603,7 +613,17 @@ class Literally_WordPress{
 		if($this->is_admin('management') && !isset($_REQUEST['transaction_id'])){
 			wp_enqueue_style('jquery-ui-datepicker');
 			wp_enqueue_script('lwp-output-csv-transaction', $this->url.'assets/js/management-helper.js', array('jquery-ui-datepicker'), $this->version);
-			wp_localize_script('lwp-output-csv-transaction', 'LWP', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
+			wp_localize_script('lwp-output-csv-transaction', 'LWP', LWP_Datepicker_Helper::get_config_array());
+		}
+		if($this->is_admin('summary')){
+			wp_enqueue_style('jquery-ui-datepicker');
+			wp_enqueue_script(
+				'lwp-transaction', 
+				$this->url.'assets/js/transaction-summary.js',
+				array('google-jsapi', 'jquery-form', 'jquery-ui-tabs', 'jquery-ui-datepicker'),
+				$this->version
+			);
+			wp_localize_script('lwp-transaction', 'LWP', array_merge(LWP_Datepicker_Helper::get_config_array(), array(
 					'pieChartTitle' => $this->_('Sales per post type'),
 					'pieChartLabel' => $this->_('Post type'),
 					'pieChartUnit' => lwp_currency_code(),
@@ -611,15 +631,6 @@ class Literally_WordPress{
 					'areaChartSales' => $this->_('Sales'),
 					'areaChartLabel' => $this->_('Date')
 			)));
-			if(!isset($_GET['view'])){
-				wp_enqueue_script(
-					'lwp-transaction', 
-					$this->url.'assets/js/transaction-summary.js',
-					array('google-jsapi', 'jquery-form', 'jquery-ui-tabs'),
-					$this->version
-				);
-			}
-
 		}
 		//Incase Reward dashboard, Load datepicker and tab UI
 		if(isset($_GET['page']) && ( ($_GET['page'] == 'lwp-reward' && !isset($_GET['tab']))|| ($_GET['page'] == 'lwp-personal-reward' && !isset($_GET['tab'])) ) ){
@@ -1344,6 +1355,9 @@ EOS;
 			if($post_type != 'all'){
 				$wheres[] = $wpdb->prepare("p.post_type = %s", $status);
 			}
+			if(!current_user_can('edit_others_posts')){
+				$wheres[] = $wpdb->prepare("p.post_author = %d", get_current_user_id());
+			}
 			$sql .= ' WHERE '.implode(' AND ', $wheres);
 			$sql .= <<<EOS
 				GROUP BY date
@@ -1547,6 +1561,7 @@ EOS;
 	 */
 	private function is_admin($page_name){
 		switch($page_name){
+			case 'summary':
 			case "campaign":
 			case "setting":
 			case "management":

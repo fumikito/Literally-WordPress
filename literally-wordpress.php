@@ -28,6 +28,7 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."base".DIRECTORY_SEPARATOR."japanese-payment.php";
 	
 	//Subclass
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."capability.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."campaign.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."refund-manager.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."post.php";
