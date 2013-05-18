@@ -265,6 +265,7 @@ EOS;
 						return sprintf('<span style="color: #999;">%s</span>', $lwp->_($item->status));
 						break;
 					case LWP_Payment_Status::REFUND_REQUESTING:
+					case LWP_Payment_Status::WAITING_REVIEW:
 						return sprintf('<strong style="color: #f00;">%s</strong>', $lwp->_($item->status));
 						break;
 					case LWP_Payment_Status::WAITING_CANCELLATION:

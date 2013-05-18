@@ -101,7 +101,8 @@
 							<?php $this->e("This is a develop enviorment.")?>
 						</label>
 						<p class="description">
-							<?php $this->e("Sandbox means develop enviorment. You can test your settings by checking above."); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small>
+							<?php $this->e("Sandbox means develop enviorment. You can test your settings by checking above."); ?><small>（<?php echo $this->help("account", $this->_("More &gt;"))?>）</small><br />
+							<?php printf($this->_('<strong>NOTICE: </strong> On sandbox environment, all transactions require <code>payment review</code> in default. This may cause unexpected result, so check your sandobx account setting at <a target="_blank" href="%s">PayPal Developer</a>.'), 'https://developer.paypal.com/webapps/developer/applications/accounts'); ?>
 						</p>
 					</td>
 				</tr>

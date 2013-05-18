@@ -148,7 +148,7 @@ class PayPal_Statics {
 	 * トランザクションを完了させる
 	 * 
 	 * @param array $transaction_info get_transaction_infoで取得した配列
-	 * @return boolean|string transaction idを返す
+	 * @return array|false
 	 */
 	public static function do_transaction($transaction_info)
 	{
@@ -157,9 +157,43 @@ class PayPal_Statics {
 		$resArray = self::hash_call("DoExpressCheckoutPayment",$nvpstr);
 		$ack = strtoupper($resArray["ACK"]);
 		if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
-			return $resArray['TRANSACTIONID'];
+			return $resArray;
 		}else{
 			self::log(var_export($resArray, true));
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns PayPal's transaction status to LWP's vocabraly.
+	 * 
+	 * @param array $response Array returned by PayPal_Static::do_transaction
+	 * @return boolean
+	 */
+	public static function transaction_result_status($response = array()){
+		if(isset($response['PAYMENTINFO_0_PAYMENTSTATUS'])){
+			switch($response['PAYMENTINFO_0_PAYMENTSTATUS']){
+				case 'Completed':
+					return LWP_Payment_Status::SUCCESS;
+					break;
+				case 'Pending':
+				case 'In-Progress':
+				case 'Processed':
+					return LWP_Payment_Status::WAITING_REVIEW;
+					break;
+				case 'Voided':
+				case 'Denied':
+					return LWP_Payment_Status::CANCEL;
+					break;
+				case 'Partially-Refunded':
+				case 'Refunded':
+					return LWP_Payment_Status::REFUND;
+					break;
+				default:
+					return false;
+					break;
+			}
+		}else{
 			return false;
 		}
 	}
