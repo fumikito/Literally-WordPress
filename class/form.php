@@ -1685,6 +1685,14 @@ EOS;
 	}
 	
 	/**
+	 * Handle request from PayPal IPN
+	 */
+	private function handle_paypal_ipn(){
+		PayPal_Statics::handle_ipn();
+		die();
+	}
+	
+	/**
 	 * Handle request from GMO
 	 * @global Literally_WordPress $lwp
 	 * @return

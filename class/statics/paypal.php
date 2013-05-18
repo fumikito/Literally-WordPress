@@ -34,13 +34,14 @@ class PayPal_Statics {
 	public static function get_transaction_token($paymentAmount, $invoice_number, $return_url, $cancel_url, $billing = true, $items = array()){
 		global $lwp;
 		$item_strval = array();
-		//Make string for SetExpressCheckout APIに投げる値を作成
+		//Make string for SetExpressCheckout API
 		$nvpstrs = array_merge(array_merge(self::simple_transaction_nvpstrs($return_url, $cancel_url, $billing), array(
 			'PAYMENTREQUEST_0_AMT' => $paymentAmount,
 			'PAYMENTREQUEST_0_ITEMAMT' => $paymentAmount,
 			'PAYMENTREQUEST_0_INVNUM' => $invoice_number,
 			'PAYMENTREQUEST_0_PAYMENTACTION' => self::PAYMENT_ACTION,
 			'PAYMENTREQUEST_0_CURRENCYCODE' => $lwp->option['currency_code'],
+			'PAYMENTREQUEST_0_NOTIFYURL' => rawurlencode(lwp_endpoint('paypal-ipn')),
 		)), self::make_item_request($items));
 		//Make request
 		$resArray = self::hash_call("SetExpressCheckout", self::create_nvp($nvpstrs));
@@ -99,7 +100,7 @@ class PayPal_Statics {
 			'LOCALECODE' => $lwp->option['country_code'],
 			'NOSHIPPING' => intval($no_shippping),
 			'LANDINGPAGE' => ($billing ? 'Billing' : 'Login'),
-			'ALLOWNOTE' => intval($allownote)
+			'ALLOWNOTE' => intval($allownote),
 		);
 	}
 	
@@ -195,6 +196,97 @@ class PayPal_Statics {
 			}
 		}else{
 			return false;
+		}
+	}
+	
+	/**
+	 * Handle IPN call from PayPal
+	 * 
+	 * @see https://www.x.com/developers/PayPal/documentation-tools/code-sample/216623
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 */
+	public static function handle_ipn(){
+		global $lwp, $wpdb;
+		
+		// STEP 1: Read POST data
+ 
+		// reading posted data from directly from $_POST causes serialization 
+		// issues with array data in POST
+		// reading raw POST data from input stream instead. 
+		$raw_post_data = file_get_contents('php://input');
+		$raw_post_array = explode('&', $raw_post_data);
+		$myPost = array();
+		foreach ($raw_post_array as $keyval) {
+		  $keyval = explode ('=', $keyval);
+		  if (count($keyval) == 2)
+			 $myPost[$keyval[0]] = urldecode($keyval[1]);
+		}
+		// read the post from PayPal system and add 'cmd'
+		$req = 'cmd=_notify-validate';
+		if(function_exists('get_magic_quotes_gpc')) {
+		   $get_magic_quotes_exists = true;
+		} 
+		foreach ($myPost as $key => $value) {        
+		   if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) { 
+				$value = urlencode(stripslashes($value)); 
+		   } else {
+				$value = urlencode($value);
+		   }
+		   $req .= "&$key=$value";
+		}
+
+
+		// STEP 2: Post IPN data back to paypal to validate
+
+		$ch = curl_init(self::url_root());
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
+		// In wamp like environments that do not come bundled with root authority certificates,
+		// please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set the directory path 
+		// of the certificate as shown below.
+		// curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
+		if( !($res = curl_exec($ch)) ) {
+			self::log('Error occurred while processing IPN data from PayPal.');
+			curl_close($ch);
+			exit;
+		}
+		curl_close($ch);
+
+
+		// STEP 3: Inspect IPN validation result and act accordingly
+
+		if (strcmp ($res, "VERIFIED") == 0) {
+			// check whether the payment_status is Completed
+			// check that txn_id has not been previously processed
+			// check that receiver_email is your Primary PayPal email
+			// check that payment_amount/payment_currency are correct
+			// process payment
+
+			// assign posted variables to local variables
+			$payment_status = $_POST['payment_status'];
+			$transaction_id = $_POST['txn_id'];
+			$transaction = $lwp->get_transaction_by('transaction_id', $transaction_id);
+			if($transaction){
+				switch($payment_status){
+					case 'Completed':
+						if($transaction->status != LWP_Payment_Status::SUCCESS){
+							$row_changed = $wpdb->update($lwp->transaction,array(
+								'status' => LWP_Payment_Status::SUCCESS
+							), array('ID' => $transaction->ID), array('%s'), array('%d'));
+							do_action('lwp_update_transaction', $transaction->ID);
+						}
+						break;
+				}
+			}
+		} else if (strcmp ($res, "INVALID") == 0) {
+			// log for manual investigation
 		}
 	}
 	
@@ -333,15 +425,28 @@ class PayPal_Statics {
 	 * PayPalへのURLを返す
 	 * 
 	 * @since 0.8
-	 * @global Literally_WordPress $lwp
 	 * @return string
 	 */
 	private static function url(){
-		global $lwp;
-		$endpoint = $lwp->option['sandbox'] ? "https://www.sandbox.paypal.com/webscr?cmd="
-									  : "https://www.paypal.com/cgi-bin/webscr?cmd=";
-		$endpoint .= self::need_mobile_checkout() ? "_express-checkout-mobile" : "_express-checkout";
+		$cmd .= self::need_mobile_checkout() ? "_express-checkout-mobile" : "_express-checkout";
+		$endpoint = self::url_root($cmd);
 		return $endpoint."&useraction=commit&token=";
+	}
+	
+	/**
+	 * Return PayPal's endpoint
+	 * 
+	 * @param string $cmd command name
+	 * @return string
+	 */
+	private static function url_root($cmd = null){
+		global $lwp;
+		$endpoint = $lwp->option['sandbox'] ? "https://www.sandbox.paypal.com/cgi-bin/webscr"
+									  : "https://www.paypal.com/cgi-bin/webscr";
+		if(!is_null($cmd)){
+			$endpoint .= '?cmd='.strval($cmd);
+		}
+		return $endpoint;
 	}
 	
 	/**
