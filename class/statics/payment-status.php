@@ -19,6 +19,11 @@ class LWP_Payment_Status {
 	const AUTH = 'AUTH';
 	
 	/**
+	 * Transaction has been succeeded, but waiting for review.
+	 */
+	const WAITING_REVIEW = 'WAITING_REVIEW';
+	
+	/**
 	 * Transaction was canceled.
 	 */
 	const CANCEL = 'Cancel';
@@ -56,6 +61,7 @@ class LWP_Payment_Status {
 		return array(
 			self::START,
 			self::AUTH,
+			self::WAITING_REVIEW,
 			self::CANCEL,
 			self::SUCCESS,
 			self::REFUND,
@@ -74,6 +80,7 @@ class LWP_Payment_Status {
 		global $lwp;
 		$lwp->_('SUCCESS');
 		$lwp->_('AUTH');
+		$lwp->_('WAITING_REVIEW');
 		$lwp->_('Cancel');
 		$lwp->_('START');
 		$lwp->_('REFUND');

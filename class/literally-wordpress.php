@@ -1095,6 +1095,38 @@ EOS;
 	}
 	
 	/**
+	 * Returns transaction object
+	 * @global wpdb $wpdb
+	 * @param string $field ID, transaction_key, transaction_id
+	 * @param int|string $value
+	 * @return object
+	 */
+	public function get_transaction_by($field, $value){
+		global $wpdb;
+		$placeholder = '%s';
+		switch($field){
+			case 'transaction_key':
+			case 'key':
+			case 'invnum':
+			case 'INVNUM':
+				$field = 'transaction_key';
+				break;
+			case 'transaction_id':
+				$field = 'transaction_id';
+				break;
+			default:
+				$field = 'ID';
+				$placeholder = '%d';
+				break;
+		}
+		$sql = <<<EOS
+			SELECT * FROM {$this->transaction}
+			WHERE {$field} = {$placeholder}
+EOS;
+		return $wpdb->get_row($wpdb->prepare($sql, $value));
+	}
+	
+	/**
 	 * Get transaction items
 	 * 
 	 * @global wpdb $wpdb

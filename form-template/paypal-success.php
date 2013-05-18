@@ -1,6 +1,7 @@
-
+<?php /* @var $this LWP_Form */ ?>
 <p class="message success">
-	<?php $this->e("Thank you for purchasing."); ?><br />
+	<?php echo $msg;  ?>
+	<br />
 	<?php $this->e("You will be redirected to the purchased item page.");?><br />
 </p>
 <p class="indicator">

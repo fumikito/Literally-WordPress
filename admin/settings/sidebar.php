@@ -21,6 +21,9 @@
 				<a href="http://www.sbpayment.jp/" target="_blank"><img src="<?php echo $this->url; ?>assets/ads/softbankps-logo.png" alt="SOFTBANK Payment Service corp." width="300" height="40" /></a>
 			</p>
 			<p class="center"><a class="button-primary" href="#" id="contact-opener"><?php $this->e('Contact'); ?></a></p>
+			<p class="description">
+				<?php $this->e('May I help you? We have premium support service. Feel free to call us! <a href="tel:05055328327">050-5532-8327</a> (Japan Only)'); ?>
+			</p>
 			<div id="lwp-pa-contact" title="<?php $this->e('Contact to Payment Agency'); ?>">
 				<?php $user = get_userdata(get_current_user_id()); ?>
 				<form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">

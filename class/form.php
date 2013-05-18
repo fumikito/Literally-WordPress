@@ -709,9 +709,9 @@ EOS;
 			if($transaction->status == LWP_Payment_Status::START){
 				$left_days = ceil((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
 				if($left_days < 0){
-					$request_suffix = sprintf($this->_(' (%d days past)'), $left_days);
+					$request_suffix = sprintf($this->_(' (%d days past)'), number_format_i18n(absint($left_days)));
 				}else{
-					$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
+					$request_suffix = sprintf($this->_(' (%d days left)'), number_format_i18n($left_days));
 				}
 				if($left_days < 3){
 					$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
@@ -897,8 +897,11 @@ EOS;
 				$this->kill(apply_filters('lwp_confirm_failure_message', $message.sprintf($this->_(' Please contact to Administrator of <strong>%s</strong>'), get_bloginfo('name'))), 500);
 			}
 		}else{
-			if(($transaction_id = PayPal_Statics::do_transaction($_POST))){
+			// Check if response is valid or not.
+			// Sometimes, it returns wrong status
+			if(($response = PayPal_Statics::do_transaction($_POST)) && ($status = PayPal_Statics::transaction_result_status($response))){
 				//データを更新
+				$transaction_id = $response['PAYMENTINFO_0_TRANSACTIONID'];
 				$post_id = $wpdb->get_var($wpdb->prepare("SELECT book_id FROM {$lwp->transaction} WHERE transaction_key = %s", $_POST["INVNUM"])); 
 				$sql = <<<EOS
 					UPDATE {$lwp->transaction}
@@ -908,15 +911,16 @@ EOS;
 EOS;
 				$wpdb->query($wpdb->prepare(
 						$sql, 
-						LWP_Payment_Status::SUCCESS, $transaction_id, $_POST['EMAIL'], current_time('mysql', true), lwp_expires_date($post_id),
+						$status, $transaction_id, $_POST['EMAIL'], current_time('mysql', true), lwp_expires_date($post_id),
 						get_current_user_id(), $_POST['INVNUM']));
 				//Do action hook on transaction updated
 				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE user_id = %d AND transaction_id = %s LIMIT 1", get_current_user_id(), $transaction_id)));
-				//サンキューページを表示する
-				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}"); 
+				// Go to thank you page.
+				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}&status={$status}"); 
 				exit;
 			}else{
-				$this->kill($this->_("Transaction Failed to finish."));
+				$this->kill(sprintf($this->_('Transaction failed to finish. Please return to previous page and try it again. If this occurs again, contact to the administrator of <a href="%1$s">%2$s</a> and confirm your current transaction status.'),
+					home_url('/', 'http'), get_bloginfo('name')));
 			}
 		}
 	}
@@ -937,10 +941,11 @@ EOS;
 			$this->show_form('success', array(
 				'link' => get_bloginfo('url'),
 				'total' => 4,
-				'current' => 4
+				'current' => 4,
+				'msg' => apply_filters('lwp_thankyou_message', $this->_("Thank you for purchasing."), LWP_Payment_Status::SUCCESS)
 			));
 		}
-		//Change transaction status
+		//Change return url
 		if(isset($_REQUEST['lwp-id'])){
 			$post_type = $wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $_REQUEST['lwp-id']));
 			if($post_type == $lwp->subscription->post_type){
@@ -953,10 +958,23 @@ EOS;
 		}else{
 			$url = get_bloginfo('url');
 		}
+		$status = isset($_REQUEST['status']) ? $_REQUEST['status'] : '';
+		switch($status){
+			case LWP_Payment_Status::CANCEL:
+				$msg = $this->_('Your transaction has been canceled. If this is an unexpected result, please contact to the administrator of <a href="%1$s">%2$s</a>');
+				break;
+			case LWP_Payment_Status::WAITING_REVIEW:
+				$msg = $this->_('Your transaction is now under processing or review. If this is an unexpected result, please contact to the administrator of <a href="%1$s">%2$s</a>');
+				break;
+			default:
+				$msg = $this->_("Thank you for purchasing.");
+				break;
+		}
 		$this->show_form("success", array(
 			'link' => ($this->is_publicly_ssl() ? $url : $this->strip_ssl($url) ),
 			'total' => ($post_type == $lwp->subscription->post_type) ? 4 : 3,
-			'current' => ($post_type == $lwp->subscription->post_type) ? 4 : 3
+			'current' => ($post_type == $lwp->subscription->post_type) ? 4 : 3,
+			'msg' => apply_filters('lwp_thankyou_message', $msg, $status),
 		));
 	}
 	
@@ -1664,6 +1682,14 @@ EOS;
 			'account' => $account,
 			'back' => lwp_history_url()
 		));
+	}
+	
+	/**
+	 * Handle request from PayPal IPN
+	 */
+	private function handle_paypal_ipn(){
+		PayPal_Statics::handle_ipn();
+		die();
 	}
 	
 	/**
