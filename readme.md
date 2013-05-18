@@ -3,7 +3,7 @@
 Contributors: Takahashi_Fumiki
 Tags: payment, paypal, ebook, ticket, subscription, monetize
 Requires at least: 3.1
-Tested up to: 3.5
+Tested up to: 3.5.2
 Stable tag: 0.9.3.0
 
 This plugin make your WordPress post payable. Registered users can buy your post via PayPal and so on.

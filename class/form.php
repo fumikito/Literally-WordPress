@@ -709,9 +709,9 @@ EOS;
 			if($transaction->status == LWP_Payment_Status::START){
 				$left_days = ceil((strtotime($limit_date) - current_time('timestamp')) / 60 / 60 / 24);
 				if($left_days < 0){
-					$request_suffix = sprintf($this->_(' (%d days past)'), $left_days);
+					$request_suffix = sprintf($this->_(' (%d days past)'), number_format_i18n(absint($left_days)));
 				}else{
-					$request_suffix = sprintf($this->_(' (%d days left)'), $left_days);
+					$request_suffix = sprintf($this->_(' (%d days left)'), number_format_i18n($left_days));
 				}
 				if($left_days < 3){
 					$request_suffix = '<span style="color:red;">'.$request_suffix.'</span>';
