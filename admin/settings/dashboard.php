@@ -38,6 +38,11 @@
 				$this->_('Japanese domestic payment service. Credit card, Web CVS and PayEasy are supported.')
 			),
 			array(
+				$this->_('NTT SmartTrade'),
+				false,
+				$this->_('Japanese domestic payment service. Credit card, Web CVS and e-money are supported.')
+			),
+			array(
 				$this->_('Transfer'),
 				$this->notifier->is_enabled(),
 				sprintf($this->_('Transafer is typically bank transfer. You can set up it <a href="%s">here</a>.'),  admin_url('admin.php?page=lwp-setting&view=payment'))

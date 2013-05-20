@@ -204,6 +204,12 @@ class Literally_WordPress{
 	 */
 	public $gmo = null;
 	
+	/**
+	 * NTT SmartTrade payment gateway
+	 * @var LWP_NTT
+	 */
+	public $ntt = null;
+	
 	//--------------------------------------------
 	//
 	// 初期化処理
@@ -274,6 +280,10 @@ class Literally_WordPress{
 				'gmo_tel' => '',
 				'gmo_contact_starts' => '',
 				'gmo_contact_ends' => '',
+				'ntt_shop_id' => '',
+				'ntt_access_key' => '',
+				'ntt_sandbox' => true,
+				'ntt_stealth' => false,
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -340,6 +350,8 @@ class Literally_WordPress{
 		$this->softbank = new LWP_SB_Payment($this->option);
 		//Initialize GMO
 		$this->gmo = new LWP_GMO($this->option);
+		//Initialzei NTT
+		$this->ntt = new LWP_NTT($this->option);
 		//Register hooks
 		$this->register_hooks();
 	}
@@ -816,6 +828,10 @@ class Literally_WordPress{
 						'gmo_tel' => (string)$_REQUEST['gmo_tel'], 
 						'gmo_contact_starts' => (string)$_REQUEST['gmo_contact_starts'], 
 						'gmo_contact_ends' => (string)$_REQUEST['gmo_contact_ends'], 
+						'ntt_shop_id' => (string)$_REQUEST['ntt_shop_id'],
+						'ntt_access_key' => (string)$_REQUEST['ntt_access_key'],
+						'ntt_sandbox' => (boolean)(isset($_REQUEST['ntt_sandbox']) && $_REQUEST['ntt_sandbox']),
+						'ntt_stealth' => (isset($_REQUEST['ntt_stealth']) && $_REQUEST['ntt_stealth']),
 					);
 					break;
 				case 'post':

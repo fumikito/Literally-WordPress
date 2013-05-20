@@ -42,6 +42,7 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	//Payment Class
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."payment".DIRECTORY_SEPARATOR."softbank-payment.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."payment".DIRECTORY_SEPARATOR."gmo.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."class".DIRECTORY_SEPARATOR."payment".DIRECTORY_SEPARATOR."ntt.php";
 	
 	/**
 	 * Instance of Literally_WordPress

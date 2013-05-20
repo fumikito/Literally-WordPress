@@ -1030,12 +1030,19 @@ function lwp_is_success()
  * @return string 
  */
 function lwp_endpoint($action = 'buy', $is_sanbdox = false){
-	$url = home_url();
-	if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
-		$url = str_replace('http:', 'https:', $url);
+	switch($action){
+		case 'ntt-smarttrade':
+			return trailingslashit(home_url('/', 'https')).'lwpgw/ntt-smarttrade/';
+			break;
+		default:
+			$url = home_url();
+			if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
+				$url = str_replace('http:', 'https:', $url);
+			}
+			$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
+			return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
+			break;
 	}
-	$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
-	return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
 }
 
 /**
