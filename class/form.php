@@ -13,7 +13,8 @@ class LWP_Form extends Literally_WordPress_Common{
 	private $_LWP = array();
 	
 	public function avoid_caonnical_redirect(){
-		if(!is_admin() && isset($_GET['lwp'])){
+		$action = get_query_var('lwp');
+		if(!is_admin() && !empty($action)){
 			remove_action('template_redirect', 'redirect_canonical');
 		}
 	}
@@ -24,16 +25,17 @@ class LWP_Form extends Literally_WordPress_Common{
 	 * @return void
 	 */
 	public function manage_actions(){
+		global $lwp;
 		//If action is set, call each method
-		if($this->get_current_action() && is_front_page()){
+		if($lwp->rewrite->get_current_action()){
 			//Avoid WP redirect
-			$action = 'handle_'.$this->make_hungalian($this->get_current_action());
+			$action = 'handle_'.$this->make_hungalian($lwp->rewrite->get_current_action());
 			if(method_exists($this, $action)){
 				$sandbox = (isset($_REQUEST['sandbox']) && $_REQUEST['sandbox']);
 				if($sandbox && !current_user_can('edit_theme_options')){
 					$this->kill('Sorry, but you have no permission.', 403);
 				}
-				if(!apply_filters('lwp_before_display_form', true, $this->get_current_action())){
+				if(!apply_filters('lwp_before_display_form', true, $lwp->rewrite->get_current_action())){
 					$this->kill($this->_('You cannot access here.'), 403, true);
 				}
 				$this->{$action}($sandbox);
@@ -1693,6 +1695,16 @@ EOS;
 	}
 	
 	/**
+	 * Handle request from NTT Chocom server
+	 * @global Literally_WordPress $lwp
+	 */
+	private function handle_ntt_smarttrade(){
+		global $lwp;
+		$lwp->ntt->parse_request();
+		die();
+	}
+	
+	/**
 	 * Handle request from GMO
 	 * @global Literally_WordPress $lwp
 	 * @return
@@ -1760,18 +1772,6 @@ EOS;
 			}else{
 				auth_redirect();
 			}
-		}
-	}
-	
-	/**
-	 * Returns current form action 
-	 * @return string
-	 */
-	private function get_current_action(){
-		if(isset($_GET['lwp'])){
-			return (string) $_GET['lwp'];
-		}else{
-			return null;
 		}
 	}
 	
@@ -1884,10 +1884,14 @@ EOS;
 		if($lwp->subscription->is_enabled()){
 			$post_types[] = $lwp->subscription->post_type;
 		}
-		$book = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->posts} WHERE ID = %d", $id));
-		if(!$book || false === array_search($book->post_type, $post_types)){
+		$book = get_post($id);
+		if(!$book){
 			//If specified content doesn't exist, die.
 			$this->kill($this->_("No content is specified."), 404);
+		}
+		if(false === array_search($book->post_type, $post_types)){
+			//If specified content doesn't exist, die.
+			$this->kill(sprintf($this->_('You cannot buy "%s".'), esc_html($book->post_title)), 403);
 		}
 		//If ticket is specified, check selling limit
 		if($book->post_type == $lwp->event->post_type){

@@ -31,7 +31,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	
 	public function is_emoney_enabled(){
-		
+			return true;
 	}
 	
 	/**
@@ -44,5 +44,10 @@ class LWP_NTT extends LWP_Japanese_Payment{
 					&&
 				(!empty($this->access_key) && !empty($this->shop_id) )
 		);
+	}
+	
+	
+	public function parse_request(){
+		var_dump('リクエストを受け取ったよ！　ありがとう！');
 	}
 }

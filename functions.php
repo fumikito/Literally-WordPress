@@ -1025,24 +1025,15 @@ function lwp_is_success()
 
 /**
  * Return URL to LWP's endpoint considering SSL
+ * 
+ * @global Literally_WordPress $lwp
  * @param string $action Defautl 'buy'
  * @param boolean $sandbox
  * @return string 
  */
 function lwp_endpoint($action = 'buy', $is_sanbdox = false){
-	switch($action){
-		case 'ntt-smarttrade':
-			return trailingslashit(home_url('/', 'https')).'lwpgw/ntt-smarttrade/';
-			break;
-		default:
-			$url = home_url();
-			if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
-				$url = str_replace('http:', 'https:', $url);
-			}
-			$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
-			return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
-			break;
-	}
+	global $lwp;
+	return $lwp->rewrite->endpoint($action, $is_sanbdox);
 }
 
 /**

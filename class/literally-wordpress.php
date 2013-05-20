@@ -133,10 +133,16 @@ class Literally_WordPress{
 	public $message = array();
 	
 	/**
-	 *
+	 * Capabitlity manager
 	 * @var LWP_Capabilities
 	 */
 	public $caps = null;
+	
+	/**
+	 * Rewrite module
+	 * @var LWP_Rewrite
+	 */
+	public $rewrite = null;
 	
 	/**
 	 * Post sell utility
@@ -326,8 +332,10 @@ class Literally_WordPress{
 				'show_payment_agency' => false
 			)
 		);
-		//Initialize Capbability
+		// Initialize Capbability
 		$this->caps = new LWP_Capabilities();
+		// Initialize rewrite module
+		$this->rewrite = new LWP_Rewrite();
 		//Initialize iOS
 		$this->ios = new LWP_iOS($this->option);
 		//Register form action
