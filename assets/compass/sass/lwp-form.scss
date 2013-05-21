@@ -147,7 +147,7 @@ input{
 }
 
 
-/* Form Table*/
+/* Form Table common */
 .form-table{
 	border-collapse: collapse;
 	margin-top: 1em;
@@ -191,14 +191,22 @@ input{
 		margin: 0.5em 0;
 	}
 	p{
-		margin:4px 0 0 0;
-		font-size:11px;
+		margin: 4px 0 0 0;
+		font-size: 11px;
+		margin: 0.25em 0;
+		padding: 0.25em 0.5em;
+		@include border-radius(3px);
 		&.invalid{
 			color: #f00;
-			margin: 0.25em 0;
-			padding: 0.25em 0.5em;
 			background-color: #ffebe8;
-			@include border-radius(3px);
+		}
+		&.info{
+			background-color: #9fc9f4 ;
+			color: #05a;
+		}
+		&.valid{
+			color: #059119;
+			background-color: #c6f4cd;
 		}
 	}
 	input{
@@ -237,6 +245,16 @@ input{
 		background-color: #ddd;
 		color: #888;
 		text-shadow: 1px 1px 2px #fff;
+	}
+}
+
+/* Payment method table */
+.lwp-method-table{
+	tr:hover{
+		th, td{
+			cursor: pointer;
+			background-color: #FEF8C4;
+		}
 	}
 }
 
@@ -316,6 +334,9 @@ p.required{
 }
 .icon-transfer{
 	background-position: right bottom;
+}
+.icon-ntt-emoney{
+	background-position: right top;
 }
 .icon-cvs{
 	background-position: -130px 0;

@@ -1156,6 +1156,11 @@ EOS;
 			: self::PAYMENT_ENDPOINT_PRODUCTION;
 	}	
 	
+	/**
+	 * Returns vendor name
+	 * @param boolean $short
+	 * @return string
+	 */
 	public function vendor_name($short = false){
 		return $short
 			? $this->_('Softbank Payment')

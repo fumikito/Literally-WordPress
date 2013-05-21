@@ -36,6 +36,12 @@ jQuery(document).ready(function($){
 			e.preventDefault();
 		}
 	});
+	$('#lwp-payment-method-form tr').click(function(e){
+		var input = $(this).find('input[type=radio]');
+		if(!input.attr('disabled')){
+			input.attr('checked', true);
+		}
+	});
 	// Auto Redirect
 	if(!sandbox && $("#lwp-auto-redirect").length > 0){
 		href = $("#lwp-auto-redirect").attr('href');

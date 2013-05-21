@@ -269,7 +269,7 @@ function lwp_has_files($post = null){
  */
 function lwp_file_link($file_id)
 {
-	return lwp_endpoint('file')."&lwp_file={$file_id}";
+	return lwp_endpoint('file', array('lwp_file' => $file_id));
 }
 
 /**
@@ -795,21 +795,12 @@ function lwp_buy_now($post = null, $btn_src = false)
  */
 function lwp_buy_url($post = null){
 	//Get post object
-	if(!$post){
-		global $post;
-		$post_id = $post->ID;
-	}elseif(is_numeric($post)){
-		$post_id = $post;
-	}elseif(is_object($post) && isset($post->ID)){
-		$post_id = $post->ID;
-	}else{
-		return;
-	}
+	$post = get_post($post);
 	//Check if it is payable
 	if(lwp_is_free(true, $post)){
 		return;
 	}
-	return lwp_endpoint('buy').'&lwp-id='.$post_id;
+	return lwp_endpoint('buy', array('lwp-id' => $post->ID));
 }
 
 /**
@@ -836,7 +827,7 @@ function lwp_transafer_link($post = null){
 	}else{
 		global $post;
 	}
-	return lwp_endpoint('transfer&lwp-id='.$post->ID);
+	return lwp_endpoint('transfer', array('lwp-id' => $post->ID));
 }
 
 /**
@@ -984,7 +975,7 @@ function lwp_show_form($post = null, $btn_src = null){
 		$button = sprintf('<p class="lwp-button">%s</p>', 
 					($btn_src ? lwp_buy_now($post, $btn_src) : lwp_buy_now($post)));
 	}else{
-		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(lwp_endpoint('buy')."&lwp-id={$post->ID}")."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
+		$button = "<p class=\"lwp-button\"><a class=\"button login\" href=\"".wp_login_url(lwp_endpoint('buy', array('lwp-id' => $post->ID)))."\">".__("Log in")."</a>".str_replace("<a", "<a class=\"button\"", wp_register('', '', false))."</p>";
 	}
 	return <<<EOS
 <!-- Literally WordPress {$lwp->version} -->
@@ -1029,11 +1020,12 @@ function lwp_is_success()
  * @global Literally_WordPress $lwp
  * @param string $action Defautl 'buy'
  * @param boolean $sandbox
+ * @param array $additional_args Added as query string(key=value). Values must be urlencoded.
  * @return string 
  */
-function lwp_endpoint($action = 'buy', $is_sanbdox = false){
+function lwp_endpoint($action = 'buy', $additional_args = array(), $is_sanbdox = false){
 	global $lwp;
-	return $lwp->rewrite->endpoint($action, $is_sanbdox);
+	return $lwp->rewrite->endpoint($action, $additional_args, $is_sanbdox);
 }
 
 /**
@@ -1220,7 +1212,7 @@ function lwp_has_cancel_list($post = null){
  */
 function lwp_cancel_list_url($post = null){
 	$post = get_post($post);
-	return lwp_endpoint('ticket-awaiting').'&ticket_id='.$post->ID;
+	return lwp_endpoint('ticket-awaiting', array('ticket_id' => $post->ID));
 }
 
 /**
@@ -1233,7 +1225,7 @@ function lwp_cancel_list_dequeue_url($post = null, $user_id = false){
 	if(!$user_id){
 		$user_id = get_current_user_id();
 	}
-	return wp_nonce_url(lwp_endpoint('ticket-awaiting-deregister').'&ticket_id='.$post->ID, 'lwp_deregistere_cancel_list_'.$user_id);
+	return wp_nonce_url(lwp_endpoint('ticket-awaiting-deregister', array('ticket_id' => $post->ID)), 'lwp_deregistere_cancel_list_'.$user_id);
 }
 
 /**
@@ -1618,7 +1610,7 @@ function lwp_cancel_url($post = null){
 	}else{
 		$post = get_post($post);
 	}
-	return lwp_endpoint('ticket-cancel').'&lwp-event='.$post->ID;
+	return lwp_endpoint('ticket-cancel', array('lwp-event' => $post->ID));
 }
 
 /**
@@ -1633,7 +1625,7 @@ function lwp_ticket_url($post = null){
 	}else{
 		$post = get_post($post);
 	}
-	return lwp_endpoint('ticket-list').'&lwp-event='.$post->ID;
+	return lwp_endpoint('ticket-list', array('lwp-event' => $post->ID));
 }
 
 /**
@@ -1653,7 +1645,7 @@ function lwp_ticket_check_url($user_id = null, $post = null){
 		$user_id = get_current_user_id();
 	}
 	$user_login = get_userdata($user_id)->user_email;
-	return lwp_endpoint('ticket-consume').'&lwp-event='.$post->ID.'&u='.  rawurlencode(base64_encode($user_login));
+	return lwp_endpoint('ticket-consume', array('lwp-event' => $post->ID, 'u' => rawurlencode(base64_encode($user_login))));
 }
 
 /**
@@ -1812,7 +1804,7 @@ function lwp_ticket_token_url($post = null){
 	}else{
 		$post = get_post($post);
 	}
-	return lwp_endpoint('ticket-owner').'&event_id='.$post->ID;
+	return lwp_endpoint('ticket-owner', array('event_id' => $post->ID));
 }
 
 /**

@@ -22,18 +22,18 @@
 				),
 				array(
 					'slug' => 'gmo',
-					'label' => $this->_('GMO Payment Gateway'),
+					'label' => $this->gmo->vendor_name(true),
 					'valid' => $this->gmo->is_enabled()
 				),
 				array(
 					'slug' => 'softbank',
-					'label' => $this->_('Softbank Payment'),
+					'label' => $this->softbank->vendor_name(true),
 					'valid' => $this->softbank->is_enabled()
 				),
 				array(
 					'slug' => 'ntt',
-					'label' => $this->_('NTT SmartTrade'),
-					'valid' => false
+					'label' => $this->ntt->vendor_name(true),
+					'valid' => $this->ntt->is_enabled()
 				),
 				array(
 					'slug' => 'transfer',

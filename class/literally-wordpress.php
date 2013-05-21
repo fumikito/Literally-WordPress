@@ -290,6 +290,7 @@ class Literally_WordPress{
 				'ntt_access_key' => '',
 				'ntt_sandbox' => true,
 				'ntt_stealth' => false,
+				'ntt_emoney' => false,
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -840,6 +841,7 @@ class Literally_WordPress{
 						'ntt_access_key' => (string)$_REQUEST['ntt_access_key'],
 						'ntt_sandbox' => (boolean)(isset($_REQUEST['ntt_sandbox']) && $_REQUEST['ntt_sandbox']),
 						'ntt_stealth' => (isset($_REQUEST['ntt_stealth']) && $_REQUEST['ntt_stealth']),
+						'ntt_emoney' => (isset($_REQUEST['ntt_emoney']) && $_REQUEST['ntt_emoney']),
 					);
 					break;
 				case 'post':

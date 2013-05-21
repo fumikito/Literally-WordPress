@@ -1,6 +1,6 @@
 <?php /* @var $this Literally_WordPress */ ?>
 <p class="description">
-	<?php $this->e('To use NTT SmartTrade, you have to contract with NTT SmartTrade inc. and get credential infomation. If Credit Card is enabled, PayPal\'s credit card will be override.'); ?>
+	<?php echo $this->ntt->get_desc('general'); ?>
 </p>
 <hr />
 <table class="form-table">
@@ -38,6 +38,18 @@
 					<?php $this->e('Enable stealth mode'); ?>
 				</label>
 				<p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">ちょこむeマネー決済</th>
+			<td>
+				<label>
+					<input type="checkbox" name="ntt_emoney" value="1"<?php if($this->ntt->is_emoney_enabled()) echo ' checked="checked"'; ?> />
+					<?php $this->e('Contaracted and available'); ?>
+				</label>
+				<p class="description">
+					<?php echo $this->ntt->get_desc('emoney'); ?>
+				</p>
 			</td>
 		</tr>
 		<tr>

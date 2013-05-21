@@ -16,6 +16,19 @@ class LWP_Rewrite{
 		'([^/]+)/?' => 'index.php?lwp-action=$matches[1]',
 	);
 	
+	/**
+	 * Actions which required SSL connection
+	 * @var type 
+	 */
+	private $ssl_required_actions = array(
+		'chocom-cc', //AID通知ちょコムクレジット
+		'chocom-emoney', //AID通知ちょコムeマネー
+		'chocom-cvs', //受付情報通知コンビニ
+		'chocom-cvs-complete', //速報(決済完了)通知コンビニ
+		'gmo-payment', // GMO Payment
+		'sb-payment', // Softbank Payment
+	);
+	
 	public function __construct(){
 		add_action('admin_notices', array($this, 'admin_notices'));
 		// Filter rewrite rules.
@@ -24,6 +37,15 @@ class LWP_Rewrite{
 		add_action('admin_init', array($this, 'flush_rules'));
 		// Add filter for query vars
 		add_filter('query_vars', array($this, 'query_vars') );
+	}
+	
+	/**
+	 * Check if rewrite rules are registered.
+	 * 
+	 * @return boolean
+	 */
+	private function is_permalink_enabled(){
+		return (boolean)get_option('rewrite_rules');
 	}
 	
 	/**
@@ -133,24 +155,34 @@ class LWP_Rewrite{
 	/**
 	 * Get endpoint
 	 * @param string $action
+	 * @param array $args willbe queried string.(key=value) value must be URL encodeed.
 	 * @param boolean $is_sanbdox
 	 * @return string
 	 */
-	public function endpoint($action = 'buy', $additional_args = '', $is_sanbdox = false){
-		
-		switch($action){
-			case 'ntt-smarttrade':
-				return trailingslashit(home_url('/', 'https')).'/ntt-smarttrade/';
-				break;
-			default:
-				$url = home_url();
-				if(FORCE_SSL_LOGIN || FORCE_SSL_ADMIN){
-					$url = str_replace('http:', 'https:', $url);
-				}
-				$sandbox = $is_sanbdox ? 'sandbox=true&' : '';
-				return apply_filters('lwp_endpoint', untrailingslashit($url)."/?{$sandbox}lwp=".(string)$action, (string)$action);
-				break;
+	public function endpoint($action = 'buy', $additional_args = array(), $is_sanbdox = false, $no_permalink = false){
+		$protocol = (FORCE_SSL_LOGIN || FORCE_SSL_ADMIN) ? 'https' : 'http';
+		if($this->is_permalink_enabled() && !$no_permalink){
+			$base = trailingslashit(home_url('/'.$this->get_slug().'/'.$action, $protocol));
+			$glue = '?';
+		}else{
+			$base = home_url('/?lwp='.$action, $protocol);
+			$glue = '&';
 		}
+		if($is_sanbdox){
+			$additional_args['sandbox'] = 'true';
+		}
+		if($additional_args){
+			$query_string = array();
+			foreach($additional_args as $key => $val){
+				$query_string[] = "{$key}={$val}";
+			}
+			$base .= $glue.implode('&', $query_string);
+		}
+		$force_ssl = apply_filters('lwp_ssl_required_action', (false !== array_search($action, $this->ssl_required_actions)), $action);
+		if($force_ssl){
+			$base = str_replace('http://', 'https://', $base);
+		}
+		return apply_filters('lwp_endpoint', $base, (string)$action, $additional_args);
 	}
 	
 	/**

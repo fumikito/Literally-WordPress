@@ -203,7 +203,8 @@ class LWP_Form extends Literally_WordPress_Common{
 					'post_id' => $book_id,
 					'quanity' => $current_quantity,
 					'current' => $current,
-					'total' => $total
+					'total' => $total,
+					'payments' => LWP_Payment_Methods::get_form_elements(array($book))
 				));
 			}else{
 				//User selected payment method and start transaction
@@ -1760,6 +1761,7 @@ EOS;
 		}
 		die();
 	}
+	
 	
 	/**
 	 * Stop processing transaction of not logged in user. 

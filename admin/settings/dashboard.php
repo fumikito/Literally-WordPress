@@ -39,8 +39,8 @@
 			),
 			array(
 				$this->_('NTT SmartTrade'),
-				false,
-				$this->_('Japanese domestic payment service. Credit card, Web CVS and e-money are supported.')
+				$this->ntt->is_enabled(),
+				$this->ntt->get_desc('general')
 			),
 			array(
 				$this->_('Transfer'),
