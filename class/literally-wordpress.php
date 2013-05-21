@@ -256,7 +256,6 @@ class Literally_WordPress{
 				"password" => "",
 				"signature" => "",
 				"token" => "",
-				"skip_payment_selection" => false,
 				'sb_creditcard' => array(),
 				'sb_webcvs' => array(),
 				'sb_payeasy' => false,
@@ -796,7 +795,6 @@ class Literally_WordPress{
 			switch((isset($_REQUEST['view']) ? $_REQUEST['view'] : '')){
 				case 'payment':
 					$option = array(
-						"skip_payment_selection" => isset($_REQUEST['skip_payment_selection']) && (boolean)$_REQUEST['skip_payment_selection'],
 						'show_payment_agency' => (isset($_REQUEST['show_payment_agency']) && $_REQUEST['show_payment_agency']),
 						'sandbox' => isset($_REQUEST['sandbox']) ? true : false,
 						"user_name" => $_REQUEST["user_name"],

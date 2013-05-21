@@ -60,12 +60,6 @@
 <h4><?php $this->e('Payment Selection'); ?></h4>
 <p>
 	<label>
-		<input type="checkbox" name="skip_payment_selection" value="1" <?php if($this->option['skip_payment_selection']) echo 'checked="checked" ';?>/>
-		<?php $this->e('Skip payment selection form if PayPal is only available payment method.'); ?>
-	</label>
-</p>
-<p>
-	<label>
 		<input type="checkbox" name="show_payment_agency" value="1" <?php if($this->show_payment_agency()) echo 'checked="checked" ';?>/>
 		<?php $this->e('Show payment agency name on payment method selection screen.'); ?>
 	</label>

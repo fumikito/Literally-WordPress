@@ -164,7 +164,7 @@ class LWP_Form extends Literally_WordPress_Common{
 					do_action('lwp_create_transaction', $wpdb->insert_id);
 				}
 				//Redirect to success page
-				header("Location: ".  lwp_endpoint('success')."&lwp-id={$book_id}");
+				header("Location: ".  lwp_endpoint('success', array('lwp-id' => $book_id)));
 				exit;
 			}else{
 				//Item is not available.
@@ -189,7 +189,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				$this->kill($this->_('Item quantity must be at least 1.'), 500);
 			}
 			//Start Transaction
-			if(!$this->can_skip_payment_selection() && (!isset($_REQUEST['_wpnonce'], $_REQUEST['lwp-method']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_buynow'))){
+			if((!isset($_REQUEST['_wpnonce'], $_REQUEST['lwp-method']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_buynow'))){
 				//Select Payment Method and show form
 				$price = lwp_price($book_id);
 				$this->show_form('selection', array(
@@ -208,7 +208,7 @@ class LWP_Form extends Literally_WordPress_Common{
 				));
 			}else{
 				//User selected payment method and start transaction
-				$method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method']: ($this->can_skip_payment_selection() ? 'cc': '' );
+				$method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method']:  '' ;
 				$fixed_quantity = min($current_quantity, $allowed_quantity);
 				if($fixed_quantity < 1){
 					$this->kill($this->_('Item quantity is wrong. Please go back and select item quantity.'), 500);
@@ -347,16 +347,15 @@ EOS;
 								( ($method == 'sb-cvs') ? $this->_('Web CVS') : 'PayEasy')
 							), 403);
 						}else{
-							header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
+							header('Location: '.lwp_endpoint('payment', array('lwp-method' => $method, 'lwp-id' => $book_id)));
 							exit();
 						}
 						break;
 					case 'gmo-cvs':
 					case 'gmo-payeasy':
-						
 					case 'sb-cc':
 					case 'gmo-cc':
-						header('Location: '.lwp_endpoint('payment').'&lwp-method='.$method.'&lwp-id='.$book_id);
+						header('Location: '.lwp_endpoint('payment', array('lwp-method' => $method, 'lwp-id' => $book_id)));
 						exit();
 						break;
 					default:
@@ -1819,11 +1818,11 @@ EOS;
 	
 	/**
 	 * Returns if payment slection can be skipped
-	 * @global Literally_WordPress $lwp 
+	 * 
+	 * @deprecated since version 0.9.3.1
 	 */
 	private function can_skip_payment_selection(){
-	  global $lwp;
-	  return $lwp->option['skip_payment_selection'] && !($lwp->option['transfer']);
+	  return false;
 	}
   
 	/**
