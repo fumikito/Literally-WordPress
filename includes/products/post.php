@@ -197,7 +197,7 @@ class LWP_Post extends Literally_WordPress_Common{
 	 * @return void
 	 */
 	public function post_metabox_form($post, $metabox){
-		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail.php";
+		require_once $this->dir."/admin/parts/edit-detail.php";
 		do_action('lwp_payable_post_type_metabox', $post, $metabox);
 	}
 

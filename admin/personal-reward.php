@@ -17,7 +17,7 @@
 </h2>
 
 <?php if(!isset($_GET['tab'])): ?>
-<?php require_once $this->dir.'/form-template/reward-summary.php';?>
+<?php require_once $this->dir.'/admin/parts/reward-summary.php';?>
 
 
 <?php elseif($_GET['tab'] == 'link' && $this->reward->promotable): ?>

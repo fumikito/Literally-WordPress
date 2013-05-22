@@ -155,7 +155,7 @@ class LWP_Payment_Methods {
 				'slug' => self::lower($method),
 				'name' => $lwp->_($method),
 				'icon' => self::get_icon_slug($method),
-				'stealth' => true, //self::get_stealth_status($method),
+				'stealth' => self::get_stealth_status($method),
 				'sandbox' => self::is_sandbox($method),
 				'cvs' => self::get_available_cvs($method),
 				'cc' => self::get_available_cards($method),
@@ -238,6 +238,29 @@ class LWP_Payment_Methods {
 			}
 		}
 		return $normalized;
+	}
+	
+	/**
+	 * Test specified method is valid for transaction.
+	 * 
+	 * @param string $method
+	 * @param array $posts
+	 * @return boolean|false
+	 */
+	public static function test($method, $posts = array()){
+		$method = str_replace('-', '_', strtoupper($method));
+		$availables = self::get_contextual_methods($posts);
+		if(false === array_search($method, $availables)){
+			return false;
+		}
+		switch($method){
+			case self::GMO_PAYEASY:
+			case self::GMO_WEB_CVS:
+			case self::SOFTBANK_PAYEASY:
+			case self::SOFTBANK_WEB_CVS:
+				break;
+		}
+		return $method;
 	}
 	
 	/**
@@ -479,10 +502,10 @@ class LWP_Payment_Methods {
 			case self::GMO_PAYEASY:
 			case self::SOFTBANK_WEB_CVS:
 			case self::SOFTBANK_PAYEASY:
-				return $lwp->_('To finish transaction, you should follow the instruction on next step.');
+				return $lwp->_('This is offline payment. To finish transaction, you should follow the instruction on next step.');
 				break;
 			case self::NTT_EMONEY:
-				return $lwp->ntt->get_desc('emoney');
+				return $lwp->ntt->get_desc('link');
 				break;
 			case self::TRANSFER:
 				return $lwp->_('Transaction will not have been complete, unless you will send deposit to the specified bank account. This means you can\'t get contents immediately.');;

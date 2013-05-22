@@ -122,7 +122,7 @@
 					
 					<small>
 						<strong><?php $this->e('Description:');  ?></strong><br />
-						<?php echo wp_kses($payment['description'], '<a>'); ?>
+						<?php echo wp_kses($payment['description'], array('a' => array('href' => array(), 'target' => array()))); ?>
 					</small>
 						
 					<?php if($lwp->show_payment_agency() && !empty($payment['vendor'])): ?>

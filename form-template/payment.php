@@ -29,27 +29,7 @@
 </table>
 
 <p class="message notice"><?php
-	switch($method){
-		case 'sb-cc':
-			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_CC);
-			break;
-		case 'sb-cvs':
-			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_WEB_CVS);
-			break;
-		case 'sb-payeasy':
-			$method_name = $this->_(LWP_Payment_Methods::SOFTBANK_PAYEASY);
-			break;
-		case 'gmo-cc':
-			$method_name = $this->_(LWP_Payment_Methods::GMO_CC);
-			break;
-		case 'gmo-cvs':
-			$method_name = $this->_(LWP_Payment_Methods::GMO_WEB_CVS);
-			break;
-		case 'gmo-payeasy':
-			$method_name = $this->_(LWP_Payment_Methods::GMO_PAYEASY);
-			break;
-	}
-	printf($this->_("Please enter payment information for %s"), $method_name);
+	printf($this->_("Please enter payment information for %s"), LWP_Payment_Methods::get_label($method));
 ?></p>
 
 <?php if(!empty($error)): ?>

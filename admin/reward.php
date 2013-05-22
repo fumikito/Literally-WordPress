@@ -17,7 +17,7 @@
 <?php do_action('admin_notice'); ?>
 
 <?php if(!isset($_GET['tab'])): ?>
-<?php require_once $this->dir.'/form-template/reward-summary.php';?>
+<?php require_once $this->dir.'/admin/parts/reward-summary.php';?>
 
 
 

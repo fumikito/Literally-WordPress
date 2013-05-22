@@ -134,7 +134,6 @@ class LWP_Form extends Literally_WordPress_Common{
 		}
 		//Let's start transaction!
 		//Get book id
-		$book_id = (isset($_REQUEST['lwp-id'])) ? intval($_REQUEST['lwp-id']) : 0;
 		$book = $this->test_post_id($book_id);
 		//Let's do action hook to delegate transaction to other plugin
 		do_action('lwp_before_transaction', $book);
@@ -207,14 +206,18 @@ class LWP_Form extends Literally_WordPress_Common{
 					'payments' => LWP_Payment_Methods::get_form_elements(array($book))
 				));
 			}else{
-				//User selected payment method and start transaction
-				$method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method']:  '' ;
+				// User selected payment method and start transaction
+				// Test payment method
+				$posted_method =  (isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method']:  '');
+				$method = LWP_Payment_Methods::test($posted_method, array($book));
+				
+				// Check Item quantity
 				$fixed_quantity = min($current_quantity, $allowed_quantity);
 				if($fixed_quantity < 1){
 					$this->kill($this->_('Item quantity is wrong. Please go back and select item quantity.'), 500);
 				}
 				switch($method){
-					case 'transfer':
+					case LWP_Payment_Methods::TRANSFER:
 						if($lwp->option['transfer']){
 							//Check if there is active transaction
 							$sql = <<<EOS
@@ -273,8 +276,7 @@ EOS;
 							$message = $this->_("Sorry, but we can't accept this payment method.");
 						}
 						break;
-					case 'paypal':
-					case 'cc':
+					case LWP_Payment_Methods::PAYPAL:
 						//Create transaction
 						$price = lwp_price($book_id);
 						//Get token
@@ -340,23 +342,46 @@ EOS;
 							$message = $this->_("Failed to make transaction.");
 						}
 						break;
-					case 'sb-cvs':
-					case 'sb-payeasy':
+					case LWP_Payment_Methods::NTT_EMONEY:
+						$order_id = $lwp->ntt->generate_order_id(get_current_user_id(), array($book));
+						$inserted = $wpdb->insert($lwp->transaction, array(
+								"user_id" => get_current_user_id(),
+								"book_id" => $book_id,
+								"price" => lwp_price($book_id) * $fixed_quantity,
+								"status" => LWP_Payment_Status::START,
+								"method" => LWP_Payment_Methods::NTT_EMONEY,
+								'num' => $fixed_quantity,
+								"transaction_key" => $order_id,
+								"registered" => gmdate('Y-m-d H:i:s'),
+								"updated" => gmdate('Y-m-d H:i:s')
+						), array('%d', '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s'));
+						if($inserted){
+							$lwp->ntt->create_emoney_request($order_id);
+						}else{
+							$message = $this->_('Failed to make transaction');
+						}
+						exit;
+						break;
+					case LWP_Payment_Methods::SOFTBANK_PAYEASY:
+					case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
 						if(!$lwp->softbank->can_pay_with($book)){
 							$this->kill(sprintf($this->_('You can\'t select %s because selling limit is today.'),
 								( ($method == 'sb-cvs') ? $this->_('Web CVS') : 'PayEasy')
 							), 403);
 						}else{
-							header('Location: '.lwp_endpoint('payment', array('lwp-method' => $method, 'lwp-id' => $book_id)));
+							header('Location: '.lwp_endpoint('payment', array('lwp-method' => $posted_method, 'lwp-id' => $book_id)));
 							exit();
 						}
 						break;
-					case 'gmo-cvs':
-					case 'gmo-payeasy':
-					case 'sb-cc':
-					case 'gmo-cc':
-						header('Location: '.lwp_endpoint('payment', array('lwp-method' => $method, 'lwp-id' => $book_id)));
+					case LWP_Payment_Methods::GMO_WEB_CVS:
+					case LWP_Payment_Methods::GMO_PAYEASY:
+					case LWP_Payment_Methods::GMO_CC:
+					case LWP_Payment_Methods::SOFTBANK_CC:
+						header('Location: '.lwp_endpoint('payment', array('lwp-method' => $posted_method, 'lwp-id' => $book_id)));
 						exit();
+						break;
+					case LWP_Payment_Methods::NTT_EMONEY:
+						header('Location: '.lwp_endpoint('chocom', array('lwp-method' => $posted_method, 'lwp-id' => $book_id)));
 						break;
 					default:
 						$message = $this->_("Wrong payment method is specified.");
@@ -376,42 +401,9 @@ EOS;
 	 */
 	private function handle_payment($is_sandbox = false){
 		global $lwp, $wpdb;
-		//Shut down not logged in user.
+		// Shut down not logged in user.
 		$this->kill_anonymous_user();
-		//Filter payment method
-		$allowed_methods = array(
-			'sb-cc' => $lwp->softbank->is_cc_enabled(),
-			'sb-cvs' => $lwp->softbank->is_cvs_enabled(),
-			'sb-payeasy' => $lwp->softbank->payeasy,
-			'gmo-cc' => $lwp->gmo->is_cc_enabled(),
-			'gmo-cvs' => $lwp->gmo->is_cvs_enabled(),
-			'gmo-payeasy' => $lwp->gmo->payeasy,
-		);
-		if(isset($_REQUEST['lwp-method'])){
-			$payment_method = $_REQUEST['lwp-method'];
-		}else{
-			$payment_method = $is_sandbox ? 'sb-cc' : '';
-		}
-		if(!array_key_exists($payment_method, $allowed_methods) || !$allowed_methods[$payment_method]){
-			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
-		}
-		//Set default values.
-		$error = array();
-		switch($payment_method){
-			case 'sb-cc':
-			case 'sb-cvs':
-			case 'sb-payeasy':
-				$vars = $lwp->softbank->get_default_payment_info(get_current_user_id(), $payment_method);
-				break;
-			case 'gmo-cc':
-			case 'gmo-cvs':
-			case 'gmo-payeasy':
-				$vars = $lwp->gmo->get_default_payment_info(get_current_user_id(), $payment_method);
-				break;
-			default:
-				$vars = array();
-				break;
-		}
+		//
 		if($is_sandbox){
 			//Get random post
 			$book = $this->get_random_post();
@@ -426,7 +418,7 @@ EOS;
 					'quantities' => array($book->ID => 1),
 					'total_price' => $price,
 					'post_id' => $book->ID,
-					'method' => $payment_method,
+					'method' => LWP_Payment_Methods::SOFTBANK_CC,
 					'vars' => $vars,
 					'link' => '#',
 					'action' => '#',
@@ -438,10 +430,34 @@ EOS;
 				$this->kill($this->_('Mmm... Cannot find product. Please check if you have payable post.'), 404);
 			}
 		}
-		//Get Items
+		// Get post
+		// TODO: カートのときにどうするか
 		$book_id = isset($_REQUEST['lwp-id']) ? intval($_REQUEST['lwp-id']) : 0;
-		//Test content
+		// Test content
 		$book = $this->test_post_id($book_id);
+		// Get method
+		$posted_method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method'] : '';
+		$payment_method = LWP_Payment_Methods::test($posted_method, array($book));
+		if(!$payment_method){
+			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
+		}
+		//Set default values.
+		$error = array();
+		switch($payment_method){
+			case LWP_Payment_Methods::SOFTBANK_CC:
+			case LWP_Payment_Methods::SOFTBANK_PAYEASY:
+			case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
+				$vars = $lwp->softbank->get_default_payment_info(get_current_user_id(), $payment_method);
+				break;
+			case LWP_Payment_Methods::GMO_CC:
+			case LWP_Payment_Methods::GMO_PAYEASY:
+			case LWP_Payment_Methods::GMO_WEB_CVS:
+				$vars = $lwp->gmo->get_default_payment_info(get_current_user_id(), $payment_method);
+				break;
+			default:
+				$vars = array();
+				break;
+		}
 		$item_name = $this->get_item_name($book);
 		$price = lwp_price($book);
 		//Get payment limit
@@ -454,8 +470,8 @@ EOS;
 		if(isset($_REQUEST['_wpnonce'])){
 			$sb_cvs = $sb_payeasy = false;
 			switch($payment_method){
-				case 'sb-cc':
-				case 'gmo-cc':
+				case LWP_Payment_Methods::GMO_CC:
+				case LWP_Payment_Methods::SOFTBANK_CC:
 					if(
 						($is_sb_cc = wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_sb_cc'))
 							||
@@ -506,7 +522,7 @@ EOS;
 							}
 							if($transaction_id){
 								do_action('lwp_update_transaction', $transaction_id);
-								header('Location: '.lwp_endpoint('success')."&lwp-id={$book_id}");
+								header('Location: '.lwp_endpoint('success', array('lwp-id' => $book_id)));
 								die();
 							}else{
 								$error[] = $this->_('Failed to make transaction.').':'.$error_msg;
@@ -517,10 +533,10 @@ EOS;
 						}
 					}
 					break;
-				case 'gmo-cvs':
-				case 'gmo-payeasy':
-				case 'sb-cvs':
-				case 'sb-payeasy':
+				case LWP_Payment_Methods::GMO_WEB_CVS:
+				case LWP_Payment_Methods::GMO_PAYEASY:
+				case LWP_Payment_Methods::SOFTBANK_PAYEASY:
+				case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
 					$gmo_cvs = $gmo_payeasy = $sb_cvs = $sb_payeasy = false;
 					if(
 						($sb_cvs = wp_verify_nonce ($_REQUEST['_wpnonce'], 'lwp_payment_sb_cvs'))
@@ -634,7 +650,7 @@ EOS;
 									}
 								}
 								//Send mail
-								header('Location: '.lwp_endpoint('payment-info').'&transaction='.$transaction_id);
+								header('Location: '.lwp_endpoint('payment-info', array('transaction' => $transaction_id)));
 								die();
 							}else{
 								$error[] = $this->_('Failed to make transaction.').':'.(($sb_cvs || $sb_payeasy) ? $lwp->softbank->last_error : $lwp->gmo->last_error);
@@ -654,10 +670,14 @@ EOS;
 			'method' => $payment_method,
 			'error' => $error,
 			'vars' => $vars,
-			'link' => lwp_endpoint().'&lwp-id='.$book_id,
+			'link' => lwp_endpoint('buy', array('lwp-id' => $book_id)),
 			'current' => 3,
 			'total' => 4
 		));
+	}
+	
+	private function handle_chocom($is_sandbox = true){
+		global $lwp, $wpdb;
 	}
 	
 	/**
@@ -918,7 +938,7 @@ EOS;
 				//Do action hook on transaction updated
 				do_action('lwp_update_transaction', $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$lwp->transaction} WHERE user_id = %d AND transaction_id = %s LIMIT 1", get_current_user_id(), $transaction_id)));
 				// Go to thank you page.
-				header("Location: ".  lwp_endpoint('success')."&lwp-id={$post_id}&status={$status}"); 
+				header("Location: ".  lwp_endpoint('success', array('lwp-id' => $post_id, 'status' => $status))); 
 				exit;
 			}else{
 				$this->kill(sprintf($this->_('Transaction failed to finish. Please return to previous page and try it again. If this occurs again, contact to the administrator of <a href="%1$s">%2$s</a> and confirm your current transaction status.'),
@@ -1382,7 +1402,7 @@ EOS;
 				'title' => apply_filters('the_title', $event->post_title),
 				'post_type' => get_post_type_object($event->post_type)->labels->name,
 				'link' => get_permalink($event->ID),
-				'action' => lwp_endpoint('ticket-owner').'&event_id='.$event->ID,
+				'action' => lwp_endpoint('ticket-owner', array('event_id' => $event->ID)),
 			));
 		}
 		$event_id = isset($_GET['event_id']) ? $_GET['event_id'] : 0;
@@ -1412,7 +1432,7 @@ EOS;
 			'title' => apply_filters('the_title', $event->post_title),
 			'post_type' => get_post_type_object($event->post_type)->labels->name,
 			'link' => get_permalink($event->ID),
-			'action' => lwp_endpoint('ticket-owner').'&event_id='.$event->ID,
+			'action' => lwp_endpoint('ticket-owner', array('event_id' => $event_id)),
 		));
 	}
 	
@@ -1761,21 +1781,6 @@ EOS;
 		die();
 	}
 	
-	
-	/**
-	 * Stop processing transaction of not logged in user. 
-	 * @param boolean $kill if set to false, user will be auth_redirec-ed.
-	 */
-	private function kill_anonymous_user($kill = true){
-		if(!is_user_logged_in()){
-			if($kill){
-				$this->kill($this->_('You must be logged in to process transaction.'), 403);
-			}else{
-				auth_redirect();
-			}
-		}
-	}
-	
 	/**
 	 * フォームを出力する
 	 * @since 0.9.1
@@ -1788,7 +1793,7 @@ EOS;
 		$args = apply_filters('lwp_form_args', $args, $slug);
 		extract($args);
 		$slug = basename($slug);
-		$filename = "paypal-{$slug}.php";
+		$filename = "{$slug}.php";
 		//テーマテンプレートに存在するかどうか調べる
 		if(file_exists(get_template_directory().DIRECTORY_SEPARATOR.$filename)){
 			//テンプレートがあれば読み込む
@@ -1814,15 +1819,6 @@ EOS;
 	 */
 	public function form_wp_head(){
 		echo '<meta name="robots" content="noindex,nofollow" />';
-	}
-	
-	/**
-	 * Returns if payment slection can be skipped
-	 * 
-	 * @deprecated since version 0.9.3.1
-	 */
-	private function can_skip_payment_selection(){
-	  return false;
 	}
   
 	/**
@@ -1851,135 +1847,6 @@ EOS;
 		do_action('lwp_form_enqueue_scripts');
 	}
 	
-	
-	/**
-	 * Returns is public page is SSL
-	 * @return boolean 
-	 */
-	private function is_publicly_ssl(){
-		return ((false !== strpos(get_option('home_url'), 'https')) || (false !== strpos(get_option('site_url'), 'https')));
-	}
-  
-	/**
-	 * Make url to http protocol
-	 * @param string $url
-	 * @return string 
-	 */
-	private function strip_ssl($url){
-		return str_replace('https://', 'http://', $url);
-	}
-	
-	/**
-	 * Check if specified post can be bought
-	 * @global Literally_WordPress $lwp
-	 * @global wpdb $wpdb
-	 * @param int $id
-	 * @return object
-	 */
-	private function test_post_id($id){
-		global $lwp, $wpdb;
-		$post_types = $lwp->post->post_types;
-		if($lwp->event->is_enabled()){
-			$post_types[] = $lwp->event->post_type;
-		}
-		if($lwp->subscription->is_enabled()){
-			$post_types[] = $lwp->subscription->post_type;
-		}
-		$book = get_post($id);
-		if(!$book){
-			//If specified content doesn't exist, die.
-			$this->kill($this->_("No content is specified."), 404);
-		}
-		if(false === array_search($book->post_type, $post_types)){
-			//If specified content doesn't exist, die.
-			$this->kill(sprintf($this->_('You cannot buy "%s".'), esc_html($book->post_title)), 403);
-		}
-		//If ticket is specified, check selling limit
-		if($book->post_type == $lwp->event->post_type){
-			$selling_limit = get_post_meta($book->post_parent, $lwp->event->meta_selling_limit, true);
-			if($selling_limit && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $selling_limit)){
-				//Selling limit is found, so check if it's oudated
-				$limit = strtotime($selling_limit.' 23:59:59');
-				$current = current_time('timestamp');
-				if($limit < $current){
-					$this->kill($this->_("Selling limit has been past. There is no ticket available."), 404);
-				}
-			}
-			//Check if stock is enough
-			$stock = lwp_get_ticket_stock(false, $book);
-			if($stock <= 0){
-				$this->kill($this->_("Sorry, but this ticket is sold out."), 403);
-			}
-		}
-		return $book;
-	}
-	
-	/**
-	 * Get post object as event
-	 * @global wpdb $wpdb
-	 * @global Literally_WordPress $lwp
-	 * @return object 
-	 */
-	private function get_random_event(){
-		global $wpdb, $lwp;
-		$post_types = implode(',', array_map(create_function('$row', 'return "\'".$row."\'"; '), $lwp->event->post_types));
-		$event = $wpdb->get_row("SELECT * FROM {$wpdb->posts} WHERE post_type IN ({$post_types}) ORDER BY RAND()");
-		if(!$event){
-			$this->kill($this->_('Sorry, but event is not found.'), 404);
-		}
-		return $event;
-	}
-	
-	/**
-	 * Create pseudo ticket
-	 * @global wpdb $wpdb
-	 * @return \stdClass 
-	 */
-	private function get_random_ticket(){
-		$ticket = new stdClass();
-		$ticket->post_title = $this->_('Dammy Ticket');
-		$ticket->updated = date('Y-m-d H:i:s');
-		$ticket->price = 1000;
-		$ticket->ID = 100;
-		$ticket->num = 1;
-		$ticket->consumed = 0;
-		return $ticket;
-	}
-	
-	/**
-	 * Returns random post if exists for sand box
-	 * @global wpdb $wpdb
-	 * @global Literally_WordPress $lwp 
-	 * @return object
-	 */
-	private function get_random_post(){
-		global $wpdb, $lwp;
-		$post_types = $lwp->option['payable_post_types'];
-		if($lwp->event->is_enabled()){
-			$post_types[] = $lwp->event->post_type;
-		}
-		if($lwp->subscription->is_enabled()){
-			$post_types[] = $lwp->subscription->post_type;
-		}
-		$post_types = implode(',', array_map(create_function('$a', 'return "\'".$a."\'";'), $post_types));
-		$sql = <<<EOS
-			SELECT p.* FROM {$wpdb->posts} AS p
-			INNER JOIN {$wpdb->postmeta} AS pm
-			ON p.ID = pm.post_id AND pm.meta_key = 'lwp_price'
-			WHERE p.post_status IN ('draft', 'publish', 'future') AND p.post_type IN ({$post_types}) AND CAST(pm.meta_value AS signed) > 0
-			ORDER BY RAND()
-EOS;
-		return $wpdb->get_row($sql);
-	}
-	
-	/**
-	 * Change method name to hungalian 
-	 * @param string $method
-	 * @return string 
-	 */
-	private function make_hungalian($method){
-		return str_replace("-", "_", strtolower(trim($method)));
-	}
 	
 	/**
 	 * Returns handle name

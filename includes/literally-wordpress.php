@@ -336,10 +336,10 @@ class Literally_WordPress{
 		$this->caps = new LWP_Capabilities();
 		// Initialize rewrite module
 		$this->rewrite = new LWP_Rewrite();
-		//Initialize iOS
-		$this->ios = new LWP_iOS($this->option);
 		//Register form action
 		$this->form = new LWP_Form($this->option);
+		//Initialize iOS
+		$this->ios = new LWP_iOS($this->option);
 		//Initialize Notification Utility
 		$this->notifier = new LWP_Notifier($this->option);
 		//Initialize Subscription
@@ -983,7 +983,7 @@ class Literally_WordPress{
 				  )
 EOS;
 		$ebooks = $wpdb->get_results($wpdb->prepare($sql, $user_id, LWP_Payment_Status::SUCCESS));
-		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."give-user.php";
+		require_once $this->dir."/admin/parts/give-user.php";
 	}
 	
 	/**
@@ -1591,6 +1591,14 @@ EOS;
 			!empty($this->option['signature']) &&
 			!empty($this->option['token'])
 		);
+	}
+	
+	/**
+	 * Returns Slug string
+	 * @return string
+	 */
+	public function slug(){
+		return !empty($this->option['slug']) ? $this->option['slug'] : 'lwp';
 	}
 	
 	/**

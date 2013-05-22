@@ -182,7 +182,7 @@ class LWP_Event extends Literally_WordPress_Common {
 	 * @param type $post 
 	 */
 	public function display_metabox($post){
-		require_once $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR."edit-detail-event.php";
+		require_once $this->dir."/admin/parts/edit-detail-event.php";
 	}
 	
 	
