@@ -2,63 +2,31 @@
 /**
  * Manage LWP's form action and display form
  *
+ * Only handle_* method can be implemented.
+ * All methods must be protected.
+ * 
  * @since 0.9.1
  */
-class LWP_Form extends Literally_WordPress_Common{
+class LWP_Form extends LWP_Form_Template{
 	
-	/**
-	 * Localize script
-	 * @var array 
-	 */
-	private $_LWP = array();
 	
-	public function avoid_caonnical_redirect(){
-		$action = get_query_var('lwp');
-		if(!is_admin() && !empty($action)){
-			remove_action('template_redirect', 'redirect_canonical');
-		}
-	}
 	
-	/**
-	 * Manage form action to lwp endpoint
-	 * 
-	 * @return void
-	 */
-	public function manage_actions(){
-		global $lwp;
-		//If action is set, call each method
-		if($lwp->rewrite->get_current_action()){
-			//Avoid WP redirect
-			$action = 'handle_'.$this->make_hungalian($lwp->rewrite->get_current_action());
-			if(method_exists($this, $action)){
-				$sandbox = (isset($_REQUEST['sandbox']) && $_REQUEST['sandbox']);
-				if($sandbox && !current_user_can('edit_theme_options')){
-					$this->kill('Sorry, but you have no permission.', 403);
-				}
-				if(!apply_filters('lwp_before_display_form', true, $lwp->rewrite->get_current_action())){
-					$this->kill($this->_('You cannot access here.'), 403, true);
-				}
-				$this->{$action}($sandbox);
-			}else{
-				$this->kill($this->_('Sorry, but You might make unexpected action.'), 400);
-			}
-		}
-	}
 	
 	/**
 	 * Handle request to price list. 
 	 * @param boolean $is_sandbox
 	 */
-	private function handle_pricelist($is_sandbox = false){
+	protected function handle_pricelist($is_sandbox = false){
 		$this->handle_subscription($is_sandbox, false);
 	}
 	
 	/**
 	 * Handle request to subscription list 
+	 * 
 	 * @param boolean $is_sandbox
 	 * @param boolean $is_subscription
 	 */
-	private function handle_subscription($is_sandbox = false, $is_subscription = true){
+	protected function handle_subscription($is_sandbox = false, $is_subscription = true){
 		global $lwp;
 		//Filter unexpected action
 		if($is_subscription && !is_user_logged_in()){
@@ -99,17 +67,15 @@ class LWP_Form extends Literally_WordPress_Common{
 	
 	/**
 	 * Handle buy action
+	 * 
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_buy($is_sandbox = false){
+	protected function handle_buy($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be logged in.
-		if(!is_user_logged_in()){
-			auth_redirect();
-			exit;
-		}
+		$this->kill_anonymous_user(false);
 		//If it's sandbox, just show form
 		if($is_sandbox){
 			//Get random post
@@ -393,13 +359,15 @@ EOS;
 		$this->kill($message);
 	}
 	
+	
+	
 	/**
 	 * Handle payment information
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param boolean $is_sandbox
 	 */
-	private function handle_payment($is_sandbox = false){
+	protected function handle_payment($is_sandbox = false){
 		global $lwp, $wpdb;
 		// Shut down not logged in user.
 		$this->kill_anonymous_user();
@@ -676,9 +644,12 @@ EOS;
 		));
 	}
 	
-	private function handle_chocom($is_sandbox = true){
+	
+	
+	protected function handle_chocom($is_sandbox = true){
 		global $lwp, $wpdb;
 	}
+	
 	
 	/**
 	 * 
@@ -686,7 +657,7 @@ EOS;
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox
 	 */
-	private function handle_payment_info($is_sandbox = true){
+	protected function handle_payment_info($is_sandbox = true){
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
@@ -820,13 +791,15 @@ EOS;
 		));
 	}
 	
+	
+	
 	/**
 	 * Handle Confirm action
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_confirm($is_sandbox = false){
+	protected function handle_confirm($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be login
 		$this->kill_anonymous_user();
@@ -955,7 +928,7 @@ EOS;
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_success($is_sandbox = false){
+	protected function handle_success($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be login
 		$this->kill_anonymous_user();
@@ -1007,7 +980,7 @@ EOS;
 	 * @global Literally_WordPress $lwp
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_cancel($is_sandbox = false){
+	protected function handle_cancel($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be logged in.
 		$this->kill_anonymous_user();
@@ -1060,13 +1033,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Output file
 	 * @global Literally_WordPress $lwp
 	 * @global boolean $is_IE
 	 * @param type $is_sandbox 
 	 */
-	private function handle_file($is_sandbox = false){
+	protected function handle_file($is_sandbox = false){
 		global $lwp;
 		//Get file object
 		$file = isset($_REQUEST['lwp_file']) ? $lwp->post->get_files(null, $_REQUEST["lwp_file"]) : null;
@@ -1081,13 +1057,16 @@ EOS;
 		$lwp->post->print_file($file);
 	}
 	
+	
+	
+	
 	/**
 	 * Show list of tickets to cancel
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_ticket_cancel($is_sandbox = false){
+	protected function handle_ticket_cancel($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in.
 		$this->kill_anonymous_user();
@@ -1142,11 +1121,14 @@ EOS;
 		
 	}
 	
+	
+	
+	
 	/**
 	 * Cancel ticket
 	 * @param type $is_sandbox 
 	 */
-	private function handle_ticket_cancel_complete($is_sandbox = false){
+	protected function handle_ticket_cancel_complete($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
@@ -1232,13 +1214,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Shows ticket list user bought
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_ticket_list($is_sandbox = false){
+	protected function handle_ticket_list($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		if(!is_user_logged_in()){
@@ -1306,13 +1291,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Show form to edit ticket status.
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_ticket_consume($is_sandbox = false){
+	protected function handle_ticket_consume($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		if(!is_user_logged_in()){
@@ -1384,13 +1372,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Displays form to find ticket owner
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_ticket_owner($is_sandbox = false){
+	protected function handle_ticket_owner($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
@@ -1436,13 +1427,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Handle cancel waiting 
 	 * @global wpdb $wpdb
 	 * @global Literally_WordPress $lwp
 	 * @param boolean $is_sandbox
 	 */
-	private function handle_ticket_awaiting($is_sandbox = false){
+	protected function handle_ticket_awaiting($is_sandbox = false){
 		global $wpdb, $lwp;
 		//First of all, user must be logged in
 		if(!is_user_logged_in()){
@@ -1503,13 +1497,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Handle action for deregister cancel list.
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox
 	 */
-	private function handle_ticket_awaiting_deregister($is_sandbox = false){
+	protected function handle_ticket_awaiting_deregister($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user(false);
@@ -1549,13 +1546,16 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Contact to participants
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox 
 	 */
-	private function handle_ticket_contact($is_sandbox = false){
+	protected function handle_ticket_contact($is_sandbox = false){
 		global $lwp, $wpdb;
 		//First of all, user must be logged in
 		$this->kill_anonymous_user();
@@ -1653,12 +1653,15 @@ EOS;
 		));
 	}
 	
+	
+	
+	
 	/**
 	 * Register refund information
 	 * @global Literally_WordPress $lwp
 	 * @param type $is_sandbox
 	 */
-	private function handle_refund_account($is_sandbox = false){
+	protected function handle_refund_account($is_sandbox = false){
 		global $lwp;
 		//Auth redirect
 		$this->kill_anonymous_user(false);
@@ -1704,346 +1707,5 @@ EOS;
 			'account' => $account,
 			'back' => lwp_history_url()
 		));
-	}
-	
-	/**
-	 * Handle request from PayPal IPN
-	 */
-	private function handle_paypal_ipn(){
-		PayPal_Statics::handle_ipn();
-		die();
-	}
-	
-	/**
-	 * Handle request from NTT Chocom server
-	 * @global Literally_WordPress $lwp
-	 */
-	private function handle_ntt_smarttrade(){
-		global $lwp;
-		$lwp->ntt->parse_request();
-		die();
-	}
-	
-	/**
-	 * Handle request from GMO
-	 * @global Literally_WordPress $lwp
-	 * @return
-	 */
-	private function handle_gmo_payment(){
-		global $lwp;
-		echo intval(!(boolean)$lwp->gmo->parse_notification($_POST));
-		die();
-	}
-	
-	/**
-	 * Parse XML Data from Softbank Payment
-	 * @global Literally_WordPress $lwp
-	 */
-	private function handle_sb_payment($is_sandbox){
-		global $lwp, $wpdb;
-		if($_SERVER["REQUEST_METHOD"] != "POST"){
-			$this->kill_anonymous_user();
-			if(!current_user_can('manage_options')){
-				$this->kill($this->_('You have no permission to see this URL.'), 403);
-			}
-			//Request
-			$response = false;
-			if(isset($_GET['sb_transaction'], $_GET['sb_status'])){
-				$xml = mb_convert_encoding($lwp->softbank->make_pseudo_request($_GET['sb_transaction'], $_GET['sb_status']), 'utf-8', 'sjis-win');
-				$response_xml = simplexml_load_string($xml);
-				$response = '';
-				if($response_xml->res_err_code){
-					$response .= "Error: \n".mb_convert_encoding(base64_decode(strval($response_xml->res_err_code)), 'utf-8', 'sjis-win')."\n\n----------------\n\n";
-				}
-				$response .= $this->_("Parsed Data: \n").var_export($response_xml, true)."\n\n----------------\n\n";
-				$response .= "XML: \n". $xml;
-			}
-			//Transaction to be change
-			$sql = <<<EOS
-				SELECT * FROM {$lwp->transaction}
-				WHERE method IN (%s, %s) AND status = %s
-EOS;
-			$this->show_form('sb-check', array(
-				'transactions' => $wpdb->get_results($wpdb->prepare($sql, LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Status::START)),
-				'action' => lwp_endpoint('sb-payment'),
-				'message' =>  $lwp->softbank->is_sandbox
-					? '<p class="message">'.sprintf($this->_('This page confirm whether your endpoint <code>%s</code> works in order. Please select transaction to be finished.'), lwp_endpoint('sb-payment')).'</p>'
-					: '<p class="message error">'.$this->_('This is not sandbox environment. Are you sure to change status?').'</p>',
-				'link' => admin_url('admin.php?page=lwp-setting&view=payment#setting-softbank'),
-				'response' => $response
-			), false);
-			exit;
-		}else{
-			$xml_data = file_get_contents('php://input');
-			header('Content-Type: text/xml; charset=Shift_JIS');
-			echo $lwp->softbank->parse_request($xml_data);
-		}
-		die();
-	}
-	
-	/**
-	 * フォームを出力する
-	 * @since 0.9.1
-	 * @global Literally_WordPress $lwp
-	 * @param string $slug
-	 * @param array $args
-	 */
-	private function show_form($slug, $args = array(), $die = true){
-		$args['meta_title'] = $this->get_form_title($slug).' : '.get_bloginfo('name');
-		$args = apply_filters('lwp_form_args', $args, $slug);
-		extract($args);
-		$slug = basename($slug);
-		$filename = "{$slug}.php";
-		//テーマテンプレートに存在するかどうか調べる
-		if(file_exists(get_template_directory().DIRECTORY_SEPARATOR.$filename)){
-			//テンプレートがあれば読み込む
-			require_once get_template_directory().DIRECTORY_SEPARATOR.$filename;
-		}else{
-			//なければ自作
-			$parent_directory = $this->dir.DIRECTORY_SEPARATOR."form-template".DIRECTORY_SEPARATOR;
-			add_action('wp_enqueue_scripts', array($this, 'enqueue_form_scripts'));
-			add_action('wp_head', array($this, 'form_wp_head'));
-			require_once $parent_directory."paypal-header.php";
-			do_action('lwp_before_form', $slug, $args);
-			require_once $parent_directory.$filename;
-			do_action('lwp_after_form', $slug, $args);
-			require_once $parent_directory."paypal-footer.php";
-		}
-		if($die){
-			exit;
-		}
-	}
-	
-	/**
-	 * Avoid Form to be crowled.
-	 */
-	public function form_wp_head(){
-		echo '<meta name="robots" content="noindex,nofollow" />';
-	}
-  
-	/**
-	 * Do enqueue scripts 
-	 */
-	public function enqueue_form_scripts(){
-		global $lwp;
-		//Load CSS, JS
-		//Screen CSS
-		$css = apply_filters('lwp_css', (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR."lwp-form.css")) ? get_stylesheet_directory_uri()."/lwp-form.css" : $lwp->url."assets/compass/stylesheets/lwp-form.css", 'form');
-		if($css){
-			wp_enqueue_style("lwp-form", $css, array(), $lwp->version, 'screen');
-		}
-		//Print CSS
-		$print_css = apply_filters('lwp_css', (file_exists(get_stylesheet_directory().DIRECTORY_SEPARATOR.'lwp-print.css')) ? get_stylesheet_directory_uri()."/lwp-print.css" : $lwp->url."assets/compass/stylesheets/lwp-print.css", 'print');
-		if($print_css){
-			wp_enqueue_style("lwp-form-print", $print_css, array(), $lwp->version, 'print');
-		}
-		//JS for form helper
-		wp_enqueue_script("lwp-form-helper", $this->url."assets/js/form-helper.js", array("jquery-form", 'jquery-effects-highlight'), $lwp->version, true);
-		//Add Common lables
-		$this->_LWP['labelProcessing'] = $this->_('Processing&hellip;');
-		$this->_LWP['labelRecalculating'] = $this->_('You changed item quantity. Please click recalculate and confirm your order.');
-		wp_localize_script('lwp-form-helper', 'LWP', $this->_LWP);
-		//Do action hook for other plugins
-		do_action('lwp_form_enqueue_scripts');
-	}
-	
-	
-	/**
-	 * Returns handle name
-	 */
-	public function endpoints(){
-		$methods = array();
-		foreach(get_class_methods($this) as $method){
-			if(0 === strpos($method, 'handle_')){
-				$handle = str_replace('_', '-', str_replace('handle_', '', $method));
-				if(false === array_search($handle, array('gmo-payment', 'sb-payment', 'ticket-awaiting-deregister'))){
-					$methods[] = $handle;
-				}
-			}
-		}
-		return $methods;
-	}
-	
-	/**
-	 * Returns title of form template
-	 * @param string $template_slug
-	 * @return string 
-	 */
-	public function get_form_title($template_slug = ''){
-		switch($template_slug){
-			case 'selection':
-				$meta_title = $this->_('Select Payment');
-				break;
-			case 'payment':
-				$meta_title = $this->_('Payment Information');
-				break;
-			case 'payment-info':
-				$meta_title = $this->_('Payment Information Detail');
-				break;
-			case 'refund-account':
-				$meta_title = $this->_('Refund Account');
-				break;
-			case 'transfer':
-				$meta_title = $this->_('Transfer Accepted');
-				break;
-			case 'return':
-				$meta_title = $this->_('Payment Confirmation');
-				break;
-			case 'success':
-				$meta_title = $this->_('Transaction Completed');
-				break;
-			case 'cancel':
-				$meta_title = $this->_('Transaciton Canceled');
-				break;
-			case 'cancel-ticket':
-				$meta_title = $this->_('Ticket Cancel');
-				break;
-			case 'cancel-ticket-success':
-				$meta_title = $this->_('Ticket Canceled');
-				break;
-			case 'event-tickets':
-				$meta_title = $this->_('Ticket List');
-				break;
-			case 'event-tickets-consume':
-				$meta_title = $this->_('Ticket Status');
-				break;
-			case 'event-tickets-awaiting':
-				$meta_title = $this->_('Waiting for ticket cancellation');
-				break;
-			case 'event-user':
-				$meta_title = $this->_('Find User');
-				break;
-			case 'event-contact':
-				$meta_title = $this->_('Contact to participants');
-				break;
-			case 'subscription':
-				$meta_title = $this->_('Subscrition Plans');
-				break;
-			case 'sb-check':
-				$meta_title = $this->_('Softbank Payment Service Notification Check');
-				break;
-			default:
-				$meta_title = '';
-				break;
-		}
-		return $meta_title;
-	}
-	
-	/**
-	 * Returns default template name for action
-	 * @param string $action
-	 * @return string 
-	 */
-	public function get_default_form_slug($action = ''){
-		switch($action){
-			case 'subscription':
-			case 'success':
-			case 'cancel':
-			case 'payment':
-			case 'payment-info':
-			case 'refund-account':
-			case 'sb-payment':
-				return $action;
-				break;
-			case 'pricelist':
-				return 'subscription';
-				break;
-			case 'buy':
-				return 'selection';
-				break;
-			case 'confirm':
-				return 'return';
-				break;
-			case 'ticket-cancel':
-				return 'cancel-ticket';
-				break;
-			case 'ticket-cancel-complete':
-				return 'cancel-ticket-success';
-				break;
-			case 'ticket-list':
-				return 'event-tickets';
-				break;
-			case 'ticket-consume':
-				return 'event-tickets-consume';
-				break;
-			case 'ticket-owner':
-				return 'event-user';
-				break;
-			case 'ticket-contact':
-				return 'event-contact';
-				break;
-			case 'ticket-awaiting':
-				return 'event-tickets-awaiting';
-				break;
-			default:
-				return '';
-				break;
-		}
-	}
-	
-	
-	/**
-	 * Returns form description
-	 * @param string $action
-	 * @return string 
-	 */
-	public function get_form_description($action = ''){
-		switch($action){
-			case 'pricelist':
-				return $this->_('Displays subscription plans.');
-				break;
-			case 'subscription':
-				return $this->_('Displays subscription plans.').' '.$this->_('User can select it and go to payment selection page.');
-				break;
-			case 'success':
-				return $this->_('Display thank you message when transaction finished.').' '.$this->_('User will be soon redirected to original event page in 5 seconds.');
-				break;
-			case 'cancel':
-				return $this->_('Display message when user cancels transaction.');
-				break;
-			case 'buy':
-				return $this->_('Displays payment methods. You can skip this form if paypal is the only method available.').
-					'<small>（<a href="'.admin_url('admin.php?page=lwp-setting').'">'.$this->_("More &gt;").')</a></small>';
-				break;
-			case 'payment':
-				return $this->_('Display form to fulfill payment information like Web CVS, CreditCard and so on.');
-				break;
-			case 'payment-info':
-				return $this->_('Display currently quueued transaction. Especially for Web CVS or PayEasy.');
-				break;
-			case 'refund-account':
-				return $this->_('Display form of refund account which is required to complete refund process.');
-				break;
-			case 'confirm':
-				return $this->_('Displays form to confirm transaction when user retruns from paypal web site.');
-				break;
-			case 'ticket-cancel':
-				return $this->_('Show list of tickets which user have bought.').' '.$this->_('User can select ticket to cancel.').' '.$this->_('If user has no tickets, wp_die will be executed.');
-				break;
-			case 'ticket-cancel-complete':
-				return $this->_('Displays message to tell user cancel is completed.').' '.$this->_('User will be soon redirected to original event page in 5 seconds.');
-				break;
-			case 'ticket-list':
-				return $this->_('Show list of tickets which user have bought.').' '.$this->_('If user has no tickets, wp_die will be executed.');
-				break;
-			case 'ticket-consume':
-				return $this->_('Displays list of tikcets owned by specified user. You can consume ticket with pulldown menu.');
-				break;
-			case 'ticket-owner':
-				return $this->_('Search tikcet owner from code which have been generared by this plugin. This code is related to particular event.');
-				break;
-			case 'ticket-contact':
-				return $this->_('Show mail form to send emails to event participants.');
-				break;
-			case 'ticket-awaiting':
-				return $this->_('Displayed when user choose to wait for cancellation.');
-				break;
-			case 'sb-payment':
-				return $this->_('Check endpoint availability. Use only on sandbox.');
-				break;
-			default:
-				return '';
-				break;
-		}
 	}
 }

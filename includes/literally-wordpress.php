@@ -408,9 +408,6 @@ class Literally_WordPress{
 			//Contact
 			add_action('wp_ajax_lwp_contact_payment_agency', array($this, 'contact_ajax'));
 		}else{ //Hooks only for public area
-			//Highjack frontpage request if lwp is set
-			add_action("template_redirect", array($this->form, 'avoid_caonnical_redirect'), 1);
-			add_action("template_redirect", array($this->form, "manage_actions"));
 			//Redirect to auth page if user is not logged in
 			add_action("template_redirect", array($this, "protect_user_page"));
 			//Output purchase history

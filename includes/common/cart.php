@@ -1,10 +1,12 @@
 <?php
 /**
- * Base class for form object.
+ * Abstract class for form object
+ * 
+ * This class has product related functions.
  * 
  * @since 0.9.3.1
  */
-class LWP_Cart extends Literally_WordPress_Common{
+abstract class LWP_Cart extends Literally_WordPress_Common{
 	
 	/**
 	 * Returns current product if specified.
@@ -65,53 +67,6 @@ class LWP_Cart extends Literally_WordPress_Common{
 			}
 		}
 		return $book;
-	}
-	
-	
-	
-	/**
-	 * Stop processing transaction of not logged in user. 
-	 * @param boolean $kill if set to false, user will be auth_redirec-ed.
-	 */
-	protected function kill_anonymous_user($kill = true){
-		if(!is_user_logged_in()){
-			if($kill){
-				$this->kill($this->_('You must be logged in to process transaction.'), 403);
-			}else{
-				auth_redirect();
-			}
-		}
-	}
-	
-	
-	
-	/**
-	 * Returns if payment slection can be skipped
-	 * 
-	 * @deprecated since version 0.9.3.1
-	 */
-	private function can_skip_payment_selection(){
-	  return false;
-	}
-	
-	
-	/**
-	 * Returns is public page is SSL
-	 * @return boolean 
-	 */
-	protected function is_publicly_ssl(){
-		return ((false !== strpos(get_option('home_url'), 'https')) || (false !== strpos(get_option('site_url'), 'https')));
-	}
-  
-	
-	
-	/**
-	 * Make url to http protocol
-	 * @param string $url
-	 * @return string 
-	 */
-	protected function strip_ssl($url){
-		return str_replace('https://', 'http://', $url);
 	}
 	
 	
@@ -179,17 +134,5 @@ class LWP_Cart extends Literally_WordPress_Common{
 			ORDER BY RAND()
 EOS;
 		return $wpdb->get_row($sql);
-	}
-	
-	
-	
-	/**
-	 * Change method name to hungalian 
-	 * 
-	 * @param string $method
-	 * @return string 
-	 */
-	protected function make_hungalian($method){
-		return str_replace("-", "_", strtolower(trim($method)));
 	}
 }

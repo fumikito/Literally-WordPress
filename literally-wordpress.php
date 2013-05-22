@@ -31,6 +31,8 @@ if(version_compare(PHP_VERSION, '5.0') >= 0 && function_exists('curl_init')){
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."capability.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."rewrite.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."cart.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."form-template.php";
+	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."form-backend.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."form.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."refund-manager.php";
 	require_once dirname(__FILE__).DIRECTORY_SEPARATOR."includes".DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR."reward.php";
