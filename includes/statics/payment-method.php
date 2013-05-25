@@ -112,6 +112,7 @@ class LWP_Payment_Methods {
 		$lwp->_('GMO_CC');
 		$lwp->_('GMO_PAYEASY');
 		$lwp->_('GMO_WEB_CVS');
+		$lwp->_('NTT_EMONEY');
 	}
 	
 	/**
@@ -168,6 +169,15 @@ class LWP_Payment_Methods {
 			$forms[] = $form;
 		}
 		return $forms;
+	}
+	
+	/**
+	 * Get currently specified method
+	 * 
+	 * @return string
+	 */
+	public static function get_current_method(){
+		return isset($_REQUEST['lwp-method']) ? self::hungalinize($_REQUEST['lwp-method']) : '';
 	}
 	
 	/**
@@ -241,6 +251,16 @@ class LWP_Payment_Methods {
 	}
 	
 	/**
+	 * Return if specified method is chocom
+	 * 
+	 * @param method $method
+	 * @return boolean
+	 */
+	public static function is_chocom($method){
+		return (false !== strpos(self::hungalinize($method), 'NTT_'));
+	}
+	
+	/**
 	 * Test specified method is valid for transaction.
 	 * 
 	 * @param string $method
@@ -248,7 +268,7 @@ class LWP_Payment_Methods {
 	 * @return boolean|false
 	 */
 	public static function test($method, $posts = array()){
-		$method = str_replace('-', '_', strtoupper($method));
+		$method = self::hungalinize($method);
 		$availables = self::get_contextual_methods($posts);
 		if(false === array_search($method, $availables)){
 			return false;
@@ -263,6 +283,24 @@ class LWP_Payment_Methods {
 		return $method;
 	}
 	
+	/**
+	 * Return hungalian-style string
+	 * @param type $string
+	 * @return type
+	 */
+	private static function hungalinize($string){
+		return str_replace('-', '_', strtoupper((string)$string));
+	}
+
+	/**
+	 * Return hyphationed string
+	 * @param string $string
+	 * @return string
+	 */
+	private static function hyphenate($string){
+		return str_replace('_', '-', strtolower((string)$string));
+	}
+
 	/**
 	 * Returns e-money like payment methods
 	 * @return array

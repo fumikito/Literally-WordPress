@@ -36,6 +36,7 @@ jQuery(document).ready(function($){
 			e.preventDefault();
 		}
 	});
+	// Radio button helper
 	$('#lwp-payment-method-form tr').click(function(e){
 		var input = $(this).find('input[type=radio]');
 		if(!input.attr('disabled')){
@@ -56,6 +57,43 @@ jQuery(document).ready(function($){
 		}
 		var timer = setInterval("myInterval()", 1000);
 	}
+	// Chocom Helper
+	$('#chocom-redirector').click(function(e){
+		e.preventDefault();
+		if(!$(this).hasClass('disabled')){
+			var savedLabel = $(this).text();
+			$(this).addClass('disabled').text(LWP.labelProcessing);
+			$('#chocom-transaction').ajaxSubmit({
+				dataType: 'json',
+				beforeSubmit: function(){
+					$('p.message span').css('display', 'none');
+					$('p.message span:eq(1)').css('display', 'inline');
+					$('p.message').effect('highlight');
+					return true;
+				},
+				success: function(response){
+					$('p.message span').css('display', 'none');
+					if(response.success){
+						$('p.message span:eq(2)').css('display', 'inline');
+						var form = $(response.message);
+						$('p.message').effect('highlight')
+								.removeClass('info').addClass('success')
+								.after(form);
+						form.submit();
+					}else{
+						$('p.message span:eq(3)').text(response.message).css('display', 'inline');
+						$('p.message').effect('highlight').
+								removeClass('info').addClass('error');
+					}
+					$('#chocom-redirector').removeClass('disabled').text(savedLabel);
+				},
+				error: function(){
+					$('#chocom-redirector').removeClass('disabled').text(savedLabel);
+					alert(LWP.onError);
+				}
+			});
+		}
+	});
 	//Bulk Mail
 	$('#lwp-contact-participants-form').submit(function(e){
 		e.preventDefault();

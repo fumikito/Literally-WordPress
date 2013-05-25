@@ -38,7 +38,7 @@
 				): ?>
 				<?php $this->e('Unavailable'); ?>
 				<?php else: ?>
-				<a class="button" href="<?php echo lwp_endpoint($method, true);?>" target="lwp-form-check"><?php $this->e('View'); ?></a>
+				<a class="button" href="<?php echo lwp_endpoint($method, array(), true);?>" target="lwp-form-check"><?php $this->e('View'); ?></a>
 				<?php endif; ?>
 			</td>
 		</tr>

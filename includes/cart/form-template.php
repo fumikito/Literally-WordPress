@@ -19,7 +19,16 @@ abstract class LWP_Form_Template extends LWP_Cart{
 	protected $_LWP = array();
 	
 	
-	
+	/**
+	 * Form to exclude 
+	 * @var array
+	 */
+	protected $skip_form = array(
+		'gmo-payment', 'sb-payment', 'ticket-awaiting-deregister',
+		'chocom'
+	);
+
+
 	/**
 	 * Register template_redirect hook on construction
 	 * 
@@ -144,7 +153,7 @@ abstract class LWP_Form_Template extends LWP_Cart{
 		foreach(get_class_methods($this) as $method){
 			if(0 === strpos($method, 'handle_')){
 				$handle = str_replace('_', '-', str_replace('handle_', '', $method));
-				if(false === array_search($handle, array('gmo-payment', 'sb-payment', 'ticket-awaiting-deregister'))){
+				if(false === array_search($handle, $this->skip_form)){
 					$methods[] = $handle;
 				}
 			}

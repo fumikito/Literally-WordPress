@@ -1,72 +1,10 @@
 <?php /* @var $this LWP_Form */?>
 <?php /* @var $lwp Literally_WordPress */ global $lwp; ?>
 <form method="get" action="<?php echo lwp_endpoint('buy'); ?>" id="lwp-payment-cart">
-	<input type="hidden" name="lwp-id" value="<?php echo $post_id; ?>" />
-	<table class="price-table">
-		<caption><?php $this->e('Order Detail'); ?></caption>
-		<thead>
-			<tr>
-				<th scope="col"><?php $this->e('Item'); ?></th>
-				<th scope="col"><?php $this->e('@'); ?></th>
-				<th scope="col"><?php $this->e('Quantity'); ?></th>
-				<th scope="col">&nbsp;</th>
-				<th class="price" scope="col"><?php $this->e('Subtotal'); ?></th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td class="recalculate" colspan="3">
-					<?php
-						$can_select = false;
-						foreach($selectable as $s){
-							if($s){
-								$can_select = true;
-								break;
-							}
-						}
-						if($can_select): 
-					?>
-						<input class="button button-calculate" type="submit" value="<?php $this->e('Recalculate'); ?>" /><br />
-						<span class="description"><?php $this->e('If you change quantity, click recalculate.'); ?></span>
-					<?php else: ?>
-						&nbsp;
-					<?php endif; ?>
-				</td>
-				<th scope="row"><?php $this->e('Total'); ?></th>
-				<td class="price"><?php echo number_format_i18n($total_price)." ".lwp_currency_code(); ?></td>
-			</tr>
-		</tfoot>
-		<tbody>
-			<?php foreach($items as $id => $item): ?>
-			<tr>
-				<th scope="row">
-					<?php echo apply_filters('lwp_cart_product_title', esc_html($item), $id); ?>
-				</th>
-				<td>
-					<?php echo number_format_i18n($unit_prices[$id])." ".lwp_currency_code(); ?>
-				</td>
-				<td class="quantity">
-					<?php if($selectable[$id]): ?>
-						<input type="hidden" class="current_quantity" value="<?php echo $quantities[$id]; ?>" />
-						<select class="quantity-changer" name="quantity[<?php echo $id; ?>]">
-							<?php foreach(lwp_option_steps($max_quantities[$id]) as $q): ?>
-							<option value="<?php echo $q; ?>"<?php if($q == $quantities[$id]) echo ' selected="selected"';?>>
-								<?php echo number_format($q); ?>
-							</option>
-							<?php endforeach; ?>
-						</select>
-					<?php else: ?>
-						<?php printf('<span>%s</span>', $quantities[$id]); ?>
-					<?php endif; ?>
-				</td>
-				<td class="misc"><?php do_action('lwp_cart_row_desc', '', $id, $prices[$id], $quantities[$id]); ?></td>
-				<td class="price">
-					<?php echo number_format_i18n($prices[$id])." ".lwp_currency_code(); ?>
-				</td>
-			</tr>
-			<?php endforeach; ?>
-		</tbody>
-	</table>
+	<?php foreach($products as $product): ?>
+	<input type="hidden" name="lwp-id" value="<?php echo esc_attr($product->ID); ?>" />
+	<?php endforeach; ?>
+	<?php $this->the_price_list($products, true); ?>
 </form>
 
 <p class="message notice">
@@ -74,9 +12,9 @@
 </p>
 	
 <form method="post" action="<?php echo lwp_endpoint('buy'); ?>" id="lwp-payment-method-form">
-	<input type="hidden" name="lwp-id" value="<?php echo $post_id; ?>" />
-	<?php foreach($quantities as $id => $quantity): ?>
-	<input type="hidden" name="quantity[<?php echo $id; ?>]" value="<?php echo $quantity ?>" />
+	<?php foreach($products as $product): ?>
+	<input type="hidden" name="lwp-id" value="<?php echo esc_attr($product->ID); ?>" />
+	<input type="hidden" name="quantity[<?php echo esc_attr($product->ID); ?>]" value="<?php echo esc_attr($this->get_current_quantity($product)); ?>" />
 	<?php endforeach; ?>
 	<?php wp_nonce_field('lwp_buynow', '_wpnonce', false); ?>
 	<table class="form-table lwp-method-table">

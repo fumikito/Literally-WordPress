@@ -168,6 +168,8 @@ EOS;
 		//Create transactios table
 		$transactions = self::transaction();
 		$method = LWP_Payment_Methods::PAYPAL;
+		// TODO: 緊急対策で張ったインデックス
+		// ALTER TABLE  wp_lwp_transaction ADD INDEX  `sales` (  `book_id` ,  `status` );
 		$sql[] = <<<EOS
 			CREATE TABLE {$transactions} (
 				ID BIGINT NOT NULL AUTO_INCREMENT,
