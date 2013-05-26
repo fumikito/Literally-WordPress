@@ -57,6 +57,16 @@ class LWP_Payment_Methods {
 	const NTT_EMONEY = 'NTT_EMONEY';
 	
 	/**
+	 * Name of Chocom credit card
+	 */
+	const NTT_CC = 'NTT_CC';
+	
+	/**
+	 * Name of NTT CVS
+	 */
+	const NTT_CVS = 'NTT_CVS';
+	
+	/**
 	 * Name of payment method for free campaign.
 	 */
 	const CAMPAIGN = 'CAMPAIGN';
@@ -89,6 +99,8 @@ class LWP_Payment_Methods {
 			self::SOFTBANK_WEB_CVS,
 			self::GMO_CC,
 			self::NTT_EMONEY,
+			self::NTT_CC,
+			self::NTT_CVS,
 		);
 		return $methods;
 	}
@@ -113,6 +125,8 @@ class LWP_Payment_Methods {
 		$lwp->_('GMO_PAYEASY');
 		$lwp->_('GMO_WEB_CVS');
 		$lwp->_('NTT_EMONEY');
+		$lwp->_('NTT_CC');
+		$lwp->_('NTT_CVS');
 	}
 	
 	/**
@@ -125,6 +139,7 @@ class LWP_Payment_Methods {
 			self::GMO_WEB_CVS,
 			self::SOFTBANK_PAYEASY,
 			self::SOFTBANK_WEB_CVS,
+			self::NTT_CVS,
 			self::TRANSFER
 		);
 	}
@@ -238,6 +253,12 @@ class LWP_Payment_Methods {
 					case self::NTT_EMONEY:
 						$flg = $lwp->ntt->is_emoney_enabled();
 						break;
+					case self::NTT_CC:
+						$flg = $lwp->ntt->is_cc_enabled();
+						break;
+					case self::NTT_CVS:
+						$flg = $lwp->ntt->is_cvs_enabled();
+						break;
 					case self::TRANSFER:
 						$flg = $lwp->notifier->is_enabled();
 						break;
@@ -319,7 +340,8 @@ class LWP_Payment_Methods {
 	public static function get_cc(){
 		return array(
 			self::GMO_CC,
-			self::SOFTBANK_CC
+			self::SOFTBANK_CC,
+			self::NTT_CC,
 		);
 	}
 	
@@ -333,6 +355,7 @@ class LWP_Payment_Methods {
 			self::GMO_PAYEASY,
 			self::SOFTBANK_PAYEASY,
 			self::SOFTBANK_WEB_CVS,
+			self::NTT_CVS,
 			self::TRANSFER
 		);
 	}
@@ -466,6 +489,7 @@ class LWP_Payment_Methods {
 		switch($method){
 			case self::GMO_CC:
 			case self::SOFTBANK_CC:
+			case self::NTT_CC:
 				return $lwp->_('Credit Card');
 				break;
 			case self::GMO_PAYEASY:
@@ -474,6 +498,7 @@ class LWP_Payment_Methods {
 				break;
 			case self::GMO_WEB_CVS:
 			case self::SOFTBANK_WEB_CVS:
+			case self::NTT_CVS:
 				return $lwp->_($method);
 				break;
 			case self::NTT_EMONEY:
@@ -498,6 +523,7 @@ class LWP_Payment_Methods {
 		switch($method){
 			case self::GMO_CC:
 			case self::SOFTBANK_CC:
+			case self::NTT_CC:
 				return $lwp->_('You can pay with credit card in secure.');
 				break;
 			case self::GMO_PAYEASY:
@@ -506,6 +532,7 @@ class LWP_Payment_Methods {
 				break;
 			case self::SOFTBANK_WEB_CVS:
 			case self::GMO_WEB_CVS:
+			case self::NTT_CVS:
 				return $lwp->_('You can pay at CVS below.');
 				break;
 			case self::PAYPAL:
@@ -540,10 +567,14 @@ class LWP_Payment_Methods {
 			case self::GMO_PAYEASY:
 			case self::SOFTBANK_WEB_CVS:
 			case self::SOFTBANK_PAYEASY:
+			case self::NTT_CVS:
 				return $lwp->_('This is offline payment. To finish transaction, you should follow the instruction on next step.');
 				break;
+			case self::NTT_CC:
+				return $lwp->ntt->get_desc('');
+				break;
 			case self::NTT_EMONEY:
-				return $lwp->ntt->get_desc('link');
+	return $lwp->ntt->get_desc('link');
 				break;
 			case self::TRANSFER:
 				return $lwp->_('Transaction will not have been complete, unless you will send deposit to the specified bank account. This means you can\'t get contents immediately.');;
@@ -575,6 +606,8 @@ class LWP_Payment_Methods {
 				return $lwp->softbank->vendor_name();
 				break;
 			case self::NTT_EMONEY:
+			case self::NTT_CC:
+			case self::NTT_CVS:
 				return $lwp->ntt->vendor_name();
 				break;
 			default:

@@ -2,25 +2,105 @@
 
 class LWP_NTT extends LWP_Japanese_Payment{
 	
+	
+	/**
+	 * creditcard list
+	 * @var array
+	 */
+	protected $_creditcard = array(
+		'visa' => false,
+		'master' => false,
+		'jcb' => false,
+	);
+	
+	
+	
+	/**
+	 * CVS list
+	 * @var array 
+	 */
+	protected $_webcvs = array(
+		'seven-eleven' => false,
+		'lawson' => false,
+		'ministop' => false,
+		'seicomart' => false
+	);
+	
+	
 	/**
 	 * @var string
 	 */
 	public $shop_id = '';
+	
+	
 	
 	/**
 	 * @var string
 	 */
 	public $access_key = '';
 	
+	
+	
+	/**
+	 * @var string
+	 */
+	public $shop_id_cc = '';
+	
+	
+	
+	/**
+	 * @var string
+	 */
+	public $access_key_cc = '';
+	
+	
+	
+	/**
+	 * @var string
+	 */
+	public $shop_id_cvs = '';
+	
+	
+	
+	/**
+	 * @var string
+	 */
+	public $access_key_cvs = '';
+	
+	
 	/**
 	 * @var boolean
 	 */
 	private $emoney = false;
 	
+	
+	/**
+	 * @var boolean
+	 */
+	private $cc = false;
+	
+	
+	/**
+	 * @var boolean
+	 */
+	private $cvs = false;
+	
+	/**
+	 * @var int
+	 */
+	public $cvs_limit = 0;
+	
 	/**
 	 * @var string
 	 */
 	private $pay_status = '';
+	
+	
+	/**
+	 * @var string
+	 */
+	public $comdisp = '';
+	
 	
 	/**
 	 * @var array
@@ -33,6 +113,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		'127.0.0.1', //デバッグ用
 	);
 	
+	
+	
 	/**
 	 * 
 	 * @param array $option
@@ -42,6 +124,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		add_action('wp_ajax_chocom_order', array($this, 'return_form'));
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @param array $option
@@ -50,19 +134,36 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		$option = shortcode_atts(array(
 			'ntt_shop_id' => '',
 			'ntt_access_key' => '',
+			'ntt_shop_id_cc' => '',
+			'ntt_access_key_cc' => '',
+			'ntt_shop_id_cvs' => '',
+			'ntt_access_key_cvs' => '',
 			'ntt_sandbox' => true,
 			'ntt_stealth' => false,
 			'ntt_emoney' => false,
+			'ntt_creditcard' => false,
+			'ntt_webcvs' => false,
+			'ntt_comdisp' => '',
+			'ntt_cvs_date' => 0,
 		), $option);
 		$this->shop_id = (string)$option['ntt_shop_id'];
 		$this->access_key = (string)$option['ntt_access_key'];
+		$this->shop_id_cc = (string)$option['ntt_shop_id_cc'];
+		$this->access_key_cc = (string)$option['ntt_access_key_cc'];
+		$this->shop_id_cvs = (string)$option['ntt_shop_id_cvs'];
+		$this->access_key_cvs = (string)$option['ntt_access_key_cvs'];
 		$this->is_sandbox = (boolean)$option['ntt_sandbox'];
 		$this->is_stealth = (boolean)$option['ntt_stealth'];
 		$this->emoney = (boolean)$option['ntt_emoney'];
+		$this->cc = (boolean)$option['ntt_creditcard'];
+		$this->cvs = (boolean)$option['ntt_webcvs'];
+		$this->comdisp = (string)$option['ntt_comdisp'];
+		$this->cvs_limit = (int)$option['ntt_cvs_date'];
 	}
 	
 	/**
 	 * Returns vendor name
+	 * 
 	 * @param boolean $short
 	 * @return string
 	 */
@@ -74,12 +175,60 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	/**
 	 * Returns if emoney is enabled
-	 * @return type
+	 * 
+	 * @return boolean
 	 */
 	public function is_emoney_enabled(){
-			return $this->emoney;
+			return $this->emoney && !empty($this->shop_id) && !empty($this->access_key);
 	}
 	
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function is_cc_enabled() {
+		return (parent::is_cc_enabled() &&  !empty($this->shop_id_cc) && !empty($this->access_key_cc));
+	}
+	
+	
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function is_cvs_enabled() {
+		return (parent::is_cvs_enabled() &&  !empty($this->shop_id_cvs) && !empty($this->access_key_cvs));
+	}
+	
+	
+	
+	/**
+	 * @see LWP_Japanese_Payment::get_available_cards
+	 * @param boolean $all
+	 * @return array
+	 */
+	public function get_available_cards($all = false) {
+		if($all || $this->cc){
+			return array_keys($this->_creditcard);
+		}else{
+			return array();
+		}
+	}
+	
+	
+	/**
+	 * @see LWP_Japanese_Payment::get_available_cvs
+	 * @param boolean $all
+	 * @return array
+	 */
+	public function get_available_cvs($all = false) {
+		if($all || $this->cvs){
+			return $this->_webcvs;
+		}else{
+			return array();
+		}
+	}
 	
 	
 	/**
@@ -89,8 +238,6 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	public function is_enabled(){
 		return (boolean)(
 				( $this->is_cc_enabled() || $this->is_cvs_enabled() || $this->is_emoney_enabled())
-					&&
-				(!empty($this->access_key) && !empty($this->shop_id) )
 		);
 	}
 	
@@ -223,13 +370,23 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	
 	
+	/**
+	 * Finish transaction on online payment.
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 * @param object $transaction
+	 * @return boolean
+	 */
 	public function finish_transaction($transaction){
 		global $lwp, $wpdb;
+		// Transaction should be start.
+		if($transaction->status != LWP_Payment_Status::START){
+			return false;
+		}
+		// Make Request
 		switch($transaction->method){
 			case LWP_Payment_Methods::NTT_EMONEY:
-				if($transaction->status != LWP_Payment_Status::START){
-					return false;
-				}
 				$response = $this->make_request($this->get_endpoint('emoney-capture'), array(
 					'shopId' => $this->shop_id,
 					'linked_1' => $transaction->transaction_key,
@@ -239,39 +396,49 @@ class LWP_NTT extends LWP_Japanese_Payment{
 					'choComGoodsCode' => '0990',
 					'flag' => '1'
 				));
-				if(false == $response){
-					return lwp_endpoint('chocom-cancel', array(
-						'order_id' => $transaction->transaction_key,
-						'error' => 1,
-						'hash' => $this->get_hash($transaction->ID),
-					));
-				}elseif($response['payStatus'] != 'C0000000'){
-					return lwp_endpoint('chocom-cancel', array(
-						'order_id' => $transaction->transaction_key,
-						'error' => $response['payStatus'],
-						'hash' => $this->get_hash($transaction->ID),
-					));
-				}else{
-					//Transaction is OK.
-					$result = $wpdb->update($lwp->transaction, array(
-						'status' => LWP_Payment_Status::SUCCESS,
-						'updated' => gmdate('Y-m-d H:i:s'),
-						'misc' => serialize(array(
-							'center_pay_id' => $response['centerPayId']
-						)),
-					), array('ID' => $transaction->ID), array('%s', '%s', '%s'), array('%d'));
-					if($result){
-						do_action('lwp_update_transaction', $transaction->ID);
-						return lwp_endpoint('success', array('lwp-id' => $transaction->book_id));
-					}else{
-						return false;
-					}
-				}
+				break;
+			case LWP_Payment_Methods::NTT_CC:
+				$response = $this->make_request($this->get_endpoint('cc-capture'), array(
+					'shopId' => $this->shop_id_cc,
+					'linked_1' => $transaction->transaction_key,
+					'accessKey' => $this->access_key_cc,
+					'aid' => $transaction->payer_mail,
+					'amount' => $transaction->price,
+					'choComGoodsCode' => '0990',
+					'flag' => '52' //与信51、与信売上52、与信取消60、売上取消61
+				));
 				break;
 			default:
 				return false;
 				break;
 		}
+		if(false == $response || !isset($response['payStatus'])){
+			return lwp_endpoint('chocom-cancel', array(
+				'order_id' => $transaction->transaction_key,
+				'error' => 1,
+				'hash' => $this->get_hash($transaction->ID),
+			));
+		}elseif(false === array_search($response['payStatus'], array('C0000000', 'C1000000'))){
+			return lwp_endpoint('chocom-cancel', array(
+				'order_id' => $transaction->transaction_key,
+				'error' => $response['payStatus'],
+				'hash' => $this->get_hash($transaction->ID),
+			));
+		}
+		//Transaction is OK.
+		$result = $wpdb->update($lwp->transaction, array(
+			'status' => LWP_Payment_Status::SUCCESS,
+			'transaction_id' => $response['centerPayId'],
+			'updated' => gmdate('Y-m-d H:i:s'),
+		), array('ID' => $transaction->ID), array('%s', '%s', '%s'), array('%d'));
+		if($result){
+			do_action('lwp_update_transaction', $transaction->ID);
+			return lwp_endpoint('success', array('lwp-id' => $transaction->book_id));
+		}else{
+			return false;
+		}
+		
+		
 	}
 	
 	/**
@@ -282,41 +449,125 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @param type $method
 	 * @return boolean
 	 */
-	public function parse_request($method){
+	public function parse_request($posted_method){
 		global $lwp, $wpdb;
-		switch ($method) {
+		$data_to_parse = array(
+			'date', 'shopId', 'accessKey', 'linked_1'
+		);
+		$method = $posted_method;
+		switch ($posted_method) {
 			case LWP_Payment_Methods::NTT_EMONEY:
-				// Test post data
-				if(!$this->test_request($_POST, array('aid', 'shopId', 'date', 'trustStatus', 'accessKey', 'linked_1'))){
-					return false;
-				}
-				// Check access key and shop ID
-				$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE transaction_key = %s", $_POST['linked_1']));
-				$hash = $this->get_hash($transaction->ID);
-				$url = '';
-				if($transaction && $transaction->transaction_key == $_POST['linked_1'] && $_POST['shopId'] == $this->shop_id && $_POST['accessKey'] == $this->access_key){
-					// Save aid on payer_mail
-					$wpdb->update($lwp->transaction, array('payer_mail' => $_POST['aid']), array('ID' => $transaction->ID), array('%s'), array('%d'));
-					if($_POST['trustStatus'] == 'GIVE'){
-						$url = lwp_endpoint('chocom-result', array('order_id' => $_POST['linked_1'], 'hash' => $hash));
-					}else{
-						$url = lwp_endpoint('chocom-cancel', array('order_id' => $_POST['linked_1'], 'hash' => $hash));
-					}
-				}else{
-					$url = lwp_endpoint('chocom-cancel', array('order_id' => $_POST['linked_1'], 'error' => true, 'hash' => $hash));
-				}
-				header('Content-Type: text/plain; charset=UTF-8');
-				echo <<<EOS
-<SHOPMSG>
-shopId={$this->shop_id}
-returnURL={$url}
-</SHOPMSG>
-EOS;
-				exit;
+				$data_to_parse = array_merge($data_to_parse, array('aid', 'trustStatus'));
+				$shop_id = $this->shop_id;
+				$access_key = $this->access_key;
 				break;
-
+			case LWP_Payment_Methods::NTT_CC:
+				$data_to_parse = array_merge($data_to_parse, array('aid', 'trustStatus'));
+				$shop_id = $this->shop_id_cc;
+				$access_key = $this->access_key_cc;
+				break;
+			case LWP_Payment_Methods::NTT_CVS:
+				$data_to_parse = array_merge($data_to_parse, array('cvs_name', 'pay_no'));
+				$shop_id = $this->shop_id_cvs;
+				$access_key = $this->access_key_cvs;
+				break;
+			case LWP_Payment_Methods::NTT_CVS.'_COMPLETE':
+				$data_to_parse = array_merge($data_to_parse, array('amount', 'centerPayId', 'cvs_name', 'cvs_date'));
+				$shop_id = $this->shop_id_cvs;
+				$access_key = $this->access_key_cvs;
+				$method = LWP_Payment_Methods::NTT_CVS;
+				break;
 			default:
 				return false;
+				break;
+		}
+		if(
+			// Test post data
+			!$this->test_request($_POST, $data_to_parse)
+				||
+			// Check Access key and shop ID
+			$shopId != $_POST['shopId']
+				||
+			$access_key != $_POST['accessKey']
+		){
+			return false;
+		}
+		// Get transaction
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE transaction_key = %s", $_POST['linked_1']));
+		if(!$transaction || $transaction->method != $method){
+			return false;
+		}
+		$hash = $this->get_hash($transaction->ID);
+		$out = array(
+			'shopId' => $shopId,
+		);
+		switch($method){
+			case LWP_Payment_Methods::NTT_EMONEY:
+			case LWP_Payment_Methods::NTT_CC:
+				// Save aid on payer_mail
+				$wpdb->update($lwp->transaction, array('payer_mail' => $_POST['aid']), array('ID' => $transaction->ID), array('%s'), array('%d'));
+				if($_POST['trustStatus'] == 'GIVE'){
+					$url = lwp_endpoint('chocom-result', array('order_id' => $_POST['linked_1'], 'hash' => $hash));
+				}else{
+					$url = lwp_endpoint('chocom-cancel', array('order_id' => $_POST['linked_1'], 'hash' => $hash));
+				}
+				$out['returnURL'] = $url;
+				break;
+			case LWP_Payment_Methods::NTT_CVS:
+				// Save pay_no on payer_mail and cvs name on misc.
+				$data = (array)unserialize($transaction->misc);
+				$data['cvs_name'] = $this->get_cvs_name($_POST['cvs_name']);
+				$data['receipt_no'] = $_POST['pay_no'];
+				$wpdb->update($lwp->transaction, array(
+					'payer_mail' => $_POST['pay_no'],
+					'misc' => serialize($data)
+				), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+				$out['returnURL'] = lwp_endpoint('payment-info', array('transaction' => $transaction->ID));
+				break;
+			case LWP_Payment_Methods::NTT_CVS.'_COMPLETE':
+				$wpdb->update($lwp->transaction, array(
+					'transaction_id' => $_POST['centerPayId'],
+					'status' => LWP_Payment_Status::SUCCESS,
+					'updated' => gmdate('Y-m-d H:i:s')
+				), array('ID' => $transaction->ID), array('%s', '%s', '%s'), array('%d'));
+				do_action('lwp_update_transaction', $transaction->ID);
+				$out['linked_1'] = $transaction->transaction_key;
+				$out['returnCode'] = 'OK';
+				break;
+		}
+		header('Content-Type: text/plain; charset=UTF-8');
+		echo "<SHOPMSG>\n";
+		foreach($out as $key => $val){
+			echo "{$key}={$val}\n";
+		}
+		echo '</SHOPMSG>';
+		exit;
+	}
+	
+	
+	/**
+	 * Returns SJIS value to cvs key name.
+	 * 
+	 * @param string $post_data
+	 * @return string
+	 */
+	private function get_cvs_name($post_data){
+		$cvs = mb_convert_encoding(rawurldecode($post_data), 'utf-8', 'sjis-win');
+		switch($cvs){
+			case 'セブンイレブン':
+				return 'seven-eleven';
+				break;
+			case 'ローソン':
+				return 'lawson';
+				break;
+			case 'セイコーマート':
+				return 'seicomart';
+				break;
+			case 'ミニストップ':
+				return 'ministop';
+				break;
+			default:
+				return 'undefined';
 				break;
 		}
 	}
@@ -335,7 +586,16 @@ EOS;
 				return 'NTTスマートトレードでは、お客様の多様なニーズにお応えするため 様々な決済手段をご提供しています。';
 				break;
 			case 'link':
-				return sprintf('次へをクリックすると、ちょコムeマネーのサイトへ移動します。ログインまたは登録してください。その後、eマネー口座からの引き落とし同意画面に金額が表示されます。同意が完了すると、%sに戻って来て決済完了となります。', get_bloginfo('name'));
+				return sprintf('次へをクリックすると、ちょコムのサイトへ移動します。ログインまたは登録してください。その後、eマネー口座からの引き落とし同意画面に金額が表示されます。同意が完了すると、%sに戻って来て決済完了となります。', get_bloginfo('name'));
+				break;
+			case 'credit':
+				return 'ちょコムクレジット支払いは、お買い物代金分のちょコムｅマネーをクレジットカードで購入いただき、即時お支払ができるサービスです。ちょコム会員でない方でも、通常のクレジットカードでのお支払いと同様の手続きでお買い物ができます。';
+				break;
+			case 'cvs':
+				return 'コンビニエンスストアでお支払いいただける決済サービスです。ちょコム会員でない方でも、お支払いいただけます。';
+				break;
+			case 'contract':
+				return '1つのショップIDですべての支払いタイプの契約をしている場合でも、ショップID、アクセスキーはそれぞれ入力してください。';
 				break;
 			case 'emoney':
 			default:
@@ -355,31 +615,90 @@ EOS;
 	public function get_error_msg($error_code){
 		switch($error_code){
 			case 'C0000000':
+			case 'C1000000':
 				return '正常に決済処理がおこなわれました。';
+				break;
 			case 'C0000001':
 				return 'お客様の信用要求情報がありません。';
+				break;
 			case 'C0000002':
+			case 'C1000002':
 				return 'お客様のデータが存在しません。';
+				break;
 			case 'C0000003':
 				return 'お客様は現在ちょコムeマネーをご利用できない状態です。';
+				break;
 			case 'C0000004':
 				return 'お客様の貯金箱が存在しません。';
+				break;
 			case 'C0000005':
-				return 'お客様のちょコム残高が不足しています。ちょコムeマネーをチャージして、もう一度やり直してください。';
-				return '加盟店のデータが存在しません。';
+				return 'お客様のちょコム残高が不足しています。<a href="https://www.chocom.net/user/html/E22Login.html" target="_blank">ちょコムeマネーをチャージ</a>して、もう一度やり直してください。';
+				break;
 			case 'C0000006':
 			case 'C0000007':
 			case 'C0000008':
 			case 'C0000009':
 			case 'C0000010':
+			case 'C1000009':
 				return '申し訳ございません。ちょコムのシステムが停止中です。';
+				break;
 			case 'C0000011':
 			case 'C0000012':
 			case 'C0000013':
 			case 'C0000014':
 			case 'C0000015':
 			case 'C0000016':
-				return '申し訳ございません。システムでエラーが発生し、処理を完了できませんでした。';＾’				
+			case 'C1000007':
+			case 'C1000011':
+			case 'C1000012':
+			case 'C1000015':
+			case 'C1000016':
+			case 'C1000021':
+				return '申し訳ございません。システムでエラーが発生し、処理を完了できませんでした。';
+				break;
+			case 'C1000013':
+			case 'C1000085':
+				return 'この決済はすでに処理を完了しています。購入履歴ページをご覧下さい。';
+				break;
+			case 'C1000022':
+			case 'C1000023':
+			case 'C1000024':
+			case 'C1000025':
+			case 'C1000026':
+			case 'C1000027':
+			case 'C1000028':
+			case 'C1000034':
+			case 'C1000035':
+			case 'C1000036':
+			case 'C1000037':
+			case 'C1000038':
+			case 'C1000040':
+			case 'C1000041':
+			case 'C1000050':
+			case 'C1000051':
+			case 'C1000052':
+			case 'C1000060':
+			case 'C1000061':
+			case 'C1000062':
+			case 'C1000063':
+				return '申し訳ございません。不正な値が指定されていたため、処理を完了できませんでした。';
+				break;
+			case 'C1000029':
+				return '申し訳ございません。利用できないクレジットカード番号です。';
+				break;
+			case 'C1000030':
+				return '申し訳ございません。1回当たりの決済金額が規定範囲外です。';
+				break;
+			case 'C1000031':
+				return '申し訳ございません。ご指定のクレジットカード番号は一定期間中の決済金額の累計額が上限値を超えています。';
+				break;
+			case 'C1000032':
+				return '申し訳ございません。ご指定のクレジットカード番号は一定期間中の決済回数が上限値を超えています。';
+				break;
+			case 'C1000033':
+			case 'C1000053':
+			case 'C1000064':
+				return '申し訳ございません。与信処理で通信エラーが発生したため、決済が完了していない可能性があります。';
 				break;
 			default:
 				return 'ちょコムでの決済処理の過程でエラーが発生しました。もう一度やり直してください。';
@@ -396,7 +715,13 @@ EOS;
 	public function get_instruction($method){
 		switch ($method) {
 			case LWP_Payment_Methods::NTT_EMONEY:
-				return '上記の内容で決済を進めます。よろしいですか？　金額はちょコムサイトでログインした後に表示されます。金額の同意なしに引き落とされることはありません。';
+				return '上記の内容で決済を進めます。よろしいですか？　ちょコム残高が足りない場合は決済をやり直しになります。足りない場合はあらかじめ<a href="https://www.chocom.net/user/html/E22Login.html" target="_blank">チャージ</a>をしておいてください。';
+				break;
+			case LWP_Payment_Methods::NTT_CC:
+				return '上記の内容で決済を進めます。よろしいですか？　ちょコムのサイトに移動後、クレジットカード情報を入力してください。その後、このサイトに戻ってきます。';
+				break;
+			case LWP_Payment_Methods::NTT_CVS:
+				return '上記の内容で決済を進めます。よろしいですか？　ちょコムのサイトに移動後、コンビニの選択や連絡先の入力を行ってください。その後、このサイトに戻ってきます。';
 				break;
 		}
 	}
@@ -415,53 +740,104 @@ EOS;
 	 */
 	public function get_form($user_id, $method, $products, $quantities){
 		global $wpdb, $lwp;
+		// Test method
+		if(!LWP_Payment_Methods::is_chocom($method)){
+			return false;
+		}
 		// Generate order_id
 		$order_id = $this->generate_order_id($user_id, $products);
 		// Create transaciton
+		if(count($products) > 1){
+			// TODO: 商品が複数の場合
+			return false;
+		}else{
+			$product = $products[0];
+			if(!isset($quantities[$product->ID]) || $quantities[$product->ID] < 1){
+				return false;
+			}
+			$amount = lwp_price($product) * $quantities[$product->ID];
+			$result = $wpdb->insert($lwp->transaction, array(
+				"user_id" => $user_id,
+				"book_id" => $product->ID,
+				"price" => $amount,
+				"status" => LWP_Payment_Status::START,
+				"method" => $method,
+				'num' => $quantities[$product->ID],
+				"transaction_key" => $order_id,
+				"registered" => gmdate('Y-m-d H:i:s'),
+				"updated" => gmdate('Y-m-d H:i:s')
+			), array('%d', '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s'));
+			if(!$result || !($transaction_id = $wpdb->insert_id)){
+				// Transaction is not created.
+				return false;
+			}else{
+				$data = array(
+					'cancelURL' => lwp_endpoint('chocom-cancel', array('order_id' => $order_id, 'hash' => $this->get_hash($transaction_id))),
+					'errorURL' => lwp_endpoint('chocom-cancel', array('order_id' => $order_id, 'error' => 1, 'hash' => $this->get_hash($transaction_id))),
+					'linked_1' => $order_id,
+				);
+			}
+		}
 		switch($method){
 			case LWP_Payment_Methods::NTT_EMONEY:
-				if(count($products) > 1){
-						// TODO: 商品が複数の場合
-						
-					}else{
-						$product = $products[0];
-						if(!isset($quantities[$product->ID]) || $quantities[$product->ID] < 1){
-							return false;
-						}
-						$result = $wpdb->insert($lwp->transaction, array(
-							"user_id" => $user_id,
-							"book_id" => $product->ID,
-							"price" => lwp_price($product) * $quantities[$product->ID],
-							"status" => LWP_Payment_Status::START,
-							"method" => LWP_Payment_Methods::NTT_EMONEY,
-							'num' => $quantities[$product->ID],
-							"transaction_key" => $order_id,
-							"registered" => gmdate('Y-m-d H:i:s'),
-							"updated" => gmdate('Y-m-d H:i:s')
-						), array('%d', '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s'));
-						if($result && ($transaction_id = $wpdb->insert_id)){
-							// Transaction is created.
-							$form = <<<EOS
-<form method="post" action="%s">
-	<input type="hidden" name="shopId" value="%s" />
-	<input type="hidden" name="cancelURL" value="%s" />
-	<input type="hidden" name="errorURL" value="%s" />
-	<input type="hidden" name="linked_1" value="%s" />
-</form>
-EOS;
-							return sprintf($form, $this->get_endpoint('emoney-auth'), $this->shop_id, 
-								lwp_endpoint('chocom-cancel', array('order_id' => $order_id, 'hash' => $this->get_hash($transaction_id))),
-								lwp_endpoint('chocom-cancel', array('order_id' => $order_id, 'error' => 1, 'hash' => $this->get_hash($transaction_id))),
-								$order_id);
-						}else{
-							return false;
-						}
+				$action = $this->get_endpoint('emoney-auth');
+				$data['shopId'] = $this->shop_id;
+				break;
+			case LWP_Payment_Methods::NTT_CC:
+				$action = $this->get_endpoint('cc-auth');
+				$data['shopId'] = $this->shop_id_cc;
+				$data['amount'] = $amount;
+				if(!empty($this->comdisp)){
+					$data['comdisp'] = $this->comdisp;
+				}
+				break;
+			case LWP_Payment_Methods::NTT_CVS:
+				$action = $this->get_endpoint('cvs-auth');
+				// Save limit date
+				$limit = $this->detect_payment_limit($products, $method);
+				$wpdb->update($lwp->transaction, array(
+					'misc' => serialize(array(
+						'bill_date' => date_i18n('Y-m-d H:i:s', $limit)
+					))
+				), array('ID' => $transaction_id), array('%s'), array('%d'));
+				// Initial Data
+				$data = array_merge($data, array(
+					'shopId' => $this->shop_id_cvs,
+					'amount' => $amount,
+					'verify' => md5($this->shop_id_cvs.$order_id.$amount.$this->access_key_cvs),
+					'payDate' => date_i18n('Ymd', $limit),
+					'mail' => get_user_meta($user_id)
+				));
+				if(!empty($this->comdisp)){
+					$data['comdisp'] = $this->comdisp;
+				}
+				// Add userdata
+				$user = get_userdata($user_id);
+				$data['mail'] = $user->user_email;
+				$tel = preg_replace('/[^0-9]/', '', (string)get_user_meta($user_id, 'tel', true));
+				if(preg_match('/^[0-9]{9,11}$/', $tel)){
+					$data['tel'] = $tel;
+				}
+				foreach(array('name1' => 'last_name_kana', 'name2' => 'first_name_kana') as $key => $meta_key){
+					$name = (string)get_user_meta($user_id, $meta_key, true);
+					if(!empty($name) && preg_match('/^[ア-ンァ-ォャ-ョ]+$/', $name)){
+						$data[$key] = rawurlencode(mb_convert_encoding(mb_substr($name, 0, 10, 'utf-8'), 'sjis-win', 'utf-8'));
 					}
+				}
 				break;
 			default:
 				return false;
 				break;
 		}
+		if(empty($action)){
+			return false;
+		}
+		$form = sprintf('<form method="post" action="%s">', $action);
+		foreach($data as $key => $val){
+			$form .= sprintf('<input type="hidden" name="%s" value="%s" />',
+					esc_attr($key), esc_attr($val));
+		}
+		return $form.'</form>';
 	}
 	
 	
@@ -474,8 +850,8 @@ EOS;
 	 */
 	private function get_endpoint($type){
 		$pc_base = $this->is_sandbox
-					? 'https://pchocom.sinka-dbg.jp/inq/servlet/'
-					: 'https://www.chocom.net/inq/servlet/';
+					? 'https://pchocom.sinka-dbg.jp/'
+					: 'https://www.chocom.net/';
 		$mobile_base = $this->is_sandbox
 					? 'https://mobilechocom.sinka-dbg.jp/mobile/servlet/'
 					: 'https://mobile.chocom.net/mobile/servlet/';
@@ -484,11 +860,28 @@ EOS;
 				if($this->domestic_mobile_phone()){
 					return $mobile_base.'EMQShinyo';
 				}else{
-					return $pc_base.'E24Shinyo';
+					return $pc_base.'inq/servlet/E24Shinyo';
 				}
 				break;
 			case 'emoney-capture':
-				return $pc_base.'E2OShopDecision';
+				return $pc_base.'inq/servlet/E2OShopDecision';
+				break;
+			case 'cc-auth':
+				if($this->domestic_mobile_phone()){
+					return $mobile_base.'EP4TrustDemand';
+				}else{
+					return $pc_base.'direct/servlet/EP4TrustDemand';
+				}
+				break;
+			case 'cc-capture':
+				return $pc_base.'direct/servlet/EPODirectCredit';
+				break;
+			case 'cvs-auth':
+				if($this->domestic_mobile_phone()){
+					return $mobile_base.'EPCCvsEntry';
+				}else{
+					return $pc_base.'direct/servlet/EPCCvsEntry';
+				}
 				break;
 		}
 	}
@@ -546,9 +939,9 @@ EOS;
 			// Check chocom method
 			!LWP_Payment_Methods::is_chocom($transaction->method)
 		){
-			return $transaction;
+			return false;
 		}else{
-			return null;
+			return $transaction;
 		}
 	}
 	

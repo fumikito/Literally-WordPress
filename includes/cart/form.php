@@ -282,26 +282,9 @@ EOS;
 						}
 						break;
 					case LWP_Payment_Methods::NTT_EMONEY:
+					case LWP_Payment_Methods::NTT_CC:
+					case LWP_Payment_Methods::NTT_CVS:
 						header('Location: '.lwp_endpoint('chocom', array('lwp-method' => $posted_method, 'lwp-id' => $book->ID)));
-						exit;
-						break;
-						$order_id = $lwp->ntt->generate_order_id(get_current_user_id(), array($book));
-						$inserted = $wpdb->insert($lwp->transaction, array(
-								"user_id" => get_current_user_id(),
-								"book_id" => $book->ID,
-								"price" => lwp_price($book->ID) * $fixed_quantity,
-								"status" => LWP_Payment_Status::START,
-								"method" => LWP_Payment_Methods::NTT_EMONEY,
-								'num' => $fixed_quantity,
-								"transaction_key" => $order_id,
-								"registered" => gmdate('Y-m-d H:i:s'),
-								"updated" => gmdate('Y-m-d H:i:s')
-						), array('%d', '%d', '%d', '%s', '%s', '%d', '%s', '%s', '%s'));
-						if($inserted){
-							$lwp->ntt->create_emoney_request($order_id);
-						}else{
-							$message = $this->_('Failed to make transaction');
-						}
 						exit;
 						break;
 					case LWP_Payment_Methods::SOFTBANK_PAYEASY:
@@ -670,7 +653,7 @@ EOS;
 		// Force user to login.
 		$this->kill_anonymous_user(false);
 		// Check transaction
-		if(($transaction = $lwp->ntt->get_transaction_by_request())){
+		if(!($transaction = $lwp->ntt->get_transaction_by_request())){
 			$this->kill($this->_('Sorry, but specified transaction does not exist.'), 404);
 		}
 		// OK check query.
@@ -711,7 +694,7 @@ EOS;
 		// This is error sequence
 		if(isset($_REQUEST['error'])){
 			$msg = $lwp->ntt->get_error_msg($_REQUEST['error']).
-					sprintf('しばらくたってもエラーが発生する場合は、管理者までお問い合わせください。お問い合わせ番号：%s', $transaction->transaction_key);
+					sprintf('<br />しばらくたってもエラーが発生する場合は、管理者までお問い合わせください。<br />お問い合わせ番号：<strong>%s</strong>', $transaction->transaction_key);
 			if($transaction->book_id > 0){
 				$link = lwp_endpoint('buy', array('lwp-id' => $transaction->book_id));
 				$link_text = $this->_('Return');
@@ -749,6 +732,7 @@ EOS;
 			header('Location: '.$redirect_url);
 			exit;
 		}else{
+			$this->kill(sprintf($this->_('Sorry, but your transaction has failed. Please contact to administrator of <a href="%s">%s</a>.'), home_url('', 'http'), get_bloginfo('name') ),500, false);
 		}
 	}
 
@@ -785,7 +769,7 @@ EOS;
 				$status_color = 'green';
 				break;
 			default:
-				$status_color = 'dark-grey';
+				$status_color = 'darkgray';
 				break;
 		}
 		$rows = array(

@@ -463,6 +463,38 @@ class LWP_Japanese_Payment extends Literally_WordPress_Common {
 		return $selling_limit ? min($time, $selling_limit) : $time;
 	}
 	
+	
+	
+	
+	/**
+	 * Detect allowed payment limit by timestamp.
+	 * 
+	 * @param array $products
+	 * @param string $method
+	 * @param int $start timestamp.
+	 * @return int
+	 */
+	protected function detect_payment_limit($products, $method, $start = 0){
+		$closest = $this->get_closest_limit($products);
+		if(!$start){
+			$start = current_time('timestamp');
+		}
+		if(false !== strpos($method, '_CVS')){
+			$limit = $start + 60 * 60 * 24 * $this->cvs_limit;
+		}elseif(false !== strpos($method, '_PAYEASY')){
+			$limit = $start + 60 * 60 * 24 * $this->payeasy_limit;
+		}else{
+			$limit = 0;
+		}
+		if(!$closest){
+			return $limit;
+		}else{
+			return min($closest, $limit);
+		}
+	}
+	
+	
+	
 	/**
 	 * If payment limit is not set, return false
 	 * @param object $post
@@ -543,6 +575,35 @@ Please see detail at your purchase histroy.
 			}
 		}
 	}
+	
+	
+	
+	/**
+	 * Returns closest limit by timestamp.
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param array $products
+	 * @return int Timestamp. if no limit, returns 0.
+	 */
+	public function get_closest_limit($products){
+		global $lwp;
+		$closest = 0;
+		foreach($products as $post){
+			if(false !== array_search($post->post_type, $lwp->event->post_types)){
+				// Only event has limit
+				$limit = lwp_event_starts('Y-m-d H:i:s', $post);
+				if($limit){
+					$timestamp = strtotime($limit);
+					if($closest < 1 || $closest > $timestamp){
+						$closest = $timestamp;
+					}
+				}
+			}
+		}
+		return $closest;
+	}
+	
+	
 	
 	/**
 	 * Returns vendor name. must be overriden

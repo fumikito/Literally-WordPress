@@ -70,6 +70,8 @@ abstract class LWP_Form_Backend extends LWP_Form_Template{
 					}
 				}
 			}
+		}else{
+			$json['message'] = $this->_('Wrong request. you might be logged out on session. Please try again later.');
 		}
 		header('Content-Type: application/json');
 		echo json_encode($json);
@@ -118,7 +120,9 @@ abstract class LWP_Form_Backend extends LWP_Form_Template{
 	 */
 	protected function handle_chocom_cc(){
 		global $lwp;
-		die('ちょコムクレジット');
+		if(!$lwp->ntt->check_ip() || !$lwp->ntt->parse_request(LWP_Payment_Methods::NTT_CC)){
+			$this->kill($this->_('You have no permission to see this page.'), 403);
+		}
 	}
 	
 	/**
@@ -131,16 +135,35 @@ abstract class LWP_Form_Backend extends LWP_Form_Template{
 		if(!$lwp->ntt->check_ip() || !$lwp->ntt->parse_request(LWP_Payment_Methods::NTT_EMONEY)){
 			$this->kill($this->_('You have no permission to see this page.'), 403);
 		}
-		exit;
 	}
 	
+	/**
+	 * Handle request from NTT DATA CVS
+	 * 
+	 * @global Literally_WordPress $lwp
+	 */
 	protected function handle_chocom_cvs(){
-		die('ちょコムコンビニ');
+		global $lwp;
+		if(!$lwp->ntt->check_ip() || !$lwp->ntt->parse_request(LWP_Payment_Methods::NTT_CVS)){
+			$this->kill($this->_('You have no permission to see this page.'), 403);
+		}
 	}
 	
+	
+	
+	/**
+	 * Handle request from NTT CVS finished.
+	 * 
+	 * @global Literally_WordPress $lwp
+	 */
 	protected function handle_chocom_cvs_complete(){
-		die('ちょコムコンビニ速報');
+		global $lwp;
+		if(!$lwp->ntt->check_ip() || !$lwp->ntt->parse_request(LWP_Payment_Methods::NTT_CVS.'_COMPLETE')){
+			$this->kill($this->_('You have no permission to see this page.'), 403);
+		}
 	}
+	
+	
 	
 	/**
 	 * Handle request from GMO
