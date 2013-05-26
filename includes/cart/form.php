@@ -229,8 +229,9 @@ EOS;
 								$physical = false;
 								break;
 						}
+						$fixed_quantity = $this->get_current_quantity($book);
 						$token = PayPal_Statics::get_transaction_token($fixed_quantity * $price, $invnum, lwp_endpoint('confirm'), lwp_endpoint('cancel'),
-								($method == 'cc'), array(array(
+								false, array(array(
 									'name' => $item_name,
 									'amt' => $price,
 									'quantity' => $fixed_quantity,
@@ -637,7 +638,9 @@ EOS;
 			'products' => $products,
 			'method' => $method,
 			'message' => $msg,
-			'link' => $back_link
+			'link' => $back_link,
+			'total' => 3,
+			'current' => 2
 		));
 	}
 	

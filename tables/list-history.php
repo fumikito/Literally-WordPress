@@ -220,7 +220,7 @@ EOS;
 				}
 				$tag = sprintf('<span class="lwp-%2$s"><i></i>%1$s</span>', $text, strtolower($item->status));
 				if($item->status == LWP_Payment_Status::START && false === array_search($item->method, array(LWP_Payment_Methods::PAYPAL, LWP_Payment_Methods::GMO_CC, LWP_Payment_Methods::SOFTBANK_CC))){
-					$tag .= '<a class="lwp-action" href="'.lwp_endpoint('payment-info').'&transaction='.$item->ID.'">'.$lwp->_ ('Detail').'</a>';
+					$tag .= '<a class="lwp-action" href="'.lwp_endpoint('payment-info', array('transaction' => $item->ID)).'">'.$lwp->_ ('Detail').'</a>';
 				}
 				if($item->post_type == $lwp->event->post_type){
 					switch ($item->status){

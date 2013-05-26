@@ -446,6 +446,9 @@ class LWP_Payment_Methods {
 			case self::SOFTBANK_WEB_CVS:
 				return $lwp->softbank->get_available_cvs();
 				break;
+			case self::NTT_CVS:
+				return $lwp->ntt->get_available_cvs();
+				break;
 			default:
 				return array();
 				break;
@@ -470,6 +473,10 @@ class LWP_Payment_Methods {
 				break;
 			case self::SOFTBANK_CC:
 				return $lwp->softbank->get_available_cards();
+				break;
+			case self::NTT_CC:
+				return $lwp->ntt->get_available_cards();
+				break;
 			default:
 				return array();
 				break;

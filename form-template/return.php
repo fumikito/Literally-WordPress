@@ -83,5 +83,5 @@
 	</p>
 </form>
 <p>
-	<a class="button" href="<?php echo lwp_endpoint('cancel'); ?>&amp;TOKEN=<?php echo $info['TOKEN']?>"><?php $this->e("Cancel");?></a>
+	<a class="button" href="<?php echo lwp_endpoint('cancel', array('TOKEN' => $info['TOKEN'])); ?>"><?php $this->e("Cancel");?></a>
 </p>

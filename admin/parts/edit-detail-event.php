@@ -29,7 +29,7 @@
 				<a class="button" href="<?php echo admin_url('admin.php').'?page=lwp-event&amp;event_id='.$post->ID; ?>"><?php $this->e('Show list'); ?></a>
 			<?php endif; ?>
 			<?php if($participants): ?>
-				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact').'&amp;'.'event_id='.$post->ID; ?>"><?php $this->e('Contact them'); ?></a>
+				<a class="button-primary" href="<?php echo lwp_endpoint('ticket-contact', array('event_id' => $post->ID)); ?>"><?php $this->e('Contact them'); ?></a>
 			<?php endif; ?>
 		</td>
 	</tr>

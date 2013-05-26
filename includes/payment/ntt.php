@@ -224,7 +224,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 */
 	public function get_available_cvs($all = false) {
 		if($all || $this->cvs){
-			return $this->_webcvs;
+			return array_keys($this->_webcvs);
 		}else{
 			return array();
 		}

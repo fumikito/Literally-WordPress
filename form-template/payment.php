@@ -73,7 +73,7 @@
 						<input type="hidden" name="same_card" value="1" />
 						<strong><?php echo esc_html($cc_info['number']); ?></strong>
 						<p class="description">
-							<?php printf($this->_('This is same number as previous order. To order with different card, click <a href="%s">here</a>.'), lwp_endpoint('payment')."&lwp-method={$method}&lwp-id={$post_id}&newcard=true"); ?>
+							<?php printf($this->_('This is same number as previous order. To order with different card, click <a href="%s">here</a>.'), lwp_endpoint('payment', array('lwp-method' => $method, 'lwp-id' => $post_id, 'newcard' => 'true'))); ?>
 						</p>
 					<?php else: ?>
 						<input type="text" class="middle-text" name="cc_number" id="cc_number" value="<?php if(isset($vars['cc_number'])) echo esc_attr($vars['cc_number']); ?>" placeholder="ex. 0123456789123" />
