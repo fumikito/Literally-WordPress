@@ -754,7 +754,7 @@ EOS;
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
-		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY)));
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY, LWP_Payment_Methods::NTT_CVS)));
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
 EOS;
@@ -807,6 +807,15 @@ EOS;
 			}
 			$rows[] = array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix);
 			switch($transaction->method){
+				case LWP_Payment_Methods::NTT_CVS:
+					$label = $lwp->ntt->get_cvs_code_label($data['cvs_name']);
+					$rows =  array_merge($rows, array(
+						array($this->_('CVS'), sprintf('<label class="cvs-container"><i class="lwp-cvs-small-icon small-icon-%s"></i><br />%s</label>',
+								$data['cvs_name'], $lwp->ntt->get_verbose_name($data['cvs_name']))),
+						array($this->_('How to pay'), nl2br($lwp->ntt->get_cvs_howtos($data['cvs_name']))),
+						array($label[0], $data['receipt_no'])
+					));
+					break;
 				case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
 					$methods = $lwp->softbank->get_cvs_code_label($data['cvs']);
 					$cvss = $lwp->softbank->get_cvs_group($data['cvs']);

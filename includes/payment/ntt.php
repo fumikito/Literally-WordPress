@@ -486,7 +486,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			!$this->test_request($_POST, $data_to_parse)
 				||
 			// Check Access key and shop ID
-			$shopId != $_POST['shopId']
+			$shop_id != $_POST['shopId']
 				||
 			$access_key != $_POST['accessKey']
 		){
@@ -499,9 +499,9 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		}
 		$hash = $this->get_hash($transaction->ID);
 		$out = array(
-			'shopId' => $shopId,
+			'shopId' => $shop_id,
 		);
-		switch($method){
+		switch($posted_method){
 			case LWP_Payment_Methods::NTT_EMONEY:
 			case LWP_Payment_Methods::NTT_CC:
 				// Save aid on payer_mail
@@ -604,6 +604,41 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		}
 	}
 	
+	
+	/**
+	 * Description for payment info
+	 * 
+	 * @param string $cvs
+	 * @return string
+	 */
+	public function get_cvs_howtos($cvs){
+		switch($cvs){
+			case 'seven-eleven':
+				return <<<EOS
+レジに「インターネットショッピング払込票」を渡すか、「払込票番号」を提示し「インターネットショッピング代金の支払い」と伝えて、お支払い合計金額を現金でお支払いください。「インターネットショッピング払込領収書」を受け取ります。
+EOS;
+				break;
+			case 'ministop':
+			case 'lawson':
+				return <<<EOS
+店内に設置されているLoppiを操作します。
+トップ画面の左上「各種番号をお持ちの方」を押してください。→「受付番号」を入力してください。→「電話番号」を入力してください。
+画面での操作が終わると「インターネット受付お支払申込券」が出てきますので、お受け取りください。
+レジに「インターネット受付お支払申込券」を渡してお支払い合計金額を現金で支払い、「インターネット受付受領書」を受け取ります。
+EOS;
+				break;
+			case 'seicomart':
+				return <<<EOS
+店内のクラブステーションを操作します。 
+トップ画面の「インターネット受付」を押してください。→「受付番号」を入力してください。→「電話番号」を入力してください。→「印刷」ボタンを押してください。
+画面での操作が終わると申込券(決済サービス払込取扱票、払込票兼受領証、領収書) が出てきます。
+レジに申込券(決済サービス払込取扱票、払込票兼受領証、領収書) を渡してお支払い合計金額を現金で支払い、「領収書」を受け取ります。
+EOS;
+				break;
+			default:
+				return '';
+		}
+	}
 	
 	
 	/**
