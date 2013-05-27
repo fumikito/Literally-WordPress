@@ -589,7 +589,7 @@ Please see detail at your purchase histroy.
 		global $lwp;
 		$closest = 0;
 		foreach($products as $post){
-			if(false !== array_search($post->post_type, $lwp->event->post_types)){
+			if($post->post_type == $lwp->event->post_type){
 				// Only event has limit
 				$limit = lwp_event_starts('Y-m-d H:i:s', $post);
 				if($limit){
@@ -619,5 +619,18 @@ Please see detail at your purchase histroy.
 	 */
 	public function stealth_check(){
 		return !$this->is_stealth || current_user_can('manage_options');
+	}
+	
+	/**
+	 * Log to log file.
+	 * 
+	 * @param string $message
+	 * @param misc $vars
+	 */
+	protected function log($message, $vars = null){
+		if(WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG){
+			error_log(sprintf('[%s]@%s  %s %s'.PHP_EOL, current_time('mysql'), get_class($this), $message,
+					($vars) ? "\n".var_export($vars, TRUE) : ''));
+		}
 	}
 }

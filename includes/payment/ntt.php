@@ -11,6 +11,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		'visa' => false,
 		'master' => false,
 		'jcb' => false,
+		'diners' => false,
 	);
 	
 	
@@ -23,7 +24,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		'seven-eleven' => false,
 		'lawson' => false,
 		'ministop' => false,
-		'seicomart' => false
+		'seicomart' => false,
 	);
 	
 	
@@ -346,13 +347,13 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			return false;
 		}
 		$response = array();
-		foreach(explode("\n", preg_replace('/<\/?SHOPMSG>/', '', $result)) as $row){
-			$row = trim($row);
+		foreach(explode("\n", $result) as $row){
+			$row = trim(preg_replace('/<\/?SHOPMSG>/', '', $row));
 			if(empty($row)){
 				continue;
 			}
 			$rows = explode('=', $row);
-			if(count($row) < 2){
+			if(count($rows) < 2){
 				continue;
 			}
 			$response[trim($rows[0])] = trim($rows[1]);
@@ -419,6 +420,11 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				'hash' => $this->get_hash($transaction->ID),
 			));
 		}elseif(false === array_search($response['payStatus'], array('C0000000', 'C1000000'))){
+			// Error occurred. save error code.
+			$wpdb->update($lwp->transaction, array(
+				'transaction_id' => $response['payStatus'],
+				'misc' => serialize($response)
+			), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
 			return lwp_endpoint('chocom-cancel', array(
 				'order_id' => $transaction->transaction_key,
 				'error' => $response['payStatus'],
@@ -472,15 +478,17 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$access_key = $this->access_key_cvs;
 				break;
 			case LWP_Payment_Methods::NTT_CVS.'_COMPLETE':
+				// Override method name
+				$method = LWP_Payment_Methods::NTT_CVS;
 				$data_to_parse = array_merge($data_to_parse, array('amount', 'centerPayId', 'cvs_name', 'cvs_date'));
 				$shop_id = $this->shop_id_cvs;
 				$access_key = $this->access_key_cvs;
-				$method = LWP_Payment_Methods::NTT_CVS;
 				break;
 			default:
 				return false;
 				break;
 		}
+		$this->log('Request to '.$posted_method, $_POST);
 		if(
 			// Test post data
 			!$this->test_request($_POST, $data_to_parse)
@@ -552,7 +560,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @return string
 	 */
 	private function get_cvs_name($post_data){
-		$cvs = mb_convert_encoding(rawurldecode($post_data), 'utf-8', 'sjis-win');
+		$cvs = preg_replace("/[^ァ-ヶー]/u", '', mb_convert_encoding($post_data, 'utf-8', 'sjis-win'));
 		switch($cvs){
 			case 'セブンイレブン':
 				return 'seven-eleven';
@@ -567,7 +575,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				return 'ministop';
 				break;
 			default:
-				return 'undefined';
+				return $cvs;
 				break;
 		}
 	}

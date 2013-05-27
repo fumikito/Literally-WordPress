@@ -578,7 +578,7 @@ class LWP_Payment_Methods {
 				return $lwp->_('This is offline payment. To finish transaction, you should follow the instruction on next step.');
 				break;
 			case self::NTT_CC:
-				return $lwp->ntt->get_desc('');
+				return $lwp->ntt->get_desc('credit');
 				break;
 			case self::NTT_EMONEY:
 	return $lwp->ntt->get_desc('link');
@@ -631,11 +631,17 @@ class LWP_Payment_Methods {
 	 * @return boolean
 	 */
 	private static function is_selectable($method, $posts){
+		global $lwp;
 		switch($method){
-			case self::SOFTBANK_PAYEASY:
-			case self::SOFTBANK_WEB_CVS:
 			case self::GMO_PAYEASY:
 			case self::GMO_WEB_CVS:
+				break;
+			case self::NTT_CVS:
+				$closest = $lwp->ntt->get_closest_limit($posts);
+				return !($closest > 0 && strtotime(date_i18n('Y-m-d H:i:s 23:59:59') > $closest));
+				break;
+			case self::SOFTBANK_PAYEASY:
+			case self::SOFTBANK_WEB_CVS:
 				return true;
 				break;
 			default:

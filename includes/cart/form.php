@@ -726,7 +726,7 @@ EOS;
 		// Force user to login.
 		$this->kill_anonymous_user(false);
 		// Check transaction.
-		if(($transaction = $lwp->ntt->get_transaction_by_request())){
+		if(!($transaction = $lwp->ntt->get_transaction_by_request())){
 			$this->kill($this->_('Sorry, but specified transaction does not exist.'), 404);
 		}
 		// Check transaction
@@ -738,9 +738,6 @@ EOS;
 			$this->kill(sprintf($this->_('Sorry, but your transaction has failed. Please contact to administrator of <a href="%s">%s</a>.'), home_url('', 'http'), get_bloginfo('name') ),500, false);
 		}
 	}
-
-
-
 
 
 
