@@ -335,16 +335,25 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		// Initialize curl.
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $endpoint);
-		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_SSLVERSION, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $parsed_data);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parsed_data));
 		$result = curl_exec($ch);
 		if(curl_errno($ch) > 0 || !$result){
 			return false;
+		}
+		if(WP_DEBUG){
+			$ch_debug = curl_init();
+			curl_setopt($ch_debug, CURLOPT_URL, 'https://c11hj5dy.securesites.net/get_env.php');
+			curl_setopt($ch_debug, CURLOPT_POST, 1);
+			curl_setopt($ch_debug, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch_debug, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch_debug, CURLOPT_SSL_VERIFYPEER, FALSE);
+			curl_setopt($ch_debug, CURLOPT_POSTFIELDS, http_build_query($parsed_data));
+			$this->log(sprintf('Request data to %s :', $endpoint), curl_exec($ch_debug));
+			curl_close($ch_debug);
 		}
 		$response = array();
 		foreach(explode("\n", $result) as $row){
@@ -359,6 +368,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			$response[trim($rows[0])] = trim($rows[1]);
 		}
 		curl_close($ch);
+		$this->log('Request to '.$endpoint, $parsed_data);
+		$this->log('Response from '.$endpoint, $result);
 		if(empty($response)){
 			return false;
 		}else{
@@ -543,6 +554,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$out['returnCode'] = 'OK';
 				break;
 		}
+		$this->log(sprintf('Response on %s will be:', $posted_method), $out);
 		header('Content-Type: text/plain; charset=UTF-8');
 		echo "<SHOPMSG>\n";
 		foreach($out as $key => $val){
