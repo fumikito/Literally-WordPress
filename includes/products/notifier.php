@@ -67,10 +67,13 @@ class LWP_Notifier extends Literally_WordPress_Common{
 			add_action('admin_head', array($this, 'admin_head'));
 			add_filter('user_can_richedit', array($this, 'rich_edit'));
 			//Register Cron
-			if ( !wp_next_scheduled( 'lwp_daily_notification' ) ) {
-				wp_schedule_event(current_time('timestamp'), 'daily', 'lwp_daily_notification');
+			if ( !wp_next_scheduled( LWP_Cron::NOTIFY_USER ) ) {
+				// Execute on 0:00 AM on GMT = 9:00 on JP.
+				$tommorow = current_time('timestamp') + 60 *60 * 24;
+				$timestamp = mktime('0', '0', '0', date('m', $tommorow), date('d', $tommorow), date('Y', $tommorow));
+				wp_schedule_event($timestamp, 'daily', LWP_Cron::NOTIFY_USER);
 			}
-			add_action('lwp_daily_notification', array($this, 'daily_cron'));
+			add_action(LWP_Cron::NOTIFY_USER, array($this, 'daily_cron'));
 		}
 	}
 	

@@ -127,9 +127,18 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 */
 	public function __construct($option = array()) {
 		parent::__construct($option);
+		// Ajax action for returns form
 		add_action('wp_ajax_chocom_order', array($this, 'return_form'));
-		if(!wp_next_scheduled(self::CRON_NAME, array())){
-			
+		// Register cron
+		if(!wp_next_scheduled(LWP_Cron::CHOCOM_CVS_BATCH)){
+			// Execute on 15:00 AM on GMT = 24:00 on JP.
+			$tommorow = current_time('timestamp');
+			$timestamp = mktime('15', '0', '0', date('m', $tommorow), date('d', $tommorow), date('Y', $tommorow));
+			wp_schedule_event($timestamp, 'daily', LWP_Cron::CHOCOM_CVS_BATCH);
+		}
+		add_action(LWP_Cron::CHOCOM_CVS_BATCH, array($this, 'cvs_batch'));
+		if(!is_admin()){
+			add_action('init', array($this, 'cvs_batch'));
 		}
 	}
 	
@@ -352,17 +361,6 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		if(curl_errno($ch) > 0 || !$result){
 			return false;
 		}
-		if(WP_DEBUG){
-			$ch_debug = curl_init();
-			curl_setopt($ch_debug, CURLOPT_URL, 'https://c11hj5dy.securesites.net/get_env.php');
-			curl_setopt($ch_debug, CURLOPT_POST, 1);
-			curl_setopt($ch_debug, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch_debug, CURLOPT_TIMEOUT, 30);
-			curl_setopt($ch_debug, CURLOPT_SSL_VERIFYPEER, FALSE);
-			curl_setopt($ch_debug, CURLOPT_POSTFIELDS, http_build_query($parsed_data));
-			$this->log(sprintf('Request data to %s :', $endpoint), curl_exec($ch_debug));
-			curl_close($ch_debug);
-		}
 		$response = array();
 		foreach(explode("\n", $result) as $row){
 			$row = trim(preg_replace('/<\/?SHOPMSG>/', '', $row));
@@ -571,6 +569,33 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		echo '</SHOPMSG>';
 		exit;
 	}
+	
+	
+	
+	/**
+	 * Bulk update outdated cvs transaction.
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @global wpdb $wpdb
+	 */
+	public function cvs_batch(){
+		global $lwp, $wpdb;
+		// Is valid
+		if(!$this->is_cvs_enabled() || $this->cvs_limit < 1){
+			return;
+		}
+		// Get all transactions
+		$sql = <<<EOS
+			UPDATE {$lwp->transaction} SET status = %s, updated = %s
+			WHERE method = %s AND status = %s AND (updated + INTERVAL 9 HOUR) < (NOW() - INTERVAL %d DAY)
+EOS;
+		$query = $wpdb->prepare($sql, LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'),  LWP_Payment_Methods::NTT_CVS, LWP_Payment_Status::START, $this->cvs_limit);
+		$result = $wpdb->query($query);
+		if(false === $result){
+			$this->log($this->_('Failed to updated CVS transaction status: '), $query);
+		}
+	}
+	
 	
 	
 	/**
