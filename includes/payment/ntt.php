@@ -2,6 +2,10 @@
 
 class LWP_NTT extends LWP_Japanese_Payment{
 	
+	/**
+	 * Batch action for cron
+	 */
+	const CRON_NAME = 'lwp_chocom_cvs_batch';
 	
 	/**
 	 * creditcard list
@@ -25,6 +29,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		'lawson' => false,
 		'ministop' => false,
 		'seicomart' => false,
+		//'familymart' => false,
 	);
 	
 	
@@ -123,6 +128,9 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	public function __construct($option = array()) {
 		parent::__construct($option);
 		add_action('wp_ajax_chocom_order', array($this, 'return_form'));
+		if(!wp_next_scheduled(self::CRON_NAME, array())){
+			
+		}
 	}
 	
 	
@@ -586,6 +594,9 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			case 'ミニストップ':
 				return 'ministop';
 				break;
+			case 'ファミリーマート':
+				return 'familymart';
+				break;
 			default:
 				return $cvs;
 				break;
@@ -653,6 +664,10 @@ EOS;
 トップ画面の「インターネット受付」を押してください。→「受付番号」を入力してください。→「電話番号」を入力してください。→「印刷」ボタンを押してください。
 画面での操作が終わると申込券(決済サービス払込取扱票、払込票兼受領証、領収書) が出てきます。
 レジに申込券(決済サービス払込取扱票、払込票兼受領証、領収書) を渡してお支払い合計金額を現金で支払い、「領収書」を受け取ります。
+EOS;
+				break;
+			case 'familymart':
+				return <<<EOS
 EOS;
 				break;
 			default:

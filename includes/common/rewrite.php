@@ -18,7 +18,8 @@ class LWP_Rewrite{
 	
 	/**
 	 * Actions which required SSL connection
-	 * @var type 
+	 * 
+	 * @var array 
 	 */
 	private $ssl_required_actions = array(
 		'chocom-cc', //AID通知ちょコムクレジット
