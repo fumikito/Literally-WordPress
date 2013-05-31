@@ -88,11 +88,16 @@ abstract class LWP_Form_Event extends LWP_Form_Backend{
 		$this->kill_anonymous_user();
 		if($is_sandbox){
 			$event = $this->get_random_event();
+			$item_name = $this->get_item_name($event);
+			$message = apply_filters('lwp_refund_message', 
+					sprintf($this->_('Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please wait for our refund process finished.'),
+							$item_name,
+							2),
+					1, LWP_Payment_Status::REFUND_REQUESTING, $item_name, 2);
 			$this->show_form('cancel-ticket-success', array(
 				'link' => get_permalink($event->ID),
 				'event' => get_the_title($event->ID),
-				'ticket' => $this->_('Deleted Ticket'),
-				'transfer' => true
+				'message' => $message
 			));
 		}
 		//Check nonce
@@ -158,13 +163,16 @@ EOS;
 			array('%d')
 		);
 		do_action('lwp_update_transaction', $transaction->ID);
+		$item_name = $this->get_item_name($transaction->book_id);
+		$message = (false !== array_search($status , array(LWP_Payment_Status::REFUND)))
+					? sprintf($this->_('You have successfully canceled <strong>%1$s x %2$d</strong>.'), $item_name, $transaction->num)
+					: sprintf($this->_('Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please wait for our refund process finished.'), $item_name, $transaction->num);
+		
 		//Show Form
 		$this->show_form('cancel-ticket-success', array(
 			'link' => get_permalink($event_id),
 			'event' => get_the_title($event_id),
-			'message' => (false !== array_search($status , array(LWP_Payment_Status::REFUND)))
-					? sprintf($this->_('You have successfully canceled <strong>%1$s x %2$d</strong>.'), $this->get_item_name($transaction->book_id), $transaction->num)
-					: sprintf($this->_('Refund request for <strong>%1$s x %2$d</strong> has been accepted. Please wait for our refund process finished.'), $this->get_item_name($transaction->book_id), $transaction->num)
+			'message' => apply_filters('lwp_refund_message', $message, $transaction, $status, $item_name, $transaction->num)
 		));
 	}
 	
@@ -234,7 +242,7 @@ EOS;
 		$this->show_form('event-tickets', array(
 			'title' => $event->post_title,
 			'limit' => get_post_meta($event->ID, $lwp->event->meta_selling_limit, true),
-			'link' => get_permalink($event->ID),
+			'link' => $this->strip_ssl(get_permalink($event->ID)),
 			'headers' => $headers,
 			'post_type' => $event_type->labels->name,
 			'token' => $lwp->event->generate_token($event->ID, get_current_user_id()),

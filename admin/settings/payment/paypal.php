@@ -31,6 +31,16 @@
 			</td>
 		</tr>
 		<tr>
+			<th valign="top"><?php $this->e('Stealth mode'); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="paypal_stealth" value="1"<?php if($this->paypal_is_stealth()) echo ' checked="checked"'; ?> />
+					<?php $this->e('Enable stealth mode'); ?>
+				</label>
+				<p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
+			</td>
+		</tr>
+		<tr>
 			<th valign="top">
 				<label for="country_code"><?php $this->e("Country Code");?></label>
 				<small class="required"><?php $this->e('Required'); ?></small>

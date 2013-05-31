@@ -256,6 +256,7 @@ class Literally_WordPress{
 				"password" => "",
 				"signature" => "",
 				"token" => "",
+				'paypal_stealth' => false,
 				'sb_creditcard' => array(),
 				'sb_webcvs' => array(),
 				'sb_payeasy' => false,
@@ -455,6 +456,13 @@ class Literally_WordPress{
 		return false;
 	}
 	
+	/**
+	 * Check if PayPal is stealth mode.
+	 * @return boolean
+	 */
+	public function paypal_is_stealth(){
+		return (boolean)$this->option['paypal_stealth'];
+	}
 	
 	/**
 	 * Create table if not exist
@@ -806,6 +814,7 @@ class Literally_WordPress{
 						"password" => $_REQUEST["marchand_pass"],
 						'signature' => $_REQUEST['signature'],
 						"token" => $_REQUEST["token"],
+						'paypal_stealth' => (isset($_REQUEST['paypal_stealth']) && $_REQUEST['paypal_stealth']),
 						"slug" => $_REQUEST["product_slug"],
 						"transfer" => (boolean)$_REQUEST['transfer'],
 						"notification_frequency" => (int) $_REQUEST['notification_frequency'],

@@ -139,7 +139,8 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 			}
 			$message = str_replace("%{$ph}%", $repl, $message);
 		}
-		$headers = apply_filters('lwp_refund_message_header', "From: ".get_bloginfo('name')." <".get_option('admin_email').">\r\n", $key);
+		$message = apply_filters('lwp_refund_message_body', $message, $key, $transaction, $user);
+		$headers = apply_filters('lwp_refund_message_header', "From: ".get_bloginfo('name')." <".get_option('admin_email').">\r\n", $key, $transaction, $user);
 		switch($key){
 			case 'succeeded':
 				$subject = $this->_('Refund is finished');
@@ -151,7 +152,7 @@ class LWP_Reufund_Manager extends Literally_WordPress_Common {
 				$subject = $this->_('Refund account is required');
 				break;
 		}
-		$subject = apply_filters('lwp_refund_message_subject', $subject.' : '.get_bloginfo('name'), $key);
+		$subject = apply_filters('lwp_refund_message_subject', $subject.' : '.get_bloginfo('name'), $key, $transaction, $user);
 		return wp_mail($user->user_email, $subject, $message, $headers);
 	}
 	

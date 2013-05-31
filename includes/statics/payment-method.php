@@ -398,7 +398,9 @@ class LWP_Payment_Methods {
 	 */
 	private static function get_stealth_status($method){
 		global $lwp;
-		if(false !== strpos($method, 'GMO_')){
+		if($method == LWP_Payment_Methods::PAYPAL){
+			return $lwp->paypal_is_stealth();
+		}elseif(false !== strpos($method, 'GMO_')){
 			return $lwp->gmo->is_stealth;
 		}elseif(false !== strpos($method, 'SOFTBANK_')){
 			return $lwp->softbank->is_stealth;
