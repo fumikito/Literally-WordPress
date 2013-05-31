@@ -41,7 +41,9 @@ class LWP_Capabilities{
 	 */
 	public function can($user_id, $capability){
 		$default_cap = $this->get_default_cap($capability);
-		return apply_filters('lwp_can_'.$capability, user_can($user_id, $default_cap), $user_id, func_get_arg(2));
+		$arguments = func_get_args();
+		$third_arg = isset($arguments[2]) ? $arguments[2] : null;
+		return apply_filters('lwp_can_'.$capability, user_can($user_id, $default_cap), $user_id, $third_arg);
 	}
 	
 	/**

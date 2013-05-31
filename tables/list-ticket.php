@@ -34,10 +34,10 @@ class LWP_List_Ticket extends WP_List_Table {
 			'user' => $lwp->_('User Name'),
 			'price' => $lwp->_('Price'),
 			'status' => $lwp->_("Status"),
+			'method' => $lwp->_('Method'),
 			'updated' => $lwp->_('Updated'),
 			'number' => $lwp->_('Quantity'),
 			'consumed' => $lwp->_('Consumed'),
-			'actions' => $lwp->_('Actions')
 		);
 		return $column;
 	}
@@ -67,7 +67,7 @@ class LWP_List_Ticket extends WP_List_Table {
 			FROM {$lwp->transaction} AS t
 			INNER JOIN {$wpdb->posts} AS p
 			ON t.book_id = p.ID
-			INNER JOIN {$wpdb->users} AS u
+			LEFT JOIN {$wpdb->users} AS u
 			ON t.user_id = u.ID
 EOS;
 		//WHERE
@@ -130,7 +130,10 @@ EOS;
 		global $lwp;
 		switch($column_name){
 			case 'ticket_name':
-				return $item->post_title;
+				$links = array(
+					'detail' => sprintf('<a href="%s">%s</a>', admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID), $lwp->_('Transaction Detail')),
+				);
+				return $item->post_title.$this->row_actions($links);
 				break;
 			case 'user':
 				if($item->display_name){
@@ -145,22 +148,10 @@ EOS;
 				return mysql2date(get_option('date_format').' H:i', get_date_from_gmt($item->updated));
 				break;
 			case 'status':
-				switch($item->status){
-					case LWP_Payment_Status::SUCCESS:
-						$placeholder = '<strong style="color:green">%s</strong>';
-						break;
-					case LWP_Payment_Status::CANCEL:
-					case LWP_Payment_Status::REFUND:
-						$placeholder = '<strong style="color:#999999">%s</strong>';
-						break;
-					case LWP_Payment_Status::REFUND_REQUESTING:
-						$placeholder = '<strong style="color:#f00">%s</strong>';
-						break;
-					default:
-						$placeholder = '%s';
-						break;
-				}
-				return sprintf($placeholder, $lwp->_($item->status));
+				return LWP_Payment_Status::status_tag($item->status, $item->method);
+				break;
+			case 'method':
+				return $lwp->_($item->method);
 				break;
 			case 'number':
 				return number_format_i18n($item->num);
@@ -170,9 +161,6 @@ EOS;
 				break;
 			case 'price':
 				return number_format_i18n($item->price).' '.  lwp_currency_code();
-				break;
-			case 'actions':
-				return '<a class="button" href="'.admin_url('admin.php?page=lwp-management&transaction_id='.$item->ID).'">'.$lwp->_('Transaction').'</a>';
 				break;
 		}
 	}

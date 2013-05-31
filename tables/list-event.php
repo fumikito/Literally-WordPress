@@ -130,8 +130,13 @@ EOS;
 						$status = '<strong>- '.__(ucfirst($item->post_status)).'</strong>';
 						break;
 				}
-				return sprintf('<span class="description">%4$s: </span><a href="%1$s">%2$s</a>%3$s', admin_url('post.php?post='.$item->ID.'&amp;action=edit'),
-											 $item->post_title, $status, get_post_type_object($item->post_type)->labels->name);
+				$links = array(
+					'edit' => sprintf('<a href="%s">%s</a>', admin_url('post.php?post='.$item->ID.'&amp;action=edit'), __('Edit')),
+					'tickets' => sprintf('<a href="%s">%s</a>', admin_url('admin.php?page=lwp-event&amp;event_id='.$item->ID), $lwp->_('View ticket list'))
+				);
+				return sprintf('<span class="description">%3$s: </span>%1$s%2$s',
+											 $item->post_title, $status, get_post_type_object($item->post_type)->labels->name).
+						$this->row_actions($links);
 				break;
 			case 'published':
 				return mysql2date(get_option('date_format'), $item->post_date);
@@ -188,9 +193,6 @@ EOS;
 					$return .= '</ol>';
 					return $return;
 				}
-				break;
-			case 'actions':
-				return '<p><a class="button" href="'.admin_url('admin.php?page=lwp-event&amp;event_id='.$item->ID).'">'.$lwp->_('Detail').'</a></p>';
 				break;
 		}
 	}

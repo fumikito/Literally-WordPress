@@ -255,33 +255,7 @@ EOS;
 				return mysql2date(get_option('date_format').get_option('time_format'), get_date_from_gmt($item->updated), false);
 				break;
 			case 'status':
-				switch($item->status){
-					case LWP_Payment_Status::SUCCESS:
-						return sprintf('<strong style="color: green;">%s</strong>', $lwp->_($item->status));
-						break;
-					case LWP_Payment_Status::CANCEL:
-					case LWP_Payment_Status::REFUND:
-					case LWP_Payment_Status::QUIT_WAITNG_CANCELLATION:
-						return sprintf('<span style="color: #999;">%s</span>', $lwp->_($item->status));
-						break;
-					case LWP_Payment_Status::REFUND_REQUESTING:
-					case LWP_Payment_Status::WAITING_REVIEW:
-						return sprintf('<strong style="color: #f00;">%s</strong>', $lwp->_($item->status));
-						break;
-					case LWP_Payment_Status::WAITING_CANCELLATION:
-						return sprintf('<strong style="color: orange;">%s</strong>', $lwp->_($item->status));
-						break;
-					case LWP_Payment_Status::START:
-						if(LWP_Payment_Methods::is_transfer($item->method)){
-							return sprintf('<strong>%s<br /><small>(%s)</small></strong>', $lwp->_('Waiting for Payment'), $lwp->_($item->status));
-						}else{
-							return sprintf('<span style="color: #999;">%s<br /><small>(%s)</small></span>', $lwp->_('Abondoned'), $lwp->_($item->status));
-						}
-						break;
-					default:
-						return $lwp->_($item->status);
-						break;
-				}
+				return LWP_Payment_Status::status_tag($item->status, $item->method);
 				break;
 			case 'detail';
 				return '<p><a class="button" href="'.admin_url("admin.php?page=lwp-management&transaction_id={$item->ID}").'">'.$lwp->_("Detail").'</a></p>';
@@ -314,7 +288,7 @@ EOS;
 				<input type="hidden" name="user_id" value="<?php echo intval($_REQUEST['user_id']); ?>" />
 			</p>
 			<?php endif; ?>
-			<select name="status<?php echo $nombre; ?>">
+			<select name="status">
 				<?php
 				$status = array('all' => $lwp->_('All Status'));
 				foreach(LWP_Payment_Status::get_all_status() as $s){
@@ -324,7 +298,7 @@ EOS;
 				<option value="<?php echo $s; if($s == $this->get_filter()) echo '" selected="selected'?>"><?php echo $val; ?></option>
 				<?php endforeach; ?>
 			</select>
-			<select name="post_types<?php echo $nombre; ?>">
+			<select name="post_types">
 				<?php
 				$post_types = array('all' => $lwp->_('All Post Types'));
 				$post_type_labels = $lwp->option['payable_post_types'];
@@ -346,7 +320,7 @@ EOS;
 			</select>
 			<input style="width: 6em;" placeholder="<?php $lwp->e('Date From'); ?>" type="text" name="from" class="date-picker" value="<?php if(isset($_REQUEST['from'])) echo esc_attr($_REQUEST['from']); ?>" />
 			<input style="width: 6em;" placeholder="<?php $lwp->e('Date To'); ?>" type="text" name="to" class="date-picker" value="<?php if(isset($_REQUEST['to'])) echo esc_attr($_REQUEST['to']); ?>" />
-			<select name="per_page<?php echo $nombre; ?>">
+			<select name="per_page">
 				<?php foreach(array(20, 50, 100) as $num): ?>
 				<option value="<?php echo $num; ?>"<?php if($this->get_per_page() == $num) echo ' selected="selected"';?>>
 					<?php printf($lwp->_('%d per 1Page'), $num); ?>

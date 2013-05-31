@@ -71,6 +71,8 @@ class LWP_Payment_Status {
 		);
 	}
 	
+	
+	
 	/**
 	 * For gettext
 	 * @global Literally_WordPress $lwp
@@ -87,5 +89,92 @@ class LWP_Payment_Status {
 		$lwp->_('REFUND_REQUESTING');
 		$lwp->_('WAITING_CANCELLATION');
 		$lwp->_('QUIT_WAITNG_CANCELLATION');
+	}
+	
+	
+	
+	/**
+	 * Returns verbose status by payment method
+	 * 
+	 * @global Literally_WordPress $lwp
+	 * @param string $status
+	 * @param string $method
+	 * @return string
+	 */
+	public static function verbose_status($status, $method){
+		global $lwp;
+		switch($status){
+			case LWP_Payment_Status::START:
+				if(false !== array_search($method, LWP_Payment_Methods::get_offline_payment())){
+					return $lwp->_('Waiting for Payment');
+				}else{
+					return $lwp->_('Abondoned');
+				}
+				break;
+			default:
+				return $lwp->_($status);
+				break;
+		}
+	}
+	
+	
+	
+	/**
+	 * Returns css color value statusn and method, 
+	 * 
+	 * @param string $status
+	 * @param string $method
+	 * @return string
+	 */
+	private static function status_color($status, $method){
+		switch($status){
+			case LWP_Payment_Status::SUCCESS:
+				return 'green';
+				break;
+			case LWP_Payment_Status::CANCEL:
+			case LWP_Payment_Status::REFUND:
+			case LWP_Payment_Status::QUIT_WAITNG_CANCELLATION:
+				return 'lightgray';
+				break;
+			case LWP_Payment_Status::START:
+				if(false === array_search($method, LWP_Payment_Methods::get_offline_payment())){
+					return 'lightgray';
+					break;
+				}
+			case LWP_Payment_Status::REFUND_REQUESTING:
+			case LWP_Payment_Status::WAITING_REVIEW:
+				return 'red';
+				break;
+			case LWP_Payment_Status::WAITING_CANCELLATION:
+				return 'orange';
+				break;
+			default:
+				return 'black';
+				break;
+		}
+	}
+	
+	
+	/**
+	 * Get status tag for list table
+	 * 
+	 * @param string $status
+	 * @param string $method
+	 * @return string
+	 */
+	public static function status_tag($status, $method){
+		$tag = 'strong';
+		switch($status){
+			case LWP_Payment_Status::START:
+				if(false !== array_search($method, LWP_Payment_Methods::get_offline_payment())){
+					break;
+				}
+			case LWP_Payment_Status::CANCEL:
+			case LWP_Payment_Status::REFUND:
+			case LWP_Payment_Status::QUIT_WAITNG_CANCELLATION:
+				$tag = 'span';
+				break;
+		}
+		return sprintf('<%1$s style="color:%3$s;">%2$s</%1$s>', $tag, self::verbose_status($status, $method), self::status_color($status, $method));
 	}
 }

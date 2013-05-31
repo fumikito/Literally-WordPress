@@ -137,9 +137,6 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			wp_schedule_event($timestamp, 'daily', LWP_Cron::CHOCOM_CVS_BATCH);
 		}
 		add_action(LWP_Cron::CHOCOM_CVS_BATCH, array($this, 'cvs_batch'));
-		if(!is_admin()){
-			add_action('init', array($this, 'cvs_batch'));
-		}
 	}
 	
 	
