@@ -639,7 +639,7 @@ class LWP_Payment_Methods {
 			case self::GMO_WEB_CVS:
 				break;
 			case self::NTT_CVS:
-				$closest = $lwp->ntt->get_closest_limit($posts);
+				$closest = apply_filters('lwp_closest_limit', $lwp->ntt->get_closest_limit($posts), $method);
 				return !($closest > 0 && strtotime(date_i18n('Y-m-d 23:59:59')) >= $closest);
 				break;
 			case self::SOFTBANK_PAYEASY:

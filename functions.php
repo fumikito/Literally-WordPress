@@ -1459,18 +1459,14 @@ function lwp_list_tickets($args = ''){
  */
 function lwp_get_ticket_stock($raw = false, $post = null){
 	global $lwp, $wpdb;
-	if(is_null($post)){
-		global $post;
-	}else{
-		$post = get_post($post);
-	}
+	$post = get_post($post);
 	$stock = get_post_meta($post->ID, $lwp->event->meta_stock, true);
 	if(!$stock || $raw){
 		return (int)$stock;
 	}
 	//Get bought ticket count
 	$sold = lwp_get_ticket_sold($post);
-	return $stock - $sold;
+	return max(0, $stock - $sold);
 }
 
 /**
@@ -1488,7 +1484,18 @@ function lwp_get_ticket_sold($post = null){
 	}else{
 		$post = get_post($post);
 	}
-	return (int)$wpdb->get_var($wpdb->prepare("SELECT SUM(num) FROM {$lwp->transaction} WHERE book_id = %d AND status = %s", $post->ID, LWP_Payment_Status::SUCCESS));
+	$offline_payment = implode(', ', array_map(create_function('$a', 'return "\'".$a."\'";'), LWP_Payment_Methods::get_offline_payment()));
+	$sql = <<<EOS
+		SELECT SUM(num) FROM {$lwp->transaction}
+		WHERE book_id = %d AND (
+			status = %s
+			OR
+			(status = %s AND method IN ({$offline_payment}))
+		)
+EOS;
+	$query = $wpdb->prepare($sql, $post->ID, LWP_Payment_Status::SUCCESS,
+		LWP_Payment_Status::START);
+	return (int)$wpdb->get_var($query);
 }
 
 /**
