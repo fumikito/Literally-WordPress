@@ -29,7 +29,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		'lawson' => false,
 		'ministop' => false,
 		'seicomart' => false,
-		//'familymart' => false,
+		'familymart' => false,
 	);
 	
 	
@@ -690,6 +690,8 @@ EOS;
 				break;
 			case 'familymart':
 				return <<<EOS
+最寄りのファミリーマート店内のFamiポート端末で、Famiポートのトップ画面の左上「代金支払い」を押してください。→「各種番号をお持ちの方はこちら」を入力してください。※「ちょコムのチャージ」ではありません。お気をつけください。
+「企業コード」と「注文番号」を入力して、内容を確認してください。画面での操作が終わると「Famiポート申込券」が出てきます。レジに渡してお支払い合計金額を支払い、「取扱明細兼受領書」を受け取ります。
 EOS;
 				break;
 			default:

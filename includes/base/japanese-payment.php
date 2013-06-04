@@ -591,8 +591,8 @@ Please see detail at your purchase histroy.
 		foreach($products as $post){
 			if($post->post_type == $lwp->event->post_type){
 				// Only event has limit
-				$limit = lwp_event_starts('Y-m-d H:i:s', $post);
-				if($limit){
+				$limit = lwp_selling_limit('Y-m-d H:i:s', $post->post_parent);
+				if(!empty($limit)){
 					$timestamp = strtotime($limit);
 					if($closest < 1 || $closest > $timestamp){
 						$closest = $timestamp;

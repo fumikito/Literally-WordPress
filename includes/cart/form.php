@@ -810,8 +810,12 @@ EOS;
 						array($this->_('CVS'), sprintf('<label class="cvs-container"><i class="lwp-cvs-small-icon small-icon-%s"></i><br />%s</label>',
 								$data['cvs_name'], $lwp->ntt->get_verbose_name($data['cvs_name']))),
 						array($this->_('How to pay'), nl2br($lwp->ntt->get_cvs_howtos($data['cvs_name']))),
-						array($label[0], $data['receipt_no'])
 					));
+					if($data['cvs_name'] == 'familymart'){
+						$rows[] = array('注意点', '「企業コード」「注文番号」はちょコムより送信された受付完了メールをご確認下さい。');
+					}else{
+						$rows[] = array($label[0], $data['receipt_no']);
+					}
 					break;
 				case LWP_Payment_Methods::SOFTBANK_WEB_CVS:
 					$methods = $lwp->softbank->get_cvs_code_label($data['cvs']);
