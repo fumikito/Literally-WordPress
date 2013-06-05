@@ -541,9 +541,10 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$data['cvs_name'] = $this->get_cvs_name($_POST['cvs_name']);
 				$data['receipt_no'] = $_POST['pay_no'];
 				$wpdb->update($lwp->transaction, array(
+					'status' => LWP_Payment_Status::START,
 					'payer_mail' => $_POST['pay_no'],
 					'misc' => serialize($data)
-				), array('ID' => $transaction->ID), array('%s', '%s'), array('%d'));
+				), array('ID' => $transaction->ID), array('%s', '%s', '%s'), array('%d'));
 				$out['returnURL'] = lwp_endpoint('payment-info', array('transaction' => $transaction->ID));
 				break;
 			case LWP_Payment_Methods::NTT_CVS.'_COMPLETE':
@@ -859,7 +860,7 @@ EOS;
 				"user_id" => $user_id,
 				"book_id" => $product->ID,
 				"price" => $amount,
-				"status" => LWP_Payment_Status::START,
+				"status" => ($method == LWP_Payment_Methods::NTT_CVS) ? LWP_Payment_Status::CANCEL : LWP_Payment_Status::START,
 				"method" => $method,
 				'num' => $quantities[$product->ID],
 				"transaction_key" => $order_id,

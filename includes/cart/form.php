@@ -285,7 +285,15 @@ EOS;
 					case LWP_Payment_Methods::NTT_EMONEY:
 					case LWP_Payment_Methods::NTT_CC:
 					case LWP_Payment_Methods::NTT_CVS:
-						header('Location: '.lwp_endpoint('chocom', array('lwp-method' => $posted_method, 'lwp-id' => $book->ID)));
+						$args = array('lwp-method' => $posted_method, 'lwp-id' => $book->ID);
+						if(isset($_REQUEST['quantity']) && is_array($_REQUEST['quantity'])){
+							foreach($_REQUEST['quantity'] as $id => $quantity){
+								if($quantity > 1){
+									$args['quantity['.$id.']'] = $quantity;
+								}
+							}
+						}
+						header('Location: '.lwp_endpoint('chocom', $args));
 						exit;
 						break;
 					case LWP_Payment_Methods::SOFTBANK_PAYEASY:
