@@ -7,6 +7,13 @@
 	<?php $this->the_price_list($products, true); ?>
 </form>
 
+<?php if(empty($payments)): ?>
+<p class="message error">
+	<?php $this->e('Sorry, but there is no payment method available.'); ?>
+</p>
+
+
+<?php else: ?>
 <p class="message notice">
 	<?php $this->e('Please select payment method below.'); ?>
 </p>
@@ -82,6 +89,8 @@
 		<input type="submit" class="button-primary" value="<?php $this->e('Next &raquo;'); ?>" />
 	</p>
 </form>
+<?php endif; ?>
+
 <p class="cancel">
 	<a class="button" href="#" onclick="window.history.back(); return false;"><?php $this->e("Cancel"); ?></a>
 </p>

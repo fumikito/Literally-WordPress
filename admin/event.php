@@ -69,6 +69,7 @@ if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 			<th><?php $this->e('Price'); ?></th>
 			<th><?php $this->e('Stock'); ?></th>
 			<th><?php $this->e('Sold'); ?></th>
+			<th><?php $this->e('Waiting for Payment'); ?></th>
 			<th><?php $this->e('Consumed'); ?></th>
 			<th><?php $this->e('Sales'); ?></th>
 		</tr>
@@ -77,17 +78,20 @@ if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 		$total_stock = 0;
 		$total_consumed = 0;
 		$total_sold = 0;
+		$total_waiting = 0;
 		$total_sales = 0;
 		ob_start();
 		$tickets = get_children("post_parent={$event->ID}&post_type={$this->event->post_type}&posts_per_page=-1");
 		if(!empty($tickets)){
 			foreach($tickets as $ticket){
 				$stock = lwp_get_ticket_stock(false, $ticket);
-				$sold = lwp_get_ticket_sold($ticket);
+				$sold = lwp_get_ticket_sold($ticket, false);
+				$waiting_payment = lwp_get_ticket_sold($ticket) - $sold;
 				$sales = $this->event->get_ticket_total_sales($ticket->ID);
 				$consumed = lwp_get_ticket_consumed($ticket);
 				$total_stock += $stock;
 				$total_consumed += $consumed;
+				$total_waiting =+ $waiting_payment;
 				$total_sold += $sold;
 				$total_sales += $sales;
 				?>
@@ -96,6 +100,7 @@ if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 						<td><?php lwp_the_price($ticket);?></td>
 						<td><?php echo number_format($stock);?></td>
 						<td><?php echo number_format($sold);?></td>
+						<td><?php echo number_format($waiting_payment);?></td>
 						<td><?php echo number_format($consumed);?></td>
 						<td><?php echo number_format($sales)." (".lwp_currency_code().")";?></td>
 					</tr>
@@ -115,6 +120,7 @@ if(isset($_GET['event_id'])): $event = get_post($_GET['event_id']);
 			<td>-</td>
 			<td><?php echo number_format($total_stock); ?></td>
 			<td><?php echo number_format($total_sold);?></td>
+			<td><?php echo number_format($total_waiting);?></td>
 			<td><?php echo number_format($total_consumed);?></td>
 			<td><?php echo number_format($total_sales)." (".lwp_currency_code().")";?></td>
 		</tr>

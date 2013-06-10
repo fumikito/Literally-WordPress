@@ -927,7 +927,8 @@ EOS;
 			$this->_('Price'),
 			$this->_('Quantity'),
 			$this->_('Consumed'),
-			$this->_('Transaction Status')
+			$this->_('Transaction Status'),
+			$this->_('Payment Method')
 		));
 		mb_convert_variables('sjis-win', 'utf-8', $first_row);
 		fputcsv($out, $first_row);
@@ -942,7 +943,8 @@ EOS;
 				$result->price,
 				$result->num,
 				$result->consumed,
-				$this->_($result->status)
+				LWP_Payment_Status::verbose_status($result->status, $result->method),
+				$this->_($result->method),
 			), $result);
 			mb_convert_variables('sjis-win', 'utf-8', $row);
 			fputcsv($out, $row);

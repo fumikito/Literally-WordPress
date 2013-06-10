@@ -183,7 +183,7 @@ class LWP_Payment_Methods {
 			);
 			$forms[] = $form;
 		}
-		return $forms;
+		return apply_filters('lwp_payment_method_on_form', $forms, $posts, get_current_user_id());
 	}
 	
 	/**

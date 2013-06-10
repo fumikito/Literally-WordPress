@@ -1471,30 +1471,32 @@ function lwp_get_ticket_stock($raw = false, $post = null){
 
 /**
  * Returns ticket sold. Use inside ticket loop
+ * 
  * @global Literally_WordPress $lwp
  * @global wpdb $wpdb
  * @global object $post
- * @param mixed $post
+ * @param mixed $post If null, use current post.
+ * @param boolean $include_offline Default true. If set to false, waiting for offline payment is not included.
  * @return int
  */
-function lwp_get_ticket_sold($post = null){
+function lwp_get_ticket_sold($post = null, $include_offline = true){
 	global $lwp, $wpdb;
 	if(is_null($post)){
 		global $post;
 	}else{
 		$post = get_post($post);
 	}
-	$offline_payment = implode(', ', array_map(create_function('$a', 'return "\'".$a."\'";'), LWP_Payment_Methods::get_offline_payment()));
+	$wheres = array($wpdb->prepare("status = %s", LWP_Payment_Status::SUCCESS));
+	if($include_offline){
+		$offline_payment = implode(', ', array_map(create_function('$a', 'return "\'".$a."\'";'), LWP_Payment_Methods::get_offline_payment()));
+		$wheres[] = $wpdb->prepare("(status = %s AND method IN ({$offline_payment}))", LWP_Payment_Status::START);
+	}
+	$where_clause = implode(' OR ', $wheres);
 	$sql = <<<EOS
 		SELECT SUM(num) FROM {$lwp->transaction}
-		WHERE book_id = %d AND (
-			status = %s
-			OR
-			(status = %s AND method IN ({$offline_payment}))
-		)
+		WHERE book_id = %d AND ({$where_clause})
 EOS;
-	$query = $wpdb->prepare($sql, $post->ID, LWP_Payment_Status::SUCCESS,
-		LWP_Payment_Status::START);
+	$query = $wpdb->prepare($sql, $post->ID);
 	return (int)$wpdb->get_var($query);
 }
 

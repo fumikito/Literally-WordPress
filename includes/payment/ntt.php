@@ -585,9 +585,9 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		// Get all transactions
 		$sql = <<<EOS
 			UPDATE {$lwp->transaction} SET status = %s, updated = %s
-			WHERE method = %s AND status = %s AND (updated + INTERVAL 9 HOUR) < (NOW() - INTERVAL %d DAY)
+			WHERE status = %s AND method = %s AND transaction_id = '' AND (updated + INTERVAL 9 HOUR) < (NOW() - INTERVAL %d DAY)
 EOS;
-		$query = $wpdb->prepare($sql, LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'),  LWP_Payment_Methods::NTT_CVS, LWP_Payment_Status::START, $this->cvs_limit);
+		$query = $wpdb->prepare($sql, LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'), LWP_Payment_Status::START, LWP_Payment_Methods::NTT_CVS, $this->cvs_limit);
 		$result = $wpdb->query($query);
 		if(false === $result){
 			$this->log($this->_('Failed to updated CVS transaction status: '), $query);

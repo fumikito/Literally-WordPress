@@ -1398,7 +1398,7 @@ EOS;
 				($result->display_name ? $result->display_name.'('.$result->user_login.')' : $this->_('Deleted User')),
 				$result->registered,
 				$result->updated,
-				$this->_($result->status)
+				LWP_Payment_Status::verbose_status($result->status, $result->method)
 			),$result);
 			mb_convert_variables('sjis-win', 'utf-8', $row);
 			fputcsv($out, $row);
