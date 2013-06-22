@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-10 01:14+0900\n"
-"PO-Revision-Date: 2013-06-10 01:14+0900\n"
+"POT-Creation-Date: 2013-06-21 03:00+0900\n"
+"PO-Revision-Date: 2013-06-21 03:00+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -129,7 +129,7 @@ msgid "Updated: %s"
 msgstr ""
 
 #: ../functions.php:607 ../admin/management.php:69
-#: ../includes/literally-wordpress.php:1373 ../includes/products/event.php:922
+#: ../includes/literally-wordpress.php:1374 ../includes/products/event.php:922
 #: ../tables/list-refund.php:119 ../tables/list-reward-history.php:35
 #: ../tables/list-reward-request.php:119 ../tables/list-ticket.php:38
 msgid "Updated"
@@ -242,7 +242,7 @@ msgstr ""
 
 #: ../admin/campaign.php:31 ../admin/management.php:46 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:92 ../admin/settings/subscription.php:2
-#: ../includes/literally-wordpress.php:1385
+#: ../includes/literally-wordpress.php:1386
 #: ../includes/base/literally-wordpress-common.php:136
 #: ../includes/cart/form.php:925 ../includes/cart/form.php:986
 #: ../includes/common/campaign.php:265
@@ -566,7 +566,7 @@ msgstr ""
 #: ../admin/parts/edit-detail-event.php:115 ../admin/parts/edit-detail.php:26
 #: ../admin/parts/reward-summary.php:124 ../form-template/cancel-ticket.php:15
 #: ../form-template/event-tickets-consume.php:17
-#: ../form-template/payment.php:8 ../includes/literally-wordpress.php:1367
+#: ../form-template/payment.php:8 ../includes/literally-wordpress.php:1368
 #: ../includes/cart/form-event.php:197 ../includes/cart/form.php:785
 #: ../includes/products/event.php:927
 #: ../includes/products/subscription.php:194
@@ -1071,7 +1071,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: ../admin/management.php:37 ../includes/literally-wordpress.php:1365
+#: ../admin/management.php:37 ../includes/literally-wordpress.php:1366
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:53
 #: ../tables/list-management.php:132 ../tables/list-refund.php:113
 #: ../tables/list-transfers.php:155
@@ -1084,7 +1084,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: ../admin/management.php:56 ../includes/literally-wordpress.php:1371
+#: ../admin/management.php:56 ../includes/literally-wordpress.php:1372
 #: ../includes/products/event.php:924 ../tables/list-download-logs.php:112
 #: ../tables/list-management.php:133 ../tables/list-refund.php:114
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:154
@@ -1101,14 +1101,14 @@ msgstr ""
 
 #: ../admin/management.php:64 ../admin/summary.php:196
 #: ../admin/parts/reward-summary.php:165
-#: ../includes/literally-wordpress.php:1398 ../includes/products/event.php:940
+#: ../includes/literally-wordpress.php:1399 ../includes/products/event.php:940
 #: ../tables/list-download-logs.php:179 ../tables/list-management.php:225
 #: ../tables/list-refund.php:165 ../tables/list-reward-history.php:150
 #: ../tables/list-reward-request.php:158 ../tables/list-ticket.php:144
 msgid "Deleted User"
 msgstr ""
 
-#: ../admin/management.php:72 ../includes/literally-wordpress.php:1372
+#: ../admin/management.php:72 ../includes/literally-wordpress.php:1373
 #: ../tables/list-history.php:58 ../tables/list-management.php:137
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
 #: ../tables/list-reward-request.php:118 ../tables/list-transfers.php:158
@@ -1125,7 +1125,7 @@ msgid "Original Price"
 msgstr ""
 
 #: ../admin/management.php:85 ../form-template/event-tickets-consume.php:18
-#: ../form-template/return.php:51 ../includes/literally-wordpress.php:1366
+#: ../form-template/return.php:51 ../includes/literally-wordpress.php:1367
 #: ../includes/cart/cart.php:129 ../includes/cart/form-event.php:198
 #: ../includes/products/event.php:928 ../tables/list-history.php:54
 #: ../tables/list-ticket.php:39
@@ -1141,7 +1141,7 @@ msgstr ""
 msgid "Transaction ID: %s"
 msgstr ""
 
-#: ../admin/management.php:105 ../includes/literally-wordpress.php:1369
+#: ../admin/management.php:105 ../includes/literally-wordpress.php:1370
 msgid "Invoice Num"
 msgstr ""
 
@@ -1162,7 +1162,7 @@ msgstr ""
 msgid "No Limit."
 msgstr ""
 
-#: ../admin/management.php:148 ../includes/products/event.php:1120
+#: ../admin/management.php:148 ../includes/products/event.php:1124
 #: ../includes/products/notifier.php:193 ../tables/list-history.php:195
 msgid "Expired"
 msgstr ""
@@ -1395,7 +1395,7 @@ msgstr ""
 #: ../admin/summary.php:183 ../admin/parts/edit-detail-event.php:113
 #: ../admin/parts/reward-summary.php:151 ../admin/settings/sidebar.php:71
 #: ../admin/settings/sidebar.php:76 ../form-template/payment.php:221
-#: ../form-template/return.php:27 ../includes/literally-wordpress.php:1474
+#: ../form-template/return.php:27 ../includes/literally-wordpress.php:1475
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
 msgstr ""
@@ -1605,7 +1605,7 @@ msgstr ""
 msgid "Start at"
 msgstr ""
 
-#: ../admin/parts/edit-detail-event.php:14 ../includes/products/event.php:1123
+#: ../admin/parts/edit-detail-event.php:14 ../includes/products/event.php:1127
 msgid "Ends at"
 msgstr ""
 
@@ -2604,7 +2604,7 @@ msgstr ""
 msgid "Site to contract"
 msgstr ""
 
-#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1474
+#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1475
 msgid "Marchandise"
 msgstr ""
 
@@ -2625,7 +2625,7 @@ msgid "Month"
 msgstr ""
 
 #: ../admin/settings/sidebar.php:130 ../form-template/selection.php:28
-#: ../includes/literally-wordpress.php:1368 ../includes/products/event.php:931
+#: ../includes/literally-wordpress.php:1369 ../includes/products/event.php:931
 msgid "Payment Method"
 msgstr ""
 
@@ -4716,53 +4716,53 @@ msgstr ""
 msgid "Transaction was updated."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1257
+#: ../includes/literally-wordpress.php:1258
 msgid "Failed to update transaction."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1352 ../includes/products/event.php:909
+#: ../includes/literally-wordpress.php:1353 ../includes/products/event.php:909
 msgid "No ticket match your qriteria.: "
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1370
+#: ../includes/literally-wordpress.php:1371
 msgid "Transaction ID"
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1374 ../includes/products/event.php:930
+#: ../includes/literally-wordpress.php:1375 ../includes/products/event.php:930
 msgid "Transaction Status"
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1478 ../includes/cart/form.php:1196
+#: ../includes/literally-wordpress.php:1479 ../includes/cart/form.php:1196
 #, php-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1486
+#: ../includes/literally-wordpress.php:1487
 msgid "Email isn't valid format."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1493
+#: ../includes/literally-wordpress.php:1494
 msgid "Tel isn't valid format."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1497
+#: ../includes/literally-wordpress.php:1498
 msgid "Payment Medhot"
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1497
+#: ../includes/literally-wordpress.php:1498
 msgid "Payment Agency"
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1501
+#: ../includes/literally-wordpress.php:1502
 #, php-format
 msgid "At lease one %s must be specified."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1509
+#: ../includes/literally-wordpress.php:1510
 msgid "Company name is empty."
 msgstr ""
 
-#: ../includes/literally-wordpress.php:1597
+#: ../includes/literally-wordpress.php:1598
 msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 
@@ -5943,52 +5943,56 @@ msgstr ""
 msgid "Thank you for participating"
 msgstr ""
 
-#: ../includes/products/event.php:1053
+#: ../includes/products/event.php:1056
 msgid "Display name of user"
 msgstr ""
 
-#: ../includes/products/event.php:1054
+#: ../includes/products/event.php:1057
 msgid "User email"
 msgstr ""
 
-#: ../includes/products/event.php:1055
+#: ../includes/products/event.php:1058
 msgid "Event name"
 msgstr ""
 
-#: ../includes/products/event.php:1056
+#: ../includes/products/event.php:1059
 msgid "Event's permalink"
 msgstr ""
 
-#: ../includes/products/event.php:1057
+#: ../includes/products/event.php:1060
 msgid "Ticket name"
 msgstr ""
 
-#: ../includes/products/event.php:1058
+#: ../includes/products/event.php:1061
 msgid "Ticket list page url"
 msgstr ""
 
-#: ../includes/products/event.php:1059
+#: ../includes/products/event.php:1062
+msgid "Ticket Quantity"
+msgstr ""
+
+#: ../includes/products/event.php:1063
 msgid "Code to identify user"
 msgstr ""
 
-#: ../includes/products/event.php:1119
+#: ../includes/products/event.php:1123
 msgid "Already ended."
 msgstr ""
 
-#: ../includes/products/event.php:1121
+#: ../includes/products/event.php:1125
 #, php-format
 msgid "%s's Detail"
 msgstr ""
 
-#: ../includes/products/event.php:1122
+#: ../includes/products/event.php:1126
 msgid "Starts at"
 msgstr ""
 
-#: ../includes/products/event.php:1124 ../tables/list-event.php:35
+#: ../includes/products/event.php:1128 ../tables/list-event.php:35
 msgid "Selling Limit"
 msgstr ""
 
-#: ../includes/products/event.php:1124
+#: ../includes/products/event.php:1128
 #, php-format
 msgid "Untill %s"
 msgstr ""

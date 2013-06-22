@@ -1253,6 +1253,7 @@ EOS;
 			}
 			if($req){
 				$this->message[] = $this->_("Transaction was updated.");
+				do_action('lwp_update_transaction', $_POST['transaction_id']);
 			}else{
 				$this->message[] = $this->_("Failed to update transaction.");
 			}

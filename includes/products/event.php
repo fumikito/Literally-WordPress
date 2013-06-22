@@ -1025,6 +1025,9 @@ EOS;
 					case 'ticket_name':
 						$repl = get_the_title($transaction->book_id);
 						break;
+					case 'ticket_quantity':
+						$repl = number_format($transaction->num);
+						break;
 					case 'ticket_url':
 						$repl = lwp_ticket_url($event);
 						break;
@@ -1056,7 +1059,8 @@ EOS;
 				'event_url' => $this->_('Event\'s permalink'),
 				'ticket_name' => $this->_('Ticket name'),
 				'ticket_url' => $this->_('Ticket list page url'),
-				'code' => $this->_('Code to identify user')
+				'ticket_quantity' => $this->_('Ticket Quantity'),
+				'code' => $this->_('Code to identify user'),
 			);
 		}
 		return $this->_place_holders;
