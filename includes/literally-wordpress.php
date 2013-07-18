@@ -1197,64 +1197,105 @@ EOS;
 	
 	/**
 	 * Update transaction
+	 * @global wpdb $wpdb
 	 * @return void
 	 */
 	public function update_transaction(){
+		global $wpdb;
 		//Check nonce If this is a 
-		if(isset($_REQUEST["_wpnonce"], $_REQUEST['transaction_id']) && wp_verify_nonce($_REQUEST["_wpnonce"], "lwp_update_transaction")){
-			//Update Data
-			global $wpdb;
-			$req = false;
-			if(isset($_REQUEST['status']) && false !== array_search($_REQUEST['status'], LWP_Payment_Status::get_all_status())){
-				//If to make it refunded on paypal transaction, 
-				//change must be done in 60 days.
-				$flg = true;
-				$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_POST['transaction_id']));
-				if($_POST['status'] == LWP_Payment_Status::REFUND && $transaction->method == LWP_Payment_Methods::PAYPAL && $transaction->status == LWP_Payment_Status::SUCCESS){
-					//Check if refundable
-					if(!PayPal_Statics::is_refundable($transaction->updated)){ //Unrefundable
-						$this->message[] = $this->_("You can't refund via PayPal because 60 days have past since the transaction occurred.");
-						$this->error = true;
-						$flg = false;
-					}else{ //Refundable
-						if(PayPal_Statics::do_refund($transaction->transaction_id)){
-							$this->message[] = $this->_("Refund succeeded.");
-						}else{
-							$this->message[] = $this->_("Sorry, but PayPal denied.");
-							$this->error = true;
-							$flg = false;
-						}
-					}
-				}
-				if($flg){
-					$req = $wpdb->update(
-						$this->transaction,
-						array(
-							'status' => $_POST['status'],
-							'updated' => gmdate('Y-m-d H:i:s')
-						),
-						array('ID' => $_POST['transaction_id']),
-						array('%s', '%s'),
-						array('%d')
-					);
-				}
+		if(isset($_POST["_wpnonce"], $_POST['transaction_id'], $_POST['change_action']) && wp_verify_nonce($_POST["_wpnonce"], "lwp_update_transaction")){
+			
+			// Get transaction and its availability
+			$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->transaction} WHERE ID = %d", $_POST['transaction_id']));
+			if(!$transaction || !$this->caps->current_user_can('access_lwp_transaction')){
+				wp_die($this->_('You have no permission to access this transaction.'), get_status_header_desc(403), array('back_link' => true, 'response' => 403));
 			}
-			if(isset($_REQUEST['expires']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_REQUEST['expires'])){
-				$req = $wpdb->update(
-					$this->transaction,
-					array(
-						'expires' => $_POST['expires'],
-						'updated' => gmdate('Y-m-d H:i:s')
-					),
-					array('ID' => $_POST['transaction_id']),
-					array('%s', '%s'),
-					array('%d')
-				);
+			
+			// Try updating transaction
+			$req = false;
+			switch($_POST['change_action']){
+				case 'refund':
+					// Check if transaction is valid
+					if($transaction->status != LWP_Payment_Status::SUCCESS){
+						wp_die($this->_('This transaction is not completed, so you can\'t refund it.'), get_status_header_desc(403), array('back_link' => true, 'response' => 403));
+					}
+					if(!LWP_Payment_Methods::is_refundable($transaction->method)){
+						wp_die(sprintf($this->_('%s is not refundable.'), $this->_($transaction->method)), get_status_header_desc(403), array('back_link' => true, 'response' => 403));
+					}
+					//If to make it refunded on paypal transaction, 
+					//change must be done in 60 days.
+					switch($transaction->method){
+						case LWP_Payment_Methods::PAYPAL:
+							if(!PayPal_Statics::is_refundable($transaction->updated)){
+								// Outdated
+								wp_die($this->_('You can\'t refund via PayPal because 60 days have past since the transaction occurred.'), get_status_header_desc(403), array('back_link' => true, 'response' => 403));
+							}elseif(!($refund_id = PayPal_Statics::do_refund($transaction->transaction_id))){
+								// Denied by PayPal
+								wp_die($this->_('Sorry, but PayPal denied refunding.'), get_status_header_desc(500), array('back_link' => true, 'response' => 500));
+							}else{
+								// Succeeded.
+								// TODO: Should be placed in LWP_Reufund_Manager
+								$req = $wpdb->update($this->transaction, array(
+									'status' => LWP_Payment_Status::REFUND,
+									'updated' => gmdate('Y-m-d H:i:s'),
+									'refund' => $transaction->price,
+								), array(
+									'ID' => $transaction->ID
+								), array('%s', '%s', '%d'), array('%d'));
+								$this->message[] = $this->_("Refund succeeded.");
+							}
+							break;
+						case LWP_Payment_Methods::NTT_CC:
+							$result = $this->ntt->cancel_fixed_transaction($transaction->ID);
+							if(is_wp_error($result)){
+								wp_die($result->get_error_message(), get_status_header_desc(500), array('back_link' => true, 'response' => 500));
+							}
+							// Refund succeeded, save data
+							$req = $wpdb->update($this->transaction, array(
+								'status' => LWP_Payment_Status::REFUND,
+								'updated' => gmdate('Y-m-d H:i:s'),
+								'refund' => $transaction->price,
+							), array(
+								'ID' => $transaction->ID
+							), array('%s', '%s', '%d'), array('%d'));
+							$this->message[] = $this->_("Refund succeeded.");
+							break;
+					}
+					break;
+				case 'status':
+					if(isset($_POST['status']) && false !== array_search($_POST['status'], LWP_Payment_Status::get_all_status())){
+						$req = $wpdb->update(
+							$this->transaction,
+							array(
+								'status' => $_POST['status'],
+								'updated' => gmdate('Y-m-d H:i:s')
+							),
+							array('ID' => $transaction->ID),
+							array('%s', '%s'),
+							array('%d')
+						);
+					}
+					break;
+				case 'expires':
+					if(isset($_POST['expires']) && preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/", $_POST['expires'])){
+						$req = $wpdb->update(
+							$this->transaction,
+							array(
+								'expires' => $_POST['expires'],
+								'updated' => gmdate('Y-m-d H:i:s')
+							),
+							array('ID' => $_POST['transaction_id']),
+							array('%s', '%s'),
+							array('%d')
+						);
+					}
+					break;
 			}
 			if($req){
 				$this->message[] = $this->_("Transaction was updated.");
 				do_action('lwp_update_transaction', $_POST['transaction_id']);
 			}else{
+				$this->error = true;
 				$this->message[] = $this->_("Failed to update transaction.");
 			}
 		}

@@ -10,12 +10,12 @@ $is_detail = isset($_GET["transaction_id"]) && is_numeric($_REQUEST["transaction
  * 個別表示
  */
 if($is_detail):
-		$book = wp_get_single_post($transaction->book_id);
+		$book = get_post($transaction->book_id);
 		$user = get_userdata($transaction->user_id);
 		//If current user has no caps, returns.
-		if(!current_user_can('edit_others_posts') && $this->caps->current_user_can('access_lwp_transaction', $transaction->ID)){
+		if(!current_user_can('edit_others_posts') && $this->caps->current_user_can('access_lwp_transaction', $transaction->ID)):
 			printf('<div class="error"><p>%s</p></div>', $this->_('You have no permission to access this page.'));
-		}
+		else:
 ?>
 
 <p>
@@ -79,7 +79,19 @@ if($is_detail):
 				<strong><?php echo number_format($transaction->price)." ({$this->option['currency_code']})"; ?></strong>
 				<p class="description"><?php $this->e('Original Price'); ?>: <?php echo number_format( lwp_original_price($book->ID))." ({$this->option['currency_code']})";?></p>
 			</td>
-			<td>---</td>
+			<td>
+				<?php if($transaction->status == LWP_Payment_Status::SUCCESS && LWP_Payment_Methods::is_refundable($transaction->method)): ?>
+				<form method="post" action="<?php echo admin_url('admin.php?page=lwp-management&transaction_id='.$transaction->ID); ?>" onsubmit="return confirm('<?php echo esc_js($this->_('Are you sure to refund total price?')); ?>');">
+					<?php wp_nonce_field('lwp_update_transaction'); ?>
+					<input type="hidden" name="change_action" value="refund" />
+					<input type="hidden" name="transaction_id" value="<?php echo $transaction->ID; ?>" />
+					<?php submit_button($this->_('Refund'), 'primary', 'update_transaction', false); ?>
+				</form>
+				<p class="description"><?php $this->e('<strong>Note:</strong> This action tries refunding and the result depends on payment agency. For example, PayPal accepts refund 60 days after.'); ?></p>
+				<?php else: ?>
+				---
+				<?php endif; ?>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row" valign="top"><?php $this->e('Quantity'); ?></th>
@@ -112,29 +124,19 @@ if($is_detail):
 				<?php $this->e($transaction->status);?>
 			</td>
 			<td>
-				<form method="post">
+				<form method="post" action="<?php echo admin_url('admin.php?page=lwp-management&transaction_id='.$transaction->ID); ?>" onsubmit="return confirm('<?php echo esc_js($this->_('Are you sure to change transaction status?')); ?>');">
 					<?php wp_nonce_field('lwp_update_transaction'); ?>
+					<input type="hidden" name="change_action" value="status" />
 					<input type="hidden" name="transaction_id" value="<?php echo $transaction->ID; ?>" />
 					<p>
 					<select name="status">
 						<?php foreach(LWP_Payment_Status::get_all_status() as $s): ?>
-						<?php if($s == LWP_Payment_Status::REFUND): ?>
-							<?php if($transaction->status == LWP_Payment_Status::SUCCESS): ?>
-								<?php $disabled = ($transaction->method == LWP_Payment_Methods::PAYPAL && 60 < ceil((time() - strtotime($transaction->updated)) / 60 / 60 / 24 )) ? ' disabled="disabled"' : '';  ?>
-								<option value="<?php echo $s; ?>"<?php echo $disabled; ?>><?php $this->e($s); ?></option>
-							<?php elseif($transaction->status == LWP_Payment_Status::REFUND): ?>
-								<option value="<?php echo $s; ?>" checked="checked"><?php $this->e($s);?></option>
-							<?php endif; ?>
-						<?php else: ?>
 							<option value="<?php echo $s; ?>"<?php if($s == $transaction->status) echo ' selected="selected"'; ?>><?php $this->e($s);?></option>
-						<?php endif; ?>
 						<?php endforeach; ?>
 					</select>
 					<?php submit_button($this->_('Update Status'), 'primary', 'update_transaction', false); ?>
 					</p>
-					<?php if($transaction->method == LWP_Payment_Methods::PAYPAL): ?>
-					<p class="description"><?php $this->e('<strong>Note:</strong> PayPal accepts refund by 60 days.'); ?></p>
-					<?php endif; ?>
+					<p class="description"><?php $this->e('<strong>Note:</strong> This action changes do nothing but change transaction status.'); ?></p>
 				</form>
 			</td>
 		</tr>
@@ -154,8 +156,9 @@ if($is_detail):
 			</td>
 			<td>
 				<?php if($transaction->status == LWP_Payment_Status::SUCCESS || $transaction->expires != '0000-00-00 00:00:00'): ?>
-				<form method="post">
+				<form method="post" action="<?php echo admin_url('admin.php?page=lwp-management&transaction_id='.$transaction->ID); ?>">
 					<?php wp_nonce_field('lwp_update_transaction'); ?>
+					<input type="hidden" name="change_action" value="expires" />
 					<input type="hidden" name="transaction_id" value="<?php echo $transaction->ID; ?>" />
 					<p>
 						<input class="date-picker" type="text" name="expires" value="<?php echo $transaction->expires; ?>" />
@@ -175,6 +178,7 @@ if($is_detail):
 
 
 <?php
+	endif; // Permission check ends
 /*---------------------------------
  *  一覧表示
  */

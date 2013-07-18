@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-21 03:00+0900\n"
-"PO-Revision-Date: 2013-06-21 03:01+0900\n"
+"POT-Creation-Date: 2013-07-18 15:40+0900\n"
+"PO-Revision-Date: 2013-07-18 15:44+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja_JP\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,289,-1\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
@@ -132,7 +132,7 @@ msgid "Updated: %s"
 msgstr "更新日: %s"
 
 #: ../functions.php:607 ../admin/management.php:69
-#: ../includes/literally-wordpress.php:1374 ../includes/products/event.php:922
+#: ../includes/literally-wordpress.php:1415 ../includes/products/event.php:922
 #: ../tables/list-refund.php:119 ../tables/list-reward-history.php:35
 #: ../tables/list-reward-request.php:119 ../tables/list-ticket.php:38
 msgid "Updated"
@@ -249,9 +249,9 @@ msgstr "キャンペーンアイテム"
 
 #: ../admin/campaign.php:31 ../admin/management.php:46 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:92 ../admin/settings/subscription.php:2
-#: ../includes/literally-wordpress.php:1386
+#: ../includes/literally-wordpress.php:1427
 #: ../includes/base/literally-wordpress-common.php:136
-#: ../includes/cart/form.php:925 ../includes/cart/form.php:986
+#: ../includes/cart/form.php:957 ../includes/cart/form.php:1018
 #: ../includes/common/campaign.php:265
 #: ../includes/products/subscription.php:81 ../tables/list-campaign.php:164
 #: ../tables/list-history.php:159 ../tables/list-management.php:236
@@ -609,8 +609,8 @@ msgstr "チケット名"
 #: ../admin/parts/edit-detail-event.php:115 ../admin/parts/edit-detail.php:26
 #: ../admin/parts/reward-summary.php:124 ../form-template/cancel-ticket.php:15
 #: ../form-template/event-tickets-consume.php:17
-#: ../form-template/payment.php:8 ../includes/literally-wordpress.php:1368
-#: ../includes/cart/form-event.php:197 ../includes/cart/form.php:785
+#: ../form-template/payment.php:8 ../includes/literally-wordpress.php:1409
+#: ../includes/cart/form-event.php:197 ../includes/cart/form.php:817
 #: ../includes/products/event.php:927
 #: ../includes/products/subscription.php:194
 #: ../tables/list-promotable-posts.php:132
@@ -628,13 +628,13 @@ msgstr "在庫"
 msgid "Sold"
 msgstr "販売数"
 
-#: ../admin/event.php:72 ../includes/cart/form.php:784
+#: ../admin/event.php:72 ../includes/cart/form.php:816
 #: ../includes/statics/payment-status.php:109 ../tables/list-history.php:211
 #: ../tables/list-transfers.php:226
 msgid "Waiting for Payment"
 msgstr "支払い待ち"
 
-#: ../admin/event.php:73 ../admin/management.php:90
+#: ../admin/event.php:73 ../admin/management.php:102
 #: ../form-template/event-tickets-consume.php:19
 #: ../includes/cart/form-event.php:199 ../includes/products/event.php:929
 #: ../tables/list-ticket.php:40
@@ -665,7 +665,7 @@ msgid "You can get participants list of <strong>%1$s</strong> in status below."
 msgstr ""
 "以下のステータスにある<strong>%1$s</strong>の参加者リストを取得できます。"
 
-#: ../admin/event.php:146 ../admin/management.php:195
+#: ../admin/event.php:146 ../admin/management.php:199
 msgid "Get CSV"
 msgstr "CSV取得"
 
@@ -798,7 +798,7 @@ msgstr "API バージョン: %1$s<br />最終更新日: %2$s"
 msgid "Option Name"
 msgstr "項目名"
 
-#: ../admin/ios-api.php:12 ../admin/management.php:110
+#: ../admin/ios-api.php:12 ../admin/management.php:122
 #: ../admin/personal-reward.php:118 ../admin/summary.php:110
 #: ../admin/summary.php:157 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:65 ../admin/settings/dashboard.php:116
@@ -806,7 +806,7 @@ msgstr "項目名"
 #: ../admin/settings/payment/gmo.php:9 ../admin/settings/payment/ntt.php:9
 #: ../admin/settings/payment/softbank.php:9 ../form-template/sb-check.php:35
 #: ../includes/literally-wordpress.php:636
-#: ../includes/literally-wordpress.php:677 ../includes/cart/form.php:784
+#: ../includes/literally-wordpress.php:677 ../includes/cart/form.php:816
 #: ../tables/list-history.php:63 ../tables/list-management.php:135
 #: ../tables/list-reward-history.php:36 ../tables/list-reward-request.php:120
 #: ../tables/list-ticket.php:36 ../tables/list-transfers.php:161
@@ -1131,7 +1131,7 @@ msgstr "決済管理"
 msgid "You have no permission to access this page."
 msgstr "このページへのアクセス権がありません。"
 
-#: ../admin/management.php:22 ../admin/management.php:173
+#: ../admin/management.php:22 ../admin/management.php:176
 msgid "Return to transaction list"
 msgstr "決済情報一覧に戻る"
 
@@ -1152,7 +1152,7 @@ msgstr "値"
 msgid "Action"
 msgstr "アクション"
 
-#: ../admin/management.php:37 ../includes/literally-wordpress.php:1366
+#: ../admin/management.php:37 ../includes/literally-wordpress.php:1407
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:53
 #: ../tables/list-management.php:132 ../tables/list-refund.php:113
 #: ../tables/list-transfers.php:155
@@ -1165,7 +1165,7 @@ msgstr "アイテム名"
 msgid "Edit"
 msgstr "編集"
 
-#: ../admin/management.php:56 ../includes/literally-wordpress.php:1372
+#: ../admin/management.php:56 ../includes/literally-wordpress.php:1413
 #: ../includes/products/event.php:924 ../tables/list-download-logs.php:112
 #: ../tables/list-management.php:133 ../tables/list-refund.php:114
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:154
@@ -1182,14 +1182,14 @@ msgstr "すべての決済を見る"
 
 #: ../admin/management.php:64 ../admin/summary.php:196
 #: ../admin/parts/reward-summary.php:165
-#: ../includes/literally-wordpress.php:1399 ../includes/products/event.php:940
+#: ../includes/literally-wordpress.php:1440 ../includes/products/event.php:940
 #: ../tables/list-download-logs.php:179 ../tables/list-management.php:225
 #: ../tables/list-refund.php:165 ../tables/list-reward-history.php:150
 #: ../tables/list-reward-request.php:158 ../tables/list-ticket.php:144
 msgid "Deleted User"
 msgstr "削除されたユーザー"
 
-#: ../admin/management.php:72 ../includes/literally-wordpress.php:1373
+#: ../admin/management.php:72 ../includes/literally-wordpress.php:1414
 #: ../tables/list-history.php:58 ../tables/list-management.php:137
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
 #: ../tables/list-reward-request.php:118 ../tables/list-transfers.php:158
@@ -1205,62 +1205,85 @@ msgstr "購入価格"
 msgid "Original Price"
 msgstr "定価"
 
-#: ../admin/management.php:85 ../form-template/event-tickets-consume.php:18
-#: ../form-template/return.php:51 ../includes/literally-wordpress.php:1367
+#: ../admin/management.php:84
+msgid "Are you sure to refund total price?"
+msgstr "全額を返金してよろしいですか？"
+
+#: ../admin/management.php:88 ../form-template/cancel-ticket.php:16
+msgid "Refund"
+msgstr "返金"
+
+#: ../admin/management.php:90
+msgid ""
+"<strong>Note:</strong> This action tries refunding and the result depends on "
+"payment agency. For example, PayPal accepts refund 60 days after."
+msgstr ""
+"<strong>注意：</strong> この操作は返金を試みますが、結果は決済代行会社によっ"
+"て異なります。たとえば、PayPalは60日後まで返金を受け付けています。"
+
+#: ../admin/management.php:97 ../form-template/event-tickets-consume.php:18
+#: ../form-template/return.php:51 ../includes/literally-wordpress.php:1408
 #: ../includes/cart/cart.php:129 ../includes/cart/form-event.php:198
 #: ../includes/products/event.php:928 ../tables/list-history.php:54
 #: ../tables/list-ticket.php:39
 msgid "Quantity"
 msgstr "数量"
 
-#: ../admin/management.php:95
+#: ../admin/management.php:107
 msgid "Purchase Method"
 msgstr "購入方法"
 
-#: ../admin/management.php:99
+#: ../admin/management.php:111
 #, php-format
 msgid "Transaction ID: %s"
 msgstr "トランザクションID: %s"
 
-#: ../admin/management.php:105 ../includes/literally-wordpress.php:1370
+#: ../admin/management.php:117 ../includes/literally-wordpress.php:1411
 msgid "Invoice Num"
 msgstr "領収番号"
 
-#: ../admin/management.php:133
+#: ../admin/management.php:127
+msgid "Are you sure to change transaction status?"
+msgstr "この決済のステータスを変更してよろしいですか？"
+
+#: ../admin/management.php:137
 msgid "Update Status"
 msgstr "ステータスを更新"
 
-#: ../admin/management.php:136
-msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
-msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
+#: ../admin/management.php:139
+msgid ""
+"<strong>Note:</strong> This action changes do nothing but change transaction "
+"status."
+msgstr ""
+"<strong>注意：</strong> この操作は単に決済ステータスを変更するだけです。"
 
-#: ../admin/management.php:142 ../includes/products/subscription.php:198
+#: ../admin/management.php:144 ../includes/products/subscription.php:198
 #: ../tables/list-history.php:57
 msgid "Expires"
 msgstr "期限"
 
-#: ../admin/management.php:146
+#: ../admin/management.php:148
 msgid "No Limit."
 msgstr "無期限"
 
-#: ../admin/management.php:148 ../includes/products/event.php:1124
+#: ../admin/management.php:150 ../includes/products/event.php:1124
 #: ../includes/products/notifier.php:193 ../tables/list-history.php:195
 msgid "Expired"
 msgstr "期限切れ"
 
-#: ../admin/management.php:148
+#: ../admin/management.php:150
 msgid "Valid"
 msgstr "有効"
 
-#: ../admin/management.php:152
+#: ../admin/management.php:154
 msgid "Not valid."
 msgstr "無効"
 
-#: ../admin/management.php:162
+#: ../admin/management.php:165
 msgid "Update Expiration"
 msgstr "期限を更新"
 
-#: ../admin/management.php:194
+#: ../admin/management.php:198
 msgid "You can get transaction list in status below."
 msgstr "下のステータスの決済リストを取得できます。"
 
@@ -1478,7 +1501,7 @@ msgstr "件数"
 #: ../admin/summary.php:183 ../admin/parts/edit-detail-event.php:113
 #: ../admin/parts/reward-summary.php:151 ../admin/settings/sidebar.php:71
 #: ../admin/settings/sidebar.php:76 ../form-template/payment.php:221
-#: ../form-template/return.php:27 ../includes/literally-wordpress.php:1475
+#: ../form-template/return.php:27 ../includes/literally-wordpress.php:1516
 #: ../tables/list-promotable-posts.php:131
 msgid "Name"
 msgstr "お名前"
@@ -2797,7 +2820,7 @@ msgstr "eメール"
 msgid "Site to contract"
 msgstr "契約対象サイト"
 
-#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1475
+#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1516
 msgid "Marchandise"
 msgstr "商材"
 
@@ -2818,7 +2841,7 @@ msgid "Month"
 msgstr "月"
 
 #: ../admin/settings/sidebar.php:130 ../form-template/selection.php:28
-#: ../includes/literally-wordpress.php:1369 ../includes/products/event.php:931
+#: ../includes/literally-wordpress.php:1410 ../includes/products/event.php:931
 msgid "Payment Method"
 msgstr "支払い方法"
 
@@ -3603,10 +3626,6 @@ msgstr ""
 msgid "Bought"
 msgstr "購入日"
 
-#: ../form-template/cancel-ticket.php:16
-msgid "Refund"
-msgstr "返金"
-
 #: ../form-template/cancel-ticket.php:17
 msgid "Condition"
 msgstr "条件"
@@ -3633,7 +3652,7 @@ msgstr "決済はキャンセルされました。"
 #: ../form-template/cancel.php:5 ../form-template/chocom.php:38
 #: ../form-template/payment.php:332 ../form-template/subscription.php:72
 #: ../form-template/subscription.php:74 ../form-template/subscription.php:76
-#: ../form-template/transfer.php:12 ../includes/cart/form.php:711
+#: ../form-template/transfer.php:12 ../includes/cart/form.php:743
 msgid "Return"
 msgstr "戻る"
 
@@ -3832,8 +3851,8 @@ msgstr "取り扱い種別"
 msgid "At once"
 msgstr "一括払い"
 
-#: ../form-template/payment.php:165 ../includes/cart/form.php:818
-#: ../includes/cart/form.php:837 ../includes/cart/form.php:853
+#: ../form-template/payment.php:165 ../includes/cart/form.php:850
+#: ../includes/cart/form.php:869 ../includes/cart/form.php:885
 msgid "CVS"
 msgstr "コンビニ"
 
@@ -3849,8 +3868,8 @@ msgstr ""
 msgid "You can pay from your bank account via PayEasy."
 msgstr "PayEasyを使って銀行口座からお支払いできます。"
 
-#: ../form-template/payment.php:197 ../includes/cart/form.php:790
-#: ../includes/cart/form.php:813 ../tables/list-transfers.php:159
+#: ../form-template/payment.php:197 ../includes/cart/form.php:822
+#: ../includes/cart/form.php:845 ../tables/list-transfers.php:159
 msgid "Payment Limit"
 msgstr "支払い期限"
 
@@ -3928,7 +3947,7 @@ msgstr ""
 "返金を送金する口座を入力してください。この情報は返金処理を完了するために"
 "<strong>必須</strong>です。口座は有効かつご自身のものでなくてはなりません。"
 
-#: ../form-template/refund-account.php:19 ../includes/cart/form.php:1190
+#: ../form-template/refund-account.php:19 ../includes/cart/form.php:1222
 msgid "Bank Name"
 msgstr "銀行名"
 
@@ -3940,7 +3959,7 @@ msgstr "東京三菱UFJ銀行"
 msgid "Bank Code"
 msgstr "銀行コード"
 
-#: ../form-template/refund-account.php:37 ../includes/cart/form.php:1191
+#: ../form-template/refund-account.php:37 ../includes/cart/form.php:1223
 msgid "Branch Name"
 msgstr "支店名"
 
@@ -3966,11 +3985,11 @@ msgstr "普通預金"
 msgid "Checking Account"
 msgstr "当座預金"
 
-#: ../form-template/refund-account.php:71 ../includes/cart/form.php:1192
+#: ../form-template/refund-account.php:71 ../includes/cart/form.php:1224
 msgid "Account No."
 msgstr "口座番号"
 
-#: ../form-template/refund-account.php:82 ../includes/cart/form.php:1193
+#: ../form-template/refund-account.php:82 ../includes/cart/form.php:1225
 msgid "Account Holder"
 msgstr "口座名義"
 
@@ -3986,7 +4005,7 @@ msgstr "支払い明細を確認の上、支払いを受諾してください。
 msgid "Customer information"
 msgstr "お客様の情報"
 
-#: ../form-template/return.php:20 ../includes/cart/form.php:875
+#: ../form-template/return.php:20 ../includes/cart/form.php:907
 msgid "Invoice No."
 msgstr "取引 No."
 
@@ -5159,7 +5178,20 @@ msgstr "プレゼントを渡しました。"
 msgid "Failed to give a present."
 msgstr "プレゼントを渡せませんでした。"
 
-#: ../includes/literally-wordpress.php:1216
+#: ../includes/literally-wordpress.php:1211
+msgid "You have no permission to access this transaction."
+msgstr "この決済情報へのアクセス権がありません。"
+
+#: ../includes/literally-wordpress.php:1220
+msgid "This transaction is not completed, so you can't refund it."
+msgstr "この決済は完了していないため返金できません。"
+
+#: ../includes/literally-wordpress.php:1223
+#, php-format
+msgid "%s is not refundable."
+msgstr "%sは返金できません。"
+
+#: ../includes/literally-wordpress.php:1231
 msgid ""
 "You can't refund via PayPal because 60 days have past since the transaction "
 "occurred."
@@ -5167,65 +5199,66 @@ msgstr ""
 "トランザクションが発生してから60日が経過したため、PayPalでの返金はできませ"
 "ん。"
 
-#: ../includes/literally-wordpress.php:1221
+#: ../includes/literally-wordpress.php:1234
+msgid "Sorry, but PayPal denied refunding."
+msgstr "PayPalが返金を拒否しました。"
+
+#: ../includes/literally-wordpress.php:1245
+#: ../includes/literally-wordpress.php:1261
 msgid "Refund succeeded."
 msgstr "返金が成功しました。"
 
-#: ../includes/literally-wordpress.php:1223
-msgid "Sorry, but PayPal denied."
-msgstr "PayPalが拒否しました。"
-
-#: ../includes/literally-wordpress.php:1255
+#: ../includes/literally-wordpress.php:1295
 msgid "Transaction was updated."
 msgstr "決済情報が更新されました。"
 
-#: ../includes/literally-wordpress.php:1258
+#: ../includes/literally-wordpress.php:1299
 msgid "Failed to update transaction."
 msgstr "決済情報の更新に失敗しました。"
 
-#: ../includes/literally-wordpress.php:1353 ../includes/products/event.php:909
+#: ../includes/literally-wordpress.php:1394 ../includes/products/event.php:909
 msgid "No ticket match your qriteria.: "
 msgstr "チケットが見つかりませんでした。"
 
-#: ../includes/literally-wordpress.php:1371
+#: ../includes/literally-wordpress.php:1412
 msgid "Transaction ID"
 msgstr "決済ID"
 
-#: ../includes/literally-wordpress.php:1375 ../includes/products/event.php:930
+#: ../includes/literally-wordpress.php:1416 ../includes/products/event.php:930
 msgid "Transaction Status"
 msgstr "決済ステータス"
 
-#: ../includes/literally-wordpress.php:1479 ../includes/cart/form.php:1196
+#: ../includes/literally-wordpress.php:1520 ../includes/cart/form.php:1228
 #, php-format
 msgid "%s is empty."
 msgstr "%sが空です。"
 
-#: ../includes/literally-wordpress.php:1487
+#: ../includes/literally-wordpress.php:1528
 msgid "Email isn't valid format."
 msgstr "メールアドレスの形式が不正です。"
 
-#: ../includes/literally-wordpress.php:1494
+#: ../includes/literally-wordpress.php:1535
 msgid "Tel isn't valid format."
 msgstr "電話番号の形式が不正です。"
 
-#: ../includes/literally-wordpress.php:1498
+#: ../includes/literally-wordpress.php:1539
 msgid "Payment Medhot"
 msgstr "支払い方法"
 
-#: ../includes/literally-wordpress.php:1498
+#: ../includes/literally-wordpress.php:1539
 msgid "Payment Agency"
 msgstr "決済代行業者"
 
-#: ../includes/literally-wordpress.php:1502
+#: ../includes/literally-wordpress.php:1543
 #, php-format
 msgid "At lease one %s must be specified."
 msgstr "少なくとも1つの%sが指定されていなければなりません。"
 
-#: ../includes/literally-wordpress.php:1510
+#: ../includes/literally-wordpress.php:1551
 msgid "Company name is empty."
 msgstr "企業名が空白です。"
 
-#: ../includes/literally-wordpress.php:1598
+#: ../includes/literally-wordpress.php:1639
 msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 "決済代行業者にメッセージが送信されました。返答が来るのをお待ちください。"
@@ -5775,7 +5808,7 @@ msgid "Sorry, but there is no subscription plan."
 msgstr "申し訳ありませんが、ご利用できる定期購読プランはありません。"
 
 #: ../includes/cart/form.php:98 ../includes/cart/form.php:363
-#: ../includes/cart/form.php:951
+#: ../includes/cart/form.php:983
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr ""
 "おや、商品を見つけられませんでした。支払い可能な投稿があるかチェックしてくだ"
@@ -5839,7 +5872,7 @@ msgstr "電話番号は必須です。9から11桁の数字で入力してくだ
 msgid "Failed to connect to server. Please try again later."
 msgstr "サーバに接続できませんでした。後でもう一度試してください。"
 
-#: ../includes/cart/form.php:668 ../includes/cart/form.php:738
+#: ../includes/cart/form.php:668 ../includes/cart/form.php:770
 msgid "Sorry, but specified transaction does not exist."
 msgstr "申し訳ございません、指定された決済は存在しません。"
 
@@ -5850,22 +5883,23 @@ msgstr "決済はキャンセルされました。"
 #: ../includes/cart/form.php:678
 #, php-format
 msgid ""
-"You seem to have finished this transaction, but change it'canceled. You can "
-"calim for it with transaction id: <strong>%s</strong>"
+"You seem to have finished this transaction, so your transaction hasn't been "
+"canceled. To cancel it, please contact to the administrator and calim for it "
+"with transaction id: <strong>%s</strong>"
 msgstr ""
-"決済はすでに完了していますが、キャンセルしました。これに関するお問い合わせに"
-"は次のIDをご利用ください：<strong>%s</strong>"
+"決済はすでに完了しているため、キャンセルされませんでした。キャンセルするため"
+"には、管理者に連絡を取り、次のIDをお伝えください：<strong>%s</strong>"
 
-#: ../includes/cart/form.php:682
+#: ../includes/cart/form.php:714
 msgid "Your transaction satatus is already canceled. Nothing done."
 msgstr "決済はすでにキャンセルさせれています。"
 
-#: ../includes/cart/form.php:685
+#: ../includes/cart/form.php:717
 #, php-format
 msgid "Your tarnsaction status is %s, so you can't change anything."
 msgstr "決済ステータスは%sであるため、変更しませんでした。"
 
-#: ../includes/cart/form.php:699
+#: ../includes/cart/form.php:731
 #, php-format
 msgid ""
 "Failed to update transaction. Please contact to the administrator of <a href="
@@ -5874,11 +5908,11 @@ msgstr ""
 "決済状況の更新に失敗しました。<a href=\"%s\">%s</a>の管理者に連絡を取ってくだ"
 "さい。"
 
-#: ../includes/cart/form.php:704
+#: ../includes/cart/form.php:736
 msgid "Go to Payment Histroy"
 msgstr "購入履歴へ移動"
 
-#: ../includes/cart/form.php:746
+#: ../includes/cart/form.php:778
 #, php-format
 msgid ""
 "Sorry, but your transaction has failed. Please contact to administrator of "
@@ -5887,54 +5921,54 @@ msgstr ""
 "もうしわけございません、決済は失敗しました。<a href=\"%s\">%s</a>の管理者に連"
 "絡を取ってください。"
 
-#: ../includes/cart/form.php:768 ../includes/payment/softbank-payment.php:719
+#: ../includes/cart/form.php:800 ../includes/payment/softbank-payment.php:719
 #: ../includes/payment/softbank-payment.php:809
 msgid "Specified transaction is not found."
 msgstr "指定された決済情報が見つかりません。"
 
-#: ../includes/cart/form.php:786
+#: ../includes/cart/form.php:818
 msgid "Requested Date"
 msgstr "申込日"
 
-#: ../includes/cart/form.php:790 ../tables/list-history.php:197
+#: ../includes/cart/form.php:822 ../tables/list-history.php:197
 #: ../tables/list-transfers.php:222
 #, php-format
 msgid "%d days left"
 msgstr "残%d日"
 
-#: ../includes/cart/form.php:791 ../includes/products/notifier.php:133
+#: ../includes/cart/form.php:823 ../includes/products/notifier.php:133
 msgid "Bank Account"
 msgstr "銀行口座"
 
-#: ../includes/cart/form.php:803
+#: ../includes/cart/form.php:835
 #, php-format
 msgid " (%d days past)"
 msgstr "（%d日経過）"
 
-#: ../includes/cart/form.php:805
+#: ../includes/cart/form.php:837
 #, php-format
 msgid " (%d days left)"
 msgstr "（あと%d日）"
 
-#: ../includes/cart/form.php:820 ../includes/cart/form.php:838
-#: ../includes/cart/form.php:854
+#: ../includes/cart/form.php:852 ../includes/cart/form.php:870
+#: ../includes/cart/form.php:886
 msgid "How to pay"
 msgstr "支払い方法"
 
-#: ../includes/cart/form.php:960
+#: ../includes/cart/form.php:992
 msgid "Failed to connect with PayPal."
 msgstr "PayPalへの接続に失敗しました。"
 
-#: ../includes/cart/form.php:964
+#: ../includes/cart/form.php:996
 msgid "Failed to get the transactional information."
 msgstr "トランザクション情報の取得に失敗しました。"
 
-#: ../includes/cart/form.php:1003
+#: ../includes/cart/form.php:1035
 #, php-format
 msgid " Please contact to Administrator of <strong>%s</strong>"
 msgstr "<strong>%s</strong>の管理者に連絡してください。"
 
-#: ../includes/cart/form.php:1028
+#: ../includes/cart/form.php:1060
 #, php-format
 msgid ""
 "Transaction failed to finish. Please return to previous page and try it "
@@ -5945,11 +5979,11 @@ msgstr ""
 "し再び失敗した場合は<a href=\"%1$s\">%2$s</a>の管理者に連絡を取り、決済状況を"
 "確認してください。"
 
-#: ../includes/cart/form.php:1052 ../includes/cart/form.php:1077
+#: ../includes/cart/form.php:1084 ../includes/cart/form.php:1109
 msgid "Thank you for purchasing."
 msgstr "ご購入ありがとうございました。"
 
-#: ../includes/cart/form.php:1071
+#: ../includes/cart/form.php:1103
 #, php-format
 msgid ""
 "Your transaction has been canceled. If this is an unexpected result, please "
@@ -5958,7 +5992,7 @@ msgstr ""
 "あなたの決済はキャンセルされました。これが意図しない結果の場合、<a href="
 "\"%1$s\">%2$s</a>の管理者に連絡を取ってください。"
 
-#: ../includes/cart/form.php:1074
+#: ../includes/cart/form.php:1106
 #, php-format
 msgid ""
 "Your transaction is now under processing or review. If this is an unexpected "
@@ -6315,7 +6349,11 @@ msgstr "NTTスマートトレード"
 msgid "NTT SmartTrade inc."
 msgstr "NTTスマートトレード株式会社"
 
-#: ../includes/payment/ntt.php:593
+#: ../includes/payment/ntt.php:586
+msgid "Specified transaction is not be refunded."
+msgstr "指定された決済情報が見つかりません。"
+
+#: ../includes/payment/ntt.php:631
 msgid "Failed to updated CVS transaction status: "
 msgstr "コンビニ決済ステータス更新に失敗: "
 
@@ -8478,6 +8516,9 @@ msgstr "タイマーはアイテムがセール中の時だけ表示されます
 
 #~ msgid "SET"
 #~ msgstr "Set"
+
+#~ msgid "<strong>Note:</strong> PayPal accepts refund by 60 days."
+#~ msgstr "<strong>注意:</strong> PayPalは返金を60日間だけ受け付けます。"
 
 #~ msgid "Deleted Ticket"
 #~ msgstr "削除されたチケット"

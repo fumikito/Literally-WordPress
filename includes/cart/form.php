@@ -675,8 +675,40 @@ EOS;
 				$update = true;
 				break;
 			case LWP_Payment_Status::SUCCESS:
-				$msg = sprintf($this->_('You seem to have finished this transaction, but change it\'canceled. You can calim for it with transaction id: <strong>%s</strong>'), $transaction->transaction_key);
-				$update = true;
+				$msg = sprintf($this->_('You seem to have finished this transaction, so your transaction hasn\'t been canceled. To cancel it, please contact to the administrator and calim for it with transaction id: <strong>%s</strong>'), $transaction->transaction_key);
+				$date = date_i18n('Y-m-d(D) H:i:s', current_time('timestamp'));
+				$transaction_detail = var_export($transaction, true);
+				$user = var_export(wp_get_current_user(), true);
+				$message = <<<EOS
+サイト管理者様
+
+一度完了した決済がキャンセルされようとしました。
+{$date}
+
+調査のため、下記データを保存しておいてください。
+
+-----------------------------
+
+【決済データ】
+{$transaction_detail}
+
+【ユーザー情報】
+{$user}
+
+【サーバ情報】
+URL
+{$_SERVER['REQUEST_URI']}
+メソッド
+{$_SERVER['REQUEST_METHOD']}
+IPアドレス
+{$_SERVER["REMOTE_ADDR"]}
+リファラ
+{$_SERVER['HTTP_REFERER']}
+
+-----------------------------
+
+EOS;
+				wp_mail(get_option('admin_email'), '決済に対する不正なキャンセルが試みられました', $message);
 				break;
 			case LWP_Payment_Status::CANCEL:
 				$msg = $this->_('Your transaction satatus is already canceled. Nothing done.');

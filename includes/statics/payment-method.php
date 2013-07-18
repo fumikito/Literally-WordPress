@@ -625,6 +625,39 @@ class LWP_Payment_Methods {
 		}
 	}
 	
+	
+	
+	/**
+	 * Returns if Refund is available
+	 * 
+	 * @param string $method Payment method.
+	 * @param boolean $partial If set to true, only partial refundable method is true.
+	 * @return boolean
+	 */
+	public static function is_refundable($method, $partial = false){
+		if($partial){
+			switch($method){
+				case self::PAYPAL:
+					return true;
+					break;
+				default:
+					return false;
+					break;
+			}
+		}else{
+			switch($method){
+				case self::PAYPAL:
+				case self::NTT_CC:
+					return true;
+					break;
+				default:
+					return false;
+					break;
+			}
+		}
+	}
+	
+	
 	/**
 	 * Check if this post type is selectable
 	 * 

@@ -545,6 +545,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 					'payer_mail' => $_POST['pay_no'],
 					'misc' => serialize($data)
 				), array('ID' => $transaction->ID), array('%s', '%s', '%s'), array('%d'));
+				do_action('lwp_update_transaction', $transaction->ID);
 				$out['returnURL'] = lwp_endpoint('payment-info', array('transaction' => $transaction->ID));
 				break;
 			case LWP_Payment_Methods::NTT_CVS.'_COMPLETE':
@@ -566,6 +567,43 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		}
 		echo '</SHOPMSG>';
 		exit;
+	}
+	
+	
+	/**
+	 * Cancel transaction made by cc.
+	 * 
+	 * @global wpdb $wpdb
+	 * @global Literally_WordPress $lwp
+	 * @param int $transaction_id
+	 * @return \WP_Error|true
+	 */
+	public function cancel_fixed_transaction($transaction_id){
+		global $wpdb, $lwp;
+		$transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$lwp->transaction} WHERE ID = %d", $transaction_id));
+		// Check if transaction is valid
+		if(!$transaction || $transaction->method != LWP_Payment_Methods::NTT_CC || $transaction->status != LWP_Payment_Status::SUCCESS){
+			return new WP_Error(404, $this->_('Specified transaction is not be refunded.'));
+		}
+		// Try request
+		$response = $this->make_request($this->get_endpoint('cc-cancel'), array(
+			'shopId' => $this->shop_id_cc,
+			'linked_1' => $transaction->transaction_key,
+			'accessKey' => $this->access_key_cc,
+			'aid' => $transaction->payer_mail,
+			'amount' => $transaction->price,
+			'choComGoodsCode' => '0990',
+			'flag' => '61' //与信51、与信売上52、与信取消60、売上取消61
+		));
+		// Check response
+		if(!$response){
+			return new WP_Error(500, $this->get_error_msg(''));
+		}elseif($response['payStatus'] != 'C1000000'){
+			return new WP_Error(500, $this->get_error_msg($response['payStatus']));
+		}else{
+			// Response is OK
+			return true;
+		}
 	}
 	
 	
@@ -795,6 +833,33 @@ EOS;
 			case 'C1000064':
 				return '申し訳ございません。与信処理で通信エラーが発生したため、決済が完了していない可能性があります。';
 				break;
+			case 'C1000050':
+				return '対象の決済は与信取消処理ができません。';
+				break;
+			case 'C1000051':
+				return '与信時の利用者IDと与信取消要求の利用者IDが一致しません。';
+				break;
+			case 'C1000052':
+				return '与信時の決済金額と与信取消金額が一致しません。';
+				break;
+			case 'C1000053':
+				return '与信取消処理で通信エラーが発生したため、与信取消が完了していない可能性があります。';
+				break;
+			case 'C1000060':
+				return '対象の決済は売上取消処理ができません。';
+				break;
+			case 'C1000061':
+				return '売上時の利用者IDと売上取消要求の利用者IDが一致しません。';
+				break;
+			case 'C1000062':
+				return '売上時の決済金額と売上取消金額が一致しません。';
+				break;
+			case 'C1000063':
+				return '加盟店貯金箱残高から売上取消金額を引き落しできません。';
+				break;
+			case 'C1000064':
+				return '売上取消処理で通信エラーが発生したため、売上取消が完了していない可能性があります。';
+				break;
 			default:
 				$match = array();
 				if(preg_match("/C1001([0-9a-zA-Z]{3})/", $error_code, $match)){
@@ -982,6 +1047,9 @@ EOS;
 				}else{
 					return $pc_base.'direct/servlet/EPCCvsEntry';
 				}
+				break;
+			case 'cc-cancel':
+				return $pc_base.'direct/servlet/EPODirectCredit';
 				break;
 		}
 	}
