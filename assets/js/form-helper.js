@@ -44,18 +44,19 @@ jQuery(document).ready(function($){
 		}
 	});
 	// Auto Redirect
-	if(!sandbox && $("#lwp-auto-redirect").length > 0){
-		href = $("#lwp-auto-redirect").attr('href');
-		left = 5;
-		window.myInterval = function(){
-			left = left - 1;
-			$("#lwp-redirect-indicator").text(left);
-			if(left == 0){
-				clearInterval(timer);
-				window.location.href = href;
-			}
-		}
-		var timer = setInterval("myInterval()", 1000);
+	if($("#lwp-auto-redirect").length){
+		var href = $("#lwp-auto-redirect").attr('href'),
+			left = parseInt($('#lwp-redirect-indicator').text(), 10),
+			timer = setInterval(function(){
+				left--;
+				$("#lwp-redirect-indicator").text(left);
+				if(left === 0){
+					clearInterval(timer);
+					if(!sandbox){
+						window.location.href = href;
+					}
+				}
+			}, 1000);
 	}
 	// Chocom Helper
 	$('#chocom-redirector').click(function(e){
