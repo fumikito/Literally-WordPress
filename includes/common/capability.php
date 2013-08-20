@@ -52,6 +52,10 @@ class LWP_Capabilities{
 	 * @return boolean
 	 */
 	public function current_user_can($capability){
-		return call_user_func_array(array($this, 'can'), array_merge(array(get_current_user_id()), func_get_args()));
+		$arguments = func_get_args();
+		if(empty($arguments)){
+			return false;
+		}
+		return call_user_func_array(array($this, 'can'), array_merge(array(get_current_user_id()), $arguments));
 	}
 }
