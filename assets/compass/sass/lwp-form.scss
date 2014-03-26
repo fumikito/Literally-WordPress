@@ -324,10 +324,10 @@ p.required{
 	display: inline-block;
 	width: 130px;
 	height: 80px;
-	background: url('../../icon-payment-method@2x.png') left top no-repeat; 
+	background: url('../../icon-payment-method@2x.png?v=0.9.3.2') left top no-repeat;
 }
 .icon-paypal {
-	background-position: 0 bottom;
+	background-position: 0 -80px;
 }
 .icon-creditcard{
 	background-position: 0 0;
@@ -343,6 +343,9 @@ p.required{
 }
 .icon-payeasy{
 	background-position: -130px bottom;
+}
+.icon-bank{
+  background-position: left bottom;
 }
 .lwp-cc-small-icon{
 	display: inline-block;

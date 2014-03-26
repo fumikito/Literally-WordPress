@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Payment module for NTT Smart Trade
+ *
+ */
 class LWP_NTT extends LWP_Japanese_Payment{
 	
 	/**
@@ -72,8 +76,17 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @var string
 	 */
 	public $access_key_cvs = '';
-	
-	
+
+    /**
+     * @var string
+     */
+    public $shop_id_bank = '';
+
+    /**
+     * @var string
+     */
+    public $access_key_bank = '';
+
 	/**
 	 * @var boolean
 	 */
@@ -90,6 +103,11 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @var boolean
 	 */
 	private $cvs = false;
+
+    /**
+     * @var bool
+     */
+    private $bank = false;
 	
 	/**
 	 * @var int
@@ -109,6 +127,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	
 	/**
+     * Allowed IP to connect
+     *
 	 * @var array
 	 */
 	private $allowed_ips = array(
@@ -122,7 +142,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	
 	/**
-	 * 
+	 * Constructor
+     *
 	 * @param array $option
 	 */
 	public function __construct($option = array()) {
@@ -142,7 +163,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	
 	
 	/**
-	 * 
+	 * Setup options
+     *
 	 * @param array $option
 	 */
 	public function set_option($option = array()){
@@ -153,11 +175,14 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			'ntt_access_key_cc' => '',
 			'ntt_shop_id_cvs' => '',
 			'ntt_access_key_cvs' => '',
+            'ntt_shop_id_bank' => '',
+            'ntt_access_key_bank' => '',
 			'ntt_sandbox' => true,
 			'ntt_stealth' => false,
 			'ntt_emoney' => false,
 			'ntt_creditcard' => false,
 			'ntt_webcvs' => false,
+            'ntt_bank' => false,
 			'ntt_comdisp' => '',
 			'ntt_cvs_date' => 0,
 		), $option);
@@ -167,11 +192,14 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		$this->access_key_cc = (string)$option['ntt_access_key_cc'];
 		$this->shop_id_cvs = (string)$option['ntt_shop_id_cvs'];
 		$this->access_key_cvs = (string)$option['ntt_access_key_cvs'];
+        $this->shop_id_bank = (string)$option['ntt_shop_id_bank'];
+        $this->access_key_bank = (string)$option['ntt_access_key_bank'];
 		$this->is_sandbox = (boolean)$option['ntt_sandbox'];
 		$this->is_stealth = (boolean)$option['ntt_stealth'];
 		$this->emoney = (boolean)$option['ntt_emoney'];
 		$this->cc = (boolean)$option['ntt_creditcard'];
 		$this->cvs = (boolean)$option['ntt_webcvs'];
+		$this->bank = (boolean)$option['ntt_bank'];
 		$this->comdisp = (string)$option['ntt_comdisp'];
 		$this->cvs_limit = (int)$option['ntt_cvs_date'];
 	}
@@ -184,7 +212,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 */
 	public function vendor_name($short = false){
 		return $short
-			? $this->_('NTT SmatTrade')
+			? $this->_('NTT SmartTrade')
 			: $this->_('NTT SmartTrade inc.');
 	}
 	
@@ -194,7 +222,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @return boolean
 	 */
 	public function is_emoney_enabled(){
-			return $this->emoney && !empty($this->shop_id) && !empty($this->access_key);
+		return $this->emoney && !empty($this->shop_id) && !empty($this->access_key);
 	}
 	
 	
@@ -215,7 +243,15 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	public function is_cvs_enabled() {
 		return (parent::is_cvs_enabled() &&  !empty($this->shop_id_cvs) && !empty($this->access_key_cvs));
 	}
-	
+
+	/**
+	 * Detect if bank is enabled
+	 *
+	 * @return bool
+	 */
+	public function is_bank_enabled(){
+		return ($this->bank && !empty($this->shop_id_cvs) && !empty($this->access_key_bank));
+	}
 	
 	
 	/**
@@ -252,7 +288,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 */
 	public function is_enabled(){
 		return (boolean)(
-				( $this->is_cc_enabled() || $this->is_cvs_enabled() || $this->is_emoney_enabled())
+			( $this->is_cc_enabled() || $this->is_cvs_enabled() || $this->is_emoney_enabled())
 		);
 	}
 	
@@ -266,8 +302,59 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	public function check_ip(){
 		return false !== array_search($_SERVER['REMOTE_ADDR'], $this->allowed_ips);
 	}
-	
-	
+
+	/**
+	 * Make request and return response for Bank transfer
+	 *
+	 * @param int $user_id
+	 * @param string $customer_name
+	 * @param string $product_name
+	 * @param stdClass $post
+	 * @param int $quantity
+	 * @return array|false|WP_Error
+	 */
+	public function create_bank_request($user_id, $customer_name, $product_name, $post, $quantity = 1){
+		$order_id = $this->generate_order_id($user_id, array($post));
+		try{
+			if( 128 < mb_strlen($product_name, 'utf-8') ){
+				$product_name = mb_substr($product_name, 0, 128, 'utf-8');
+			}
+			$price = lwp_price($post) * max(1, $quantity);
+			$limit = $this->get_closest_limit(array($post));
+			if( $limit > 0 ){
+				$limit =  $limit - (60 * 60 * 24);
+			}else{
+				$limit = strtotime('+14 day', current_time('timestamp'));
+			}
+			// Make request.
+			$result = $this->make_request($this->get_endpoint('bank-auth'), array(
+				'shopId' => $this->shop_id_bank,
+				'linked_1' => $order_id,
+				'accessKey' => $this->access_key_bank,
+				'amount' => $price,
+				'name' => mb_convert_encoding($customer_name, 'sjis-win', 'utf-8'),
+				'choComTypicalGoodsName' => mb_convert_encoding($product_name, 'sjis-win', 'utf-8'),
+				'flag' => 1,
+				'expiry' => date_i18n('YYYMMDD', $limit),
+			));
+			// Check if request is O.K.
+			if( !$result || !isset($result['payStatus']) ){
+				throw new Exception('金融機関との通信に失敗しました。');
+			}
+			if( 'C2000000' != $result['payStatus'] ){
+				throw new Exception($this->get_error_msg($result['payStatus']));
+			}
+			// Check data
+			if( $order_id != $result['linked_1'] ){
+				throw new Exception('予期しない注文番号が返ってきました。時間をおいてからもう一度お試しください。');
+			}
+			$result['expires'] = date_i18n('Y-m-d H:i:s', $limit);
+			return $result;
+		}catch (Exception $e){
+			return new WP_Error(500, $e->getMessage());
+		}
+	}
+
 	
 	/**
 	 * Redirect user to endpoint
@@ -307,6 +394,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * 
 	 * @global Literally_WordPress $lwp
 	 * @param int $user_id
+	 * @param array $posts
 	 * @return string
 	 */
 	public function generate_order_id($user_id, $posts = array()){
@@ -331,11 +419,10 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		}
 		return true;
 	}
-	
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Make request and get result as array.
 	 * 
@@ -466,7 +553,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * 
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
-	 * @param type $method
+	 * @param string $posted_method
 	 * @return boolean
 	 */
 	public function parse_request($posted_method){
@@ -497,6 +584,13 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$data_to_parse = array_merge($data_to_parse, array('amount', 'centerPayId', 'cvs_name', 'cvs_date'));
 				$shop_id = $this->shop_id_cvs;
 				$access_key = $this->access_key_cvs;
+				break;
+			case LWP_Payment_Methods::NTT_BANK:
+				$shop_id = $this->shop_id_bank;
+				$access_key = $this->access_key_bank;
+				$data_to_parse = array_merge($data_to_parse, array(
+					'centerPayId', 'payAmount', 'van'
+				));
 				break;
 			default:
 				return false;
@@ -558,6 +652,53 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$out['linked_1'] = $transaction->transaction_key;
 				$out['returnCode'] = 'OK';
 				break;
+			case LWP_Payment_Methods::NTT_BANK:
+				$data = unserialize($transaction->misc);
+				$out['returnCode'] = 'OK';
+				$site_name = get_bloginfo('name');
+				try{
+					// Check if transaction is valid
+					if( strtotime($transaction->expires) < current_time('timestamp') ){
+						throw new Exception(sprintf('%sに入金されましたが、購入期限%sを過ぎています。', current_time('mysql'), $transaction->expires));
+					}
+					if( $transaction->price != $_POST['payAmount'] ){
+						throw new Exception(sprintf('購入金額が異なります。%d円のはずが、%d円しか入金されませんでした。', $transaction->price, $_POST['payAmount']));
+					}
+					$user_data = get_userdata($transaction->user_id);
+					if( !$user_data ){
+						throw new Exception(sprintf('ユーザーID %d はすでに存在しません。', $transaction->user_id));
+					}
+					$wpdb->update($lwp->transaction, array(
+						'status' => LWP_Payment_Status::SUCCESS,
+						'expires' => '0000-00-00 00:00:00',
+						'updated' => gmdate('Y-m-d H:i:s'),
+					), array(
+						'ID' => $transaction->ID,
+					), array('%s', '%s', '%s'), array('%d'));
+					do_action('lwp_update_transaction', $transaction->ID);
+				}catch (Exception $e){
+					$message = $e->getMessage();
+					$admin_url = admin_url('admin.php?page=lwp-management&transaction_id='.$transaction->ID);
+					$body = <<<EOS
+{$site_name}様
+
+以下の銀行振込決済でエラーが発生しました。
+
+ID: {$transaction->transaction_key}
+
+［エラー］
+{$message}
+
+管理画面へ行き、ユーザーにコンタクトを取ってください。
+
+{$admin_url}
+
+このメールは自動送信です。
+EOS;
+
+					wp_mail(get_option('admin_email'), 'NTT スマートトレード決済エラー', $body);
+				}
+				break;
 		}
 		$this->log(sprintf('Response on %s will be:', $posted_method), $out);
 		header('Content-Type: text/plain; charset=UTF-8');
@@ -616,19 +757,29 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 */
 	public function cvs_batch(){
 		global $lwp, $wpdb;
-		// Is valid
-		if(!$this->is_cvs_enabled() || $this->cvs_limit < 1){
-			return;
-		}
-		// Get all transactions
-		$sql = <<<EOS
-			UPDATE {$lwp->transaction} SET status = %s, updated = %s
-			WHERE status = %s AND method = %s AND transaction_id = '' AND (updated + INTERVAL 9 HOUR) < (NOW() - INTERVAL %d DAY)
+		// Is CSV valid
+		if( $this->is_cvs_enabled() && $this->cvs_limit >= 1){
+			// Get all transactions
+			$sql = <<<EOS
+				UPDATE {$lwp->transaction} SET status = %s, updated = %s
+				WHERE status = %s AND method = %s AND transaction_id = '' AND (updated + INTERVAL 9 HOUR) < (NOW() - INTERVAL %d DAY)
 EOS;
-		$query = $wpdb->prepare($sql, LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'), LWP_Payment_Status::START, LWP_Payment_Methods::NTT_CVS, $this->cvs_limit);
-		$result = $wpdb->query($query);
-		if(false === $result){
-			$this->log($this->_('Failed to updated CVS transaction status: '), $query);
+			$query = $wpdb->prepare($sql, LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'), LWP_Payment_Status::START, LWP_Payment_Methods::NTT_CVS, $this->cvs_limit);
+			$result = $wpdb->query($query);
+			if(false === $result){
+				$this->log($this->_('Failed to updated CVS transaction status: '), $query);
+			}
+		}
+		// Is Bank Valid
+		if( $this->is_bank_enabled() ){
+			$query = <<<EOS
+				UPDATE {$lwp->transaction} SET status = %s, updated = %s, expires = '0000-00-00 00:00:00'
+				WHERE status = %s AND method = %s AND expires <= NOW()
+EOS;
+			$wpdb->query($wpdb->prepare($query,
+				LWP_Payment_Status::CANCEL, gmdate('Y-m-d H:i:s'),
+				LWP_Payment_Status::START,
+				LWP_Payment_Methods::NTT_BANK));
 		}
 	}
 	
@@ -688,6 +839,9 @@ EOS;
 				break;
 			case 'contract':
 				return '1つのショップIDですべての支払いタイプの契約をしている場合でも、ショップID、アクセスキーはそれぞれ入力してください。';
+				break;
+			case 'bank':
+				return '専用の銀行口座に対して銀行振込を行うサービスです。別途振込手数料が発生します。';
 				break;
 			case 'emoney':
 			default:
@@ -749,6 +903,7 @@ EOS;
 		switch($error_code){
 			case 'C0000000':
 			case 'C1000000':
+			case 'C2000000':
 				return '正常に決済処理がおこなわれました。';
 				break;
 			case 'C0000001':
@@ -860,14 +1015,51 @@ EOS;
 			case 'C1000064':
 				return '売上取消処理で通信エラーが発生したため、売上取消が完了していない可能性があります。';
 				break;
+			case 'C2000001':
+			case 'C2000002':
+			case 'C2000003':
+			case 'C2000004':
+			case 'C2000005':
+				return '決済用の口座番号が取得できませんでした。';
+				break;
+			case 'C2000006':
+				return 'この加盟店は銀行振込サービスを利用できません。';
+				break;
+			case 'C2000007':
+			case 'C2000008':
+				return '処理中にエラーが発生しました。';
+				break;
+			case 'C2000009':
+				return 'システム停止中です。';
+				break;
+			case 'C2000011':
+			case 'C2000012':
+			case 'C2000020':
+				return '加盟店の認証情報が間違っています。時間をおいてからもう一度お試しください。';
+				break;
+			case 'C2000013':
+				return '二重申し込みです。メールが届いていないか、ご確認の上、管理者にお問い合わせ下さい。';
+				break;
+			case 'C2000021':
+				return '金額が不正です。大き過ぎるか、小さ過ぎます。';
+				break;
+			case 'C2000023':
+				return '商品名が長過ぎるか、設定されていません。';
+				break;
+			case 'C2000024':
+				return '支払方法が間違っています。時間をおいてからもう一度お試しください。';
+				break;
+			case 'C2000025':
+				return '支払い期限の指定に誤りがあります。ブラウザを長く開いたままにしていませんでしたか？';
+				break;
 			default:
 				$match = array();
 				if(preg_match("/C1001([0-9a-zA-Z]{3})/", $error_code, $match)){
 					return sprintf('エラー%s（カード情報が間違っている、限度額を超えている、有効期限が切れている、など）により、決済を完了できませんでした。詳しくはカード会社までお問い合わせください。', $error_code);
 				}else{
-					return 'ちょコムでの決済処理の過程でエラーが発生しました。もう一度やり直してください。';
+					return '決済処理の過程でエラーが発生しました。もう一度やり直してください。';
 				}
-				break;;
+				break;
 		}
 	}
 	
@@ -1050,6 +1242,9 @@ EOS;
 				break;
 			case 'cc-cancel':
 				return $pc_base.'direct/servlet/EPODirectCredit';
+				break;
+			case 'bank-auth':
+				return $pc_base.'/inq/servlet/';
 				break;
 		}
 	}

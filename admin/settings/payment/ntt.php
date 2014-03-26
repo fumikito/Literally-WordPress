@@ -149,6 +149,37 @@
 		</tr>
 		<tr>
 			<th valign="top">
+				<label><?php $this->e(LWP_Payment_Methods::NTT_BANK); ?></label>
+			</th>
+			<td>
+				<label>
+					<input type="checkbox" name="ntt_bank" value="1"<?php if($this->ntt->is_bank_enabled()) echo ' checked="checked"'; ?> />
+					<?php $this->e('Contaracted and available'); ?>
+				</label>
+				<p class="description"><?php echo $this->ntt->get_desc('bank'); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
+				<label for="ntt_shop_id_bank"><?php printf($this->_('Shop ID for %s'), $this->_(LWP_Payment_Methods::NTT_BANK)); ?></label>
+				<small class="required"><?php $this->e('Required'); ?></small>
+			</th>
+			<td>
+				<input type="text" name="ntt_shop_id_bank" id="ntt_shop_id_bank" class="regular-text" value="<?php echo esc_attr($this->ntt->shop_id_bank); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
+				<label for="ntt_access_key_bank"><?php printf($this->_('Access Key for %s'), $this->_(LWP_Payment_Methods::NTT_BANK)); ?></label>
+				<small class="required"><?php $this->e('Required'); ?></small>
+			</th>
+			<td>
+				<input type="text" name="ntt_access_key_bank" id="ntt_access_key_bank" class="regular-text" value="<?php echo esc_attr($this->ntt->access_key_bank); ?>" />
+				<p class="info"><?php echo $this->ntt->get_desc('contract'); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th valign="top">
 				<label for="ntt_comdisp">同意選択画面番号</label>
 			</th>
 			<td>
@@ -176,6 +207,10 @@
 				<label>
 					<input type="text" readonly="readonly" onclick="this.select(0, this.value.length);" value="<?php echo esc_attr(lwp_endpoint('chocom-cvs-complete')); ?>" class="regular-text" />
 					ちょコムコンビニ決済完了通知
+				</label><br />
+				<label>
+					<input type="text" readonly="readonly" onclick="this.select(0, this.value.length);" value="<?php echo esc_attr(lwp_endpoint('chocom-bank')); ?>" class="regular-text" />
+					銀行振込入金通知
 				</label>
 				<p class="description">
 					<?php $this->e('NTT SmartTrade requires contact endpoint on your server. Please notify this URL to your service manager.'); ?>

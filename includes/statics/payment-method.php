@@ -65,6 +65,11 @@ class LWP_Payment_Methods {
 	 * Name of NTT CVS
 	 */
 	const NTT_CVS = 'NTT_CVS';
+
+	/**
+	 * Name of NTT Bank
+	 */
+	const NTT_BANK = 'NTT_BANK';
 	
 	/**
 	 * Name of payment method for free campaign.
@@ -101,6 +106,7 @@ class LWP_Payment_Methods {
 			self::NTT_EMONEY,
 			self::NTT_CC,
 			self::NTT_CVS,
+			self::NTT_BANK,
 		);
 		return $methods;
 	}
@@ -127,10 +133,12 @@ class LWP_Payment_Methods {
 		$lwp->_('NTT_EMONEY');
 		$lwp->_('NTT_CC');
 		$lwp->_('NTT_CVS');
+		$lwp->_('NTT_BANK');
 	}
 	
 	/**
 	 * Returns transfer method
+	 *
 	 * @return array
 	 */
 	public static function get_transfer_methods(){
@@ -140,6 +148,7 @@ class LWP_Payment_Methods {
 			self::SOFTBANK_PAYEASY,
 			self::SOFTBANK_WEB_CVS,
 			self::NTT_CVS,
+			self::NTT_BANK,
 			self::TRANSFER
 		);
 	}
@@ -259,6 +268,9 @@ class LWP_Payment_Methods {
 					case self::NTT_CVS:
 						$flg = $lwp->ntt->is_cvs_enabled();
 						break;
+					case self::NTT_BANK:
+						$flg = $lwp->ntt->is_bank_enabled();
+						break;
 					case self::TRANSFER:
 						$flg = $lwp->notifier->is_enabled();
 						break;
@@ -274,7 +286,7 @@ class LWP_Payment_Methods {
 	/**
 	 * Return if specified method is chocom
 	 * 
-	 * @param method $method
+	 * @param string $method
 	 * @return boolean
 	 */
 	public static function is_chocom($method){
@@ -356,6 +368,7 @@ class LWP_Payment_Methods {
 			self::SOFTBANK_PAYEASY,
 			self::SOFTBANK_WEB_CVS,
 			self::NTT_CVS,
+			self::NTT_BANK,
 			self::TRANSFER
 		);
 	}
@@ -385,6 +398,8 @@ class LWP_Payment_Methods {
 			return 'cvs';
 		}elseif(false !== strpos($method, 'PAYEASY')){
 			return 'payeasy';
+		}elseif( self::NTT_BANK == $method ){
+			return 'bank';
 		}else{
 			return self::lower($method);
 		}
@@ -405,6 +420,7 @@ class LWP_Payment_Methods {
 		}elseif(false !== strpos($method, 'SOFTBANK_')){
 			return $lwp->softbank->is_stealth;
 		}elseif(false !== strpos($method, 'NTT_')){
+			// TODO: 銀行振込だけ変える
 			return $lwp->ntt->is_stealth;
 		}else{
 			return false;
@@ -508,10 +524,14 @@ class LWP_Payment_Methods {
 			case self::GMO_WEB_CVS:
 			case self::SOFTBANK_WEB_CVS:
 			case self::NTT_CVS:
+			case self::NTT_BANK:
 				return $lwp->_($method);
 				break;
 			case self::NTT_EMONEY:
 				return 'ちょコムeマネー';
+				break;
+			case self::NTT_BANK:
+				return '銀行振込';
 				break;
 			case self::PAYPAL:
 			case self::TRANSFER:
@@ -550,6 +570,9 @@ class LWP_Payment_Methods {
 			case self::NTT_EMONEY:
 				return 'NTTスマートトレードの提供する電子マネーサービス';
 				break;
+			case self::NTT_BANK:
+				return 'NTTスマートトレードの提供する銀行振込サービス';
+				break;
 			case self::TRANSFER:
 				return $lwp->_('You can pay through specified bank account. The account will be displayed on next page.');
 				break;
@@ -577,6 +600,7 @@ class LWP_Payment_Methods {
 			case self::SOFTBANK_WEB_CVS:
 			case self::SOFTBANK_PAYEASY:
 			case self::NTT_CVS:
+			case self::NTT_BANK:
 				return $lwp->_('This is offline payment. To finish transaction, you should follow the instruction on next step.');
 				break;
 			case self::NTT_CC:
@@ -617,6 +641,7 @@ class LWP_Payment_Methods {
 			case self::NTT_EMONEY:
 			case self::NTT_CC:
 			case self::NTT_CVS:
+			case self::NTT_BANK:
 				return $lwp->ntt->vendor_name();
 				break;
 			default:
@@ -670,10 +695,20 @@ class LWP_Payment_Methods {
 		switch($method){
 			case self::GMO_PAYEASY:
 			case self::GMO_WEB_CVS:
+				return true;
 				break;
 			case self::NTT_CVS:
 				$closest = apply_filters('lwp_closest_limit', $lwp->ntt->get_closest_limit($posts), $method);
 				return !($closest > 0 && strtotime(date_i18n('Y-m-d 23:59:59')) >= $closest);
+				break;
+			case self::NTT_BANK:
+				$closest = apply_filters('lwp_closest_limit', $lwp->ntt->get_closest_limit($posts), $method);
+				// Available 1 day before selling limit
+				if( $closest > 0 && strtotime(date_i18n('Y-m-d 23:59:59')) >= ($closest - 60 * 60 * 24) ){
+					return false;
+				}else{
+					return true;
+				}
 				break;
 			case self::SOFTBANK_PAYEASY:
 			case self::SOFTBANK_WEB_CVS:

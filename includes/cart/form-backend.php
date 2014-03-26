@@ -162,13 +162,24 @@ abstract class LWP_Form_Backend extends LWP_Form_Template{
 			$this->kill($this->_('You have no permission to see this page.'), 403);
 		}
 	}
-	
-	
+
+
+	/**
+	 * Handle request form NTT Bank finished
+	 */
+	protected function handle_chocom_bank(){
+		global $lwp;
+		if( !$lwp->ntt->check_ip() || !$lwp->ntt->parse_request(LWP_Payment_Methods::NTT_BANK) ){
+			$this->kill($this->_('You have no permission to see this page.'), 403);
+		}
+	}
+
+
 	
 	/**
 	 * Handle request from GMO
+	 *
 	 * @global Literally_WordPress $lwp
-	 * @return
 	 */
 	protected function handle_gmo_payment(){
 		global $lwp;

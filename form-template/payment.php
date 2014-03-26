@@ -42,6 +42,7 @@
 
 <form method="post" action="<?php echo $action; ?>">
 	<input type="hidden" name="lwp-id" value="<?php echo esc_attr($post_id); ?>" />
+	<input type="hidden" name="quantity[<?php echo $post_id ?>]" value="<?php echo esc_attr($quantities[$post_id]) ?>" />
 	<input type="hidden" name="lwp-method" value="<?php echo esc_attr($method); ?>" />
 	<table class="form-table">
 		<tbody>
@@ -158,7 +159,7 @@
 				<td><?php $this->e('At once'); ?></td>
 			</tr>
 			<?php ?>
-			<?php break; case 'sb-cvs': case 'sb-payeasy': case 'gmo-cvs':  case 'gmo-payeasy': ?>
+			<?php break; case 'sb-cvs': case 'sb-payeasy': case 'gmo-cvs':  case 'gmo-payeasy': case 'ntt-bank': ?>
 			<?php if(false !== array_search($method, array('sb-cvs', 'gmo-cvs'))): ?>
 			<tr>
 				<th>
@@ -318,6 +319,35 @@
 						<input type="checkbox" name="save_info" value="1" checked="checked" />
 						<?php $this->e('Save these information'); ?>
 					</label>
+				</td>
+			</tr>
+			<?php break; case LWP_Payment_Methods::NTT_BANK: ?>
+			<tr>
+				<th>
+					<label for="customer_name"><?php $this->e('Name') ?></label>
+					<span class="required">*</span>
+				</th>
+				<td>
+					<input type="text" class="middle-text" name="customer_name" id="customer_name" value="<?php echo esc_attr($vars['customer_name']); ?>" placeholder="ex. タナカタロウ" />
+					<p class="description">
+						お名前を40文字以内の全角カナで入力してください。（例： タナカタロウ）
+					</p>
+					<?php wp_nonce_field('lwp_payment_ntt_bank') ?>
+				</td>
+			</tr>
+			<?php if($vars['payment_limit']): ?>
+				<tr>
+					<th><label>支払い期限</label></th>
+					<td><?php echo esc_html($vars['payment_limit']) ?></td>
+				</tr>
+			<?php endif; ?>
+			<tr>
+				<th><label>支払い方法</label></th>
+				<td>
+					<p class="description">
+						次のページで三井住友銀行の支店名および口座番号を表示します。<br />
+						<strong>振込手数料はお客様のご負担となります。</strong>
+					</p>
 				</td>
 			</tr>
 			<?php break; endswitch; ?>

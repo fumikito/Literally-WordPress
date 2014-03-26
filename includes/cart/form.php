@@ -311,7 +311,19 @@ EOS;
 					case LWP_Payment_Methods::GMO_PAYEASY:
 					case LWP_Payment_Methods::GMO_CC:
 					case LWP_Payment_Methods::SOFTBANK_CC:
-						header('Location: '.lwp_endpoint('payment', array('lwp-method' => $posted_method, 'lwp-id' => $book->ID)));
+					case LWP_Payment_Methods::NTT_BANK:
+						$args = array(
+							'lwp-method' => $posted_method,
+							'lwp-id' => $book->ID
+						);
+						if(isset($_REQUEST['quantity']) && is_array($_REQUEST['quantity'])){
+							foreach($_REQUEST['quantity'] as $id => $quantity){
+								if($quantity > 1){
+									$args['quantity['.$id.']'] = $quantity;
+								}
+							}
+						}
+						header('Location: '.lwp_endpoint('payment', $args));
 						exit();
 						break;
 					default:
@@ -368,10 +380,15 @@ EOS;
 		$book_id = isset($_REQUEST['lwp-id']) ? intval($_REQUEST['lwp-id']) : 0;
 		// Test content
 		$book = $this->test_post_id($book_id);
+		$this->test_post_id($book);
+		// Test quantity
+		if( !$this->test_current_quantity($book) ){
+			$this->kill($this->_('Item quantity is wrong. Please go back and select item quantity.'), 500);
+		}
 		// Get method
 		$posted_method = isset($_REQUEST['lwp-method']) ? $_REQUEST['lwp-method'] : '';
 		$payment_method = LWP_Payment_Methods::test($posted_method, array($book));
-		if(!$payment_method){
+		if( !$payment_method ){
 			$this->kill($this->_('Specified payment method doesn\'t exist.'), 404, true);
 		}
 		//Set default values.
@@ -388,7 +405,11 @@ EOS;
 				$vars = $lwp->gmo->get_default_payment_info(get_current_user_id(), $payment_method);
 				break;
 			default:
-				$vars = array();
+				$closest = $lwp->ntt->get_closest_limit(array($book));
+				$vars = array(
+					'customer_name' => isset($_REQUEST['customer_name']) ? $_REQUEST['customer_name'] : '',
+					'payment_limit' => $closest ? ( date_i18n( get_option('date_format'), ($closest - 60 * 60 * 24) )) : false,
+				);
 				break;
 		}
 		$item_name = $this->get_item_name($book);
@@ -591,12 +612,99 @@ EOS;
 						}
 					}
 					break;
+				case LWP_Payment_Methods::NTT_BANK:
+					if( wp_verify_nonce($_REQUEST['_wpnonce'], 'lwp_payment_ntt_bank') ){
+						try{
+							$quantity = max(1, intval($_POST['quantity'][$book->ID]));
+							$name = isset($_POST['customer_name']) ? $_POST['customer_name'] : '';
+							if( !preg_match('/^[ァ-ヶー]{1,40}$/u', $name) ){
+								throw new Exception('お名前は40文字以内の全角カナで入力してください。');
+							}
+							// Make request.
+							$response = $lwp->ntt->create_bank_request(get_current_user_id(), $name, $item_name, $book, $quantity);
+							if( is_wp_error($response) ){
+								throw new Exception($response->get_error_message());
+							}
+							// No error.  Let's make tarnsaction.
+							$wpdb->insert($lwp->transaction, array(
+								'user_id' => get_current_user_id(),
+								'book_id' => $book->ID,
+								'price' => ($price = lwp_price($book) * $quantity),
+								'status' => LWP_Payment_Status::START,
+								'method' => LWP_Payment_Methods::NTT_BANK,
+								'transaction_key' => $response['linked_1'],
+								'transaction_id' => $response['centerPayId'],
+								'registered' => gmdate('Y-m-d H:i:s'),
+								'updated' => gmdate('Y-m-d H:i:s'),
+								'expires' => $response['expires'],
+								'num' => $quantity,
+								'misc' => serialize($response),
+							), array('%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s'));
+							$transaction_id = $wpdb->insert_id;
+							// Execute hook
+							do_action('lwp_create_transaction', $transaction_id);
+							// メール送る
+							$user = get_userdata(get_current_user_id());
+							$site_name = get_bloginfo('name');
+							$subject = sprintf('%s: 銀行振込受付のお知らせ', $site_name);
+							$url = get_permalink($book->post_parent);
+							$end_point = lwp_endpoint('payment-info', array(
+								'transaction' => $transaction_id,
+							));
+							$limit = mysql2date(get_option('date_format'), $response['expires']);
+							$body = <<<EOS
+{$user->display_name} 様
+
+
+
+いつもご利用ありがとうございます。{$site_name}です。
+以下のイベントについて銀行振込を受付けました。
+
+［購入した商品］
+{$item_name} x {$quantity}
+￥ {$price}
+
+［振込先］
+三井住友銀行
+銀行コード：0009
+支店番号　：{$response['van1']}
+口座番号　：{$response['van2']}
+
+［振込期限］
+{$limit}
+
+詳細は下記URLの情報をご覧下さい。
+{$url}
+
+お客様の支払いステータスは以下のURLでご覧になれます。
+{$end_point}
+
+［お問い合わせID］
+お問い合わせの際は、以下のIDをお伝えください。
+{$response['linked_1']}
+
+
+{$lwp->option['event_signature']}
+
+EOS;
+							wp_mail($user->user_email, $subject, $body);
+							// Redirect
+							wp_redirect($end_point);
+							exit;
+						}catch (Exception $e){
+							$error[] = $e->getMessage();
+						}
+					}
+					break;
+				default:
+					// Do nothing
+					break;
 			}
 		}
 		$this->show_form('payment', array(
 			'prices' => array($book->ID => $price),
 			'items' => array($book->ID => $item_name),
-			'quantities' => array($book->ID => 1),
+			'quantities' => array($book->ID => $this->get_current_quantity($book) ),
 			'total_price' => $price,
 			'post_id' => $book->ID,
 			'action' => lwp_endpoint('payment'),
@@ -782,7 +890,8 @@ EOS;
 
 
 	/**
-	 * 
+	 * Show Payment information
+	 *
 	 * @global Literally_WordPress $lwp
 	 * @global wpdb $wpdb
 	 * @param boolean $is_sandbox
@@ -791,7 +900,7 @@ EOS;
 		global $lwp, $wpdb;
 		$this->kill_anonymous_user();
 		$transaction_id = isset($_REQUEST['transaction']) ? intval($_REQUEST['transaction']) : 0;
-		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY, LWP_Payment_Methods::NTT_CVS)));
+		$methods = implode(', ', array_map(create_function('$m', 'return "\'".$m."\'";'), array(LWP_Payment_Methods::SOFTBANK_PAYEASY, LWP_Payment_Methods::SOFTBANK_WEB_CVS, LWP_Payment_Methods::TRANSFER, LWP_Payment_Methods::GMO_WEB_CVS, LWP_Payment_Methods::GMO_PAYEASY, LWP_Payment_Methods::NTT_CVS, LWP_Payment_Methods::NTT_BANK)));
 		$sql = <<<EOS
 			SELECT * FROM {$lwp->transaction} WHERE user_id = %d AND method IN ({$methods}) AND ID = %d
 EOS;
@@ -826,6 +935,8 @@ EOS;
 			$data = unserialize($transaction->misc);
 			if(preg_match("/^SB_/", $transaction->method)){
 				$limit_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "$1-$2-$3 23:59:59", $data['bill_date']);
+			}elseif( LWP_Payment_Methods::NTT_BANK == $transaction->method){
+				$limit_date = $transaction->expires;
 			}else{
 				$limit_date = $data['bill_date'];
 			}
@@ -844,6 +955,18 @@ EOS;
 			}
 			$rows[] = array($this->_('Payment Limit'), mysql2date(get_option('date_format'), $limit_date).' '.$request_suffix);
 			switch($transaction->method){
+				case LWP_Payment_Methods::NTT_BANK:
+					$desc = <<<EOS
+三井住友銀行<br />
+銀行コード： <code>0009</code><br />
+支店番号　： <code>{$data['van1']}</code><br />
+口座番号　： <code>{$data['van2']}</code><br />
+EOS;
+
+					$rows[] = array('支払方法', '銀行振込');
+					$rows[] = array( '振込先', $desc);
+					$rows[] = array('注意点', '振込手数料はお客様のご負担とります。なにとぞご了承ください。');
+					break;
 				case LWP_Payment_Methods::NTT_CVS:
 					$label = $lwp->ntt->get_cvs_code_label($data['cvs_name']);
 					$rows =  array_merge($rows, array(

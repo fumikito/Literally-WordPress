@@ -12,7 +12,7 @@ class Literally_WordPress{
 	*
 	* @var string
 	*/
-	public $version = "0.9.3.1";
+	public $version = "0.9.3.2";
 	
 	/**
 	 * 翻訳用ドメイン名
@@ -292,11 +292,14 @@ class Literally_WordPress{
 				'ntt_access_key_cc' => '',
 				'ntt_shop_id_cvs' => '',
 				'ntt_access_key_cvs' => '',
+				'ntt_shop_id_bank' => '',
+				'ntt_access_key_bank' => '',
 				'ntt_sandbox' => true,
 				'ntt_stealth' => false,
 				'ntt_emoney' => false,
 				'ntt_creditcard' => false,
 				'ntt_webcvs' => false,
+				'ntt_bank' => false,
 				'ntt_comdisp' => '',
 				'ntt_cvs_date' => 0,
 				'ios' => false,
@@ -855,11 +858,14 @@ class Literally_WordPress{
 						'ntt_access_key_cc' => (string)$_REQUEST['ntt_access_key_cc'],
 						'ntt_shop_id_cvs' => (string)$_REQUEST['ntt_shop_id_cvs'],
 						'ntt_access_key_cvs' => (string)$_REQUEST['ntt_access_key_cvs'],
+						'ntt_shop_id_bank' => (string)$_REQUEST['ntt_shop_id_bank'],
+						'ntt_access_key_bank' => (string)$_REQUEST['ntt_access_key_bank'],
 						'ntt_sandbox' => (boolean)(isset($_REQUEST['ntt_sandbox']) && $_REQUEST['ntt_sandbox']),
 						'ntt_stealth' => (isset($_REQUEST['ntt_stealth']) && $_REQUEST['ntt_stealth']),
 						'ntt_emoney' => (isset($_REQUEST['ntt_emoney']) && $_REQUEST['ntt_emoney']),
 						'ntt_creditcard' => (isset($_REQUEST['ntt_creditcard']) && $_REQUEST['ntt_creditcard']),
 						'ntt_webcvs' => (isset($_REQUEST['ntt_webcvs']) && $_REQUEST['ntt_webcvs']),
+						'ntt_bank' => (isset($_REQUEST['ntt_bank']) && $_REQUEST['ntt_bank']),
 						'ntt_comdisp' => (string)$_REQUEST['ntt_comdisp'],
 						'ntt_cvs_date' => (int)$_REQUEST['ntt_cvs_date'],
 					);
