@@ -348,7 +348,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 			if( $order_id != $result['linked_1'] ){
 				throw new Exception('予期しない注文番号が返ってきました。時間をおいてからもう一度お試しください。');
 			}
-			$result['expires'] = date_i18n('Y-m-d H:i:s', $limit);
+			$result['expires'] = date_i18n('Y-m-d 23:59:59', $limit);
 			return $result;
 		}catch (Exception $e){
 			return new WP_Error(500, $e->getMessage());
@@ -679,6 +679,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				}catch (Exception $e){
 					$message = $e->getMessage();
 					$admin_url = admin_url('admin.php?page=lwp-management&transaction_id='.$transaction->ID);
+					$to = apply_filters('lwp_failure_notification_mail', get_option('admin_email'));
 					$body = <<<EOS
 {$site_name}様
 
@@ -696,7 +697,7 @@ ID: {$transaction->transaction_key}
 このメールは自動送信です。
 EOS;
 
-					wp_mail(get_option('admin_email'), 'NTT スマートトレード決済エラー', $body);
+					wp_mail($to, 'NTT スマートトレード決済エラー', $body);
 				}
 				break;
 		}
@@ -1244,7 +1245,7 @@ EOS;
 				return $pc_base.'direct/servlet/EPODirectCredit';
 				break;
 			case 'bank-auth':
-				return $pc_base.'/inq/servlet/';
+				return $pc_base.'direct/servlet/EPBReconcileRequest';
 				break;
 		}
 	}

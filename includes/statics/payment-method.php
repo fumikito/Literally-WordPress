@@ -421,7 +421,11 @@ class LWP_Payment_Methods {
 			return $lwp->softbank->is_stealth;
 		}elseif(false !== strpos($method, 'NTT_')){
 			// TODO: 銀行振込だけ変える
-			return $lwp->ntt->is_stealth;
+			if( $method == self::NTT_BANK ){
+				return true;
+			}else{
+				return $lwp->ntt->is_stealth;
+			}
 		}else{
 			return false;
 		}
