@@ -147,7 +147,7 @@
 				<p class="info"><?php echo $this->ntt->get_desc('contract'); ?></p>
 			</td>
 		</tr>
-		<tr>
+        <tr>
 			<th valign="top">
 				<label><?php $this->e(LWP_Payment_Methods::NTT_BANK); ?></label>
 			</th>
@@ -159,6 +159,17 @@
 				<p class="description"><?php echo $this->ntt->get_desc('bank'); ?></p>
 			</td>
 		</tr>
+        <tr>
+            <th valign="top"><?php $this->e('Stealth mode');?> | <?php $this->e(LWP_Payment_Methods::NTT_BANK) ?></th>
+            <td>
+                <label>
+                    <input type="checkbox" name="ntt_bank_stealth" value="1"<?php if($this->ntt->stealth_bank) echo ' checked="checked"'; ?> />
+                    <?php $this->e('Enable stealth mode'); ?>
+                </label>
+                <p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
+                <p class="description"><?php printf($this->_('<strong>NOTICE: </strong> This setting overrides global stealth mode for %s.'), 'NTT Smart Trade') ?></p>
+            </td>
+        </tr>
 		<tr>
 			<th valign="top">
 				<label for="ntt_shop_id_bank"><?php printf($this->_('Shop ID for %s'), $this->_(LWP_Payment_Methods::NTT_BANK)); ?></label>

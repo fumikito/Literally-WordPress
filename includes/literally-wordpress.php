@@ -302,6 +302,7 @@ class Literally_WordPress{
 				'ntt_bank' => false,
 				'ntt_comdisp' => '',
 				'ntt_cvs_date' => 0,
+                'ntt_bank_stealth' => false,
 				'ios' => false,
 				'android' => false,
 				'ios_public' => false,
@@ -868,6 +869,7 @@ class Literally_WordPress{
 						'ntt_bank' => (isset($_REQUEST['ntt_bank']) && $_REQUEST['ntt_bank']),
 						'ntt_comdisp' => (string)$_REQUEST['ntt_comdisp'],
 						'ntt_cvs_date' => (int)$_REQUEST['ntt_cvs_date'],
+                        'ntt_bank_stealth' => (isset($_REQUEST['ntt_bank_stealth']) && $_REQUEST['ntt_bank_stealth']),
 					);
 					break;
 				case 'post':

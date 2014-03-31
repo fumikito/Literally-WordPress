@@ -124,7 +124,13 @@ class LWP_NTT extends LWP_Japanese_Payment{
 	 * @var string
 	 */
 	public $comdisp = '';
-	
+
+
+    /**
+     * @var bool
+     */
+    public $stealth_bank = false;
+
 	
 	/**
      * Allowed IP to connect
@@ -185,6 +191,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
             'ntt_bank' => false,
 			'ntt_comdisp' => '',
 			'ntt_cvs_date' => 0,
+            'ntt_bank_stealth' => false,
 		), $option);
 		$this->shop_id = (string)$option['ntt_shop_id'];
 		$this->access_key = (string)$option['ntt_access_key'];
@@ -202,6 +209,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 		$this->bank = (boolean)$option['ntt_bank'];
 		$this->comdisp = (string)$option['ntt_comdisp'];
 		$this->cvs_limit = (int)$option['ntt_cvs_date'];
+        $this->stealth_bank = (bool)$option['ntt_bank_stealth'];
 	}
 	
 	/**

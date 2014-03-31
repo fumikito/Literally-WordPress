@@ -687,6 +687,7 @@ EOS;
 {$lwp->option['event_signature']}
 
 EOS;
+                            $body = apply_filters('lwp_bank_mail_body', $body);
 							$from = apply_filters('lwp_bank_mail_from', get_option('admin_email'));
 							wp_mail($user->user_email, $subject, $body, "From: $site_name {<$from>}\r\n\\" );
 							// Redirect
