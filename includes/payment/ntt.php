@@ -666,16 +666,23 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				$site_name = get_bloginfo('name');
 				try{
 					// Check if transaction is valid
+                    // Transaction expires.
 					if( strtotime($transaction->expires) < current_time('timestamp') ){
 						throw new Exception(sprintf('%sに入金されましたが、購入期限%sを過ぎています。', current_time('mysql'), $transaction->expires));
 					}
+                    // Payment amount is invalid.
 					if( $transaction->price != $_POST['payAmount'] ){
 						throw new Exception(sprintf('購入金額が異なります。%d円のはずが、%d円しか入金されませんでした。', $transaction->price, $_POST['payAmount']));
 					}
+                    // User doesn't exists
 					$user_data = get_userdata($transaction->user_id);
 					if( !$user_data ){
 						throw new Exception(sprintf('ユーザーID %d はすでに存在しません。', $transaction->user_id));
 					}
+                    // Transaction is already done.
+                    if( $transaction->status != LWP_Payment_Status::START ){
+                        throw new Exception(sprintf('決済ステータスが異常です。%s状態のトランザクションに対して入金されました。', $this->_($transaction->status)));
+                    }
 					$wpdb->update($lwp->transaction, array(
 						'status' => LWP_Payment_Status::SUCCESS,
 						'expires' => '0000-00-00 00:00:00',
@@ -694,6 +701,8 @@ class LWP_NTT extends LWP_Japanese_Payment{
 以下の銀行振込決済でエラーが発生しました。
 
 ID: {$transaction->transaction_key}
+
+上記IDはNTTスマートトレードにおけるlinked_1です。
 
 ［エラー］
 {$message}
@@ -844,7 +853,7 @@ EOS;
 				return '当社のクレジット決済は、NTTスマートトレード株式会社が提供する安心・安全なちょコムクレジット支払いを採用しています。ちょコムクレジット支払いは、お買い物代金分のちょコムｅマネーをクレジットカードで購入いただき、即時お支払ができるサービスです。ちょコム会員でない方でも、通常のクレジットカードでのお支払いと同様の手続きでお買い物ができます。カードのご利用明細には「ちょコム」と表記されますのでご留意ください。';
 				break;
 			case 'cvs':
-				return 'コンビニエンスストアでお支払いいただける決済サービスです。ちょコム会員でない方でも、お支払いいただけます。コンビニ決済の場合、決済手数料315円が別途かかります。';
+				return 'コンビニエンスストアでお支払いいただける決済サービスです。ちょコム会員でない方でも、お支払いいただけます。コンビニ決済の場合、決済手数料324円（2014年3月31日までは315円）が別途かかります。';
 				break;
 			case 'contract':
 				return '1つのショップIDですべての支払いタイプの契約をしている場合でも、ショップID、アクセスキーはそれぞれ入力してください。';

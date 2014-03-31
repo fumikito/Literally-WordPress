@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Litrally WordPress 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-27 05:08+0900\n"
-"PO-Revision-Date: 2014-03-27 05:10+0900\n"
+"POT-Creation-Date: 2014-03-31 17:35+0900\n"
+"PO-Revision-Date: 2014-03-31 17:36+0900\n"
 "Last-Translator: Takahashi Fumiki <info@takahashifumiki.com>\n"
 "Language-Team: Hametuha inc. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: en_US\n"
@@ -13,239 +13,26 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: ../functions-internal.php:50
-#, php-format
-msgid "<strong>%1$d</strong> of %2$d Steps"
-msgstr ""
-
-#: ../functions-internal.php:77 ../functions.php:558
-msgid "download"
-msgstr ""
-
-#: ../functions-internal.php:78 ../functions.php:559
-#: ../admin/form-check.php:39 ../help/customize.php:122
-msgid "Unavailable"
-msgstr ""
-
-#: ../functions-internal.php:96 ../functions.php:562
-#, php-format
-msgid "Published: %s"
-msgstr ""
-
-#: ../functions-internal.php:154
-#, php-format
-msgid "Refunds %s of bought price"
-msgstr ""
-
-#: ../functions-internal.php:156
-#, php-format
-msgid "Refunds bought price - %s"
-msgstr ""
-
-#: ../functions-internal.php:158
-#, php-format
-msgid "Refunds %s"
-msgstr ""
-
-#: ../functions-internal.php:162
-#, php-format
-msgid "Until %s"
-msgstr ""
-
-#: ../functions-internal.php:186 ../functions-internal.php:195
-msgid "Sold Out"
-msgstr ""
-
-#: ../functions-internal.php:190
-msgid "You are waiting"
-msgstr ""
-
-#: ../functions-internal.php:192
-#, php-format
-msgid "Are you sure to register on waiting list for %2$s of %1$s?"
-msgstr ""
-
-#: ../functions-internal.php:192
-msgid "Wait for Cancellation"
-msgstr ""
-
-#: ../functions-internal.php:199 ../functions.php:780 ../functions.php:785
-#: ../admin/settings/sidebar.php:9 ../widgets/buynow.php:111
-msgid "Buy Now"
-msgstr ""
-
-#: ../functions-internal.php:205
-#, php-format
-msgid "(%s tickets)"
-msgstr ""
-
-#: ../functions-internal.php:210
-#, php-format
-msgid "Discount price untill <strong>%s</strong>"
-msgstr ""
-
-#: ../functions-internal.php:214
-#, php-format
-msgid ""
-"You have this ticket. See <a href=\"%1$s\">Purchase History</a> or <a href="
-"\"%2$s\">Ticket List</a>."
-msgstr ""
-
-#: ../functions.php:541 ../functions.php:606
-msgid "Registered Files"
-msgstr ""
-
-#: ../functions.php:546 ../functions.php:607
-#: ../tables/list-download-logs.php:111
-msgid "File Name"
-msgstr ""
-
-#: ../functions.php:547 ../functions.php:607 ../admin/upload.php:178
-#: ../admin/parts/edit-detail-event.php:114
-#: ../admin/settings/dashboard.php:149
-msgid "Description"
-msgstr ""
-
-#: ../functions.php:548 ../functions.php:607
-msgid "Available with"
-msgstr ""
-
-#: ../functions.php:549 ../functions.php:607 ../help/customize.php:106
-msgid "Download"
-msgstr ""
-
-#: ../functions.php:561
-#, php-format
-msgid "File Size: %s"
-msgstr ""
-
-#: ../functions.php:563
-#, php-format
-msgid "Updated: %s"
-msgstr ""
-
-#: ../functions.php:607 ../admin/management.php:69
-#: ../includes/literally-wordpress.php:1421 ../includes/products/event.php:922
-#: ../tables/list-refund.php:119 ../tables/list-reward-history.php:35
-#: ../tables/list-reward-request.php:119 ../tables/list-ticket.php:38
-msgid "Updated"
-msgstr ""
-
-#: ../functions.php:662
-msgid "Devices Available With"
-msgstr ""
-
-#: ../functions.php:666 ../admin/devices.php:15 ../admin/devices.php:72
-#: ../tables/list-devices.php:90
-msgid "Device Name"
-msgstr ""
-
-#: ../functions.php:667
-msgid "Avalability"
-msgstr ""
-
-#: ../functions.php:673
-msgid "Available"
-msgstr ""
-
-#: ../functions.php:673
-msgid "Unconfirmed"
-msgstr ""
-
-#: ../functions.php:857
-msgid "Subscription list"
-msgstr ""
-
-#: ../functions.php:890
-msgid "Left time: "
-msgstr ""
-
-#: ../functions.php:909
-msgid "day"
-msgstr ""
-
-#: ../functions.php:909
-msgid "days"
-msgstr ""
-
-#: ../functions.php:910
-#, php-format
-msgid "<span class=\"day\">%1$d</span>%2$s"
-msgstr ""
-
-#: ../functions.php:912
-#, php-format
-msgid "<span class=\"hour\">%02d</span>h "
-msgstr ""
-
-#: ../functions.php:913
-#, php-format
-msgid "<span class=\"minutes\">%02d</span>m "
-msgstr ""
-
-#: ../functions.php:914
-#, php-format
-msgid "<span class=\"seconds\">%02d</span>s"
-msgstr ""
-
-#: ../functions.php:933
-#, php-format
-msgid "%d%% Off"
-msgstr ""
-
-#: ../functions.php:956
-#, php-format
-msgid "On SALE till %s"
-msgstr ""
-
-#: ../functions.php:1361
-msgid "Cancel Condition"
-msgstr ""
-
-#: ../functions.php:1833
-msgid "Check Token"
-msgstr ""
-
-#: ../literally-wordpress.php:89
-#, php-format
-msgid ""
-"Literally WordPress is activated but is not available. This plugin needs PHP "
-"version 5<. Your PHP version is %1$s."
-msgstr ""
-
-#: ../literally-wordpress.php:90
-msgid " Furthermore, this plugin needs cURL module."
-msgstr ""
-
-#: ../literally-wordpress.php:91
-msgid ""
-" Please contact to your server administrator to change server configuration."
-msgstr ""
-
-#: ../literally-wordpress.php:92
-msgid ""
-"This plugin make your WordPress post object payable via PayPal and so on. "
-"ePub, PDF, MP3, Live ticket, Web-Magazine... What you sell is up to you."
-msgstr ""
-
 #: ../admin/campaign.php:2 ../admin/parts/edit-detail.php:51
+#, fuzzy
 msgid "Campaign"
-msgstr ""
+msgstr "Campaign"
 
 #: ../admin/campaign.php:22 ../admin/campaign.php:170
+#, fuzzy
 msgid "Campaign Item"
-msgstr ""
+msgstr "Campaign"
 
 #: ../admin/campaign.php:31 ../admin/management.php:46 ../admin/setting.php:10
 #: ../admin/settings/dashboard.php:92 ../admin/settings/subscription.php:2
-#: ../includes/literally-wordpress.php:1433
 #: ../includes/base/literally-wordpress-common.php:136
-#: ../includes/cart/form.php:1080 ../includes/cart/form.php:1141
+#: ../includes/cart/form.php:1083 ../includes/cart/form.php:1144
 #: ../includes/common/campaign.php:265
+#: ../includes/literally-wordpress.php:1435
 #: ../includes/products/subscription.php:81 ../tables/list-campaign.php:164
 #: ../tables/list-history.php:159 ../tables/list-management.php:236
 msgid "Subscription"
@@ -262,27 +49,29 @@ msgid ""
 msgstr ""
 
 #: ../admin/campaign.php:55 ../admin/campaign.php:184
+#, fuzzy
 msgid "Campaign Price"
-msgstr ""
+msgstr "Campaign"
 
 #: ../admin/campaign.php:64 ../admin/campaign.php:191
-#, php-format
+#, fuzzy, php-format
 msgid "%s as sale price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../admin/campaign.php:67 ../admin/campaign.php:194
-#, php-format
+#, fuzzy, php-format
 msgid "%s as discount"
-msgstr ""
+msgstr "Discount"
 
 #: ../admin/campaign.php:70 ../admin/campaign.php:197
-#, php-format
+#, fuzzy, php-format
 msgid "%s of original price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../admin/campaign.php:111 ../admin/campaign.php:241
+#, fuzzy
 msgid "Start Date"
-msgstr ""
+msgstr "Start"
 
 #: ../admin/campaign.php:116 ../admin/campaign.php:127
 #: ../admin/campaign.php:244 ../admin/campaign.php:253
@@ -303,8 +92,9 @@ msgid "Update"
 msgstr ""
 
 #: ../admin/campaign.php:134
+#, fuzzy
 msgid "Return to campaign page"
-msgstr ""
+msgstr "Campaign"
 
 #: ../admin/campaign.php:154
 msgid ""
@@ -314,8 +104,9 @@ msgid ""
 msgstr ""
 
 #: ../admin/campaign.php:166
+#, fuzzy
 msgid "Add new campaign"
-msgstr ""
+msgstr "Campaign"
 
 #: ../admin/campaign.php:178
 msgid ""
@@ -334,6 +125,11 @@ msgstr ""
 #: ../admin/devices.php:5 ../admin/upload.php:163 ../admin/upload.php:171
 #: ../admin/upload.php:259
 msgid "Devices"
+msgstr ""
+
+#: ../admin/devices.php:15 ../admin/devices.php:72 ../functions.php:666
+#: ../tables/list-devices.php:90
+msgid "Device Name"
 msgstr ""
 
 #: ../admin/devices.php:21 ../admin/devices.php:81
@@ -520,7 +316,7 @@ msgstr ""
 msgid "File Download Logs"
 msgstr ""
 
-#: ../admin/event.php:4 ../includes/literally-wordpress.php:556
+#: ../admin/event.php:4 ../includes/literally-wordpress.php:557
 msgid "Event Management"
 msgstr ""
 
@@ -547,12 +343,14 @@ msgid "From: %1$s To: %2$s%3$s"
 msgstr ""
 
 #: ../admin/event.php:48 ../admin/parts/edit-detail-event.php:58
+#, fuzzy
 msgid "Limit to sell"
-msgstr ""
+msgstr "Sell"
 
 #: ../admin/event.php:58 ../admin/parts/edit-detail-event.php:66
+#, fuzzy
 msgid "Limit to cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: ../admin/event.php:68 ../admin/parts/edit-detail-event.php:155
 #: ../form-template/cancel-ticket.php:13
@@ -562,19 +360,20 @@ msgstr ""
 msgid "Ticket Name"
 msgstr ""
 
-#: ../admin/event.php:69 ../admin/summary.php:185
-#: ../admin/parts/edit-detail-event.php:115 ../admin/parts/edit-detail.php:26
-#: ../admin/parts/reward-summary.php:124 ../form-template/cancel-ticket.php:15
+#: ../admin/event.php:69 ../admin/parts/edit-detail-event.php:115
+#: ../admin/parts/edit-detail.php:26 ../admin/parts/reward-summary.php:124
+#: ../admin/summary.php:185 ../form-template/cancel-ticket.php:15
 #: ../form-template/event-tickets-consume.php:17
-#: ../form-template/payment.php:8 ../includes/literally-wordpress.php:1415
-#: ../includes/cart/form-event.php:197 ../includes/cart/form.php:926
+#: ../form-template/payment.php:8 ../includes/cart/form-event.php:197
+#: ../includes/cart/form.php:928 ../includes/literally-wordpress.php:1417
 #: ../includes/products/event.php:927
 #: ../includes/products/subscription.php:194
 #: ../tables/list-promotable-posts.php:132
 #: ../tables/list-reward-history.php:31 ../tables/list-reward-request.php:117
 #: ../tables/list-ticket.php:35 ../tables/list-transfers.php:156
+#, fuzzy
 msgid "Price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../admin/event.php:70 ../admin/parts/edit-detail-event.php:116
 msgid "Stock"
@@ -585,11 +384,12 @@ msgstr ""
 msgid "Sold"
 msgstr ""
 
-#: ../admin/event.php:72 ../includes/cart/form.php:925
+#: ../admin/event.php:72 ../includes/cart/form.php:927
 #: ../includes/statics/payment-status.php:109 ../tables/list-history.php:211
 #: ../tables/list-transfers.php:226
+#, fuzzy
 msgid "Waiting for Payment"
-msgstr ""
+msgstr "Waiting Cancellation"
 
 #: ../admin/event.php:73 ../admin/management.php:102
 #: ../form-template/event-tickets-consume.php:19
@@ -598,7 +398,7 @@ msgstr ""
 msgid "Consumed"
 msgstr ""
 
-#: ../admin/event.php:74 ../includes/literally-wordpress.php:667
+#: ../admin/event.php:74 ../includes/literally-wordpress.php:668
 msgid "Sales"
 msgstr ""
 
@@ -625,7 +425,7 @@ msgstr ""
 msgid "Get CSV"
 msgstr ""
 
-#: ../admin/form-check.php:4 ../includes/literally-wordpress.php:561
+#: ../admin/form-check.php:4 ../includes/literally-wordpress.php:562
 msgid "LWP Form Check"
 msgstr ""
 
@@ -664,6 +464,11 @@ msgstr ""
 
 #: ../admin/form-check.php:24 ../admin/form-check.php:41
 msgid "View"
+msgstr ""
+
+#: ../admin/form-check.php:39 ../functions-internal.php:78
+#: ../functions.php:559 ../help/customize.php:122
+msgid "Unavailable"
 msgstr ""
 
 #: ../admin/form-check.php:51
@@ -711,7 +516,7 @@ msgstr ""
 
 #: ../admin/history.php:2 ../form-template/payment-info.php:26
 #: ../form-template/refund-account.php:97
-#: ../includes/literally-wordpress.php:559
+#: ../includes/literally-wordpress.php:560
 msgid "Purchase History"
 msgstr ""
 
@@ -741,17 +546,17 @@ msgid "Option Name"
 msgstr ""
 
 #: ../admin/ios-api.php:12 ../admin/management.php:122
-#: ../admin/personal-reward.php:118 ../admin/summary.php:110
-#: ../admin/summary.php:157 ../admin/settings/dashboard.php:12
+#: ../admin/personal-reward.php:118 ../admin/settings/dashboard.php:12
 #: ../admin/settings/dashboard.php:65 ../admin/settings/dashboard.php:116
 #: ../admin/settings/dashboard.php:148 ../admin/settings/payment.php:7
 #: ../admin/settings/payment/gmo.php:9 ../admin/settings/payment/ntt.php:9
-#: ../admin/settings/payment/softbank.php:9 ../form-template/sb-check.php:35
-#: ../includes/literally-wordpress.php:639
-#: ../includes/literally-wordpress.php:680 ../includes/cart/form.php:925
-#: ../tables/list-history.php:63 ../tables/list-management.php:135
-#: ../tables/list-reward-history.php:36 ../tables/list-reward-request.php:120
-#: ../tables/list-ticket.php:36 ../tables/list-transfers.php:161
+#: ../admin/settings/payment/softbank.php:9 ../admin/summary.php:110
+#: ../admin/summary.php:157 ../form-template/sb-check.php:35
+#: ../includes/cart/form.php:927 ../includes/literally-wordpress.php:640
+#: ../includes/literally-wordpress.php:681 ../tables/list-history.php:63
+#: ../tables/list-management.php:135 ../tables/list-reward-history.php:36
+#: ../tables/list-reward-request.php:120 ../tables/list-ticket.php:36
+#: ../tables/list-transfers.php:161
 msgid "Status"
 msgstr ""
 
@@ -765,8 +570,9 @@ msgid "iOS In App Purchase"
 msgstr ""
 
 #: ../admin/ios-api.php:27 ../admin/settings/dashboard.php:87
+#, fuzzy
 msgid "Android In-App Billing"
-msgstr ""
+msgstr "Android"
 
 #: ../admin/ios-api.php:35
 msgid "Force SSL"
@@ -812,8 +618,9 @@ msgid "iOS Only"
 msgstr ""
 
 #: ../admin/ios-api.php:61
+#, fuzzy
 msgid "Android Only"
-msgstr ""
+msgstr "Android"
 
 #: ../admin/ios-api.php:78
 msgid "You can know API version information."
@@ -932,8 +739,9 @@ msgid "File list of specified post."
 msgstr ""
 
 #: ../admin/ios-api.php:181
+#, fuzzy
 msgid "ID of post."
-msgstr ""
+msgstr "Post Type"
 
 #: ../admin/ios-api.php:187
 msgid "File ID."
@@ -974,8 +782,9 @@ msgid "File size"
 msgstr ""
 
 #: ../admin/ios-api.php:218 ../admin/ios-api.php:286 ../admin/ios-api.php:313
+#, fuzzy
 msgid "Mime type of file"
-msgstr ""
+msgstr "Post Type"
 
 #: ../admin/ios-api.php:219 ../admin/ios-api.php:287 ../admin/ios-api.php:314
 msgid "Binary data of file."
@@ -1042,7 +851,7 @@ msgstr ""
 msgid "Payment method. Default <code>%1$s</code>. Allowed methods: %2$s"
 msgstr ""
 
-#: ../admin/management.php:5 ../includes/literally-wordpress.php:520
+#: ../admin/management.php:5 ../includes/literally-wordpress.php:521
 msgid "Transaction Management"
 msgstr ""
 
@@ -1071,20 +880,21 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: ../admin/management.php:37 ../includes/literally-wordpress.php:1413
+#: ../admin/management.php:37 ../includes/literally-wordpress.php:1415
 #: ../tables/list-download-logs.php:110 ../tables/list-history.php:53
 #: ../tables/list-management.php:132 ../tables/list-refund.php:113
 #: ../tables/list-transfers.php:155
+#, fuzzy
 msgid "Item Name"
-msgstr ""
+msgstr "Item set"
 
 #: ../admin/management.php:53 ../admin/parts/edit-detail-event.php:129
-#: ../includes/literally-wordpress.php:705 ../tables/list-campaign.php:185
+#: ../includes/literally-wordpress.php:706 ../tables/list-campaign.php:185
 #: ../tables/list-devices.php:151 ../tables/list-reward-request.php:177
 msgid "Edit"
 msgstr ""
 
-#: ../admin/management.php:56 ../includes/literally-wordpress.php:1419
+#: ../admin/management.php:56 ../includes/literally-wordpress.php:1421
 #: ../includes/products/event.php:924 ../tables/list-download-logs.php:112
 #: ../tables/list-management.php:133 ../tables/list-refund.php:114
 #: ../tables/list-ticket.php:34 ../tables/list-transfers.php:154
@@ -1099,16 +909,23 @@ msgstr ""
 msgid "See all transactions"
 msgstr ""
 
-#: ../admin/management.php:64 ../admin/summary.php:196
-#: ../admin/parts/reward-summary.php:165
-#: ../includes/literally-wordpress.php:1446 ../includes/products/event.php:940
-#: ../tables/list-download-logs.php:179 ../tables/list-management.php:225
-#: ../tables/list-refund.php:165 ../tables/list-reward-history.php:150
-#: ../tables/list-reward-request.php:158 ../tables/list-ticket.php:144
+#: ../admin/management.php:64 ../admin/parts/reward-summary.php:165
+#: ../admin/summary.php:196 ../includes/literally-wordpress.php:1448
+#: ../includes/products/event.php:940 ../tables/list-download-logs.php:179
+#: ../tables/list-management.php:225 ../tables/list-refund.php:165
+#: ../tables/list-reward-history.php:150 ../tables/list-reward-request.php:158
+#: ../tables/list-ticket.php:144
 msgid "Deleted User"
 msgstr ""
 
-#: ../admin/management.php:72 ../includes/literally-wordpress.php:1420
+#: ../admin/management.php:69 ../functions.php:607
+#: ../includes/literally-wordpress.php:1423 ../includes/products/event.php:922
+#: ../tables/list-refund.php:119 ../tables/list-reward-history.php:35
+#: ../tables/list-reward-request.php:119 ../tables/list-ticket.php:38
+msgid "Updated"
+msgstr ""
+
+#: ../admin/management.php:72 ../includes/literally-wordpress.php:1422
 #: ../tables/list-history.php:58 ../tables/list-management.php:137
 #: ../tables/list-refund.php:118 ../tables/list-reward-history.php:34
 #: ../tables/list-reward-request.php:118 ../tables/list-transfers.php:158
@@ -1117,20 +934,23 @@ msgstr ""
 
 #: ../admin/management.php:77 ../tables/list-history.php:55
 #: ../tables/list-management.php:134
+#, fuzzy
 msgid "Purchased Price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../admin/management.php:80
+#, fuzzy
 msgid "Original Price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../admin/management.php:84
 msgid "Are you sure to refund total price?"
 msgstr ""
 
 #: ../admin/management.php:88 ../form-template/cancel-ticket.php:16
+#, fuzzy
 msgid "Refund"
-msgstr ""
+msgstr "Refund"
 
 #: ../admin/management.php:90
 msgid ""
@@ -1139,10 +959,10 @@ msgid ""
 msgstr ""
 
 #: ../admin/management.php:97 ../form-template/event-tickets-consume.php:18
-#: ../form-template/return.php:51 ../includes/literally-wordpress.php:1414
-#: ../includes/cart/cart.php:129 ../includes/cart/form-event.php:198
-#: ../includes/products/event.php:928 ../tables/list-history.php:54
-#: ../tables/list-ticket.php:39
+#: ../form-template/return.php:51 ../includes/cart/cart.php:129
+#: ../includes/cart/form-event.php:198
+#: ../includes/literally-wordpress.php:1416 ../includes/products/event.php:928
+#: ../tables/list-history.php:54 ../tables/list-ticket.php:39
 msgid "Quantity"
 msgstr ""
 
@@ -1155,7 +975,7 @@ msgstr ""
 msgid "Transaction ID: %s"
 msgstr ""
 
-#: ../admin/management.php:117 ../includes/literally-wordpress.php:1417
+#: ../admin/management.php:117 ../includes/literally-wordpress.php:1419
 msgid "Invoice Num"
 msgstr ""
 
@@ -1201,6 +1021,340 @@ msgstr ""
 
 #: ../admin/management.php:198
 msgid "You can get transaction list in status below."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:3
+msgid "Event Information"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:9
+#, fuzzy
+msgid "Start at"
+msgstr "Start"
+
+#: ../admin/parts/edit-detail-event.php:14 ../includes/products/event.php:1127
+msgid "Ends at"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:20
+msgid "Participants"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:24
+#, php-format
+msgid "<strong>%s</strong> People"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:26
+#, fuzzy, php-format
+msgid "%d poeple are waiting for cancellation."
+msgstr "Waiting Cancellation"
+
+#: ../admin/parts/edit-detail-event.php:29
+msgid "Show list"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:32
+msgid "Contact them"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:37
+msgid "Ticket Sold"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:43 ../admin/settings/event.php:43
+#, fuzzy
+msgid "Waiting list"
+msgstr "Waiting Cancellation"
+
+#: ../admin/parts/edit-detail-event.php:47
+msgid "User can wait for cancellation of this event."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:53
+msgid "Ticket Sale Setting"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:72
+#: ../includes/literally-wordpress.php:703
+#, php-format
+msgid "Cacnelable till %1$s days before, %2$s"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:75
+#: ../admin/parts/edit-detail-event.php:132 ../admin/upload.php:224
+#: ../includes/literally-wordpress.php:704 ../tables/list-campaign.php:120
+#: ../tables/list-devices.php:109
+msgid "Delete"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:77
+msgid "You do not specify cancel limit, so user cannot cancel."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:82
+#, php-format
+msgid "User can cancel ticket %1$s days before selling limit. Refund is %2$s."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:87 ../admin/upload.php:207
+msgid "Add"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:90
+msgid ""
+"If you specify cancelable date, user can cancel transaction after payment."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:91
+msgid ""
+"You can specify percentage(ex. 50%), number(ex. 100). If you specified "
+"positive number, that amount will be refunded. Negative number specified, "
+"refund amount results paid price minus it."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:92
+msgid "<strong>Example: </strong>"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:93
+#: ../admin/parts/edit-detail-event.php:94
+#: ../admin/parts/edit-detail-event.php:95
+#, php-format
+msgid "Price %1$s and Refund %2$s -&gt; %3$s back."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:100
+msgid "Ticket Footer Note"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:103
+msgid "Auto format"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:109
+#: ../includes/cart/form-template.php:259
+msgid "Ticket List"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:113
+#: ../admin/parts/reward-summary.php:151 ../admin/settings/sidebar.php:71
+#: ../admin/settings/sidebar.php:76 ../admin/summary.php:183
+#: ../form-template/payment.php:222 ../form-template/payment.php:327
+#: ../form-template/return.php:27 ../includes/literally-wordpress.php:1524
+#: ../tables/list-promotable-posts.php:131
+msgid "Name"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:114
+#: ../admin/settings/dashboard.php:149 ../admin/upload.php:178
+#: ../functions.php:547 ../functions.php:607
+msgid "Description"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:139
+msgid "Ticket form"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:144
+#, fuzzy
+msgid "This post type has presets: "
+msgstr "Post Type"
+
+#: ../admin/parts/edit-detail-event.php:146
+#: ../includes/base/japanese-payment.php:613
+msgid "No name"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:148
+msgid "Add presets"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:159
+msgid "Added as new ticket."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:160
+msgid "Editting existing ticket."
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:165
+msgid "Ticket Description"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:171
+#, fuzzy
+msgid "Ticket Price"
+msgstr "Special Price"
+
+#: ../admin/parts/edit-detail-event.php:177
+msgid "Ticket Stock"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:185
+msgid "Clear form"
+msgstr ""
+
+#: ../admin/parts/edit-detail-event.php:186
+msgid "Edit ticket"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:12
+msgid "This Post has no files. You can add files from media uploader."
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:18
+msgid "Files"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:20
+msgid "File Manager"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:21
+msgid "Manage File"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:30 ../admin/upload.php:187
+msgid "Download Limit"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:32 ../form-template/subscription.php:51
+#: ../includes/products/subscription.php:198
+msgid "Days"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:33
+msgid "About Download Limit"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:37
+msgid "You can set download limit to digital contents in 2 ways."
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:38
+msgid "1. Limit by days"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:39
+msgid ""
+"For example, If you set 10 days as download limit, a user will not be able "
+"to donwload 10 days after transaction. &quot;0&quot; means no limit. This "
+"option is valid for all files associated to this post."
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:40
+msgid "2. Limit by times"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:41
+msgid ""
+"For example, If you set 10 times as donwload limit, a user can donwload only "
+"10 times. &quot;0&quot; means no limit. This option must be set to each "
+"files on the file manager."
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:42
+msgid ""
+"You can set both limit, but simple usage is recommended. Too many limitation "
+"will confuse your users."
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:44 ../form-template/subscription.php:70
+#: ../includes/statics/datepicker.php:60
+msgid "Close"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:54
+#, php-format
+msgid "Till <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:56
+msgid "Not on Sale"
+msgstr ""
+
+#: ../admin/parts/edit-detail.php:64
+#, fuzzy
+msgid "This post is free."
+msgstr "Post Type"
+
+#: ../admin/parts/give-user.php:2
+msgid "Give Downloadable contents."
+msgstr ""
+
+#: ../admin/parts/give-user.php:6
+msgid "Contents to Give"
+msgstr ""
+
+#: ../admin/parts/give-user.php:9 ../admin/settings/sidebar.php:104
+msgid "Please Select"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:11 ../admin/parts/reward-summary.php:14
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:33 ../admin/summary.php:89
+msgid "Refresh"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:39 ../admin/summary.php:95
+msgid "Amount: "
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:48
+#, fuzzy
+msgid "All Promotion"
+msgstr "Promotion"
+
+#: ../admin/parts/reward-summary.php:49
+#: ../includes/literally-wordpress.php:642
+#: ../includes/literally-wordpress.php:683
+msgid "Fixed"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:50
+msgid "Referrer"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:52
+msgid "Promoter"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:57 ../admin/parts/reward-summary.php:87
+#: ../admin/parts/reward-summary.php:117 ../admin/parts/reward-summary.php:145
+#: ../admin/summary.php:102 ../admin/summary.php:115 ../admin/summary.php:151
+#: ../admin/summary.php:177
+msgid "No Data"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:63 ../admin/parts/reward-summary.php:93
+#: ../admin/summary.php:121 ../admin/upload.php:129
+msgid "Title"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:64 ../admin/parts/reward-summary.php:94
+#: ../admin/parts/reward-summary.php:154 ../admin/setting.php:12
+#: ../admin/settings/dashboard.php:128 ../admin/settings/reward.php:2
+#: ../includes/literally-wordpress.php:552
+#: ../tables/list-promotable-posts.php:134
+#: ../tables/list-reward-history.php:32
+msgid "Reward"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:65 ../admin/parts/reward-summary.php:95
+#: ../admin/parts/reward-summary.php:125 ../admin/summary.php:122
+#: ../admin/summary.php:158 ../admin/summary.php:184
+msgid "Count"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:123
+msgid "Domain"
+msgstr ""
+
+#: ../admin/parts/reward-summary.php:153
+msgid "Promoted"
 msgstr ""
 
 #: ../admin/personal-reward.php:4
@@ -1277,20 +1431,23 @@ msgid "%1$d (%2$s)"
 msgstr ""
 
 #: ../admin/personal-reward.php:143
+#, fuzzy
 msgid "You are requesting."
-msgstr ""
+msgstr "Refund requesting"
 
 #: ../admin/personal-reward.php:145
 msgid "You do not have enought information to get reward."
 msgstr ""
 
 #: ../admin/refund.php:13
+#, fuzzy
 msgid "Refund Messages"
-msgstr ""
+msgstr "Refund"
 
 #: ../admin/refund.php:51 ../includes/common/refund-manager.php:146
+#, fuzzy
 msgid "Refund is finished"
-msgstr ""
+msgstr "Refund"
 
 #: ../admin/refund.php:56
 msgid ""
@@ -1302,8 +1459,9 @@ msgid "Available placeholders: "
 msgstr ""
 
 #: ../admin/refund.php:66 ../includes/common/refund-manager.php:149
+#, fuzzy
 msgid "Refund is accepted"
-msgstr ""
+msgstr "Refund"
 
 #: ../admin/refund.php:71
 msgid ""
@@ -1312,8 +1470,9 @@ msgid ""
 msgstr ""
 
 #: ../admin/refund.php:81 ../includes/common/refund-manager.php:152
+#, fuzzy
 msgid "Refund account is required"
-msgstr ""
+msgstr "Refund"
 
 #: ../admin/refund.php:86
 #, php-format
@@ -1352,15 +1511,6 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
-#: ../admin/setting.php:12 ../admin/parts/reward-summary.php:64
-#: ../admin/parts/reward-summary.php:94 ../admin/parts/reward-summary.php:154
-#: ../admin/settings/dashboard.php:128 ../admin/settings/reward.php:2
-#: ../includes/literally-wordpress.php:551
-#: ../tables/list-promotable-posts.php:134
-#: ../tables/list-reward-history.php:32
-msgid "Reward"
-msgstr ""
-
 #: ../admin/setting.php:13 ../admin/settings/misc.php:1
 msgid "Miscellaneous"
 msgstr ""
@@ -1368,517 +1518,6 @@ msgstr ""
 #: ../admin/setting.php:44
 #, php-format
 msgid "Template file does not exists at %s."
-msgstr ""
-
-#: ../admin/summary.php:2 ../includes/literally-wordpress.php:518
-msgid "Transaction Summary"
-msgstr ""
-
-#: ../admin/summary.php:89 ../admin/parts/reward-summary.php:33
-msgid "Refresh"
-msgstr ""
-
-#: ../admin/summary.php:95 ../admin/parts/reward-summary.php:39
-msgid "Amount: "
-msgstr ""
-
-#: ../admin/summary.php:99
-msgid "Undefined"
-msgstr ""
-
-#: ../admin/summary.php:102 ../admin/summary.php:115 ../admin/summary.php:151
-#: ../admin/summary.php:177 ../admin/parts/reward-summary.php:57
-#: ../admin/parts/reward-summary.php:87 ../admin/parts/reward-summary.php:117
-#: ../admin/parts/reward-summary.php:145
-msgid "No Data"
-msgstr ""
-
-#: ../admin/summary.php:109
-msgid "Top Sales"
-msgstr ""
-
-#: ../admin/summary.php:111
-msgid "Royal user"
-msgstr ""
-
-#: ../admin/summary.php:121 ../admin/upload.php:129
-#: ../admin/parts/reward-summary.php:63 ../admin/parts/reward-summary.php:93
-msgid "Title"
-msgstr ""
-
-#: ../admin/summary.php:122 ../admin/summary.php:158 ../admin/summary.php:184
-#: ../admin/parts/reward-summary.php:65 ../admin/parts/reward-summary.php:95
-#: ../admin/parts/reward-summary.php:125
-msgid "Count"
-msgstr ""
-
-#: ../admin/summary.php:183 ../admin/parts/edit-detail-event.php:113
-#: ../admin/parts/reward-summary.php:151 ../admin/settings/sidebar.php:71
-#: ../admin/settings/sidebar.php:76 ../form-template/payment.php:222
-#: ../form-template/payment.php:327 ../form-template/return.php:27
-#: ../includes/literally-wordpress.php:1522
-#: ../tables/list-promotable-posts.php:131
-msgid "Name"
-msgstr ""
-
-#: ../admin/transfer.php:2 ../help/transfer.php:22
-#: ../includes/literally-wordpress.php:525
-msgid "Transfer Management"
-msgstr ""
-
-#: ../admin/upload.php:17
-msgid "You have no permission to upload file."
-msgstr ""
-
-#: ../admin/upload.php:27
-msgid "Title is empty."
-msgstr ""
-
-#: ../admin/upload.php:32
-msgid "Select public status."
-msgstr ""
-
-#: ../admin/upload.php:37
-msgid "No file is specified."
-msgstr ""
-
-#: ../admin/upload.php:46
-msgid "No device is specified."
-msgstr ""
-
-#: ../admin/upload.php:52
-msgid "File is successfully uploaded."
-msgstr ""
-
-#: ../admin/upload.php:54
-#, php-format
-msgid ""
-"Sorry, but failed to upload file. Check permission of <code>%s</code>. It "
-"must be writable from WordPress."
-msgstr ""
-
-#: ../admin/upload.php:67
-msgid "File is successfully updated."
-msgstr ""
-
-#: ../admin/upload.php:69
-msgid "Failed to update file."
-msgstr ""
-
-#: ../admin/upload.php:76
-msgid "File deleted."
-msgstr ""
-
-#: ../admin/upload.php:78
-msgid "Failed to delete file."
-msgstr ""
-
-#: ../admin/upload.php:98 ../form-template/event-contact.php:66
-#: ../includes/cart/form-template.php:439
-msgid "Processing&hellip;"
-msgstr ""
-
-#: ../admin/upload.php:107
-msgid "Manage files"
-msgstr ""
-
-#: ../admin/upload.php:111
-msgid "Please update file information"
-msgstr ""
-
-#: ../admin/upload.php:113
-msgid "Please upload file"
-msgstr ""
-
-#: ../admin/upload.php:133
-msgid "Name of this file. ex. ePub for iBooks(2nd Edition)"
-msgstr ""
-
-#: ../admin/upload.php:138
-msgid "Public Status"
-msgstr ""
-
-#: ../admin/upload.php:141 ../admin/settings/post.php:134
-msgid "Public"
-msgstr ""
-
-#: ../admin/upload.php:142
-msgid "Private"
-msgstr ""
-
-#: ../admin/upload.php:143
-msgid "Public status of this file. Private files won't be displayed."
-msgstr ""
-
-#: ../admin/upload.php:148
-msgid "Access to File"
-msgstr ""
-
-#: ../admin/upload.php:151 ../admin/upload.php:248
-msgid "Parchasers only"
-msgstr ""
-
-#: ../admin/upload.php:152 ../admin/upload.php:245
-msgid "Members only"
-msgstr ""
-
-#: ../admin/upload.php:153 ../admin/upload.php:156 ../admin/upload.php:242
-#: ../tables/list-download-logs.php:155
-msgid "Anyone"
-msgstr ""
-
-#: ../admin/upload.php:155
-msgid ""
-"File access permits user to <strong>download whole of the file</strong>."
-msgstr ""
-
-#: ../admin/upload.php:156
-#, php-format
-msgid ""
-"If you want provide partial trial, <strong>make a partial file</strong> and "
-"specify it as &quot;%s&quot;"
-msgstr ""
-
-#: ../admin/upload.php:170
-msgid "Check device which can read this file."
-msgstr ""
-
-#: ../admin/upload.php:171
-#, php-format
-msgid "To add device, go to %s."
-msgstr ""
-
-#: ../admin/upload.php:182
-msgid "Enter if required."
-msgstr ""
-
-#: ../admin/upload.php:187 ../admin/parts/edit-detail.php:30
-msgid "Download Limit"
-msgstr ""
-
-#: ../admin/upload.php:190
-msgid "Times"
-msgstr ""
-
-#: ../admin/upload.php:191
-msgid ""
-"If you set 10, a user can download 10 times. &quot;0&quot; means unlimited. "
-"This option is not valid for public files."
-msgstr ""
-
-#: ../admin/upload.php:197
-msgid "File"
-msgstr ""
-
-#: ../admin/upload.php:207 ../admin/parts/edit-detail-event.php:87
-msgid "Add"
-msgstr ""
-
-#: ../admin/upload.php:209
-msgid "Go to add file"
-msgstr ""
-
-#: ../admin/upload.php:218
-msgid "Registered files"
-msgstr ""
-
-#: ../admin/upload.php:224 ../admin/parts/edit-detail-event.php:75
-#: ../admin/parts/edit-detail-event.php:132
-#: ../includes/literally-wordpress.php:703 ../tables/list-campaign.php:120
-#: ../tables/list-devices.php:109
-msgid "Delete"
-msgstr ""
-
-#: ../admin/upload.php:224
-msgid "Are you sure to delete?"
-msgstr ""
-
-#: ../admin/upload.php:237
-msgid "Size"
-msgstr ""
-
-#: ../admin/upload.php:239
-msgid "Accessibility"
-msgstr ""
-
-#: ../admin/upload.php:252
-msgid "Donwload Limit"
-msgstr ""
-
-#: ../admin/upload.php:254
-#, php-format
-msgid "%s times"
-msgstr ""
-
-#: ../admin/upload.php:256
-msgid "No limit"
-msgstr ""
-
-#: ../admin/upload.php:262
-msgid "None"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:3
-msgid "Event Information"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:9
-msgid "Start at"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:14 ../includes/products/event.php:1127
-msgid "Ends at"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:20
-msgid "Participants"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:24
-#, php-format
-msgid "<strong>%s</strong> People"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:26
-#, php-format
-msgid "%d poeple are waiting for cancellation."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:29
-msgid "Show list"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:32
-msgid "Contact them"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:37
-msgid "Ticket Sold"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:43 ../admin/settings/event.php:43
-msgid "Waiting list"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:47
-msgid "User can wait for cancellation of this event."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:53
-msgid "Ticket Sale Setting"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:72
-#: ../includes/literally-wordpress.php:702
-#, php-format
-msgid "Cacnelable till %1$s days before, %2$s"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:77
-msgid "You do not specify cancel limit, so user cannot cancel."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:82
-#, php-format
-msgid "User can cancel ticket %1$s days before selling limit. Refund is %2$s."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:90
-msgid ""
-"If you specify cancelable date, user can cancel transaction after payment."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:91
-msgid ""
-"You can specify percentage(ex. 50%), number(ex. 100). If you specified "
-"positive number, that amount will be refunded. Negative number specified, "
-"refund amount results paid price minus it."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:92
-msgid "<strong>Example: </strong>"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:93
-#: ../admin/parts/edit-detail-event.php:94
-#: ../admin/parts/edit-detail-event.php:95
-#, php-format
-msgid "Price %1$s and Refund %2$s -&gt; %3$s back."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:100
-msgid "Ticket Footer Note"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:103
-msgid "Auto format"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:109
-#: ../includes/cart/form-template.php:259
-msgid "Ticket List"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:139
-msgid "Ticket form"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:144
-msgid "This post type has presets: "
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:146
-#: ../includes/base/japanese-payment.php:613
-msgid "No name"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:148
-msgid "Add presets"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:159
-msgid "Added as new ticket."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:160
-msgid "Editting existing ticket."
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:165
-msgid "Ticket Description"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:171
-msgid "Ticket Price"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:177
-msgid "Ticket Stock"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:185
-msgid "Clear form"
-msgstr ""
-
-#: ../admin/parts/edit-detail-event.php:186
-msgid "Edit ticket"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:12
-msgid "This Post has no files. You can add files from media uploader."
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:18
-msgid "Files"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:20
-msgid "File Manager"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:21
-msgid "Manage File"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:32 ../form-template/subscription.php:51
-#: ../includes/products/subscription.php:198
-msgid "Days"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:33
-msgid "About Download Limit"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:37
-msgid "You can set download limit to digital contents in 2 ways."
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:38
-msgid "1. Limit by days"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:39
-msgid ""
-"For example, If you set 10 days as download limit, a user will not be able "
-"to donwload 10 days after transaction. &quot;0&quot; means no limit. This "
-"option is valid for all files associated to this post."
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:40
-msgid "2. Limit by times"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:41
-msgid ""
-"For example, If you set 10 times as donwload limit, a user can donwload only "
-"10 times. &quot;0&quot; means no limit. This option must be set to each "
-"files on the file manager."
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:42
-msgid ""
-"You can set both limit, but simple usage is recommended. Too many limitation "
-"will confuse your users."
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:44 ../form-template/subscription.php:70
-#: ../includes/statics/datepicker.php:60
-msgid "Close"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:54
-#, php-format
-msgid "Till <a href=\"%1$s\">%2$s</a>"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:56
-msgid "Not on Sale"
-msgstr ""
-
-#: ../admin/parts/edit-detail.php:64
-msgid "This post is free."
-msgstr ""
-
-#: ../admin/parts/give-user.php:2
-msgid "Give Downloadable contents."
-msgstr ""
-
-#: ../admin/parts/give-user.php:6
-msgid "Contents to Give"
-msgstr ""
-
-#: ../admin/parts/give-user.php:9 ../admin/settings/sidebar.php:104
-msgid "Please Select"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:11 ../admin/parts/reward-summary.php:14
-msgid "You do not have permission to access this page."
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:48
-msgid "All Promotion"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:49
-#: ../includes/literally-wordpress.php:641
-#: ../includes/literally-wordpress.php:682
-msgid "Fixed"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:50
-msgid "Referrer"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:52
-msgid "Promoter"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:123
-msgid "Domain"
-msgstr ""
-
-#: ../admin/parts/reward-summary.php:153
-msgid "Promoted"
 msgstr ""
 
 #: ../admin/settings/dashboard.php:3
@@ -1909,8 +1548,9 @@ msgid "Set up your PayPal information <a href=\"%s\">here</a>."
 msgstr ""
 
 #: ../admin/settings/dashboard.php:31
+#, fuzzy
 msgid "GMO Payment Gateway"
-msgstr ""
+msgstr "Credit Card"
 
 #: ../admin/settings/dashboard.php:33 ../admin/settings/dashboard.php:38
 msgid ""
@@ -1920,17 +1560,19 @@ msgstr ""
 
 #: ../admin/settings/dashboard.php:36
 #: ../includes/payment/softbank-payment.php:1166
+#, fuzzy
 msgid "Softbank Payment"
-msgstr ""
+msgstr "SB Credit Card"
 
-#: ../admin/settings/dashboard.php:41 ../includes/payment/ntt.php:215
+#: ../admin/settings/dashboard.php:41 ../includes/payment/ntt.php:223
 msgid "NTT SmartTrade"
 msgstr ""
 
 #: ../admin/settings/dashboard.php:46 ../admin/settings/payment.php:40
 #: ../help/transfer.php:2
+#, fuzzy
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #: ../admin/settings/dashboard.php:48
 #, php-format
@@ -1940,12 +1582,14 @@ msgid ""
 msgstr ""
 
 #: ../admin/settings/dashboard.php:60
+#, fuzzy
 msgid "What you sell"
-msgstr ""
+msgstr "Sell"
 
 #: ../admin/settings/dashboard.php:64
+#, fuzzy
 msgid "Sales Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../admin/settings/dashboard.php:71
 msgid "Each sales type should be set up properly."
@@ -1984,8 +1628,9 @@ msgid "Marketing"
 msgstr ""
 
 #: ../admin/settings/dashboard.php:115
+#, fuzzy
 msgid "Marketing Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../admin/settings/dashboard.php:122
 msgid "Let's make promotion to get more sales."
@@ -2049,8 +1694,9 @@ msgid "Setting"
 msgstr ""
 
 #: ../admin/settings/event.php:12
+#, fuzzy
 msgid "Event Post Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../admin/settings/event.php:24 ../form-template/event-contact.php:45
 msgid "Mail Body"
@@ -2079,8 +1725,9 @@ msgid "This setting is global and can be overridden individually."
 msgstr ""
 
 #: ../admin/settings/event.php:53
+#, fuzzy
 msgid "Waiting message"
-msgstr ""
+msgstr "Waiting Cancellation"
 
 #: ../admin/settings/event.php:56
 msgid "This text will be displayed when user decide to wait for cancellation."
@@ -2105,15 +1752,14 @@ msgid ""
 msgstr ""
 
 #: ../admin/settings/misc.php:20 ../admin/settings/misc.php:39
-#: ../admin/settings/misc.php:62 ../admin/settings/post.php:19
-#: ../admin/settings/post.php:50 ../admin/settings/post.php:67
-#: ../admin/settings/payment/paypal.php:28
+#: ../admin/settings/misc.php:62 ../admin/settings/payment/paypal.php:28
 #: ../admin/settings/payment/paypal.php:77
 #: ../admin/settings/payment/paypal.php:89
 #: ../admin/settings/payment/paypal.php:101
 #: ../admin/settings/payment/paypal.php:113
 #: ../admin/settings/payment/paypal.php:131
-#: ../admin/settings/payment/transfer.php:5
+#: ../admin/settings/payment/transfer.php:5 ../admin/settings/post.php:19
+#: ../admin/settings/post.php:50 ../admin/settings/post.php:67
 #: ../includes/cart/form-template.php:310
 msgid "More &gt;"
 msgstr ""
@@ -2180,8 +1826,9 @@ msgid ""
 msgstr ""
 
 #: ../admin/settings/payment.php:20
+#, fuzzy
 msgid "PayPal"
-msgstr ""
+msgstr "PayPal"
 
 #: ../admin/settings/payment.php:55
 msgid "To enable LWP, you have to set up at leaset one payment method."
@@ -2205,534 +1852,6 @@ msgstr ""
 
 #: ../admin/settings/payment.php:89
 msgid "Settign screen is not found. The plugin files might be broken."
-msgstr ""
-
-#: ../admin/settings/post.php:5
-msgid ""
-"You can sell post content itself or attached downloadble content like mp3, "
-"ePub, zip and so on. Typically you can sell your ebook, music video, how-tos "
-"and so on."
-msgstr ""
-
-#: ../admin/settings/post.php:13
-msgid "Directory for File protection"
-msgstr ""
-
-#: ../admin/settings/post.php:18
-msgid ""
-"Directory to save files. This should be writable and innaccessible via HTTP."
-msgstr ""
-
-#: ../admin/settings/post.php:30
-msgid "Custom Post Type"
-msgstr ""
-
-#: ../admin/settings/post.php:35
-msgid "Custom post name"
-msgstr ""
-
-#: ../admin/settings/post.php:36
-msgid "If not needed, leave it blank. ex: eBooks"
-msgstr ""
-
-#: ../admin/settings/post.php:40
-msgid "Custom post name in Singular"
-msgstr ""
-
-#: ../admin/settings/post.php:41
-msgid "If you don't specified, this same as above field. ex: eBook"
-msgstr ""
-
-#: ../admin/settings/post.php:45
-msgid "Custom post slug"
-msgstr ""
-
-#: ../admin/settings/post.php:46
-msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
-msgstr ""
-
-#: ../admin/settings/post.php:49
-msgid ""
-"If you need detailed settings, please leave it blank and make custom post by "
-"yourself. 3rd party plugins will help you."
-msgstr ""
-
-#: ../admin/settings/post.php:56
-msgid "Payable Post Types"
-msgstr ""
-
-#: ../admin/settings/post.php:66
-msgid ""
-"You can manually make any post type payable. See detail at how to customize."
-msgstr ""
-
-#: ../admin/settings/post.php:72
-msgid "User XML-RPC API"
-msgstr ""
-
-#: ../admin/settings/post.php:76
-msgid "Enable XML-RPC API endpoint"
-msgstr ""
-
-#: ../admin/settings/post.php:78
-msgid ""
-"XML-RPC provides interface to other softwares. This is for experienced "
-"developer."
-msgstr ""
-
-#: ../admin/settings/post.php:81
-#, php-format
-msgid ""
-"WordPress XML-RPC endpoint is not working. Please enable it <a href=\"%s"
-"\">here</a>."
-msgstr ""
-
-#: ../admin/settings/post.php:83
-msgid "XML-RPC API is working in order."
-msgstr ""
-
-#: ../admin/settings/post.php:92
-msgid "Cooperating with Smartphone Application"
-msgstr ""
-
-#: ../admin/settings/post.php:93 ../admin/settings/reward.php:3
-msgid "EXPERIMENTAL"
-msgstr ""
-
-#: ../admin/settings/post.php:96
-msgid ""
-"Smartphone applications have so-called <strong>In-App Purchase</strong>. LWP "
-"can be a content delivery server for them with XML-RPC protocol. Now iOS and "
-"android(Google Play) are supoorted."
-msgstr ""
-
-#: ../admin/settings/post.php:97
-#, php-format
-msgid ""
-"Once you enable it, new post type will be created <a href=\"%1$s\">here</a> "
-"and you can access <a href=\"%2$s\">API Manual</a>."
-msgstr ""
-
-#: ../admin/settings/post.php:99
-msgid ""
-"<strong>Note: </strong> This feature is only for experienced developers."
-msgstr ""
-
-#: ../admin/settings/post.php:104
-msgid "Enable iOS In App Purchase"
-msgstr ""
-
-#: ../admin/settings/post.php:107 ../admin/settings/post.php:114
-msgid "Disabled"
-msgstr ""
-
-#: ../admin/settings/post.php:111
-msgid "Enable android In-app Billing"
-msgstr ""
-
-#: ../admin/settings/post.php:115
-msgid "Android Public Key"
-msgstr ""
-
-#: ../admin/settings/post.php:118
-#, php-format
-msgid ""
-"To verify receipt sent from Android application, WordPress needs Public key. "
-"You can get it at <a href=\"%s\">Google Play Developer Console</a>. "
-msgstr ""
-
-#: ../admin/settings/post.php:119
-msgid ""
-"<strong>Note: </strong>PHP's OpenSSL can't treat Google Play's RSA public "
-"key as-is. It should be converted like below and paste the result above."
-msgstr ""
-
-#: ../admin/settings/post.php:122
-msgid "Copy and paste public key and save it as pubkey.txt."
-msgstr ""
-
-#: ../admin/settings/post.php:123
-msgid "Decode public key with Base64 and save it."
-msgstr ""
-
-#: ../admin/settings/post.php:125
-msgid "Convert DER pubkey to PEM format."
-msgstr ""
-
-#: ../admin/settings/post.php:127
-msgid "Encode public key and save it."
-msgstr ""
-
-#: ../admin/settings/post.php:132
-msgid "Post Type public"
-msgstr ""
-
-#: ../admin/settings/post.php:135
-msgid "Hidden"
-msgstr ""
-
-#: ../admin/settings/post.php:137
-msgid ""
-"If you choose public, this post type is publicly displayed and can be "
-"accessed on Web site."
-msgstr ""
-
-#: ../admin/settings/post.php:142
-msgid "Availability"
-msgstr ""
-
-#: ../admin/settings/post.php:144
-msgid "Available from Web site"
-msgstr ""
-
-#: ../admin/settings/post.php:145
-msgid "Only available with Smartphone"
-msgstr ""
-
-#: ../admin/settings/post.php:147
-msgid ""
-"If you enable this, post type for smartphone can be bought from Web site."
-msgstr ""
-
-#: ../admin/settings/post.php:152
-msgid "Force SSL on XML-RPC"
-msgstr ""
-
-#: ../admin/settings/post.php:154
-msgid "Force"
-msgstr ""
-
-#: ../admin/settings/post.php:155
-msgid "Depends on WordPress setting"
-msgstr ""
-
-#: ../admin/settings/post.php:156
-msgid "Do nothing"
-msgstr ""
-
-#: ../admin/settings/post.php:159
-#, php-format
-msgid ""
-"Your current WordPress setting: Admin Panel SSL = <strong>%1$s</strong> , "
-"Login SSL = <strong>%2$s</strong> "
-msgstr ""
-
-#: ../admin/settings/post.php:166
-msgid "Endpoint"
-msgstr ""
-
-#: ../admin/settings/post.php:170
-msgid "XML-RPC availability"
-msgstr ""
-
-#: ../admin/settings/post.php:175
-#, php-format
-msgid "XML-RPC is disabled. Please enable it <a href=\"%s\">here</a>"
-msgstr ""
-
-#: ../admin/settings/reward.php:7
-msgid ""
-"This is so called affiliate system, but very experimental. Please be careful "
-"to your regal responsibility to your partners."
-msgstr ""
-
-#: ../admin/settings/reward.php:14
-msgid "Reward for promoter"
-msgstr ""
-
-#: ../admin/settings/reward.php:19
-msgid ""
-"If you wish to reward for your user who promote your product, enable this. "
-"Your users can promote your product and can manage there sales statistic."
-msgstr ""
-
-#: ../admin/settings/reward.php:24
-msgid "Reward margin for promotion"
-msgstr ""
-
-#: ../admin/settings/reward.php:28
-msgid ""
-"Specify back margin in percentage. This is global setting for promotion and "
-"you can override on each product individually."
-msgstr ""
-
-#: ../admin/settings/reward.php:33
-msgid "Maximum promotion margin"
-msgstr ""
-
-#: ../admin/settings/reward.php:37
-msgid ""
-"You can override margin per posts and users. In some case, margin exceeds "
-"100%. You can set limit to avoid paying unexpected amount of reward."
-msgstr ""
-
-#: ../admin/settings/reward.php:42
-msgid "Reward for author"
-msgstr ""
-
-#: ../admin/settings/reward.php:47
-msgid ""
-"If you wish to reward for your authors, enable this. Your authors can see "
-"how much they sold their contents on sales report dashboard."
-msgstr ""
-
-#: ../admin/settings/reward.php:52
-msgid "Reward margin for author"
-msgstr ""
-
-#: ../admin/settings/reward.php:56
-msgid ""
-"Specify back margin in percentage. This is global setting for author and you "
-"can override on each author individually."
-msgstr ""
-
-#: ../admin/settings/reward.php:61
-msgid "Maximum author margin"
-msgstr ""
-
-#: ../admin/settings/reward.php:65
-msgid ""
-"You can override margin per authors. In some case, margin exceeds 100%. You "
-"can set limit to avoid paying unexpected amount of reward."
-msgstr ""
-
-#: ../admin/settings/reward.php:70
-msgid "Reward minimum amount"
-msgstr ""
-
-#: ../admin/settings/reward.php:74
-msgid ""
-"Your partners can request payment for reward if reward amount is above this "
-"value."
-msgstr ""
-
-#: ../admin/settings/reward.php:79
-msgid "Reward Request"
-msgstr ""
-
-#: ../admin/settings/reward.php:88
-#, php-format
-msgid "%d month after"
-msgstr ""
-
-#: ../admin/settings/reward.php:88
-msgid "That month"
-msgstr ""
-
-#: ../admin/settings/reward.php:93
-#, php-format
-msgid ""
-"If reward amount exceeds %1$d (%2$s), user can request payment once until "
-"%3$s on every month. Reward will be paid at %4$s on %5$s"
-msgstr ""
-
-#: ../admin/settings/reward.php:103
-msgid "Reward Notice"
-msgstr ""
-
-#: ../admin/settings/reward.php:107
-msgid "This will be displayed on profile page. You can use placeholders: "
-msgstr ""
-
-#: ../admin/settings/reward.php:116
-msgid "Contact information for reward"
-msgstr ""
-
-#: ../admin/settings/reward.php:118
-msgid ""
-"i.e. To get reward payed, you have to enter bank account. All information "
-"for transfer is required."
-msgstr ""
-
-#: ../admin/settings/reward.php:120
-msgid ""
-"If you need some additional information on payment besides WordPress "
-"Default(i.e. Bank account required), enter description. If it is not blank, "
-"This description will be displayed on payment request page."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:3
-msgid "Try my ebook"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:8
-msgid ""
-"Kitasenju Social club is plugin author's novel. Please buy this ebook only "
-"for <strong>&yen;100</strong> to know how this plugin works!"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:12
-msgid "Contact to payment agency"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:15
-msgid ""
-"Belows are Japanese payment agency and official partner of this plugin. "
-"There payment API is available via LWP."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:25
-msgid ""
-"May I help you? We have premium support service. Feel free to call us! <a "
-"href=\"tel:05055328327\">050-5532-8327</a> (Japan Only)"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:27
-msgid "Contact to Payment Agency"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:33 ../admin/settings/payment/softbank.php:152
-#: ../admin/settings/payment/softbank.php:168
-#: ../admin/settings/payment/softbank.php:184
-#, php-format
-msgid "%s is required."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:38
-msgid "Agency"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:55
-msgid "Legal Entity"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:60
-msgid "Individual"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:61
-msgid "Coporate"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:64
-msgid "(Company Name)"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:65
-msgid "Required for corporative."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:72 ../admin/settings/sidebar.php:77
-#: ../form-template/payment.php:307
-msgid "Tel"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:82 ../includes/products/event.php:925
-msgid "Email"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:90
-msgid "Site to contract"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1522
-msgid "Marchandise"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:98
-msgid "Estimated Sales"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:107
-msgid "Event ticket"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:110
-msgid "Other"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:125
-msgid "Month"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:130 ../form-template/selection.php:28
-#: ../includes/literally-wordpress.php:1416 ../includes/products/event.php:931
-msgid "Payment Method"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:149
-msgid "Miselaneous"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:151
-msgid "Please enter questions or notices."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:158
-msgid "Create PayPal Account"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:160
-msgid ""
-"First of all, try to get PayPal <strong>buisiness account</strong> <a href="
-"\"http://www.paypal.com\" target=\"_blank\">here</a>."
-msgstr ""
-
-#: ../admin/settings/sidebar.php:165
-msgid "Please visit LWPer.info"
-msgstr ""
-
-#: ../admin/settings/sidebar.php:168
-msgid ""
-"<a href=\"http://lwper.info\">LWPer.info</a> is the only information site "
-"for LWP user."
-msgstr ""
-
-#: ../admin/settings/subscription.php:11
-msgid "Accept Subscription"
-msgstr ""
-
-#: ../admin/settings/subscription.php:14
-#: ../admin/settings/payment/transfer.php:15
-msgid "Disallow"
-msgstr ""
-
-#: ../admin/settings/subscription.php:15
-#: ../admin/settings/payment/transfer.php:16
-msgid "Allow"
-msgstr ""
-
-#: ../admin/settings/subscription.php:19
-msgid "Registered Plans"
-msgstr ""
-
-#: ../admin/settings/subscription.php:22
-#, php-format
-msgid "You have %d subscription plans."
-msgstr ""
-
-#: ../admin/settings/subscription.php:26
-#, php-format
-msgid "You can set it up <a href=\"%s\">here</a>."
-msgstr ""
-
-#: ../admin/settings/subscription.php:31
-msgid "Subscription Post Type"
-msgstr ""
-
-#: ../admin/settings/subscription.php:44
-msgid "Subscription Format"
-msgstr ""
-
-#: ../admin/settings/subscription.php:47
-msgid "More tag"
-msgstr ""
-
-#: ../admin/settings/subscription.php:48
-msgid "Nextpage Tag"
-msgstr ""
-
-#: ../admin/settings/subscription.php:49
-msgid "All"
-msgstr ""
-
-#: ../admin/settings/subscription.php:51
-#, php-format
-msgid ""
-"If you choose More Tag or Nextpage Tag, non subscriber can see the content "
-"before it and the invitation message after it. If you choose all, non "
-"subscriber saw only the invitation message. You can customize the invitation "
-"message at <a href=\"%s\">Subscription</a>."
 msgstr ""
 
 #: ../admin/settings/payment/gmo.php:3
@@ -2779,6 +1898,7 @@ msgid ""
 msgstr ""
 
 #: ../admin/settings/payment/gmo.php:34 ../admin/settings/payment/ntt.php:34
+#: ../admin/settings/payment/ntt.php:163
 #: ../admin/settings/payment/paypal.php:34
 #: ../admin/settings/payment/softbank.php:34
 msgid "Stealth mode"
@@ -2791,6 +1911,7 @@ msgid "Enable stealth mode"
 msgstr ""
 
 #: ../admin/settings/payment/gmo.php:40 ../admin/settings/payment/ntt.php:40
+#: ../admin/settings/payment/ntt.php:169
 #: ../admin/settings/payment/paypal.php:40
 #: ../admin/settings/payment/softbank.php:40
 msgid ""
@@ -2800,7 +1921,7 @@ msgstr ""
 
 #: ../admin/settings/payment/gmo.php:45 ../admin/settings/payment/ntt.php:74
 #: ../admin/settings/payment/softbank.php:45
-#: ../includes/statics/payment-method.php:518
+#: ../includes/statics/payment-method.php:522
 msgid "Credit Card"
 msgstr ""
 
@@ -2820,8 +1941,9 @@ msgstr ""
 #: ../admin/settings/payment/gmo.php:67 ../admin/settings/payment/ntt.php:105
 #: ../admin/settings/payment/softbank.php:71 ../form-template/sb-check.php:30
 #: ../includes/cart/form.php:303
+#, fuzzy
 msgid "Web CVS"
-msgstr ""
+msgstr "SB Web CVS"
 
 #: ../admin/settings/payment/gmo.php:80 ../admin/settings/payment/gmo.php:92
 #: ../admin/settings/payment/softbank.php:85
@@ -2832,14 +1954,16 @@ msgstr ""
 
 #: ../admin/settings/payment/gmo.php:85
 #: ../admin/settings/payment/softbank.php:93 ../form-template/payment.php:188
-#: ../includes/statics/payment-method.php:522
+#: ../includes/statics/payment-method.php:526
+#, fuzzy
 msgid "PayEasy"
-msgstr ""
+msgstr "SB PayEasy"
 
 #: ../admin/settings/payment/gmo.php:90
 #: ../admin/settings/payment/softbank.php:98
+#, fuzzy
 msgid "Enables PayEasy"
-msgstr ""
+msgstr "SB PayEasy"
 
 #: ../admin/settings/payment/gmo.php:97
 msgid "Shop ID"
@@ -2849,7 +1973,7 @@ msgstr ""
 #: ../admin/settings/payment/ntt.php:56 ../admin/settings/payment/ntt.php:65
 #: ../admin/settings/payment/ntt.php:87 ../admin/settings/payment/ntt.php:96
 #: ../admin/settings/payment/ntt.php:134 ../admin/settings/payment/ntt.php:143
-#: ../admin/settings/payment/ntt.php:165 ../admin/settings/payment/ntt.php:174
+#: ../admin/settings/payment/ntt.php:176 ../admin/settings/payment/ntt.php:185
 #: ../admin/settings/payment/paypal.php:46
 #: ../admin/settings/payment/paypal.php:59
 #: ../admin/settings/payment/paypal.php:72
@@ -2904,7 +2028,7 @@ msgstr ""
 msgid "Hour format must be <strong>HH:MM</strong>."
 msgstr ""
 
-#: ../admin/settings/payment/gmo.php:152 ../admin/settings/payment/ntt.php:193
+#: ../admin/settings/payment/gmo.php:152 ../admin/settings/payment/ntt.php:204
 #: ../admin/settings/payment/softbank.php:232
 msgid "Notification URL"
 msgstr ""
@@ -2923,18 +2047,29 @@ msgid "Contaracted and available"
 msgstr ""
 
 #: ../admin/settings/payment/ntt.php:55 ../admin/settings/payment/ntt.php:86
-#: ../admin/settings/payment/ntt.php:133 ../admin/settings/payment/ntt.php:164
+#: ../admin/settings/payment/ntt.php:133 ../admin/settings/payment/ntt.php:175
 #, php-format
 msgid "Shop ID for %s"
 msgstr ""
 
 #: ../admin/settings/payment/ntt.php:64 ../admin/settings/payment/ntt.php:95
-#: ../admin/settings/payment/ntt.php:142 ../admin/settings/payment/ntt.php:173
+#: ../admin/settings/payment/ntt.php:142 ../admin/settings/payment/ntt.php:184
 #, php-format
 msgid "Access Key for %s"
 msgstr ""
 
-#: ../admin/settings/payment/ntt.php:216
+#: ../admin/settings/payment/ntt.php:167
+#, php-format
+msgid "Enable stealth mode only for %s"
+msgstr ""
+
+#: ../admin/settings/payment/ntt.php:170
+#, php-format
+msgid ""
+"<strong>NOTICE: </strong> This setting overrides global stealth mode for %s."
+msgstr ""
+
+#: ../admin/settings/payment/ntt.php:227
 msgid ""
 "NTT SmartTrade requires contact endpoint on your server. Please notify this "
 "URL to your service manager."
@@ -3002,24 +2137,27 @@ msgid "PayPal API User Name issued by PayPal."
 msgstr ""
 
 #: ../admin/settings/payment/paypal.php:83
+#, fuzzy
 msgid "PayPal Password"
-msgstr ""
+msgstr "PayPal"
 
 #: ../admin/settings/payment/paypal.php:89
 msgid "API password issued by PayPal"
 msgstr ""
 
 #: ../admin/settings/payment/paypal.php:95
+#, fuzzy
 msgid "PayPal Signature"
-msgstr ""
+msgstr "PayPal"
 
 #: ../admin/settings/payment/paypal.php:101
 msgid "API signature issued by PayPal"
 msgstr ""
 
 #: ../admin/settings/payment/paypal.php:107
+#, fuzzy
 msgid "PayPal PDT Token"
-msgstr ""
+msgstr "PayPal"
 
 #: ../admin/settings/payment/paypal.php:113
 msgid "Token issued by PayPal. Required for transaction."
@@ -3111,6 +2249,13 @@ msgstr ""
 #: ../admin/settings/payment/softbank.php:145
 #: ../admin/settings/payment/softbank.php:152
 msgid "Marchant ID"
+msgstr ""
+
+#: ../admin/settings/payment/softbank.php:152
+#: ../admin/settings/payment/softbank.php:168
+#: ../admin/settings/payment/softbank.php:184 ../admin/settings/sidebar.php:33
+#, php-format
+msgid "%s is required."
 msgstr ""
 
 #: ../admin/settings/payment/softbank.php:155
@@ -3252,7 +2397,18 @@ msgid ""
 msgstr ""
 
 #: ../admin/settings/payment/transfer.php:12
+#, fuzzy
 msgid "Accept Transfer"
+msgstr "Transfer"
+
+#: ../admin/settings/payment/transfer.php:15
+#: ../admin/settings/subscription.php:14
+msgid "Disallow"
+msgstr ""
+
+#: ../admin/settings/payment/transfer.php:16
+#: ../admin/settings/subscription.php:15
+msgid "Allow"
 msgstr ""
 
 #: ../admin/settings/payment/transfer.php:20
@@ -3283,6 +2439,731 @@ msgstr ""
 #: ../admin/settings/payment/transfer.php:43
 #, php-format
 msgid "You can customize notification message <a href=\"%s\">here</a>."
+msgstr ""
+
+#: ../admin/settings/post.php:5
+msgid ""
+"You can sell post content itself or attached downloadble content like mp3, "
+"ePub, zip and so on. Typically you can sell your ebook, music video, how-tos "
+"and so on."
+msgstr ""
+
+#: ../admin/settings/post.php:13
+msgid "Directory for File protection"
+msgstr ""
+
+#: ../admin/settings/post.php:18
+msgid ""
+"Directory to save files. This should be writable and innaccessible via HTTP."
+msgstr ""
+
+#: ../admin/settings/post.php:30
+#, fuzzy
+msgid "Custom Post Type"
+msgstr "Post Type"
+
+#: ../admin/settings/post.php:35
+#, fuzzy
+msgid "Custom post name"
+msgstr "Post Type"
+
+#: ../admin/settings/post.php:36
+msgid "If not needed, leave it blank. ex: eBooks"
+msgstr ""
+
+#: ../admin/settings/post.php:40
+msgid "Custom post name in Singular"
+msgstr ""
+
+#: ../admin/settings/post.php:41
+msgid "If you don't specified, this same as above field. ex: eBook"
+msgstr ""
+
+#: ../admin/settings/post.php:45
+#, fuzzy
+msgid "Custom post slug"
+msgstr "Post Type"
+
+#: ../admin/settings/post.php:46
+msgid "Must be alphabetical and lowercase. Used for permalink. ex: ebook"
+msgstr ""
+
+#: ../admin/settings/post.php:49
+msgid ""
+"If you need detailed settings, please leave it blank and make custom post by "
+"yourself. 3rd party plugins will help you."
+msgstr ""
+
+#: ../admin/settings/post.php:56
+#, fuzzy
+msgid "Payable Post Types"
+msgstr "Post Type"
+
+#: ../admin/settings/post.php:66
+msgid ""
+"You can manually make any post type payable. See detail at how to customize."
+msgstr ""
+
+#: ../admin/settings/post.php:72
+msgid "User XML-RPC API"
+msgstr ""
+
+#: ../admin/settings/post.php:76
+msgid "Enable XML-RPC API endpoint"
+msgstr ""
+
+#: ../admin/settings/post.php:78
+msgid ""
+"XML-RPC provides interface to other softwares. This is for experienced "
+"developer."
+msgstr ""
+
+#: ../admin/settings/post.php:81
+#, php-format
+msgid ""
+"WordPress XML-RPC endpoint is not working. Please enable it <a href=\"%s"
+"\">here</a>."
+msgstr ""
+
+#: ../admin/settings/post.php:83
+msgid "XML-RPC API is working in order."
+msgstr ""
+
+#: ../admin/settings/post.php:92
+msgid "Cooperating with Smartphone Application"
+msgstr ""
+
+#: ../admin/settings/post.php:93 ../admin/settings/reward.php:3
+msgid "EXPERIMENTAL"
+msgstr ""
+
+#: ../admin/settings/post.php:96
+msgid ""
+"Smartphone applications have so-called <strong>In-App Purchase</strong>. LWP "
+"can be a content delivery server for them with XML-RPC protocol. Now iOS and "
+"android(Google Play) are supoorted."
+msgstr ""
+
+#: ../admin/settings/post.php:97
+#, php-format
+msgid ""
+"Once you enable it, new post type will be created <a href=\"%1$s\">here</a> "
+"and you can access <a href=\"%2$s\">API Manual</a>."
+msgstr ""
+
+#: ../admin/settings/post.php:99
+msgid ""
+"<strong>Note: </strong> This feature is only for experienced developers."
+msgstr ""
+
+#: ../admin/settings/post.php:104
+msgid "Enable iOS In App Purchase"
+msgstr ""
+
+#: ../admin/settings/post.php:107 ../admin/settings/post.php:114
+msgid "Disabled"
+msgstr ""
+
+#: ../admin/settings/post.php:111
+msgid "Enable android In-app Billing"
+msgstr ""
+
+#: ../admin/settings/post.php:115
+#, fuzzy
+msgid "Android Public Key"
+msgstr "Android"
+
+#: ../admin/settings/post.php:118
+#, php-format
+msgid ""
+"To verify receipt sent from Android application, WordPress needs Public key. "
+"You can get it at <a href=\"%s\">Google Play Developer Console</a>. "
+msgstr ""
+
+#: ../admin/settings/post.php:119
+msgid ""
+"<strong>Note: </strong>PHP's OpenSSL can't treat Google Play's RSA public "
+"key as-is. It should be converted like below and paste the result above."
+msgstr ""
+
+#: ../admin/settings/post.php:122
+msgid "Copy and paste public key and save it as pubkey.txt."
+msgstr ""
+
+#: ../admin/settings/post.php:123
+msgid "Decode public key with Base64 and save it."
+msgstr ""
+
+#: ../admin/settings/post.php:125
+msgid "Convert DER pubkey to PEM format."
+msgstr ""
+
+#: ../admin/settings/post.php:127
+msgid "Encode public key and save it."
+msgstr ""
+
+#: ../admin/settings/post.php:132
+#, fuzzy
+msgid "Post Type public"
+msgstr "Post Type"
+
+#: ../admin/settings/post.php:134 ../admin/upload.php:141
+msgid "Public"
+msgstr ""
+
+#: ../admin/settings/post.php:135
+msgid "Hidden"
+msgstr ""
+
+#: ../admin/settings/post.php:137
+msgid ""
+"If you choose public, this post type is publicly displayed and can be "
+"accessed on Web site."
+msgstr ""
+
+#: ../admin/settings/post.php:142
+msgid "Availability"
+msgstr ""
+
+#: ../admin/settings/post.php:144
+msgid "Available from Web site"
+msgstr ""
+
+#: ../admin/settings/post.php:145
+msgid "Only available with Smartphone"
+msgstr ""
+
+#: ../admin/settings/post.php:147
+msgid ""
+"If you enable this, post type for smartphone can be bought from Web site."
+msgstr ""
+
+#: ../admin/settings/post.php:152
+msgid "Force SSL on XML-RPC"
+msgstr ""
+
+#: ../admin/settings/post.php:154
+msgid "Force"
+msgstr ""
+
+#: ../admin/settings/post.php:155
+msgid "Depends on WordPress setting"
+msgstr ""
+
+#: ../admin/settings/post.php:156
+msgid "Do nothing"
+msgstr ""
+
+#: ../admin/settings/post.php:159
+#, php-format
+msgid ""
+"Your current WordPress setting: Admin Panel SSL = <strong>%1$s</strong> , "
+"Login SSL = <strong>%2$s</strong> "
+msgstr ""
+
+#: ../admin/settings/post.php:166
+msgid "Endpoint"
+msgstr ""
+
+#: ../admin/settings/post.php:170
+msgid "XML-RPC availability"
+msgstr ""
+
+#: ../admin/settings/post.php:175
+#, php-format
+msgid "XML-RPC is disabled. Please enable it <a href=\"%s\">here</a>"
+msgstr ""
+
+#: ../admin/settings/reward.php:7
+msgid ""
+"This is so called affiliate system, but very experimental. Please be careful "
+"to your regal responsibility to your partners."
+msgstr ""
+
+#: ../admin/settings/reward.php:14
+msgid "Reward for promoter"
+msgstr ""
+
+#: ../admin/settings/reward.php:19
+msgid ""
+"If you wish to reward for your user who promote your product, enable this. "
+"Your users can promote your product and can manage there sales statistic."
+msgstr ""
+
+#: ../admin/settings/reward.php:24
+#, fuzzy
+msgid "Reward margin for promotion"
+msgstr "Promotion"
+
+#: ../admin/settings/reward.php:28
+msgid ""
+"Specify back margin in percentage. This is global setting for promotion and "
+"you can override on each product individually."
+msgstr ""
+
+#: ../admin/settings/reward.php:33
+#, fuzzy
+msgid "Maximum promotion margin"
+msgstr "Promotion"
+
+#: ../admin/settings/reward.php:37
+msgid ""
+"You can override margin per posts and users. In some case, margin exceeds "
+"100%. You can set limit to avoid paying unexpected amount of reward."
+msgstr ""
+
+#: ../admin/settings/reward.php:42
+msgid "Reward for author"
+msgstr ""
+
+#: ../admin/settings/reward.php:47
+msgid ""
+"If you wish to reward for your authors, enable this. Your authors can see "
+"how much they sold their contents on sales report dashboard."
+msgstr ""
+
+#: ../admin/settings/reward.php:52
+msgid "Reward margin for author"
+msgstr ""
+
+#: ../admin/settings/reward.php:56
+msgid ""
+"Specify back margin in percentage. This is global setting for author and you "
+"can override on each author individually."
+msgstr ""
+
+#: ../admin/settings/reward.php:61
+msgid "Maximum author margin"
+msgstr ""
+
+#: ../admin/settings/reward.php:65
+msgid ""
+"You can override margin per authors. In some case, margin exceeds 100%. You "
+"can set limit to avoid paying unexpected amount of reward."
+msgstr ""
+
+#: ../admin/settings/reward.php:70
+msgid "Reward minimum amount"
+msgstr ""
+
+#: ../admin/settings/reward.php:74
+msgid ""
+"Your partners can request payment for reward if reward amount is above this "
+"value."
+msgstr ""
+
+#: ../admin/settings/reward.php:79
+msgid "Reward Request"
+msgstr ""
+
+#: ../admin/settings/reward.php:88
+#, php-format
+msgid "%d month after"
+msgstr ""
+
+#: ../admin/settings/reward.php:88
+msgid "That month"
+msgstr ""
+
+#: ../admin/settings/reward.php:93
+#, php-format
+msgid ""
+"If reward amount exceeds %1$d (%2$s), user can request payment once until "
+"%3$s on every month. Reward will be paid at %4$s on %5$s"
+msgstr ""
+
+#: ../admin/settings/reward.php:103
+msgid "Reward Notice"
+msgstr ""
+
+#: ../admin/settings/reward.php:107
+msgid "This will be displayed on profile page. You can use placeholders: "
+msgstr ""
+
+#: ../admin/settings/reward.php:116
+msgid "Contact information for reward"
+msgstr ""
+
+#: ../admin/settings/reward.php:118
+msgid ""
+"i.e. To get reward payed, you have to enter bank account. All information "
+"for transfer is required."
+msgstr ""
+
+#: ../admin/settings/reward.php:120
+msgid ""
+"If you need some additional information on payment besides WordPress "
+"Default(i.e. Bank account required), enter description. If it is not blank, "
+"This description will be displayed on payment request page."
+msgstr ""
+
+#: ../admin/settings/sidebar.php:3
+msgid "Try my ebook"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:8
+msgid ""
+"Kitasenju Social club is plugin author's novel. Please buy this ebook only "
+"for <strong>&yen;100</strong> to know how this plugin works!"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:9 ../functions-internal.php:199
+#: ../functions.php:780 ../functions.php:785 ../widgets/buynow.php:111
+msgid "Buy Now"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:12
+msgid "Contact to payment agency"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:15
+msgid ""
+"Belows are Japanese payment agency and official partner of this plugin. "
+"There payment API is available via LWP."
+msgstr ""
+
+#: ../admin/settings/sidebar.php:25
+msgid ""
+"May I help you? We have premium support service. Feel free to call us! <a "
+"href=\"tel:05055328327\">050-5532-8327</a> (Japan Only)"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:27
+msgid "Contact to Payment Agency"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:38
+msgid "Agency"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:55
+msgid "Legal Entity"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:60
+msgid "Individual"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:61
+msgid "Coporate"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:64
+msgid "(Company Name)"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:65
+msgid "Required for corporative."
+msgstr ""
+
+#: ../admin/settings/sidebar.php:72 ../admin/settings/sidebar.php:77
+#: ../form-template/payment.php:307
+msgid "Tel"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:82 ../includes/products/event.php:925
+msgid "Email"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:90
+msgid "Site to contract"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:98 ../includes/literally-wordpress.php:1524
+msgid "Marchandise"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:98
+msgid "Estimated Sales"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:107
+msgid "Event ticket"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:110
+msgid "Other"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:125
+msgid "Month"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:130 ../form-template/selection.php:28
+#: ../includes/literally-wordpress.php:1418 ../includes/products/event.php:931
+msgid "Payment Method"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:149
+msgid "Miselaneous"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:151
+msgid "Please enter questions or notices."
+msgstr ""
+
+#: ../admin/settings/sidebar.php:158
+#, fuzzy
+msgid "Create PayPal Account"
+msgstr "PayPal"
+
+#: ../admin/settings/sidebar.php:160
+msgid ""
+"First of all, try to get PayPal <strong>buisiness account</strong> <a href="
+"\"http://www.paypal.com\" target=\"_blank\">here</a>."
+msgstr ""
+
+#: ../admin/settings/sidebar.php:165
+msgid "Please visit LWPer.info"
+msgstr ""
+
+#: ../admin/settings/sidebar.php:168
+msgid ""
+"<a href=\"http://lwper.info\">LWPer.info</a> is the only information site "
+"for LWP user."
+msgstr ""
+
+#: ../admin/settings/subscription.php:11
+msgid "Accept Subscription"
+msgstr ""
+
+#: ../admin/settings/subscription.php:19
+msgid "Registered Plans"
+msgstr ""
+
+#: ../admin/settings/subscription.php:22
+#, php-format
+msgid "You have %d subscription plans."
+msgstr ""
+
+#: ../admin/settings/subscription.php:26
+#, php-format
+msgid "You can set it up <a href=\"%s\">here</a>."
+msgstr ""
+
+#: ../admin/settings/subscription.php:31
+#, fuzzy
+msgid "Subscription Post Type"
+msgstr "Post Type"
+
+#: ../admin/settings/subscription.php:44
+msgid "Subscription Format"
+msgstr ""
+
+#: ../admin/settings/subscription.php:47
+msgid "More tag"
+msgstr ""
+
+#: ../admin/settings/subscription.php:48
+msgid "Nextpage Tag"
+msgstr ""
+
+#: ../admin/settings/subscription.php:49
+msgid "All"
+msgstr ""
+
+#: ../admin/settings/subscription.php:51
+#, php-format
+msgid ""
+"If you choose More Tag or Nextpage Tag, non subscriber can see the content "
+"before it and the invitation message after it. If you choose all, non "
+"subscriber saw only the invitation message. You can customize the invitation "
+"message at <a href=\"%s\">Subscription</a>."
+msgstr ""
+
+#: ../admin/summary.php:2 ../includes/literally-wordpress.php:519
+msgid "Transaction Summary"
+msgstr ""
+
+#: ../admin/summary.php:99
+msgid "Undefined"
+msgstr ""
+
+#: ../admin/summary.php:109
+msgid "Top Sales"
+msgstr ""
+
+#: ../admin/summary.php:111
+msgid "Royal user"
+msgstr ""
+
+#: ../admin/transfer.php:2 ../help/transfer.php:22
+#: ../includes/literally-wordpress.php:526
+#, fuzzy
+msgid "Transfer Management"
+msgstr "Transfer"
+
+#: ../admin/upload.php:17
+msgid "You have no permission to upload file."
+msgstr ""
+
+#: ../admin/upload.php:27
+msgid "Title is empty."
+msgstr ""
+
+#: ../admin/upload.php:32
+msgid "Select public status."
+msgstr ""
+
+#: ../admin/upload.php:37
+msgid "No file is specified."
+msgstr ""
+
+#: ../admin/upload.php:46
+msgid "No device is specified."
+msgstr ""
+
+#: ../admin/upload.php:52
+msgid "File is successfully uploaded."
+msgstr ""
+
+#: ../admin/upload.php:54
+#, php-format
+msgid ""
+"Sorry, but failed to upload file. Check permission of <code>%s</code>. It "
+"must be writable from WordPress."
+msgstr ""
+
+#: ../admin/upload.php:67
+msgid "File is successfully updated."
+msgstr ""
+
+#: ../admin/upload.php:69
+msgid "Failed to update file."
+msgstr ""
+
+#: ../admin/upload.php:76
+msgid "File deleted."
+msgstr ""
+
+#: ../admin/upload.php:78
+msgid "Failed to delete file."
+msgstr ""
+
+#: ../admin/upload.php:98 ../form-template/event-contact.php:66
+#: ../includes/cart/form-template.php:439
+msgid "Processing&hellip;"
+msgstr ""
+
+#: ../admin/upload.php:107
+msgid "Manage files"
+msgstr ""
+
+#: ../admin/upload.php:111
+msgid "Please update file information"
+msgstr ""
+
+#: ../admin/upload.php:113
+msgid "Please upload file"
+msgstr ""
+
+#: ../admin/upload.php:133
+msgid "Name of this file. ex. ePub for iBooks(2nd Edition)"
+msgstr ""
+
+#: ../admin/upload.php:138
+msgid "Public Status"
+msgstr ""
+
+#: ../admin/upload.php:142
+msgid "Private"
+msgstr ""
+
+#: ../admin/upload.php:143
+msgid "Public status of this file. Private files won't be displayed."
+msgstr ""
+
+#: ../admin/upload.php:148
+msgid "Access to File"
+msgstr ""
+
+#: ../admin/upload.php:151 ../admin/upload.php:248
+msgid "Parchasers only"
+msgstr ""
+
+#: ../admin/upload.php:152 ../admin/upload.php:245
+msgid "Members only"
+msgstr ""
+
+#: ../admin/upload.php:153 ../admin/upload.php:156 ../admin/upload.php:242
+#: ../tables/list-download-logs.php:155
+msgid "Anyone"
+msgstr ""
+
+#: ../admin/upload.php:155
+msgid ""
+"File access permits user to <strong>download whole of the file</strong>."
+msgstr ""
+
+#: ../admin/upload.php:156
+#, php-format
+msgid ""
+"If you want provide partial trial, <strong>make a partial file</strong> and "
+"specify it as &quot;%s&quot;"
+msgstr ""
+
+#: ../admin/upload.php:170
+msgid "Check device which can read this file."
+msgstr ""
+
+#: ../admin/upload.php:171
+#, php-format
+msgid "To add device, go to %s."
+msgstr ""
+
+#: ../admin/upload.php:182
+msgid "Enter if required."
+msgstr ""
+
+#: ../admin/upload.php:190
+msgid "Times"
+msgstr ""
+
+#: ../admin/upload.php:191
+msgid ""
+"If you set 10, a user can download 10 times. &quot;0&quot; means unlimited. "
+"This option is not valid for public files."
+msgstr ""
+
+#: ../admin/upload.php:197
+msgid "File"
+msgstr ""
+
+#: ../admin/upload.php:209
+msgid "Go to add file"
+msgstr ""
+
+#: ../admin/upload.php:218
+msgid "Registered files"
+msgstr ""
+
+#: ../admin/upload.php:224
+msgid "Are you sure to delete?"
+msgstr ""
+
+#: ../admin/upload.php:237
+msgid "Size"
+msgstr ""
+
+#: ../admin/upload.php:239
+msgid "Accessibility"
+msgstr ""
+
+#: ../admin/upload.php:252
+msgid "Donwload Limit"
+msgstr ""
+
+#: ../admin/upload.php:254
+#, php-format
+msgid "%s times"
+msgstr ""
+
+#: ../admin/upload.php:256
+msgid "No limit"
+msgstr ""
+
+#: ../admin/upload.php:262
+msgid "None"
 msgstr ""
 
 #: ../assets/js/tinymce-lang.php:12
@@ -3362,7 +3243,7 @@ msgstr ""
 
 #: ../form-template/cancel-ticket.php:44 ../form-template/return.php:86
 #: ../form-template/selection.php:95 ../form-template/subscription.php:64
-#: ../includes/literally-wordpress.php:623
+#: ../includes/literally-wordpress.php:624
 #: ../includes/statics/payment-status.php:86 ../tables/list-history.php:230
 msgid "Cancel"
 msgstr "Cancel"
@@ -3382,7 +3263,7 @@ msgstr ""
 #: ../form-template/cancel.php:5 ../form-template/chocom.php:38
 #: ../form-template/payment.php:362 ../form-template/subscription.php:72
 #: ../form-template/subscription.php:74 ../form-template/subscription.php:76
-#: ../form-template/transfer.php:12 ../includes/cart/form.php:851
+#: ../form-template/transfer.php:12 ../includes/cart/form.php:853
 msgid "Return"
 msgstr ""
 
@@ -3510,8 +3391,9 @@ msgstr ""
 
 #: ../form-template/payment.php:7 ../form-template/return.php:50
 #: ../includes/cart/cart.php:127 ../tables/list-campaign.php:97
+#, fuzzy
 msgid "Item"
-msgstr ""
+msgstr "Item set"
 
 #: ../form-template/payment.php:32
 #, php-format
@@ -3558,17 +3440,19 @@ msgid ""
 msgstr ""
 
 #: ../form-template/payment.php:158
+#, fuzzy
 msgid "Dealing Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../form-template/payment.php:159
 msgid "At once"
 msgstr ""
 
-#: ../form-template/payment.php:166 ../includes/cart/form.php:973
-#: ../includes/cart/form.php:992 ../includes/cart/form.php:1008
+#: ../form-template/payment.php:166 ../includes/cart/form.php:976
+#: ../includes/cart/form.php:995 ../includes/cart/form.php:1011
+#, fuzzy
 msgid "CVS"
-msgstr ""
+msgstr "SB Web CVS"
 
 #: ../form-template/payment.php:181
 msgid ""
@@ -3576,12 +3460,12 @@ msgid ""
 "instruction on next page."
 msgstr ""
 
-#: ../form-template/payment.php:192 ../includes/statics/payment-method.php:560
+#: ../form-template/payment.php:192 ../includes/statics/payment-method.php:564
 msgid "You can pay from your bank account via PayEasy."
 msgstr ""
 
-#: ../form-template/payment.php:198 ../includes/cart/form.php:931
-#: ../includes/cart/form.php:956 ../tables/list-transfers.php:159
+#: ../form-template/payment.php:198 ../includes/cart/form.php:933
+#: ../includes/cart/form.php:958 ../tables/list-transfers.php:159
 msgid "Payment Limit"
 msgstr ""
 
@@ -3657,7 +3541,7 @@ msgid ""
 "should be valid and your own."
 msgstr ""
 
-#: ../form-template/refund-account.php:19 ../includes/cart/form.php:1345
+#: ../form-template/refund-account.php:19 ../includes/cart/form.php:1348
 msgid "Bank Name"
 msgstr ""
 
@@ -3669,7 +3553,7 @@ msgstr ""
 msgid "Bank Code"
 msgstr ""
 
-#: ../form-template/refund-account.php:37 ../includes/cart/form.php:1346
+#: ../form-template/refund-account.php:37 ../includes/cart/form.php:1349
 msgid "Branch Name"
 msgstr ""
 
@@ -3682,8 +3566,9 @@ msgid "Branch No."
 msgstr ""
 
 #: ../form-template/refund-account.php:54
+#, fuzzy
 msgid "Account Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../form-template/refund-account.php:60
 #: ../includes/common/refund-manager.php:298
@@ -3695,11 +3580,11 @@ msgstr ""
 msgid "Checking Account"
 msgstr ""
 
-#: ../form-template/refund-account.php:71 ../includes/cart/form.php:1347
+#: ../form-template/refund-account.php:71 ../includes/cart/form.php:1350
 msgid "Account No."
 msgstr ""
 
-#: ../form-template/refund-account.php:82 ../includes/cart/form.php:1348
+#: ../form-template/refund-account.php:82 ../includes/cart/form.php:1351
 msgid "Account Holder"
 msgstr ""
 
@@ -3715,7 +3600,7 @@ msgstr ""
 msgid "Customer information"
 msgstr ""
 
-#: ../form-template/return.php:20 ../includes/cart/form.php:1030
+#: ../form-template/return.php:20 ../includes/cart/form.php:1033
 msgid "Invoice No."
 msgstr ""
 
@@ -3843,6 +3728,174 @@ msgstr ""
 
 #: ../form-template/transfer.php:8
 msgid "We send you a reminder mail to your registered addres."
+msgstr ""
+
+#: ../functions-internal.php:50
+#, php-format
+msgid "<strong>%1$d</strong> of %2$d Steps"
+msgstr ""
+
+#: ../functions-internal.php:77 ../functions.php:558
+msgid "download"
+msgstr ""
+
+#: ../functions-internal.php:96 ../functions.php:562
+#, php-format
+msgid "Published: %s"
+msgstr ""
+
+#: ../functions-internal.php:154
+#, php-format
+msgid "Refunds %s of bought price"
+msgstr ""
+
+#: ../functions-internal.php:156
+#, php-format
+msgid "Refunds bought price - %s"
+msgstr ""
+
+#: ../functions-internal.php:158
+#, php-format
+msgid "Refunds %s"
+msgstr ""
+
+#: ../functions-internal.php:162
+#, php-format
+msgid "Until %s"
+msgstr ""
+
+#: ../functions-internal.php:186 ../functions-internal.php:195
+msgid "Sold Out"
+msgstr ""
+
+#: ../functions-internal.php:190
+#, fuzzy
+msgid "You are waiting"
+msgstr "Waiting Cancellation"
+
+#: ../functions-internal.php:192
+#, php-format
+msgid "Are you sure to register on waiting list for %2$s of %1$s?"
+msgstr ""
+
+#: ../functions-internal.php:192
+#, fuzzy
+msgid "Wait for Cancellation"
+msgstr "Waiting Cancellation"
+
+#: ../functions-internal.php:205
+#, php-format
+msgid "(%s tickets)"
+msgstr ""
+
+#: ../functions-internal.php:210
+#, php-format
+msgid "Discount price untill <strong>%s</strong>"
+msgstr ""
+
+#: ../functions-internal.php:214
+#, php-format
+msgid ""
+"You have this ticket. See <a href=\"%1$s\">Purchase History</a> or <a href="
+"\"%2$s\">Ticket List</a>."
+msgstr ""
+
+#: ../functions.php:541 ../functions.php:606
+msgid "Registered Files"
+msgstr ""
+
+#: ../functions.php:546 ../functions.php:607
+#: ../tables/list-download-logs.php:111
+msgid "File Name"
+msgstr ""
+
+#: ../functions.php:548 ../functions.php:607
+msgid "Available with"
+msgstr ""
+
+#: ../functions.php:549 ../functions.php:607 ../help/customize.php:106
+msgid "Download"
+msgstr ""
+
+#: ../functions.php:561
+#, php-format
+msgid "File Size: %s"
+msgstr ""
+
+#: ../functions.php:563
+#, php-format
+msgid "Updated: %s"
+msgstr ""
+
+#: ../functions.php:662
+msgid "Devices Available With"
+msgstr ""
+
+#: ../functions.php:667
+msgid "Avalability"
+msgstr ""
+
+#: ../functions.php:673
+msgid "Available"
+msgstr ""
+
+#: ../functions.php:673
+msgid "Unconfirmed"
+msgstr ""
+
+#: ../functions.php:857
+msgid "Subscription list"
+msgstr ""
+
+#: ../functions.php:890
+msgid "Left time: "
+msgstr ""
+
+#: ../functions.php:909
+msgid "day"
+msgstr ""
+
+#: ../functions.php:909
+msgid "days"
+msgstr ""
+
+#: ../functions.php:910
+#, php-format
+msgid "<span class=\"day\">%1$d</span>%2$s"
+msgstr ""
+
+#: ../functions.php:912
+#, php-format
+msgid "<span class=\"hour\">%02d</span>h "
+msgstr ""
+
+#: ../functions.php:913
+#, php-format
+msgid "<span class=\"minutes\">%02d</span>m "
+msgstr ""
+
+#: ../functions.php:914
+#, php-format
+msgid "<span class=\"seconds\">%02d</span>s"
+msgstr ""
+
+#: ../functions.php:933
+#, php-format
+msgid "%d%% Off"
+msgstr ""
+
+#: ../functions.php:956
+#, php-format
+msgid "On SALE till %s"
+msgstr ""
+
+#: ../functions.php:1361
+#, fuzzy
+msgid "Cancel Condition"
+msgstr "Cancel"
+
+#: ../functions.php:1833
+msgid "Check Token"
 msgstr ""
 
 #: ../help/account.php:3
@@ -4309,8 +4362,9 @@ msgid ""
 msgstr ""
 
 #: ../help/customize.php:149
+#, fuzzy
 msgid "Custom Post Type UI"
-msgstr ""
+msgstr "Post Type"
 
 #: ../help/customize.php:153
 msgid ""
@@ -4448,13 +4502,14 @@ msgid ""
 "admin panel."
 msgstr ""
 
-#: ../help/index.php:12 ../includes/literally-wordpress.php:772
+#: ../help/index.php:12 ../includes/literally-wordpress.php:773
 msgid "Literally WordPress Help"
 msgstr ""
 
 #: ../help/transfer.php:3
+#, fuzzy
 msgid "Aboutn transfer"
-msgstr ""
+msgstr "Transfer"
 
 #: ../help/transfer.php:5
 msgid ""
@@ -4503,7 +4558,7 @@ msgid ""
 "\"%1$s\" target=\"_top\">%1$s</a>."
 msgstr ""
 
-#: ../help/transfer.php:16 ../includes/literally-wordpress.php:516
+#: ../help/transfer.php:16 ../includes/literally-wordpress.php:517
 msgid "General Setting"
 msgstr ""
 
@@ -4569,233 +4624,6 @@ msgstr ""
 
 #: ../help/transfer.php:34
 msgid "Adding new notification is possible but meaningless."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:334
-msgid "Thank you for your patience. Please wait for our contact."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:450
-msgid "Marchand ID and PDT Token required for transaction"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:454
-msgid "Currency code is invalid."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:457
-msgid "Country code is invalid."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:487
-msgid "Literally WordPress successfully upgrades database."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:518
-msgid "Summary"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:524
-#, php-format
-msgid "%d waiting transfers."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:529
-#, php-format
-msgid "%d waiting refunds."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:530
-msgid "Refund History"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:532
-msgid "Campaign Management"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:535
-msgid "Download logs"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:537
-msgid "Device Setting"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:541
-msgid "API Manual"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:547
-#, php-format
-msgid "%d rewards are waiting queueue."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:548
-msgid "Reward Management"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:579
-msgid "This page does not exist. Template not found."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:624
-msgid "Submit"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:638
-#: ../includes/literally-wordpress.php:679
-msgid "Reward Amount Summary"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:642
-#: ../includes/literally-wordpress.php:683
-msgid "Unfixed"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:643
-#: ../includes/literally-wordpress.php:684
-msgid "Lost"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:644
-#: ../includes/literally-wordpress.php:666
-#: ../includes/literally-wordpress.php:685
-msgid "Daily Report"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:645
-#: ../includes/literally-wordpress.php:668
-#: ../includes/literally-wordpress.php:686
-msgid "Date"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:663
-msgid "Sales per post type"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:664
-msgid "Post type"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:704
-msgid "Are you sure to delete this ticket?"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:706
-msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:739
-#, php-format
-msgid ""
-"User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
-"register."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:787
-msgid "Purchase history"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:945
-msgid "Option updated."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:948
-msgid "Option values are same, so nothing has changed."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:951
-msgid "Failed to updated options."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1043
-msgid "You've kindly given a present."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1048
-msgid "Failed to give a present."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1217
-msgid "You have no permission to access this transaction."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1226
-msgid "This transaction is not completed, so you can't refund it."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1229
-#, php-format
-msgid "%s is not refundable."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1237
-msgid ""
-"You can't refund via PayPal because 60 days have past since the transaction "
-"occurred."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1240
-msgid "Sorry, but PayPal denied refunding."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1251
-#: ../includes/literally-wordpress.php:1267
-msgid "Refund succeeded."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1301
-msgid "Transaction was updated."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1305
-msgid "Failed to update transaction."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1400 ../includes/products/event.php:909
-msgid "No ticket match your qriteria.: "
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1418
-msgid "Transaction ID"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1422 ../includes/products/event.php:930
-msgid "Transaction Status"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1526 ../includes/cart/form.php:1351
-#, php-format
-msgid "%s is empty."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1534
-msgid "Email isn't valid format."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1541
-msgid "Tel isn't valid format."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1545
-msgid "Payment Medhot"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1545
-msgid "Payment Agency"
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1549
-#, php-format
-msgid "At lease one %s must be specified."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1557
-msgid "Company name is empty."
-msgstr ""
-
-#: ../includes/literally-wordpress.php:1645
-msgid "Message was sent to agency. Please wait for their response."
 msgstr ""
 
 #: ../includes/base/japanese-payment.php:542
@@ -4875,16 +4703,17 @@ msgstr ""
 msgid "Sorry, but failed to make transaction. Please try again later."
 msgstr ""
 
-#: ../includes/cart/form-backend.php:44 ../includes/cart/form.php:731
+#: ../includes/cart/form-backend.php:44 ../includes/cart/form.php:733
+#, fuzzy
 msgid "No item is selectd."
-msgstr ""
+msgstr "Item set"
 
-#: ../includes/cart/form-backend.php:49 ../includes/cart/form.php:736
+#: ../includes/cart/form-backend.php:49 ../includes/cart/form.php:738
 msgid "You specified wrong payment method."
 msgstr ""
 
 #: ../includes/cart/form-backend.php:62 ../includes/cart/form.php:108
-#: ../includes/cart/form.php:386 ../includes/cart/form.php:741
+#: ../includes/cart/form.php:386 ../includes/cart/form.php:743
 msgid "Item quantity is wrong. Please go back and select item quantity."
 msgstr ""
 
@@ -5087,8 +4916,9 @@ msgid "Mail body is empty."
 msgstr ""
 
 #: ../includes/cart/form-event.php:537 ../includes/products/event.php:682
+#, fuzzy
 msgid "Recipients not set."
-msgstr ""
+msgstr "Item set"
 
 #: ../includes/cart/form-event.php:563
 msgid "You do not have capability to contact participants."
@@ -5144,12 +4974,14 @@ msgid "Payment Information Detail"
 msgstr ""
 
 #: ../includes/cart/form-template.php:238 ../tables/list-refund.php:115
+#, fuzzy
 msgid "Refund Account"
-msgstr ""
+msgstr "Refund"
 
 #: ../includes/cart/form-template.php:241
+#, fuzzy
 msgid "Transfer Accepted"
-msgstr ""
+msgstr "Transfer"
 
 #: ../includes/cart/form-template.php:244
 msgid "Payment Confirmation"
@@ -5164,8 +4996,9 @@ msgid "Transaciton Canceled"
 msgstr ""
 
 #: ../includes/cart/form-template.php:253
+#, fuzzy
 msgid "Ticket Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: ../includes/cart/form-template.php:256
 msgid "Ticket Canceled"
@@ -5176,8 +5009,9 @@ msgid "Ticket Status"
 msgstr ""
 
 #: ../includes/cart/form-template.php:265
+#, fuzzy
 msgid "Waiting for ticket cancellation"
-msgstr ""
+msgstr "Waiting Cancellation"
 
 #: ../includes/cart/form-template.php:268
 msgid "Find User"
@@ -5305,7 +5139,7 @@ msgid "Sorry, but there is no subscription plan."
 msgstr ""
 
 #: ../includes/cart/form.php:98 ../includes/cart/form.php:375
-#: ../includes/cart/form.php:1106
+#: ../includes/cart/form.php:1109
 msgid "Mmm... Cannot find product. Please check if you have payable post."
 msgstr ""
 
@@ -5361,19 +5195,19 @@ msgstr ""
 msgid "Tel number is required and must be 9 - 11 digits."
 msgstr ""
 
-#: ../includes/cart/form.php:751
+#: ../includes/cart/form.php:753
 msgid "Failed to connect to server. Please try again later."
 msgstr ""
 
-#: ../includes/cart/form.php:776 ../includes/cart/form.php:878
+#: ../includes/cart/form.php:778 ../includes/cart/form.php:880
 msgid "Sorry, but specified transaction does not exist."
 msgstr ""
 
-#: ../includes/cart/form.php:782
+#: ../includes/cart/form.php:784
 msgid "Your transaciton is successfully canceled."
 msgstr ""
 
-#: ../includes/cart/form.php:786
+#: ../includes/cart/form.php:788
 #, php-format
 msgid ""
 "You seem to have finished this transaction, so your transaction hasn't been "
@@ -5381,81 +5215,82 @@ msgid ""
 "with transaction id: <strong>%s</strong>"
 msgstr ""
 
-#: ../includes/cart/form.php:822
+#: ../includes/cart/form.php:824
 msgid "Your transaction satatus is already canceled. Nothing done."
 msgstr ""
 
-#: ../includes/cart/form.php:825
+#: ../includes/cart/form.php:827
 #, php-format
 msgid "Your tarnsaction status is %s, so you can't change anything."
 msgstr ""
 
-#: ../includes/cart/form.php:839
+#: ../includes/cart/form.php:841
 #, php-format
 msgid ""
 "Failed to update transaction. Please contact to the administrator of <a href="
 "\"%s\">%s</a>."
 msgstr ""
 
-#: ../includes/cart/form.php:844
+#: ../includes/cart/form.php:846
 msgid "Go to Payment Histroy"
 msgstr ""
 
-#: ../includes/cart/form.php:886
+#: ../includes/cart/form.php:888
 #, php-format
 msgid ""
 "Sorry, but your transaction has failed. Please contact to administrator of "
 "<a href=\"%s\">%s</a>."
 msgstr ""
 
-#: ../includes/cart/form.php:909 ../includes/payment/softbank-payment.php:719
+#: ../includes/cart/form.php:911 ../includes/payment/softbank-payment.php:719
 #: ../includes/payment/softbank-payment.php:809
 msgid "Specified transaction is not found."
 msgstr ""
 
-#: ../includes/cart/form.php:927
+#: ../includes/cart/form.php:929
 msgid "Requested Date"
 msgstr ""
 
-#: ../includes/cart/form.php:931 ../tables/list-history.php:197
+#: ../includes/cart/form.php:933 ../tables/list-history.php:197
 #: ../tables/list-transfers.php:222
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: ../includes/cart/form.php:932 ../includes/products/notifier.php:133
+#: ../includes/cart/form.php:934 ../includes/products/notifier.php:133
 msgid "Bank Account"
-msgstr ""
-
-#: ../includes/cart/form.php:946
-#, php-format
-msgid " (%d days past)"
 msgstr ""
 
 #: ../includes/cart/form.php:948
 #, php-format
+msgid " (%d days past)"
+msgstr ""
+
+#: ../includes/cart/form.php:950
+#, php-format
 msgid " (%d days left)"
 msgstr ""
 
-#: ../includes/cart/form.php:975 ../includes/cart/form.php:993
-#: ../includes/cart/form.php:1009
+#: ../includes/cart/form.php:978 ../includes/cart/form.php:996
+#: ../includes/cart/form.php:1012
 msgid "How to pay"
 msgstr ""
 
-#: ../includes/cart/form.php:1115
+#: ../includes/cart/form.php:1118
+#, fuzzy
 msgid "Failed to connect with PayPal."
-msgstr ""
+msgstr "PayPal"
 
-#: ../includes/cart/form.php:1119
+#: ../includes/cart/form.php:1122
 msgid "Failed to get the transactional information."
 msgstr ""
 
-#: ../includes/cart/form.php:1158
+#: ../includes/cart/form.php:1161
 #, php-format
 msgid " Please contact to Administrator of <strong>%s</strong>"
 msgstr ""
 
-#: ../includes/cart/form.php:1183
+#: ../includes/cart/form.php:1186
 #, php-format
 msgid ""
 "Transaction failed to finish. Please return to previous page and try it "
@@ -5463,22 +5298,27 @@ msgid ""
 "\">%2$s</a> and confirm your current transaction status."
 msgstr ""
 
-#: ../includes/cart/form.php:1207 ../includes/cart/form.php:1232
+#: ../includes/cart/form.php:1210 ../includes/cart/form.php:1235
 msgid "Thank you for purchasing."
 msgstr ""
 
-#: ../includes/cart/form.php:1226
+#: ../includes/cart/form.php:1229
 #, php-format
 msgid ""
 "Your transaction has been canceled. If this is an unexpected result, please "
 "contact to the administrator of <a href=\"%1$s\">%2$s</a>"
 msgstr ""
 
-#: ../includes/cart/form.php:1229
+#: ../includes/cart/form.php:1232
 #, php-format
 msgid ""
 "Your transaction is now under processing or review. If this is an unexpected "
 "result, please contact to the administrator of <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: ../includes/cart/form.php:1354 ../includes/literally-wordpress.php:1528
+#, php-format
+msgid "%s is empty."
 msgstr ""
 
 #: ../includes/common/campaign.php:34
@@ -5495,12 +5335,14 @@ msgid "You don't have capability to edit %s"
 msgstr ""
 
 #: ../includes/common/campaign.php:72
+#, fuzzy
 msgid "Please select item."
-msgstr ""
+msgstr "Item set"
 
 #: ../includes/common/campaign.php:83 ../includes/products/post.php:217
+#, fuzzy
 msgid "Price must be numeric."
-msgstr ""
+msgstr "Special Price"
 
 #: ../includes/common/campaign.php:91
 msgid "Price is higher than original price."
@@ -5519,24 +5361,29 @@ msgid "Specified campaign does not exists."
 msgstr ""
 
 #: ../includes/common/campaign.php:162
+#, fuzzy
 msgid "Failed to add campaign."
-msgstr ""
+msgstr "Campaign"
 
 #: ../includes/common/campaign.php:194
+#, fuzzy
 msgid "Failed to delete campaign."
-msgstr ""
+msgstr "Campaign"
 
 #: ../includes/common/campaign.php:207
+#, fuzzy
 msgid "Campaign added."
-msgstr ""
+msgstr "Campaign"
 
 #: ../includes/common/campaign.php:210
+#, fuzzy
 msgid "Campaign was successfully updated."
-msgstr ""
+msgstr "Campaign"
 
 #: ../includes/common/campaign.php:213
+#, fuzzy
 msgid "Campaign was deleted."
-msgstr ""
+msgstr "Campaign"
 
 #: ../includes/common/refund-manager.php:43
 msgid ""
@@ -5613,8 +5460,9 @@ msgstr ""
 
 #: ../includes/common/refund-manager.php:195
 #: ../includes/common/refund-manager.php:217
+#, fuzzy
 msgid "This transaction is not with refund status."
-msgstr ""
+msgstr "Refund"
 
 #: ../includes/common/refund-manager.php:199
 msgid "This transaction's refund price seem to be valid."
@@ -5658,8 +5506,9 @@ msgid ""
 msgstr ""
 
 #: ../includes/common/refund-manager.php:256
+#, fuzzy
 msgid "Refund message are updated."
-msgstr ""
+msgstr "Refund"
 
 #: ../includes/common/reward.php:192
 msgid "Request is accepted."
@@ -5703,8 +5552,9 @@ msgid ""
 msgstr ""
 
 #: ../includes/common/reward.php:281
+#, fuzzy
 msgid "Promotion coefficient"
-msgstr ""
+msgstr "Promotion"
 
 #: ../includes/common/reward.php:283 ../includes/common/reward.php:292
 #, php-format
@@ -5758,6 +5608,234 @@ msgstr ""
 msgid "Rewrite rules are successfully updated."
 msgstr ""
 
+#: ../includes/literally-wordpress.php:335
+msgid "Thank you for your patience. Please wait for our contact."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:451
+msgid "Marchand ID and PDT Token required for transaction"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:455
+msgid "Currency code is invalid."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:458
+msgid "Country code is invalid."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:488
+msgid "Literally WordPress successfully upgrades database."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:519
+msgid "Summary"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:525
+#, fuzzy, php-format
+msgid "%d waiting transfers."
+msgstr "Waiting Cancellation"
+
+#: ../includes/literally-wordpress.php:530
+#, fuzzy, php-format
+msgid "%d waiting refunds."
+msgstr "Waiting Cancellation"
+
+#: ../includes/literally-wordpress.php:531
+#, fuzzy
+msgid "Refund History"
+msgstr "Refund"
+
+#: ../includes/literally-wordpress.php:533
+#, fuzzy
+msgid "Campaign Management"
+msgstr "Campaign"
+
+#: ../includes/literally-wordpress.php:536
+msgid "Download logs"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:538
+msgid "Device Setting"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:542
+msgid "API Manual"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:548
+#, php-format
+msgid "%d rewards are waiting queueue."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:549
+msgid "Reward Management"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:580
+msgid "This page does not exist. Template not found."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:625
+msgid "Submit"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:639
+#: ../includes/literally-wordpress.php:680
+msgid "Reward Amount Summary"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:643
+#: ../includes/literally-wordpress.php:684
+msgid "Unfixed"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:644
+#: ../includes/literally-wordpress.php:685
+msgid "Lost"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:645
+#: ../includes/literally-wordpress.php:667
+#: ../includes/literally-wordpress.php:686
+msgid "Daily Report"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:646
+#: ../includes/literally-wordpress.php:669
+#: ../includes/literally-wordpress.php:687
+msgid "Date"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:664
+#, fuzzy
+msgid "Sales per post type"
+msgstr "Post Type"
+
+#: ../includes/literally-wordpress.php:665
+#, fuzzy
+msgid "Post type"
+msgstr "Post Type"
+
+#: ../includes/literally-wordpress.php:705
+msgid "Are you sure to delete this ticket?"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:707
+msgid "Refund must be number(negative or positive) or percentage(ex. 50%)"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:740
+#, php-format
+msgid ""
+"User can't register. Go to <a href=\"%s\">setting page</a> and allow user to "
+"register."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:788
+msgid "Purchase history"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:947
+msgid "Option updated."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:950
+msgid "Option values are same, so nothing has changed."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:953
+msgid "Failed to updated options."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1045
+msgid "You've kindly given a present."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1050
+#, fuzzy
+msgid "Failed to give a present."
+msgstr "Present"
+
+#: ../includes/literally-wordpress.php:1219
+msgid "You have no permission to access this transaction."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1228
+msgid "This transaction is not completed, so you can't refund it."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1231
+#, php-format
+msgid "%s is not refundable."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1239
+msgid ""
+"You can't refund via PayPal because 60 days have past since the transaction "
+"occurred."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1242
+msgid "Sorry, but PayPal denied refunding."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1253
+#: ../includes/literally-wordpress.php:1269
+#, fuzzy
+msgid "Refund succeeded."
+msgstr "Refund"
+
+#: ../includes/literally-wordpress.php:1303
+msgid "Transaction was updated."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1307
+msgid "Failed to update transaction."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1402 ../includes/products/event.php:909
+msgid "No ticket match your qriteria.: "
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1420
+msgid "Transaction ID"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1424 ../includes/products/event.php:930
+msgid "Transaction Status"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1536
+msgid "Email isn't valid format."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1543
+msgid "Tel isn't valid format."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1547
+msgid "Payment Medhot"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1547
+msgid "Payment Agency"
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1551
+#, php-format
+msgid "At lease one %s must be specified."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1559
+msgid "Company name is empty."
+msgstr ""
+
+#: ../includes/literally-wordpress.php:1647
+msgid "Message was sent to agency. Please wait for their response."
+msgstr ""
+
 #: ../includes/payment/gmo.php:208 ../includes/payment/gmo.php:278
 msgid "Thank you for your order."
 msgstr ""
@@ -5772,22 +5850,23 @@ msgid ""
 msgstr ""
 
 #: ../includes/payment/gmo.php:437
+#, fuzzy
 msgid "GMO"
-msgstr ""
+msgstr "Credit Card"
 
 #: ../includes/payment/gmo.php:438
 msgid "GMO Payment Gateway inc."
 msgstr ""
 
-#: ../includes/payment/ntt.php:216
+#: ../includes/payment/ntt.php:224
 msgid "NTT SmartTrade inc."
 msgstr ""
 
-#: ../includes/payment/ntt.php:727
+#: ../includes/payment/ntt.php:736
 msgid "Specified transaction is not be refunded."
 msgstr ""
 
-#: ../includes/payment/ntt.php:770
+#: ../includes/payment/ntt.php:779
 msgid "Failed to updated CVS transaction status: "
 msgstr ""
 
@@ -5818,12 +5897,14 @@ msgid "Nothing needs update."
 msgstr ""
 
 #: ../includes/payment/softbank-payment.php:779
+#, fuzzy
 msgid "Request type is wrong."
-msgstr ""
+msgstr "Post Type"
 
 #: ../includes/payment/softbank-payment.php:785
+#, fuzzy
 msgid "ID is not set."
-msgstr ""
+msgstr "Item set"
 
 #: ../includes/payment/softbank-payment.php:814
 #, php-format
@@ -5908,8 +5989,9 @@ msgid "Event Setting"
 msgstr ""
 
 #: ../includes/products/event.php:465
+#, fuzzy
 msgid "This post is not event."
-msgstr ""
+msgstr "Post Type"
 
 #: ../includes/products/event.php:467
 msgid "You have no permission to edit this post."
@@ -5920,8 +6002,9 @@ msgid "Preset tickets are already registered."
 msgstr ""
 
 #: ../includes/products/event.php:473
+#, fuzzy
 msgid "This post type has no presets."
-msgstr ""
+msgstr "Post Type"
 
 #: ../includes/products/event.php:482
 #, php-format
@@ -6093,8 +6176,9 @@ msgid ""
 msgstr ""
 
 #: ../includes/products/ios.php:216
+#, fuzzy
 msgid "Android Procut ID"
-msgstr ""
+msgstr "Android"
 
 #: ../includes/products/ios.php:224
 #, php-format
@@ -6121,8 +6205,9 @@ msgid "Product ID:%s does not exists."
 msgstr ""
 
 #: ../includes/products/ios.php:569
+#, fuzzy
 msgid "JSON data is not set."
-msgstr ""
+msgstr "Item set"
 
 #: ../includes/products/ios.php:634 ../includes/products/ios.php:652
 msgid "Failed to register transaction."
@@ -6583,56 +6668,58 @@ msgstr "Web CVS"
 
 #: ../includes/statics/payment-method.php:133
 msgid "NTT_EMONEY"
-msgstr ""
+msgstr "eMoney"
 
 #: ../includes/statics/payment-method.php:134
+#, fuzzy
 msgid "NTT_CC"
-msgstr ""
+msgstr "SB Credit Card"
 
 #: ../includes/statics/payment-method.php:135
+#, fuzzy
 msgid "NTT_CVS"
-msgstr ""
+msgstr "SB Web CVS"
 
 #: ../includes/statics/payment-method.php:136
 msgid "NTT_BANK"
-msgstr ""
+msgstr "Bank Transfer"
 
-#: ../includes/statics/payment-method.php:556
+#: ../includes/statics/payment-method.php:560
 msgid "You can pay with credit card in secure."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:565
+#: ../includes/statics/payment-method.php:569
 msgid "You can pay at CVS below."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:568
+#: ../includes/statics/payment-method.php:572
 msgid "You can pay with PayPal account or credit cards."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:577
+#: ../includes/statics/payment-method.php:581
 msgid ""
 "You can pay through specified bank account. The account will be displayed on "
 "next page."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:592
+#: ../includes/statics/payment-method.php:596
 msgid ""
 "Clicking 'Next', You will be redirect to PayPal web site. Logging in or "
 "register to PayPal, you will be redirected to this site again. And then, by "
 "confirming payment on this site, your transaction will be complete."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:596
+#: ../includes/statics/payment-method.php:600
 msgid "Clicking 'Next', you will enter credit card infomation form."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:604
+#: ../includes/statics/payment-method.php:608
 msgid ""
 "This is offline payment. To finish transaction, you should follow the "
 "instruction on next step."
 msgstr ""
 
-#: ../includes/statics/payment-method.php:613
+#: ../includes/statics/payment-method.php:617
 msgid ""
 "Transaction will not have been complete, unless you will send deposit to the "
 "specified bank account. This means you can't get contents immediately."
@@ -6647,8 +6734,9 @@ msgid "AUTH"
 msgstr "Authorized"
 
 #: ../includes/statics/payment-status.php:85
+#, fuzzy
 msgid "WAITING_REVIEW"
-msgstr ""
+msgstr "Waiting Cancellation"
 
 #: ../includes/statics/payment-status.php:87
 msgid "START"
@@ -7494,21 +7582,46 @@ msgstr "Promotion"
 msgid "SELL"
 msgstr "Sell"
 
-#: ../tables/list-campaign.php:84
-msgid "No matching Campaign found."
+#: ../literally-wordpress.php:89
+#, php-format
+msgid ""
+"Literally WordPress is activated but is not available. This plugin needs PHP "
+"version 5<. Your PHP version is %1$s."
 msgstr ""
 
-#: ../tables/list-campaign.php:98
-msgid "Start"
+#: ../literally-wordpress.php:90
+msgid " Furthermore, this plugin needs cURL module."
 msgstr ""
+
+#: ../literally-wordpress.php:91
+msgid ""
+" Please contact to your server administrator to change server configuration."
+msgstr ""
+
+#: ../literally-wordpress.php:92
+msgid ""
+"This plugin make your WordPress post object payable via PayPal and so on. "
+"ePub, PDF, MP3, Live ticket, Web-Magazine... What you sell is up to you."
+msgstr ""
+
+#: ../tables/list-campaign.php:84
+#, fuzzy
+msgid "No matching Campaign found."
+msgstr "Campaign"
+
+#: ../tables/list-campaign.php:98
+#, fuzzy
+msgid "Start"
+msgstr "Start"
 
 #: ../tables/list-campaign.php:99
 msgid "End"
 msgstr ""
 
 #: ../tables/list-campaign.php:100
+#, fuzzy
 msgid "Sale Price"
-msgstr ""
+msgstr "Special Price"
 
 #: ../tables/list-campaign.php:179
 #, php-format
@@ -7516,9 +7629,9 @@ msgid "%d items<small>(%s)</small>"
 msgstr ""
 
 #: ../tables/list-campaign.php:199
-#, php-format
+#, fuzzy, php-format
 msgid "%s discount"
-msgstr ""
+msgstr "Discount"
 
 #: ../tables/list-campaign.php:241 ../tables/list-devices.php:175
 #: ../tables/list-download-logs.php:224 ../tables/list-event.php:269
@@ -7603,8 +7716,9 @@ msgstr ""
 
 #: ../tables/list-event.php:249 ../tables/list-history.php:316
 #: ../tables/list-management.php:303 ../tables/list-promotable-posts.php:189
+#, fuzzy
 msgid "All Post Types"
-msgstr ""
+msgstr "Post Type"
 
 #: ../tables/list-event.php:261 ../tables/list-management.php:293
 #: ../tables/list-ticket.php:225
@@ -7630,8 +7744,9 @@ msgid "No Limit"
 msgstr ""
 
 #: ../tables/list-history.php:215
+#, fuzzy
 msgid "Partial Refund"
-msgstr ""
+msgstr "Refund"
 
 #: ../tables/list-history.php:223 ../tables/list-management.php:139
 #: ../tables/list-management.php:261 ../tables/list-refund.php:221
@@ -7664,8 +7779,9 @@ msgid "Filter"
 msgstr ""
 
 #: ../tables/list-history.php:374
+#, fuzzy
 msgid "1 item"
-msgstr ""
+msgstr "Item set"
 
 #: ../tables/list-history.php:374
 #, php-format
@@ -7700,12 +7816,14 @@ msgid "Date To"
 msgstr ""
 
 #: ../tables/list-promotable-posts.php:25
+#, fuzzy
 msgid "No matching post is found."
-msgstr ""
+msgstr "Post Type"
 
 #: ../tables/list-promotable-posts.php:130
+#, fuzzy
 msgid "Type"
-msgstr ""
+msgstr "Post Type"
 
 #: ../tables/list-refund.php:116
 msgid "Paid"
@@ -7801,8 +7919,9 @@ msgid "Widgets Title"
 msgstr ""
 
 #: ../widgets/buynow.php:123
+#, fuzzy
 msgid "Post ID to display"
-msgstr ""
+msgstr "Post Type"
 
 #: ../widgets/buynow.php:126
 msgid ""

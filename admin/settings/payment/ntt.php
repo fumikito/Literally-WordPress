@@ -164,7 +164,7 @@
             <td>
                 <label>
                     <input type="checkbox" name="ntt_bank_stealth" value="1"<?php if($this->ntt->stealth_bank) echo ' checked="checked"'; ?> />
-                    <?php $this->e('Enable stealth mode'); ?>
+                    <?php printf($this->_('Enable stealth mode only for %s'), $this->_(LWP_Payment_Methods::NTT_BANK)); ?>
                 </label>
                 <p class="description"><?php $this->e('If stealth mode is on, only administrator can see this payment option on transaction form. This is useful for productional test.'); ?></p>
                 <p class="description"><?php printf($this->_('<strong>NOTICE: </strong> This setting overrides global stealth mode for %s.'), 'NTT Smart Trade') ?></p>
