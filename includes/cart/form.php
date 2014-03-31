@@ -687,7 +687,8 @@ EOS;
 {$lwp->option['event_signature']}
 
 EOS;
-							wp_mail($user->user_email, $subject, $body);
+							$from = apply_filters('lwp_bank_mail_from', get_option('admin_email'));
+							wp_mail($user->user_email, $subject, $body, "From: $site_name {<$from>}\r\n\\" );
 							// Redirect
 							wp_redirect($end_point);
 							exit;
@@ -965,7 +966,8 @@ EOS;
 
 					$rows[] = array('支払方法', '銀行振込');
 					$rows[] = array( '振込先', $desc);
-					$rows[] = array('注意点', '振込手数料はお客様のご負担とります。なにとぞご了承ください。');
+					$rows[] = array('問い合わせ番号', '<code>'.$transaction->transaction_key.'</code>');
+					$rows[] = array('注意点', '振込手数料はお客様のご負担となります。なにとぞご了承ください。');
 					break;
 				case LWP_Payment_Methods::NTT_CVS:
 					$label = $lwp->ntt->get_cvs_code_label($data['cvs_name']);

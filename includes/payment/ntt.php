@@ -335,7 +335,7 @@ class LWP_NTT extends LWP_Japanese_Payment{
 				'name' => mb_convert_encoding($customer_name, 'sjis-win', 'utf-8'),
 				'choComTypicalGoodsName' => mb_convert_encoding($product_name, 'sjis-win', 'utf-8'),
 				'flag' => 1,
-				'expiry' => date_i18n('YYYMMDD', $limit),
+				'expiry' => date_i18n('Ymd', $limit),
 			));
 			// Check if request is O.K.
 			if( !$result || !isset($result['payStatus']) ){
