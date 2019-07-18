@@ -6,7 +6,7 @@ Requires at least: 3.1
 Tested up to: 3.5.2  
 Stable tag: 0.9.3.0  
 
-> **THIS PLUGIN IS ABONDONED**
+> **THIS PLUGIN IS ABANDONED**
 > We stop maintaining Litearlly WordPress because of few development resource. Please use alteranatives.
 > If you need special support for importing or exporting, please give us a feed back from the support forum.
 
